@@ -185,13 +185,8 @@ void Player::Rotate(float elapsedTime, DirectX::SimpleMath::Vector3 moveDirectio
 
 	moveDirection.Normalize();
 	//Œ»İ‚ÌŒü‚«‚Æ“®‚­•ûŒü‚©‚ç²‚ğì‚é
-	//Vector3 axis = m_direction.Cross(moveDirection);
 	Vector3 axis = moveDirection.Cross(m_direction);
 
-	//if (axis == Vector3::Zero)
-	//{
-	//	return;
-	//}
 
 	if (axis == Vector3::Zero)
 	{
@@ -200,8 +195,6 @@ void Player::Rotate(float elapsedTime, DirectX::SimpleMath::Vector3 moveDirectio
 
 	//
 	axis *= -1;
-	//float angle= elapsedTime * 10.0f;
-	//angle *= Vector3::Distance(moveDirection, m_direction);
 
 
 	float  angle = Vector3::Distance(moveDirection, m_direction);

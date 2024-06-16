@@ -1,0 +1,4 @@
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(1116,5): warning MSB8027: DebugDraw.cpp という名前の複数のファイルでは、同じ場所に出力が生成されます。これにより、不適切なビルド結果が生じる可能性があります。関連するファイルは Libraries\Microsoft\DebugDraw.cpp, Utilities\DebugDraw.cpp です。
+  BoomerangThrow.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\State\BoomerangThrow.cpp(94,31): warning C4267: '=': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
+  3DPG.vcxproj -> C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\3DPG.exe

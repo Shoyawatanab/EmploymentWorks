@@ -32,7 +32,8 @@ Boomerang::Boomerang(Player* player)
 	m_position{},
 	m_currentState{},
 	m_idling{},
-	m_throw{}
+	m_throw{},
+	m_scale{}
 {
 }
 

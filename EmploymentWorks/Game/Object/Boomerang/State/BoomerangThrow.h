@@ -12,7 +12,6 @@ class BoomerangThrow : public IBoomerangState
 public: 
 	DirectX::SimpleMath::Matrix GetMatrix() { return m_worldMatrix; }
 
-	std::vector<DirectX::SimpleMath::Vector3> GetSS() { return m_spherePos; }
 
 public:
 	// コンストラクタ
@@ -35,13 +34,17 @@ private:
 	Boomerang* m_boomerang;
 	Player* m_player;
 
-	DirectX::SimpleMath::Quaternion m_rotate;
+	DirectX::SimpleMath::Quaternion m_initialRotate;
 	DirectX::SimpleMath::Vector3 m_position;
 
 	std::unique_ptr<CSV> m_csv;
 
 	std::vector<DirectX::SimpleMath::Vector3> m_spherePos;
 	std::vector<DirectX::SimpleMath::Vector3> m_moveSpherePos;
+	DirectX::SimpleMath::Quaternion  m_rotate;
+
+	DirectX::SimpleMath::Vector3 m_direction;
+	DirectX::SimpleMath::Vector3 m_previousFrameDirection;
 
 	// デバイスコンテキスト
 	ID3D11DeviceContext* m_context;
@@ -56,6 +59,9 @@ private:
 	int m_startIndex;
 
 	float m_moveSpeed;
+
+	float m_rotationalMotion;
+	float  m_rotateY;
 
 
 };
