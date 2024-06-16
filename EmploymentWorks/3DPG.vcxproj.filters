@@ -123,6 +123,9 @@
     <ClInclude Include="Libraries\MyLib\CSV.h">
       <Filter>Libraries\MyLib</Filter>
     </ClInclude>
+    <ClInclude Include="Libraries\MyLib\TPS_Camera.h">
+      <Filter>Libraries\MyLib</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -177,6 +180,9 @@
       <Filter>Game\Object\Boomerang\State</Filter>
     </ClCompile>
     <ClCompile Include="Libraries\MyLib\CSV.cpp">
+      <Filter>Libraries\MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\MyLib\TPS_Camera.cpp">
       <Filter>Libraries\MyLib</Filter>
     </ClCompile>
   </ItemGroup>
