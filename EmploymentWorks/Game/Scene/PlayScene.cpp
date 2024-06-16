@@ -119,7 +119,7 @@ void PlayScene::Render()
 	m_gridFloor->Render(context, view, m_projection);
 
 	m_player->Render(view, m_projection);
-	m_enemy->Render(view, m_projection);
+	//m_enemy->Render(view, m_projection);
 
 	// デバッグ情報を「DebugString」で表示する
 	auto debugString = m_commonResources->GetDebugString();
