@@ -14,6 +14,7 @@ namespace mylib
 {
 	class DebugCamera;
 	class GridFloor;
+	class TPS_Camera;
 }
 
 
@@ -25,7 +26,9 @@ private:
 	CommonResources* m_commonResources;
 
 	// デバッグカメラ
-	std::unique_ptr<mylib::DebugCamera> m_debugCamera;
+	//std::unique_ptr<mylib::DebugCamera> m_debugCamera;
+
+	std::unique_ptr<mylib::TPS_Camera> m_tpsCamera;
 
 	// 格子床
 	std::unique_ptr<mylib::GridFloor> m_gridFloor;

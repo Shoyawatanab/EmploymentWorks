@@ -5,19 +5,21 @@
 #include "pch.h"
 #include "TPS_Camera.h"
 #include "Game/Screen.h"
+#include "Game/Object/Player.h"
 
 //-------------------------------------------------------------------
 // コンストラクタ
 //-------------------------------------------------------------------
-mylib::TPS_Camera::TPS_Camera(const DirectX::SimpleMath::Vector3& target)
+mylib::TPS_Camera::TPS_Camera(Player* player)
 	:
 	m_view{},
 	m_projection{},
 	m_eye{},
-	m_target{ target },
-	m_up{ DirectX::SimpleMath::Vector3::UnitY }
+	m_target{},
+	m_up{ DirectX::SimpleMath::Vector3::UnitY },
+	m_player{player}
 {
-	CalculateEyePosition(DirectX::SimpleMath::Matrix::Identity);
+	CalculateEyePosition(DirectX::SimpleMath::Quaternion::Identity);
 	CalculateViewMatrix();
 	CalculateProjectionMatrix();
 }
@@ -25,17 +27,13 @@ mylib::TPS_Camera::TPS_Camera(const DirectX::SimpleMath::Vector3& target)
 //-------------------------------------------------------------------
 // 更新する
 //-------------------------------------------------------------------
-void mylib::TPS_Camera::Update(
-	const DirectX::SimpleMath::Vector3& newTarget,
-	const DirectX::SimpleMath::Matrix& rotate
-)
+void mylib::TPS_Camera::Update(float elapsedTime)
 {
 	// targetの位置を更新する
-	m_target =newTarget;
+	m_target = m_player->GetPosition();
 
 	// カメラ座標を計算する
-	CalculateEyePosition(rotate);
-
+	CalculateEyePosition(m_player->GetRotate());
 	// ビュー行列を更新する
 	CalculateViewMatrix();
 }
@@ -67,7 +65,7 @@ void mylib::TPS_Camera::CalculateProjectionMatrix()
 //-------------------------------------------------------------------
 // カメラ座標を計算する
 //-------------------------------------------------------------------
-void mylib::TPS_Camera::CalculateEyePosition(const DirectX::SimpleMath::Matrix& rotate)
+void mylib::TPS_Camera::CalculateEyePosition(const DirectX::SimpleMath::Quaternion& rotate)
 {
 	// 既定の進行方向ベクトル
 	DirectX::SimpleMath::Vector3 forward = DirectX::SimpleMath::Vector3::Forward;
