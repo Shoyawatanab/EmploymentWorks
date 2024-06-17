@@ -41,9 +41,6 @@
     <Filter Include="Game\Object">
       <UniqueIdentifier>{839cee05-09d6-4b90-b83a-78234f360ee5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Utilities">
-      <UniqueIdentifier>{a3b3b409-09e2-4ecc-8ef1-7c5d029cb9d6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\Object\Boomerang">
       <UniqueIdentifier>{a0772f40-98d9-4749-8a05-e2c82e0d065a}</UniqueIdentifier>
     </Filter>
@@ -105,9 +102,6 @@
     <ClInclude Include="Game\Object\Enemy.h">
       <Filter>Game\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Utilities\DebugDraw.h">
-      <Filter>Utilities</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Object\Boomerang\State\BoomerangIdling.h">
       <Filter>Game\Object\Boomerang\State</Filter>
     </ClInclude>
@@ -166,9 +160,6 @@
     </ClCompile>
     <ClCompile Include="Game\Object\Enemy.cpp">
       <Filter>Game\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Utilities\DebugDraw.cpp">
-      <Filter>Utilities</Filter>
     </ClCompile>
     <ClCompile Include="Game\Object\Boomerang\State\BoomerangIdling.cpp">
       <Filter>Game\Object\Boomerang\State</Filter>

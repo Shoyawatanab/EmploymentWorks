@@ -1,18 +1,4 @@
-﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(1116,5): warning MSB8027: DebugDraw.cpp という名前の複数のファイルでは、同じ場所に出力が生成されます。これにより、不適切なビルド結果が生じる可能性があります。関連するファイルは Libraries\Microsoft\DebugDraw.cpp, Utilities\DebugDraw.cpp です。
-  Boomerang.cpp
-  BoomerangIdling.cpp
-  BoomerangThrow.cpp
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\State\BoomerangThrow.cpp(94,31): warning C4267: '=': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
-  Enemy.cpp
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy.cpp(48,7): warning C4189: 'context': ローカル変数が初期化されましたが、参照されていません
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy.cpp(49,7): warning C4189: 'states': ローカル変数が初期化されましたが、参照されていません
-  Player.cpp
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player.cpp(166,27): warning C4100: 'elapsedTime': 引数は関数の本体部で 1 度も参照されません。
-  PlayScene.cpp
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\PlayScene.cpp(96,14): warning C4189: 'kbTracker': ローカル変数が初期化されましたが、参照されていません
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\PlayScene.cpp(113,7): warning C4189: 'states': ローカル変数が初期化されましたが、参照されていません
-  SceneManager.cpp
-  コードを生成中...
-x64\Debug\DebugDraw.obj : warning LNK4042: オブジェクトの指定が重複しています。余分なものは無視されます。
-     ライブラリ C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\3DPG.lib とオブジェクト C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\3DPG.exp を作成中
+﻿  PlayScene.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\PlayScene.cpp(105,14): warning C4189: 'kbTracker': ローカル変数が初期化されましたが、参照されていません
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\PlayScene.cpp(122,7): warning C4189: 'states': ローカル変数が初期化されましたが、参照されていません
   3DPG.vcxproj -> C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\3DPG.exe

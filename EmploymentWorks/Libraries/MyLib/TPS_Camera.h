@@ -4,6 +4,8 @@
 */
 #pragma once
 
+class Player;
+
 namespace mylib
 {
 	class TPS_Camera
@@ -40,16 +42,13 @@ namespace mylib
 
 	public:
 		// コンストラクタ
-		TPS_Camera(const DirectX::SimpleMath::Vector3& target = DirectX::SimpleMath::Vector3::Zero);
+		TPS_Camera(Player* Player);
 
 		// デストラクタ
 		~TPS_Camera() = default;
 
 		// 更新処理
-		void Update(
-			const DirectX::SimpleMath::Vector3& newTarget,
-			const DirectX::SimpleMath::Matrix& rotate
-		);
+		void Update(float elapsedTime);
 
 
 		// getter
@@ -63,6 +62,7 @@ namespace mylib
 
 		const DirectX::SimpleMath::Vector3& GetUpVector() const { return m_up; }
 
+		Player* m_player;
 
 	private:
 		// ビュー行列を計算する
@@ -72,6 +72,6 @@ namespace mylib
 		void CalculateProjectionMatrix();
 
 		// カメラ座標を計算する
-		void CalculateEyePosition(const DirectX::SimpleMath::Matrix& rotate);
+		void CalculateEyePosition(const DirectX::SimpleMath::Quaternion& rotate);
 	};
 }
