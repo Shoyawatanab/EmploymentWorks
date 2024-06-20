@@ -120,6 +120,9 @@
     <ClInclude Include="Libraries\MyLib\TPS_Camera.h">
       <Filter>Libraries\MyLib</Filter>
     </ClInclude>
+    <ClInclude Include="Libraries\MyLib\Mouse.h">
+      <Filter>Libraries\MyLib</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -174,6 +177,9 @@
       <Filter>Libraries\MyLib</Filter>
     </ClCompile>
     <ClCompile Include="Libraries\MyLib\TPS_Camera.cpp">
+      <Filter>Libraries\MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\MyLib\Mouse.cpp">
       <Filter>Libraries\MyLib</Filter>
     </ClCompile>
   </ItemGroup>

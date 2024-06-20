@@ -45,7 +45,7 @@ public:
 	~Player() ;
 
 	void Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 position) ;
-	void Update(float elapsedTime);
+	void Update(float elapsedTime, DirectX::SimpleMath::Quaternion cameraRotation);
 	void Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection) ;
 	void Finalize() ;
 
