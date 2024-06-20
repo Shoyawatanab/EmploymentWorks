@@ -8,8 +8,34 @@ class Player;
 
 namespace mylib
 {
+	class Mouse;
+}
+
+namespace mylib
+{
 	class TPS_Camera
 	{
+	private:
+		struct MouseSensitivity //マウス感度の構造体
+		{
+			float x;
+			float y;
+		};
+
+	public:
+		// getter
+		const DirectX::SimpleMath::Matrix& GetViewMatrix() const { return m_view; }
+
+		const DirectX::SimpleMath::Matrix& GetProjectionMatrix() const { return m_projection; }
+
+		const DirectX::SimpleMath::Vector3& GetEyePosition() const { return m_eye; }
+
+		const DirectX::SimpleMath::Vector3& GetTargetPosition() const { return m_target; }
+
+		const DirectX::SimpleMath::Vector3& GetUpVector() const { return m_up; }
+
+		DirectX::SimpleMath::Quaternion GetRotationX() { return m_rotationX; }
+
 	private:
 		// ターゲットからのデフォルト距離
 		const float CAMERA_DISTANCE = 7.0f;
@@ -39,6 +65,16 @@ namespace mylib
 		// カメラの頭の方向
 		DirectX::SimpleMath::Vector3 m_up;
 
+		Player* m_player;
+
+		DirectX::SimpleMath::Quaternion m_rotationX;
+
+		mylib::Mouse* m_mouse;
+		//回転角度
+		POINT m_angle;
+		//マウス感度
+		MouseSensitivity m_mouseSensitivity;
+
 
 	public:
 		// コンストラクタ
@@ -51,18 +87,7 @@ namespace mylib
 		void Update(float elapsedTime);
 
 
-		// getter
-		const DirectX::SimpleMath::Matrix& GetViewMatrix() const { return m_view; }
 
-		const DirectX::SimpleMath::Matrix& GetProjectionMatrix() const { return m_projection; }
-
-		const DirectX::SimpleMath::Vector3& GetEyePosition() const { return m_eye; }
-
-		const DirectX::SimpleMath::Vector3& GetTargetPosition() const { return m_target; }
-
-		const DirectX::SimpleMath::Vector3& GetUpVector() const { return m_up; }
-
-		Player* m_player;
 
 	private:
 		// ビュー行列を計算する
@@ -72,6 +97,6 @@ namespace mylib
 		void CalculateProjectionMatrix();
 
 		// カメラ座標を計算する
-		void CalculateEyePosition(const DirectX::SimpleMath::Quaternion& rotate);
+		void CalculateEyePosition();
 	};
 }

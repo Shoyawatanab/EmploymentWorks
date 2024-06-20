@@ -6,6 +6,9 @@
 #include "TPS_Camera.h"
 #include "Game/Screen.h"
 #include "Game/Object/Player.h"
+#include "Libraries/MyLib/Mouse.h"
+
+const POINT MOUSESENSITIVITY = { 0.001f,0.001f };      // マウスの感度
 
 //-------------------------------------------------------------------
 // コンストラクタ
@@ -17,9 +20,14 @@ mylib::TPS_Camera::TPS_Camera(Player* player)
 	m_eye{},
 	m_target{},
 	m_up{ DirectX::SimpleMath::Vector3::UnitY },
-	m_player{player}
+	m_player{player},
+	m_angle{},
+	m_mouseSensitivity{ 0.001f,0.001f }
 {
-	CalculateEyePosition(DirectX::SimpleMath::Quaternion::Identity);
+	m_mouse = new mylib::Mouse;
+	m_mouse->Initialize();
+
+	CalculateEyePosition();
 	CalculateViewMatrix();
 	CalculateProjectionMatrix();
 }
@@ -29,11 +37,17 @@ mylib::TPS_Camera::TPS_Camera(Player* player)
 //-------------------------------------------------------------------
 void mylib::TPS_Camera::Update(float elapsedTime)
 {
+	m_mouse->Update(elapsedTime);
+
 	// targetの位置を更新する
 	m_target = m_player->GetPosition();
 
+	m_angle.x -= m_mouse->GetDiffX();
+	m_angle.y -= m_mouse->GetDiffY();
+
+
 	// カメラ座標を計算する
-	CalculateEyePosition(m_player->GetRotate());
+	CalculateEyePosition();
 	// ビュー行列を更新する
 	CalculateViewMatrix();
 }
@@ -65,8 +79,15 @@ void mylib::TPS_Camera::CalculateProjectionMatrix()
 //-------------------------------------------------------------------
 // カメラ座標を計算する
 //-------------------------------------------------------------------
-void mylib::TPS_Camera::CalculateEyePosition(const DirectX::SimpleMath::Quaternion& rotate)
+void mylib::TPS_Camera::CalculateEyePosition()
 {
+	DirectX::SimpleMath::Vector3 angleX = DirectX::SimpleMath::Vector3(0, m_angle.x * m_mouseSensitivity.x, 0);
+	m_rotationX = DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(angleX);
+
+	//マウスの差分から角度の作成
+	DirectX::SimpleMath::Vector3 angle = DirectX::SimpleMath::Vector3(m_angle.y * m_mouseSensitivity.y, m_angle.x * m_mouseSensitivity.x, 0);
+	DirectX::SimpleMath::Quaternion Rotation = DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(angle);
+	//float a = Rotation.x;
 	// 既定の進行方向ベクトル
 	DirectX::SimpleMath::Vector3 forward = DirectX::SimpleMath::Vector3::Forward;
 
@@ -75,8 +96,7 @@ void mylib::TPS_Camera::CalculateEyePosition(const DirectX::SimpleMath::Quaterni
 	forward.z = CAMERA_DISTANCE;
 
 	// ターゲットの向いている方向に追従する
-	forward = DirectX::SimpleMath::Vector3::Transform(forward, rotate);
-
+	forward = DirectX::SimpleMath::Vector3::Transform(forward, Rotation);
 	// カメラ座標を計算する
 	m_eye = m_target + forward;
 }

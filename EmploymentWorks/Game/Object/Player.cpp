@@ -69,7 +69,7 @@ void Player::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3
 //---------------------------------------------------------
 // XV‚·‚é
 //---------------------------------------------------------
-void Player::Update(float elapsedTime)
+void Player::Update(float elapsedTime, DirectX::SimpleMath::Quaternion cameraRotation)
 {
 	UNREFERENCED_PARAMETER(elapsedTime);
 
@@ -82,33 +82,30 @@ void Player::Update(float elapsedTime)
 
 	Vector3 moveDirection = Vector3::Zero;
 
-	if (key.IsKeyDown(Keyboard::Keyboard::Up))
+	if (key.IsKeyDown(Keyboard::Keyboard::W))
 	{
 		moveDirection.z--;
 	}
-	if (key.IsKeyDown(Keyboard::Keyboard::Down))
+	if (key.IsKeyDown(Keyboard::Keyboard::S))
 	{
 		moveDirection.z++;
 	}
-	if (key.IsKeyDown(Keyboard::Keyboard::Left))
+	if (key.IsKeyDown(Keyboard::Keyboard::A))
 	{
 		moveDirection.x--;
 	}
-	if (key.IsKeyDown(Keyboard::Keyboard::Right))
+	if (key.IsKeyDown(Keyboard::Keyboard::D))
 	{
 		moveDirection.x++;
 	}
+
+	moveDirection = Vector3::Transform(moveDirection, cameraRotation);
 
 	
 	Rotate(elapsedTime, moveDirection);
 
 	Move(elapsedTime, moveDirection);
 	Attack(elapsedTime, key);
-
-
-
-
-
 
 	m_boomerang->Update(elapsedTime);
 

@@ -98,7 +98,7 @@ void PlayScene::Update(float elapsedTime)
 
 	m_tpsCamera->Update(elapsedTime);
 
-	m_player->Update(elapsedTime);
+	m_player->Update(elapsedTime,m_tpsCamera->GetRotationX());
 	m_enemy->Update(elapsedTime);
 
 	// キーボードステートトラッカーを取得する
