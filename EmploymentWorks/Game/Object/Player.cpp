@@ -162,11 +162,28 @@ void Player::Move(float elapsedTime, DirectX::SimpleMath::Vector3 moveDirection)
 
 void Player::Attack(float elapsedTime, DirectX::Keyboard::State key)
 {
-	if (key.Space)
+	using namespace DirectX;
+
+	Mouse::State a;
+
+	//\‚¦‚é
+	if (m_boomerang->GetBoomerangState() == m_boomerang->GetBoomerangIdling()
+		&& key.IsKeyDown(Keyboard::Keys::Space))
+	{
+		m_boomerang->ChangeState(m_boomerang->GetBoomerangGetReady());
+	}
+
+	//“Š‚°‚é
+	if (m_boomerang->GetBoomerangState() == m_boomerang->GetBoomerangGetReady()
+		&& key.IsKeyUp(Keyboard::Keys::Space))
 	{
 		m_boomerang->ChangeState(m_boomerang->GetBoomerangThrow());
 	}
 
+	//if (m_boomerang->GetBoomerangState() == m_boomerang->GetBoomerangGetReady()
+	//	&& key.IsKeyUp(Keyboard::Keys::Space))
+
+	
 }
 
 

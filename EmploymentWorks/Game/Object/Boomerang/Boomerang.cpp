@@ -75,6 +75,8 @@ void Boomerang::Initialize(CommonResources* resources)
 	m_idling->Initialize();
 	m_throw = std::make_unique<BoomerangThrow>(this,m_player);
 	m_throw->Initialize();
+	m_getReady = std::make_unique<BoomerangGetReady>(this, m_player);
+	m_getReady->Initialize();
 
 	m_currentState = m_idling.get();
 	
@@ -128,8 +130,6 @@ void Boomerang::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 
 	// –C“ƒ‚Ì‹«ŠE‹…‚ð•`‰æ‚·‚é
 	DX::Draw(m_primitiveBatch.get(), m_boundingSphere, color);
-
-
 #endif
 	// ƒvƒŠƒ~ƒeƒBƒu•`‰æ‚ðI—¹‚·‚é
 	m_primitiveBatch->End();
