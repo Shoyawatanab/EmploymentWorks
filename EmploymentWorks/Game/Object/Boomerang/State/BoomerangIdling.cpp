@@ -53,15 +53,6 @@ void BoomerangIdling::Update(const float& elapsedTime)
 	m_worldMatrix *= Matrix::CreateFromQuaternion(m_boomerang->GetRotate());
 	m_worldMatrix *= Matrix::CreateTranslation(m_boomerang->GetPosition());
 
-
-
-	DirectX::Keyboard::State key = DirectX::Keyboard::Get().GetState();
-	if (key.IsKeyDown(Keyboard::Keyboard::P))
-	{
-		m_boomerang->ChangeState(m_boomerang->GetBoomerangThrow());
-	}
-
-
 }
 
 

@@ -4,11 +4,12 @@
 */
 #pragma once
 #include "IScene.h"
-#include "Game/Object/Player.h"
-#include "Game/Object/Enemy.h"
 
 // ‘O•ûéŒ¾
 class CommonResources;
+class Player;
+class Enemy;
+class Floor;
 
 namespace mylib
 {
@@ -41,6 +42,8 @@ private:
 
 	std::unique_ptr<Player> m_player;
 	std::unique_ptr<Enemy> m_enemy ;
+
+	std::unique_ptr<Floor> m_floor;
 
 public:
 	PlayScene();

@@ -123,6 +123,12 @@
     <ClInclude Include="Libraries\MyLib\Mouse.h">
       <Filter>Libraries\MyLib</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Object\Boomerang\State\BoomerangGetReady.h">
+      <Filter>Game\Object\Boomerang\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Floor.h">
+      <Filter>Game\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -181,6 +187,12 @@
     </ClCompile>
     <ClCompile Include="Libraries\MyLib\Mouse.cpp">
       <Filter>Libraries\MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Boomerang\State\BoomerangGetReady.cpp">
+      <Filter>Game\Object\Boomerang\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Floor.cpp">
+      <Filter>Game\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

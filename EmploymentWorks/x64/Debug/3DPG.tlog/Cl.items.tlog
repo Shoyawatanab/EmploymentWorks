@@ -2,9 +2,11 @@ C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\DeviceResources.cpp;
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Game.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\CommonResources.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\CommonResources.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\Boomerang.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Boomerang.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\State\BoomerangGetReady.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\BoomerangGetReady.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\State\BoomerangIdling.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\BoomerangIdling.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\State\BoomerangThrow.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\BoomerangThrow.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Enemy.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Floor.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Floor.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Player.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\PlayScene.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\PlayScene.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\SceneManager.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\SceneManager.obj

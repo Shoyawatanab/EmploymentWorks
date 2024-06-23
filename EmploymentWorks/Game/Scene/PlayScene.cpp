@@ -13,6 +13,9 @@
 #include "Libraries/MyLib/MemoryLeakDetector.h"
 
 #include "Libraries/MyLib/TPS_Camera.h"
+#include "Game/Object/Player.h"
+#include "Game/Object/Enemy.h"
+#include "Game/Object/Floor.h"
 #include <cassert>
 
 
@@ -28,7 +31,8 @@ PlayScene::PlayScene()
 	m_isChangeScene{},
 	m_player{},
 	m_enemy{},
-	m_tpsCamera{}
+	m_tpsCamera{},
+	m_floor{}
 {
 }
 
@@ -72,6 +76,8 @@ void PlayScene::Initialize(CommonResources* resources)
 		0.1f, 100.0f
 	);
 
+	m_floor = std::make_unique<Floor>();
+	m_floor->Initialize(m_commonResources, Vector3::Zero);
 
 	m_player = std::make_unique<Player>();
 	m_player->Initialize(m_commonResources,Vector3(0,1,0));
@@ -128,6 +134,7 @@ void PlayScene::Render()
 
 	// ŠiŽq°‚ð•`‰æ‚·‚é
 	m_gridFloor->Render(context, view, m_projection);
+	m_floor->Render(view, m_projection);
 
 	m_player->Render(view, m_projection);
 	//m_enemy->Render(view, m_projection);

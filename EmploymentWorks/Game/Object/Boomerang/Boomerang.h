@@ -8,6 +8,7 @@
 #include "Interface/IBoomerangState.h"
 #include "Game/Object/Boomerang/State/BoomerangIdling.h"
 #include "Game/Object/Boomerang/State/BoomerangThrow.h"
+#include "Game/Object/Boomerang/State/BoomerangGetReady.h"
 
 // ‘O•ûéŒ¾
 class CommonResources;
@@ -36,8 +37,10 @@ public:
 	DirectX::BoundingSphere& GetBoundingSphere() { return m_boundingSphere; }
 	Player* GetPlayer() { return m_player; }
 
+	IBoomerangState* GetBoomerangState() { return m_currentState; }
 	BoomerangIdling* GetBoomerangIdling() { return m_idling.get(); }
 	BoomerangThrow* GetBoomerangThrow() { return m_throw.get(); }
+	BoomerangGetReady* GetBoomerangGetReady() { return m_getReady.get(); }
 
 private:
 
@@ -61,6 +64,7 @@ private:
 	IBoomerangState* m_currentState;
 	std::unique_ptr<BoomerangIdling> m_idling;
 	std::unique_ptr<BoomerangThrow> m_throw;
+	std::unique_ptr<BoomerangGetReady> m_getReady;
 
 
 public:

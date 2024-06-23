@@ -184,9 +184,11 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Game\CommonResources.h" />
     <ClInclude Include="Game\Object\Boomerang\Boomerang.h" />
+    <ClInclude Include="Game\Object\Boomerang\State\BoomerangGetReady.h" />
     <ClInclude Include="Game\Object\Boomerang\State\BoomerangIdling.h" />
     <ClInclude Include="Game\Object\Boomerang\State\BoomerangThrow.h" />
     <ClInclude Include="Game\Object\Enemy.h" />
+    <ClInclude Include="Game\Object\Floor.h" />
     <ClInclude Include="Game\Object\Player.h" />
     <ClInclude Include="Game\Scene\IScene.h" />
     <ClInclude Include="Game\Scene\PlayScene.h" />
@@ -211,9 +213,11 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Game\CommonResources.cpp" />
     <ClCompile Include="Game\Object\Boomerang\Boomerang.cpp" />
+    <ClCompile Include="Game\Object\Boomerang\State\BoomerangGetReady.cpp" />
     <ClCompile Include="Game\Object\Boomerang\State\BoomerangIdling.cpp" />
     <ClCompile Include="Game\Object\Boomerang\State\BoomerangThrow.cpp" />
     <ClCompile Include="Game\Object\Enemy.cpp" />
+    <ClCompile Include="Game\Object\Floor.cpp" />
     <ClCompile Include="Game\Object\Player.cpp" />
     <ClCompile Include="Game\Scene\PlayScene.cpp" />
     <ClCompile Include="Game\Scene\SceneManager.cpp" />
