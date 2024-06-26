@@ -22,6 +22,14 @@ namespace mylib
 			float y;
 		};
 
+		enum class ZoomState
+		{
+			None,
+			ZoomIn,
+			ZoomOut
+		};
+
+
 	public:
 		// getter
 		const DirectX::SimpleMath::Matrix& GetViewMatrix() const { return m_view; }
@@ -35,6 +43,9 @@ namespace mylib
 		const DirectX::SimpleMath::Vector3& GetUpVector() const { return m_up; }
 
 		DirectX::SimpleMath::Quaternion GetRotationX() { return m_rotationX; }
+
+		//デバック用
+		const POINT GetAngle() { return m_angle; }
 
 	private:
 		// ターゲットからのデフォルト距離
@@ -74,6 +85,13 @@ namespace mylib
 		POINT m_angle;
 		//マウス感度
 		MouseSensitivity m_mouseSensitivity;
+
+		float m_lerpTime;
+
+		//構えた時のカメラの動く距離
+		DirectX::SimpleMath::Vector3 m_moveEye;
+
+		ZoomState m_zoomState;
 
 
 	public:
