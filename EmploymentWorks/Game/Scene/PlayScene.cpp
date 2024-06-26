@@ -134,7 +134,7 @@ void PlayScene::Render()
 
 	// 格子床を描画する
 	m_gridFloor->Render(context, view, m_projection);
-	m_floor->Render(view, m_projection);
+	//m_floor->Render(view, m_projection);
 
 	m_player->Render(view, m_projection);
 	//m_enemy->Render(view, m_projection);
@@ -142,6 +142,8 @@ void PlayScene::Render()
 	// デバッグ情報を「DebugString」で表示する
 	auto debugString = m_commonResources->GetDebugString();
 	debugString->AddString("Play Scene");
+	debugString->AddString("Pos: %d, %d", m_tpsCamera->GetAngle().x, m_tpsCamera->GetAngle().y);
+
 }
 
 //---------------------------------------------------------

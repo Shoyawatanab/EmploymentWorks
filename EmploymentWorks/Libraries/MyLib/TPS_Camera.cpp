@@ -9,6 +9,9 @@
 #include "Libraries/MyLib/Mouse.h"
 
 const POINT MOUSESENSITIVITY = { 0.001f,0.001f };      // マウスの感度
+const int MAXANGLEY = 100;
+
+const float EXPANSIOOSPEED = 0.7f;   //拡大時のスピード
 
 //-------------------------------------------------------------------
 // コンストラクタ
@@ -22,7 +25,10 @@ mylib::TPS_Camera::TPS_Camera(Player* player)
 	m_up{ DirectX::SimpleMath::Vector3::UnitY },
 	m_player{player},
 	m_angle{},
-	m_mouseSensitivity{ 0.001f,0.001f }
+	m_mouseSensitivity{ 0.001f,0.001f },
+	m_lerpTime{},
+	m_moveEye{},
+	m_zoomState{ ZoomState::None }
 {
 	m_mouse = new mylib::Mouse;
 	m_mouse->Initialize();
@@ -37,6 +43,12 @@ mylib::TPS_Camera::TPS_Camera(Player* player)
 //-------------------------------------------------------------------
 void mylib::TPS_Camera::Update(float elapsedTime)
 {
+	using namespace DirectX;
+	using namespace DirectX::SimpleMath;
+
+	DirectX::Keyboard::State key = DirectX::Keyboard::Get().GetState();
+
+
 	m_mouse->Update(elapsedTime);
 
 	// targetの位置を更新する
@@ -44,6 +56,65 @@ void mylib::TPS_Camera::Update(float elapsedTime)
 
 	m_angle.x -= m_mouse->GetDiffX();
 	m_angle.y -= m_mouse->GetDiffY();
+
+	//下の制限
+	if (m_angle.y > 2100)
+	{
+		m_angle.y = 2100;
+	}
+	//上の制限
+	if (m_angle.y < -950)
+	{
+		m_angle.y = -950;
+	}
+	if (key.IsKeyDown(Keyboard::Keyboard::Space))
+	{
+		m_zoomState = ZoomState::ZoomIn;
+	}
+
+	if (key.IsKeyUp(Keyboard::Keyboard::Space) && m_zoomState == ZoomState::ZoomIn)
+	{
+		m_zoomState = ZoomState::ZoomOut;
+	}
+
+	Vector3 direction = Vector3::Zero;
+	switch (m_zoomState)
+	{
+		case mylib::TPS_Camera::ZoomState::None:
+			break;
+		case mylib::TPS_Camera::ZoomState::ZoomIn:
+			//向いている方向
+			direction = m_target - m_eye;
+			direction.Normalize();
+			direction *= 4;
+			if (m_lerpTime < 1)
+			{
+				m_lerpTime += 0.1f * EXPANSIOOSPEED;
+			}
+			m_moveEye = Vector3::Lerp(Vector3::Zero, direction, m_lerpTime);
+			break;
+		case mylib::TPS_Camera::ZoomState::ZoomOut:
+			//向いている方向
+			direction = m_target - m_eye;
+			direction.Normalize();
+			direction *= 2;
+			if (m_lerpTime > 0)
+			{
+				m_lerpTime -= 0.1f * EXPANSIOOSPEED;
+				m_moveEye = Vector3::Lerp(Vector3::Zero, direction, m_lerpTime);
+			}
+			else
+			{
+				m_lerpTime = 0;
+				m_moveEye = Vector3::Zero;
+				m_zoomState = ZoomState::None;
+			}
+			break;
+		default:
+			break;
+	}
+
+
 
 
 	// カメラ座標を計算する
@@ -57,7 +128,7 @@ void mylib::TPS_Camera::Update(float elapsedTime)
 //-------------------------------------------------------------------
 void mylib::TPS_Camera::CalculateViewMatrix()
 {
-	m_view = DirectX::SimpleMath::Matrix::CreateLookAt(m_eye, m_target, m_up);
+	m_view = DirectX::SimpleMath::Matrix::CreateLookAt(m_eye + m_moveEye, m_target, m_up);
 }
 
 //-------------------------------------------------------------------
