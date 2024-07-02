@@ -38,10 +38,11 @@ private:
 
 	std::unique_ptr<Boomerang> m_boomerang;
 
-	
+	Enemy* m_enemy;
+
 
 public:
-	Player();
+	Player(Enemy* enemy);
 	~Player() ;
 
 	void Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 position) ;

@@ -65,10 +65,11 @@ private:
 	std::unique_ptr<BoomerangIdling> m_idling;
 	std::unique_ptr<BoomerangThrow> m_throw;
 	std::unique_ptr<BoomerangGetReady> m_getReady;
+	Enemy* m_enemy;
 
 
 public:
-	Boomerang(Player* player);
+	Boomerang(Player* player, Enemy* enemy);
 	~Boomerang() ;
 
 	void Initialize(CommonResources* resources) ;

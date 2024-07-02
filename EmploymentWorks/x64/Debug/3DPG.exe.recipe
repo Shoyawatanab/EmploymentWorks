@@ -5,7 +5,17 @@
       <FullPath>C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\3DPG.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
-  <ContentFiles />
+  <ContentFiles>
+    <ContentFile>
+      <FullPath>C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Resources\Shaders\LockOn\LockOnUIGS.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Resources\Shaders\LockOn\LockOnUIPS.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Resources\Shaders\LockOn\LockOnUIVS.cso</FullPath>
+    </ContentFile>
+  </ContentFiles>
   <SatelliteDlls />
   <NonRecipeFileRefs />
 </Project>

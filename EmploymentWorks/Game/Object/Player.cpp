@@ -13,18 +13,22 @@
 #include "Libraries/MyLib/MemoryLeakDetector.h"
 #include <cassert>
 
+#include "Game/Object/Enemy.h"
+
 const float MOVE_SPEED = 5.0f;                                        //動く時のスピード
 const DirectX::SimpleMath::Vector3 INITIAL_DIRECTION( 0.0f,0.0f,-1.0f); //初期の向いている方向
 //---------------------------------------------------------
 // コンストラクタ
 //---------------------------------------------------------
-Player::Player()
+Player::Player(Enemy* enemy)
 	:
 	m_commonResources{},
 	m_model{},
 	m_position{},
 	m_direction{INITIAL_DIRECTION},
-	m_boomerang{}
+	m_boomerang{},
+	m_enemy{ enemy }
+
 {
 }
 
@@ -61,7 +65,7 @@ void Player::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3
 
 	m_position = position;
 
-	m_boomerang = std::make_unique<Boomerang>(this);
+	m_boomerang = std::make_unique<Boomerang>(this,m_enemy);
 	m_boomerang->Initialize(m_commonResources);
 
 }
