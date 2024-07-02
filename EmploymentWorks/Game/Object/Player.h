@@ -24,6 +24,7 @@ public:
 
 	DirectX::SimpleMath::Vector3 GetPosition() { return m_position; }
 	DirectX::SimpleMath::Quaternion GetRotate() { return m_rotate; }
+	Boomerang* GetBoomerang() { return m_boomerang.get(); }
 
 private:
 	// ‹¤’ÊƒŠƒ\[ƒX
