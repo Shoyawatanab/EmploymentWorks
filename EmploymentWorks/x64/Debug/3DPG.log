@@ -1,4 +1,7 @@
-﻿  LockOn.cpp
+﻿  compilation object save succeeded; see C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Resources\Shaders\LockOn\LockOnUIGS.cso
+  compilation object save succeeded; see C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Resources\Shaders\LockOn\LockOnUIPS.cso
+  compilation object save succeeded; see C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Resources\Shaders\LockOn\LockOnUIVS.cso
+  LockOn.cpp
   Boomerang.cpp
   BoomerangGetReady.cpp
   BoomerangIdling.cpp
@@ -16,6 +19,8 @@ C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player.c
   PlayScene.cpp
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\PlayScene.cpp(123,14): warning C4189: 'kbTracker': ローカル変数が初期化されましたが、参照されていません
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\PlayScene.cpp(140,7): warning C4189: 'states': ローカル変数が初期化されましたが、参照されていません
+  SceneManager.cpp
+  BinaryFile.cpp
   TPS_Camera.cpp
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\TPS_Camera.cpp(11,34): warning C4838: 'float' から 'LONG' への変換には縮小変換が必要です
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\TPS_Camera.cpp(11,34): warning C4244: '初期化中': 'float' から 'LONG' への変換です。データが失われる可能性があります。
@@ -23,5 +28,6 @@ C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\TPS_
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\TPS_Camera.cpp(11,41): warning C4244: '初期化中': 'float' から 'LONG' への変換です。データが失われる可能性があります。
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\TPS_Camera.cpp(57,32): warning C4244: '-=': 'float' から 'LONG' への変換です。データが失われる可能性があります。
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\TPS_Camera.cpp(58,32): warning C4244: '-=': 'float' から 'LONG' への変換です。データが失われる可能性があります。
+  UserInterface.cpp
   コードを生成中...
   3DPG.vcxproj -> C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\3DPG.exe

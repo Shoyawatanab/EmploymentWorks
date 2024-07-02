@@ -71,11 +71,20 @@ void LockOn::Initialize(DX::DeviceResources* pDR, int width, int height)
 //---------------------------------------------------------
 void LockOn::Update(float elapsedTime)
 {
+	using namespace DirectX;
+	using namespace DirectX::SimpleMath;
+
 	UNREFERENCED_PARAMETER(elapsedTime);
 
 
-	using namespace DirectX;
-	using namespace DirectX::SimpleMath;
+
+
+	if (m_player->GetBoomerang()->GetBoomerangState() != m_player->GetBoomerang()->GetBoomerangGetReady())
+	{
+		return;
+	}
+
+
 
 	Vector3 PlayerPos = m_player->GetPosition();
 	Vector3 EnemyPos = m_enemy->GetPosition();
