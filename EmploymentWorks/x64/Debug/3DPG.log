@@ -1,8 +1,27 @@
-﻿  TPS_Camera.cpp
+﻿  LockOn.cpp
+  Boomerang.cpp
+  BoomerangGetReady.cpp
+  BoomerangIdling.cpp
+  BoomerangThrow.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\State\BoomerangThrow.cpp(97,31): warning C4267: '=': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
+  Enemy.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy.cpp(48,7): warning C4189: 'context': ローカル変数が初期化されましたが、参照されていません
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy.cpp(49,7): warning C4189: 'states': ローカル変数が初期化されましたが、参照されていません
+  Floor.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Floor.cpp(37,81): warning C4100: 'position': 引数は関数の本体部で 1 度も参照されません。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Floor.cpp(58,71): warning C4100: 'cameraRotation': 引数は関数の本体部で 1 度も参照されません。
+  Player.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player.cpp(167,27): warning C4100: 'elapsedTime': 引数は関数の本体部で 1 度も参照されません。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player.cpp(171,15): warning C4101: 'a': ローカル変数は 1 度も使われていません。
+  PlayScene.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\PlayScene.cpp(123,14): warning C4189: 'kbTracker': ローカル変数が初期化されましたが、参照されていません
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\PlayScene.cpp(140,7): warning C4189: 'states': ローカル変数が初期化されましたが、参照されていません
+  TPS_Camera.cpp
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\TPS_Camera.cpp(11,34): warning C4838: 'float' から 'LONG' への変換には縮小変換が必要です
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\TPS_Camera.cpp(11,34): warning C4244: '初期化中': 'float' から 'LONG' への変換です。データが失われる可能性があります。
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\TPS_Camera.cpp(11,41): warning C4838: 'float' から 'LONG' への変換には縮小変換が必要です
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\TPS_Camera.cpp(11,41): warning C4244: '初期化中': 'float' から 'LONG' への変換です。データが失われる可能性があります。
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\TPS_Camera.cpp(56,32): warning C4244: '-=': 'float' から 'LONG' への変換です。データが失われる可能性があります。
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\TPS_Camera.cpp(57,32): warning C4244: '-=': 'float' から 'LONG' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\TPS_Camera.cpp(58,32): warning C4244: '-=': 'float' から 'LONG' への変換です。データが失われる可能性があります。
+  コードを生成中...
   3DPG.vcxproj -> C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\3DPG.exe

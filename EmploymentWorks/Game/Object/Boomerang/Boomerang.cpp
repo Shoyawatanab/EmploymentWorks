@@ -23,7 +23,7 @@ const float SCALE = 0.5f; //オブジェクトの大きさ
 //---------------------------------------------------------
 // コンストラクタ
 //---------------------------------------------------------
-Boomerang::Boomerang(Player* player)
+Boomerang::Boomerang(Player* player, Enemy* enemy)
 	:
 	m_player{player},
 	m_commonResources{},
@@ -33,7 +33,9 @@ Boomerang::Boomerang(Player* player)
 	m_currentState{},
 	m_idling{},
 	m_throw{},
-	m_scale{}
+	m_scale{},
+	m_enemy{ enemy }
+
 {
 }
 
@@ -73,7 +75,7 @@ void Boomerang::Initialize(CommonResources* resources)
 
 	m_idling = std::make_unique<BoomerangIdling>(this,m_player);
 	m_idling->Initialize();
-	m_throw = std::make_unique<BoomerangThrow>(this,m_player);
+	m_throw = std::make_unique<BoomerangThrow>(this,m_player,m_enemy);
 	m_throw->Initialize();
 	m_getReady = std::make_unique<BoomerangGetReady>(this, m_player);
 	m_getReady->Initialize();

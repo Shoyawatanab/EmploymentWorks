@@ -2,6 +2,8 @@
 #include "pch.h"
 #include "Game/Object/Boomerang/State/BoomerangThrow.h"
 #include "Game/Object/Boomerang/Boomerang.h"
+#include "Game/Object/Player.h"
+#include "Game/Object/Enemy.h"
 
 
 const float SPEED = 2.0f;
@@ -9,12 +11,13 @@ const float SPEED = 2.0f;
 const DirectX::SimpleMath::Vector3 AxisOfRotation(0,1,0);  //‰ñ“]Ž²
 
 // ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-BoomerangThrow::BoomerangThrow(Boomerang* boomerang, Player* player)
+BoomerangThrow::BoomerangThrow(Boomerang* boomerang, Player* player, Enemy* enemy)
 	:
 	m_worldMatrix{},
 	m_boundingSphereLeftLeg{},
 	m_boomerang{ boomerang },
 	m_player{ player }
+	, m_enemy{ enemy }
 
 {
 }
@@ -108,11 +111,29 @@ void BoomerangThrow::Enter()
 
 	Matrix SphereMatrix = Matrix::Identity;
 	SphereMatrix *= Matrix::CreateFromQuaternion(m_initialRotate);
+	//ƒvƒŒƒCƒ„‚Æ“G‚Ì‹——£
+	Vector3 PlayerToEnemyDistance = m_enemy->GetPosition() - m_player->GetPosition();
+	//‹——£‚ðflaot‚É•ÏŠ·‚µ‚Ä”¼•ª‚É‚·‚é
+	float PlayerToEnemyLenght = PlayerToEnemyDistance.Length() / 2;
 
 	//‰ñ“]‚Ì’n“_‚ð‰ñ“]‚³‚¹‚é
 	for (int i = 0; i < m_spherePos.size(); i++)
 	{
-		m_moveSpherePos[i] = Vector3::Transform(m_spherePos[i],SphereMatrix);
+		Vector3 Pos = m_spherePos[i];
+		//Sphere‚Æƒ[ƒ’n“_‚Ì‹——£
+		Vector3 Distance = Pos - Vector3::Zero;
+		//ã‚Ì‹——£‚ðfloat‚ª‚½‚É•ÏŠ·
+		float Lenght = Distance.Length();
+		//“G‚Æ‚Ì‹——£‚ÆSphere‚Æ‚Ì‹——£‚Ì”{—¦‚ð‹‚ß‚é
+		float Magnification = PlayerToEnemyLenght / Lenght;
+		Distance *= Magnification;
+		Pos = Distance;;
+		//‹——£‚Ì”¼•ª‚ð‰ÁŽZ
+		Pos.z -= PlayerToEnemyLenght;
+
+
+		//ƒvƒŒƒCƒ„‚Ì‰ñ“]‚ð‚à‚Æ‚É‰ñ“]‚³‚¹‚é
+		m_moveSpherePos[i] = Vector3::Transform(Pos, SphereMatrix);
 	}
 }
 
@@ -129,7 +150,7 @@ void BoomerangThrow::SplineCurve(const float& elapsedTime)
 {
 	using namespace DirectX::SimpleMath;
 
-	m_moveSpeed -= 0.12f * elapsedTime;
+	//m_moveSpeed -= 0.12f * elapsedTime;
 
 
 	float distance = (m_moveSpherePos[(m_index + 2) % m_moveSpherePos.size()] -

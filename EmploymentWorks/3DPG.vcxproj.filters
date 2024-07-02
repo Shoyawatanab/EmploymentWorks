@@ -50,6 +50,12 @@
     <Filter Include="Interface">
       <UniqueIdentifier>{52a8c007-a0c6-48c1-a8b0-8a733951a76d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources\Shaders">
+      <UniqueIdentifier>{19c380d8-765c-4a92-aa82-1de77b325187}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Shaders\LockOn">
+      <UniqueIdentifier>{d2ebf4f7-981b-4af7-909f-032c06df633f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -129,6 +135,15 @@
     <ClInclude Include="Game\Object\Floor.h">
       <Filter>Game\Object</Filter>
     </ClInclude>
+    <ClInclude Include="Game\LockOn.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Libraries\MyLib\UserInterface.h">
+      <Filter>Libraries\MyLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Libraries\MyLib\BinaryFile.h">
+      <Filter>Libraries\MyLib</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -194,6 +209,15 @@
     <ClCompile Include="Game\Object\Floor.cpp">
       <Filter>Game\Object</Filter>
     </ClCompile>
+    <ClCompile Include="Game\LockOn.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\MyLib\UserInterface.cpp">
+      <Filter>Libraries\MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\MyLib\BinaryFile.cpp">
+      <Filter>Libraries\MyLib</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />
@@ -210,5 +234,19 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Resources\Shaders\LockOn\LockOnUI.hlsli">
+      <Filter>Resources\Shaders\LockOn</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Resources\Shaders\LockOn\LockOnUIGS.hlsl">
+      <Filter>Resources\Shaders\LockOn</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\LockOn\LockOnUIPS.hlsl">
+      <Filter>Resources\Shaders\LockOn</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\LockOn\LockOnUIVS.hlsl">
+      <Filter>Resources\Shaders\LockOn</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

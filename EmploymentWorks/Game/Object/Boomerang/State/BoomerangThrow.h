@@ -5,6 +5,8 @@
 
 class Boomerang;
 class Player;
+class Enemy;
+
 
 // BoomerangThrowクラスを定義する
 class BoomerangThrow : public IBoomerangState
@@ -15,7 +17,7 @@ public:
 
 public:
 	// コンストラクタ
-	BoomerangThrow(Boomerang* boomerang, Player* player);
+	BoomerangThrow(Boomerang* boomerang, Player* player, Enemy* enemy);
 	// デストラクタ
 	~BoomerangThrow();
 	// 初期化する
@@ -33,6 +35,8 @@ private:
 
 	Boomerang* m_boomerang;
 	Player* m_player;
+	Enemy* m_enemy;
+
 
 	DirectX::SimpleMath::Quaternion m_initialRotate;
 	DirectX::SimpleMath::Vector3 m_position;

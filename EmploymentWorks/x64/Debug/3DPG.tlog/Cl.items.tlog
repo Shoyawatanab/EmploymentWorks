@@ -1,6 +1,7 @@
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\DeviceResources.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\DeviceResources.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Game.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\CommonResources.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\CommonResources.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\LockOn.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\LockOn.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\Boomerang.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Boomerang.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\State\BoomerangGetReady.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\BoomerangGetReady.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\State\BoomerangIdling.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\BoomerangIdling.obj
@@ -12,6 +13,7 @@ C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\PlayScene
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\SceneManager.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\SceneManager.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\TitleScene.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\TitleScene.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\Microsoft\DebugDraw.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\DebugDraw.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\BinaryFile.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\BinaryFile.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\CSV.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\CSV.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\DebugCamera.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\DebugCamera.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\DebugString.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\DebugString.obj
@@ -19,5 +21,6 @@ C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\Grid
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\InputManager.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\InputManager.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\Mouse.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Mouse.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\TPS_Camera.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\TPS_Camera.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\UserInterface.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\UserInterface.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Main.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Main.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\pch.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\pch.obj

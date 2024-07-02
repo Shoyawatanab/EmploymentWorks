@@ -16,6 +16,8 @@
 #include "Game/Object/Player.h"
 #include "Game/Object/Enemy.h"
 #include "Game/Object/Floor.h"
+#include "Game/LockOn.h"
+
 #include <cassert>
 
 
@@ -33,6 +35,8 @@ PlayScene::PlayScene()
 	m_enemy{},
 	m_tpsCamera{},
 	m_floor{}
+	, m_lockOn{}
+
 {
 }
 
@@ -77,16 +81,20 @@ void PlayScene::Initialize(CommonResources* resources)
 	);
 
 	m_floor = std::make_unique<Floor>();
-	m_floor->Initialize(m_commonResources, Vector3::Zero);
-
-	m_player = std::make_unique<Player>();
-	m_player->Initialize(m_commonResources,Vector3(0,1,0));
-
+	m_enemy = std::make_unique<Enemy>();
+	m_player = std::make_unique<Player>(m_enemy.get());
 	m_tpsCamera = std::make_unique<mylib::TPS_Camera>(m_player.get());
 
+	m_floor->Initialize(m_commonResources, Vector3::Zero);
+	m_player->Initialize(m_commonResources, Vector3(0, 0.75f, 0));
+	m_enemy->Initialize(m_commonResources, Vector3(0, 0.75f, -10));
 
-	m_enemy = std::make_unique<Enemy>();
-	m_enemy->Initialize(m_commonResources, Vector3(0, 0, -4));
+
+	m_lockOn = std::make_unique<LockOn>(m_player.get(), m_enemy.get(), m_tpsCamera.get());
+	m_lockOn->Initialize(m_commonResources->GetDeviceResources(),
+		m_commonResources->GetDeviceResources()->GetOutputSize().right,
+		m_commonResources->GetDeviceResources()->GetOutputSize().bottom);
+
 
 	// シーン変更フラグを初期化する
 	m_isChangeScene = false;
@@ -106,6 +114,10 @@ void PlayScene::Update(float elapsedTime)
 
 	m_player->Update(elapsedTime,m_tpsCamera->GetRotationX());
 	m_enemy->Update(elapsedTime);
+
+
+	m_lockOn->Update(elapsedTime);
+
 
 	// キーボードステートトラッカーを取得する
 	const auto& kbTracker = m_commonResources->GetInputManager()->GetKeyboardTracker();
@@ -134,10 +146,13 @@ void PlayScene::Render()
 
 	// 格子床を描画する
 	m_gridFloor->Render(context, view, m_projection);
-	//m_floor->Render(view, m_projection);
+	m_floor->Render(view, m_projection);
 
 	m_player->Render(view, m_projection);
-	//m_enemy->Render(view, m_projection);
+	m_enemy->Render(view, m_projection);
+
+	m_lockOn->Render();
+
 
 	// デバッグ情報を「DebugString」で表示する
 	auto debugString = m_commonResources->GetDebugString();

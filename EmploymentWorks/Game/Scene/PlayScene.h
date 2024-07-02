@@ -10,6 +10,8 @@ class CommonResources;
 class Player;
 class Enemy;
 class Floor;
+class LockOn;
+
 
 namespace mylib
 {
@@ -44,6 +46,8 @@ private:
 	std::unique_ptr<Enemy> m_enemy ;
 
 	std::unique_ptr<Floor> m_floor;
+	std::unique_ptr<LockOn> m_lockOn;
+
 
 public:
 	PlayScene();

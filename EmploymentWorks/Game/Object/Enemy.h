@@ -19,6 +19,10 @@ namespace mylib
 class Enemy final 
 
 {
+public:
+	DirectX::SimpleMath::Vector3 GetPosition() { return m_position; }
+	DirectX::SimpleMath::Quaternion GetRotate() { return m_rotate; }
+
 private:
 	// ã§í ÉäÉ\Å[ÉX
 	CommonResources* m_commonResources;
@@ -27,6 +31,7 @@ private:
 	std::unique_ptr<DirectX::Model> m_model;
 
 	DirectX::SimpleMath::Vector3 m_position;
+	DirectX::SimpleMath::Quaternion m_rotate;
 
 
 public:
