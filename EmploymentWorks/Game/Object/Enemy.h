@@ -8,6 +8,7 @@
 
 // 前方宣言
 class CommonResources;
+class Bounding;
 
 namespace mylib
 {
@@ -23,6 +24,9 @@ public:
 	DirectX::SimpleMath::Vector3 GetPosition() { return m_position; }
 	DirectX::SimpleMath::Quaternion GetRotate() { return m_rotate; }
 
+	Bounding* GetBounding() { return m_bounding.get(); }
+
+
 private:
 	// 共通リソース
 	CommonResources* m_commonResources;
@@ -33,6 +37,7 @@ private:
 	DirectX::SimpleMath::Vector3 m_position;
 	DirectX::SimpleMath::Quaternion m_rotate;
 
+	std::unique_ptr<Bounding> m_bounding;
 
 public:
 	Enemy();

@@ -144,6 +144,9 @@
     <ClInclude Include="Libraries\MyLib\BinaryFile.h">
       <Filter>Libraries\MyLib</Filter>
     </ClInclude>
+    <ClInclude Include="Libraries\MyLib\Bounding.h">
+      <Filter>Libraries\MyLib</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -216,6 +219,9 @@
       <Filter>Libraries\MyLib</Filter>
     </ClCompile>
     <ClCompile Include="Libraries\MyLib\BinaryFile.cpp">
+      <Filter>Libraries\MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\MyLib\Bounding.cpp">
       <Filter>Libraries\MyLib</Filter>
     </ClCompile>
   </ItemGroup>

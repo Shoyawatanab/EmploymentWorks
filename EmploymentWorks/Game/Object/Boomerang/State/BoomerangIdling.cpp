@@ -34,7 +34,6 @@ void BoomerangIdling::Initialize()
 }
 
 
-
 // 更新する
 void BoomerangIdling::Update(const float& elapsedTime)
 {
@@ -43,15 +42,18 @@ void BoomerangIdling::Update(const float& elapsedTime)
 	using namespace DirectX::SimpleMath;
 
 
-	m_boomerang->SetRotate(m_player->GetRotate()) ;
-	m_boomerang->SetPosition(m_player->GetPosition());
-
+	m_boomerang->SetRotate(m_player->GetRotate());
+	//m_boomerang->SetPosition(m_player->GetPosition() + GENERATEDISTANCE);
 
 	//マトリクス　子供の計算　親の計算の順番でやらないといけない
 	m_worldMatrix = Matrix::CreateScale(m_boomerang->GetScale());
 	m_worldMatrix *= Matrix::CreateTranslation(GENERATEDISTANCE);
-	m_worldMatrix *= Matrix::CreateFromQuaternion(m_boomerang->GetRotate());
-	m_worldMatrix *= Matrix::CreateTranslation(m_boomerang->GetPosition());
+	m_worldMatrix *= Matrix::CreateFromQuaternion(m_player->GetRotate());
+	m_worldMatrix *= Matrix::CreateTranslation(m_player->GetPosition());
+
+	//座標を更新
+	Vector3 Pos = Vector3::Transform(Vector3::Zero, m_worldMatrix);
+	m_boomerang->SetPosition(Pos);
 
 }
 

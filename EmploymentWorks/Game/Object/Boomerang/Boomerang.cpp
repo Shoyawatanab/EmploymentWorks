@@ -15,7 +15,7 @@
 
 #include "Libraries/Microsoft/DebugDraw.h"
 #include "Game/Object/Player.h"
-
+#include "Libraries/MyLib/Bounding.h"
 
 const float SCALE = 0.5f; //オブジェクトの大きさ
 
@@ -28,7 +28,6 @@ Boomerang::Boomerang(Player* player, Enemy* enemy)
 	m_player{player},
 	m_commonResources{},
 	m_model{},
-	m_boundingSphere{},
 	m_position{},
 	m_currentState{},
 	m_idling{},
@@ -69,7 +68,6 @@ void Boomerang::Initialize(CommonResources* resources)
 	// モデルを読み込む
 	m_model = DirectX::Model::CreateFromCMO(device, L"Resources/Models/Boomerang.cmo", *fx);
 
-	m_boundingSphere = CreateBoundingSphere(1.0f);
 
 	m_primitiveBatch = std::make_unique<PrimitiveBatch<VertexPositionColor>>(context);
 
@@ -86,6 +84,10 @@ void Boomerang::Initialize(CommonResources* resources)
 	m_scale = SCALE;
 	//m_rotate = m_player->GetRotate();
 
+	m_bounding = std::make_unique<Bounding>();
+	//m_bounding->CreateBoundingBox(m_commonResources, m_position,Vector3(0.5f,0.8f,0.5f));
+	m_bounding->CreateBoundingSphere(m_commonResources, m_position, 0.5f);
+
 
 }
 
@@ -101,7 +103,6 @@ void Boomerang::Update(float elapsedTime)
 
 	m_currentState->Update(elapsedTime);
 
-	m_boundingSphere.Center = Vector3(0, 0, 0);
 }
 
 
@@ -121,20 +122,12 @@ void Boomerang::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 
 	// モデルを描画する
 	m_model->Draw(context, *states, m_currentState->GetMatrix(), view, projection);
+	m_bounding->DrawBoundingSphere(m_position, view, projection);
 
 	
 
 
 	// プリミティブ描画を開始する
-	m_primitiveBatch->Begin();
-#ifdef _DEBUG
-	DirectX::XMVECTOR color = DirectX::Colors::Yellow;
-
-	// 砲塔の境界球を描画する
-	DX::Draw(m_primitiveBatch.get(), m_boundingSphere, color);
-#endif
-	// プリミティブ描画を終了する
-	m_primitiveBatch->End();
 
 
 	// デバッグ情報を表示する
@@ -170,12 +163,3 @@ DirectX::SimpleMath::Vector3 Lerp(const DirectX::SimpleMath::Vector3& start, con
 	return (1.0f - t) * start + t * end;
 }
 
-DirectX::BoundingSphere Boomerang::CreateBoundingSphere(const float& radius)
-{
-	// 境界球を宣言する
-	DirectX::BoundingSphere turretBoundingSphere;
-	// 境界球の半径を設定する
-	turretBoundingSphere.Radius = radius;
-	// 境界球を返す
-	return turretBoundingSphere;
-}

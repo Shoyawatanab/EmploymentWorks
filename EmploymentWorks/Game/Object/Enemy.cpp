@@ -13,7 +13,7 @@
 #include "Libraries/MyLib/MemoryLeakDetector.h"
 #include <cassert>
 
-
+#include "Libraries/MyLib/Bounding.h"
 //---------------------------------------------------------
 // コンストラクタ
 //---------------------------------------------------------
@@ -60,6 +60,9 @@ void Enemy::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 
 
 	m_position = position;
 
+	m_bounding = std::make_unique<Bounding>();
+	//m_bounding->CreateBoundingBox(m_commonResources, m_position, Vector3(0.5f, 0.8f, 0.5f));
+	m_bounding->CreateBoundingSphere(m_commonResources, m_position, 0.8f);
 
 }
 
@@ -95,6 +98,8 @@ void Enemy::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 	// モデルを描画する
 	m_model->Draw(context, *states, world, view, projection);
 
+	//m_bounding->DrawBoundingBox(m_position, view,projection);
+	m_bounding->DrawBoundingSphere(m_position, view, projection);
 
 
 
