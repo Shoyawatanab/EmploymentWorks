@@ -14,6 +14,7 @@
 #include <cassert>
 
 #include "Game/Object/Enemy.h"
+#include "Libraries/MyLib/Bounding.h"
 
 const float MOVE_SPEED = 5.0f;                                        //動く時のスピード
 const DirectX::SimpleMath::Vector3 INITIAL_DIRECTION( 0.0f,0.0f,-1.0f); //初期の向いている方向
@@ -67,6 +68,10 @@ void Player::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3
 
 	m_boomerang = std::make_unique<Boomerang>(this,m_enemy);
 	m_boomerang->Initialize(m_commonResources);
+
+	m_bounding = std::make_unique<Bounding>();
+	//m_bounding->CreateBoundingBox(m_commonResources, m_position,Vector3(0.5f,0.8f,0.5f));
+	m_bounding->CreateBoundingSphere(m_commonResources, m_position, 0.8f);
 
 }
 
@@ -134,6 +139,7 @@ void Player::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 
 	// モデルを描画する
 	m_model->Draw(context, *states, world, view, projection);
+	m_bounding->DrawBoundingSphere(m_position, view, projection);
 
 	m_boomerang->Render(view, projection);
 

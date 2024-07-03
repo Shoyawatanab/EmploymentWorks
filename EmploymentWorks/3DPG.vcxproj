@@ -199,6 +199,7 @@
     <ClInclude Include="Interface\IBoomerangState.h" />
     <ClInclude Include="Libraries\Microsoft\DebugDraw.h" />
     <ClInclude Include="Libraries\MyLib\BinaryFile.h" />
+    <ClInclude Include="Libraries\MyLib\Bounding.h" />
     <ClInclude Include="Libraries\MyLib\CSV.h" />
     <ClInclude Include="Libraries\MyLib\DebugCamera.h" />
     <ClInclude Include="Libraries\MyLib\DebugString.h" />
@@ -228,6 +229,7 @@
     <ClCompile Include="Game\Scene\TitleScene.cpp" />
     <ClCompile Include="Libraries\Microsoft\DebugDraw.cpp" />
     <ClCompile Include="Libraries\MyLib\BinaryFile.cpp" />
+    <ClCompile Include="Libraries\MyLib\Bounding.cpp" />
     <ClCompile Include="Libraries\MyLib\CSV.cpp" />
     <ClCompile Include="Libraries\MyLib\DebugCamera.cpp" />
     <ClCompile Include="Libraries\MyLib\DebugString.cpp" />

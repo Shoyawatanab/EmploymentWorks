@@ -9,6 +9,7 @@
 
 // 前方宣言
 class CommonResources;
+class Bounding;
 
 namespace mylib
 {
@@ -26,6 +27,9 @@ public:
 	DirectX::SimpleMath::Quaternion GetRotate() { return m_rotate; }
 	Boomerang* GetBoomerang() { return m_boomerang.get(); }
 
+	Bounding* GetBounding() { return m_bounding.get(); }
+
+
 private:
 	// 共通リソース
 	CommonResources* m_commonResources;
@@ -40,6 +44,7 @@ private:
 	std::unique_ptr<Boomerang> m_boomerang;
 
 	Enemy* m_enemy;
+	std::unique_ptr<Bounding> m_bounding;
 
 
 public:

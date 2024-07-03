@@ -14,6 +14,7 @@ C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\SceneMana
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\TitleScene.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\TitleScene.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\Microsoft\DebugDraw.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\DebugDraw.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\BinaryFile.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\BinaryFile.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\Bounding.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Bounding.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\CSV.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\CSV.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\DebugCamera.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\DebugCamera.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\DebugString.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\DebugString.obj

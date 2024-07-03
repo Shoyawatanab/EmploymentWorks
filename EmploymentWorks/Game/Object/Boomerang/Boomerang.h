@@ -13,6 +13,8 @@
 // 前方宣言
 class CommonResources;
 class Player;
+class Bounding;
+
 
 namespace mylib
 {
@@ -34,7 +36,6 @@ public:
 
 	float GetScale() { return m_scale; }
 
-	DirectX::BoundingSphere& GetBoundingSphere() { return m_boundingSphere; }
 	Player* GetPlayer() { return m_player; }
 
 	IBoomerangState* GetBoomerangState() { return m_currentState; }
@@ -48,9 +49,11 @@ private:
 	CommonResources* m_commonResources;
 
 	Player* m_player;
+
+	std::unique_ptr<Bounding> m_bounding;
+
 	// モデル
 	std::unique_ptr<DirectX::Model> m_model;
-	DirectX::BoundingSphere m_boundingSphere;
 	std::unique_ptr<DirectX::PrimitiveBatch<DirectX::VertexPositionColor>> m_primitiveBatch;
 
 	//パラメーター
@@ -79,7 +82,6 @@ public:
 
 	void ChangeState(IBoomerangState* nextState);
 
-	DirectX::BoundingSphere CreateBoundingSphere(const float& radius);
 
 
 };
