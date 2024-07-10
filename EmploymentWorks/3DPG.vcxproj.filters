@@ -56,6 +56,12 @@
     <Filter Include="Resources\Shaders\LockOn">
       <UniqueIdentifier>{d2ebf4f7-981b-4af7-909f-032c06df633f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Object\StageObject">
+      <UniqueIdentifier>{3a72f566-b6fb-47ff-a192-2276d00be7fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\DetectionCollision">
+      <UniqueIdentifier>{87b40e6a-dc7d-4a5f-b775-b559b49e10f0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -132,9 +138,6 @@
     <ClInclude Include="Game\Object\Boomerang\State\BoomerangGetReady.h">
       <Filter>Game\Object\Boomerang\State</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Object\Floor.h">
-      <Filter>Game\Object</Filter>
-    </ClInclude>
     <ClInclude Include="Game\LockOn.h">
       <Filter>Game</Filter>
     </ClInclude>
@@ -146,6 +149,24 @@
     </ClInclude>
     <ClInclude Include="Libraries\MyLib\Bounding.h">
       <Filter>Libraries\MyLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\ICollisionObject.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Floor.h">
+      <Filter>Game\Object\StageObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\IMoveCollisionObject.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\INotMoveCollisionObject.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\DetectionCollision\CollisionManager.h">
+      <Filter>Game\DetectionCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Wall.h">
+      <Filter>Game\Object\StageObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -209,9 +230,6 @@
     <ClCompile Include="Game\Object\Boomerang\State\BoomerangGetReady.cpp">
       <Filter>Game\Object\Boomerang\State</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Object\Floor.cpp">
-      <Filter>Game\Object</Filter>
-    </ClCompile>
     <ClCompile Include="Game\LockOn.cpp">
       <Filter>Game</Filter>
     </ClCompile>
@@ -223,6 +241,15 @@
     </ClCompile>
     <ClCompile Include="Libraries\MyLib\Bounding.cpp">
       <Filter>Libraries\MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Floor.cpp">
+      <Filter>Game\Object\StageObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\DetectionCollision\CollisionManager.cpp">
+      <Filter>Game\DetectionCollision</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Wall.cpp">
+      <Filter>Game\Object\StageObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

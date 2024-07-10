@@ -11,6 +11,8 @@ class Player;
 class Enemy;
 class Floor;
 class LockOn;
+class CollisionManager;
+class Wall;
 
 
 namespace mylib
@@ -48,6 +50,10 @@ private:
 	std::unique_ptr<Floor> m_floor;
 	std::unique_ptr<LockOn> m_lockOn;
 
+
+	std::vector<std::unique_ptr<Wall>> m_wall;
+
+	std::unique_ptr<CollisionManager> m_collisionManager;
 
 public:
 	PlayScene();

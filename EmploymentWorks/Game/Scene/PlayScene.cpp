@@ -17,8 +17,13 @@
 #include "Game/Object/Enemy.h"
 #include "Game/Object/Floor.h"
 #include "Game/LockOn.h"
+#include "Game/DetectionCollision/CollisionManager.h"
+#include "Game/Object/Wall.h"
 
 #include <cassert>
+
+const int WALLSIZE = 4;
+const float WALLHEITH = 2;
 
 
 //---------------------------------------------------------
@@ -85,16 +90,42 @@ void PlayScene::Initialize(CommonResources* resources)
 	m_player = std::make_unique<Player>(m_enemy.get());
 	m_tpsCamera = std::make_unique<mylib::TPS_Camera>(m_player.get());
 
-	m_floor->Initialize(m_commonResources, Vector3::Zero);
-	m_player->Initialize(m_commonResources, Vector3(0, 0.75f, 0));
-	m_enemy->Initialize(m_commonResources, Vector3(0, 0.75f, -10));
+	for (int i = 0; i < WALLSIZE; i++)
+	{
+		m_wall.push_back(std::make_unique<Wall>());
+	}
+
+
+	m_floor->Initialize(m_commonResources, Vector3::Zero, Vector3(15, 1, 15), 8.0f);
+	m_player->Initialize(m_commonResources, Vector3(0, 2.75f, 0));
+	m_enemy->Initialize(m_commonResources, Vector3(0, 2.75f, -10));
+	//Wallクラスは当たり判定を持っているだけモデルの描画はない
+	m_wall[0]->Initialize(m_commonResources,
+		Vector3(16, WALLHEITH, 0), Vector3(0.8f, 2, 15), 8.6f);
+	m_wall[1]->Initialize(m_commonResources,
+		Vector3(-16, WALLHEITH, 0), Vector3(0.8f, 2, 15), 8.6f);
+	m_wall[2]->Initialize(m_commonResources,
+		Vector3(0, WALLHEITH, 16), Vector3(15, 2, 0.8f), 8.6f);
+	m_wall[3]->Initialize(m_commonResources,
+		Vector3(0, WALLHEITH, -16), Vector3(15, 2, 0.8f), 8.6f);
 
 
 	m_lockOn = std::make_unique<LockOn>(m_player.get(), m_enemy.get(), m_tpsCamera.get());
 	m_lockOn->Initialize(m_commonResources->GetDeviceResources(),
 		m_commonResources->GetDeviceResources()->GetOutputSize().right,
 		m_commonResources->GetDeviceResources()->GetOutputSize().bottom);
+	m_collisionManager = std::make_unique<CollisionManager>();
 
+
+	///当たり判定をManagerに追加
+	m_player->RegistrationCollionManager(m_collisionManager.get());
+	m_enemy->RegistrationCollionManager(m_collisionManager.get());
+	m_floor->RegistrationCollionManager(m_collisionManager.get());
+
+	for (auto& wall : m_wall)
+	{
+		wall->RegistrationCollionManager(m_collisionManager.get());
+	}
 
 	// シーン変更フラグを初期化する
 	m_isChangeScene = false;
@@ -114,6 +145,7 @@ void PlayScene::Update(float elapsedTime)
 
 	m_player->Update(elapsedTime,m_tpsCamera->GetRotationX());
 	m_enemy->Update(elapsedTime);
+	m_collisionManager->Update();
 
 
 	m_lockOn->Update(elapsedTime);
@@ -147,6 +179,13 @@ void PlayScene::Render()
 	// 格子床を描画する
 	m_gridFloor->Render(context, view, m_projection);
 	m_floor->Render(view, m_projection);
+
+	for (auto& wall : m_wall)
+	{
+		wall->Render(view, m_projection);
+	}
+
+
 
 	m_player->Render(view, m_projection);
 	m_enemy->Render(view, m_projection);

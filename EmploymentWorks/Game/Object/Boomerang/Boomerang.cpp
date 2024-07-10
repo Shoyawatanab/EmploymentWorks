@@ -16,6 +16,7 @@
 #include "Libraries/Microsoft/DebugDraw.h"
 #include "Game/Object/Player.h"
 #include "Libraries/MyLib/Bounding.h"
+#include "Game/DetectionCollision/CollisionManager.h"
 
 const float SCALE = 0.5f; //オブジェクトの大きさ
 
@@ -85,8 +86,8 @@ void Boomerang::Initialize(CommonResources* resources)
 	//m_rotate = m_player->GetRotate();
 
 	m_bounding = std::make_unique<Bounding>();
-	//m_bounding->CreateBoundingBox(m_commonResources, m_position,Vector3(0.5f,0.8f,0.5f));
-	m_bounding->CreateBoundingSphere(m_commonResources, m_position, 0.5f);
+	m_bounding->CreateBoundingBox(m_commonResources, m_position, Vector3(0.3f, 0.5f, 0.3f));
+	m_bounding->CreateBoundingSphere(m_commonResources, m_position, 0.7f);
 
 
 }
@@ -123,6 +124,7 @@ void Boomerang::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 	// モデルを描画する
 	m_model->Draw(context, *states, m_currentState->GetMatrix(), view, projection);
 	m_bounding->DrawBoundingSphere(m_position, view, projection);
+	m_bounding->DrawBoundingBox(m_position, view, projection);
 
 	
 
@@ -162,4 +164,7 @@ DirectX::SimpleMath::Vector3 Lerp(const DirectX::SimpleMath::Vector3& start, con
 {
 	return (1.0f - t) * start + t * end;
 }
-
+void Boomerang::RegistrationCollionManager(CollisionManager* collsionManager)
+{
+	collsionManager->AddCollsion(this);
+}
