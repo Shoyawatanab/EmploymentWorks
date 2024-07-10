@@ -13,6 +13,10 @@
 #include "Libraries/MyLib/MemoryLeakDetector.h"
 #include <cassert>
 
+
+#include "Game/DetectionCollision/CollisionManager.h"
+#include "Libraries/MyLib/Bounding.h"
+
 //---------------------------------------------------------
 // コンストラクタ
 //---------------------------------------------------------
@@ -34,7 +38,7 @@ Floor::~Floor()
 //---------------------------------------------------------
 // 初期化する
 //---------------------------------------------------------
-void Floor::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 position)
+void Floor::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Vector3 Extens, float Scale)
 {
 	using namespace DirectX::SimpleMath;
 	assert(resources);
@@ -49,6 +53,9 @@ void Floor::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 
 	// モデルを読み込む
 	m_model = DirectX::Model::CreateFromCMO(device, L"Resources/Models/Floor.cmo", *fx);
 
+	m_bounding = std::make_unique<Bounding>();
+	m_bounding->CreateBoundingBox(m_commonResources, m_position, Extens);
+	m_bounding->CreateBoundingSphere(m_commonResources, m_position, 20.0f);
 
 }
 
@@ -77,11 +84,12 @@ void Floor::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 
 
 	// ワールド行列を更新する
-	Matrix world = Matrix::CreateScale(4.0f);
-
+	Matrix world = Matrix::CreateScale(m_scale);
+	world *= Matrix::CreateTranslation(m_position);
 	// モデルを描画する
-	m_model->Draw(context, *states, world, view, projection);
-
+	//m_model->Draw(context, *states, world, view, projection);
+	//m_bounding->DrawBoundingSphere(POS, view, projection);
+	m_bounding->DrawBoundingBox(m_position, view, projection);
 
 
 
@@ -94,5 +102,13 @@ void Floor::Finalize()
 {
 	// do nothing.
 }
+
+
+
+void Floor::RegistrationCollionManager(CollisionManager* collsionManager)
+{
+	collsionManager->AddCollsion(this);
+}
+
 
 

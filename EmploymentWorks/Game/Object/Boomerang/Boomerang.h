@@ -9,6 +9,7 @@
 #include "Game/Object/Boomerang/State/BoomerangIdling.h"
 #include "Game/Object/Boomerang/State/BoomerangThrow.h"
 #include "Game/Object/Boomerang/State/BoomerangGetReady.h"
+#include "Interface/ICollisionObject.h"
 
 // ëOï˚êÈåæ
 class CommonResources;
@@ -23,7 +24,7 @@ namespace mylib
 }
 
 
-class Boomerang final 
+class Boomerang : public ICollisionObject
 {
 public:
 
@@ -82,6 +83,15 @@ public:
 
 	void ChangeState(IBoomerangState* nextState);
 
+	void RegistrationCollionManager(CollisionManager* collsionManager) override;
+
+	Bounding* GetBounding() const override { return m_bounding.get(); };
+
+	CollsionObjectTag GetCollsionTag() const override { return CollsionObjectTag::Boomerang; }
+
+	void SetPos(DirectX::SimpleMath::Vector3& Pos) override { m_position = Pos; }
+
+	DirectX::SimpleMath::Vector3 GetPos() override { return m_position; }
 
 
 };

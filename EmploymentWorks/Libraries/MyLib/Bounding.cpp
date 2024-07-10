@@ -15,13 +15,20 @@
 Bounding::Bounding()
 	:
 	m_boundingBox{}
-	,m_boundingSphere{}
-	,m_commonResources{}
-	,m_batch{}
+	, m_boundingSphere{}
+	, m_commonResources{}
+	, m_batch{}
+	, m_isBoxHit{ false }
+	, m_isSphereHit{ false }
 {
 
 }
 
+void Bounding::Render(const DirectX::SimpleMath::Vector3 CenterPos, DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
+{
+
+
+}
 
 void Bounding::CreateBoundingBox(CommonResources* resources, DirectX::SimpleMath::Vector3 CenterPos, DirectX::SimpleMath::Vector3 Extents)
 {
@@ -31,25 +38,24 @@ void Bounding::CreateBoundingBox(CommonResources* resources, DirectX::SimpleMath
 
 	m_commonResources = resources;
 	m_boundingBox.Center = CenterPos;
-	 m_boundingBox.Extents = Extents;
+	m_boundingBox.Extents = Extents;
 
-	 auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
-	 auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
+	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
+	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
 
-	 // プリミティブバッチ、ベーシックエフェクトを準備する
-	 m_batch = std::make_unique<PrimitiveBatch<VertexPositionColor>>(context);
-	 m_effect = std::make_unique<BasicEffect>(device);
-	 m_effect->SetVertexColorEnabled(true);
+	// プリミティブバッチ、ベーシックエフェクトを準備する
+	m_batch = std::make_unique<PrimitiveBatch<VertexPositionColor>>(context);
+	m_effect = std::make_unique<BasicEffect>(device);
+	m_effect->SetVertexColorEnabled(true);
 
-	 //// 入力レイアウトを作成する
-	 DX::ThrowIfFailed(
-		 CreateInputLayoutFromEffect<VertexPositionColor>(
-			 device,
-			 m_effect.get(),
-			 m_layout.ReleaseAndGetAddressOf()
-		 )
-	 );
-
+	//// 入力レイアウトを作成する
+	DX::ThrowIfFailed(
+		CreateInputLayoutFromEffect<VertexPositionColor>(
+			device,
+			m_effect.get(),
+			m_layout.ReleaseAndGetAddressOf()
+		)
+	);
 }
 
 
@@ -94,13 +100,19 @@ void Bounding::DrawBoundingBox(const DirectX::SimpleMath::Vector3 CenterPos, Dir
 	context->RSSetState(states->CullCounterClockwise());							// ポリゴンの両面を描画する
 	context->IASetInputLayout(m_layout.Get());							// 入力レイアウトを設定する
 
+	DirectX::XMVECTOR color = DirectX::Colors::Green;
+
+	if (m_isBoxHit)
+	{
+		color = DirectX::Colors::Red;
+	}
 
 #ifdef _DEBUG
 	// プリミティブ描画を開始する
 	m_batch->Begin();
 
 	// 境界ボックスを描画する
-	DX::Draw(m_batch.get(), m_boundingBox,DirectX::Colors::Red);
+	DX::Draw(m_batch.get(), m_boundingBox, color);
 	// プリミティブ描画を終了する
 	m_batch->End();
 
@@ -108,7 +120,7 @@ void Bounding::DrawBoundingBox(const DirectX::SimpleMath::Vector3 CenterPos, Dir
 
 }
 
-void Bounding::DrawBoundingSphere(const DirectX::SimpleMath::Vector3 CenterPos,DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
+void Bounding::DrawBoundingSphere(const DirectX::SimpleMath::Vector3 CenterPos, DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 {
 	m_boundingSphere.Center = CenterPos;
 	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
@@ -122,13 +134,19 @@ void Bounding::DrawBoundingSphere(const DirectX::SimpleMath::Vector3 CenterPos,D
 	context->RSSetState(states->CullNone());							// ポリゴンの両面を描画する
 	context->IASetInputLayout(m_layout.Get());							// 入力レイアウトを設定する
 
+	DirectX::XMVECTOR color = DirectX::Colors::Yellow;
+
+	if (m_isSphereHit)
+	{
+		color = DirectX::Colors::Red;
+	}
 
 #ifdef _DEBUG
 	// プリミティブ描画を開始する
 	m_batch->Begin();
 
 	// 境界ボックスを描画する
-	DX::Draw(m_batch.get(), m_boundingSphere, DirectX::Colors::White);
+	DX::Draw(m_batch.get(), m_boundingSphere, color);
 	// プリミティブ描画を終了する
 	m_batch->End();
 

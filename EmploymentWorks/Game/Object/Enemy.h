@@ -17,14 +17,13 @@ namespace mylib
 }
 
 
-class Enemy final 
+class Enemy : public ICollisionObject
 
 {
 public:
 	DirectX::SimpleMath::Vector3 GetPosition() { return m_position; }
 	DirectX::SimpleMath::Quaternion GetRotate() { return m_rotate; }
 
-	Bounding* GetBounding() { return m_bounding.get(); }
 
 
 private:
@@ -48,5 +47,14 @@ public:
 	void Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection) ;
 	void Finalize() ;
 
+	void RegistrationCollionManager(CollisionManager* collsionManager) override;
+
+	Bounding* GetBounding() const override { return m_bounding.get(); };
+
+	CollsionObjectTag GetCollsionTag() const override { return CollsionObjectTag::Enemy; }
+
+	void SetPos(DirectX::SimpleMath::Vector3& Pos) override { m_position = Pos; }
+
+	DirectX::SimpleMath::Vector3 GetPos()override { return m_position; }
 
 };

@@ -15,6 +15,8 @@
 
 #include "Game/Object/Enemy.h"
 #include "Libraries/MyLib/Bounding.h"
+#include "Game/DetectionCollision/CollisionManager.h"
+
 
 const float MOVE_SPEED = 5.0f;                                        //動く時のスピード
 const DirectX::SimpleMath::Vector3 INITIAL_DIRECTION( 0.0f,0.0f,-1.0f); //初期の向いている方向
@@ -70,8 +72,8 @@ void Player::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3
 	m_boomerang->Initialize(m_commonResources);
 
 	m_bounding = std::make_unique<Bounding>();
-	//m_bounding->CreateBoundingBox(m_commonResources, m_position,Vector3(0.5f,0.8f,0.5f));
-	m_bounding->CreateBoundingSphere(m_commonResources, m_position, 0.8f);
+	m_bounding->CreateBoundingBox(m_commonResources, m_position, Vector3(0.4f, 0.8f, 0.4f));
+	m_bounding->CreateBoundingSphere(m_commonResources, m_position, 1.0f);
 
 }
 
@@ -139,6 +141,7 @@ void Player::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 
 	// モデルを描画する
 	m_model->Draw(context, *states, world, view, projection);
+	m_bounding->DrawBoundingBox(m_position, view, projection);
 	m_bounding->DrawBoundingSphere(m_position, view, projection);
 
 	m_boomerang->Render(view, projection);
@@ -232,4 +235,11 @@ void Player::Rotate(float elapsedTime, DirectX::SimpleMath::Vector3 moveDirectio
 	m_direction = Vector3::Transform(INITIAL_DIRECTION, rotation);
 	
 	m_direction.Normalize();
+}
+
+
+void Player::RegistrationCollionManager(CollisionManager* collsionManager)
+{
+	collsionManager->AddCollsion(this);
+	m_boomerang->RegistrationCollionManager(collsionManager);
 }

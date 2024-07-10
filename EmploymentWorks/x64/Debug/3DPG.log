@@ -1,2 +1,6 @@
-﻿  BoomerangIdling.cpp
+﻿  PlayScene.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Floor.h(53,44): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Wall.h(49,44): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\PlayScene.cpp(155,14): warning C4189: 'kbTracker': ローカル変数が初期化されましたが、参照されていません
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\PlayScene.cpp(172,7): warning C4189: 'states': ローカル変数が初期化されましたが、参照されていません
   3DPG.vcxproj -> C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\3DPG.exe
