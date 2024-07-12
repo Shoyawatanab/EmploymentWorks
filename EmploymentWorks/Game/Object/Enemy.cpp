@@ -66,6 +66,7 @@ void Enemy::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 
 	m_bounding->CreateBoundingBox(m_commonResources, m_position, Vector3(0.5f, 0.9f, 0.5f));
 	m_bounding->CreateBoundingSphere(m_commonResources, m_position, 1.0f);
 
+	m_hp = 2;
 }
 
 //---------------------------------------------------------
@@ -78,6 +79,15 @@ void Enemy::Update(float elapsedTime)
 	// キーボードステートを取得する
 	DirectX::Keyboard::State keyboardState = DirectX::Keyboard::Get().GetState();
 
+	if (m_isCollsionTime)
+	{
+		m_collisionTime += elapsedTime;
+		if (m_collisionTime >= 2)
+		{
+			m_isCollsionTime = false;
+			m_collisionTime = 0;
+		}
+	}
 
 }
 
@@ -122,3 +132,15 @@ void Enemy::RegistrationCollionManager(CollisionManager* collsionManager)
 	collsionManager->AddCollsion(this);
 }
 
+void Enemy::OnCollision()
+{
+	//ブーメランと当たっときに毎フレームHpがへらないようにする
+	if (m_isCollsionTime)
+	{
+		return;
+	}
+
+	m_hp--;
+
+	m_isCollsionTime = true;
+}

@@ -29,10 +29,10 @@ private:
 	std::unique_ptr<DirectX::SpriteFont> m_spriteFont;
 
 	// テクスチャ
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_texture;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_texture[2];
 
 	// テクスチャの半分の大きさ
-	DirectX::SimpleMath::Vector2 m_texCenter;
+	DirectX::SimpleMath::Vector2 m_texCenter[2];
 
 	// シーンチェンジフラグ
 	bool m_isChangeScene;
@@ -48,4 +48,7 @@ public:
     void Finalize() override;
 
     SceneID GetNextSceneID() const;
+
+
+	void CreateTex(const wchar_t* szFileName, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>&tex, DirectX::SimpleMath::Vector2& texCenter);
 };

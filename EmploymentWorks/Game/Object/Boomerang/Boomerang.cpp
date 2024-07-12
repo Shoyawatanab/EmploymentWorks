@@ -156,6 +156,11 @@ void Boomerang::ChangeState(IBoomerangState* nextState)
 }
 
 
+void Boomerang::OnCollision()
+{
+
+}
+
 
 
 

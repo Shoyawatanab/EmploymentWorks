@@ -17,8 +17,14 @@ BoomerangThrow::BoomerangThrow(Boomerang* boomerang, Player* player, Enemy* enem
 	m_boundingSphereLeftLeg{},
 	m_boomerang{ boomerang },
 	m_player{ player }
-	, m_enemy{ enemy }
-
+	, m_enemy{ enemy },
+	m_index{},
+	m_moveSpeed{},
+	m_rotateY{},
+	m_rotationalMotion{},
+	m_transformRatio{},
+	m_startIndex{},
+	m_totalTime{}
 {
 }
 
@@ -116,6 +122,16 @@ void BoomerangThrow::Enter()
 	//距離をflaotに変換して半分にする
 	float PlayerToEnemyLenght = PlayerToEnemyDistance.Length() / 2;
 
+	//ロックオン状態じゃなければ
+	if (!m_player->GetIsLockOn())
+	{
+		//距離を自分で決めたものにする
+		PlayerToEnemyLenght = 1;
+
+	}
+
+
+
 	//回転の地点を回転させる
 	for (int i = 0; i < m_spherePos.size(); i++)
 	{
@@ -134,6 +150,9 @@ void BoomerangThrow::Enter()
 
 		//プレイヤの回転をもとに回転させる
 		m_moveSpherePos[i] = Vector3::Transform(Pos, SphereMatrix);
+		//原点からになっているからブーメランの位置を加算する
+		m_moveSpherePos[i] += m_position;
+
 	}
 }
 
@@ -167,7 +186,7 @@ void BoomerangThrow::SplineCurve(const float& elapsedTime)
 			m_transformRatio
 		);
 
-	m_boomerang->SetPosition(Pos + m_position);
+	m_boomerang->SetPosition(Pos);
 	m_direction = Pos - m_previousFrameDirection;
 
 	if (m_transformRatio > 1.0f)

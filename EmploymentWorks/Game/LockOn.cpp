@@ -17,6 +17,8 @@
 #include "Libraries/MyLib/TPS_Camera.h"
 
 const float LOCKONDISTANCE = 10.0f;
+//視野角
+const float VIEWANGLE = 90;
 
 //---------------------------------------------------------
 // コンストラクタ
@@ -76,8 +78,17 @@ void LockOn::Update(float elapsedTime)
 
 	UNREFERENCED_PARAMETER(elapsedTime);
 
+	//ロックオンのリセット
+	m_isLockOn = false;
+
+	//視野角外なら
+	if (!IsEnemyInview(m_player->GetPos(), m_player->GetPlayerForWard(), m_enemy->GetPos()))
+	{
+		return;
+	}
 
 
+	//ブーメランを構えていないなら
 
 	if (m_player->GetBoomerang()->GetBoomerangState() != m_player->GetBoomerang()->GetBoomerangGetReady())
 	{
@@ -91,26 +102,30 @@ void LockOn::Update(float elapsedTime)
 
 	Vector3 Distance = PlayerPos - EnemyPos;
 
-
+	//距離外なら
 	if (Distance.Length() >= LOCKONDISTANCE)
 	{
 		m_isLockOn = false;
 		return;
 	}
+	else // 距離内なら
+	{
+		m_isLockOn = true;
 
-	m_isLockOn = true;
 
-
-	Vector2 ScreenPos = WorldToScreen(m_enemy->GetPosition(),
-		Matrix::Identity,
-		m_tpsCamera->GetViewMatrix(),
-		m_tpsCamera->GetProjectionMatrix(),
-		m_windowWidth,
-		m_windowHeight
+		Vector2 ScreenPos = WorldToScreen(m_enemy->GetPosition(),
+			Matrix::Identity,
+			m_tpsCamera->GetViewMatrix(),
+			m_tpsCamera->GetProjectionMatrix(),
+			m_windowWidth,
+			m_windowHeight
 		);
 
-	m_userInterface[0]->SetPosition(ScreenPos);
+		m_userInterface[0]->SetPosition(ScreenPos);
 
+	}
+
+	m_player->SetisLockOn(m_isLockOn);
 }
 
 //---------------------------------------------------------
@@ -182,6 +197,34 @@ DirectX::SimpleMath::Vector2 LockOn::WorldToScreen(const DirectX::SimpleMath::Ve
 	float y = (0.5f - projectedPos.y / projectedPos.z * 0.5f) * screenHeight;
 
 	return Vector2(x, y);
+
+}
+
+
+
+/// <summary>
+///  敵がプレイヤの視界に入っているかどうか
+/// </summary>
+/// <param name="playerPos">プレイヤ座標</param>
+/// <param name="playerForward">プレイヤの向いている方向</param>
+/// <param name="enemyPos">敵座標</param>
+/// <returns></returns>
+bool LockOn::IsEnemyInview(const DirectX::SimpleMath::Vector3& playerPos, const DirectX::SimpleMath::Vector3& playerForward, const DirectX::SimpleMath::Vector3& enemyPos)
+{
+	using namespace DirectX;
+	using namespace DirectX::SimpleMath;
+	//角度をラジアンに変換
+	float radianViewAngle = XMConvertToRadians(VIEWANGLE);
+	float cosViewAngle = cos(radianViewAngle / 2);
+
+	//敵へのベクトルの計算
+	Vector3 enemyVector = enemyPos - playerPos;
+	enemyVector.Normalize();
+
+	//ドット積の計算
+	float dotProduct = enemyVector.Dot(playerForward);
+
+	return dotProduct >= cosViewAngle;
 
 }
 

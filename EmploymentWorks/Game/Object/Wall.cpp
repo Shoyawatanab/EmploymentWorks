@@ -105,3 +105,10 @@ void Wall::RegistrationCollionManager(CollisionManager* collsionManager)
 	collsionManager->AddCollsion(this);
 }
 
+
+
+void Wall::OnCollision()
+{
+
+}
+
