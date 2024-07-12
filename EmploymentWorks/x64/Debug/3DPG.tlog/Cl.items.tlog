@@ -12,6 +12,7 @@ C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Floor.cp
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Player.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Wall.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Wall.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\PlayScene.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\PlayScene.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\ResultScene.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\ResultScene.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\SceneManager.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\SceneManager.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\TitleScene.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\TitleScene.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\Microsoft\DebugDraw.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\DebugDraw.obj

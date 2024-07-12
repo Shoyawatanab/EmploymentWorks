@@ -50,8 +50,6 @@ private:
 	DirectX::SimpleMath::Vector3 m_direction;
 	DirectX::SimpleMath::Vector3 m_previousFrameDirection;
 
-	// デバイスコンテキスト
-	ID3D11DeviceContext* m_context;
 	// ワールドマトリックス
 	DirectX::SimpleMath::Matrix m_worldMatrix;
 	// バウンディングスフィア

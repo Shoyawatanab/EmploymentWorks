@@ -96,18 +96,18 @@ void PlayScene::Initialize(CommonResources* resources)
 	}
 
 
-	m_floor->Initialize(m_commonResources, Vector3::Zero, Vector3(15, 1, 15), 8.0f);
+	m_floor->Initialize(m_commonResources, Vector3::Zero, Vector3(15, 0.6f, 15), 8.0f);
 	m_player->Initialize(m_commonResources, Vector3(0, 2.75f, 0));
-	m_enemy->Initialize(m_commonResources, Vector3(0, 2.75f, -10));
+	m_enemy->Initialize(m_commonResources, Vector3(0, 0.75f, -10));
 	//Wallクラスは当たり判定を持っているだけモデルの描画はない
 	m_wall[0]->Initialize(m_commonResources,
-		Vector3(16, WALLHEITH, 0), Vector3(0.8f, 2, 15), 8.6f);
+		Vector3(16, WALLHEITH, 0), Vector3(1.5f, 2, 15), 8.6f);
 	m_wall[1]->Initialize(m_commonResources,
-		Vector3(-16, WALLHEITH, 0), Vector3(0.8f, 2, 15), 8.6f);
+		Vector3(-16, WALLHEITH, 0), Vector3(1.5f, 2, 15), 8.6f);
 	m_wall[2]->Initialize(m_commonResources,
-		Vector3(0, WALLHEITH, 16), Vector3(15, 2, 0.8f), 8.6f);
+		Vector3(0, WALLHEITH, 16), Vector3(15, 2, 1.5f), 8.6f);
 	m_wall[3]->Initialize(m_commonResources,
-		Vector3(0, WALLHEITH, -16), Vector3(15, 2, 0.8f), 8.6f);
+		Vector3(0, WALLHEITH, -16), Vector3(15, 2, 1.5f), 8.6f);
 
 
 	m_lockOn = std::make_unique<LockOn>(m_player.get(), m_enemy.get(), m_tpsCamera.get());
@@ -217,6 +217,10 @@ IScene::SceneID PlayScene::GetNextSceneID() const
 	if (m_isChangeScene)
 	{
 		return IScene::SceneID::TITLE;
+	}
+	if (m_enemy->GetHp() <= 0)
+	{
+		return IScene::SceneID::RESULT;
 	}
 
 	// シーン変更がない場合

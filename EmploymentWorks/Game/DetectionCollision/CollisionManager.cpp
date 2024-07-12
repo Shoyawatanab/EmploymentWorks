@@ -24,7 +24,9 @@
 CollisionManager::CollisionManager()
 	:
 	m_commonResources{},
-	m_collsionObjects{}
+	m_collsionObjects{},
+	m_player{},
+	m_enemy{}
 {
 }
 
@@ -76,10 +78,15 @@ void CollisionManager::Update()
 			{
 				continue;
 			}
+			if (tag1 != CollsionObjectTag::NotMoveObject || tag2 != CollsionObjectTag::NotMoveObject)
+			{
+
+			}
 
 			//スフィアの色の変更
 			bounding1->SetIsSphereHit(true);
 			bounding2->SetIsSphereHit(true);
+
 
 
 			//バウンディングボックスの取得
@@ -96,6 +103,18 @@ void CollisionManager::Update()
 			bounding1->SetIsBoxHit(true);
 			bounding2->SetIsBoxHit(true);
 
+
+			if (tag1 == CollsionObjectTag::Boomerang && tag2 == CollsionObjectTag::Enemy ||
+				tag2 == CollsionObjectTag::Boomerang && tag1 == CollsionObjectTag::Enemy)
+			{
+
+				m_collsionObjects[i]->OnCollision();
+				m_collsionObjects[j]->OnCollision();
+
+
+
+				return;
+			}
 
 
 			//ボックス同士の当たり判定

@@ -166,6 +166,9 @@ void mylib::TPS_Camera::CalculateEyePosition()
 	forward.y = CAMERA_HIGHT;
 	forward.z = CAMERA_DISTANCE;
 
+	m_player->SetCameraRotate(m_rotationX);
+
+
 	// ターゲットの向いている方向に追従する
 	forward = DirectX::SimpleMath::Vector3::Transform(forward, Rotation);
 	// カメラ座標を計算する

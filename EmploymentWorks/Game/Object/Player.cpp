@@ -30,7 +30,9 @@ Player::Player(Enemy* enemy)
 	m_position{},
 	m_direction{INITIAL_DIRECTION},
 	m_boomerang{},
-	m_enemy{ enemy }
+	m_enemy{ enemy },
+	m_graivty{},
+	m_isLockOn{}
 
 {
 }
@@ -75,6 +77,9 @@ void Player::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3
 	m_bounding->CreateBoundingBox(m_commonResources, m_position, Vector3(0.4f, 0.8f, 0.4f));
 	m_bounding->CreateBoundingSphere(m_commonResources, m_position, 1.0f);
 
+	m_graivty = 0.05f;
+	m_isLockOn = false;
+
 }
 
 //---------------------------------------------------------
@@ -117,6 +122,9 @@ void Player::Update(float elapsedTime, DirectX::SimpleMath::Quaternion cameraRot
 
 	Move(elapsedTime, moveDirection);
 	Attack(elapsedTime, key);
+
+	m_position.y -= m_graivty;
+
 
 	m_boomerang->Update(elapsedTime);
 
@@ -179,12 +187,6 @@ void Player::Attack(float elapsedTime, DirectX::Keyboard::State key)
 
 	Mouse::State a;
 
-	//構える
-	if (m_boomerang->GetBoomerangState() == m_boomerang->GetBoomerangIdling()
-		&& key.IsKeyDown(Keyboard::Keys::Space))
-	{
-		m_boomerang->ChangeState(m_boomerang->GetBoomerangGetReady());
-	}
 
 	//投げる
 	if (m_boomerang->GetBoomerangState() == m_boomerang->GetBoomerangGetReady()
@@ -192,6 +194,14 @@ void Player::Attack(float elapsedTime, DirectX::Keyboard::State key)
 	{
 		m_boomerang->ChangeState(m_boomerang->GetBoomerangThrow());
 	}
+	//構える
+	if (m_boomerang->GetBoomerangState() == m_boomerang->GetBoomerangIdling()
+		&& key.IsKeyDown(Keyboard::Keys::Space))
+	{
+		m_boomerang->ChangeState(m_boomerang->GetBoomerangGetReady());
+	}
+
+
 
 	//if (m_boomerang->GetBoomerangState() == m_boomerang->GetBoomerangGetReady()
 	//	&& key.IsKeyUp(Keyboard::Keys::Space))
@@ -205,36 +215,43 @@ void Player::Rotate(float elapsedTime, DirectX::SimpleMath::Vector3 moveDirectio
 
 	using namespace DirectX::SimpleMath;
 
-	if (moveDirection == Vector3::Zero)
+	if (m_boomerang->GetBoomerangState() == m_boomerang->GetBoomerangGetReady())
 	{
-		return;
+		//カメラの向いている方向にプレイヤの正面を合わせる
+
+		m_rotate = m_cameraRatate;
+
 	}
-
-	moveDirection.Normalize();
-	//現在の向きと動く方向から軸を作る
-	Vector3 axis = moveDirection.Cross(m_direction);
-
-
-	if (axis == Vector3::Zero)
+	else
 	{
-		axis = Vector3::UnitY;
+		if (moveDirection == Vector3::Zero)
+		{
+			return;
+		}
+		moveDirection.Normalize();
+		//現在の向きと動く方向から軸を作る
+		Vector3 axis = moveDirection.Cross(m_direction);
+
+		if (axis == Vector3::Zero)
+		{
+			axis = Vector3::UnitY;
+		}
+
+		//
+		axis *= -1;
+
+		float  angle = Vector3::Distance(moveDirection, m_direction);
+		angle *= elapsedTime * 10.0f;
+		Quaternion rotation = m_rotate;
+		rotation *= Quaternion::CreateFromAxisAngle(axis, angle);
+
+		m_rotate = rotation;
+
+
+		m_direction = Vector3::Transform(INITIAL_DIRECTION, rotation);
+
+		m_direction.Normalize();
 	}
-
-	//
-	axis *= -1;
-
-
-	float  angle = Vector3::Distance(moveDirection, m_direction);
-	angle *= elapsedTime * 10.0f ;
-	Quaternion rotation = m_rotate;
-	rotation *=	Quaternion::CreateFromAxisAngle(axis,angle);
-
-	m_rotate = rotation;
-
-
-	m_direction = Vector3::Transform(INITIAL_DIRECTION, rotation);
-	
-	m_direction.Normalize();
 }
 
 
@@ -242,4 +259,10 @@ void Player::RegistrationCollionManager(CollisionManager* collsionManager)
 {
 	collsionManager->AddCollsion(this);
 	m_boomerang->RegistrationCollionManager(collsionManager);
+}
+
+
+void Player::OnCollision() 
+{
+
 }

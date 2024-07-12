@@ -38,6 +38,12 @@ private:
 
 	std::unique_ptr<Bounding> m_bounding;
 
+	float m_hp;
+
+	float m_collisionTime;
+	bool m_isCollsionTime;
+
+
 public:
 	Enemy();
 	~Enemy() ;
@@ -56,5 +62,8 @@ public:
 	void SetPos(DirectX::SimpleMath::Vector3& Pos) override { m_position = Pos; }
 
 	DirectX::SimpleMath::Vector3 GetPos()override { return m_position; }
+
+	float GetHp() { return m_hp; }
+	void OnCollision() override;
 
 };

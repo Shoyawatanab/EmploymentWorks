@@ -40,6 +40,7 @@ public:
 	/// <returns>É^ÉO</returns>
 	virtual CollsionObjectTag GetCollsionTag() const = 0;
 
+	virtual void OnCollision() = 0; 
 
 	virtual void SetPos(DirectX::SimpleMath::Vector3& Pos) = 0;
 

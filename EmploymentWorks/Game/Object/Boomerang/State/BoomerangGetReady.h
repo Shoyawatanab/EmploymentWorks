@@ -31,8 +31,6 @@ private:
 
 	Player* m_player;
 
-	// デバイスコンテキスト
-	ID3D11DeviceContext* m_context;
 	// ワールドマトリックス
 	DirectX::SimpleMath::Matrix m_worldMatrix;
 	// バウンディングスフィア

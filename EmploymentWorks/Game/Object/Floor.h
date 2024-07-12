@@ -8,7 +8,6 @@
 #include "Game/Object/Boomerang/Boomerang.h"
 #include "Interface/ICollisionObject.h"
 
-
 // ëOï˚êÈåæ
 class CommonResources;
 class Bounding;
@@ -31,18 +30,18 @@ private:
 
 	std::unique_ptr<Bounding> m_bounding;
 
+
 	DirectX::SimpleMath::Vector3 m_position;
 	float m_scale;
 
-
 public:
 	Floor();
-	~Floor() ;
+	~Floor();
 
 	void Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Vector3 Extens, float Scale);
 	void Update(float elapsedTime, DirectX::SimpleMath::Quaternion cameraRotation);
-	void Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection) ;
-	void Finalize() ;
+	void Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection);
+	void Finalize();
 
 	void RegistrationCollionManager(CollisionManager* collsionManager) override;
 
@@ -53,6 +52,7 @@ public:
 	void SetPos(DirectX::SimpleMath::Vector3& Pos) override { }
 
 	DirectX::SimpleMath::Vector3 GetPos() override { return DirectX::SimpleMath::Vector3::Zero; }
+	void OnCollision() override;
 
 
 private:

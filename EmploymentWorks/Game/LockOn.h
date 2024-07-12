@@ -68,4 +68,7 @@ private:
 		const DirectX::SimpleMath::Matrix& projectionMatrix,
 		int screenWidth, int screenHeight);
 
+	bool IsEnemyInview(const DirectX::SimpleMath::Vector3& playerPos, const DirectX::SimpleMath::Vector3& playerForward, const DirectX::SimpleMath::Vector3& enemyPos);
+
+
 };

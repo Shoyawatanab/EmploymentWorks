@@ -51,6 +51,8 @@ void BoomerangGetReady::Update(const float& elapsedTime)
 
 	//マトリクス　子供の計算　親の計算の順番でやらないといけない
 	m_worldMatrix = Matrix::CreateScale(m_boomerang->GetScale());
+	m_worldMatrix *= Matrix::CreateRotationZ(XMConvertToRadians(90));  //ブーメランを立てるように９０度回転
+
 	m_worldMatrix *= Matrix::CreateTranslation(GENERATEDISTANCE);
 	m_worldMatrix *= Matrix::CreateFromQuaternion(m_boomerang->GetRotate());
 	m_worldMatrix *= Matrix::CreateTranslation(m_boomerang->GetPosition());

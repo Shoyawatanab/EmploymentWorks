@@ -29,6 +29,14 @@ public:
 	Boomerang* GetBoomerang() { return m_boomerang.get(); }
 
 
+	bool GetIsLockOn() { return m_isLockOn; }
+	void SetisLockOn(bool isLockOn) { m_isLockOn = isLockOn; }
+
+	DirectX::SimpleMath::Vector3 GetPlayerForWard() { return m_direction; }
+
+	void SetCameraRotate(DirectX::SimpleMath::Quaternion rotate) { m_cameraRatate = rotate; }
+	DirectX::SimpleMath::Quaternion m_cameraRatate;
+
 
 private:
 	// ã§í ÉäÉ\Å[ÉX
@@ -45,6 +53,11 @@ private:
 
 	Enemy* m_enemy;
 	std::unique_ptr<Bounding> m_bounding;
+
+	float m_graivty;
+
+	bool m_isLockOn;
+
 
 
 public:
@@ -67,7 +80,7 @@ public:
 
 	DirectX::SimpleMath::Vector3 GetPos() override { return m_position; }
 
-
+	void OnCollision() override;
 
 private:
 	void Move(float elapsedTime, DirectX::SimpleMath::Vector3 moveDirection);
