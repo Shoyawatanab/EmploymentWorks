@@ -13,7 +13,7 @@
 #include "Libraries/MyLib/MemoryLeakDetector.h"
 #include <cassert>
 
-#include "Game/Object/Enemy.h"
+#include "Game/Object/Enemy/Enemy.h"
 #include "Libraries/MyLib/Bounding.h"
 #include "Game/DetectionCollision/CollisionManager.h"
 
@@ -262,7 +262,7 @@ void Player::RegistrationCollionManager(CollisionManager* collsionManager)
 }
 
 
-void Player::OnCollision() 
+void Player::OnCollision(CollsionObjectTag& PartnerTag)
 {
 
 }

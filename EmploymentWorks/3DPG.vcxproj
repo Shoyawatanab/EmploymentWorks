@@ -189,7 +189,10 @@
     <ClInclude Include="Game\Object\Boomerang\State\BoomerangGetReady.h" />
     <ClInclude Include="Game\Object\Boomerang\State\BoomerangIdling.h" />
     <ClInclude Include="Game\Object\Boomerang\State\BoomerangThrow.h" />
-    <ClInclude Include="Game\Object\Enemy.h" />
+    <ClInclude Include="Game\Object\Enemy\Enemy.h" />
+    <ClInclude Include="Game\Object\Enemy\State\EnemyAttack.h" />
+    <ClInclude Include="Game\Object\Enemy\State\EnemyIdling.h" />
+    <ClInclude Include="Game\Object\Enemy\State\EnemyMove.h" />
     <ClInclude Include="Game\Object\Floor.h" />
     <ClInclude Include="Game\Object\Player.h" />
     <ClInclude Include="Game\Object\Wall.h" />
@@ -199,8 +202,10 @@
     <ClInclude Include="Game\Scene\SceneManager.h" />
     <ClInclude Include="Game\Scene\TitleScene.h" />
     <ClInclude Include="Game\Screen.h" />
+    <ClInclude Include="Game\Timer.h" />
     <ClInclude Include="Interface\IBoomerangState.h" />
     <ClInclude Include="Interface\ICollisionObject.h" />
+    <ClInclude Include="Interface\IEnemyState.h" />
     <ClInclude Include="Interface\IMoveCollisionObject.h" />
     <ClInclude Include="Interface\INotMoveCollisionObject.h" />
     <ClInclude Include="Libraries\Microsoft\DebugDraw.h" />
@@ -228,7 +233,10 @@
     <ClCompile Include="Game\Object\Boomerang\State\BoomerangGetReady.cpp" />
     <ClCompile Include="Game\Object\Boomerang\State\BoomerangIdling.cpp" />
     <ClCompile Include="Game\Object\Boomerang\State\BoomerangThrow.cpp" />
-    <ClCompile Include="Game\Object\Enemy.cpp" />
+    <ClCompile Include="Game\Object\Enemy\Enemy.cpp" />
+    <ClCompile Include="Game\Object\Enemy\State\EnemyAttack.cpp" />
+    <ClCompile Include="Game\Object\Enemy\State\EnemyIdling.cpp" />
+    <ClCompile Include="Game\Object\Enemy\State\EnemyMove.cpp" />
     <ClCompile Include="Game\Object\Floor.cpp" />
     <ClCompile Include="Game\Object\Player.cpp" />
     <ClCompile Include="Game\Object\Wall.cpp" />
@@ -236,6 +244,7 @@
     <ClCompile Include="Game\Scene\ResultScene.cpp" />
     <ClCompile Include="Game\Scene\SceneManager.cpp" />
     <ClCompile Include="Game\Scene\TitleScene.cpp" />
+    <ClCompile Include="Game\Timer.cpp" />
     <ClCompile Include="Libraries\Microsoft\DebugDraw.cpp" />
     <ClCompile Include="Libraries\MyLib\BinaryFile.cpp" />
     <ClCompile Include="Libraries\MyLib\Bounding.cpp" />

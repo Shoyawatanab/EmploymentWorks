@@ -13,7 +13,7 @@
 #include <cassert>
 
 #include "Game/Object/Player.h"
-#include "Game/Object/Enemy.h"
+#include "Game/Object/Enemy/Enemy.h"
 #include "Libraries/MyLib/TPS_Camera.h"
 
 const float LOCKONDISTANCE = 10.0f;

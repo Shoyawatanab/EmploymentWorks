@@ -41,4 +41,8 @@ void CommonResources::Initialize(
 	m_commonStates = commonStates;
 	m_debugString = debugString;
 	m_inputManager = inputManager;
+
+	m_timer = std::make_unique<Timer>();
+	m_timer->Initialize(this);
+
 }

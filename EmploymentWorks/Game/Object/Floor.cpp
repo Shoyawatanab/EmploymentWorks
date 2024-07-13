@@ -114,7 +114,7 @@ void Floor::RegistrationCollionManager(CollisionManager* collsionManager)
 }
 
 
-void Floor::OnCollision()
+void Floor::OnCollision(CollsionObjectTag& PartnerTag)
 {
 
 }

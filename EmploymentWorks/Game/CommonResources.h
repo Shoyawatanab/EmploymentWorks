@@ -3,6 +3,7 @@
 	@brief	シーンへ渡す、ゲーム内で使用する共通リソース
 */
 #pragma once
+#include "Game/Timer.h"
 
 // 前方宣言
 namespace DX
@@ -32,6 +33,7 @@ private:
 
 	mylib::InputManager* m_inputManager;
 
+	std::unique_ptr<Timer> m_timer;
 
 public:
 	CommonResources();
@@ -69,5 +71,12 @@ public:
 	mylib::InputManager* GetInputManager() const
 	{
 		return m_inputManager;
+	}
+
+
+
+	Timer* GetTimer() const
+	{
+		return m_timer.get();
 	}
 };

@@ -62,6 +62,12 @@
     <Filter Include="Game\DetectionCollision">
       <UniqueIdentifier>{87b40e6a-dc7d-4a5f-b775-b559b49e10f0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Object\Enemy">
+      <UniqueIdentifier>{53e98583-5d4e-41e2-bcf8-dd25c2138cd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\Enemy\State">
+      <UniqueIdentifier>{6420d79e-01d2-43e4-9b0d-558b61443738}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -109,9 +115,6 @@
       <Filter>Game\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Game\Object\Player.h">
-      <Filter>Game\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Enemy.h">
       <Filter>Game\Object</Filter>
     </ClInclude>
     <ClInclude Include="Game\Object\Boomerang\State\BoomerangIdling.h">
@@ -171,6 +174,24 @@
     <ClInclude Include="Game\Scene\ResultScene.h">
       <Filter>Game\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\Enemy.h">
+      <Filter>Game\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\State\EnemyAttack.h">
+      <Filter>Game\Object\Enemy\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\State\EnemyIdling.h">
+      <Filter>Game\Object\Enemy\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\State\EnemyMove.h">
+      <Filter>Game\Object\Enemy\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\IEnemyState.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Timer.h">
+      <Filter>Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -207,9 +228,6 @@
       <Filter>Game\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Game\Object\Player.cpp">
-      <Filter>Game\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\Enemy.cpp">
       <Filter>Game\Object</Filter>
     </ClCompile>
     <ClCompile Include="Game\Object\Boomerang\State\BoomerangIdling.cpp">
@@ -256,6 +274,21 @@
     </ClCompile>
     <ClCompile Include="Game\Scene\ResultScene.cpp">
       <Filter>Game\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\Enemy.cpp">
+      <Filter>Game\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\State\EnemyAttack.cpp">
+      <Filter>Game\Object\Enemy\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\State\EnemyIdling.cpp">
+      <Filter>Game\Object\Enemy\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\State\EnemyMove.cpp">
+      <Filter>Game\Object\Enemy\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Timer.cpp">
+      <Filter>Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

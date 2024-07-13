@@ -53,11 +53,22 @@ void ResultScene::Initialize(CommonResources* resources)
 	m_spriteBatch = std::make_unique<DirectX::SpriteBatch>(context);
 
 
-	CreateTex(L"Resources/Textures/pushSpace.png", m_texture, m_texCenter);
+	CreateTex(L"Resources/Textures/Number.png", m_texture, m_texCenter);
+
+	//for (int i = 0; i < 10 ; i++)
+	//{
+	//	m_numberTexture.emplace_back();
+	//	m_numberTexCenter.emplace_back();
+
+	//	CreateTex(L"Resources/Textures/Number.png",m_numberTexture[i], m_numberTexCenter[i]);
+	//}
 
 
 	// シーン変更フラグを初期化する
 	m_isChangeScene = false;
+
+	num = 0;
+
 }
 
 //---------------------------------------------------------
@@ -76,6 +87,16 @@ void ResultScene::Update(float elapsedTime)
 	{
 		m_isChangeScene = true;
 	}
+
+
+	if (kbTracker->released.O && num < 9)
+	{
+		num++;
+	}
+	if (kbTracker->released.I && num > 0)
+	{
+		num--;
+	}
 }
 
 //---------------------------------------------------------
@@ -83,33 +104,9 @@ void ResultScene::Update(float elapsedTime)
 //---------------------------------------------------------
 void ResultScene::Render()
 {
-	auto states = m_commonResources->GetCommonStates();
-
-	// スプライトバッチの開始：オプションでソートモード、ブレンドステートを指定する
-	m_spriteBatch->Begin(SpriteSortMode_Deferred, states->NonPremultiplied());
-
-	// TRIDENTロゴの描画位置を決める
-	RECT rect{ m_commonResources->GetDeviceResources()->GetOutputSize() };
-	// 画像の中心を計算する
-	Vector2 pos{ rect.right / 2.0f, rect.bottom / 2.0f };
 
 
-	//PushSpaceの描画
-	m_spriteBatch->Draw(
-		m_texture.Get(),	// テクスチャ(SRV)
-		pos + Vector2(0, 150),				// スクリーンの表示位置(originの描画位置)
-		nullptr,			// 矩形(RECT)
-		Colors::White,		// 背景色
-		0.0f,				// 回転角(ラジアン)
-		m_texCenter,		// テクスチャの基準になる表示位置(描画中心)(origin)
-		0.3f,				// スケール(scale)
-		SpriteEffects_None,	// エフェクト(effects)
-		0.0f				// レイヤ深度(画像のソートで必要)(layerDepth)
-	);
-
-	// スプライトバッチの終わり
-	m_spriteBatch->End();
-
+	m_commonResources->GetTimer()->Render();
 
 	auto debugString = m_commonResources->GetDebugString();
 	debugString->AddString("Result Scene");
@@ -174,6 +171,8 @@ void ResultScene::CreateTex(const wchar_t* szFileName, Microsoft::WRL::ComPtr<ID
 	// ID3D11ResourceをID3D11Texture2Dとして見る
 	resource.As(&tex2D);
 
+	
+
 	// テクスチャ情報を取得する
 	tex2D->GetDesc(&desc);
 
@@ -181,10 +180,37 @@ void ResultScene::CreateTex(const wchar_t* szFileName, Microsoft::WRL::ComPtr<ID
 	texSize.x = static_cast<float>(desc.Width);
 	texSize.y = static_cast<float>(desc.Height);
 
+
+
 	// テクスチャの中心位置を計算する
 	texCenter = texSize / 2.0f;
 
 }
 
+
+void ResultScene::CreateNumberTex(const wchar_t* szFileName, std::vector< Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>& tex, std::vector<DirectX::SimpleMath::Vector2>& texCenter)
+{
+
+	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> Tex;
+
+	//番号の画像の読み込み
+	DX::ThrowIfFailed(
+		CreateWICTextureFromFile(
+			device,
+			szFileName,
+			nullptr,
+			Tex.ReleaseAndGetAddressOf()
+		)
+	);
+
+	
+	
+
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> NumberTex;
+	DirectX::SimpleMath::Vector2 NumberTexCenter;
+
+
+}
 
 

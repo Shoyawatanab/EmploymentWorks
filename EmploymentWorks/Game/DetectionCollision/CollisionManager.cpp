@@ -13,7 +13,7 @@
 #include <cassert>
 
 #include "Game/Object/Player.h"
-#include "Game/Object/Enemy.h"
+#include "Game/Object/Enemy/Enemy.h"
 #include "Libraries/MyLib/Bounding.h"
 #include "Interface/ICollisionObject.h"
 #include "Interface/IMoveCollisionObject.h"
@@ -54,11 +54,11 @@ void CollisionManager::Update()
 	{
 		for (int j = i + 1; j < m_collsionObjects.size(); j++)
 		{
-			CollsionObjectTag tag1 = m_collsionObjects[i]->GetCollsionTag();
-			CollsionObjectTag tag2 = m_collsionObjects[j]->GetCollsionTag();
+			CollsionObjectTag tagI = m_collsionObjects[i]->GetCollsionTag();
+			CollsionObjectTag tagJ = m_collsionObjects[j]->GetCollsionTag();
 
-			if (tag1 == CollsionObjectTag::Player && tag2 == CollsionObjectTag::Boomerang ||
-				tag2 == CollsionObjectTag::Player && tag1 == CollsionObjectTag::Boomerang)
+			if (tagI == CollsionObjectTag::Player && tagJ == CollsionObjectTag::Boomerang ||
+				tagJ == CollsionObjectTag::Player && tagI == CollsionObjectTag::Boomerang)
 			{
 				continue;
 			}
@@ -78,7 +78,7 @@ void CollisionManager::Update()
 			{
 				continue;
 			}
-			if (tag1 != CollsionObjectTag::NotMoveObject || tag2 != CollsionObjectTag::NotMoveObject)
+			if (tagI != CollsionObjectTag::NotMoveObject || tagJ != CollsionObjectTag::NotMoveObject)
 			{
 
 			}
@@ -104,12 +104,12 @@ void CollisionManager::Update()
 			bounding2->SetIsBoxHit(true);
 
 
-			if (tag1 == CollsionObjectTag::Boomerang && tag2 == CollsionObjectTag::Enemy ||
-				tag2 == CollsionObjectTag::Boomerang && tag1 == CollsionObjectTag::Enemy)
+			if (tagI == CollsionObjectTag::Boomerang && tagJ == CollsionObjectTag::Enemy ||
+				tagJ == CollsionObjectTag::Boomerang && tagI == CollsionObjectTag::Enemy)
 			{
 
-				m_collsionObjects[i]->OnCollision();
-				m_collsionObjects[j]->OnCollision();
+				m_collsionObjects[i]->OnCollision(tagJ);
+				m_collsionObjects[j]->OnCollision(tagI);
 
 
 

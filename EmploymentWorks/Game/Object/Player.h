@@ -80,7 +80,7 @@ public:
 
 	DirectX::SimpleMath::Vector3 GetPos() override { return m_position; }
 
-	void OnCollision() override;
+	void OnCollision(CollsionObjectTag& PartnerTag) override;
 
 private:
 	void Move(float elapsedTime, DirectX::SimpleMath::Vector3 moveDirection);

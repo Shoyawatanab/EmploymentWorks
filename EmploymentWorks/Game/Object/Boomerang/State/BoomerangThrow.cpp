@@ -3,7 +3,7 @@
 #include "Game/Object/Boomerang/State/BoomerangThrow.h"
 #include "Game/Object/Boomerang/Boomerang.h"
 #include "Game/Object/Player.h"
-#include "Game/Object/Enemy.h"
+#include "Game/Object/Enemy/Enemy.h"
 
 
 const float SPEED = 2.0f;

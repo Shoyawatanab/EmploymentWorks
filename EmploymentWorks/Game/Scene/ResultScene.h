@@ -34,9 +34,17 @@ private:
 	// テクスチャの半分の大きさ
 	DirectX::SimpleMath::Vector2 m_texCenter;
 
+	// テクスチャ
+	std::vector<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> m_numberTexture;
+
+	// テクスチャの半分の大きさ
+	std::vector<DirectX::SimpleMath::Vector2> m_numberTexCenter;
+
+
 	// シーンチェンジフラグ
 	bool m_isChangeScene;
 
+	int num;
 
 public:
     ResultScene();
@@ -50,5 +58,7 @@ public:
     SceneID GetNextSceneID() const;
 
 	void CreateTex(const wchar_t* szFileName, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& tex, DirectX::SimpleMath::Vector2& texCenter);
+
+	void CreateNumberTex(const wchar_t* szFileName,std::vector< Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>& tex, std::vector<DirectX::SimpleMath::Vector2>& texCenter);
 
 };
