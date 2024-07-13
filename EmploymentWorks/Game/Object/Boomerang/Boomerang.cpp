@@ -156,7 +156,7 @@ void Boomerang::ChangeState(IBoomerangState* nextState)
 }
 
 
-void Boomerang::OnCollision()
+void Boomerang::OnCollision(CollsionObjectTag& PartnerTag)
 {
 
 }

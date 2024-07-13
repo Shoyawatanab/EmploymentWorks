@@ -40,7 +40,11 @@ public:
 	/// <returns>タグ</returns>
 	virtual CollsionObjectTag GetCollsionTag() const = 0;
 
-	virtual void OnCollision() = 0; 
+	/// <summary>
+	/// 当たった時に呼び出す関数
+	/// </summary>
+	/// <param name="tag">当たった時の相手のタグ</param>
+	virtual void OnCollision(CollsionObjectTag& PartnerTag) = 0;
 
 	virtual void SetPos(DirectX::SimpleMath::Vector3& Pos) = 0;
 

@@ -14,7 +14,7 @@
 
 #include "Libraries/MyLib/TPS_Camera.h"
 #include "Game/Object/Player.h"
-#include "Game/Object/Enemy.h"
+#include "Game/Object/Enemy/Enemy.h"
 #include "Game/Object/Floor.h"
 #include "Game/LockOn.h"
 #include "Game/DetectionCollision/CollisionManager.h"
@@ -98,7 +98,7 @@ void PlayScene::Initialize(CommonResources* resources)
 
 	m_floor->Initialize(m_commonResources, Vector3::Zero, Vector3(15, 0.6f, 15), 8.0f);
 	m_player->Initialize(m_commonResources, Vector3(0, 2.75f, 0));
-	m_enemy->Initialize(m_commonResources, Vector3(0, 0.75f, -10));
+	m_enemy->Initialize(m_commonResources, Vector3(0, 5.75f, -10));
 	//WallƒNƒ‰ƒX‚Í“–‚½‚è”»’è‚ðŽ‚Á‚Ä‚¢‚é‚¾‚¯ƒ‚ƒfƒ‹‚Ì•`‰æ‚Í‚È‚¢
 	m_wall[0]->Initialize(m_commonResources,
 		Vector3(16, WALLHEITH, 0), Vector3(1.5f, 2, 15), 8.6f);

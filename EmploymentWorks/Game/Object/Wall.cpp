@@ -107,7 +107,7 @@ void Wall::RegistrationCollionManager(CollisionManager* collsionManager)
 
 
 
-void Wall::OnCollision()
+void Wall::OnCollision(CollsionObjectTag& PartnerTag)
 {
 
 }
