@@ -48,6 +48,8 @@ private:
 	std::unique_ptr<Bounding> m_bounding;
 
 	float m_hp;
+	float m_graivty;
+
 
 	float m_collisionTime;
 	bool m_isCollsionTime;

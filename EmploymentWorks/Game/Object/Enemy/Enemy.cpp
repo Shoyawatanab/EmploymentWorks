@@ -75,10 +75,12 @@ void Enemy::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 
 	m_attack->Initialize();
 
 	m_bounding = std::make_unique<Bounding>();
-	m_bounding->CreateBoundingBox(m_commonResources, m_position, Vector3(0.5f, 0.9f, 0.5f));
-	m_bounding->CreateBoundingSphere(m_commonResources, m_position, 1.0f);
+	m_bounding->CreateBoundingBox(m_commonResources, m_position, Vector3(3.5f, 4.9f, 1.8f));
+	m_bounding->CreateBoundingSphere(m_commonResources, m_position, 6.0f);
 
 	m_hp = 2;
+	m_graivty = 0.05f;
+
 }
 
 //---------------------------------------------------------
@@ -101,6 +103,8 @@ void Enemy::Update(float elapsedTime)
 		}
 	}
 
+	m_position.y -= m_graivty;
+
 }
 
 //---------------------------------------------------------
@@ -116,6 +120,7 @@ void Enemy::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 
 	// ワールド行列を更新する
 	Matrix world = Matrix::CreateScale(1.8f);
+	world *= Matrix::CreateRotationY(DirectX::XMConvertToRadians(90));
 	world *= Matrix::CreateTranslation(m_position);
 
 
@@ -149,7 +154,7 @@ void Enemy::OnCollision(CollsionObjectTag& PartnerTag)
 	//ブーメランと当たっときに毎フレームHpがへらないようにする
 	if (m_isCollsionTime)
 	{
-		return;
+		//return;
 	}
 
 	m_hp--;

@@ -12,6 +12,8 @@
 #include <cassert>
 #include "Libraries/MyLib/DebugString.h"
 
+#include "Game/Timer.h"
+
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
@@ -53,21 +55,14 @@ void ResultScene::Initialize(CommonResources* resources)
 	m_spriteBatch = std::make_unique<DirectX::SpriteBatch>(context);
 
 
-	CreateTex(L"Resources/Textures/Number.png", m_texture, m_texCenter);
+	CreateTex(L"Resources/Textures/pushSpace.png", m_texture, m_texCenter);
 
-	//for (int i = 0; i < 10 ; i++)
-	//{
-	//	m_numberTexture.emplace_back();
-	//	m_numberTexCenter.emplace_back();
 
-	//	CreateTex(L"Resources/Textures/Number.png",m_numberTexture[i], m_numberTexCenter[i]);
-	//}
-
+	m_commonResources->GetTimer()->TimeCalculation();
 
 	// シーン変更フラグを初期化する
 	m_isChangeScene = false;
 
-	num = 0;
 
 }
 
@@ -88,15 +83,6 @@ void ResultScene::Update(float elapsedTime)
 		m_isChangeScene = true;
 	}
 
-
-	if (kbTracker->released.O && num < 9)
-	{
-		num++;
-	}
-	if (kbTracker->released.I && num > 0)
-	{
-		num--;
-	}
 }
 
 //---------------------------------------------------------
@@ -107,6 +93,8 @@ void ResultScene::Render()
 
 
 	m_commonResources->GetTimer()->Render();
+
+	TexRender(m_texture,m_texCenter,Vector2(640,500),0.3f);
 
 	auto debugString = m_commonResources->GetDebugString();
 	debugString->AddString("Result Scene");
@@ -188,28 +176,32 @@ void ResultScene::CreateTex(const wchar_t* szFileName, Microsoft::WRL::ComPtr<ID
 }
 
 
-void ResultScene::CreateNumberTex(const wchar_t* szFileName, std::vector< Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>& tex, std::vector<DirectX::SimpleMath::Vector2>& texCenter)
+void ResultScene::TexRender(Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& Tex, DirectX::SimpleMath::Vector2& Center, DirectX::SimpleMath::Vector2 Pos, float Scale)
 {
+	using namespace DirectX;
+	using namespace DirectX::SimpleMath;
+	auto states = m_commonResources->GetCommonStates();
 
-	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> Tex;
 
-	//番号の画像の読み込み
-	DX::ThrowIfFailed(
-		CreateWICTextureFromFile(
-			device,
-			szFileName,
-			nullptr,
-			Tex.ReleaseAndGetAddressOf()
-		)
+	// スプライトバッチの開始：オプションでソートモード、ブレンドステートを指定する
+	m_spriteBatch->Begin(SpriteSortMode_Deferred, states->NonPremultiplied());
+
+	// Titleを描画する
+	m_spriteBatch->Draw(
+		Tex.Get(),	// テクスチャ(SRV)
+		Pos,				// スクリーンの表示位置(originの描画位置)
+		nullptr,			// 矩形(RECT)
+		Colors::White,		// 背景色
+		0.0f,				// 回転角(ラジアン)
+		Center,		// テクスチャの基準になる表示位置(描画中心)(origin)
+		Scale,				// スケール(scale)
+		SpriteEffects_None,	// エフェクト(effects)
+		0.0f				// レイヤ深度(画像のソートで必要)(layerDepth)
 	);
 
-	
-	
 
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> NumberTex;
-	DirectX::SimpleMath::Vector2 NumberTexCenter;
-
+	// スプライトバッチの終わり
+	m_spriteBatch->End();
 
 }
 

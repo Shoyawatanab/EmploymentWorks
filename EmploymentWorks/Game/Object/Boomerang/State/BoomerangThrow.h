@@ -64,6 +64,8 @@ private:
 
 	float m_rotationalMotion;
 	float  m_rotateY;
+	DirectX::SimpleMath::Vector3 m_target;
+
 
 
 };

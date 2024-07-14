@@ -31,6 +31,16 @@ private:
 	// テクスチャの半分の大きさ
 	DirectX::SimpleMath::Vector2 m_texCenter;
 	
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_tenTexture;
+
+	// テクスチャの半分の大きさ
+	DirectX::SimpleMath::Vector2 m_tenTexCenter;
+
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_timeTexture;
+
+	// テクスチャの半分の大きさ
+	DirectX::SimpleMath::Vector2 m_timeTexCenter;
+
 
 	float m_totalTime;
 
@@ -41,6 +51,17 @@ private:
 	DirectX::SimpleMath::Vector2 m_position;
 	float m_scale;
 
+	//秒数の1桁目
+	int m_secFirstDigit;
+	//秒数の2桁目
+	int m_secSecondDigit;
+	//分数の1桁目
+	int m_minFirstDigit;
+	//分数の2桁目
+	int m_minSecondDigit;
+
+
+
 public:
 	Timer();
 	~Timer() ;
@@ -49,10 +70,12 @@ public:
 	void Update(float elapsedTime);
 	void Render();
 	void OneNumberRender(int number , DirectX::SimpleMath::Vector2 Pos,float Scale);
-
+	void TexRender(Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& Tex, DirectX::SimpleMath::Vector2& Center, DirectX::SimpleMath::Vector2 Pos, float Scale);
 
 	void CreateNumberTex(const wchar_t* szFileName, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& tex, DirectX::SimpleMath::Vector2& texCenter);
+	void CreateTex(const wchar_t* szFileName, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& tex, DirectX::SimpleMath::Vector2& texCenter);
 
+	void TimeCalculation();
 
 private:
 

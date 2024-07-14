@@ -7,7 +7,10 @@ C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomeran
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\State\BoomerangGetReady.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\BoomerangGetReady.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\State\BoomerangIdling.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\BoomerangIdling.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\State\BoomerangThrow.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\BoomerangThrow.obj
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Enemy.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Enemy.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\State\EnemyAttack.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\EnemyAttack.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\State\EnemyIdling.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\EnemyIdling.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\State\EnemyMove.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\EnemyMove.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Floor.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Floor.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Player.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Wall.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Wall.obj
@@ -15,6 +18,7 @@ C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\PlayScene
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\ResultScene.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\ResultScene.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\SceneManager.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\SceneManager.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\TitleScene.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\TitleScene.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Timer.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Timer.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\Microsoft\DebugDraw.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\DebugDraw.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\BinaryFile.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\BinaryFile.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\Bounding.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Bounding.obj

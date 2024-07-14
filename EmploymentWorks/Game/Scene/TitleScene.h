@@ -37,6 +37,9 @@ private:
 	// シーンチェンジフラグ
 	bool m_isChangeScene;
 
+	float m_titleScale;
+
+	bool m_isTitleScale;
 
 public:
     TitleScene();
@@ -51,4 +54,6 @@ public:
 
 
 	void CreateTex(const wchar_t* szFileName, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>&tex, DirectX::SimpleMath::Vector2& texCenter);
+
+	void UpdateScale(float& scale, float increment, float min, float max, bool& increasing);
 };

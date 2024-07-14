@@ -113,7 +113,7 @@ void CollisionManager::Update()
 
 
 
-				return;
+				continue;
 			}
 
 

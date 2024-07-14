@@ -16,9 +16,9 @@
 #include "Game/Object/Enemy/Enemy.h"
 #include "Libraries/MyLib/TPS_Camera.h"
 
-const float LOCKONDISTANCE = 10.0f;
+const float LOCKONDISTANCE = 20.0f;
 //視野角
-const float VIEWANGLE = 90;
+const float VIEWANGLE = 90.0f;
 
 //---------------------------------------------------------
 // コンストラクタ
@@ -60,7 +60,7 @@ void LockOn::Initialize(DX::DeviceResources* pDR, int width, int height)
 	//  背景となるウィンドウ画像を読み込む
 
 	//  草画像を読み込む
-	Add(L"Resources/Textures/Reticle.jpg"
+	Add(L"Resources/Textures/LockOnTex.png"
 		,Vector2(300, 300)
 		,Vector2(0.1f, 0.1f)
 		,ANCHOR::MIDDLE_CENTER);
@@ -113,7 +113,7 @@ void LockOn::Update(float elapsedTime)
 		m_isLockOn = true;
 
 
-		Vector2 ScreenPos = WorldToScreen(m_enemy->GetPosition(),
+ 		Vector2 ScreenPos = WorldToScreen(m_enemy->GetPosition(),
 			Matrix::Identity,
 			m_tpsCamera->GetViewMatrix(),
 			m_tpsCamera->GetProjectionMatrix(),
@@ -214,7 +214,7 @@ bool LockOn::IsEnemyInview(const DirectX::SimpleMath::Vector3& playerPos, const 
 	using namespace DirectX;
 	using namespace DirectX::SimpleMath;
 	//角度をラジアンに変換
-	float radianViewAngle = XMConvertToRadians(VIEWANGLE);
+	 float radianViewAngle = XMConvertToRadians(VIEWANGLE);
 	float cosViewAngle = cos(radianViewAngle / 2);
 
 	//敵へのベクトルの計算
