@@ -10,6 +10,12 @@ const float SPEED = 2.0f;
 
 const DirectX::SimpleMath::Vector3 AxisOfRotation(0,1,0);  //回転軸
 
+
+float Lerp(float a, float b, float t)
+{
+	return a + t * (b - a);
+}
+
 // コンストラクタ
 BoomerangThrow::BoomerangThrow(Boomerang* boomerang, Player* player, Enemy* enemy)
 	:
@@ -115,26 +121,29 @@ void BoomerangThrow::Enter()
 	m_position = m_boomerang->GetPosition();
 	m_previousFrameDirection = m_position;
 
+	m_target = m_enemy->GetPosition();;
+
+
 	Matrix SphereMatrix = Matrix::Identity;
 	SphereMatrix *= Matrix::CreateFromQuaternion(m_initialRotate);
 	//プレイヤと敵の距離
-	Vector3 PlayerToEnemyDistance = m_enemy->GetPosition() - m_player->GetPosition();
+	Vector3 PlayerToEnemyDistance = m_target - m_player->GetPosition();
 	//距離をflaotに変換して半分にする
 	float PlayerToEnemyLenght = PlayerToEnemyDistance.Length() / 2;
 
+
+
 	//ロックオン状態じゃなければ
-	if (!m_player->GetIsLockOn())
-	{
-		//距離を自分で決めたものにする
-		PlayerToEnemyLenght = 1;
+	//if (!m_player->GetIsLockOn())
+	//{
+	//	//距離を自分で決めたものにする
+	//	PlayerToEnemyLenght = 7;
 
-	}
-
-
-
+	//}
 	//回転の地点を回転させる
 	for (int i = 0; i < m_spherePos.size(); i++)
 	{
+		//基準点
 		Vector3 Pos = m_spherePos[i];
 		//Sphereとゼロ地点の距離
 		Vector3 Distance = Pos - Vector3::Zero;
@@ -148,12 +157,32 @@ void BoomerangThrow::Enter()
 		Pos.z -= PlayerToEnemyLenght;
 
 
-		//プレイヤの回転をもとに回転させる
-		m_moveSpherePos[i] = Vector3::Transform(Pos, SphereMatrix);
-		//原点からになっているからブーメランの位置を加算する
-		m_moveSpherePos[i] += m_position;
+		//一時的に保存する
+		m_moveSpherePos[i] = Pos;
+
 
 	}
+
+
+	//高さ調整
+	for (int i = 0; i < m_spherePos.size(); i++)
+	{
+		//初期値点から一番遠いところの距離と今の座標の割合を求める
+		float a = (m_moveSpherePos[i].z - m_moveSpherePos[0].z) / (m_moveSpherePos[3].z - m_moveSpherePos[0].z);
+		m_moveSpherePos[i].y = Lerp(m_boomerang->GetPos().y, m_target.y, a) - 1;
+	}
+
+	for (int i = 0; i < m_spherePos.size(); i++)
+	{
+
+		//プレイヤの回転をもとに回転させる
+		m_moveSpherePos[i] = Vector3::Transform(m_moveSpherePos[i], SphereMatrix);
+		//原点からになっているからブーメランの位置を加算する
+		m_moveSpherePos[i] += m_position;
+	}
+
+
+
 }
 
 void BoomerangThrow::Exit()

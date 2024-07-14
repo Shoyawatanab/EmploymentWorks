@@ -44,7 +44,6 @@ private:
 	// シーンチェンジフラグ
 	bool m_isChangeScene;
 
-	int num;
 
 public:
     ResultScene();
@@ -59,6 +58,5 @@ public:
 
 	void CreateTex(const wchar_t* szFileName, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& tex, DirectX::SimpleMath::Vector2& texCenter);
 
-	void CreateNumberTex(const wchar_t* szFileName,std::vector< Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>& tex, std::vector<DirectX::SimpleMath::Vector2>& texCenter);
-
+	void TexRender(Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& Tex, DirectX::SimpleMath::Vector2& Center, DirectX::SimpleMath::Vector2 Pos, float Scale);
 };

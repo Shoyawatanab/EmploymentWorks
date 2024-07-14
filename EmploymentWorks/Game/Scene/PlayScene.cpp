@@ -150,6 +150,7 @@ void PlayScene::Update(float elapsedTime)
 
 	m_lockOn->Update(elapsedTime);
 
+	m_commonResources->GetTimer()->Update(elapsedTime);
 
 	// キーボードステートトラッカーを取得する
 	const auto& kbTracker = m_commonResources->GetInputManager()->GetKeyboardTracker();

@@ -65,6 +65,8 @@ void TitleScene::Initialize(CommonResources* resources)
 
 	// シーン変更フラグを初期化する
 	m_isChangeScene = false;
+	m_titleScale = 0.4f;
+	m_isTitleScale = false;
 }
 
 //---------------------------------------------------------
@@ -77,6 +79,8 @@ void TitleScene::Update(float elapsedTime)
 
 	// キーボードステートトラッカーを取得する
 	const auto& kbTracker = m_commonResources->GetInputManager()->GetKeyboardTracker();
+
+	UpdateScale(m_titleScale,0.002f,0.3f,0.4f,m_isTitleScale);
 
 	// スペースキーが押されたら
 	if (kbTracker->released.Space)
@@ -111,7 +115,7 @@ void TitleScene::Render()
 		Colors::White,		// 背景色
 		0.0f,				// 回転角(ラジアン)
 		m_texCenter[0],		// テクスチャの基準になる表示位置(描画中心)(origin)
-		0.4f,				// スケール(scale)
+		m_titleScale,				// スケール(scale)
 		SpriteEffects_None,	// エフェクト(effects)
 		0.0f				// レイヤ深度(画像のソートで必要)(layerDepth)
 	);
@@ -203,6 +207,34 @@ void TitleScene::CreateTex(const wchar_t* szFileName, Microsoft::WRL::ComPtr<ID3
 	// テクスチャの中心位置を計算する
 	texCenter = texSize / 2.0f;
 
+}
+
+
+/// <summary>
+/// Scaleの値を繰り返し処理する関数
+/// </summary>
+/// <param name="scale">大きさの変数</param>
+/// <param name="increment">加算値</param>
+/// <param name="min">最小値</param>
+/// <param name="max">最大値</param>
+/// <param name="increasing">bool変数</param>
+void TitleScene::UpdateScale(float& scale, float increment, float min, float max, bool& increasing) {
+	if (increasing) {
+		scale += increment;
+		// max値を超えた場合に減少に転じる
+		if (scale >= max) {
+			scale = max;
+			increasing = false;
+		}
+	}
+	else {
+		scale -= increment;
+		// min値を下回った場合に増加に転じる
+		if (scale <= min) {
+			scale = min;
+			increasing = true;
+		}
+	}
 }
 
 
