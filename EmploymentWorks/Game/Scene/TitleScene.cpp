@@ -137,8 +137,6 @@ void TitleScene::Render()
 	m_spriteBatch->End();
 
 
-	auto debugString = m_commonResources->GetDebugString();
-	debugString->AddString("Title Scene");
 
 }
 

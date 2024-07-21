@@ -80,7 +80,7 @@ void Timer::Update(float elapsedTime)
 
 	UNREFERENCED_PARAMETER(elapsedTime);
 
-
+	TimeCalculation();
 
 	m_totalTime += elapsedTime;
 
@@ -113,6 +113,31 @@ void Timer::Render()
 
 
 }
+
+void Timer::PlaySceneRender(DirectX::SimpleMath::Vector2 Pos, float Scale)
+{
+	using namespace DirectX;
+	using namespace DirectX::SimpleMath;
+	//•¶Žš‚ÌŠÔŠu
+	int a = 30;
+
+	float gameTime = m_commonResources->GetStepTimer()->GetTotalSeconds();
+	//2•b‚ð’´‚¦‚½‚ç0‚É–ß‚é
+	float t = fmodf(gameTime, 2.0f);
+
+
+	OneNumberRender(m_minFirstDigit, Vector2(Pos.x - a * 2, Pos.y), Scale);
+	OneNumberRender(m_minSecondDigit, Vector2(Pos.x - a, Pos.y), Scale);
+	if (t <= 1.0f)
+	{
+		TexRender(m_tenTexture, m_tenTexCenter, Pos, Scale);
+	}
+	OneNumberRender(m_secFirstDigit, Vector2(Pos.x + a, Pos.y), Scale);
+	OneNumberRender(m_secSecondDigit, Vector2(Pos.x + a * 2, Pos.y),Scale);
+
+
+}
+
 
 void Timer::CreateNumberTex(const wchar_t* szFileName,Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& tex, DirectX::SimpleMath::Vector2& texCenter)
 {

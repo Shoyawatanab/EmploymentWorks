@@ -1,3 +1,15 @@
 ﻿  SceneManager.cpp
+  Timer.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Timer.cpp(52,7): warning C4189: 'device': ローカル変数が初期化されましたが、参照されていません
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Timer.cpp(99,17): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Timer.cpp(124,17): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Timer.cpp(180,21): warning C4838: 'float' から 'LONG' への変換には縮小変換が必要です
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Timer.cpp(180,21): warning C4244: '初期化中': 'float' から 'LONG' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Timer.cpp(181,8): warning C4838: 'float' から 'LONG' への変換には縮小変換が必要です
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Timer.cpp(181,8): warning C4244: '初期化中': 'float' から 'LONG' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Timer.cpp(181,26): warning C4838: 'float' から 'LONG' への変換には縮小変換が必要です
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Timer.cpp(181,26): warning C4244: '初期化中': 'float' から 'LONG' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Timer.cpp(281,11): warning C4244: '初期化中': 'float' から 'int' への変換です。データが失われる可能性があります。
+  コードを生成中...
      ライブラリ C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\3DPG.lib とオブジェクト C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\3DPG.exp を作成中
   3DPG.vcxproj -> C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\3DPG.exe

@@ -14,23 +14,24 @@
 
 #include "Game/Object/Player.h"
 #include "Game/Object/Enemy/Enemy.h"
-#include "Libraries/MyLib/TPS_Camera.h"
+#include "Libraries/MyLib/Camera/TPS_Camera.h"
+#include "Libraries/MyLib/Camera/GameCameraManager.h"
 
 const float LOCKONDISTANCE = 20.0f;
 //視野角
-const float VIEWANGLE = 90.0f;
+const float VIEWANGLE = 60.0f;
 
 //---------------------------------------------------------
 // コンストラクタ
 //---------------------------------------------------------
-LockOn::LockOn(Player* player, Enemy* enemy, mylib::TPS_Camera* tpsCamera)
+LockOn::LockOn(Player* player, Enemy* enemy, mylib::GameCameraManager* gameCamera)
 	:
 	m_windowHeight(0)
 	, m_windowWidth(0)
 	, m_pDR(nullptr),
 	m_player{player}
 	,m_enemy{enemy}
-	,m_tpsCamera{tpsCamera}
+	, m_tpsCamera{ gameCamera->GetTPSCamera() }
 	, m_isLockOn{ false }
 
 {
@@ -81,7 +82,7 @@ void LockOn::Update(float elapsedTime)
 	//ロックオンのリセット
 	m_isLockOn = false;
 
-	//視野角外なら
+	////視野角外なら
 	if (!IsEnemyInview(m_player->GetPos(), m_player->GetPlayerForWard(), m_enemy->GetPos()))
 	{
 		return;
@@ -110,10 +111,10 @@ void LockOn::Update(float elapsedTime)
 	}
 	else // 距離内なら
 	{
-		m_isLockOn = true;
+   		m_isLockOn = true;
 
 
- 		Vector2 ScreenPos = WorldToScreen(m_enemy->GetPosition(),
+    		Vector2 ScreenPos = WorldToScreen(m_enemy->GetPosition(),
 			Matrix::Identity,
 			m_tpsCamera->GetViewMatrix(),
 			m_tpsCamera->GetProjectionMatrix(),
@@ -125,7 +126,6 @@ void LockOn::Update(float elapsedTime)
 
 	}
 
-	m_player->SetisLockOn(m_isLockOn);
 }
 
 //---------------------------------------------------------
@@ -145,6 +145,8 @@ void LockOn::Render()
 	{
 		m_userInterface[i]->Render();
 	}
+
+
 }
 
 

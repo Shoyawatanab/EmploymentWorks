@@ -96,8 +96,6 @@ void ResultScene::Render()
 
 	TexRender(m_texture,m_texCenter,Vector2(640,500),0.3f);
 
-	auto debugString = m_commonResources->GetDebugString();
-	debugString->AddString("Result Scene");
 
 }
 

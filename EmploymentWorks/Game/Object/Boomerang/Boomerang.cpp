@@ -132,11 +132,11 @@ void Boomerang::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 	// プリミティブ描画を開始する
 
 
-	// デバッグ情報を表示する
-	auto debugString = m_commonResources->GetDebugString();
-	//debugString->AddString("Rotate : %f", m_rotate.x);
-	debugString->AddString("BoomeerangSpherePos : %f, %f, %f", m_position.x, m_position.y, m_position.z);
-	debugString->AddString("BoomerangRotate : %f, %f, %f", m_rotate.x, m_rotate.y, m_rotate.z);
+	//// デバッグ情報を表示する
+	//auto debugString = m_commonResources->GetDebugString();
+	////debugString->AddString("Rotate : %f", m_rotate.x);
+	//debugString->AddString("BoomeerangSpherePos : %f, %f, %f", m_position.x, m_position.y, m_position.z);
+	//debugString->AddString("BoomerangRotate : %f, %f, %f", m_rotate.x, m_rotate.y, m_rotate.z);
 
 }
 

@@ -1,15 +1,13 @@
-﻿  Timer.cpp
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Timer.cpp(49,7): warning C4189: 'device': ローカル変数が初期化されましたが、参照されていません
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Timer.cpp(80,8): warning C4189: 'a': ローカル変数が初期化されましたが、参照されていません
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Timer.cpp(144,21): warning C4838: 'float' から 'LONG' への変換には縮小変換が必要です
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Timer.cpp(144,21): warning C4244: '初期化中': 'float' から 'LONG' への変換です。データが失われる可能性があります。
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Timer.cpp(145,8): warning C4838: 'float' から 'LONG' への変換には縮小変換が必要です
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Timer.cpp(145,8): warning C4244: '初期化中': 'float' から 'LONG' への変換です。データが失われる可能性があります。
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Timer.cpp(145,26): warning C4838: 'float' から 'LONG' への変換には縮小変換が必要です
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Timer.cpp(145,26): warning C4244: '初期化中': 'float' から 'LONG' への変換です。データが失われる可能性があります。
+﻿  LockOn.cpp
+  PlayScene.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Floor.h(52,44): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Wall.h(49,44): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\PlayScene.cpp(176,14): warning C4189: 'kbTracker': ローカル変数が初期化されましたが、参照されていません
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\PlayScene.cpp(194,7): warning C4189: 'context': ローカル変数が初期化されましたが、参照されていません
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\PlayScene.cpp(195,7): warning C4189: 'states': ローカル変数が初期化されましたが、参照されていません
      ライブラリ C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\3DPG.lib とオブジェクト C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\3DPG.exp を作成中
   コード生成しています。
-  0 of 2106 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+  3 of 2144 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     0 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。

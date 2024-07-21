@@ -19,7 +19,7 @@ namespace mylib
 {
 	class DebugCamera;
 	class GridFloor;
-	class TPS_Camera;
+	class GameCameraManager;
 }
 
 
@@ -33,7 +33,7 @@ private:
 	// デバッグカメラ
 	//std::unique_ptr<mylib::DebugCamera> m_debugCamera;
 
-	std::unique_ptr<mylib::TPS_Camera> m_tpsCamera;
+	std::unique_ptr<mylib::GameCameraManager> m_cameraManager;
 
 	// 格子床
 	std::unique_ptr<mylib::GridFloor> m_gridFloor;

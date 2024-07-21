@@ -12,7 +12,7 @@
 #include "Libraries/MyLib/InputManager.h"
 #include "Libraries/MyLib/MemoryLeakDetector.h"
 
-#include "Libraries/MyLib/TPS_Camera.h"
+#include "Libraries/MyLib/Camera/GameCameraManager.h"
 #include "Game/Object/Player.h"
 #include "Game/Object/Enemy/Enemy.h"
 #include "Game/Object/Floor.h"
@@ -38,7 +38,7 @@ PlayScene::PlayScene()
 	m_isChangeScene{},
 	m_player{},
 	m_enemy{},
-	m_tpsCamera{},
+	m_cameraManager{},
 	m_floor{}
 	, m_lockOn{}
 
@@ -88,7 +88,7 @@ void PlayScene::Initialize(CommonResources* resources)
 	m_floor = std::make_unique<Floor>();
 	m_enemy = std::make_unique<Enemy>();
 	m_player = std::make_unique<Player>(m_enemy.get());
-	m_tpsCamera = std::make_unique<mylib::TPS_Camera>(m_player.get());
+	m_cameraManager = std::make_unique<mylib::GameCameraManager>(m_player.get());
 
 	for (int i = 0; i < WALLSIZE; i++)
 	{
@@ -109,12 +109,16 @@ void PlayScene::Initialize(CommonResources* resources)
 	m_wall[3]->Initialize(m_commonResources,
 		Vector3(0, WALLHEITH, -16), Vector3(15, 2, 1.5f), 8.6f);
 
+	m_cameraManager->Initialize();
 
-	m_lockOn = std::make_unique<LockOn>(m_player.get(), m_enemy.get(), m_tpsCamera.get());
+
+	m_lockOn = std::make_unique<LockOn>(m_player.get(), m_enemy.get(), m_cameraManager.get());
 	m_lockOn->Initialize(m_commonResources->GetDeviceResources(),
 		m_commonResources->GetDeviceResources()->GetOutputSize().right,
 		m_commonResources->GetDeviceResources()->GetOutputSize().bottom);
 	m_collisionManager = std::make_unique<CollisionManager>();
+
+
 
 
 	///当たり判定をManagerに追加
@@ -138,14 +142,30 @@ void PlayScene::Update(float elapsedTime)
 {
 	UNREFERENCED_PARAMETER(elapsedTime);
 
+
+
 	// デバッグカメラを更新する
 	//m_debugCamera->Update(m_commonResources->GetInputManager());
 
-	m_tpsCamera->Update(elapsedTime);
-
-	m_player->Update(elapsedTime,m_tpsCamera->GetRotationX());
+	m_cameraManager->Update(elapsedTime);
 	m_enemy->Update(elapsedTime);
+
+	m_player->Update(elapsedTime, m_cameraManager->GetTPSCamera()->GetRotationX());
 	m_collisionManager->Update();
+
+	if (m_enemy->GetHp() <= 0)
+	{
+
+		if (m_enemy->GetScale() <= 0)
+		{
+			m_isChangeScene = true;
+		}
+
+
+		return;
+	}
+
+
 
 
 	m_lockOn->Update(elapsedTime);
@@ -160,6 +180,8 @@ void PlayScene::Update(float elapsedTime)
 	//{
 	//	m_isChangeScene = true;
 	//}
+
+	m_player->SetisLockOn(m_lockOn->GetIsLOckOn());
 }
 
 //---------------------------------------------------------
@@ -174,11 +196,11 @@ void PlayScene::Render()
 
 	// ビュー行列を取得する
 	//const Matrix& view = m_debugCamera->GetViewMatrix();
-	const Matrix& view = m_tpsCamera->GetViewMatrix();;
+	const Matrix& view = m_cameraManager->GetViewMatrix();;
 
 
 	// 格子床を描画する
-	m_gridFloor->Render(context, view, m_projection);
+	//m_gridFloor->Render(context, view, m_projection);
 	m_floor->Render(view, m_projection);
 
 	for (auto& wall : m_wall)
@@ -187,18 +209,19 @@ void PlayScene::Render()
 	}
 
 
+	m_enemy->Render(view, m_projection);
 
 	m_player->Render(view, m_projection);
-	m_enemy->Render(view, m_projection);
 
 	m_lockOn->Render();
 
+	m_commonResources->GetTimer()->PlaySceneRender(Vector2(100,50),0.3f);
 
-	// デバッグ情報を「DebugString」で表示する
-	auto debugString = m_commonResources->GetDebugString();
-	debugString->AddString("Play Scene");
-	debugString->AddString("Pos: %d, %d", m_tpsCamera->GetAngle().x, m_tpsCamera->GetAngle().y);
-
+	//// デバッグ情報を「DebugString」で表示する
+	//auto debugString = m_commonResources->GetDebugString();
+	//debugString->AddString("Play Scene");
+	//debugString->AddString("Pos: %d, %d", m_tpsCamera->GetAngle().x, m_tpsCamera->GetAngle().y);
+	//debugString->AddString("IsLockOn: %d ", m_lockOn->GetIsLOckOn());
 }
 
 //---------------------------------------------------------
@@ -216,10 +239,6 @@ IScene::SceneID PlayScene::GetNextSceneID() const
 {
 	// シーン変更がある場合
 	if (m_isChangeScene)
-	{
-		return IScene::SceneID::TITLE;
-	}
-	if (m_enemy->GetHp() <= 0)
 	{
 		return IScene::SceneID::RESULT;
 	}

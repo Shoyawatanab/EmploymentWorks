@@ -6,7 +6,7 @@
 #include "Game/Object/Enemy/Enemy.h"
 
 
-const float SPEED = 2.0f;
+const float SPEED = 5.0f;
 
 const DirectX::SimpleMath::Vector3 AxisOfRotation(0,1,0);  //‰ñ“]Ž²
 
@@ -124,6 +124,14 @@ void BoomerangThrow::Enter()
 	m_target = m_enemy->GetPosition();;
 
 
+	//ƒƒbƒNƒIƒ“ó‘Ô‚¶‚á‚È‚¯‚ê‚Î
+	if (!m_player->GetIsLockOn())
+	{
+		//‹——£‚ðŽ©•ª‚ÅŒˆ‚ß‚½‚à‚Ì‚É‚·‚é
+		m_target = Vector3(0, 4, 4);
+
+	}
+
 	Matrix SphereMatrix = Matrix::Identity;
 	SphereMatrix *= Matrix::CreateFromQuaternion(m_initialRotate);
 	//ƒvƒŒƒCƒ„‚Æ“G‚Ì‹——£
@@ -137,7 +145,7 @@ void BoomerangThrow::Enter()
 	//if (!m_player->GetIsLockOn())
 	//{
 	//	//‹——£‚ðŽ©•ª‚ÅŒˆ‚ß‚½‚à‚Ì‚É‚·‚é
-	//	PlayerToEnemyLenght = 7;
+	//	PlayerToEnemyLenght = 1;
 
 	//}
 	//‰ñ“]‚Ì’n“_‚ð‰ñ“]‚³‚¹‚é

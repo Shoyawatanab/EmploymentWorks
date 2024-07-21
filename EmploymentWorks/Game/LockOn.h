@@ -15,6 +15,7 @@ class Enemy;
 
 namespace mylib
 {
+	class GameCameraManager;
 	class TPS_Camera;
 }
 
@@ -24,7 +25,7 @@ class LockOn final
 
 {
 public:
-
+	bool GetIsLOckOn() { return m_isLockOn; }
 
 private:
 
@@ -45,7 +46,7 @@ private:
 
 
 public:
-	LockOn(Player* player, Enemy* enemy,mylib::TPS_Camera* tpsCamera);
+	LockOn(Player* player, Enemy* enemy, mylib::GameCameraManager* gameCamera);
 	~LockOn() ;
 
 	void Initialize(DX::DeviceResources* pDR, int width, int height);
