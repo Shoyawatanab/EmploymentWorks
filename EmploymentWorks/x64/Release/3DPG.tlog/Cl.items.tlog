@@ -22,13 +22,15 @@ C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Timer.cpp;C:\Us
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\Microsoft\DebugDraw.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\DebugDraw.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\BinaryFile.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\BinaryFile.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\Bounding.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\Bounding.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\Camera\GameCameraManager.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\GameCameraManager.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\Camera\GameStartCamera.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\GameStartCamera.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\Camera\TPS_Camera.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\TPS_Camera.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\CSV.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\CSV.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\DebugCamera.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\DebugCamera.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\DebugString.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\DebugString.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\GridFloor.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\GridFloor.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\InputManager.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\InputManager.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\Mouse.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\Mouse.obj
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\TPS_Camera.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\TPS_Camera.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\UserInterface.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\UserInterface.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Main.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\Main.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\pch.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\pch.obj

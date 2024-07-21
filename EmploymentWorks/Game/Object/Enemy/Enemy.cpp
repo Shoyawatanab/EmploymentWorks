@@ -80,7 +80,9 @@ void Enemy::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 
 
 	m_hp = 2;
 	m_graivty = 0.05f;
-
+	m_scale = 1.8f;
+	m_isCollsionTime = false;
+	m_collisionTime = 0;
 }
 
 //---------------------------------------------------------
@@ -96,14 +98,23 @@ void Enemy::Update(float elapsedTime)
 	if (m_isCollsionTime)
 	{
 		m_collisionTime += elapsedTime;
-		if (m_collisionTime >= 2)
+		if (m_collisionTime >= 6)
 		{
 			m_isCollsionTime = false;
 			m_collisionTime = 0;
 		}
 	}
 
-	m_position.y -= m_graivty;
+
+	if (m_hp <= 0 && m_scale > 0)
+	{
+		m_scale -= 0.01f;
+
+	}
+	else
+	{
+		m_position.y -= m_graivty;
+	}
 
 }
 
@@ -119,7 +130,7 @@ void Enemy::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 
 
 	// ワールド行列を更新する
-	Matrix world = Matrix::CreateScale(1.8f);
+	Matrix world = Matrix::CreateScale(m_scale);
 	world *= Matrix::CreateRotationY(DirectX::XMConvertToRadians(90));
 	world *= Matrix::CreateTranslation(m_position);
 
@@ -154,7 +165,7 @@ void Enemy::OnCollision(CollsionObjectTag& PartnerTag)
 	//ブーメランと当たっときに毎フレームHpがへらないようにする
 	if (m_isCollsionTime)
 	{
-		//return;
+		return;
 	}
 
 	m_hp--;

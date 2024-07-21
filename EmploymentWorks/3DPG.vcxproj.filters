@@ -68,6 +68,9 @@
     <Filter Include="Game\Object\Enemy\State">
       <UniqueIdentifier>{6420d79e-01d2-43e4-9b0d-558b61443738}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Libraries\MyLib\Camera">
+      <UniqueIdentifier>{b3695848-fbd7-42db-bc09-565f88d0a4c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -132,9 +135,6 @@
     <ClInclude Include="Libraries\MyLib\CSV.h">
       <Filter>Libraries\MyLib</Filter>
     </ClInclude>
-    <ClInclude Include="Libraries\MyLib\TPS_Camera.h">
-      <Filter>Libraries\MyLib</Filter>
-    </ClInclude>
     <ClInclude Include="Libraries\MyLib\Mouse.h">
       <Filter>Libraries\MyLib</Filter>
     </ClInclude>
@@ -192,6 +192,15 @@
     <ClInclude Include="Game\Timer.h">
       <Filter>Game</Filter>
     </ClInclude>
+    <ClInclude Include="Libraries\MyLib\Camera\GameCameraManager.h">
+      <Filter>Libraries\MyLib\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Libraries\MyLib\Camera\GameStartCamera.h">
+      <Filter>Libraries\MyLib\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Libraries\MyLib\Camera\TPS_Camera.h">
+      <Filter>Libraries\MyLib\Camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -242,9 +251,6 @@
     <ClCompile Include="Libraries\MyLib\CSV.cpp">
       <Filter>Libraries\MyLib</Filter>
     </ClCompile>
-    <ClCompile Include="Libraries\MyLib\TPS_Camera.cpp">
-      <Filter>Libraries\MyLib</Filter>
-    </ClCompile>
     <ClCompile Include="Libraries\MyLib\Mouse.cpp">
       <Filter>Libraries\MyLib</Filter>
     </ClCompile>
@@ -289,6 +295,15 @@
     </ClCompile>
     <ClCompile Include="Game\Timer.cpp">
       <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\MyLib\Camera\GameCameraManager.cpp">
+      <Filter>Libraries\MyLib\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\MyLib\Camera\GameStartCamera.cpp">
+      <Filter>Libraries\MyLib\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\MyLib\Camera\TPS_Camera.cpp">
+      <Filter>Libraries\MyLib\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

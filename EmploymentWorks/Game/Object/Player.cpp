@@ -220,6 +220,10 @@ void Player::Rotate(float elapsedTime, DirectX::SimpleMath::Vector3 moveDirectio
 		//ƒJƒƒ‰‚ÌŒü‚¢‚Ä‚¢‚é•ûŒü‚ÉƒvƒŒƒCƒ„‚Ì³–Ê‚ğ‡‚í‚¹‚é
 
 		m_rotate = m_cameraRatate;
+		m_direction = Vector3::Transform(INITIAL_DIRECTION, m_rotate);
+
+		m_direction.Normalize();
+
 
 	}
 	else

@@ -29,6 +29,7 @@ class Enemy : public ICollisionObject
 public:
 	DirectX::SimpleMath::Vector3 GetPosition() { return m_position; }
 	DirectX::SimpleMath::Quaternion GetRotate() { return m_rotate; }
+	float GetScale() { return m_scale; }
 
 	IEnemyState* GetEnemyState() { return m_currentState; }
 	EnemyIdling* GetEnemyIdling() { return m_idling.get(); }
@@ -53,6 +54,8 @@ private:
 
 	float m_collisionTime;
 	bool m_isCollsionTime;
+
+	float m_scale;
 
 
 	IEnemyState* m_currentState;

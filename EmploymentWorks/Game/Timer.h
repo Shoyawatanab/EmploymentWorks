@@ -69,6 +69,8 @@ public:
 	void Initialize(CommonResources* resources);
 	void Update(float elapsedTime);
 	void Render();
+	void PlaySceneRender(DirectX::SimpleMath::Vector2 Pos, float Scale);
+
 	void OneNumberRender(int number , DirectX::SimpleMath::Vector2 Pos,float Scale);
 	void TexRender(Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& Tex, DirectX::SimpleMath::Vector2& Center, DirectX::SimpleMath::Vector2 Pos, float Scale);
 
