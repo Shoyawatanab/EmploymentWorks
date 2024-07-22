@@ -2,6 +2,7 @@ C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\DeviceResources.cpp;
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\Game.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\CommonResources.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\CommonResources.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\DetectionCollision\CollisionManager.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\CollisionManager.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\EnemyHP.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\EnemyHP.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\LockOn.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\LockOn.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\Boomerang.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\Boomerang.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\State\BoomerangGetReady.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\BoomerangGetReady.obj

@@ -129,7 +129,7 @@ void LockOn::Update(float elapsedTime)
 }
 
 //---------------------------------------------------------
-// 描画する
+// 描画する	
 //---------------------------------------------------------
 void LockOn::Render()
 {
@@ -159,7 +159,8 @@ void LockOn::Add(const wchar_t* path, DirectX::SimpleMath::Vector2 position, Dir
 		, path
 		, position
 		, scale
-		, anchor);
+		, anchor
+		,UserInterface::Kinds::LockOn);
 	userInterface->SetWindowSize(m_windowWidth, m_windowHeight);
 
 	//  アイテムを新しく追加

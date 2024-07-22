@@ -50,7 +50,7 @@ void main(
 		//-----------------------------------------------------
 
 		//色情報（貰った情報は使えないのでとりあえず白）
-		element.color = float4(1.0f,1.0f,1.0f,1.0f);
+        element.color = float4(input[0].tex.x, 1.0f, 1.0f, 1.0f);
 
 		//テクスチャのUV座標
 		element.tex =  offset_array[i].xy;

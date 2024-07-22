@@ -15,6 +15,18 @@
     <ContentFile>
       <FullPath>C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Resources\Shaders\LockOn\LockOnUIVS.cso</FullPath>
     </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Resources\Shaders\UI\HPUIPS.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Resources\Shaders\UI\UIGS.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Resources\Shaders\UI\UIPS.cso</FullPath>
+    </ContentFile>
+    <ContentFile>
+      <FullPath>C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Resources\Shaders\UI\UIVS.cso</FullPath>
+    </ContentFile>
   </ContentFiles>
   <SatelliteDlls />
   <NonRecipeFileRefs />

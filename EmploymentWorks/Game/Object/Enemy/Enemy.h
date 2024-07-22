@@ -49,6 +49,7 @@ private:
 	std::unique_ptr<Bounding> m_bounding;
 
 	float m_hp;
+	int m_maxHP;
 	float m_graivty;
 
 
@@ -84,6 +85,9 @@ public:
 	DirectX::SimpleMath::Vector3 GetPos()override { return m_position; }
 
 	float GetHp() { return m_hp; }
+
+	float GetMAXHp() { return m_maxHP; }
+
 	void OnCollision(CollsionObjectTag& PartnerTag) override;
 
 };
