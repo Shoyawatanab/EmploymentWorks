@@ -71,6 +71,9 @@
     <Filter Include="Libraries\MyLib\Camera">
       <UniqueIdentifier>{b3695848-fbd7-42db-bc09-565f88d0a4c1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources\Shaders\UI">
+      <UniqueIdentifier>{c8e0cd45-46a4-44a3-b73a-c563d502857d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -201,6 +204,9 @@
     <ClInclude Include="Libraries\MyLib\Camera\TPS_Camera.h">
       <Filter>Libraries\MyLib\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="Game\EnemyHP.h">
+      <Filter>Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -305,6 +311,9 @@
     <ClCompile Include="Libraries\MyLib\Camera\TPS_Camera.cpp">
       <Filter>Libraries\MyLib\Camera</Filter>
     </ClCompile>
+    <ClCompile Include="Game\EnemyHP.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />
@@ -324,6 +333,9 @@
     <None Include="Resources\Shaders\LockOn\LockOnUI.hlsli">
       <Filter>Resources\Shaders\LockOn</Filter>
     </None>
+    <None Include="Resources\Shaders\UI\UI.hlsli">
+      <Filter>Resources\Shaders\UI</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\LockOn\LockOnUIGS.hlsl">
@@ -334,6 +346,18 @@
     </FxCompile>
     <FxCompile Include="Resources\Shaders\LockOn\LockOnUIVS.hlsl">
       <Filter>Resources\Shaders\LockOn</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\UI\UIGS.hlsl">
+      <Filter>Resources\Shaders\UI</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\UI\UIPS.hlsl">
+      <Filter>Resources\Shaders\UI</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\UI\UIVS.hlsl">
+      <Filter>Resources\Shaders\UI</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\UI\HPUIPS.hlsl">
+      <Filter>Resources\Shaders\UI</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

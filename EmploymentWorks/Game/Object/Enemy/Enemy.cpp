@@ -79,10 +79,12 @@ void Enemy::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 
 	m_bounding->CreateBoundingSphere(m_commonResources, m_position, 6.0f);
 
 	m_hp = 2;
+	m_maxHP = m_hp;
 	m_graivty = 0.05f;
 	m_scale = 1.8f;
 	m_isCollsionTime = false;
 	m_collisionTime = 0;
+
 }
 
 //---------------------------------------------------------

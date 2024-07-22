@@ -19,6 +19,7 @@
 #include "Game/LockOn.h"
 #include "Game/DetectionCollision/CollisionManager.h"
 #include "Game/Object/Wall.h"
+#include "Game/EnemyHP.h"
 
 #include <cassert>
 
@@ -41,6 +42,7 @@ PlayScene::PlayScene()
 	m_cameraManager{},
 	m_floor{}
 	, m_lockOn{}
+	, m_enemyHP{}
 
 {
 }
@@ -118,6 +120,10 @@ void PlayScene::Initialize(CommonResources* resources)
 		m_commonResources->GetDeviceResources()->GetOutputSize().bottom);
 	m_collisionManager = std::make_unique<CollisionManager>();
 
+	m_enemyHP = std::make_unique<EnemyHP>(m_enemy.get());
+	m_enemyHP->Initialize(m_commonResources->GetDeviceResources(),
+		m_commonResources->GetDeviceResources()->GetOutputSize().right,
+		m_commonResources->GetDeviceResources()->GetOutputSize().bottom);
 
 
 
@@ -152,6 +158,9 @@ void PlayScene::Update(float elapsedTime)
 
 	m_player->Update(elapsedTime, m_cameraManager->GetTPSCamera()->GetRotationX());
 	m_collisionManager->Update();
+
+	m_enemyHP->Update(elapsedTime);
+
 
 	if (m_enemy->GetHp() <= 0)
 	{
@@ -214,6 +223,9 @@ void PlayScene::Render()
 	m_player->Render(view, m_projection);
 
 	m_lockOn->Render();
+
+	m_enemyHP->Render();
+
 
 	m_commonResources->GetTimer()->PlaySceneRender(Vector2(100,50),0.3f);
 
