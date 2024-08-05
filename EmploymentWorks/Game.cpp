@@ -219,6 +219,18 @@ void Game::OnWindowMoved()
 {
     auto const r = m_deviceResources->GetOutputSize();
     m_deviceResources->WindowSizeChanged(r.right, r.bottom);
+
+
+    // š’Ç‹L
+    BOOL fullScreen = FALSE;
+
+    m_deviceResources->GetSwapChain()->GetFullscreenState(&fullScreen, nullptr);
+
+    if (m_fullScreen != fullScreen)
+    {
+        m_fullScreen = fullScreen;
+        m_deviceResources->CreateWindowSizeDependentResources();
+    }
 }
 
 void Game::OnDisplayChange()

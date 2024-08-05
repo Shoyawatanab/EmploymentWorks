@@ -1,8 +1,2 @@
-﻿  Enemy.cpp
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.h(89,28): warning C4244: 'return': 'int' から 'float' への変換です。データが失われる可能性があります。
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.cpp(82,12): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.cpp(55,7): warning C4189: 'context': ローカル変数が初期化されましたが、参照されていません
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.cpp(56,7): warning C4189: 'states': ローカル変数が初期化されましたが、参照されていません
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.cpp(165,44): warning C4100: 'PartnerTag': 引数は関数の本体部で 1 度も参照されません。
-     ライブラリ C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\3DPG.lib とオブジェクト C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\3DPG.exp を作成中
+﻿  Main.cpp
   3DPG.vcxproj -> C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\3DPG.exe

@@ -2,8 +2,7 @@
 #include <pch.h>
 #include "Interface/IEnemyState.h"
 
-class Boomerang;
-class Player;
+class Enemy;
 
 // EnemyIdlingクラスを定義する
 class EnemyIdling : public IEnemyState
@@ -14,7 +13,7 @@ public:
 
 public:
 	// コンストラクタ
-	EnemyIdling();
+	EnemyIdling(Enemy* enemy);
 	// デストラクタ
 	~EnemyIdling();
 	// 初期化する
@@ -27,10 +26,14 @@ public:
 	void Exit();
 
 private:
+	Enemy* m_enemy;
+
 	// ワールドマトリックス
 	DirectX::SimpleMath::Matrix m_worldMatrix;
 	// バウンディングスフィア
 	DirectX::BoundingSphere m_boundingSphereLeftLeg;
+
+	float m_stayTime;
 
 };
 

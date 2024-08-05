@@ -2,8 +2,7 @@
 #include <pch.h>
 #include "Interface/IEnemyState.h"
 
-class Boomerang;
-class Player;
+class Enemy;
 
 // EnemyAttackクラスを定義する
 class EnemyAttack : public IEnemyState
@@ -14,7 +13,7 @@ public:
 
 public:
 	// コンストラクタ
-	EnemyAttack();
+	EnemyAttack(Enemy* enemy);
 	// デストラクタ
 	~EnemyAttack();
 	// 初期化する
@@ -27,6 +26,7 @@ public:
 	void Exit();
 
 private:
+	Enemy* m_enemy;
 
 	// ワールドマトリックス
 	DirectX::SimpleMath::Matrix m_worldMatrix;

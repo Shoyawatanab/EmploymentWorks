@@ -7,10 +7,11 @@
 const DirectX::SimpleMath::Vector3 GENERATEDISTANCE(0.5f, 0.8f, 0.0f);
 
 // コンストラクタ
-EnemyAttack::EnemyAttack()
+EnemyAttack::EnemyAttack(Enemy* enemy)
 	:
 	m_worldMatrix{},
-	m_boundingSphereLeftLeg{}
+	m_boundingSphereLeftLeg{},
+	m_enemy{enemy}
 {
 }
 

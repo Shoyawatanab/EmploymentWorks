@@ -74,6 +74,9 @@ public:
 	void Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection) ;
 	void Finalize() ;
 
+	void ChangeState(IEnemyState* nextState);
+
+
 	void RegistrationCollionManager(CollisionManager* collsionManager) override;
 
 	Bounding* GetBounding() const override { return m_bounding.get(); };
