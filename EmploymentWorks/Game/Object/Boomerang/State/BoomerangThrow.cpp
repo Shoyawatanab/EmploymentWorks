@@ -11,7 +11,7 @@ const float SPEED = 5.0f;
 const DirectX::SimpleMath::Vector3 AxisOfRotation(0,1,0);  //‰ñ“]Ž²
 
 
-float Lerp(float a, float b, float t)
+static float Lerp(float a, float b, float t)
 {
 	return a + t * (b - a);
 }

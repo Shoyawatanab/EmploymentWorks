@@ -1,8 +1,7 @@
 #pragma once
 #include <pch.h>
 #include "Interface/IEnemyState.h"
-class Boomerang;
-class Player;
+class Enemy;
 
 // EnemyMoveクラスを定義する
 class EnemyMove : public IEnemyState
@@ -13,7 +12,7 @@ public:
 
 public:
 	// コンストラクタ
-	EnemyMove();
+	EnemyMove(Enemy* enemy);
 	// デストラクタ
 	~EnemyMove();
 	// 初期化する
@@ -22,11 +21,19 @@ public:
 	// 更新する
 	void Update(const float& elapsedTime);
 
+	void ChangePos();
+
 	void Enter();
 	void Exit();
 
 private:
+	Enemy* m_enemy;
 
+	float m_lerpT;
+	float m_acceleration;
+	DirectX::SimpleMath::Vector3 m_startPos[3];
+	DirectX::SimpleMath::Vector3 m_endPos[3];
+	int m_index;
 	// ワールドマトリックス
 	DirectX::SimpleMath::Matrix m_worldMatrix;
 	// バウンディングスフィア

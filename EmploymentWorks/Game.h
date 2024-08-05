@@ -87,4 +87,19 @@ private:
     std::unique_ptr<SceneManager>           m_sceneManager;
 
     // ★追記ココまで↑↑↑★
+
+    // フルスクリーン関連
+private:
+    // ★追記
+    BOOL m_fullScreen;
+
+public:
+    // 追記
+    // 画面モードを変更する関数（TRUE:フルスクリーン）
+    void SetFullscreenState(BOOL value)
+    {
+        m_fullScreen = value;
+        m_deviceResources->GetSwapChain()->SetFullscreenState(value, nullptr);
+        if (value) m_deviceResources->CreateWindowSizeDependentResources();
+    }
 };

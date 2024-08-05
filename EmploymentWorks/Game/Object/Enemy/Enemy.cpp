@@ -67,12 +67,14 @@ void Enemy::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 
 
 	m_position = position;
 	
-	m_idling = std::make_unique<EnemyIdling>();
+	m_idling = std::make_unique<EnemyIdling>(this);
 	m_idling->Initialize();
-	m_move = std::make_unique<EnemyMove>();
+	m_move = std::make_unique<EnemyMove>(this);
 	m_move->Initialize();
-	m_attack = std::make_unique<EnemyAttack>();
+	m_attack = std::make_unique<EnemyAttack>(this);
 	m_attack->Initialize();
+
+	m_currentState = m_idling.get();
 
 	m_bounding = std::make_unique<Bounding>();
 	m_bounding->CreateBoundingBox(m_commonResources, m_position, Vector3(3.5f, 4.9f, 1.8f));
@@ -96,6 +98,8 @@ void Enemy::Update(float elapsedTime)
 
 	// キーボードステートを取得する
 	DirectX::Keyboard::State keyboardState = DirectX::Keyboard::Get().GetState();
+
+	m_currentState->Update(elapsedTime);
 
 	if (m_isCollsionTime)
 	{
@@ -153,6 +157,13 @@ void Enemy::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 void Enemy::Finalize()
 {
 	// do nothing.
+}
+
+void Enemy::ChangeState(IEnemyState* nextState)
+{
+	m_currentState->Exit();
+	m_currentState = nextState;
+	m_currentState->Enter();
 }
 
 
