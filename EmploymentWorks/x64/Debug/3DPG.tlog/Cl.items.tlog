@@ -5,6 +5,7 @@ C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\DetectionCollis
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\EnemyHP.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\EnemyHP.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\LockOn.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\LockOn.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\Boomerang.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Boomerang.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\BoomerangOrbit.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\BoomerangOrbit.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\State\BoomerangGetReady.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\BoomerangGetReady.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\State\BoomerangIdling.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\BoomerangIdling.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\State\BoomerangThrow.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\BoomerangThrow.obj

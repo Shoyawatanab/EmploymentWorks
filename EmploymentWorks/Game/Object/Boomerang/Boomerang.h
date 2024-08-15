@@ -15,6 +15,7 @@
 class CommonResources;
 class Player;
 class Bounding;
+class BoomerangOrbit;
 
 
 namespace mylib
@@ -44,6 +45,8 @@ public:
 	BoomerangThrow* GetBoomerangThrow() { return m_throw.get(); }
 	BoomerangGetReady* GetBoomerangGetReady() { return m_getReady.get(); }
 
+	BoomerangOrbit* GetOrbit() { return m_orbit.get(); }
+
 private:
 
 	// ã§í ÉäÉ\Å[ÉX
@@ -63,6 +66,7 @@ private:
 	float m_scale;
 
 
+	std::unique_ptr<BoomerangOrbit> m_orbit;
 
 	//èÛë‘
 	IBoomerangState* m_currentState;
