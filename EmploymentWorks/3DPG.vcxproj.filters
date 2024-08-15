@@ -207,6 +207,9 @@
     <ClInclude Include="Game\EnemyHP.h">
       <Filter>Game</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Object\Boomerang\BoomerangOrbit.h">
+      <Filter>Game\Object\Boomerang</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -313,6 +316,9 @@
     </ClCompile>
     <ClCompile Include="Game\EnemyHP.cpp">
       <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Boomerang\BoomerangOrbit.cpp">
+      <Filter>Game\Object\Boomerang</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

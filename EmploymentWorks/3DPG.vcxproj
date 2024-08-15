@@ -187,6 +187,7 @@
     <ClInclude Include="Game\EnemyHP.h" />
     <ClInclude Include="Game\LockOn.h" />
     <ClInclude Include="Game\Object\Boomerang\Boomerang.h" />
+    <ClInclude Include="Game\Object\Boomerang\BoomerangOrbit.h" />
     <ClInclude Include="Game\Object\Boomerang\State\BoomerangGetReady.h" />
     <ClInclude Include="Game\Object\Boomerang\State\BoomerangIdling.h" />
     <ClInclude Include="Game\Object\Boomerang\State\BoomerangThrow.h" />
@@ -234,6 +235,7 @@
     <ClCompile Include="Game\EnemyHP.cpp" />
     <ClCompile Include="Game\LockOn.cpp" />
     <ClCompile Include="Game\Object\Boomerang\Boomerang.cpp" />
+    <ClCompile Include="Game\Object\Boomerang\BoomerangOrbit.cpp" />
     <ClCompile Include="Game\Object\Boomerang\State\BoomerangGetReady.cpp" />
     <ClCompile Include="Game\Object\Boomerang\State\BoomerangIdling.cpp" />
     <ClCompile Include="Game\Object\Boomerang\State\BoomerangThrow.cpp" />

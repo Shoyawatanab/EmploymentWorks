@@ -17,6 +17,8 @@
 #include "Game/Object/Player.h"
 #include "Libraries/MyLib/Bounding.h"
 #include "Game/DetectionCollision/CollisionManager.h"
+#include "Game/Object/Boomerang/BoomerangOrbit.h"
+
 
 const float SCALE = 0.5f; //オブジェクトの大きさ
 
@@ -34,7 +36,8 @@ Boomerang::Boomerang(Player* player, Enemy* enemy)
 	m_idling{},
 	m_throw{},
 	m_scale{},
-	m_enemy{ enemy }
+	m_enemy{ enemy },
+	m_orbit{}
 
 {
 }
@@ -89,6 +92,8 @@ void Boomerang::Initialize(CommonResources* resources)
 	m_bounding->CreateBoundingBox(m_commonResources, m_position, Vector3(0.3f, 0.5f, 0.3f));
 	m_bounding->CreateBoundingSphere(m_commonResources, m_position, 0.7f);
 
+	m_orbit = std::make_unique<BoomerangOrbit>(this, m_player, m_enemy);
+	m_orbit->Initialize(m_commonResources);
 
 }
 
@@ -103,6 +108,13 @@ void Boomerang::Update(float elapsedTime)
 
 
 	m_currentState->Update(elapsedTime);
+
+	if (m_currentState == m_getReady.get())
+	{
+		m_orbit->Update(elapsedTime);
+
+	}
+
 
 }
 
@@ -126,7 +138,12 @@ void Boomerang::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 	m_bounding->DrawBoundingSphere(m_position, view, projection);
 	m_bounding->DrawBoundingBox(m_position, view, projection);
 
-	
+	if (m_currentState == m_getReady.get())
+	{
+		m_orbit->Render();
+
+	}
+
 
 
 	// プリミティブ描画を開始する
