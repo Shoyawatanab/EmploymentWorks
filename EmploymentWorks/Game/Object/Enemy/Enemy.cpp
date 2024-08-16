@@ -15,6 +15,8 @@
 
 #include "Libraries/MyLib/Bounding.h"
 #include "Game/DetectionCollision/CollisionManager.h"
+#include "Game/BehaviorTree/BehaviorTree.h"
+#include "Game/Object/Player.h"
 
 //---------------------------------------------------------
 // コンストラクタ
@@ -25,10 +27,8 @@ Enemy::Enemy()
 	m_model{},
 	m_position{},
 	m_hp{},
-	m_currentState{},
-	m_idling{},
-	m_move{},
-	m_attack{}
+	m_behavior{},
+	m_player{}
 {
 }
 
@@ -67,14 +67,6 @@ void Enemy::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 
 
 	m_position = position;
 	
-	m_idling = std::make_unique<EnemyIdling>(this);
-	m_idling->Initialize();
-	m_move = std::make_unique<EnemyMove>(this);
-	m_move->Initialize();
-	m_attack = std::make_unique<EnemyAttack>(this);
-	m_attack->Initialize();
-
-	m_currentState = m_idling.get();
 
 	m_bounding = std::make_unique<Bounding>();
 	m_bounding->CreateBoundingBox(m_commonResources, m_position, Vector3(3.5f, 4.9f, 1.8f));
@@ -86,6 +78,9 @@ void Enemy::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 
 	m_scale = 1.8f;
 	m_isCollsionTime = false;
 	m_collisionTime = 0;
+
+	m_behavior = std::make_unique<BehaviorTree>(m_player, this);
+	m_behavior->Initialize(m_commonResources);
 
 }
 
@@ -99,7 +94,8 @@ void Enemy::Update(float elapsedTime)
 	// キーボードステートを取得する
 	DirectX::Keyboard::State keyboardState = DirectX::Keyboard::Get().GetState();
 
-	m_currentState->Update(elapsedTime);
+	m_behavior->Update(elapsedTime);
+
 
 	if (m_isCollsionTime)
 	{
@@ -159,12 +155,6 @@ void Enemy::Finalize()
 	// do nothing.
 }
 
-void Enemy::ChangeState(IEnemyState* nextState)
-{
-	m_currentState->Exit();
-	m_currentState = nextState;
-	m_currentState->Enter();
-}
 
 
 

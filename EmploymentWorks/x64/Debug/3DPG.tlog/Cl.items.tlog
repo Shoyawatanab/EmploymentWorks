@@ -1,5 +1,13 @@
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\DeviceResources.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\DeviceResources.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Game.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\BehaviorTree\ActionNode.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\ActionNode.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\BehaviorTree\BehaviorTree.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\BehaviorTree.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\BehaviorTree\Conditions.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Conditions.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\BehaviorTree\DecoratorNode.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\DecoratorNode.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\BehaviorTree\ExecutionNode.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\ExecutionNode.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\BehaviorTree\Root.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Root.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\BehaviorTree\SelectorNode.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\SelectorNode.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\BehaviorTree\SequenceNode.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\SequenceNode.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\CommonResources.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\CommonResources.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\DetectionCollision\CollisionManager.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\CollisionManager.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\EnemyHP.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\EnemyHP.obj
@@ -10,9 +18,6 @@ C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomeran
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\State\BoomerangIdling.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\BoomerangIdling.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\State\BoomerangThrow.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\BoomerangThrow.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Enemy.obj
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\State\EnemyAttack.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\EnemyAttack.obj
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\State\EnemyIdling.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\EnemyIdling.obj
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\State\EnemyMove.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\EnemyMove.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Floor.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Floor.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Player.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Wall.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Wall.obj

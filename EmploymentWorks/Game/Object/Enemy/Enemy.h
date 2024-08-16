@@ -5,16 +5,15 @@
 */
 #include "pch.h"
 #include"Game/Object/Boomerang/Boomerang.h"
-
-#include "Interface/IEnemyState.h"
-#include "Game/Object/Enemy/State/EnemyIdling.h"
-#include "Game/Object/Enemy/State/EnemyMove.h"
-#include "Game/Object/Enemy/State/EnemyAttack.h"
 #include "Interface/ICollisionObject.h"
+
 
 // 前方宣言
 class CommonResources;
 class Bounding;
+class BehaviorTree;
+class Player;
+
 
 namespace mylib
 {
@@ -27,14 +26,13 @@ class Enemy : public ICollisionObject
 
 {
 public:
+
+	void SetPlayer(Player* player) { m_player = player; }
+
 	DirectX::SimpleMath::Vector3 GetPosition() { return m_position; }
 	DirectX::SimpleMath::Quaternion GetRotate() { return m_rotate; }
 	float GetScale() { return m_scale; }
 
-	IEnemyState* GetEnemyState() { return m_currentState; }
-	EnemyIdling* GetEnemyIdling() { return m_idling.get(); }
-	EnemyMove* GetEnemyMove() { return m_move.get(); }
-	EnemyAttack* GetEnemyAttack() { return m_attack.get(); }
 
 private:
 	// 共通リソース
@@ -59,10 +57,9 @@ private:
 	float m_scale;
 
 
-	IEnemyState* m_currentState;
-	std::unique_ptr<EnemyIdling> m_idling;
-	std::unique_ptr<EnemyMove> m_move;
-	std::unique_ptr<EnemyAttack> m_attack;
+	std::unique_ptr<BehaviorTree> m_behavior;
+
+	Player* m_player;
 
 
 public:
@@ -74,7 +71,6 @@ public:
 	void Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection) ;
 	void Finalize() ;
 
-	void ChangeState(IEnemyState* nextState);
 
 
 	void RegistrationCollionManager(CollisionManager* collsionManager) override;

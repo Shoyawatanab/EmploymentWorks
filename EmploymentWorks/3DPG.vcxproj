@@ -182,6 +182,14 @@
   <ItemGroup>
     <ClInclude Include="DeviceResources.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Game\BehaviorTree\ActionNode.h" />
+    <ClInclude Include="Game\BehaviorTree\BehaviorTree.h" />
+    <ClInclude Include="Game\BehaviorTree\Conditions.h" />
+    <ClInclude Include="Game\BehaviorTree\DecoratorNode.h" />
+    <ClInclude Include="Game\BehaviorTree\ExecutionNode.h" />
+    <ClInclude Include="Game\BehaviorTree\Root.h" />
+    <ClInclude Include="Game\BehaviorTree\SelectorNode.h" />
+    <ClInclude Include="Game\BehaviorTree\SequenceNode.h" />
     <ClInclude Include="Game\CommonResources.h" />
     <ClInclude Include="Game\DetectionCollision\CollisionManager.h" />
     <ClInclude Include="Game\EnemyHP.h" />
@@ -192,9 +200,6 @@
     <ClInclude Include="Game\Object\Boomerang\State\BoomerangIdling.h" />
     <ClInclude Include="Game\Object\Boomerang\State\BoomerangThrow.h" />
     <ClInclude Include="Game\Object\Enemy\Enemy.h" />
-    <ClInclude Include="Game\Object\Enemy\State\EnemyAttack.h" />
-    <ClInclude Include="Game\Object\Enemy\State\EnemyIdling.h" />
-    <ClInclude Include="Game\Object\Enemy\State\EnemyMove.h" />
     <ClInclude Include="Game\Object\Floor.h" />
     <ClInclude Include="Game\Object\Player.h" />
     <ClInclude Include="Game\Object\Wall.h" />
@@ -205,9 +210,12 @@
     <ClInclude Include="Game\Scene\TitleScene.h" />
     <ClInclude Include="Game\Screen.h" />
     <ClInclude Include="Game\Timer.h" />
+    <ClInclude Include="Interface\IBehaviorNode.h" />
     <ClInclude Include="Interface\IBoomerangState.h" />
     <ClInclude Include="Interface\ICollisionObject.h" />
+    <ClInclude Include="Interface\ICompositeNode.h" />
     <ClInclude Include="Interface\IEnemyState.h" />
+    <ClInclude Include="Interface\ILeafNode.h" />
     <ClInclude Include="Interface\IMoveCollisionObject.h" />
     <ClInclude Include="Interface\INotMoveCollisionObject.h" />
     <ClInclude Include="Libraries\Microsoft\DebugDraw.h" />
@@ -230,6 +238,14 @@
   <ItemGroup>
     <ClCompile Include="DeviceResources.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Game\BehaviorTree\ActionNode.cpp" />
+    <ClCompile Include="Game\BehaviorTree\BehaviorTree.cpp" />
+    <ClCompile Include="Game\BehaviorTree\Conditions.cpp" />
+    <ClCompile Include="Game\BehaviorTree\DecoratorNode.cpp" />
+    <ClCompile Include="Game\BehaviorTree\ExecutionNode.cpp" />
+    <ClCompile Include="Game\BehaviorTree\Root.cpp" />
+    <ClCompile Include="Game\BehaviorTree\SelectorNode.cpp" />
+    <ClCompile Include="Game\BehaviorTree\SequenceNode.cpp" />
     <ClCompile Include="Game\CommonResources.cpp" />
     <ClCompile Include="Game\DetectionCollision\CollisionManager.cpp" />
     <ClCompile Include="Game\EnemyHP.cpp" />
@@ -240,9 +256,6 @@
     <ClCompile Include="Game\Object\Boomerang\State\BoomerangIdling.cpp" />
     <ClCompile Include="Game\Object\Boomerang\State\BoomerangThrow.cpp" />
     <ClCompile Include="Game\Object\Enemy\Enemy.cpp" />
-    <ClCompile Include="Game\Object\Enemy\State\EnemyAttack.cpp" />
-    <ClCompile Include="Game\Object\Enemy\State\EnemyIdling.cpp" />
-    <ClCompile Include="Game\Object\Enemy\State\EnemyMove.cpp" />
     <ClCompile Include="Game\Object\Floor.cpp" />
     <ClCompile Include="Game\Object\Player.cpp" />
     <ClCompile Include="Game\Object\Wall.cpp" />
