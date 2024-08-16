@@ -65,14 +65,14 @@
     <Filter Include="Game\Object\Enemy">
       <UniqueIdentifier>{53e98583-5d4e-41e2-bcf8-dd25c2138cd6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Object\Enemy\State">
-      <UniqueIdentifier>{6420d79e-01d2-43e4-9b0d-558b61443738}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Libraries\MyLib\Camera">
       <UniqueIdentifier>{b3695848-fbd7-42db-bc09-565f88d0a4c1}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resources\Shaders\UI">
       <UniqueIdentifier>{c8e0cd45-46a4-44a3-b73a-c563d502857d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\Enemy\BehaviorTree">
+      <UniqueIdentifier>{9af1577b-fac2-4ba1-b6bd-830a9faa8049}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -180,15 +180,6 @@
     <ClInclude Include="Game\Object\Enemy\Enemy.h">
       <Filter>Game\Object\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Object\Enemy\State\EnemyAttack.h">
-      <Filter>Game\Object\Enemy\State</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Enemy\State\EnemyIdling.h">
-      <Filter>Game\Object\Enemy\State</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Enemy\State\EnemyMove.h">
-      <Filter>Game\Object\Enemy\State</Filter>
-    </ClInclude>
     <ClInclude Include="Interface\IEnemyState.h">
       <Filter>Interface</Filter>
     </ClInclude>
@@ -209,6 +200,39 @@
     </ClInclude>
     <ClInclude Include="Game\Object\Boomerang\BoomerangOrbit.h">
       <Filter>Game\Object\Boomerang</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\BehaviorTree\ActionNode.h">
+      <Filter>Game\Object\Enemy\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\BehaviorTree\BehaviorTree.h">
+      <Filter>Game\Object\Enemy\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\BehaviorTree\Conditions.h">
+      <Filter>Game\Object\Enemy\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\BehaviorTree\DecoratorNode.h">
+      <Filter>Game\Object\Enemy\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\BehaviorTree\ExecutionNode.h">
+      <Filter>Game\Object\Enemy\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\BehaviorTree\Root.h">
+      <Filter>Game\Object\Enemy\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\BehaviorTree\SelectorNode.h">
+      <Filter>Game\Object\Enemy\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\BehaviorTree\SequenceNode.h">
+      <Filter>Game\Object\Enemy\BehaviorTree</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\IBehaviorNode.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\ILeafNode.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\ICompositeNode.h">
+      <Filter>Interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -293,15 +317,6 @@
     <ClCompile Include="Game\Object\Enemy\Enemy.cpp">
       <Filter>Game\Object\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Object\Enemy\State\EnemyAttack.cpp">
-      <Filter>Game\Object\Enemy\State</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\Enemy\State\EnemyIdling.cpp">
-      <Filter>Game\Object\Enemy\State</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\Enemy\State\EnemyMove.cpp">
-      <Filter>Game\Object\Enemy\State</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Timer.cpp">
       <Filter>Game</Filter>
     </ClCompile>
@@ -319,6 +334,30 @@
     </ClCompile>
     <ClCompile Include="Game\Object\Boomerang\BoomerangOrbit.cpp">
       <Filter>Game\Object\Boomerang</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\BehaviorTree\ActionNode.cpp">
+      <Filter>Game\Object\Enemy\BehaviorTree</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\BehaviorTree\BehaviorTree.cpp">
+      <Filter>Game\Object\Enemy\BehaviorTree</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\BehaviorTree\Conditions.cpp">
+      <Filter>Game\Object\Enemy\BehaviorTree</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\BehaviorTree\DecoratorNode.cpp">
+      <Filter>Game\Object\Enemy\BehaviorTree</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\BehaviorTree\ExecutionNode.cpp">
+      <Filter>Game\Object\Enemy\BehaviorTree</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\BehaviorTree\Root.cpp">
+      <Filter>Game\Object\Enemy\BehaviorTree</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\BehaviorTree\SelectorNode.cpp">
+      <Filter>Game\Object\Enemy\BehaviorTree</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\BehaviorTree\SequenceNode.cpp">
+      <Filter>Game\Object\Enemy\BehaviorTree</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

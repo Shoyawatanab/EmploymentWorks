@@ -92,6 +92,9 @@ void PlayScene::Initialize(CommonResources* resources)
 	m_player = std::make_unique<Player>(m_enemy.get());
 	m_cameraManager = std::make_unique<mylib::GameCameraManager>(m_player.get());
 
+
+	m_enemy->SetPlayer(m_player.get());
+
 	for (int i = 0; i < WALLSIZE; i++)
 	{
 		m_wall.push_back(std::make_unique<Wall>());
@@ -101,6 +104,9 @@ void PlayScene::Initialize(CommonResources* resources)
 	m_floor->Initialize(m_commonResources, Vector3::Zero, Vector3(15, 0.6f, 15), 8.0f);
 	m_player->Initialize(m_commonResources, Vector3(0, 2.75f, 0));
 	m_enemy->Initialize(m_commonResources, Vector3(0, 5.75f, -10));
+
+	
+
 	//WallƒNƒ‰ƒX‚Í“–‚½‚è”»’è‚ðŽ‚Á‚Ä‚¢‚é‚¾‚¯ƒ‚ƒfƒ‹‚Ì•`‰æ‚Í‚È‚¢
 	m_wall[0]->Initialize(m_commonResources,
 		Vector3(16, WALLHEITH, 0), Vector3(1.5f, 2, 15), 8.6f);
