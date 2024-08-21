@@ -55,11 +55,11 @@ void Floor::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 
 	fx->SetDirectory(L"Resources/Models");
 
 	// ÉÇÉfÉãÇì«Ç›çûÇﬁ
-	m_model = DirectX::Model::CreateFromCMO(device, L"Resources/Models/KariStage.cmo", *fx);
+	m_model = DirectX::Model::CreateFromCMO(device, L"Resources/Models/Stage.cmo", *fx);
 
 	m_bounding = std::make_unique<Bounding>();
 	m_bounding->CreateBoundingBox(m_commonResources, m_position, Extens);
-	m_bounding->CreateBoundingSphere(m_commonResources, m_position, 20.0f);
+	m_bounding->CreateBoundingSphere(m_commonResources, m_position, 40.0f);
 
 }
 
@@ -114,7 +114,7 @@ void Floor::RegistrationCollionManager(CollisionManager* collsionManager)
 }
 
 
-void Floor::OnCollision(CollsionObjectTag& PartnerTag)
+void Floor::OnCollision(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos)
 {
 
 }

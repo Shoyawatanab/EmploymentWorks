@@ -1,3 +1,6 @@
-﻿  Conditions.cpp
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.h(88,28): warning C4244: 'return': 'int' から 'float' への変換です。データが失われる可能性があります。
+﻿  Floor.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Floor.h(52,44): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Floor.cpp(69,71): warning C4100: 'cameraRotation': 引数は関数の本体部で 1 度も参照されません。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Floor.cpp(117,85): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Floor.cpp(117,44): warning C4100: 'PartnerTag': 引数は関数の本体部で 1 度も参照されません。
   3DPG.vcxproj -> C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\3DPG.exe

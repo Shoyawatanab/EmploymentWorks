@@ -97,7 +97,7 @@ public:
 
 	DirectX::SimpleMath::Vector3 GetPos() override { return m_position; }
 
-	void OnCollision(CollsionObjectTag& PartnerTag) override;
+	void OnCollision(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos) override;
 
 
 };

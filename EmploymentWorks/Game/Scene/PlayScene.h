@@ -52,7 +52,7 @@ private:
 	std::unique_ptr<LockOn> m_lockOn;
 
 
-	std::vector<std::unique_ptr<Wall>> m_wall;
+	std::unique_ptr<Wall> m_wall;
 
 	std::unique_ptr<CollisionManager> m_collisionManager;
 

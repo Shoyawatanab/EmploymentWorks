@@ -38,7 +38,7 @@ Wall::~Wall()
 //---------------------------------------------------------
 // 初期化する
 //---------------------------------------------------------
-void Wall::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 position,DirectX::SimpleMath::Vector3 Extens, float Scale)
+void Wall::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 position, float Scale)
 {
 	using namespace DirectX::SimpleMath;
 	assert(resources);
@@ -52,8 +52,7 @@ void Wall::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 p
 	//L"Resources/Models/Wall.cmo"
 
 	m_bounding = std::make_unique<Bounding>();
-	m_bounding->CreateBoundingBox(m_commonResources, m_position,Extens);
-	m_bounding->CreateBoundingSphere(m_commonResources,m_position, 20.0f);
+	m_bounding->CreateBoundingSphere(m_commonResources,m_position, m_scale);
 
 }
 
@@ -84,7 +83,7 @@ void Wall::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 	// ワールド行列を更新する
 	Matrix world = Matrix::CreateScale(m_scale);
 	world *= Matrix::CreateTranslation(m_position);
-	//m_bounding->DrawBoundingSphere(POS, view, projection);
+	m_bounding->DrawBoundingSphere(m_position, view, projection);
 	m_bounding->DrawBoundingBox(m_position, view, projection);
 
 
@@ -107,7 +106,7 @@ void Wall::RegistrationCollionManager(CollisionManager* collsionManager)
 
 
 
-void Wall::OnCollision(CollsionObjectTag& PartnerTag)
+void Wall::OnCollision(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos)
 {
 
 }

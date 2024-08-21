@@ -12,7 +12,7 @@ enum  class CollsionObjectTag
 	Enemy,
 	NotMoveObject,
 	Boomerang,
-
+	Wall
 
 };
 
@@ -44,7 +44,7 @@ public:
 	/// “–‚½‚Á‚½‚ÉŒÄ‚Ño‚·ŠÖ”
 	/// </summary>
 	/// <param name="tag">“–‚½‚Á‚½‚Ì‘Šè‚Ìƒ^ƒO</param>
-	virtual void OnCollision(CollsionObjectTag& PartnerTag) = 0;
+	virtual void OnCollision(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos1) = 0;
 
 	virtual void SetPos(DirectX::SimpleMath::Vector3& Pos) = 0;
 

@@ -95,27 +95,18 @@ void PlayScene::Initialize(CommonResources* resources)
 
 	m_enemy->SetPlayer(m_player.get());
 
-	for (int i = 0; i < WALLSIZE; i++)
-	{
-		m_wall.push_back(std::make_unique<Wall>());
-	}
+	m_wall = std::make_unique<Wall>();
 
 
-	m_floor->Initialize(m_commonResources, Vector3::Zero, Vector3(15, 0.6f, 15), 8.0f);
+	m_floor->Initialize(m_commonResources, Vector3::Zero, Vector3(36, 0.2f, 36), 8.0f);
 	m_player->Initialize(m_commonResources, Vector3(0, 2.75f, 0));
 	m_enemy->Initialize(m_commonResources, Vector3(0, 5.75f, -10));
 
 	
 
 	//Wallクラスは当たり判定を持っているだけモデルの描画はない
-	m_wall[0]->Initialize(m_commonResources,
-		Vector3(16, WALLHEITH, 0), Vector3(1.5f, 2, 15), 8.6f);
-	m_wall[1]->Initialize(m_commonResources,
-		Vector3(-16, WALLHEITH, 0), Vector3(1.5f, 2, 15), 8.6f);
-	m_wall[2]->Initialize(m_commonResources,
-		Vector3(0, WALLHEITH, 16), Vector3(15, 2, 1.5f), 8.6f);
-	m_wall[3]->Initialize(m_commonResources,
-		Vector3(0, WALLHEITH, -16), Vector3(15, 2, 1.5f), 8.6f);
+	m_wall->Initialize(m_commonResources,
+		Vector3::Zero, 36.0f);
 
 	m_cameraManager->Initialize();
 
@@ -138,10 +129,7 @@ void PlayScene::Initialize(CommonResources* resources)
 	m_enemy->RegistrationCollionManager(m_collisionManager.get());
 	m_floor->RegistrationCollionManager(m_collisionManager.get());
 
-	for (auto& wall : m_wall)
-	{
-		wall->RegistrationCollionManager(m_collisionManager.get());
-	}
+	m_wall->RegistrationCollionManager(m_collisionManager.get());
 
 	// シーン変更フラグを初期化する
 	m_isChangeScene = false;
@@ -218,10 +206,7 @@ void PlayScene::Render()
 	//m_gridFloor->Render(context, view, m_projection);
 	m_floor->Render(view, m_projection);
 
-	for (auto& wall : m_wall)
-	{
-		wall->Render(view, m_projection);
-	}
+	m_wall->Render(view, m_projection);
 
 
 	m_enemy->Render(view, m_projection);

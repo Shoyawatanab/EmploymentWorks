@@ -35,7 +35,7 @@ public:
 	Wall();
 	~Wall() ;
 
-	void Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Vector3 Extens,float Scale) ;
+	void Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 position, float Scale);
 	void Update(float elapsedTime, DirectX::SimpleMath::Quaternion cameraRotation);
 	void Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection) ;
 	void Finalize() ;
@@ -44,12 +44,12 @@ public:
 
 	Bounding* GetBounding() const override { return m_bounding.get(); };
 
-	CollsionObjectTag GetCollsionTag() const override { return CollsionObjectTag::NotMoveObject; }
+	CollsionObjectTag GetCollsionTag() const override { return CollsionObjectTag::Wall; }
 
 	void SetPos(DirectX::SimpleMath::Vector3& Pos) override { }
 
 	DirectX::SimpleMath::Vector3 GetPos() override { return DirectX::SimpleMath::Vector3::Zero; }
-	void OnCollision(CollsionObjectTag& PartnerTag) override;
+	void OnCollision(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos) override;
 
 private:
 };
