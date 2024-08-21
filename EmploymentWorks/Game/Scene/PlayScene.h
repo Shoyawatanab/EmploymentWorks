@@ -14,6 +14,8 @@ class LockOn;
 class CollisionManager;
 class Wall;
 class EnemyHP;
+class Rock;
+class Pillar;
 
 
 namespace mylib
@@ -58,6 +60,9 @@ private:
 
 	std::unique_ptr<EnemyHP> m_enemyHP;
 
+	std::vector< std::unique_ptr<Rock>> m_rock;
+
+	std::unique_ptr<Pillar> m_pillar;
 
 public:
 	PlayScene();

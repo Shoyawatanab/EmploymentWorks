@@ -201,7 +201,9 @@
     <ClInclude Include="Game\Object\Boomerang\State\BoomerangThrow.h" />
     <ClInclude Include="Game\Object\Enemy\Enemy.h" />
     <ClInclude Include="Game\Object\Floor.h" />
+    <ClInclude Include="Game\Object\Pillar.h" />
     <ClInclude Include="Game\Object\Player.h" />
+    <ClInclude Include="Game\Object\Rock.h" />
     <ClInclude Include="Game\Object\Wall.h" />
     <ClInclude Include="Game\Scene\IScene.h" />
     <ClInclude Include="Game\Scene\PlayScene.h" />
@@ -257,7 +259,9 @@
     <ClCompile Include="Game\Object\Boomerang\State\BoomerangThrow.cpp" />
     <ClCompile Include="Game\Object\Enemy\Enemy.cpp" />
     <ClCompile Include="Game\Object\Floor.cpp" />
+    <ClCompile Include="Game\Object\Pillar.cpp" />
     <ClCompile Include="Game\Object\Player.cpp" />
+    <ClCompile Include="Game\Object\Rock.cpp" />
     <ClCompile Include="Game\Object\Wall.cpp" />
     <ClCompile Include="Game\Scene\PlayScene.cpp" />
     <ClCompile Include="Game\Scene\ResultScene.cpp" />

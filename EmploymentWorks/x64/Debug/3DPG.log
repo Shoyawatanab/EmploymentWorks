@@ -1,6 +1,86 @@
-﻿  Floor.cpp
+﻿  Conditions.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.h(98,28): warning C4244: 'return': 'int' から 'float' への変換です。データが失われる可能性があります。
+  ExecutionNode.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.h(98,28): warning C4244: 'return': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\BehaviorTree\ExecutionNode.cpp(99,50): warning C4100: 'elapsdTime': 引数は関数の本体部で 1 度も参照されません。
+  CollisionManager.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.h(98,28): warning C4244: 'return': 'int' から 'float' への変換です。データが失われる可能性があります。
+  EnemyHP.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.h(98,28): warning C4244: 'return': 'int' から 'float' への変換です。データが失われる可能性があります。
+  LockOn.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.h(98,28): warning C4244: 'return': 'int' から 'float' への変換です。データが失われる可能性があります。
+  Boomerang.cpp
+  BoomerangOrbit.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.h(98,28): warning C4244: 'return': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\BoomerangOrbit.cpp(86,31): warning C4267: '=': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
+  BoomerangGetReady.cpp
+  BoomerangIdling.cpp
+  BoomerangThrow.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.h(98,28): warning C4244: 'return': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\State\BoomerangThrow.cpp(110,31): warning C4267: '=': 'size_t' から 'int' に変換しました。データが失われているかもしれません。
+  Enemy.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.h(98,28): warning C4244: 'return': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.cpp(83,12): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.cpp(62,7): warning C4189: 'context': ローカル変数が初期化されましたが、参照されていません
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.cpp(63,7): warning C4189: 'states': ローカル変数が初期化されましたが、参照されていません
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.cpp(215,44): warning C4100: 'PartnerTag': 引数は関数の本体部で 1 度も参照されません。
+  Floor.cpp
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Floor.h(52,44): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Floor.cpp(69,71): warning C4100: 'cameraRotation': 引数は関数の本体部で 1 度も参照されません。
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Floor.cpp(117,85): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Floor.cpp(117,44): warning C4100: 'PartnerTag': 引数は関数の本体部で 1 度も参照されません。
+  Pillar.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Pillar.h(52,44): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Pillar.cpp(69,72): warning C4100: 'cameraRotation': 引数は関数の本体部で 1 度も参照されません。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Pillar.cpp(117,86): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Pillar.cpp(117,45): warning C4100: 'PartnerTag': 引数は関数の本体部で 1 度も参照されません。
+  Player.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.h(98,28): warning C4244: 'return': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player.cpp(184,27): warning C4100: 'elapsedTime': 引数は関数の本体部で 1 度も参照されません。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player.cpp(188,15): warning C4101: 'a': ローカル変数は 1 度も使われていません。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player.cpp(269,86): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player.cpp(269,45): warning C4100: 'PartnerTag': 引数は関数の本体部で 1 度も参照されません。
+  Rock.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Rock.h(52,44): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Rock.cpp(69,70): warning C4100: 'cameraRotation': 引数は関数の本体部で 1 度も参照されません。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Rock.cpp(117,84): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Rock.cpp(117,43): warning C4100: 'PartnerTag': 引数は関数の本体部で 1 度も参照されません。
+  Wall.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Wall.h(49,44): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Wall.cpp(49,7): warning C4189: 'device': ローカル変数が初期化されましたが、参照されていません
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Wall.cpp(62,70): warning C4100: 'cameraRotation': 引数は関数の本体部で 1 度も参照されません。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Wall.cpp(79,7): warning C4189: 'context': ローカル変数が初期化されましたが、参照されていません
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Wall.cpp(80,7): warning C4189: 'states': ローカル変数が初期化されましたが、参照されていません
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Wall.cpp(109,84): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Wall.cpp(109,43): warning C4100: 'PartnerTag': 引数は関数の本体部で 1 度も参照されません。
+  PlayScene.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.h(98,28): warning C4244: 'return': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Floor.h(52,44): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Wall.h(49,44): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Rock.h(52,44): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Pillar.h(52,44): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\PlayScene.cpp(204,14): warning C4189: 'kbTracker': ローカル変数が初期化されましたが、参照されていません
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\PlayScene.cpp(222,7): warning C4189: 'context': ローカル変数が初期化されましたが、参照されていません
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\PlayScene.cpp(223,7): warning C4189: 'states': ローカル変数が初期化されましたが、参照されていません
+  SceneManager.cpp
+  GameCameraManager.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\Camera\GameCameraManager.cpp(14,34): warning C4838: 'float' から 'LONG' への変換には縮小変換が必要です
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\Camera\GameCameraManager.cpp(14,34): warning C4244: '初期化中': 'float' から 'LONG' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\Camera\GameCameraManager.cpp(14,41): warning C4838: 'float' から 'LONG' への変換には縮小変換が必要です
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\Camera\GameCameraManager.cpp(14,41): warning C4244: '初期化中': 'float' から 'LONG' への変換です。データが失われる可能性があります。
+  GameStartCamera.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\Camera\GameStartCamera.cpp(75,50): warning C4100: 'elapsedTime': 引数は関数の本体部で 1 度も参照されません。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\Camera\GameStartCamera.cpp(132,8): warning C4189: 'z': ローカル変数が初期化されましたが、参照されていません
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\Camera\GameStartCamera.cpp(131,8): warning C4189: 'x': ローカル変数が初期化されましたが、参照されていません
+  コードを生成中...
+  コンパイル中...
+  TPS_Camera.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\Camera\TPS_Camera.cpp(11,34): warning C4838: 'float' から 'LONG' への変換には縮小変換が必要です
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\Camera\TPS_Camera.cpp(11,34): warning C4244: '初期化中': 'float' から 'LONG' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\Camera\TPS_Camera.cpp(11,41): warning C4838: 'float' から 'LONG' への変換には縮小変換が必要です
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\Camera\TPS_Camera.cpp(11,41): warning C4244: '初期化中': 'float' から 'LONG' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\Camera\TPS_Camera.cpp(69,32): warning C4244: '-=': 'float' から 'LONG' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\Camera\TPS_Camera.cpp(70,32): warning C4244: '-=': 'float' から 'LONG' への変換です。データが失われる可能性があります。
+  コードを生成中...
+     ライブラリ C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\3DPG.lib とオブジェクト C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\3DPG.exp を作成中
   3DPG.vcxproj -> C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\3DPG.exe
