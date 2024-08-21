@@ -173,10 +173,26 @@ void Boomerang::ChangeState(IBoomerangState* nextState)
 }
 
 
-void Boomerang::OnCollision(CollsionObjectTag& PartnerTag)
+void Boomerang::OnCollision(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos)
 {
 
+	if (PartnerTag == CollsionObjectTag::Enemy)
+	{
+		//’e‚©‚ê‚éˆ—
+
+		//’e‚©‚ê‚é•ûŒü
+		DirectX::SimpleMath::Vector3 StrikeDirection = Pos = m_position;
+
+
+
+
+
+	}
+
+
+
 }
+
 
 
 

@@ -33,6 +33,7 @@ public:
 	DirectX::SimpleMath::Quaternion GetRotate() { return m_rotate; }
 	float GetScale() { return m_scale; }
 
+	DirectX::SimpleMath::Vector3 GetTargetPos() { return m_targetPos; }
 
 private:
 	// 共通リソース
@@ -61,6 +62,15 @@ private:
 
 	Player* m_player;
 
+	//ノックバックの方向
+	DirectX::SimpleMath::Vector3 m_knockbackDirection;
+	float m_acceleration;
+	float m_knockbackTime;
+
+
+	//ブーメランのターゲットの座標
+	DirectX::SimpleMath::Vector3 m_targetPos;
+
 
 public:
 	Enemy();
@@ -87,6 +97,6 @@ public:
 
 	float GetMAXHp() { return m_maxHP; }
 
-	void OnCollision(CollsionObjectTag& PartnerTag) override;
+	void OnCollision(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos) override;
 
 };

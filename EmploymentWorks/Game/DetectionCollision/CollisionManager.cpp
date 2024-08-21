@@ -58,7 +58,8 @@ void CollisionManager::Update()
 			CollsionObjectTag tagJ = m_collsionObjects[j]->GetCollsionTag();
 
 			if (tagI == CollsionObjectTag::Player && tagJ == CollsionObjectTag::Boomerang ||
-				tagJ == CollsionObjectTag::Player && tagI == CollsionObjectTag::Boomerang)
+				tagJ == CollsionObjectTag::Player && tagI == CollsionObjectTag::Boomerang ||
+				tagI == CollsionObjectTag::NotMoveObject && tagJ == CollsionObjectTag::NotMoveObject)
 			{
 				continue;
 			}
@@ -71,7 +72,7 @@ void CollisionManager::Update()
 			DirectX::BoundingSphere* Sphere1 = bounding1->GetBoundingSphere();
 			DirectX::BoundingSphere* Sphere2 = bounding2->GetBoundingSphere();
 
-			
+
 			//スフィアが当たっているかどうか
 			//前に＊を置いたらエラーが消えた　今後理解する
 			if (!Sphere1->Intersects(*Sphere2))
@@ -89,9 +90,41 @@ void CollisionManager::Update()
 
 
 
+
+
 			//バウンディングボックスの取得
 			DirectX::BoundingBox* Box1 = bounding1->GetBoundingBox();
 			DirectX::BoundingBox* Box2 = bounding2->GetBoundingBox();
+
+
+
+			//プレイヤと壁との当たり判定の時に使用
+			if (tagI == CollsionObjectTag::Player && tagJ == CollsionObjectTag::Wall)
+			{
+
+				//円とプレイヤの距離
+				Vector3 ToPlayer = Box1->Center - Box2->Center;
+
+				float distance = ToPlayer.Length();
+
+				float radius = Sphere2->Radius - Sphere1->Radius;
+
+				//外に出たら
+				if (distance > radius)
+				{
+					//正規化
+					ToPlayer.Normalize();
+
+
+					Vector3 Pos = Sphere2->Center + ToPlayer * radius;
+
+					m_collsionObjects[i]->SetPos(Pos);
+
+				}
+
+				continue;
+			}
+
 
 			//バウンディングボックスと当たったかどうか
 			if (!Box1->Intersects(*Box2))
@@ -99,17 +132,25 @@ void CollisionManager::Update()
 				continue;
 			}
 
+
+
+
 			//ボックスの色の変更
 			bounding1->SetIsBoxHit(true);
 			bounding2->SetIsBoxHit(true);
+
+
+
+
+
 
 
 			if (tagI == CollsionObjectTag::Boomerang && tagJ == CollsionObjectTag::Enemy ||
 				tagJ == CollsionObjectTag::Boomerang && tagI == CollsionObjectTag::Enemy)
 			{
 
-				m_collsionObjects[i]->OnCollision(tagJ);
-				m_collsionObjects[j]->OnCollision(tagI);
+				m_collsionObjects[i]->OnCollision(tagJ, Box2->Center);
+				m_collsionObjects[j]->OnCollision(tagI, Box1->Center);
 
 
 
@@ -125,7 +166,7 @@ void CollisionManager::Update()
 			Vector3 Min2 = Box2->Center - Box2->Extents;
 			Vector3 Max2 = Box2->Center + Box2->Extents;
 
-			
+
 			//各軸の差分の計算
 			float dx1 = Max2.x - Min1.x;
 			float dx2 = Min2.x - Max1.x;
@@ -162,7 +203,7 @@ void CollisionManager::Update()
 			Vector3 a = m_collsionObjects[i]->GetPos();
 			a += pushBackVec;
 			m_collsionObjects[i]->SetPos(a);
-	
+
 		}
 	}
 

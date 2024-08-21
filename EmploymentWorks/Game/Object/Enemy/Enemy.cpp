@@ -18,6 +18,10 @@
 #include "Game/BehaviorTree/BehaviorTree.h"
 #include "Game/Object/Player.h"
 
+//初期のターゲットの座標の距離
+static const DirectX::SimpleMath::Vector3 STAETTAEGETDIRECTION = DirectX::SimpleMath::Vector3(0, 0, 2.5f);
+
+
 //---------------------------------------------------------
 // コンストラクタ
 //---------------------------------------------------------
@@ -28,7 +32,10 @@ Enemy::Enemy()
 	m_position{},
 	m_hp{},
 	m_behavior{},
-	m_player{}
+	m_player{},
+	m_knockbackDirection{},
+	m_targetPos{}
+
 {
 }
 
@@ -82,6 +89,11 @@ void Enemy::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 
 	m_behavior = std::make_unique<BehaviorTree>(m_player, this);
 	m_behavior->Initialize(m_commonResources);
 
+
+	m_acceleration = 0;
+	m_knockbackDirection = DirectX::SimpleMath::Vector3::Zero;
+	m_knockbackTime = 0;
+
 }
 
 //---------------------------------------------------------
@@ -99,12 +111,36 @@ void Enemy::Update(float elapsedTime)
 
 	if (m_isCollsionTime)
 	{
-		m_collisionTime += elapsedTime;
-		if (m_collisionTime >= 6)
+
+		if (m_knockbackTime < 0.2f)
+		{
+
+
+
+
+			//弾かれる処理
+
+			m_acceleration += 90.0f * elapsedTime;
+
+			m_acceleration = std::min(m_acceleration, 60.0f);
+
+			DirectX::SimpleMath::Vector3 Direction = m_knockbackDirection;
+
+			Direction *= m_acceleration * elapsedTime;
+
+			m_position += Direction;
+
+		}
+
+
+		m_knockbackTime += elapsedTime;
+
+		if (m_knockbackTime >= 5)
 		{
 			m_isCollsionTime = false;
-			m_collisionTime = 0;
+			m_knockbackTime = 0;
 		}
+
 	}
 
 
@@ -117,6 +153,19 @@ void Enemy::Update(float elapsedTime)
 	{
 		m_position.y -= m_graivty;
 	}
+
+
+	//プレイヤと敵のベクトル
+	DirectX::SimpleMath::Vector3 vec = m_player->GetPos() - m_position;
+	vec.Normalize();
+	//プレイヤの方向に向けるための回転
+	DirectX::SimpleMath::Quaternion Rotate;
+
+	Rotate = DirectX::SimpleMath::Quaternion::FromToRotation(STAETTAEGETDIRECTION, vec);
+
+	DirectX::SimpleMath::Vector3 Pos = DirectX::SimpleMath::Vector3::Transform(STAETTAEGETDIRECTION, Rotate);
+
+	m_targetPos = m_position + Pos;
 
 }
 
@@ -163,7 +212,7 @@ void Enemy::RegistrationCollionManager(CollisionManager* collsionManager)
 	collsionManager->AddCollsion(this);
 }
 
-void Enemy::OnCollision(CollsionObjectTag& PartnerTag)
+void Enemy::OnCollision(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos)
 {
 	//ブーメランと当たっときに毎フレームHpがへらないようにする
 	if (m_isCollsionTime)
@@ -174,4 +223,15 @@ void Enemy::OnCollision(CollsionObjectTag& PartnerTag)
 	m_hp--;
 
 	m_isCollsionTime = true;
+
+	//ブーメランとの座標から弾く方向を決める
+
+//方向
+	m_knockbackDirection = m_position - Pos;
+	m_knockbackDirection.y = 0;
+
+	m_knockbackDirection.Normalize();
+
+	m_acceleration = 0;
+
 }
