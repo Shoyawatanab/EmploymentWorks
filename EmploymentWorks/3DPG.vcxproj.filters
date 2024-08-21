@@ -234,6 +234,12 @@
     <ClInclude Include="Interface\ICompositeNode.h">
       <Filter>Interface</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Object\Pillar.h">
+      <Filter>Game\Object\StageObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Rock.h">
+      <Filter>Game\Object\StageObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -358,6 +364,12 @@
     </ClCompile>
     <ClCompile Include="Game\BehaviorTree\SequenceNode.cpp">
       <Filter>Game\Object\Enemy\BehaviorTree</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Pillar.cpp">
+      <Filter>Game\Object\StageObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Rock.cpp">
+      <Filter>Game\Object\StageObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

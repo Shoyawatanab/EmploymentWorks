@@ -19,7 +19,9 @@ C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomeran
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\State\BoomerangThrow.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\BoomerangThrow.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Enemy.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Floor.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Floor.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Pillar.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Pillar.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Player.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Rock.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Rock.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Wall.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Wall.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\PlayScene.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\PlayScene.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\ResultScene.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\ResultScene.obj

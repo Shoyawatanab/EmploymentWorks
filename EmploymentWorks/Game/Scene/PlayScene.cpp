@@ -20,6 +20,8 @@
 #include "Game/DetectionCollision/CollisionManager.h"
 #include "Game/Object/Wall.h"
 #include "Game/EnemyHP.h"
+#include "Game/Object/Rock.h"
+#include "Game/Object/Pillar.h"
 
 #include <cassert>
 
@@ -43,6 +45,8 @@ PlayScene::PlayScene()
 	m_floor{}
 	, m_lockOn{}
 	, m_enemyHP{}
+	, m_rock{},
+	m_pillar{}
 
 {
 }
@@ -122,6 +126,20 @@ void PlayScene::Initialize(CommonResources* resources)
 		m_commonResources->GetDeviceResources()->GetOutputSize().right,
 		m_commonResources->GetDeviceResources()->GetOutputSize().bottom);
 
+	//石　岩
+	auto rock = std::make_unique<Rock>();
+	rock->Initialize(m_commonResources, Vector3(15, 0, 0), Vector3(3.8, 3.5f, 2.5f), 2);
+	m_rock.emplace_back(std::move(rock));
+
+	rock = std::make_unique<Rock>();
+	rock->Initialize(m_commonResources, Vector3(-15, 0, 0), Vector3(3.8, 3.5f, 2.5f), 2);
+	m_rock.emplace_back(std::move(rock));
+
+
+	//柱
+	m_pillar = std::make_unique<Pillar>();
+	m_pillar->Initialize(m_commonResources, Vector3(0, 3, 0), Vector3(1, 3.5f, 1), 1);
+
 
 
 	///当たり判定をManagerに追加
@@ -130,6 +148,13 @@ void PlayScene::Initialize(CommonResources* resources)
 	m_floor->RegistrationCollionManager(m_collisionManager.get());
 
 	m_wall->RegistrationCollionManager(m_collisionManager.get());
+
+	m_rock[0]->RegistrationCollionManager(m_collisionManager.get());
+	m_rock[1]->RegistrationCollionManager(m_collisionManager.get());
+
+	m_pillar->RegistrationCollionManager(m_collisionManager.get());
+
+
 
 	// シーン変更フラグを初期化する
 	m_isChangeScene = false;
@@ -216,6 +241,14 @@ void PlayScene::Render()
 	m_lockOn->Render();
 
 	m_enemyHP->Render();
+
+	for (auto& rock : m_rock)
+	{
+		rock->Render(view, m_projection);
+
+	}
+	m_pillar->Render(view, m_projection);
+
 
 
 	m_commonResources->GetTimer()->PlaySceneRender(Vector2(100,50),0.3f);
