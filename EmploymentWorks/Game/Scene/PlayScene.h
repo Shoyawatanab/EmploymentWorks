@@ -16,7 +16,7 @@ class Wall;
 class EnemyHP;
 class Rock;
 class Pillar;
-
+class Sky;
 
 namespace mylib
 {
@@ -63,6 +63,8 @@ private:
 	std::vector< std::unique_ptr<Rock>> m_rock;
 
 	std::unique_ptr<Pillar> m_pillar;
+
+	std::unique_ptr<Sky> m_sky;
 
 public:
 	PlayScene();
