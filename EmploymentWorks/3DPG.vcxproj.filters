@@ -240,6 +240,15 @@
     <ClInclude Include="Game\Object\Rock.h">
       <Filter>Game\Object\StageObject</Filter>
     </ClInclude>
+    <ClInclude Include="Libraries\MyLib\Judgement.h">
+      <Filter>Libraries\MyLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\Beam.h">
+      <Filter>Game\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\BeamModel.h">
+      <Filter>Game\Object\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -370,6 +379,15 @@
     </ClCompile>
     <ClCompile Include="Game\Object\Rock.cpp">
       <Filter>Game\Object\StageObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\MyLib\Judgement.cpp">
+      <Filter>Libraries\MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\Beam.cpp">
+      <Filter>Game\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\BeamModel.cpp">
+      <Filter>Game\Object\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

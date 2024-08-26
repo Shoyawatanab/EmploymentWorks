@@ -17,9 +17,14 @@
 #include "Game/DetectionCollision/CollisionManager.h"
 #include "Game/BehaviorTree/BehaviorTree.h"
 #include "Game/Object/Player.h"
+#include "Game/Object/Enemy/Beam.h"
+
 
 //初期のターゲットの座標の距離
-static const DirectX::SimpleMath::Vector3 STAETTAEGETDIRECTION = DirectX::SimpleMath::Vector3(0, 0, 2.5f);
+const DirectX::SimpleMath::Vector3 Enemy::STAETTAEGETDIRECTION = DirectX::SimpleMath::Vector3(0, 0, 2.5f);
+
+//敵の初期の向いている方向
+const DirectX::SimpleMath::Vector3 Enemy::INITIALFORWARD = DirectX::SimpleMath::Vector3(0, 0, 1);
 
 
 //---------------------------------------------------------
@@ -34,7 +39,8 @@ Enemy::Enemy()
 	m_behavior{},
 	m_player{},
 	m_knockbackDirection{},
-	m_targetPos{}
+	m_targetPos{},
+	m_forward{ INITIALFORWARD }
 
 {
 }
@@ -74,6 +80,9 @@ void Enemy::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 
 
 	m_position = position;
 	
+	m_initialRotate = DirectX::SimpleMath::Quaternion::CreateFromAxisAngle(DirectX::SimpleMath::Vector3::Up, DirectX::XMConvertToRadians(90.0f));
+	m_rotate = DirectX::SimpleMath::Quaternion::Identity;
+
 
 	m_bounding = std::make_unique<Bounding>();
 	m_bounding->CreateBoundingBox(m_commonResources, m_position, Vector3(3.5f, 4.9f, 1.8f));
@@ -93,6 +102,10 @@ void Enemy::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 
 	m_acceleration = 0;
 	m_knockbackDirection = DirectX::SimpleMath::Vector3::Zero;
 	m_knockbackTime = 0;
+
+	m_beam = std::make_unique<Beam>();
+	m_beam->Initialize(m_commonResources, m_player, this);
+
 
 }
 
@@ -182,7 +195,10 @@ void Enemy::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 
 	// ワールド行列を更新する
 	Matrix world = Matrix::CreateScale(m_scale);
-	world *= Matrix::CreateRotationY(DirectX::XMConvertToRadians(90));
+	//のちに変更する　初期角度をここでやらないとプレイヤの方向に向く処理に影響が出て向かなくなる
+	world *= Matrix::CreateFromQuaternion(m_initialRotate);
+
+	world *= Matrix::CreateFromQuaternion(m_rotate);
 	world *= Matrix::CreateTranslation(m_position);
 
 
@@ -192,6 +208,7 @@ void Enemy::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 	m_bounding->DrawBoundingBox(m_position, view, projection);
 	m_bounding->DrawBoundingSphere(m_position, view, projection);
 
+	m_beam->Render(view, projection);
 
 
 }
@@ -211,6 +228,23 @@ void Enemy::RegistrationCollionManager(CollisionManager* collsionManager)
 {
 	collsionManager->AddCollsion(this);
 }
+
+
+
+IBehaviorNode::State Enemy::BeamAttack(float elapsdTime)
+{
+
+	if (m_beam->Attack(elapsdTime))
+	{
+		//攻撃中
+		return IBehaviorNode::State::Runngin;
+	}
+
+	//攻撃終了
+	return IBehaviorNode::State::Success;
+
+}
+
 
 void Enemy::OnCollision(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos)
 {

@@ -45,8 +45,7 @@ PlayScene::PlayScene()
 	m_floor{}
 	, m_lockOn{}
 	, m_enemyHP{}
-	, m_rock{},
-	m_pillar{}
+	, m_rock{}
 
 {
 }
@@ -103,10 +102,10 @@ void PlayScene::Initialize(CommonResources* resources)
 
 
 	m_floor->Initialize(m_commonResources, Vector3::Zero, Vector3(36, 0.2f, 36), 8.0f);
-	m_player->Initialize(m_commonResources, Vector3(0, 2.75f, 0));
+	m_player->Initialize(m_commonResources, Vector3(0, 2.75f, 10));
 	m_enemy->Initialize(m_commonResources, Vector3(0, 5.75f, -10));
 
-	
+
 
 	//Wallクラスは当たり判定を持っているだけモデルの描画はない
 	m_wall->Initialize(m_commonResources,
@@ -136,9 +135,6 @@ void PlayScene::Initialize(CommonResources* resources)
 	m_rock.emplace_back(std::move(rock));
 
 
-	//柱
-	m_pillar = std::make_unique<Pillar>();
-	m_pillar->Initialize(m_commonResources, Vector3(0, 3, 0), Vector3(1, 3.5f, 1), 1);
 
 
 
@@ -152,8 +148,10 @@ void PlayScene::Initialize(CommonResources* resources)
 	m_rock[0]->RegistrationCollionManager(m_collisionManager.get());
 	m_rock[1]->RegistrationCollionManager(m_collisionManager.get());
 
-	m_pillar->RegistrationCollionManager(m_collisionManager.get());
 
+	//Rayとの当たり判定を取るためにBoundingの登録
+	m_commonResources->GetJudgement()->SetBounding(m_rock[0]->GetBounding());
+	m_commonResources->GetJudgement()->SetBounding(m_rock[1]->GetBounding());
 
 
 	// シーン変更フラグを初期化する
@@ -192,9 +190,6 @@ void PlayScene::Update(float elapsedTime)
 
 		return;
 	}
-
-
-
 
 	m_lockOn->Update(elapsedTime);
 
@@ -247,16 +242,19 @@ void PlayScene::Render()
 		rock->Render(view, m_projection);
 
 	}
-	m_pillar->Render(view, m_projection);
 
 
 
-	m_commonResources->GetTimer()->PlaySceneRender(Vector2(100,50),0.3f);
+
+	m_commonResources->GetTimer()->PlaySceneRender(Vector2(100, 50), 0.3f);
 
 	//// デバッグ情報を「DebugString」で表示する
-	//auto debugString = m_commonResources->GetDebugString();
+	auto debugString = m_commonResources->GetDebugString();
 	//debugString->AddString("Play Scene");
-	//debugString->AddString("Pos: %d, %d", m_tpsCamera->GetAngle().x, m_tpsCamera->GetAngle().y);
+	//debugString->AddString("direction: %f, %f,%f", m_enemy->Getforward().x, m_enemy->Getforward().y, m_enemy->Getforward().z);
+
+	//debugString->AddString("Pos: %f, %f", m_player->GetPos().x, m_player->GetPos().z);
+	//debugString->AddString("Pos: %f, %f", m_enemy->GetPos().x, m_enemy->GetPos().z);
 	//debugString->AddString("IsLockOn: %d ", m_lockOn->GetIsLOckOn());
 }
 

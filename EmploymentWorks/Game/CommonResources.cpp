@@ -45,4 +45,7 @@ void CommonResources::Initialize(
 	m_timer = std::make_unique<Timer>();
 	m_timer->Initialize(this);
 
+
+	m_judgement = std::make_unique<mylib::Judgement>();
+
 }

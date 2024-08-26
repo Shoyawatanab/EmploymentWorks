@@ -25,11 +25,11 @@ private:
 
 
 	//ŠÖ”‚ğ“o˜^‚·‚é•Ï”
-	std::function<bool()> m_condition;
+	std::function<bool(float)> m_condition;
 
 
 public:
-	DecoratorNode(std::function<bool()> fun);
+	DecoratorNode(std::function<bool(float)> fun);
 	~DecoratorNode() override;
 
 	void Initialize() override;
@@ -41,7 +41,6 @@ public:
 
 	void AddNode(std::unique_ptr<IBehaviorNode> node)  override;
 
-	void AddConditions();
 
 }; 
 

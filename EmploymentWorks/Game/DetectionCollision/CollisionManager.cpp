@@ -99,7 +99,8 @@ void CollisionManager::Update()
 
 
 			//プレイヤと壁との当たり判定の時に使用
-			if (tagI == CollsionObjectTag::Player && tagJ == CollsionObjectTag::Wall)
+			if (tagI == CollsionObjectTag::Player && tagJ == CollsionObjectTag::Wall ||
+				tagI == CollsionObjectTag::Enemy && tagJ == CollsionObjectTag::Wall)
 			{
 
 				//円とプレイヤの距離

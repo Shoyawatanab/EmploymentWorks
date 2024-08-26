@@ -199,6 +199,8 @@
     <ClInclude Include="Game\Object\Boomerang\State\BoomerangGetReady.h" />
     <ClInclude Include="Game\Object\Boomerang\State\BoomerangIdling.h" />
     <ClInclude Include="Game\Object\Boomerang\State\BoomerangThrow.h" />
+    <ClInclude Include="Game\Object\Enemy\Beam.h" />
+    <ClInclude Include="Game\Object\Enemy\BeamModel.h" />
     <ClInclude Include="Game\Object\Enemy\Enemy.h" />
     <ClInclude Include="Game\Object\Floor.h" />
     <ClInclude Include="Game\Object\Pillar.h" />
@@ -231,6 +233,7 @@
     <ClInclude Include="Libraries\MyLib\DebugString.h" />
     <ClInclude Include="Libraries\MyLib\GridFloor.h" />
     <ClInclude Include="Libraries\MyLib\InputManager.h" />
+    <ClInclude Include="Libraries\MyLib\Judgement.h" />
     <ClInclude Include="Libraries\MyLib\MemoryLeakDetector.h" />
     <ClInclude Include="Libraries\MyLib\Mouse.h" />
     <ClInclude Include="Libraries\MyLib\UserInterface.h" />
@@ -257,6 +260,8 @@
     <ClCompile Include="Game\Object\Boomerang\State\BoomerangGetReady.cpp" />
     <ClCompile Include="Game\Object\Boomerang\State\BoomerangIdling.cpp" />
     <ClCompile Include="Game\Object\Boomerang\State\BoomerangThrow.cpp" />
+    <ClCompile Include="Game\Object\Enemy\Beam.cpp" />
+    <ClCompile Include="Game\Object\Enemy\BeamModel.cpp" />
     <ClCompile Include="Game\Object\Enemy\Enemy.cpp" />
     <ClCompile Include="Game\Object\Floor.cpp" />
     <ClCompile Include="Game\Object\Pillar.cpp" />
@@ -279,6 +284,7 @@
     <ClCompile Include="Libraries\MyLib\DebugString.cpp" />
     <ClCompile Include="Libraries\MyLib\GridFloor.cpp" />
     <ClCompile Include="Libraries\MyLib\InputManager.cpp" />
+    <ClCompile Include="Libraries\MyLib\Judgement.cpp" />
     <ClCompile Include="Libraries\MyLib\Mouse.cpp" />
     <ClCompile Include="Libraries\MyLib\UserInterface.cpp" />
     <ClCompile Include="Main.cpp" />
