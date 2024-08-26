@@ -44,5 +44,8 @@ public:
 
 	void DrawBoundingSphere(const DirectX::SimpleMath::Vector3 CenterPos, DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection);
 	void DrawBoundingBox(const DirectX::SimpleMath::Vector3 CenterPos, DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection);
+
+	void DrawBoundingSphere(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection);
+
 };
 

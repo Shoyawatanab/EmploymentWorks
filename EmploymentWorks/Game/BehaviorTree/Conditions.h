@@ -18,27 +18,27 @@ class Conditions
 
 
 private:
-	//CommonResources* m_commonResources;
+	CommonResources* m_commonResources;
 
 	Player* m_palyer;
 	Enemy* m_enemy;
 
-	//ChasingDistance用変数
-
-
-	//IsRotation用変数
+	//IsAttack用変数
+	float m_attackCoolTime;
 
 
 public:
-	Conditions(Player* player, Enemy* enmey);
+	Conditions(CommonResources* resources, Player* player, Enemy* enmey);
 	~Conditions();
 
-	bool ChasingDistance();
-
-	bool IsRotation();
-
-
-	bool FindToPlayer();
+	//プレイヤを見つけたかどうか
+	bool IsFindToPlayer();
+	//HPが半分以上かどうか
+	bool IsMoreThanHalfHP();
+	//攻撃するかどうか
+	bool IsAttack(float elapsdTime);
+	//近距離攻撃かどうか
+	bool IsCloseRangeAttack();
 };
 
 

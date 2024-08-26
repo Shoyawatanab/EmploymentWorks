@@ -4,7 +4,7 @@
 
 #include "Conditions.h"
 
-DecoratorNode::DecoratorNode(std::function<bool()> fun)
+DecoratorNode::DecoratorNode(std::function<bool(float)> fun)
 {
 
 	m_condition = fun;
@@ -26,7 +26,7 @@ IBehaviorNode::State DecoratorNode::Update(float elapsedTime)
 {
 
 	//ðŒ‚ªfalse‚È‚ç
-	if (!m_condition())
+	if (!m_condition(elapsedTime))
 	{
 		return State::Failure;
 	}
@@ -36,13 +36,9 @@ IBehaviorNode::State DecoratorNode::Update(float elapsedTime)
 
 IBehaviorNode::State DecoratorNode::RunningUpdate(float elapsedTime)
 {
-	//ðŒ‚ªfalse‚È‚ç
-	if (!m_condition)
-	{
-		return State::Failure;
-	}
 
-	return m_childNode->Update(elapsedTime);
+
+	return m_childNode->RunningUpdate(elapsedTime);
 }
 
 void DecoratorNode::Render()
@@ -64,11 +60,4 @@ void DecoratorNode::AddNode(std::unique_ptr<IBehaviorNode> node)
 	m_childNode = std::move(node);
 
 }
-
-void DecoratorNode::AddConditions()
-{
-
-
-}
-
 

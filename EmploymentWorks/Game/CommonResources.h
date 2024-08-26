@@ -4,6 +4,8 @@
 */
 #pragma once
 #include "Game/Timer.h"
+#include "Libraries/MyLib/Judgement.h"
+
 
 // ‘O•ûéŒ¾
 namespace DX
@@ -34,6 +36,9 @@ private:
 	mylib::InputManager* m_inputManager;
 
 	std::unique_ptr<Timer> m_timer;
+
+	std::unique_ptr<mylib::Judgement> m_judgement;
+
 
 public:
 	CommonResources();
@@ -79,4 +84,10 @@ public:
 	{
 		return m_timer.get();
 	}
+
+	mylib::Judgement* GetJudgement() const
+	{
+		return m_judgement.get();
+	}
+
 };

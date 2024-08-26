@@ -6,6 +6,7 @@
 #include "pch.h"
 #include"Game/Object/Boomerang/Boomerang.h"
 #include "Interface/ICollisionObject.h"
+#include "Interface/IBehaviorNode.h"
 
 
 // 前方宣言
@@ -13,6 +14,7 @@ class CommonResources;
 class Bounding;
 class BehaviorTree;
 class Player;
+class Beam;
 
 
 namespace mylib
@@ -30,10 +32,24 @@ public:
 	void SetPlayer(Player* player) { m_player = player; }
 
 	DirectX::SimpleMath::Vector3 GetPosition() { return m_position; }
+	void SetPosition(DirectX::SimpleMath::Vector3 Pos) { m_position = Pos; }
 	DirectX::SimpleMath::Quaternion GetRotate() { return m_rotate; }
+	void SetRotate(DirectX::SimpleMath::Quaternion rotate) { m_rotate = rotate; }
 	float GetScale() { return m_scale; }
 
 	DirectX::SimpleMath::Vector3 GetTargetPos() { return m_targetPos; }
+
+	DirectX::SimpleMath::Vector3 Getforward() { return m_forward; }
+	void Setforward(DirectX::SimpleMath::Vector3 direction) { m_forward = direction; }
+
+public:
+
+	//初期のターゲットの座標の距離
+	static const DirectX::SimpleMath::Vector3 STAETTAEGETDIRECTION;
+
+	//敵の初期の向いている方向
+	static const DirectX::SimpleMath::Vector3 INITIALFORWARD;
+
 
 private:
 	// 共通リソース
@@ -43,6 +59,7 @@ private:
 	std::unique_ptr<DirectX::Model> m_model;
 
 	DirectX::SimpleMath::Vector3 m_position;
+	DirectX::SimpleMath::Quaternion m_initialRotate;
 	DirectX::SimpleMath::Quaternion m_rotate;
 
 	std::unique_ptr<Bounding> m_bounding;
@@ -62,6 +79,10 @@ private:
 
 	Player* m_player;
 
+	//向いている方向
+	DirectX::SimpleMath::Vector3 m_forward;
+
+
 	//ノックバックの方向
 	DirectX::SimpleMath::Vector3 m_knockbackDirection;
 	float m_acceleration;
@@ -70,6 +91,9 @@ private:
 
 	//ブーメランのターゲットの座標
 	DirectX::SimpleMath::Vector3 m_targetPos;
+
+	//ビームクラス
+	std::unique_ptr<Beam> m_beam;
 
 
 public:
@@ -81,6 +105,8 @@ public:
 	void Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection) ;
 	void Finalize() ;
 
+	//遠距離攻撃　ビヘイビアツリーで呼び出す
+	IBehaviorNode::State BeamAttack(float elapsdTime);
 
 
 	void RegistrationCollionManager(CollisionManager* collsionManager) override;

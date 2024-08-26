@@ -4,11 +4,15 @@
 
 #include "Game/Object/Player.h"
 #include "Game/Object/Enemy/Enemy.h"
+#include "Game/CommonResources.h"
 
-Conditions::Conditions(Player* player, Enemy* enemy)
+
+Conditions::Conditions(CommonResources* resources, Player* player, Enemy* enemy)
 	:
-	m_palyer{player},
-	m_enemy{enemy}
+	m_commonResources{ resources },
+	m_palyer{ player },
+	m_enemy{ enemy },
+	m_attackCoolTime{}
 {
 
 }
@@ -21,45 +25,92 @@ Conditions::~Conditions()
 
 
 /// <summary>
-/// プレイヤをどれだけ追いかけたか
+/// プレイヤを見つけたかどうか
 /// </summary>
-/// <returns>一定値を超えている:true、超えていない:false</returns>
-bool Conditions::ChasingDistance()
+/// <returns>見つてない:true ,見つけた:false</returns>
+bool Conditions::IsFindToPlayer()
 {
+	//視野角外
+	if (!m_commonResources->GetJudgement()->IsWithinTheSector(m_palyer->GetPos(), m_enemy->Getforward(), m_enemy->GetPos(), 20, 90))
+	{
+		//巡回に行ってほしから見つけていないときにtrue
+		return true;
+	}
 
-	return false ;
-}
+	//Rayのための方向ベクトルの作成
+	DirectX::SimpleMath::Vector3 Direction = m_palyer->GetPos() - m_enemy->GetPos();
+	//正規化
+	Direction.Normalize();
+
+	//Rayの作成
+	DirectX::SimpleMath::Ray ray;
+	ray.position = m_enemy->GetPos();
+	//Rayのdirectionは正規化されていること
+	ray.direction = Direction;
 
 
-/// <summary>
-/// 回転できるかどうか
-/// </summary>
-/// <returns>回転できる：true、できない:false</returns>
-bool Conditions::IsRotation()
-{
+	//障害物があるかどうか
+	if (m_commonResources->GetJudgement()->IsRayToBoundingBox(ray, 1000))
+	{
+		return true;
+	}
 
-
-
+	//攻撃などのノードに行く
 	return false;
 }
 
 /// <summary>
-/// プレイヤを見つけたかどうか
+/// Hpが半分以上かどうか
 /// </summary>
-/// <returns>見つてない:false ,見つけた:true</returns>
-bool Conditions::FindToPlayer()
+/// <returns></returns>
+bool Conditions::IsMoreThanHalfHP()
 {
 
-	DirectX::SimpleMath::Vector3 Distance = m_palyer->GetPos() - m_enemy->GetPos();
-
-	//距離が５以内なら
-	if (Distance.Length() <= 5)
+	if (m_commonResources->GetJudgement()->GetRatio(m_enemy->GetHp(), m_enemy->GetMAXHp()) >= 0.5f)
 	{
-		return false;
+		//半分以上
+		return true;
 	}
 
-	//見つけてない　巡回に行ってほしいから
-	return true;
+	//半分未満
+	return false;
+}
+
+//攻撃するかどうか
+bool Conditions::IsAttack(float elapsdTime)
+{
+
+	//５秒に一回攻撃
+	if (m_attackCoolTime >= 2)
+	{
+		//どっかでクールタイムのリセットが必要
+		m_attackCoolTime = 0;
+		//攻撃
+		return true;
+	}
+
+
+
+	m_attackCoolTime += elapsdTime;
+	//攻撃しない
+	return false;
+}
+
+/// <summary>
+/// 近距離攻撃かどうか
+/// </summary>
+/// <returns></returns>
+bool Conditions::IsCloseRangeAttack()
+{
+
+	//if (m_commonResources->GetJudgement()->GetLenght(m_palyer->GetPos(), m_enemy->GetPos()) <= 7)
+	//{
+	//	//近距離攻撃
+	//	return true;
+	//}
+
+	//遠距離攻撃
+	return false;
 }
 
 

@@ -66,7 +66,7 @@ void Player::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3
 	fx->SetDirectory(L"Resources/Models");
 
 	// モデルを読み込む
-	m_model = DirectX::Model::CreateFromCMO(device, L"Resources/Models/Player.cmo", *fx);
+	m_model = DirectX::Model::CreateFromCMO(device, L"Resources/Models/NewPlayer.cmo", *fx);
 
 	m_position = position;
 
@@ -142,7 +142,9 @@ void Player::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 
 
 	// ワールド行列を更新する
-	Matrix world = Matrix::CreateScale(0.3f);
+	Matrix world = Matrix::CreateScale(0.4f);
+	//モデルが判定しているからやっている本当はBlenderで軸を決めてやる
+	world *= Matrix::CreateRotationY(DirectX::XMConvertToRadians(180));
 	world *= Matrix::CreateFromQuaternion(m_rotate);
 	world *= Matrix::CreateTranslation(m_position);
 
