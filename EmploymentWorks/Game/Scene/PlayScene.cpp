@@ -22,6 +22,7 @@
 #include "Game/EnemyHP.h"
 #include "Game/Object/Rock.h"
 #include "Game/Object/Pillar.h"
+#include "Game/Object/Sky.h"
 
 #include <cassert>
 
@@ -46,7 +47,7 @@ PlayScene::PlayScene()
 	, m_lockOn{}
 	, m_enemyHP{}
 	, m_rock{}
-
+	,m_sky{}
 {
 }
 
@@ -87,7 +88,7 @@ void PlayScene::Initialize(CommonResources* resources)
 	m_projection = SimpleMath::Matrix::CreatePerspectiveFieldOfView(
 		XMConvertToRadians(45.0f),
 		static_cast<float>(rect.right) / static_cast<float>(rect.bottom),
-		0.1f, 100.0f
+		0.1f, 1000.0f
 	);
 
 	m_floor = std::make_unique<Floor>();
@@ -153,6 +154,9 @@ void PlayScene::Initialize(CommonResources* resources)
 	m_commonResources->GetJudgement()->SetBounding(m_rock[0]->GetBounding());
 	m_commonResources->GetJudgement()->SetBounding(m_rock[1]->GetBounding());
 
+
+	m_sky = std::make_unique<Sky>();
+	m_sky->Initialize(m_commonResources);
 
 	// シーン変更フラグを初期化する
 	m_isChangeScene = false;
@@ -235,7 +239,6 @@ void PlayScene::Render()
 
 	m_lockOn->Render();
 
-	m_enemyHP->Render();
 
 	for (auto& rock : m_rock)
 	{
@@ -243,6 +246,10 @@ void PlayScene::Render()
 
 	}
 
+	m_sky->Render(view, m_projection);
+
+
+	m_enemyHP->Render();
 
 
 
