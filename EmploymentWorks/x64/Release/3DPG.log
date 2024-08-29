@@ -4,14 +4,13 @@ C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Floor.h(
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Wall.h(49,44): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Rock.h(52,44): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Pillar.h(52,44): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\PlayScene.cpp(203,14): warning C4189: 'kbTracker': ローカル変数が初期化されましたが、参照されていません
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\PlayScene.cpp(259,7): warning C4189: 'debugString': ローカル変数が初期化されましたが、参照されていません
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\PlayScene.cpp(221,7): warning C4189: 'context': ローカル変数が初期化されましたが、参照されていません
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\PlayScene.cpp(222,7): warning C4189: 'states': ローカル変数が初期化されましたが、参照されていません
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\PlayScene.cpp(207,14): warning C4189: 'kbTracker': ローカル変数が初期化されましたが、参照されていません
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\PlayScene.cpp(263,7): warning C4189: 'debugString': ローカル変数が初期化されましたが、参照されていません
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\PlayScene.cpp(225,7): warning C4189: 'context': ローカル変数が初期化されましたが、参照されていません
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\PlayScene.cpp(226,7): warning C4189: 'states': ローカル変数が初期化されましたが、参照されていません
      ライブラリ C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\3DPG.lib とオブジェクト C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\3DPG.exp を作成中
   コード生成しています。
-  1 of 3398 functions (<0.1%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    2 functions had inline decision re-evaluated but remain unchanged
+  Previous IPDB and IOBJ mismatch, fall back to full compilation.
+  All 3400 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   コード生成が終了しました。
   3DPG.vcxproj -> C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\3DPG.exe

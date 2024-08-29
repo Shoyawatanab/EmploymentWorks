@@ -175,7 +175,11 @@ void PlayScene::Update(float elapsedTime)
 	//m_debugCamera->Update(m_commonResources->GetInputManager());
 
 	m_cameraManager->Update(elapsedTime);
-	m_enemy->Update(elapsedTime);
+	if (m_cameraManager->GetGameCameraState() != m_cameraManager->GetGameStartCamera())
+	{
+		m_enemy->Update(elapsedTime);
+
+	}
 
 	m_player->Update(elapsedTime, m_cameraManager->GetTPSCamera()->GetRotationX());
 	m_collisionManager->Update();
