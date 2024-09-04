@@ -106,6 +106,7 @@ void Enemy::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 
 	m_beam = std::make_unique<Beam>();
 	m_beam->Initialize(m_commonResources, m_player, this);
 
+	m_onCollisionTag = CollsionObjectTag::None;
 
 }
 
@@ -246,17 +247,34 @@ IBehaviorNode::State Enemy::BeamAttack(float elapsdTime)
 }
 
 
-void Enemy::OnCollision(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos)
+void Enemy::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos)
 {
-	//ブーメランと当たっときに毎フレームHpがへらないようにする
-	if (m_isCollsionTime)
+	//動く簿部ジェクトのタグを
+	switch (PartnerTag)
 	{
-		return;
+		case CollsionObjectTag::Boomerang:
+			//ブーメランと当たっときに毎フレームHpがへらないようにする
+			if (m_isCollsionTime)
+			{
+				return;
+			}
+
+			m_hp--;
+
+			m_isCollsionTime = true;
+
+		case CollsionObjectTag::Player:
+		case CollsionObjectTag::Enemy:
+		case CollsionObjectTag::NotMoveObject:
+
+			m_onCollisionTag = PartnerTag;
+			break;
+		case CollsionObjectTag::None:
+		case CollsionObjectTag::Wall:
+			break;
+		default:
+			break;
 	}
-
-	m_hp--;
-
-	m_isCollsionTime = true;
 
 	//ブーメランとの座標から弾く方向を決める
 

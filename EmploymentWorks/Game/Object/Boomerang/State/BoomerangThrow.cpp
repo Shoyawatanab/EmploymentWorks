@@ -69,7 +69,17 @@ void BoomerangThrow::Update(const float& elapsedTime)
 	UNREFERENCED_PARAMETER(elapsedTime);
 	using namespace DirectX::SimpleMath;
 
-	SplineCurve(elapsedTime);
+	switch (m_state)
+	{
+		case BoomerangThrow::BoomerangThrowState::SplineCurve:
+			SplineCurve(elapsedTime);
+			break;
+		case BoomerangThrow::BoomerangThrowState::ChaseToPlayer:
+			ChaseToPlayer(elapsedTime);
+			break;
+		default:
+			break;
+	}
 
 	////‰ñ“]‰^“®
 	//Quaternion RotationalMotion ;
@@ -127,6 +137,7 @@ void BoomerangThrow::Enter()
 
 	m_moveSpherePos = m_boomerang->GetOrbit()->GetMovePos();
 
+	m_state = BoomerangThrowState::SplineCurve;
 
 }
 
@@ -169,14 +180,49 @@ void BoomerangThrow::SplineCurve(const float& elapsedTime)
 		m_totalTime = 0.0f;
 	}
 
-	if (m_index >= m_startIndex * 2 + 1)
+	//ÅŒã‚Ì“_‚É‚Â‚¢‚½‚çƒvƒŒƒCƒ„‚ð’Ç‚¢‚©‚¯‚éˆ—‚ÉØ‚è‘Ö‚¦‚é
+	if (m_index >= m_startIndex * 2 )
 	{
 
 		//ó‘Ô‘JˆÚ
-		m_boomerang->ChangeState(m_boomerang->GetBoomerangIdling());
+		//m_boomerang->ChangeState(m_boomerang->GetBoomerangIdling());
+		m_state = BoomerangThrowState::ChaseToPlayer;
 
 	}
 
 
 	m_totalTime += elapsedTime;
+}
+
+void BoomerangThrow::ChaseToPlayer(const float& elapsedTime)
+{
+
+	DirectX::SimpleMath::Vector3 BoomerangPos = m_boomerang->GetPosition();
+
+	DirectX::SimpleMath::Vector3 PlayerPos = m_player->GetPosition();
+
+
+	//i‚Þ•ûŒü
+	DirectX::SimpleMath::Vector3 MoveDirection = PlayerPos - BoomerangPos;
+	MoveDirection.Normalize();
+
+	MoveDirection *= SPEED * elapsedTime;
+
+	BoomerangPos += MoveDirection;
+
+	m_boomerang->SetPosition(BoomerangPos);
+
+	float distance = (PlayerPos - BoomerangPos).Length();
+
+
+
+
+	//‹ß‚Ã‚¢‚½‚ç
+	if (distance <= 2.0f)
+	{
+		m_boomerang->ChangeState(m_boomerang->GetBoomerangIdling());
+
+	}
+
+
 }

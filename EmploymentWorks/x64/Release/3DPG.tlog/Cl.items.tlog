@@ -14,14 +14,15 @@ C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\EnemyHP.cpp;C:\
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\LockOn.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\LockOn.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\Boomerang.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\Boomerang.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\BoomerangOrbit.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\BoomerangOrbit.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\State\BoomerangDrop.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\BoomerangDrop.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\State\BoomerangGetReady.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\BoomerangGetReady.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\State\BoomerangIdling.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\BoomerangIdling.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\State\BoomerangRepelled.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\BoomerangRepelled.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\State\BoomerangThrow.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\BoomerangThrow.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Beam.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\Beam.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\BeamModel.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\BeamModel.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\Enemy.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Floor.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\Floor.obj
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Pillar.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\Pillar.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\Player.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Rock.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\Rock.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Sky.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\Sky.obj
@@ -37,6 +38,7 @@ C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\Boun
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\Camera\GameCameraManager.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\GameCameraManager.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\Camera\GameStartCamera.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\GameStartCamera.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\Camera\TPS_Camera.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\TPS_Camera.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\CollisionMesh.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\CollisionMesh.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\CSV.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\CSV.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\DebugCamera.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\DebugCamera.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\DebugString.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\DebugString.obj

@@ -21,7 +21,6 @@
 #include "Game/Object/Wall.h"
 #include "Game/EnemyHP.h"
 #include "Game/Object/Rock.h"
-#include "Game/Object/Pillar.h"
 #include "Game/Object/Sky.h"
 
 #include <cassert>
@@ -47,7 +46,7 @@ PlayScene::PlayScene()
 	, m_lockOn{}
 	, m_enemyHP{}
 	, m_rock{}
-	,m_sky{}
+	, m_sky{}
 {
 }
 
@@ -103,7 +102,7 @@ void PlayScene::Initialize(CommonResources* resources)
 
 
 	m_floor->Initialize(m_commonResources, Vector3::Zero, Vector3(36, 0.2f, 36), 8.0f);
-	m_player->Initialize(m_commonResources, Vector3(0, 2.75f, 10));
+	m_player->Initialize(m_commonResources, Vector3(0, 3.75f, 10));
 	m_enemy->Initialize(m_commonResources, Vector3(0, 5.75f, -10));
 
 
@@ -119,7 +118,10 @@ void PlayScene::Initialize(CommonResources* resources)
 	m_lockOn->Initialize(m_commonResources->GetDeviceResources(),
 		m_commonResources->GetDeviceResources()->GetOutputSize().right,
 		m_commonResources->GetDeviceResources()->GetOutputSize().bottom);
+
 	m_collisionManager = std::make_unique<CollisionManager>();
+	m_collisionManager->Initialize(m_commonResources);
+
 
 	m_enemyHP = std::make_unique<EnemyHP>(m_enemy.get());
 	m_enemyHP->Initialize(m_commonResources->GetDeviceResources(),

@@ -12,6 +12,13 @@ class CommonResources;
 class ICollsionObject;
 
 
+namespace mylib
+{
+	class CollisionMesh;
+}
+
+
+
 class CollisionManager final 
 
 {
@@ -27,11 +34,31 @@ private:
 	//当たり判定オブジェクトの登録配列 
 	std::vector<ICollisionObject*> m_collsionObjects;
 
+	//メッシュとの当たり判定
+	std::unique_ptr<mylib::CollisionMesh> m_collisionMesh;
+	// ポリゴンとRayが衝突した座標
+	DirectX::SimpleMath::Vector3 m_hitPosition;
+
+
 public:
 	CollisionManager();
+	~CollisionManager();
+
+
+	void Initialize(CommonResources* resources);
+
 
 	void Update();
 
 	void AddCollsion(ICollisionObject* object);
+
+	void BoxExtrusion(ICollisionObject* Object1, ICollisionObject* Object2);
+
+	bool CheckIsBox(ICollisionObject* Object1, ICollisionObject* Object2);
+
+	bool CheckIsSphere(ICollisionObject* Object1, ICollisionObject* Object2);
+
+	bool WallExtrusion(ICollisionObject* Object1, ICollisionObject* Object2);
+
 private:
 };

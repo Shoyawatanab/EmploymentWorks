@@ -268,7 +268,7 @@ void Player::RegistrationCollionManager(CollisionManager* collsionManager)
 }
 
 
-void Player::OnCollision(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos)
+void Player::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos)
 {
 
 

@@ -106,7 +106,7 @@ void Wall::RegistrationCollionManager(CollisionManager* collsionManager)
 
 
 
-void Wall::OnCollision(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos)
+void Wall::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos)
 {
 
 }

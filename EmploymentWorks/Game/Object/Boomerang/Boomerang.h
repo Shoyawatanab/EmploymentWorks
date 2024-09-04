@@ -10,6 +10,8 @@
 #include "Game/Object/Boomerang/State/BoomerangThrow.h"
 #include "Game/Object/Boomerang/State/BoomerangGetReady.h"
 #include "Interface/ICollisionObject.h"
+#include "Game/Object/Boomerang/State/BoomerangRepelled.h"
+#include "Game/Object/Boomerang/State/BoomerangDrop.h"
 
 // 前方宣言
 class CommonResources;
@@ -44,8 +46,13 @@ public:
 	BoomerangIdling* GetBoomerangIdling() { return m_idling.get(); }
 	BoomerangThrow* GetBoomerangThrow() { return m_throw.get(); }
 	BoomerangGetReady* GetBoomerangGetReady() { return m_getReady.get(); }
+	BoomerangRepelled* GetBoomerangRepelled() { return m_repelled.get(); }
+	BoomerangDrop* GetBoomerangDrop() { return m_drop.get(); }
+
 
 	BoomerangOrbit* GetOrbit() { return m_orbit.get(); }
+
+	DirectX::SimpleMath::Vector3 GetPreviousFramePos() { return m_previousFramePos; }
 
 private:
 
@@ -73,7 +80,18 @@ private:
 	std::unique_ptr<BoomerangIdling> m_idling;
 	std::unique_ptr<BoomerangThrow> m_throw;
 	std::unique_ptr<BoomerangGetReady> m_getReady;
+	std::unique_ptr<BoomerangRepelled> m_repelled;
+	std::unique_ptr<BoomerangDrop> m_drop;
+
+
 	Enemy* m_enemy;
+
+	//当たった時の相手のタグ
+	CollsionObjectTag m_onCollisionTag;
+
+	//１フレーム前の座標　弾かれる処理で使用
+
+	DirectX::SimpleMath::Vector3 m_previousFramePos;
 
 
 public:
@@ -97,7 +115,7 @@ public:
 
 	DirectX::SimpleMath::Vector3 GetPos() override { return m_position; }
 
-	void OnCollision(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos) override;
+	void OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos) override;
 
 
 };

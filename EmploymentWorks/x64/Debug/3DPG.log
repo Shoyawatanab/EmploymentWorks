@@ -1,22 +1,4 @@
-﻿  Pillar.cpp
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Pillar.h(52,44): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Pillar.cpp(69,72): warning C4100: 'cameraRotation': 引数は関数の本体部で 1 度も参照されません。
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Pillar.cpp(117,86): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Pillar.cpp(117,45): warning C4100: 'PartnerTag': 引数は関数の本体部で 1 度も参照されません。
-  Rock.cpp
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Rock.h(52,44): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Rock.cpp(69,70): warning C4100: 'cameraRotation': 引数は関数の本体部で 1 度も参照されません。
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Rock.cpp(117,84): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Rock.cpp(117,43): warning C4100: 'PartnerTag': 引数は関数の本体部で 1 度も参照されません。
-  PlayScene.cpp
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.h(98,28): warning C4244: 'return': 'int' から 'float' への変換です。データが失われる可能性があります。
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Floor.h(52,44): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Wall.h(49,44): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Rock.h(52,44): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Pillar.h(52,44): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\PlayScene.cpp(204,14): warning C4189: 'kbTracker': ローカル変数が初期化されましたが、参照されていません
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\PlayScene.cpp(222,7): warning C4189: 'context': ローカル変数が初期化されましたが、参照されていません
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\PlayScene.cpp(223,7): warning C4189: 'states': ローカル変数が初期化されましたが、参照されていません
-  SceneManager.cpp
-  コードを生成中...
+﻿  Boomerang.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Interface\ICollisionObject.h(24,2): warning C4091: 'static ': 変数が何も宣言されていないときは、'CollsionObjectTag' の左辺を無視します。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\Boomerang.cpp(188,94): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
   3DPG.vcxproj -> C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\3DPG.exe

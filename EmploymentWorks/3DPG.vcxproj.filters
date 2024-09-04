@@ -234,9 +234,6 @@
     <ClInclude Include="Interface\ICompositeNode.h">
       <Filter>Interface</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Object\Pillar.h">
-      <Filter>Game\Object\StageObject</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Object\Rock.h">
       <Filter>Game\Object\StageObject</Filter>
     </ClInclude>
@@ -251,6 +248,15 @@
     </ClInclude>
     <ClInclude Include="Game\Object\Sky.h">
       <Filter>Game\Object\StageObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Libraries\MyLib\CollisionMesh.h">
+      <Filter>Libraries\MyLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Boomerang\State\BoomerangDrop.h">
+      <Filter>Game\Object\Boomerang\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Boomerang\State\BoomerangRepelled.h">
+      <Filter>Game\Object\Boomerang\State</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -377,9 +383,6 @@
     <ClCompile Include="Game\BehaviorTree\SequenceNode.cpp">
       <Filter>Game\Object\Enemy\BehaviorTree</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Object\Pillar.cpp">
-      <Filter>Game\Object\StageObject</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Object\Rock.cpp">
       <Filter>Game\Object\StageObject</Filter>
     </ClCompile>
@@ -394,6 +397,15 @@
     </ClCompile>
     <ClCompile Include="Game\Object\Sky.cpp">
       <Filter>Game\Object\StageObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\MyLib\CollisionMesh.cpp">
+      <Filter>Libraries\MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Boomerang\State\BoomerangDrop.cpp">
+      <Filter>Game\Object\Boomerang\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Boomerang\State\BoomerangRepelled.cpp">
+      <Filter>Game\Object\Boomerang\State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
