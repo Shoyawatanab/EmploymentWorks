@@ -96,6 +96,9 @@ private:
 	std::unique_ptr<Beam> m_beam;
 
 
+	//“–‚½‚Á‚½Žž‚Ì‘ŠŽè‚Ìƒ^ƒO
+	CollsionObjectTag m_onCollisionTag;
+
 public:
 	Enemy();
 	~Enemy() ;
@@ -123,6 +126,6 @@ public:
 
 	float GetMAXHp() { return m_maxHP; }
 
-	void OnCollision(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos) override;
+	void OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos) override;
 
 };

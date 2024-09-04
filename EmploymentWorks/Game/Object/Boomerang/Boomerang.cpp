@@ -38,6 +38,9 @@ Boomerang::Boomerang(Player* player, Enemy* enemy)
 	m_scale{},
 	m_enemy{ enemy },
 	m_orbit{}
+	, m_repelled{}
+	, m_previousFramePos{}
+	, m_drop{}
 
 {
 }
@@ -82,11 +85,17 @@ void Boomerang::Initialize(CommonResources* resources)
 	m_getReady = std::make_unique<BoomerangGetReady>(this, m_player);
 	m_getReady->Initialize();
 
+	m_repelled = std::make_unique<BoomerangRepelled>(this);
+	m_repelled->Initialize();
+
+	m_drop = std::make_unique<BoomerangDrop>(this);
+	m_drop->Initialize();
+
+
 	m_currentState = m_idling.get();
 	
-	//m_position = m_player->GetPosition();
+	m_position = m_player->GetPosition();
 	m_scale = SCALE;
-	//m_rotate = m_player->GetRotate();
 
 	m_bounding = std::make_unique<Bounding>();
 	m_bounding->CreateBoundingBox(m_commonResources, m_position, Vector3(0.3f, 0.5f, 0.3f));
@@ -94,6 +103,8 @@ void Boomerang::Initialize(CommonResources* resources)
 
 	m_orbit = std::make_unique<BoomerangOrbit>(this, m_player, m_enemy);
 	m_orbit->Initialize(m_commonResources);
+
+	m_onCollisionTag = CollsionObjectTag::None;
 
 }
 
@@ -106,6 +117,7 @@ void Boomerang::Update(float elapsedTime)
 	using namespace DirectX::SimpleMath;
 	UNREFERENCED_PARAMETER(elapsedTime);
 
+	m_previousFramePos = m_position;
 
 	m_currentState->Update(elapsedTime);
 
@@ -173,20 +185,41 @@ void Boomerang::ChangeState(IBoomerangState* nextState)
 }
 
 
-void Boomerang::OnCollision(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos)
+void Boomerang::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos)
 {
 
-	if (PartnerTag == CollsionObjectTag::Enemy)
+	switch (PartnerTag)
 	{
-		//íeÇ©ÇÍÇÈèàóù
+		case CollsionObjectTag::Player:
+			break;
+		case CollsionObjectTag::Enemy:
+			break;
+		case CollsionObjectTag::Boomerang:
+			break;
+		case CollsionObjectTag::None:
+			break;
+		case CollsionObjectTag::Floor:
+			ChangeState(m_drop.get());
+			break;
+		case CollsionObjectTag::NotMoveObject:
 
-		//íeÇ©ÇÍÇÈï˚å¸
-		DirectX::SimpleMath::Vector3 StrikeDirection = Pos = m_position;
+			if (m_currentState == m_throw.get())
+			{
+				//íeÇ©ÇÍÇÈèàóùÇ…êÿÇËë÷Ç¶
+				ChangeState(m_repelled.get());
 
+			}
+			break;
+		case CollsionObjectTag::Wall:
 
+			if (m_currentState == m_throw.get())
+			{
+				ChangeState(m_repelled.get());
 
-
-
+			}
+			break;
+		default:
+			break;
 	}
 
 

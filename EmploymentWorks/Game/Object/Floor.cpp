@@ -114,7 +114,7 @@ void Floor::RegistrationCollionManager(CollisionManager* collsionManager)
 }
 
 
-void Floor::OnCollision(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos)
+void Floor::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos)
 {
 
 }

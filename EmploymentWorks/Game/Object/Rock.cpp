@@ -114,7 +114,7 @@ void Rock::RegistrationCollionManager(CollisionManager* collsionManager)
 }
 
 
-void Rock::OnCollision(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos)
+void Rock::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos)
 {
 
 }

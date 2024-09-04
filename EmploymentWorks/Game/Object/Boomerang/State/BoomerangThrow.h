@@ -11,6 +11,15 @@ class Enemy;
 // BoomerangThrowクラスを定義する
 class BoomerangThrow : public IBoomerangState
 {
+private:
+	enum class BoomerangThrowState
+	{
+
+		SplineCurve,   //スプライン曲線
+		ChaseToPlayer  //プレイヤを追いかける
+	};
+
+
 public: 
 	DirectX::SimpleMath::Matrix GetMatrix() { return m_worldMatrix; }
 
@@ -30,6 +39,9 @@ public:
 	void Exit();
 
 	void SplineCurve(const float& elapsedTime);
+
+	void ChaseToPlayer(const float& elapsedTime);
+
 
 private:
 
@@ -66,6 +78,7 @@ private:
 	float  m_rotateY;
 	DirectX::SimpleMath::Vector3 m_target;
 
+	BoomerangThrowState m_state;
 
 
 };
