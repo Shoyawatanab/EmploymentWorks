@@ -41,9 +41,7 @@ public:
 	{
 
 		LockOn,
-		UI,
-		UIHP
-
+		UI
 	};
 public:
 	//データ受け渡し用コンスタントバッファ(送信側)
@@ -106,7 +104,7 @@ public:
 		, DirectX::SimpleMath::Vector2 position
 		, DirectX::SimpleMath::Vector2 scale
 		, ANCHOR anchor
-		,Kinds kind);
+		, Kinds kind);
 
 	void Render();
 
@@ -129,6 +127,5 @@ private:
 
 	void CreateLockOnShader();
 	void CreateUIShader();
-	void CreateUIHPShader();
 
 };

@@ -12,12 +12,14 @@
 #include "Libraries/MyLib/MemoryLeakDetector.h"
 #include <cassert>
 
-#include "Game/Object/Player.h"
+#include "Game/Object/Player/Player.h"
 #include "Game/Object/Enemy/Enemy.h"
 #include "Libraries/MyLib/Bounding.h"
 #include "Interface/ICollisionObject.h"
 #include "Interface/IMoveCollisionObject.h"
 #include "Libraries/MyLib/CollisionMesh.h"
+
+#include "Game/Object/Enemy/Beam.h"
 
 //---------------------------------------------------------
 // コンストラクタ
@@ -37,10 +39,12 @@ CollisionManager::~CollisionManager()
 
 }
 
-void CollisionManager::Initialize(CommonResources* resources)
+void CollisionManager::Initialize(CommonResources* resources, Player* player, Enemy* enemy)
 {
 
 	m_commonResources = resources;
+	m_player = player;
+	m_enemy = enemy;
 
 	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
 	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
@@ -72,8 +76,6 @@ void CollisionManager::Update()
 
 	}
 
-
-
 	//登録されたオブジェクト全てと当たり判定を取る
 	for (int i = 0; i < m_collsionObjects.size() - 1; i++)
 	{
@@ -95,8 +97,8 @@ void CollisionManager::Update()
 				//当たったら
 				if (WallExtrusion(m_collsionObjects[i], m_collsionObjects[j]))
 				{
-					m_collsionObjects[i]->OnCollisionEnter(tagJ, m_collsionObjects[j]->GetBounding()->GetBoundingBox()->Center);
-					m_collsionObjects[j]->OnCollisionEnter(tagI, m_collsionObjects[i]->GetBounding()->GetBoundingBox()->Center);
+					m_collsionObjects[i]->OnCollisionEnter(tagJ, m_hitPosition);
+					m_collsionObjects[j]->OnCollisionEnter(tagI, m_hitPosition);
 				}
 				continue;
 			}
@@ -129,7 +131,6 @@ void CollisionManager::Update()
 					break;
 				case static_cast<uint32_t>(CollisionType::Enemy_NotMoveObject):
 					BoxExtrusion(m_collsionObjects[i], m_collsionObjects[j]);
-
 					break;
 				case static_cast<uint32_t>(CollisionType::Boomerang_NotMoveObject):
 					BoxExtrusion(m_collsionObjects[i], m_collsionObjects[j]);
@@ -163,8 +164,45 @@ void CollisionManager::Update()
 		}
 	}
 
+	//プレイヤとビーム
+	if (m_player->GetPlayerState() != m_player->GetPlayerUsually() && !m_enemy->GetIsAttack())
+	{
+		return;
+	}
 
 
+
+	//ビームのBoundinの取得
+	std::vector<std::unique_ptr<Bounding>>& BeamBounding = m_enemy->GetBeam()->GetBounding();
+
+	//プレイヤのBoundingSphereの取得
+	DirectX::BoundingSphere* PlayerBoundingSphere = m_player->GetBounding()->GetBoundingSphere();
+
+	for (auto& beam : BeamBounding)
+	{
+
+		DirectX::BoundingSphere* Sphere = beam->GetBoundingSphere();
+
+		//当たったら
+		if (PlayerBoundingSphere->Intersects(*Sphere))
+		{
+			if (m_player->GetPlayerState() == m_player->GetPlayerUsually())
+			{
+				int hp = m_player->GetPlayerHP();
+				hp--;
+				m_player->SetPlayerHP(hp);
+			}
+
+			//飛ぶ方向を求める
+			m_player->DemandBlownAwayDirection(Sphere->Center);
+
+			//プレイヤの状態を飛ばされるに変更
+			m_player->ChangeState(m_player->GetPlayerBlownAway());
+
+			return;
+		}
+
+	}
 
 
 
@@ -178,6 +216,8 @@ void CollisionManager::AddCollsion(ICollisionObject* object)
 {
 	m_collsionObjects.emplace_back(object);
 }
+
+
 
 
 /// <summary>

@@ -14,7 +14,7 @@
 #include <cassert>
 
 #include "Libraries/Microsoft/DebugDraw.h"
-#include "Game/Object/Player.h"
+#include "Game/Object/Player/Player.h"
 #include "Libraries/MyLib/Bounding.h"
 #include "Game/DetectionCollision/CollisionManager.h"
 #include "Game/Object/Boomerang/BoomerangOrbit.h"
@@ -184,6 +184,34 @@ void Boomerang::ChangeState(IBoomerangState* nextState)
 	m_currentState->Enter();
 }
 
+void Boomerang::DemandBounceDirection(DirectX::SimpleMath::Vector3 pos, CollsionObjectTag& tag)
+{
+
+	switch (tag)
+	{
+		case CollsionObjectTag::None:
+			break;
+		case CollsionObjectTag::Player:
+			break;
+		case CollsionObjectTag::Enemy:
+			break;
+		case CollsionObjectTag::Boomerang:
+			break;
+		case CollsionObjectTag::NotMoveObject:
+			m_bounceDirection = m_position - pos;
+			break;
+		case CollsionObjectTag::Wall:
+			m_bounceDirection = m_previousFramePos - m_position;
+			break;
+		case CollsionObjectTag::Floor:
+			break;
+		default:
+			break;
+	}
+
+
+}
+
 
 void Boomerang::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos)
 {
@@ -202,20 +230,19 @@ void Boomerang::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleM
 			ChangeState(m_drop.get());
 			break;
 		case CollsionObjectTag::NotMoveObject:
+			DemandBounceDirection(Pos, PartnerTag);
 
 			if (m_currentState == m_throw.get())
 			{
 				//íeÇ©ÇÍÇÈèàóùÇ…êÿÇËë÷Ç¶
 				ChangeState(m_repelled.get());
-
 			}
 			break;
 		case CollsionObjectTag::Wall:
-
+			DemandBounceDirection(Pos, PartnerTag);
 			if (m_currentState == m_throw.get())
 			{
 				ChangeState(m_repelled.get());
-
 			}
 			break;
 		default:

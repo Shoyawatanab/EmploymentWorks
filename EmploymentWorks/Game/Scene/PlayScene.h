@@ -13,9 +13,10 @@ class Floor;
 class LockOn;
 class CollisionManager;
 class Wall;
-class EnemyHP;
 class Rock;
 class Sky;
+class UI;
+
 
 namespace mylib
 {
@@ -57,7 +58,8 @@ private:
 
 	std::unique_ptr<CollisionManager> m_collisionManager;
 
-	std::unique_ptr<EnemyHP> m_enemyHP;
+	std::unique_ptr<UI> m_ui;
+
 
 	std::vector< std::unique_ptr<Rock>> m_rock;
 

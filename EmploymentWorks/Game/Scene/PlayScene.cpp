@@ -13,7 +13,7 @@
 #include "Libraries/MyLib/MemoryLeakDetector.h"
 
 #include "Libraries/MyLib/Camera/GameCameraManager.h"
-#include "Game/Object/Player.h"
+#include "Game/Object/Player/Player.h"
 #include "Game/Object/Enemy/Enemy.h"
 #include "Game/Object/Floor.h"
 #include "Game/LockOn.h"
@@ -22,6 +22,7 @@
 #include "Game/EnemyHP.h"
 #include "Game/Object/Rock.h"
 #include "Game/Object/Sky.h"
+#include "Game/UI.h"
 
 #include <cassert>
 
@@ -44,7 +45,6 @@ PlayScene::PlayScene()
 	m_cameraManager{},
 	m_floor{}
 	, m_lockOn{}
-	, m_enemyHP{}
 	, m_rock{}
 	, m_sky{}
 {
@@ -120,13 +120,13 @@ void PlayScene::Initialize(CommonResources* resources)
 		m_commonResources->GetDeviceResources()->GetOutputSize().bottom);
 
 	m_collisionManager = std::make_unique<CollisionManager>();
-	m_collisionManager->Initialize(m_commonResources);
+	m_collisionManager->Initialize(m_commonResources,m_player.get(),m_enemy.get());
 
-
-	m_enemyHP = std::make_unique<EnemyHP>(m_enemy.get());
-	m_enemyHP->Initialize(m_commonResources->GetDeviceResources(),
+	m_ui = std::make_unique<UI>(m_player.get(), m_enemy.get());
+	m_ui->Initialize(m_commonResources->GetDeviceResources(),
 		m_commonResources->GetDeviceResources()->GetOutputSize().right,
 		m_commonResources->GetDeviceResources()->GetOutputSize().bottom);
+
 
 	//êŒÅ@ä‚
 	auto rock = std::make_unique<Rock>();
@@ -177,6 +177,10 @@ void PlayScene::Update(float elapsedTime)
 	//m_debugCamera->Update(m_commonResources->GetInputManager());
 
 	m_cameraManager->Update(elapsedTime);
+
+	m_collisionManager->Update();
+
+
 	if (m_cameraManager->GetGameCameraState() != m_cameraManager->GetGameStartCamera())
 	{
 		m_enemy->Update(elapsedTime);
@@ -184,9 +188,8 @@ void PlayScene::Update(float elapsedTime)
 	}
 
 	m_player->Update(elapsedTime, m_cameraManager->GetTPSCamera()->GetRotationX());
-	m_collisionManager->Update();
 
-	m_enemyHP->Update(elapsedTime);
+	m_ui->Update(elapsedTime);
 
 
 	if (m_enemy->GetHp() <= 0)
@@ -254,10 +257,7 @@ void PlayScene::Render()
 
 	m_sky->Render(view, m_projection);
 
-
-	m_enemyHP->Render();
-
-
+	m_ui->Render();
 
 	m_commonResources->GetTimer()->PlaySceneRender(Vector2(100, 50), 0.3f);
 

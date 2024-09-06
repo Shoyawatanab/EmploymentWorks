@@ -16,7 +16,7 @@
 #include "Libraries/MyLib/Bounding.h"
 #include "Game/DetectionCollision/CollisionManager.h"
 
-#include "Game/Object/Player.h"
+#include "Game/Object/Player/Player.h"
 #include "Game/Object/Enemy/Enemy.h"
 #include "Game/Object/Enemy/BeamModel.h"
 

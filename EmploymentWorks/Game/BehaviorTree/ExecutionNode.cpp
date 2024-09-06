@@ -2,7 +2,7 @@
 #include "Game/BehaviorTree/ExecutionNode.h"
 #include "ExecutionNode.h"
 
-#include "Game/Object/Player.h"
+#include "Game/Object/Player/Player.h"
 #include "Game/Object/Enemy/Enemy.h"
 #include "Game/CommonResources.h"
 

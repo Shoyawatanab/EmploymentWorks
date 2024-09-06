@@ -2,7 +2,7 @@
 #include "pch.h"
 #include "Game/Object/Boomerang/State/BoomerangGetReady.h"
 #include "Game/Object/Boomerang/Boomerang.h"
-#include "Game/Object/Player.h"
+#include "Game/Object/Player/Player.h"
 
 const DirectX::SimpleMath::Vector3 GENERATEDISTANCE(0.5f, 0.8f, 0.0f);
 

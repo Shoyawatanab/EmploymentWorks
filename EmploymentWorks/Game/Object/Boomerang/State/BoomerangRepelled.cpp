@@ -2,7 +2,6 @@
 #include "pch.h"
 #include "Game/Object/Boomerang/State/BoomerangRepelled.h"
 #include "Game/Object/Boomerang/Boomerang.h"
-#include "Game/Object/Player.h"
 
 const DirectX::SimpleMath::Vector3 GENERATEDISTANCE(0.5f, 0.8f, 0.0f);
 
@@ -10,7 +9,7 @@ const DirectX::SimpleMath::Vector3 GENERATEDISTANCE(0.5f, 0.8f, 0.0f);
 BoomerangRepelled::BoomerangRepelled(Boomerang* boomerang)
 	:
 	m_worldMatrix{},
-	m_boomerang{boomerang}
+	m_boomerang{ boomerang }
 {
 }
 
@@ -23,7 +22,7 @@ BoomerangRepelled::~BoomerangRepelled()
 // ‰Šú‰»‚·‚é
 void BoomerangRepelled::Initialize()
 {
-	
+
 
 
 }
@@ -38,9 +37,9 @@ void BoomerangRepelled::Update(const float& elapsedTime)
 
 
 	m_position = m_boomerang->GetPos();
-	m_position += m_direction ;
+	m_position += m_direction * elapsedTime;
 
-	m_position.y -= m_graivty;
+	m_position.y -= m_graivty * elapsedTime;
 
 	m_boomerang->SetPos(m_position);
 
@@ -48,7 +47,23 @@ void BoomerangRepelled::Update(const float& elapsedTime)
 	m_worldMatrix *= Matrix::CreateTranslation(m_boomerang->GetPos());
 
 
-	m_graivty += 0.005f;
+	m_graivty += 5.5f * elapsedTime;
+
+
+
+	//m_position = m_boomerang->GetPos();
+	//m_position += m_direction;
+
+	//m_position.y -= m_graivty;
+
+	//m_boomerang->SetPos(m_position);
+
+	//m_worldMatrix = Matrix::CreateScale(m_boomerang->GetScale());
+	//m_worldMatrix *= Matrix::CreateTranslation(m_boomerang->GetPos());
+
+
+	//m_graivty += 0.005f;
+
 
 }
 
@@ -58,8 +73,7 @@ void BoomerangRepelled::Enter()
 
 	m_position = m_boomerang->GetPos();
 
-	//’e‚­•ûŒü
-	m_direction = m_boomerang->GetPos() - m_boomerang->GetPreviousFramePos();
+	m_direction = m_boomerang->GetBounceDirection();
 
 	m_pwoer = 2.0f;
 
@@ -75,9 +89,10 @@ void BoomerangRepelled::Enter()
 		m_graivty = 0;
 	}
 
+	//m_direction.z *= -1;
 
+	m_direction.Normalize();
 	m_position += m_direction;
-
 }
 
 void BoomerangRepelled::Exit()

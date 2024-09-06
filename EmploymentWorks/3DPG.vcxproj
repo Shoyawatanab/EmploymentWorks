@@ -192,7 +192,6 @@
     <ClInclude Include="Game\BehaviorTree\SequenceNode.h" />
     <ClInclude Include="Game\CommonResources.h" />
     <ClInclude Include="Game\DetectionCollision\CollisionManager.h" />
-    <ClInclude Include="Game\EnemyHP.h" />
     <ClInclude Include="Game\LockOn.h" />
     <ClInclude Include="Game\Object\Boomerang\Boomerang.h" />
     <ClInclude Include="Game\Object\Boomerang\BoomerangOrbit.h" />
@@ -205,7 +204,9 @@
     <ClInclude Include="Game\Object\Enemy\BeamModel.h" />
     <ClInclude Include="Game\Object\Enemy\Enemy.h" />
     <ClInclude Include="Game\Object\Floor.h" />
-    <ClInclude Include="Game\Object\Player.h" />
+    <ClInclude Include="Game\Object\Player\Player.h" />
+    <ClInclude Include="Game\Object\Player\State\PlayerBlownAway.h" />
+    <ClInclude Include="Game\Object\Player\State\PlayerUsually.h" />
     <ClInclude Include="Game\Object\Rock.h" />
     <ClInclude Include="Game\Object\Sky.h" />
     <ClInclude Include="Game\Object\Wall.h" />
@@ -216,6 +217,7 @@
     <ClInclude Include="Game\Scene\TitleScene.h" />
     <ClInclude Include="Game\Screen.h" />
     <ClInclude Include="Game\Timer.h" />
+    <ClInclude Include="Game\UI.h" />
     <ClInclude Include="Interface\IBehaviorNode.h" />
     <ClInclude Include="Interface\IBoomerangState.h" />
     <ClInclude Include="Interface\ICollisionObject.h" />
@@ -224,6 +226,7 @@
     <ClInclude Include="Interface\ILeafNode.h" />
     <ClInclude Include="Interface\IMoveCollisionObject.h" />
     <ClInclude Include="Interface\INotMoveCollisionObject.h" />
+    <ClInclude Include="Interface\IPlayerState.h" />
     <ClInclude Include="Libraries\Microsoft\DebugDraw.h" />
     <ClInclude Include="Libraries\MyLib\BinaryFile.h" />
     <ClInclude Include="Libraries\MyLib\Bounding.h" />
@@ -256,7 +259,6 @@
     <ClCompile Include="Game\BehaviorTree\SequenceNode.cpp" />
     <ClCompile Include="Game\CommonResources.cpp" />
     <ClCompile Include="Game\DetectionCollision\CollisionManager.cpp" />
-    <ClCompile Include="Game\EnemyHP.cpp" />
     <ClCompile Include="Game\LockOn.cpp" />
     <ClCompile Include="Game\Object\Boomerang\Boomerang.cpp" />
     <ClCompile Include="Game\Object\Boomerang\BoomerangOrbit.cpp" />
@@ -269,7 +271,9 @@
     <ClCompile Include="Game\Object\Enemy\BeamModel.cpp" />
     <ClCompile Include="Game\Object\Enemy\Enemy.cpp" />
     <ClCompile Include="Game\Object\Floor.cpp" />
-    <ClCompile Include="Game\Object\Player.cpp" />
+    <ClCompile Include="Game\Object\Player\Player.cpp" />
+    <ClCompile Include="Game\Object\Player\State\PlayerBlownAway.cpp" />
+    <ClCompile Include="Game\Object\Player\State\PlayerUsually.cpp" />
     <ClCompile Include="Game\Object\Rock.cpp" />
     <ClCompile Include="Game\Object\Sky.cpp" />
     <ClCompile Include="Game\Object\Wall.cpp" />
@@ -278,6 +282,7 @@
     <ClCompile Include="Game\Scene\SceneManager.cpp" />
     <ClCompile Include="Game\Scene\TitleScene.cpp" />
     <ClCompile Include="Game\Timer.cpp" />
+    <ClCompile Include="Game\UI.cpp" />
     <ClCompile Include="Libraries\Microsoft\DebugDraw.cpp" />
     <ClCompile Include="Libraries\MyLib\BinaryFile.cpp" />
     <ClCompile Include="Libraries\MyLib\Bounding.cpp" />
@@ -335,12 +340,6 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\LockOn\%(Filename).cso</ObjectFileOutput>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\LockOn\%(Filename).cso</ObjectFileOutput>
-    </FxCompile>
-    <FxCompile Include="Resources\Shaders\UI\HPUIPS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\UI\%(Filename).cso</ObjectFileOutput>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\UI\%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="Resources\Shaders\UI\UIGS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>

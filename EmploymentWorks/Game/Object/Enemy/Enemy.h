@@ -42,6 +42,12 @@ public:
 	DirectX::SimpleMath::Vector3 Getforward() { return m_forward; }
 	void Setforward(DirectX::SimpleMath::Vector3 direction) { m_forward = direction; }
 
+
+	bool GetIsAttack() { return m_isAttack; }
+
+	Beam* GetBeam() { return m_beam.get(); }
+
+
 public:
 
 	//初期のターゲットの座標の距離
@@ -98,6 +104,9 @@ private:
 
 	//当たった時の相手のタグ
 	CollsionObjectTag m_onCollisionTag;
+
+	bool m_isAttack;
+
 
 public:
 	Enemy();

@@ -19,7 +19,7 @@ namespace mylib
 
 
 
-class CollisionManager final 
+class CollisionManager final
 
 {
 public:
@@ -40,12 +40,15 @@ private:
 	DirectX::SimpleMath::Vector3 m_hitPosition;
 
 
+	//ビームのバウンディング
+	std::vector<Bounding> m_beamBounding;
+
 public:
 	CollisionManager();
 	~CollisionManager();
 
 
-	void Initialize(CommonResources* resources);
+	void Initialize(CommonResources* resources, Player* player, Enemy* enemy);
 
 
 	void Update();

@@ -10,7 +10,6 @@ C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\BehaviorTree\Se
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\BehaviorTree\SequenceNode.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\SequenceNode.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\CommonResources.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\CommonResources.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\DetectionCollision\CollisionManager.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\CollisionManager.obj
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\EnemyHP.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\EnemyHP.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\LockOn.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\LockOn.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\Boomerang.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Boomerang.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\BoomerangOrbit.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\BoomerangOrbit.obj
@@ -23,7 +22,9 @@ C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Be
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\BeamModel.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\BeamModel.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Enemy.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Floor.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Floor.obj
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Player.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player\Player.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Player.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player\State\PlayerBlownAway.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\PlayerBlownAway.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player\State\PlayerUsually.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\PlayerUsually.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Rock.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Rock.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Sky.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Sky.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Wall.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Wall.obj
@@ -32,6 +33,7 @@ C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\ResultSce
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\SceneManager.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\SceneManager.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\TitleScene.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\TitleScene.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Timer.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Timer.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\UI.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\UI.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\Microsoft\DebugDraw.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\DebugDraw.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\BinaryFile.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\BinaryFile.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\Bounding.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Bounding.obj

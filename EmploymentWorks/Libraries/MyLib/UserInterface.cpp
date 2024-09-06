@@ -118,9 +118,6 @@ void UserInterface::Create(DX::DeviceResources* pDR
 		case UserInterface::Kinds::UI:
 			CreateUIShader();
 			break;
-		case UserInterface::Kinds::UIHP:
-			CreateUIHPShader();
-			break;
 		default:
 			break;
 	}
@@ -200,6 +197,7 @@ void UserInterface::CreateLockOnShader()
 	device->CreateBuffer(&bd, nullptr, &m_CBuffer);
 }
 
+
 void UserInterface::CreateUIShader()
 {
 	auto device = m_pDR->GetD3DDevice();
@@ -244,51 +242,8 @@ void UserInterface::CreateUIShader()
 	bd.CPUAccessFlags = 0;
 	device->CreateBuffer(&bd, nullptr, &m_CBuffer);
 }
-void UserInterface::CreateUIHPShader()
-{
-	auto device = m_pDR->GetD3DDevice();
 
-	//	コンパイルされたシェーダファイルを読み込み
-	BinaryFile VSData = BinaryFile::LoadFile(L"Resources/Shaders/UI/UIVS.cso");
-	BinaryFile GSData = BinaryFile::LoadFile(L"Resources/Shaders/UI/UIGS.cso");
-	BinaryFile PSData = BinaryFile::LoadFile(L"Resources/Shaders/UI/HPUIPS.cso");
 
-	//	インプットレイアウトの作成
-	device->CreateInputLayout(&INPUT_LAYOUT[0],
-		static_cast<UINT>(INPUT_LAYOUT.size()),
-		VSData.GetData(), VSData.GetSize(),
-		m_inputLayout.GetAddressOf());
-
-	//	頂点シェーダ作成
-	if (FAILED(device->CreateVertexShader(VSData.GetData(), VSData.GetSize(), NULL, m_vertexShader.ReleaseAndGetAddressOf())))
-	{//	エラー
-		MessageBox(0, L"CreateVertexShader Failed.", NULL, MB_OK);
-		return;
-	}
-
-	//	ジオメトリシェーダ作成
-	if (FAILED(device->CreateGeometryShader(GSData.GetData(), GSData.GetSize(), NULL, m_geometryShader.ReleaseAndGetAddressOf())))
-	{// エラー
-		MessageBox(0, L"CreateGeometryShader Failed.", NULL, MB_OK);
-		return;
-	}
-	//	ピクセルシェーダ作成
-	if (FAILED(device->CreatePixelShader(PSData.GetData(), PSData.GetSize(), NULL, m_pixelShader.ReleaseAndGetAddressOf())))
-	{// エラー
-		MessageBox(0, L"CreatePixelShader Failed.", NULL, MB_OK);
-		return;
-	}
-
-	//	シェーダーにデータを渡すためのコンスタントバッファ生成
-	D3D11_BUFFER_DESC bd;
-	ZeroMemory(&bd, sizeof(bd));
-	bd.Usage = D3D11_USAGE_DEFAULT;
-	bd.ByteWidth = sizeof(ConstBuffer);
-	bd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	bd.CPUAccessFlags = 0;
-	device->CreateBuffer(&bd, nullptr, &m_CBuffer);
-
-}
 /// <summary>
 /// 描画関数
 /// </summary>
