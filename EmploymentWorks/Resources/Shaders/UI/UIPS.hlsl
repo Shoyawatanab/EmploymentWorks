@@ -6,22 +6,14 @@ SamplerState samLinear : register(s0);
 
 float4 main(PS_INPUT input) : SV_TARGET
 {
+	//	指定された画像の表示
     float4 output = tex.Sample(samLinear, input.tex);
 
-// 透明度を急峻に変化させる
+	//	ゲージの現在値から、メーター用画像が丁度いい位置でαグラデーションとなるには、
+	//	どのような値を「smoothValue」に代入すればいいだろう？
+	//	ヒント：一つの値を代入すればOK。計算式まで書く必要性なし！
     float smoothValue = input.color;
-    float alpha = lerp(1.0f, 0.0f, smoothstep(smoothValue, smoothValue + 0.1f, input.tex.x));
-    output.a *= alpha;
-
-    //// テクスチャ座標xがsmoothValueを超えたら透明にする
-    //float smoothValue = input.color.x;
-    //if (input.tex.x > smoothValue)
-    //{
-    //    output.a = 0.0f; // 完全に透明
-    //}
-    //else
-    //{
-    //    output.a = 1.0f; // 完全に不透明
-    //}
+    output.a *= lerp(1.0f, 0.0f, smoothstep(smoothValue, smoothValue + 0.01f, input.tex.x)); //tex.yで上下に移動可能
+    
     return output;
 }

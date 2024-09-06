@@ -74,6 +74,12 @@
     <Filter Include="Game\Object\Enemy\BehaviorTree">
       <UniqueIdentifier>{9af1577b-fac2-4ba1-b6bd-830a9faa8049}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Object\Player">
+      <UniqueIdentifier>{aba55ac5-77a2-4b92-9254-9ee51b7d0e09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\Player\State">
+      <UniqueIdentifier>{10c39386-02c3-42cd-b414-8701094c8197}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -119,9 +125,6 @@
     </ClInclude>
     <ClInclude Include="Game\Scene\SceneManager.h">
       <Filter>Game\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Player.h">
-      <Filter>Game\Object</Filter>
     </ClInclude>
     <ClInclude Include="Game\Object\Boomerang\State\BoomerangIdling.h">
       <Filter>Game\Object\Boomerang\State</Filter>
@@ -195,9 +198,6 @@
     <ClInclude Include="Libraries\MyLib\Camera\TPS_Camera.h">
       <Filter>Libraries\MyLib\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="Game\EnemyHP.h">
-      <Filter>Game</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Object\Boomerang\BoomerangOrbit.h">
       <Filter>Game\Object\Boomerang</Filter>
     </ClInclude>
@@ -258,6 +258,21 @@
     <ClInclude Include="Game\Object\Boomerang\State\BoomerangRepelled.h">
       <Filter>Game\Object\Boomerang\State</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Object\Player\Player.h">
+      <Filter>Game\Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\IPlayerState.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Player\State\PlayerBlownAway.h">
+      <Filter>Game\Object\Player\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Player\State\PlayerUsually.h">
+      <Filter>Game\Object\Player\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\UI.h">
+      <Filter>Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -292,9 +307,6 @@
     </ClCompile>
     <ClCompile Include="Game\Scene\SceneManager.cpp">
       <Filter>Game\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\Player.cpp">
-      <Filter>Game\Object</Filter>
     </ClCompile>
     <ClCompile Include="Game\Object\Boomerang\State\BoomerangIdling.cpp">
       <Filter>Game\Object\Boomerang\State</Filter>
@@ -353,9 +365,6 @@
     <ClCompile Include="Libraries\MyLib\Camera\TPS_Camera.cpp">
       <Filter>Libraries\MyLib\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="Game\EnemyHP.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Object\Boomerang\BoomerangOrbit.cpp">
       <Filter>Game\Object\Boomerang</Filter>
     </ClCompile>
@@ -407,6 +416,18 @@
     <ClCompile Include="Game\Object\Boomerang\State\BoomerangRepelled.cpp">
       <Filter>Game\Object\Boomerang\State</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Object\Player\Player.cpp">
+      <Filter>Game\Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Player\State\PlayerBlownAway.cpp">
+      <Filter>Game\Object\Player\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Player\State\PlayerUsually.cpp">
+      <Filter>Game\Object\Player\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\UI.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />
@@ -447,9 +468,6 @@
       <Filter>Resources\Shaders\UI</Filter>
     </FxCompile>
     <FxCompile Include="Resources\Shaders\UI\UIVS.hlsl">
-      <Filter>Resources\Shaders\UI</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\Shaders\UI\HPUIPS.hlsl">
       <Filter>Resources\Shaders\UI</Filter>
     </FxCompile>
   </ItemGroup>

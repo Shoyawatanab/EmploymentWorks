@@ -23,7 +23,9 @@ C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Be
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\BeamModel.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\BeamModel.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\Enemy.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Floor.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\Floor.obj
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\Player.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player\Player.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\Player.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player\State\PlayerBlownAway.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\PlayerBlownAway.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player\State\PlayerUsually.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\PlayerUsually.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Rock.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\Rock.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Sky.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\Sky.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Wall.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\Wall.obj

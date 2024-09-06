@@ -27,6 +27,8 @@ class Beam
 {
 public:
 
+	std::vector<std::unique_ptr<Bounding>>& GetBounding() { return m_bounding; }
+
 
 public:
 

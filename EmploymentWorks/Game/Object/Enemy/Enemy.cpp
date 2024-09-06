@@ -16,7 +16,7 @@
 #include "Libraries/MyLib/Bounding.h"
 #include "Game/DetectionCollision/CollisionManager.h"
 #include "Game/BehaviorTree/BehaviorTree.h"
-#include "Game/Object/Player.h"
+#include "Game/Object/Player/Player.h"
 #include "Game/Object/Enemy/Beam.h"
 
 
@@ -237,9 +237,12 @@ IBehaviorNode::State Enemy::BeamAttack(float elapsdTime)
 
 	if (m_beam->Attack(elapsdTime))
 	{
+		m_isAttack = true;
 		//UŒ‚’†
 		return IBehaviorNode::State::Runngin;
 	}
+
+	m_isAttack = false;
 
 	//UŒ‚I—¹
 	return IBehaviorNode::State::Success;

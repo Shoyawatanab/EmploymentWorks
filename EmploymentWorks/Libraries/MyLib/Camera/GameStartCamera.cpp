@@ -5,7 +5,7 @@
 #include "pch.h"
 #include "GameStartCamera.h"
 #include "Game/Screen.h"
-#include "Game/Object/Player.h"
+#include "Game/Object/Player/Player.h"
 #include "Libraries/MyLib/Mouse.h"
 
 const int MAXANGLEY = 100;

@@ -5,7 +5,7 @@
 #include "pch.h"
 #include "TPS_Camera.h"
 #include "Game/Screen.h"
-#include "Game/Object/Player.h"
+#include "Game/Object/Player/Player.h"
 #include "Libraries/MyLib/Mouse.h"
 
 const POINT MOUSESENSITIVITY = { 0.001f,0.001f };      // マウスの感度

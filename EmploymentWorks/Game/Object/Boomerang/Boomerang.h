@@ -54,6 +54,10 @@ public:
 
 	DirectX::SimpleMath::Vector3 GetPreviousFramePos() { return m_previousFramePos; }
 
+
+	DirectX::SimpleMath::Vector3 GetBounceDirection() { return m_bounceDirection; }
+	void SetBounceDirection(DirectX::SimpleMath::Vector3 direction) { m_bounceDirection = direction; }
+
 private:
 
 	// 共通リソース
@@ -93,6 +97,9 @@ private:
 
 	DirectX::SimpleMath::Vector3 m_previousFramePos;
 
+	//ブーメランの弾かれる方向
+	DirectX::SimpleMath::Vector3 m_bounceDirection;
+
 
 public:
 	Boomerang(Player* player, Enemy* enemy);
@@ -104,6 +111,9 @@ public:
 	void Finalize() ;
 
 	void ChangeState(IBoomerangState* nextState);
+
+	void DemandBounceDirection(DirectX::SimpleMath::Vector3 pos, CollsionObjectTag& tag);
+
 
 	void RegistrationCollionManager(CollisionManager* collsionManager) override;
 
