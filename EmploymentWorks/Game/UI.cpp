@@ -14,17 +14,20 @@
 
 #include "Game/Object/Enemy/Enemy.h"
 #include "Game/Object/Player/Player.h"
+#include "Game/Scene/PlayScene.h"
 
 //---------------------------------------------------------
 // コンストラクタ
 //---------------------------------------------------------
-UI::UI(Player* player, Enemy* enemy)
+UI::UI(PlayScene* playScene, Player* player, Enemy* enemy)
 	:
 	m_windowHeight(0)
 	, m_windowWidth(0)
-	, m_pDR(nullptr)
-	,m_enemy{enemy}
-	,m_player{player}
+	, m_commonResources{}
+	, m_enemy{ enemy }
+	, m_player{ player }
+	, m_clearUI{}
+	, m_playScene{ playScene }
 {
 	m_enemyHP.clear();
 }
@@ -42,21 +45,34 @@ UI::~UI()
 //---------------------------------------------------------
 // 初期化する
 //---------------------------------------------------------
-void UI::Initialize(DX::DeviceResources* pDR, int width, int height)
+void UI::Initialize(CommonResources* resources, int width, int height)
 {
 	using namespace DirectX::SimpleMath;
-	assert(pDR);
+	assert(resources);
 
-	m_pDR = pDR;
+	m_commonResources = resources;
 	m_windowWidth = width;
 	m_windowHeight = height;
 
 
 	CreateEnemyHP();
 	CreatePlayerHP();
+	CreateClearTex();
+	CreateGameOverTex();
 
+	//ボスHPの割合をセットする
+	float EnemyHp = m_enemy->GetHp();
+	float ratio = EnemyHp / m_enemy->GetMAXHp();
+	m_enemyHP[1]->SetRenderRatio(ratio);
 
-	m_enemyHP[1]->SetRenderRatio(1.0f);
+	//背景の透明度を０に設定
+	m_gameOverUI->SetAlphaValue(0.0f);
+	//リトライ画像の透明度を０に設定
+	m_gameOverReTryUI->SetAlphaValue(-0.3f);
+	//やめる画像の透明度を０に設定
+	m_gameOverEndUI->SetAlphaValue(-0.3f);
+	//矢印画像の透明度の設定
+	m_gameOverArrowUI->SetAlphaValue(-0.3f);
 
 }
 
@@ -83,6 +99,89 @@ void UI::Update(float elapsedTime)
 
 }
 
+void UI::GameOverUpdate(float elapsedTime)
+{
+
+
+
+	//背景の透明度の変更
+	float alpha;
+	alpha = m_gameOverUI->GetAlphaValue();
+	//透明度を加算
+	alpha += 0.5f * elapsedTime;
+
+	alpha = std::min(alpha, 1.0f);
+
+	//透明度をセット
+	m_gameOverUI->SetAlphaValue(alpha);
+
+
+
+	if (m_gameOverUI->GetAlphaValue() < 1)
+	{
+		return;
+	}
+
+	float Additive = 0.8f * elapsedTime;
+
+	//リトライ画像の透明度の取得
+	alpha = m_gameOverReTryUI->GetAlphaValue();
+	//透明度を加算
+	alpha += Additive;
+	//透明度をセット
+	m_gameOverReTryUI->SetAlphaValue(alpha);
+
+
+	//やめる画像の透明度の取得
+	alpha = m_gameOverEndUI->GetAlphaValue();
+	//透明度を加算
+	alpha += Additive;
+	//透明度をセット
+	m_gameOverEndUI->SetAlphaValue(alpha);
+
+	//矢印画像の透明度の取得
+	alpha = m_gameOverArrowUI->GetAlphaValue();
+	//透明度を加算
+	alpha += Additive;
+	//透明度をセット
+	m_gameOverArrowUI->SetAlphaValue(alpha);
+
+	// キーボードステートトラッカーを取得する
+	const auto& kbTracker = m_commonResources->GetInputManager()->GetKeyboardTracker();
+
+	if (kbTracker->released.W)
+	{
+
+		m_gameOverArrowUI->SetPosition(DirectX::SimpleMath::Vector2(500, 420));
+
+	}
+	else if (kbTracker->released.S)
+	{
+
+		m_gameOverArrowUI->SetPosition(DirectX::SimpleMath::Vector2(500, 510));
+
+	}
+
+	if (kbTracker->released.Space)
+	{
+
+		//リトライなら
+		if (m_gameOverArrowUI->GetPosition().y <= 420)
+		{
+
+			m_playScene->SetNextSceneID(PlayScene::SceneID::PLAY);
+
+		}
+		else
+		{
+			//やめる
+			PostQuitMessage(0);
+		}
+
+	}
+
+}
+
 //---------------------------------------------------------
 // 描画する
 //---------------------------------------------------------
@@ -96,11 +195,39 @@ void UI::Render()
 
 	}
 
-	for (int i = 0 ; i < m_player->GetPlayerHP();i++)
+
+
+	for (int i = 0; i < m_player->GetPlayerHP(); i++)
 	{
 		m_playerHP[i]->Render();
 
 	}
+
+
+
+
+}
+
+/// <summary>
+/// クリアやゲームオーバーのテキスト表示関数
+/// </summary>
+void UI::ClearTexRender()
+{
+
+	m_clearUI->Render();
+
+}
+
+void UI::GameOverRender()
+{
+
+	m_gameOverUI->Render();
+
+	m_gameOverReTryUI->Render();
+
+	m_gameOverEndUI->Render();
+
+	m_gameOverArrowUI->Render();
 
 
 }
@@ -112,12 +239,12 @@ void UI::EnemyHPAdd(const wchar_t* path, DirectX::SimpleMath::Vector2 position, 
 	//  メニューとしてアイテムを追加する
 	std::unique_ptr<UserInterface> userInterface = std::make_unique<UserInterface>();
 	//  指定された画像を表示するためのアイテムを作成する
-	userInterface->Create(m_pDR
+	userInterface->Create(m_commonResources->GetDeviceResources()
 		, path
 		, position
 		, scale
 		, anchor
-		,kind);
+		, kind);
 
 	userInterface->SetWindowSize(m_windowWidth, m_windowHeight);
 
@@ -131,7 +258,7 @@ void UI::PlayerHPAdd(const wchar_t* path, DirectX::SimpleMath::Vector2 position,
 	//  メニューとしてアイテムを追加する
 	std::unique_ptr<UserInterface> userInterface = std::make_unique<UserInterface>();
 	//  指定された画像を表示するためのアイテムを作成する
-	userInterface->Create(m_pDR
+	userInterface->Create(m_commonResources->GetDeviceResources()
 		, path
 		, position
 		, scale
@@ -142,6 +269,97 @@ void UI::PlayerHPAdd(const wchar_t* path, DirectX::SimpleMath::Vector2 position,
 
 	m_playerHP.push_back(std::move(userInterface));
 
+}
+
+/// <summary>
+/// Claer画像の追加
+/// </summary>
+/// <param name="path"></param>
+/// <param name="position"></param>
+/// <param name="scale"></param>
+/// <param name="anchor"></param>
+/// <param name="kind"></param>
+void UI::ClearTexAdd(const wchar_t* path, DirectX::SimpleMath::Vector2 position, DirectX::SimpleMath::Vector2 scale, ANCHOR anchor, UserInterface::Kinds kind)
+{
+
+	m_clearUI = std::make_unique<UserInterface>();
+	//  指定された画像を表示するためのアイテムを作成する
+	m_clearUI->Create(m_commonResources->GetDeviceResources()
+		, path
+		, position
+		, scale
+		, anchor
+		, kind);
+
+	m_clearUI->SetWindowSize(m_windowWidth, m_windowHeight);
+
+
+}
+
+void UI::GameOverTexAdd(const wchar_t* path, DirectX::SimpleMath::Vector2 position, DirectX::SimpleMath::Vector2 scale, ANCHOR anchor, UserInterface::Kinds kind)
+{
+
+	m_gameOverUI = std::make_unique<UserInterface>();
+	//  指定された画像を表示するためのアイテムを作成する
+	m_gameOverUI->Create(m_commonResources->GetDeviceResources()
+		, path
+		, position
+		, scale
+		, anchor
+		, kind);
+
+	m_gameOverUI->SetWindowSize(m_windowWidth, m_windowHeight);
+
+
+}
+
+void UI::GameOverReTryTexAdd(const wchar_t* path, DirectX::SimpleMath::Vector2 position, DirectX::SimpleMath::Vector2 scale, ANCHOR anchor, UserInterface::Kinds kind)
+{
+
+	m_gameOverReTryUI = std::make_unique<UserInterface>();
+	//  指定された画像を表示するためのアイテムを作成する
+	m_gameOverReTryUI->Create(m_commonResources->GetDeviceResources()
+		, path
+		, position
+		, scale
+		, anchor
+		, kind);
+
+	m_gameOverReTryUI->SetWindowSize(m_windowWidth, m_windowHeight);
+
+
+}
+
+void UI::GameOverEndTexAdd(const wchar_t* path, DirectX::SimpleMath::Vector2 position, DirectX::SimpleMath::Vector2 scale, ANCHOR anchor, UserInterface::Kinds kind)
+{
+
+	m_gameOverEndUI = std::make_unique<UserInterface>();
+	//  指定された画像を表示するためのアイテムを作成する
+	m_gameOverEndUI->Create(m_commonResources->GetDeviceResources()
+		, path
+		, position
+		, scale
+		, anchor
+		, kind);
+
+	m_gameOverEndUI->SetWindowSize(m_windowWidth, m_windowHeight);
+
+
+}
+
+void UI::GameOverArrowTexAdd(const wchar_t* path, DirectX::SimpleMath::Vector2 position, DirectX::SimpleMath::Vector2 scale, ANCHOR anchor, UserInterface::Kinds kind)
+{
+
+	m_gameOverArrowUI = std::make_unique<UserInterface>();
+	//  指定された画像を表示するためのアイテムを作成する
+	m_gameOverArrowUI->Create(m_commonResources->GetDeviceResources()
+		, path
+		, position
+		, scale
+		, anchor
+		, kind);
+
+	m_gameOverArrowUI->SetWindowSize(m_windowWidth, m_windowHeight);
 
 
 }
@@ -151,7 +369,6 @@ void UI::CreateEnemyHP()
 	using namespace DirectX::SimpleMath;
 	//  背景となるウィンドウ画像を読み込む
 
-//  草画像を読み込む
 	EnemyHPAdd(L"Resources/Textures/BossHPBase.png"
 		, Vector2(640, 50)
 		, Vector2(0.9f, 0.5f)
@@ -188,6 +405,51 @@ void UI::CreatePlayerHP()
 
 	}
 
-	
+
+}
+
+void UI::CreateClearTex()
+{
+	using namespace DirectX::SimpleMath;
+
+	ClearTexAdd(L"Resources/Textures/GameClear.png"
+		, Vector2(640, 360)
+		, Vector2(0.5f, 0.5f)
+		, ANCHOR::MIDDLE_CENTER
+		, UserInterface::Kinds::UI);
+
+}
+
+void UI::CreateGameOverTex()
+{
+
+	using namespace DirectX::SimpleMath;
+
+	GameOverTexAdd(L"Resources/Textures/GameOver.png"
+		, Vector2(640, 360)
+		, Vector2(1.0f, 1.0f)
+		, ANCHOR::MIDDLE_CENTER
+		, UserInterface::Kinds::UI);
+
+	GameOverReTryTexAdd(L"Resources/Textures/ReTry.png"
+		, Vector2(640, 420)
+		, Vector2(0.3f, 0.3f)
+		, ANCHOR::MIDDLE_CENTER
+		, UserInterface::Kinds::UI);
+
+	GameOverEndTexAdd(L"Resources/Textures/End.png"
+		, Vector2(640, 510)
+		, Vector2(0.3f, 0.3f)
+		, ANCHOR::MIDDLE_CENTER
+		, UserInterface::Kinds::UI);
+
+	GameOverArrowTexAdd(L"Resources/Textures/Arrow.png"
+		, Vector2(500, 420)
+		, Vector2(0.18f, 0.18f)
+		, ANCHOR::MIDDLE_CENTER
+		, UserInterface::Kinds::UI);
+
+	//上　420　　　下 510
+
 }
 

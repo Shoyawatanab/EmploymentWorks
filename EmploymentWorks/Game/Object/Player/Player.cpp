@@ -90,7 +90,7 @@ void Player::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3
 	m_graivty = 0.05f;
 	m_isLockOn = false;
 
-	m_hp = 3;
+	m_hp = 1;
 
 }
 
