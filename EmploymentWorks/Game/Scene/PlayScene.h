@@ -27,9 +27,26 @@ namespace mylib
 
 
 class PlayScene final :
-    public IScene
+	public IScene
 {
+public:
+
+	enum class GameState
+	{
+		None,    //通常
+		Clear,
+		GameOver
+
+	};
+
+public:
+
+	void SetNextSceneID(SceneID ID) { m_nextScene = ID; }
+
 private:
+
+	SceneID m_nextScene;
+
 	// 共通リソース
 	CommonResources* m_commonResources;
 
@@ -44,11 +61,8 @@ private:
 	// 射影行列
 	DirectX::SimpleMath::Matrix m_projection;
 
-	// シーンチェンジフラグ
-	bool m_isChangeScene;
-
 	std::unique_ptr<Player> m_player;
-	std::unique_ptr<Enemy> m_enemy ;
+	std::unique_ptr<Enemy> m_enemy;
 
 	std::unique_ptr<Floor> m_floor;
 	std::unique_ptr<LockOn> m_lockOn;
@@ -66,6 +80,8 @@ private:
 
 	std::unique_ptr<Sky> m_sky;
 
+	GameState m_state;
+
 public:
 	PlayScene();
 	~PlayScene() override;
@@ -75,5 +91,8 @@ public:
 	void Render() override;
 	void Finalize() override;
 
-	SceneID GetNextSceneID() const;
+	SceneID GetNextSceneID() const override;
+
+
+
 };

@@ -43,12 +43,12 @@ namespace mylib
 
 		// ‰æŠp
 		const float FOV = DirectX::XMConvertToRadians(45.0f);
-		
+
 		// ‹ß‚¢“Š‰e–Ê
 		const float NEAR_PLANE = 1.0f;
-		
+
 		// ‰“‚¢“Š‰e–Ê
-		const float FAR_PLANE  = 100.0f;
+		const float FAR_PLANE = 100.0f;
 
 		// ƒrƒ…[s—ñ
 		DirectX::SimpleMath::Matrix m_view;
@@ -102,7 +102,7 @@ namespace mylib
 
 		void Enter() override;
 
-		void Exit() override ;
+		void Exit() override;
 
 
 	private:

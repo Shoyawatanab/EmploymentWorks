@@ -117,6 +117,9 @@ public:
 	void Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection) ;
 	void Finalize() ;
 
+	void ReduceSize(float elapsdTime);
+
+
 	//遠距離攻撃　ビヘイビアツリーで呼び出す
 	IBehaviorNode::State BeamAttack(float elapsdTime);
 

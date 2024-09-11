@@ -26,6 +26,7 @@ const DirectX::SimpleMath::Vector3 Enemy::STAETTAEGETDIRECTION = DirectX::Simple
 //敵の初期の向いている方向
 const DirectX::SimpleMath::Vector3 Enemy::INITIALFORWARD = DirectX::SimpleMath::Vector3(0, 0, 1);
 
+const int MAXHP = 1;
 
 //---------------------------------------------------------
 // コンストラクタ
@@ -79,7 +80,7 @@ void Enemy::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 
 	m_model = DirectX::Model::CreateFromCMO(device, L"Resources/Models/kariEnemy.cmo", *fx);
 
 	m_position = position;
-	
+
 	m_initialRotate = DirectX::SimpleMath::Quaternion::CreateFromAxisAngle(DirectX::SimpleMath::Vector3::Up, DirectX::XMConvertToRadians(90.0f));
 	m_rotate = DirectX::SimpleMath::Quaternion::Identity;
 
@@ -88,7 +89,7 @@ void Enemy::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 
 	m_bounding->CreateBoundingBox(m_commonResources, m_position, Vector3(3.5f, 4.9f, 1.8f));
 	m_bounding->CreateBoundingSphere(m_commonResources, m_position, 6.0f);
 
-	m_hp = 2;
+	m_hp = MAXHP;
 	m_maxHP = m_hp;
 	m_graivty = 0.05f;
 	m_scale = 1.8f;
@@ -158,15 +159,7 @@ void Enemy::Update(float elapsedTime)
 	}
 
 
-	if (m_hp <= 0 && m_scale > 0)
-	{
-		m_scale -= 0.01f;
-
-	}
-	else
-	{
-		m_position.y -= m_graivty;
-	}
+	m_position.y -= m_graivty;
 
 
 	//プレイヤと敵のベクトル
@@ -220,6 +213,13 @@ void Enemy::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 void Enemy::Finalize()
 {
 	// do nothing.
+}
+
+//大きさを小さくする
+void Enemy::ReduceSize(float elapsdTime)
+{
+	m_scale -= 0.01f;
+	m_scale = std::max(m_scale, 0.0f);
 }
 
 

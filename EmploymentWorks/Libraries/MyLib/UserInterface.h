@@ -48,6 +48,7 @@ public:
 	struct ConstBuffer
 	{
 		DirectX::SimpleMath::Vector4	windowSize;
+		DirectX::SimpleMath::Vector4    diffuse;
 	};
 	//変数
 private:
@@ -87,6 +88,9 @@ private:
 	float m_renderRatio;
 	float m_renderRatioOffset;
 
+	//画像全体の透明度
+	float m_alphaValue;
+
 	//作るシェーダーの種類
 	Kinds m_kinds;
 
@@ -122,6 +126,10 @@ public:
 
 	void SetRenderRatioOffset(float offset);
 	float GetRenderRatioOffset() { return m_renderRatioOffset; }
+
+	void SetAlphaValue(float value) { m_alphaValue = value; }
+	float GetAlphaValue() { return m_alphaValue; }
+
 
 private:
 

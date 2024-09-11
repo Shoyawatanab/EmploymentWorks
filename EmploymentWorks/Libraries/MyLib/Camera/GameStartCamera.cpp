@@ -11,8 +11,8 @@
 const int MAXANGLEY = 100;
 const DirectX::SimpleMath::Vector3 TARGET = DirectX::SimpleMath::Vector3(0, 1, 0); //ステージの中心
 
-const float MOVESPEED     = 0.5f;
-DirectX::SimpleMath::Vector3 STARTPOS = DirectX::SimpleMath::Vector3(0,15,25);
+const float MOVESPEED = 0.5f;
+DirectX::SimpleMath::Vector3 STARTPOS = DirectX::SimpleMath::Vector3(0, 15, 25);
 
 
 
@@ -42,9 +42,9 @@ mylib::GameStartCamera::GameStartCamera(Player* player)
 	m_view{},
 	m_projection{},
 	m_eye{},
-	m_target{TARGET},
+	m_target{ TARGET },
 	m_up{ DirectX::SimpleMath::Vector3::UnitY },
-	m_player{player},
+	m_player{ player },
 	m_lerpTime{},
 	m_angle{},
 	m_height{},
@@ -80,7 +80,7 @@ void mylib::GameStartCamera::Update(const float& elapsedTime)
 	DirectX::Keyboard::State key = DirectX::Keyboard::Get().GetState();
 
 	m_distanceFromTarget = Lerp(STARTPOS.z, m_cameraEndPos.z, m_lerpTime);
-	m_height = Lerp(STARTPOS.y,m_cameraEndPos.y, m_lerpTime);
+	m_height = Lerp(STARTPOS.y, m_cameraEndPos.y, m_lerpTime);
 	m_target = Lerp(TARGET, m_endTarget, m_lerpTime);
 
 
@@ -90,7 +90,7 @@ void mylib::GameStartCamera::Update(const float& elapsedTime)
 	CalculateViewMatrix();
 
 	m_lerpTime += 0.01f;
-	m_lerpTime = Clamp(m_lerpTime,0,1);
+	m_lerpTime = Clamp(m_lerpTime, 0, 1);
 
 
 
@@ -101,7 +101,7 @@ void mylib::GameStartCamera::Update(const float& elapsedTime)
 //-------------------------------------------------------------------
 void mylib::GameStartCamera::CalculateViewMatrix()
 {
-	m_view = DirectX::SimpleMath::Matrix::CreateLookAt(m_eye , m_target, m_up);
+	m_view = DirectX::SimpleMath::Matrix::CreateLookAt(m_eye, m_target, m_up);
 }
 
 //-------------------------------------------------------------------
@@ -112,7 +112,7 @@ void mylib::GameStartCamera::CalculateProjectionMatrix()
 	// ウィンドウサイズ
 	const float width = static_cast<float>(Screen::WIDTH);
 	const float height = static_cast<float>(Screen::HEIGHT);
-	
+
 	// 画面縦横比
 	const float aspectRatio = width / height;
 

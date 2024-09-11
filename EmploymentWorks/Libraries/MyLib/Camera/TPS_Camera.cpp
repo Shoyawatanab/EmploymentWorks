@@ -190,6 +190,9 @@ void mylib::TPS_Camera::CalculateEyePosition()
 
 void mylib::TPS_Camera::Enter()
 {
+
+	m_angle = { 400,800 };
+
 }
 
 

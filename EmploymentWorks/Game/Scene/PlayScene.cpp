@@ -39,7 +39,6 @@ PlayScene::PlayScene()
 	//m_debugCamera{},
 	m_gridFloor{},
 	m_projection{},
-	m_isChangeScene{},
 	m_player{},
 	m_enemy{},
 	m_cameraManager{},
@@ -47,6 +46,7 @@ PlayScene::PlayScene()
 	, m_lockOn{}
 	, m_rock{}
 	, m_sky{}
+	, m_nextScene{ SceneID::NONE }
 {
 }
 
@@ -73,6 +73,7 @@ void PlayScene::Initialize(CommonResources* resources)
 	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
 	auto states = m_commonResources->GetCommonStates();
 
+	m_nextScene = SceneID::NONE;
 
 	// グリッド床を作成する
 	m_gridFloor = std::make_unique<mylib::GridFloor>(device, context, states);
@@ -81,6 +82,7 @@ void PlayScene::Initialize(CommonResources* resources)
 	RECT rect{ m_commonResources->GetDeviceResources()->GetOutputSize() };
 	//m_debugCamera = std::make_unique<mylib::DebugCamera>();
 	//m_debugCamera->Initialize(rect.right, rect.bottom);
+
 
 
 	// 射影行列を作成する
@@ -93,7 +95,7 @@ void PlayScene::Initialize(CommonResources* resources)
 	m_floor = std::make_unique<Floor>();
 	m_enemy = std::make_unique<Enemy>();
 	m_player = std::make_unique<Player>(m_enemy.get());
-	m_cameraManager = std::make_unique<mylib::GameCameraManager>(m_player.get());
+	m_cameraManager = std::make_unique<mylib::GameCameraManager>(this, m_player.get(), m_enemy.get());
 
 
 	m_enemy->SetPlayer(m_player.get());
@@ -120,10 +122,10 @@ void PlayScene::Initialize(CommonResources* resources)
 		m_commonResources->GetDeviceResources()->GetOutputSize().bottom);
 
 	m_collisionManager = std::make_unique<CollisionManager>();
-	m_collisionManager->Initialize(m_commonResources,m_player.get(),m_enemy.get());
+	m_collisionManager->Initialize(m_commonResources, m_player.get(), m_enemy.get());
 
-	m_ui = std::make_unique<UI>(m_player.get(), m_enemy.get());
-	m_ui->Initialize(m_commonResources->GetDeviceResources(),
+	m_ui = std::make_unique<UI>(this, m_player.get(), m_enemy.get());
+	m_ui->Initialize(m_commonResources,
 		m_commonResources->GetDeviceResources()->GetOutputSize().right,
 		m_commonResources->GetDeviceResources()->GetOutputSize().bottom);
 
@@ -160,8 +162,8 @@ void PlayScene::Initialize(CommonResources* resources)
 	m_sky = std::make_unique<Sky>();
 	m_sky->Initialize(m_commonResources);
 
-	// シーン変更フラグを初期化する
-	m_isChangeScene = false;
+	m_state = GameState::None;
+	m_state = GameState::GameOver;
 }
 
 //---------------------------------------------------------
@@ -171,51 +173,65 @@ void PlayScene::Update(float elapsedTime)
 {
 	UNREFERENCED_PARAMETER(elapsedTime);
 
-
-
-	// デバッグカメラを更新する
-	//m_debugCamera->Update(m_commonResources->GetInputManager());
-
 	m_cameraManager->Update(elapsedTime);
 
 	m_collisionManager->Update();
 
-
-	if (m_cameraManager->GetGameCameraState() != m_cameraManager->GetGameStartCamera())
-	{
-		m_enemy->Update(elapsedTime);
-
-	}
-
 	m_player->Update(elapsedTime, m_cameraManager->GetTPSCamera()->GetRotationX());
 
-	m_ui->Update(elapsedTime);
-
-
-	if (m_enemy->GetHp() <= 0)
+	switch (m_state)
 	{
-
-		if (m_enemy->GetScale() <= 0)
-		{
-			m_isChangeScene = true;
-		}
+		case PlayScene::GameState::None:
 
 
-		return;
+			if (m_cameraManager->GetGameCameraState() != m_cameraManager->GetGameStartCamera())
+			{
+				m_enemy->Update(elapsedTime);
+			}
+
+
+			//ゲームクリア時に１度だけ呼びたい
+			if (m_enemy->GetHp() <= 0)
+			{
+				//カメラの切り替え
+				m_cameraManager->ChangeState(m_cameraManager->GetGameEndCamera());
+				//ゲーム状態をクリアに変更
+				m_state = GameState::Clear;
+			}
+
+			//ゲームオーバーに変更
+			if (m_player->GetPlayerHP() <= 0)
+			{
+				m_state = GameState::GameOver;
+			}
+
+			m_lockOn->Update(elapsedTime);
+
+
+			m_ui->Update(elapsedTime);
+
+			break;
+		case PlayScene::GameState::Clear:
+
+			//TPSカメラになってゲームが通常状態の時
+			if (m_cameraManager->GetGameCameraState() != m_cameraManager->GetGameStartCamera())
+			{
+				m_enemy->ReduceSize(elapsedTime);
+			}
+
+			break;
+		case PlayScene::GameState::GameOver:
+
+			m_ui->GameOverUpdate(elapsedTime);
+
+			break;
+		default:
+			break;
 	}
 
-	m_lockOn->Update(elapsedTime);
+
 
 	m_commonResources->GetTimer()->Update(elapsedTime);
-
-	// キーボードステートトラッカーを取得する
-	const auto& kbTracker = m_commonResources->GetInputManager()->GetKeyboardTracker();
-
-	// スペースキーが押されたら
-	//if (kbTracker->pressed.Space)
-	//{
-	//	m_isChangeScene = true;
-	//}
 
 	m_player->SetisLockOn(m_lockOn->GetIsLOckOn());
 }
@@ -231,12 +247,9 @@ void PlayScene::Render()
 	auto states = m_commonResources->GetCommonStates();
 
 	// ビュー行列を取得する
-	//const Matrix& view = m_debugCamera->GetViewMatrix();
 	const Matrix& view = m_cameraManager->GetViewMatrix();;
 
 
-	// 格子床を描画する
-	//m_gridFloor->Render(context, view, m_projection);
 	m_floor->Render(view, m_projection);
 
 	m_wall->Render(view, m_projection);
@@ -246,18 +259,30 @@ void PlayScene::Render()
 
 	m_player->Render(view, m_projection);
 
-	m_lockOn->Render();
-
-
 	for (auto& rock : m_rock)
 	{
 		rock->Render(view, m_projection);
-
 	}
 
 	m_sky->Render(view, m_projection);
 
 	m_ui->Render();
+
+	switch (m_state)
+	{
+		case PlayScene::GameState::None:
+			m_lockOn->Render();
+
+			break;
+		case PlayScene::GameState::Clear:
+			m_ui->ClearTexRender();
+			break;
+		case PlayScene::GameState::GameOver:
+			m_ui->GameOverRender();
+			break;
+		default:
+			break;
+	}
 
 	m_commonResources->GetTimer()->PlaySceneRender(Vector2(100, 50), 0.3f);
 
@@ -284,12 +309,10 @@ void PlayScene::Finalize()
 //---------------------------------------------------------
 IScene::SceneID PlayScene::GetNextSceneID() const
 {
-	// シーン変更がある場合
-	if (m_isChangeScene)
-	{
-		return IScene::SceneID::RESULT;
-	}
 
-	// シーン変更がない場合
-	return IScene::SceneID::NONE;
+	//Noneなら切り替えしない
+	return m_nextScene;
+
 }
+
+

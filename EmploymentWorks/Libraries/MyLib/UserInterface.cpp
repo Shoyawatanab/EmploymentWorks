@@ -51,7 +51,7 @@ UserInterface::UserInterface()
 	, m_renderRatio(1.0f)
 	, m_renderRatioOffset(0.0f),
 	m_kinds{}
-
+	, m_alphaValue{ 1.0f }
 {
 
 }
@@ -138,6 +138,10 @@ void UserInterface::SetScale(DirectX::SimpleMath::Vector2 scale)
 void UserInterface::SetPosition(DirectX::SimpleMath::Vector2 position)
 {
 	m_position = position;
+}
+
+void UserInterface::SetAnchor(ANCHOR anchor)
+{
 }
 
 void UserInterface::SetRenderRatio(float ratio)
@@ -262,15 +266,19 @@ void UserInterface::Render()
 			,SimpleMath::Vector4(m_position.x, m_position.y, static_cast<float>(m_textureWidth), static_cast<float>(m_textureHeight))
 			,SimpleMath::Vector2(m_renderRatio - m_renderRatioOffset,0))
 	};
+
 	//	ただし上記の設定値には、WorldやViewなどの3D空間から変換するための計算を一切しないため、
 	//	スクリーン座標として描画される
 
 	//	シェーダーに渡す追加のバッファを作成する。(ConstBuffer）
 	ConstBuffer cbuff;
 	cbuff.windowSize = SimpleMath::Vector4(static_cast<float>(m_windowWidth), static_cast<float>(m_windowHeight), 1, 1);
+	cbuff.diffuse = SimpleMath::Vector4(1, 1, 1, m_alphaValue);
 
 	//	受け渡し用バッファの内容更新(ConstBufferからID3D11Bufferへの変換）
 	context->UpdateSubresource(m_CBuffer.Get(), 0, NULL, &cbuff, 0, 0);
+
+
 
 	//	シェーダーにバッファを渡す
 	ID3D11Buffer* cb[1] = { m_CBuffer.Get() };
