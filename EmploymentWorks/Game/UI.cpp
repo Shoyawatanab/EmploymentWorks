@@ -28,6 +28,8 @@ UI::UI(PlayScene* playScene, Player* player, Enemy* enemy)
 	, m_player{ player }
 	, m_clearUI{}
 	, m_playScene{ playScene }
+	, m_clearTime{}
+
 {
 	m_enemyHP.clear();
 }
@@ -74,6 +76,11 @@ void UI::Initialize(CommonResources* resources, int width, int height)
 	//矢印画像の透明度の設定
 	m_gameOverArrowUI->SetAlphaValue(-0.3f);
 
+	m_clearTime = 0;
+
+	m_changeResultScene = false;
+
+
 }
 
 //---------------------------------------------------------
@@ -99,8 +106,41 @@ void UI::Update(float elapsedTime)
 
 }
 
+void UI::GameClearUpdate(float elapsedTime)
+{
+
+	DirectX::SimpleMath::Vector2 pos = m_clearUI->GetPosition();
+
+	pos.y += 200.0f * elapsedTime;
+
+	pos.y = std::min(pos.y, 360.0f);
+
+	m_clearUI->SetPosition(pos);
+
+	if (pos.y <= 360)
+	{
+
+		//クリアの画像が中心に来てからの時間の計測
+		m_clearTime += elapsedTime;
+
+	}
+
+	if (m_clearTime >= 3)
+	{
+		m_changeResultScene = true;
+	}
+
+}
+
+
 void UI::GameOverUpdate(float elapsedTime)
 {
+
+
+
+
+	//加算値を求める
+	float Additive = 0.5f * elapsedTime;
 
 
 
@@ -108,21 +148,10 @@ void UI::GameOverUpdate(float elapsedTime)
 	float alpha;
 	alpha = m_gameOverUI->GetAlphaValue();
 	//透明度を加算
-	alpha += 0.5f * elapsedTime;
-
-	alpha = std::min(alpha, 1.0f);
-
+	alpha += Additive;
 	//透明度をセット
 	m_gameOverUI->SetAlphaValue(alpha);
 
-
-
-	if (m_gameOverUI->GetAlphaValue() < 1)
-	{
-		return;
-	}
-
-	float Additive = 0.8f * elapsedTime;
 
 	//リトライ画像の透明度の取得
 	alpha = m_gameOverReTryUI->GetAlphaValue();
@@ -139,13 +168,6 @@ void UI::GameOverUpdate(float elapsedTime)
 	//透明度をセット
 	m_gameOverEndUI->SetAlphaValue(alpha);
 
-	//矢印画像の透明度の取得
-	alpha = m_gameOverArrowUI->GetAlphaValue();
-	//透明度を加算
-	alpha += Additive;
-	//透明度をセット
-	m_gameOverArrowUI->SetAlphaValue(alpha);
-
 	// キーボードステートトラッカーを取得する
 	const auto& kbTracker = m_commonResources->GetInputManager()->GetKeyboardTracker();
 
@@ -159,6 +181,7 @@ void UI::GameOverUpdate(float elapsedTime)
 	{
 
 		m_gameOverArrowUI->SetPosition(DirectX::SimpleMath::Vector2(500, 510));
+
 
 	}
 
@@ -413,7 +436,7 @@ void UI::CreateClearTex()
 	using namespace DirectX::SimpleMath;
 
 	ClearTexAdd(L"Resources/Textures/GameClear.png"
-		, Vector2(640, 360)
+		, Vector2(640, -50)
 		, Vector2(0.5f, 0.5f)
 		, ANCHOR::MIDDLE_CENTER
 		, UserInterface::Kinds::UI);

@@ -27,7 +27,6 @@ mylib::GameEndCamera::GameEndCamera(GameCameraManager* cameraManager, Enemy* ene
 	m_up{ DirectX::SimpleMath::Vector3::UnitY },
 	m_angle{},
 	m_enemy{enemy},
-	m_time{},
 	m_cameraManager{cameraManager}
 {
 
@@ -58,19 +57,10 @@ void mylib::GameEndCamera::Update(const float& elapsedTime)
 	// ビュー行列を更新する
 	CalculateViewMatrix();
 
-	m_time += elapsedTime;
-
-	//最大値を超えたら終了
-	if (m_time >= MAXTIME)
-	{
-		//TPSカメラに変更
-		//m_cameraManager->ChangeState(m_cameraManager->GetTPSCamera());
-		//リザルト画面に
-		m_cameraManager->GameEnd();
-	}
-
-
 }
+
+
+
 
 //-------------------------------------------------------------------
 // ビュー行列を計算する

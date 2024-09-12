@@ -55,7 +55,6 @@ namespace mylib
 
 		void ChangeState(IGameCamera* nestState);
 
-		void GameEnd();
 
 	};
 }

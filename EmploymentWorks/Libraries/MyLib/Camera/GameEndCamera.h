@@ -70,8 +70,6 @@ namespace mylib
 		//カメラの角度
 		float m_angle;
 
-		//カメラの経過時間
-		float m_time;
 
 		//カメラマネージャー
 		mylib::GameCameraManager* m_cameraManager;
