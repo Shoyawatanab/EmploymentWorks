@@ -22,6 +22,8 @@ class UI final
 {
 public:
 
+	bool GetIsChangeResultScene() { return m_changeResultScene; }
+
 
 private:
 
@@ -51,6 +53,11 @@ private:
 
 	PlayScene* m_playScene;
 
+	float m_clearTime;
+
+	bool m_changeResultScene;
+
+
 public:
 	UI(PlayScene* playScene, Player* player, Enemy* enemy);
 	~UI();
@@ -58,6 +65,8 @@ public:
 	void Initialize(CommonResources* resources, int width, int height);
 
 	void Update(float elapsedTime);
+
+	void GameClearUpdate(float elapsedTime);
 
 	void GameOverUpdate(float elapsedTime);
 

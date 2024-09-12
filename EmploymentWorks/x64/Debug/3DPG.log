@@ -1,7 +1,94 @@
-﻿  UI.cpp
+﻿  CollisionManager.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Interface\ICollisionObject.h(24,2): warning C4091: 'static ': 変数が何も宣言されていないときは、'CollsionObjectTag' の左辺を無視します。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player\Player.h(46,29): warning C4244: 'return': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player\Player.h(47,36): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.h(139,28): warning C4244: 'return': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\DetectionCollision\CollisionManager.cpp(412,8): warning C4189: 'a': ローカル変数が初期化されましたが、参照されていません
+  LockOn.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Interface\ICollisionObject.h(24,2): warning C4091: 'static ': 変数が何も宣言されていないときは、'CollsionObjectTag' の左辺を無視します。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player\Player.h(46,29): warning C4244: 'return': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player\Player.h(47,36): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.h(139,28): warning C4244: 'return': 'int' から 'float' への変換です。データが失われる可能性があります。
+  Boomerang.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Interface\ICollisionObject.h(24,2): warning C4091: 'static ': 変数が何も宣言されていないときは、'CollsionObjectTag' の左辺を無視します。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player\Player.h(46,29): warning C4244: 'return': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player\Player.h(47,36): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+  Beam.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Interface\ICollisionObject.h(24,2): warning C4091: 'static ': 変数が何も宣言されていないときは、'CollsionObjectTag' の左辺を無視します。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player\Player.h(46,29): warning C4244: 'return': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player\Player.h(47,36): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.h(139,28): warning C4244: 'return': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Beam.cpp(60,7): warning C4189: 'device': ローカル変数が初期化されましたが、参照されていません
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Beam.cpp(154,13): warning C4244: '初期化中': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Beam.cpp(163,50): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
+  Enemy.cpp
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Interface\ICollisionObject.h(24,2): warning C4091: 'static ': 変数が何も宣言されていないときは、'CollsionObjectTag' の左辺を無視します。
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.h(139,28): warning C4244: 'return': 'int' から 'float' への変換です。データが失われる可能性があります。
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player\Player.h(46,29): warning C4244: 'return': 'float' から 'int' への変換です。データが失われる可能性があります。
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player\Player.h(47,36): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\UI.cpp(402,17): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.cpp(93,12): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.cpp(69,7): warning C4189: 'context': ローカル変数が初期化されましたが、参照されていません
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.cpp(70,7): warning C4189: 'states': ローカル変数が初期化されましたが、参照されていません
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.cpp(219,30): warning C4100: 'elapsdTime': 引数は関数の本体部で 1 度も参照されません。
+  Floor.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Interface\ICollisionObject.h(24,2): warning C4091: 'static ': 変数が何も宣言されていないときは、'CollsionObjectTag' の左辺を無視します。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Floor.h(52,44): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Floor.cpp(69,71): warning C4100: 'cameraRotation': 引数は関数の本体部で 1 度も参照されません。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Floor.cpp(117,90): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Floor.cpp(117,49): warning C4100: 'PartnerTag': 引数は関数の本体部で 1 度も参照されません。
+  Player.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Interface\ICollisionObject.h(24,2): warning C4091: 'static ': 変数が何も宣言されていないときは、'CollsionObjectTag' の左辺を無視します。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player\Player.h(46,29): warning C4244: 'return': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player\Player.h(47,36): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.h(139,28): warning C4244: 'return': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player\Player.cpp(100,72): warning C4100: 'cameraRotation': 引数は関数の本体部で 1 度も参照されません。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player\Player.cpp(177,91): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
+  Rock.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Interface\ICollisionObject.h(24,2): warning C4091: 'static ': 変数が何も宣言されていないときは、'CollsionObjectTag' の左辺を無視します。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Rock.h(52,44): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Rock.cpp(69,70): warning C4100: 'cameraRotation': 引数は関数の本体部で 1 度も参照されません。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Rock.cpp(117,89): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Rock.cpp(117,48): warning C4100: 'PartnerTag': 引数は関数の本体部で 1 度も参照されません。
+  Wall.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Interface\ICollisionObject.h(24,2): warning C4091: 'static ': 変数が何も宣言されていないときは、'CollsionObjectTag' の左辺を無視します。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Wall.h(49,44): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Wall.cpp(49,7): warning C4189: 'device': ローカル変数が初期化されましたが、参照されていません
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Wall.cpp(62,70): warning C4100: 'cameraRotation': 引数は関数の本体部で 1 度も参照されません。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Wall.cpp(79,7): warning C4189: 'context': ローカル変数が初期化されましたが、参照されていません
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Wall.cpp(80,7): warning C4189: 'states': ローカル変数が初期化されましたが、参照されていません
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Wall.cpp(109,89): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Wall.cpp(109,48): warning C4100: 'PartnerTag': 引数は関数の本体部で 1 度も参照されません。
+  PlayScene.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Interface\ICollisionObject.h(24,2): warning C4091: 'static ': 変数が何も宣言されていないときは、'CollsionObjectTag' の左辺を無視します。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player\Player.h(46,29): warning C4244: 'return': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player\Player.h(47,36): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.h(139,28): warning C4244: 'return': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Floor.h(52,44): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Wall.h(49,44): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Rock.h(52,44): warning C4100: 'Pos': 引数は関数の本体部で 1 度も参照されません。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\PlayScene.cpp(261,7): warning C4189: 'context': ローカル変数が初期化されましたが、参照されていません
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\PlayScene.cpp(262,7): warning C4189: 'states': ローカル変数が初期化されましたが、参照されていません
+  GameCameraManager.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Interface\ICollisionObject.h(24,2): warning C4091: 'static ': 変数が何も宣言されていないときは、'CollsionObjectTag' の左辺を無視します。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player\Player.h(46,29): warning C4244: 'return': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player\Player.h(47,36): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\Camera\GameCameraManager.cpp(16,34): warning C4838: 'float' から 'LONG' への変換には縮小変換が必要です
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\Camera\GameCameraManager.cpp(16,34): warning C4244: '初期化中': 'float' から 'LONG' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\Camera\GameCameraManager.cpp(16,41): warning C4838: 'float' から 'LONG' への変換には縮小変換が必要です
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\Camera\GameCameraManager.cpp(16,41): warning C4244: '初期化中': 'float' から 'LONG' への変換です。データが失われる可能性があります。
+  GameEndCamera.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Interface\ICollisionObject.h(24,2): warning C4091: 'static ': 変数が何も宣言されていないときは、'CollsionObjectTag' の左辺を無視します。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.h(139,28): warning C4244: 'return': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\Camera\GameEndCamera.cpp(47,48): warning C4100: 'elapsedTime': 引数は関数の本体部で 1 度も参照されません。
+  TPS_Camera.cpp
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Interface\ICollisionObject.h(24,2): warning C4091: 'static ': 変数が何も宣言されていないときは、'CollsionObjectTag' の左辺を無視します。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player\Player.h(46,29): warning C4244: 'return': 'float' から 'int' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player\Player.h(47,36): warning C4244: '=': 'int' から 'float' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\Camera\TPS_Camera.cpp(11,34): warning C4838: 'float' から 'LONG' への変換には縮小変換が必要です
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\Camera\TPS_Camera.cpp(11,34): warning C4244: '初期化中': 'float' から 'LONG' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\Camera\TPS_Camera.cpp(11,41): warning C4838: 'float' から 'LONG' への変換には縮小変換が必要です
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\Camera\TPS_Camera.cpp(11,41): warning C4244: '初期化中': 'float' から 'LONG' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\Camera\TPS_Camera.cpp(69,32): warning C4244: '-=': 'float' から 'LONG' への変換です。データが失われる可能性があります。
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Libraries\MyLib\Camera\TPS_Camera.cpp(70,32): warning C4244: '-=': 'float' から 'LONG' への変換です。データが失われる可能性があります。
+  コードを生成中...
   3DPG.vcxproj -> C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\3DPG.exe

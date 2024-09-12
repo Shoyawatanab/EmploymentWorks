@@ -40,6 +40,12 @@ namespace mylib
 
 		const DirectX::SimpleMath::Vector3& GetEyePosition() const { return m_eye; }
 
+		void SetEyePosition(DirectX::SimpleMath::Vector3 pos) {
+			m_eye = pos; 	// カメラ座標を計算する
+			// ビュー行列を更新する
+			CalculateViewMatrix();
+		}
+
 		const DirectX::SimpleMath::Vector3& GetTargetPosition() const { return m_target; }
 
 		const DirectX::SimpleMath::Vector3& GetUpVector() const { return m_up; }

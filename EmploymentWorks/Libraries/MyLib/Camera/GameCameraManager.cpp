@@ -88,7 +88,3 @@ void mylib::GameCameraManager::ChangeState(IGameCamera* nextState)
 
 }
 
-void mylib::GameCameraManager::GameEnd()
-{
-	m_playScene->SetNextSceneID(PlayScene::SceneID::RESULT);
-}

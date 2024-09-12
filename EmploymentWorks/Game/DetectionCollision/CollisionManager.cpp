@@ -20,6 +20,7 @@
 #include "Libraries/MyLib/CollisionMesh.h"
 
 #include "Game/Object/Enemy/Beam.h"
+#include "Libraries/MyLib/Camera/TPS_Camera.h"
 
 //---------------------------------------------------------
 // コンストラクタ
@@ -56,6 +57,7 @@ void CollisionManager::Initialize(CommonResources* resources, Player* player, En
 	m_collisionMesh->Initialize(device, context, L"Stage", DirectX::SimpleMath::Vector3::Zero, 7.9f);
 
 
+
 }
 
 
@@ -79,14 +81,16 @@ void CollisionManager::Update()
 	//登録されたオブジェクト全てと当たり判定を取る
 	for (int i = 0; i < m_collsionObjects.size() - 1; i++)
 	{
+
+		CollsionObjectTag tagI = m_collsionObjects[i]->GetCollsionTag();
+
+
 		for (int j = i + 1; j < m_collsionObjects.size(); j++)
 		{
 
-			CollsionObjectTag tagI = m_collsionObjects[i]->GetCollsionTag();
 			CollsionObjectTag tagJ = m_collsionObjects[j]->GetCollsionTag();
 
 			uint32_t kind = static_cast<uint32_t>(tagI) | static_cast<uint32_t>(tagJ);
-
 
 
 			if (kind == static_cast<uint32_t>(CollisionType::Player_Wall) ||
@@ -100,6 +104,7 @@ void CollisionManager::Update()
 					m_collsionObjects[i]->OnCollisionEnter(tagJ, m_hitPosition);
 					m_collsionObjects[j]->OnCollisionEnter(tagI, m_hitPosition);
 				}
+
 				continue;
 			}
 
@@ -164,47 +169,38 @@ void CollisionManager::Update()
 		}
 	}
 
-	//プレイヤとビーム
-	if (m_player->GetPlayerState() != m_player->GetPlayerUsually() && !m_enemy->GetIsAttack())
-	{
-		return;
-	}
+	BeamAndPlayerCollision();
 
 
-
-	//ビームのBoundinの取得
-	std::vector<std::unique_ptr<Bounding>>& BeamBounding = m_enemy->GetBeam()->GetBounding();
-
-	//プレイヤのBoundingSphereの取得
-	DirectX::BoundingSphere* PlayerBoundingSphere = m_player->GetBounding()->GetBoundingSphere();
-
-	for (auto& beam : BeamBounding)
+	//カメラの当たり判定
+	for (int i = 0; i < m_collsionObjects.size(); i++)
 	{
 
-		DirectX::BoundingSphere* Sphere = beam->GetBoundingSphere();
+		CollsionObjectTag tag = m_collsionObjects[i]->GetCollsionTag();
 
-		//当たったら
-		if (PlayerBoundingSphere->Intersects(*Sphere))
+
+		switch (tag)
 		{
-			if (m_player->GetPlayerState() == m_player->GetPlayerUsually())
-			{
-				int hp = m_player->GetPlayerHP();
-				hp--;
-				m_player->SetPlayerHP(hp);
-			}
-
-			//飛ぶ方向を求める
-			m_player->DemandBlownAwayDirection(Sphere->Center);
-
-			//プレイヤの状態を飛ばされるに変更
-			m_player->ChangeState(m_player->GetPlayerBlownAway());
-
-			return;
+			case CollsionObjectTag::None:
+				break;
+			case CollsionObjectTag::Player:
+				break;
+			case CollsionObjectTag::Enemy:
+				break;
+			case CollsionObjectTag::Boomerang:
+				break;
+			case CollsionObjectTag::Wall:
+				break;
+			case CollsionObjectTag::NotMoveObject:
+			case CollsionObjectTag::Floor:
+				CameraCollision(m_collsionObjects[i]);
+				break;
+			default:
+				break;
 		}
 
+
 	}
-
-
 
 }
 
@@ -347,5 +343,88 @@ bool CollisionManager::WallExtrusion(ICollisionObject* Object1, ICollisionObject
 	}
 
 	return false;
+}
+
+void CollisionManager::BeamAndPlayerCollision()
+{
+
+	//プレイヤとビーム
+	if (m_player->GetPlayerState() != m_player->GetPlayerUsually() && !m_enemy->GetIsAttack())
+	{
+		return;
+	}
+
+
+
+	//ビームのBoundinの取得
+	std::vector<std::unique_ptr<Bounding>>& BeamBounding = m_enemy->GetBeam()->GetBounding();
+
+	//プレイヤのBoundingSphereの取得
+	DirectX::BoundingSphere* PlayerBoundingSphere = m_player->GetBounding()->GetBoundingSphere();
+
+	for (auto& beam : BeamBounding)
+	{
+
+		DirectX::BoundingSphere* Sphere = beam->GetBoundingSphere();
+
+		//当たったら
+		if (PlayerBoundingSphere->Intersects(*Sphere))
+		{
+			if (m_player->GetPlayerState() == m_player->GetPlayerUsually())
+			{
+				int hp = m_player->GetPlayerHP();
+				hp--;
+				m_player->SetPlayerHP(hp);
+			}
+
+			//飛ぶ方向を求める
+			m_player->DemandBlownAwayDirection(Sphere->Center);
+
+			//プレイヤの状態を飛ばされるに変更
+			m_player->ChangeState(m_player->GetPlayerBlownAway());
+
+			return;
+		}
+
+	}
+
+
+}
+
+/// <summary>
+/// カメラとの当たり判定
+/// </summary>
+/// <param name="object"></param>
+void CollisionManager::CameraCollision(ICollisionObject* object)
+{
+
+
+	DirectX::BoundingBox* box = object->GetBounding()->GetBoundingBox();
+
+
+	DirectX::SimpleMath::Vector3 direction = m_tpsCamera->GetEyePosition() - m_tpsCamera->GetTargetPosition();
+	direction.Normalize();
+	//カメラの座標と注視点からの線分をRayとして作成
+	DirectX::SimpleMath::Ray ray { m_tpsCamera->GetTargetPosition(), direction };
+	//Ray(線分)の距離を求める
+	float distance = DirectX::SimpleMath::Vector3::Distance(m_tpsCamera->GetEyePosition(), m_tpsCamera->GetTargetPosition());
+
+	float a = distance;
+
+	//当たっていない
+	if (!ray.Intersects(*box, distance))
+	{
+		return;
+	}
+
+
+	//ターゲットの座標を取得
+	DirectX::SimpleMath::Vector3 pos = m_tpsCamera->GetTargetPosition();
+	//ターゲットに方向と当たった距離をかけたものを足してEyeの座標を求める
+	pos += direction * distance;
+
+
+	m_tpsCamera->SetEyePosition(pos);
+
 }
 

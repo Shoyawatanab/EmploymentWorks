@@ -123,6 +123,7 @@ void PlayScene::Initialize(CommonResources* resources)
 
 	m_collisionManager = std::make_unique<CollisionManager>();
 	m_collisionManager->Initialize(m_commonResources, m_player.get(), m_enemy.get());
+	m_collisionManager->SetTPS_Camera(m_cameraManager->GetTPSCamera());
 
 	m_ui = std::make_unique<UI>(this, m_player.get(), m_enemy.get());
 	m_ui->Initialize(m_commonResources,
@@ -163,7 +164,7 @@ void PlayScene::Initialize(CommonResources* resources)
 	m_sky->Initialize(m_commonResources);
 
 	m_state = GameState::None;
-	m_state = GameState::GameOver;
+	//m_state = GameState::GameOver;
 }
 
 //---------------------------------------------------------
@@ -175,7 +176,6 @@ void PlayScene::Update(float elapsedTime)
 
 	m_cameraManager->Update(elapsedTime);
 
-	m_collisionManager->Update();
 
 	m_player->Update(elapsedTime, m_cameraManager->GetTPSCamera()->GetRotationX());
 
@@ -219,6 +219,20 @@ void PlayScene::Update(float elapsedTime)
 				m_enemy->ReduceSize(elapsedTime);
 			}
 
+			//敵を倒したときのアニメーションが終わったら
+			if (m_enemy->GetScale() <= 0)
+			{
+				m_ui->GameClearUpdate(elapsedTime);
+			}
+
+			if (m_ui->GetIsChangeResultScene())
+			{
+
+				SetNextSceneID(SceneID::RESULT);
+			}
+
+
+
 			break;
 		case PlayScene::GameState::GameOver:
 
@@ -229,6 +243,7 @@ void PlayScene::Update(float elapsedTime)
 			break;
 	}
 
+	m_collisionManager->Update();
 
 
 	m_commonResources->GetTimer()->Update(elapsedTime);
@@ -290,6 +305,7 @@ void PlayScene::Render()
 	auto debugString = m_commonResources->GetDebugString();
 	//debugString->AddString("Play Scene");
 	//debugString->AddString("direction: %f, %f,%f", m_enemy->Getforward().x, m_enemy->Getforward().y, m_enemy->Getforward().z);
+	debugString->AddString("EyePos: %f, %f,%f", m_cameraManager->GetTPSCamera()->GetEyePosition().x, m_cameraManager->GetTPSCamera()->GetEyePosition().y, m_cameraManager->GetTPSCamera()->GetEyePosition().z);
 
 	//debugString->AddString("Pos: %f, %f", m_player->GetPos().x, m_player->GetPos().z);
 	//debugString->AddString("Pos: %f, %f", m_enemy->GetPos().x, m_enemy->GetPos().z);

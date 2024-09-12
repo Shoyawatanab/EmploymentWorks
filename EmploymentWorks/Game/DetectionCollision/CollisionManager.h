@@ -15,6 +15,8 @@ class ICollsionObject;
 namespace mylib
 {
 	class CollisionMesh;
+	class TPS_Camera;
+
 }
 
 
@@ -23,6 +25,8 @@ class CollisionManager final
 
 {
 public:
+
+	void SetTPS_Camera(mylib::TPS_Camera* camera) { m_tpsCamera = camera; }
 
 
 private:
@@ -43,6 +47,9 @@ private:
 	//ビームのバウンディング
 	std::vector<Bounding> m_beamBounding;
 
+	//ゲームカメラ プレイ中のカメラ
+	mylib::TPS_Camera* m_tpsCamera;
+
 public:
 	CollisionManager();
 	~CollisionManager();
@@ -62,6 +69,11 @@ public:
 	bool CheckIsSphere(ICollisionObject* Object1, ICollisionObject* Object2);
 
 	bool WallExtrusion(ICollisionObject* Object1, ICollisionObject* Object2);
+
+	void BeamAndPlayerCollision();
+
+	void CameraCollision(ICollisionObject* object);
+
 
 private:
 };
