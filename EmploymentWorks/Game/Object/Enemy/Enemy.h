@@ -29,7 +29,6 @@ class Enemy : public ICollisionObject
 {
 public:
 
-	void SetPlayer(Player* player) { m_player = player; }
 
 	DirectX::SimpleMath::Vector3 GetPosition() { return m_position; }
 	void SetPosition(DirectX::SimpleMath::Vector3 Pos) { m_position = Pos; }
@@ -71,7 +70,7 @@ private:
 	std::unique_ptr<Bounding> m_bounding;
 
 	float m_hp;
-	int m_maxHP;
+	float m_maxHP;
 	float m_graivty;
 
 
@@ -118,6 +117,12 @@ public:
 	void Finalize() ;
 
 	void ReduceSize(float elapsdTime);
+
+	//クラスに必要な情報（ポインタ）を登録する
+	void RegistrationInformation(Player* player);
+
+	//クラスのインスタンス
+	void Instances();
 
 
 	//遠距離攻撃　ビヘイビアツリーで呼び出す

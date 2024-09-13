@@ -7,12 +7,12 @@
 const DirectX::SimpleMath::Vector3 GENERATEDISTANCE(0.5f, 0.8f, 0.0f);
 
 // コンストラクタ
-BoomerangIdling::BoomerangIdling(Boomerang* boomerang, Player* player)
+BoomerangIdling::BoomerangIdling()
 	:
 	m_worldMatrix{},
 	m_boundingSphereLeftLeg{},
-	m_boomerang{boomerang},
-	m_player{player}
+	m_boomerang{},
+	m_player{}
 {
 }
 
@@ -68,5 +68,13 @@ void BoomerangIdling::Enter()
 
 void BoomerangIdling::Exit()
 {
+
+}
+
+void BoomerangIdling::RegistrationInformation(Boomerang* boomerang, Player* player)
+{
+
+	m_boomerang = boomerang;
+	m_player = player;
 
 }

@@ -26,7 +26,7 @@ public:
 
 public:
 	// コンストラクタ
-	BoomerangThrow(Boomerang* boomerang, Player* player, Enemy* enemy);
+	BoomerangThrow();
 	// デストラクタ
 	~BoomerangThrow();
 	// 初期化する
@@ -37,6 +37,10 @@ public:
 
 	void Enter();
 	void Exit();
+
+	//クラスに必要な情報（ポインタ）の登録
+	void RegistrationInformation(Boomerang* boomerang, Player* player, Enemy* enemy);
+
 
 	void SplineCurve(const float& elapsedTime);
 

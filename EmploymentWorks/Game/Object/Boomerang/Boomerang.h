@@ -102,7 +102,7 @@ private:
 
 
 public:
-	Boomerang(Player* player, Enemy* enemy);
+	Boomerang();
 	~Boomerang() ;
 
 	void Initialize(CommonResources* resources) ;
@@ -127,5 +127,10 @@ public:
 
 	void OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos) override;
 
+	//クラスに必要な情報（ポインタ）の登録
+	void RegistrationInformation(Player* player, Enemy* enemy);
+
+	//クラスのインスタンス
+	void Instances();
 
 };

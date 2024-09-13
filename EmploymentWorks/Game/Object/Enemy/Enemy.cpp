@@ -42,7 +42,15 @@ Enemy::Enemy()
 	m_knockbackDirection{},
 	m_targetPos{},
 	m_forward{ INITIALFORWARD }
-
+	,m_acceleration{}
+	,m_collisionTime{}
+	,m_graivty{}
+	,m_isAttack{}
+	,m_isCollsionTime{}
+	,m_knockbackTime{}
+	,m_maxHP{}
+	,m_onCollisionTag{}
+	,m_scale{}
 {
 }
 
@@ -61,13 +69,9 @@ void Enemy::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 
 {
 	using namespace DirectX::SimpleMath;
 
-
-	assert(resources);
 	m_commonResources = resources;
 
 	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
-	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
-	auto states = m_commonResources->GetCommonStates();
 
 
 
@@ -85,7 +89,6 @@ void Enemy::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 
 	m_rotate = DirectX::SimpleMath::Quaternion::Identity;
 
 
-	m_bounding = std::make_unique<Bounding>();
 	m_bounding->CreateBoundingBox(m_commonResources, m_position, Vector3(3.5f, 4.9f, 1.8f));
 	m_bounding->CreateBoundingSphere(m_commonResources, m_position, 6.0f);
 
@@ -96,7 +99,6 @@ void Enemy::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 
 	m_isCollsionTime = false;
 	m_collisionTime = 0;
 
-	m_behavior = std::make_unique<BehaviorTree>(m_player, this);
 	m_behavior->Initialize(m_commonResources);
 
 
@@ -104,10 +106,10 @@ void Enemy::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 
 	m_knockbackDirection = DirectX::SimpleMath::Vector3::Zero;
 	m_knockbackTime = 0;
 
-	m_beam = std::make_unique<Beam>();
 	m_beam->Initialize(m_commonResources, m_player, this);
 
 	m_onCollisionTag = CollsionObjectTag::None;
+
 
 }
 
@@ -218,8 +220,31 @@ void Enemy::Finalize()
 //‘å‚«‚³‚ð¬‚³‚­‚·‚é
 void Enemy::ReduceSize(float elapsdTime)
 {
+
+	UNREFERENCED_PARAMETER(elapsdTime);
+
 	m_scale -= 0.01f;
 	m_scale = std::max(m_scale, 0.0f);
+}
+
+void Enemy::RegistrationInformation( Player* player)
+{
+
+	m_player = player;
+	
+	m_behavior->RegistrationInformation(m_player, this);
+
+}
+
+
+void Enemy::Instances()
+{
+
+	m_bounding = std::make_unique<Bounding>();
+	m_behavior = std::make_unique<BehaviorTree>();
+	m_beam = std::make_unique<Beam>();
+
+
 }
 
 

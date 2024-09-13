@@ -14,7 +14,7 @@ public:
 
 public:
 	// コンストラクタ
-	PlayerUsually(Boomerang* boomerang , Player* player);
+	PlayerUsually();
 	// デストラクタ
 	~PlayerUsually();
 	// 初期化する
@@ -26,6 +26,8 @@ public:
 	void Enter();
 	void Exit();
 
+	//クラスに必要な情報（ポインタ）の登録
+	void RegistrationInformation(Boomerang* boomerang, Player* player);
 
 private:
 	void Move(float elapsedTime,  DirectX::SimpleMath::Vector3 moveDirection);

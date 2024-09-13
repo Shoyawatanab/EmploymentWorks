@@ -10,10 +10,11 @@ const float MOVE_SPEED = 5.0f;                                        //動く時の
 const DirectX::SimpleMath::Vector3 INITIAL_DIRECTION(0.0f, 0.0f, -1.0f); //初期の向いている方向
 
 // コンストラクタ
-PlayerUsually::PlayerUsually(Boomerang* boomerang, Player* player)
+PlayerUsually::PlayerUsually()
 	:
-	m_boomerang{boomerang},
-	m_player{player}
+	m_boomerang{},
+	m_player{}
+	,m_graivty{}
 {
 }
 
@@ -95,6 +96,14 @@ void PlayerUsually::Exit()
 
 }
 
+void PlayerUsually::RegistrationInformation(Boomerang* boomerang, Player* player)
+{
+
+	m_boomerang = boomerang;
+	m_player = player;
+
+}
+
 void PlayerUsually::Move(float elapsedTime,  DirectX::SimpleMath::Vector3 moveDirection)
 {
 
@@ -117,9 +126,7 @@ void PlayerUsually::Attack(float elapsedTime, DirectX::Keyboard::State key)
 {
 
 	using namespace DirectX;
-
-	Mouse::State a;
-
+	UNREFERENCED_PARAMETER(elapsedTime);
 
 	//投げる
 	if (m_boomerang->GetBoomerangState() == m_boomerang->GetBoomerangGetReady()

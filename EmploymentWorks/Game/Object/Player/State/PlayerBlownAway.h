@@ -14,7 +14,7 @@ public:
 
 public:
 	// コンストラクタ
-	PlayerBlownAway(Boomerang* boomerang , Player* player);
+	PlayerBlownAway();
 	// デストラクタ
 	~PlayerBlownAway();
 	// 初期化する
@@ -25,6 +25,9 @@ public:
 
 	void Enter();
 	void Exit();
+
+	//クラスに必要な情報（ポインタ）の登録
+	void RegistrationInformation(Boomerang* boomerang, Player* player);
 
 
 private:

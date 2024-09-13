@@ -17,23 +17,26 @@
 #include "Libraries/MyLib/Bounding.h"
 #include "Game/DetectionCollision/CollisionManager.h"
 
+#include "Libraries/MyLib/Camera/TPS_Camera.h"
 
 const float MOVE_SPEED = 5.0f;                                        //動く時のスピード
 const DirectX::SimpleMath::Vector3 INITIAL_DIRECTION( 0.0f,0.0f,-1.0f); //初期の向いている方向
 //---------------------------------------------------------
 // コンストラクタ
 //---------------------------------------------------------
-Player::Player(Enemy* enemy)
+Player::Player()
 	:
 	m_commonResources{},
 	m_model{},
 	m_position{},
 	m_direction{INITIAL_DIRECTION},
 	m_boomerang{},
-	m_enemy{ enemy },
+	m_enemy{ },
 	m_graivty{},
 	m_isLockOn{}
-
+	,m_currentState{}
+	,m_hp{}
+	,m_tpsCamera{}
 {
 }
 
@@ -52,9 +55,11 @@ void Player::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3
 {
 	using namespace DirectX::SimpleMath;
 
-
 	assert(resources);
 	m_commonResources = resources;
+
+	
+
 
 	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
 
@@ -71,17 +76,13 @@ void Player::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3
 	m_position = position;
 
 
-	m_boomerang = std::make_unique<Boomerang>(this,m_enemy);
 	m_boomerang->Initialize(m_commonResources);
 
-	m_bounding = std::make_unique<Bounding>();
 	m_bounding->CreateBoundingBox(m_commonResources, m_position, Vector3(0.4f, 0.8f, 0.4f));
 	m_bounding->CreateBoundingSphere(m_commonResources, m_position, 1.0f);
 
-	m_usually = std::make_unique<PlayerUsually>(m_boomerang.get(), this);
 	m_usually->Initialize();
 
-	m_blownAway = std::make_unique<PlayerBlownAway>(m_boomerang.get(),this);
 	m_blownAway->Initialize();
 
 	m_currentState = m_usually.get();
@@ -92,6 +93,10 @@ void Player::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3
 
 	m_hp = 1;
 
+	m_basicEffect = std::make_unique<DirectX::BasicEffect>(device);;
+
+
+
 }
 
 //---------------------------------------------------------
@@ -100,7 +105,7 @@ void Player::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3
 void Player::Update(float elapsedTime, DirectX::SimpleMath::Quaternion cameraRotation)
 {
 	UNREFERENCED_PARAMETER(elapsedTime);
-
+	UNREFERENCED_PARAMETER(cameraRotation);
 
 	using namespace DirectX;
 	using namespace DirectX::SimpleMath;
@@ -122,12 +127,32 @@ void Player::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
 	auto states = m_commonResources->GetCommonStates();
 
-
-
-
+	//	半透明描画指定
+	ID3D11BlendState* blendstate = states->NonPremultiplied();
 
 	// モデルを描画する
-	m_model->Draw(context, *states, m_currentState->GetMatrix(), view, projection);
+	m_model->Draw(context, *states, m_currentState->GetMatrix(), view, projection,
+		false,
+		[&]()
+		{
+
+			DirectX::Colors::White.v;
+
+			DirectX::FXMVECTOR colorValues {1.0f, 1.0f, 1.0f, 0.5f};
+			;
+
+			m_basicEffect->SetDiffuseColor(colorValues);
+
+			// ブレンドステートを設定する
+			context->OMSetBlendState(blendstate, nullptr, 0xffffffff);
+
+			context->OMSetDepthStencilState(states->DepthDefault(), 0);
+
+			//	シェーダの登録を解除しておく
+			context->PSSetShader(nullptr, nullptr, 0);
+
+		}
+	);
 	m_bounding->DrawBoundingBox(m_position, view, projection);
 	m_bounding->DrawBoundingSphere(m_position, view, projection);
 
@@ -154,6 +179,31 @@ void Player::ChangeState(IPlayerState* nextState)
 
 }
 
+
+void Player::RegistrationInformation(Enemy* enemy, mylib::TPS_Camera* tpsCamera)
+{
+	assert(tpsCamera);
+	m_enemy = enemy;
+	m_tpsCamera = tpsCamera;
+
+	m_boomerang->RegistrationInformation(this, m_enemy);
+	m_usually->RegistrationInformation(m_boomerang.get(), this);
+	m_blownAway->RegistrationInformation(m_boomerang.get(), this);
+
+}
+
+void Player::Instances()
+{
+
+	m_boomerang = std::make_unique<Boomerang>();
+	m_bounding = std::make_unique<Bounding>();
+	m_usually = std::make_unique<PlayerUsually>();
+	m_blownAway = std::make_unique<PlayerBlownAway>();
+
+	m_boomerang->Instances();
+	
+}
+
 void Player::DemandBlownAwayDirection(DirectX::SimpleMath::Vector3 pos)
 {
 
@@ -176,6 +226,7 @@ void Player::RegistrationCollionManager(CollisionManager* collsionManager)
 
 void Player::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos)
 {
+	UNREFERENCED_PARAMETER(Pos);
 
 	//動く簿部ジェクトのタグを
 	switch (PartnerTag)

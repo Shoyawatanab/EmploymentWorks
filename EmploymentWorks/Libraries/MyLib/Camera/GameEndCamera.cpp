@@ -18,7 +18,7 @@ const float MAXTIME = 4;
 //-------------------------------------------------------------------
 // コンストラクタ
 //-------------------------------------------------------------------
-mylib::GameEndCamera::GameEndCamera(GameCameraManager* cameraManager, Enemy* enemy)
+mylib::GameEndCamera::GameEndCamera()
 	:
 	m_view{},
 	m_projection{},
@@ -26,19 +26,21 @@ mylib::GameEndCamera::GameEndCamera(GameCameraManager* cameraManager, Enemy* ene
 	m_target{ TARGET },
 	m_up{ DirectX::SimpleMath::Vector3::UnitY },
 	m_angle{},
-	m_enemy{enemy},
-	m_cameraManager{cameraManager}
+	m_enemy{},
+	m_cameraManager{}
 {
 
-	CalculateEyePosition();
-	CalculateViewMatrix();
-	CalculateProjectionMatrix();
 }
 
 void mylib::GameEndCamera::Initialize()
 {
 	m_angle = 0;
 	m_target = m_enemy->GetPos();
+
+	CalculateEyePosition();
+	CalculateViewMatrix();
+	CalculateProjectionMatrix();
+
 }
 
 //-------------------------------------------------------------------
@@ -46,6 +48,8 @@ void mylib::GameEndCamera::Initialize()
 //-------------------------------------------------------------------
 void mylib::GameEndCamera::Update(const float& elapsedTime)
 {
+	UNREFERENCED_PARAMETER(elapsedTime);
+
 	using namespace DirectX;
 	using namespace DirectX::SimpleMath;
 
@@ -106,6 +110,14 @@ void mylib::GameEndCamera::CalculateEyePosition()
 	forward = DirectX::SimpleMath::Vector3::Transform(forward, enemyRotate);
 	// カメラ座標を計算する
 	m_eye = m_target + forward;
+
+}
+
+void mylib::GameEndCamera::RegistrationInformation(GameCameraManager* cameraManager, Enemy* enemy)
+{
+
+	m_cameraManager = cameraManager;
+	m_enemy = enemy;
 
 }
 

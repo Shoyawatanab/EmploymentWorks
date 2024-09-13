@@ -13,7 +13,7 @@ public:
 
 public:
 	// コンストラクタ
-	BoomerangDrop(Boomerang* boomerang );
+	BoomerangDrop();
 	// デストラクタ
 	~BoomerangDrop();
 	// 初期化する
@@ -24,6 +24,10 @@ public:
 
 	void Enter();
 	void Exit();
+
+	//クラスに必要な情報（ポインタ）の登録
+	void RegistrationInformation(Boomerang* boomerang);
+
 
 private:
 	Boomerang* m_boomerang;

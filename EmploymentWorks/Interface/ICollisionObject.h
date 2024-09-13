@@ -8,7 +8,7 @@ class Bounding;
 static const uint32_t bit = 1 << 0;
 
 
-static enum  class CollsionObjectTag
+enum  class CollsionObjectTag
 {
 
 	None = 0
@@ -18,9 +18,6 @@ static enum  class CollsionObjectTag
 	, NotMoveObject = 1 << 3     //ステージの床と壁以外の動かないオブジェクト
 	, Wall = 1 << 4
 	, Floor = 1 << 5
-
-
-
 };
 
 //当たり判定の種類 ORで判定する

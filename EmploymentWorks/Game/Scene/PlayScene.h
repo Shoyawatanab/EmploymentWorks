@@ -94,5 +94,4 @@ public:
 	SceneID GetNextSceneID() const override;
 
 
-
 };

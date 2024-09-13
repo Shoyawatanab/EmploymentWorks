@@ -7,6 +7,7 @@
 #include "Libraries/Microsoft/DebugDraw.h"
 #include "Game/CommonResources.h"
 #include "DeviceResources.h"
+#include <cassert>
 
 
 //---------------------------------------------------------
@@ -24,11 +25,12 @@ Bounding::Bounding()
 
 }
 
-void Bounding::Render(const DirectX::SimpleMath::Vector3 CenterPos, DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
-{
-
-
-}
+//void Bounding::Render(const DirectX::SimpleMath::Vector3 CenterPos, DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
+//{
+//	assert(view);
+//
+//
+//}
 
 void Bounding::CreateBoundingBox(CommonResources* resources, DirectX::SimpleMath::Vector3 CenterPos, DirectX::SimpleMath::Vector3 Extents)
 {

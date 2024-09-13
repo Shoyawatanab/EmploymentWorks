@@ -32,6 +32,9 @@ Beam::Beam()
 	m_rotate{},
 	m_generationInterval{},
 	m_preliminaryActionTime{}
+	,m_enemy{}
+	,m_player{}
+	,m_models{}
 {
 }
 
@@ -57,9 +60,6 @@ void Beam::Initialize(CommonResources* resources, Player* player, Enemy* enemy)
 	m_player = player;
 	m_enemy = enemy;
 
-	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
-	//auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
-	//auto states = m_commonResources->GetCommonStates();
 
 
 	m_position = DirectX::SimpleMath::Vector3(0, 10, 0);
@@ -151,7 +151,7 @@ bool Beam::Attack(float elapsdTime)
 		float a = 1;
 
 		//•ªŠ„”‚ğŒˆ‚ß‚é
-		int Split = Lenght / a;
+		float Split = Lenght / a;
 
 		Orbit.Normalize();
 		//•ªŠ„”‚ğ‚à‚Æ‚ÉÀ•W‚ğŒˆ‚ß‚é

@@ -16,14 +16,14 @@ const float EXPANSIOOSPEED = 0.7f;   //拡大時のスピード
 //-------------------------------------------------------------------
 // コンストラクタ
 //-------------------------------------------------------------------
-mylib::TPS_Camera::TPS_Camera(Player* player)
+mylib::TPS_Camera::TPS_Camera()
 	:
 	m_view{},
 	m_projection{},
 	m_eye{},
 	m_target{},
 	m_up{ DirectX::SimpleMath::Vector3::UnitY },
-	m_player{player},
+	m_player{},
 	m_angle{},
 	m_mouseSensitivity{ 0.001f,0.001f },
 	m_lerpTime{},
@@ -185,6 +185,13 @@ void mylib::TPS_Camera::CalculateEyePosition()
 	forward = DirectX::SimpleMath::Vector3::Transform(forward, Rotation);
 	// カメラ座標を計算する
 	m_eye = m_target + forward;
+}
+
+void mylib::TPS_Camera::RegistrationInformation(Player* Player)
+{
+
+	m_player = Player;
+
 }
 
 

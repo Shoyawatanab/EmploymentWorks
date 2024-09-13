@@ -48,7 +48,6 @@ void ResultScene::Initialize(CommonResources* resources)
 	assert(resources);
 	m_commonResources = resources;
 
-	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
 	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
 
 	// スプライトバッチを作成する

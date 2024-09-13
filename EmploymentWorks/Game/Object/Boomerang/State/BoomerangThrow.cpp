@@ -18,13 +18,13 @@ static float Lerp(float a, float b, float t)
 }
 
 // コンストラクタ
-BoomerangThrow::BoomerangThrow(Boomerang* boomerang, Player* player, Enemy* enemy)
+BoomerangThrow::BoomerangThrow()
 	:
 	m_worldMatrix{},
 	m_boundingSphereLeftLeg{},
-	m_boomerang{ boomerang },
-	m_player{ player }
-	, m_enemy{ enemy },
+	m_boomerang{},
+	m_player{}
+	, m_enemy{},
 	m_index{},
 	m_moveSpeed{},
 	m_rotateY{},
@@ -143,6 +143,15 @@ void BoomerangThrow::Enter()
 
 void BoomerangThrow::Exit()
 {
+
+}
+
+void BoomerangThrow::RegistrationInformation(Boomerang* boomerang, Player* player, Enemy* enemy)
+{
+
+	m_boomerang = boomerang;
+	m_player = player;
+	m_enemy = enemy;
 
 }
 

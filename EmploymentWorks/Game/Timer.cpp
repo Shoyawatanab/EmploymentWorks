@@ -26,7 +26,10 @@ Timer::Timer()
 	m_height{},
 	m_position{},
 	m_scale{}
-
+	,m_minFirstDigit{}
+	,m_minSecondDigit{}
+	,m_secFirstDigit{}
+	,m_secSecondDigit{}
 {
 }
 
@@ -49,7 +52,6 @@ void Timer::Initialize(CommonResources* resources)
 
 	m_commonResources = resources;
 
-	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
 	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
 
 	// スプライトバッチを作成する

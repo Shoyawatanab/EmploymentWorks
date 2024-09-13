@@ -42,7 +42,7 @@ namespace mylib
 
 	public:
 		// コンストラクタ
-		GameCameraManager(PlayScene* playScene, Player* Player, Enemy* enemy);
+		GameCameraManager();
 
 		// デストラクタ
 		~GameCameraManager() = default;
@@ -54,6 +54,12 @@ namespace mylib
 		void Update(float elapsedTime);
 
 		void ChangeState(IGameCamera* nestState);
+
+		//クラスに必要な情報（ポインタ）を登録する
+		void RegistrationInformation(PlayScene* playScene, Player* Player, Enemy* enemy);
+
+		//クラスのインスタンス
+		void Instances();
 
 
 	};

@@ -22,6 +22,7 @@ BeamModel::BeamModel()
 	:
 	m_commonResources{},
 	m_model{}
+	,m_scale{}
 {
 }
 
@@ -89,7 +90,7 @@ void BeamModel::Initialize(CommonResources* resources, DirectX::SimpleMath::Vect
 void BeamModel::Update(float elapsedTime, DirectX::SimpleMath::Quaternion cameraRotation)
 {
 	UNREFERENCED_PARAMETER(elapsedTime);
-
+	UNREFERENCED_PARAMETER(cameraRotation);
 
 	using namespace DirectX;
 	using namespace DirectX::SimpleMath;

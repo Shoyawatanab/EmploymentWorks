@@ -15,7 +15,7 @@ public:
 
 public:
 	// コンストラクタ
-	BoomerangRepelled(Boomerang* boomerang);
+	BoomerangRepelled();
 	// デストラクタ
 	~BoomerangRepelled();
 	// 初期化する
@@ -26,6 +26,10 @@ public:
 
 	void Enter();
 	void Exit();
+
+	//クラスに必要な情報（ポインタ）の登録
+	void RegistrationInformation(Boomerang* boomerang);
+
 
 private:
 	Boomerang* m_boomerang;

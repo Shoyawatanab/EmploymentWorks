@@ -70,7 +70,7 @@ UserInterface::~UserInterface()
 void UserInterface::LoadTexture(const wchar_t* path)
 {
 	//	‘PŽq‰æ‘œ‚ð“Ç‚Ýž‚Þ
-	HRESULT result;/* = DirectX::CreateWICTextureFromFile(m_pDR->GetD3DDevice(), L"Resources/Textures/yoshiko.jpg", m_yoshiRes.ReleaseAndGetAddressOf(), m_yoshiTexture.ReleaseAndGetAddressOf());
+	/*HRESULT result; = DirectX::CreateWICTextureFromFile(m_pDR->GetD3DDevice(), L"Resources/Textures/yoshiko.jpg", m_yoshiRes.ReleaseAndGetAddressOf(), m_yoshiTexture.ReleaseAndGetAddressOf());
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> yoshiTex;
 	DX::ThrowIfFailed(m_yoshiRes.As(&yoshiTex));*/
 
@@ -142,6 +142,8 @@ void UserInterface::SetPosition(DirectX::SimpleMath::Vector2 position)
 
 void UserInterface::SetAnchor(ANCHOR anchor)
 {
+	assert(anchor);
+
 }
 
 void UserInterface::SetRenderRatio(float ratio)
