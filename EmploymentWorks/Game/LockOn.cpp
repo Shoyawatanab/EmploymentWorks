@@ -24,14 +24,14 @@ const float VIEWANGLE = 60.0f;
 //---------------------------------------------------------
 // コンストラクタ
 //---------------------------------------------------------
-LockOn::LockOn(Player* player, Enemy* enemy, mylib::GameCameraManager* gameCamera)
+LockOn::LockOn()
 	:
 	m_windowHeight(0)
 	, m_windowWidth(0)
 	, m_pDR(nullptr),
-	m_player{player}
-	,m_enemy{enemy}
-	, m_tpsCamera{ gameCamera->GetTPSCamera() }
+	m_player{}
+	,m_enemy{}
+	, m_tpsCamera{ }
 	, m_isLockOn{ false }
 
 {
@@ -145,6 +145,22 @@ void LockOn::Render()
 	{
 		m_userInterface[i]->Render();
 	}
+
+
+}
+
+void LockOn::RegistrationInformationAndInstances(Player* player, Enemy* enemy, mylib::GameCameraManager* gameCamera)
+{
+
+	m_player = player;
+	m_enemy = enemy;
+	m_tpsCamera = gameCamera->GetTPSCamera();
+
+}
+
+void LockOn::Instances()
+{
+
 
 
 }

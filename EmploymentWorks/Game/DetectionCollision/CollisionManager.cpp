@@ -31,6 +31,7 @@ CollisionManager::CollisionManager()
 	m_collsionObjects{},
 	m_player{},
 	m_enemy{}
+	,m_tpsCamera{}
 {
 
 }
@@ -372,7 +373,7 @@ void CollisionManager::BeamAndPlayerCollision()
 		{
 			if (m_player->GetPlayerState() == m_player->GetPlayerUsually())
 			{
-				int hp = m_player->GetPlayerHP();
+				float hp = m_player->GetPlayerHP();
 				hp--;
 				m_player->SetPlayerHP(hp);
 			}
@@ -409,14 +410,13 @@ void CollisionManager::CameraCollision(ICollisionObject* object)
 	//Ray(線分)の距離を求める
 	float distance = DirectX::SimpleMath::Vector3::Distance(m_tpsCamera->GetEyePosition(), m_tpsCamera->GetTargetPosition());
 
-	float a = distance;
-
 	//当たっていない
 	if (!ray.Intersects(*box, distance))
 	{
 		return;
 	}
 
+	distance /= 3;
 
 	//ターゲットの座標を取得
 	DirectX::SimpleMath::Vector3 pos = m_tpsCamera->GetTargetPosition();

@@ -37,7 +37,7 @@ public:
 	~Bounding() = default;
 
 
-	void Render(const DirectX::SimpleMath::Vector3 CenterPos, DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection);
+	//void Render(const DirectX::SimpleMath::Vector3 CenterPos, DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection);
 	void CreateBoundingSphere(CommonResources* resources, DirectX::SimpleMath::Vector3 CenterPos, float radius);
 	void CreateBoundingBox(CommonResources* resources, DirectX::SimpleMath::Vector3 CenterPos, DirectX::SimpleMath::Vector3 Extents);
 

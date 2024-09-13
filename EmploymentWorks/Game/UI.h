@@ -59,12 +59,20 @@ private:
 
 
 public:
-	UI(PlayScene* playScene, Player* player, Enemy* enemy);
+	UI();
 	~UI();
 
 	void Initialize(CommonResources* resources, int width, int height);
 
 	void Update(float elapsedTime);
+
+	//クラスに必要な情報（ポインタ）を登録する
+	void RegistrationInformationAndInstances(PlayScene* playScene, Player* player, Enemy* enemy);
+
+	//クラスのインスタンス
+	void Instances();
+
+
 
 	void GameClearUpdate(float elapsedTime);
 

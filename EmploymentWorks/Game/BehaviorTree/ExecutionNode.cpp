@@ -13,8 +13,11 @@ static const float PATROLSPEED = 2.0f;;
 
 ExecutionNode::ExecutionNode(Player* player, Enemy* enemy)
 	:
+	m_commonResources{},
 	m_palyer{ player },
 	m_enemy{ enemy }
+	,m_currentPointNumber{}
+	,m_nextPointNumber{}
 {
 
 }
@@ -124,7 +127,7 @@ void ExecutionNode::DecideNextPosition()
 {
 
 	//隣接の数を求める
-	int size = m_patrolPoint.at(m_currentPointNumber)->m_adjacentNumber.size() - 1;
+	int size =  m_patrolPoint.at(m_currentPointNumber)->m_adjacentNumber.size() - 1;
 	//ポイントの隣接番号の数をもとにランダムで番号の生成
 	int number = m_commonResources->GetJudgement()->GetRandom(0, size);
 	//番号をもとに次の隣接の番号を求める	
@@ -276,6 +279,8 @@ IBehaviorNode::State ExecutionNode::FacingThePlayer(float elapsdTime)
 /// <returns></returns>
 IBehaviorNode::State ExecutionNode::CloseRangeAttacks(float elapsdTime)
 {
+	assert(elapsdTime);
+
 	return IBehaviorNode::State::Success;
 }
 
@@ -286,6 +291,7 @@ IBehaviorNode::State ExecutionNode::CloseRangeAttacks(float elapsdTime)
 /// <returns></returns>
 IBehaviorNode::State ExecutionNode::RangedAttack(float elapsdTime)
 {
+	assert(elapsdTime);
 
 	//遠距離攻撃はRenderの関係でEnemyクラスで作ったBeamAttackを使用している
 
@@ -311,6 +317,8 @@ IBehaviorNode::State ExecutionNode::DoNothing()
 /// <returns></returns>
 IBehaviorNode::State ExecutionNode::RunAway(float elapsdTime)
 {
+	assert(elapsdTime);
+
 	return IBehaviorNode::State::Success;
 }
 

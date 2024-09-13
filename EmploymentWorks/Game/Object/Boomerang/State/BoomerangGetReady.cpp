@@ -9,12 +9,12 @@ const DirectX::SimpleMath::Vector3 GENERATEDISTANCE(0.5f, 0.8f, 0.0f);
 const float HOLDANGLE = 45.0f;
 
 // コンストラクタ
-BoomerangGetReady::BoomerangGetReady(Boomerang* boomerang, Player* player)
+BoomerangGetReady::BoomerangGetReady()
 	:
 	m_worldMatrix{},
 	m_boundingSphereLeftLeg{},
-	m_boomerang{boomerang},
-	m_player{player}
+	m_boomerang{},
+	m_player{}
 {
 }
 
@@ -75,5 +75,13 @@ void BoomerangGetReady::Enter()
 
 void BoomerangGetReady::Exit()
 {
+
+}
+
+void BoomerangGetReady::RegistrationInformation(Boomerang* boomerang, Player* player)
+{
+
+	m_boomerang = boomerang;
+	m_player = player;
 
 }

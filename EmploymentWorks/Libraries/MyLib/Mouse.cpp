@@ -49,6 +49,8 @@ void mylib::Mouse::Initialize()
 //---------------------------------------------------------
 void mylib::Mouse::Update(float elapsedTime)
 {
+	elapsedTime;
+
 	//現在のマウス座標の取得
 	GetCursorPos(&m_currentMousePos);
 

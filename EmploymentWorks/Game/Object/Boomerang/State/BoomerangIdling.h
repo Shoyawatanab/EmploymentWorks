@@ -14,7 +14,7 @@ public:
 
 public:
 	// コンストラクタ
-	BoomerangIdling(Boomerang* boomerang , Player* player);
+	BoomerangIdling();
 	// デストラクタ
 	~BoomerangIdling();
 	// 初期化する
@@ -25,6 +25,10 @@ public:
 
 	void Enter();
 	void Exit();
+
+	//クラスに必要な情報（ポインタ）の登録
+	void RegistrationInformation(Boomerang* boomerang, Player* player);
+
 
 private:
 	Boomerang* m_boomerang;

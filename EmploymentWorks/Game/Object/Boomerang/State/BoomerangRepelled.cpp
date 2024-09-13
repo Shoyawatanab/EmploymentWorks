@@ -6,10 +6,10 @@
 const DirectX::SimpleMath::Vector3 GENERATEDISTANCE(0.5f, 0.8f, 0.0f);
 
 // コンストラクタ
-BoomerangRepelled::BoomerangRepelled(Boomerang* boomerang)
+BoomerangRepelled::BoomerangRepelled()
 	:
 	m_worldMatrix{},
-	m_boomerang{ boomerang }
+	m_boomerang{ }
 {
 }
 
@@ -97,5 +97,12 @@ void BoomerangRepelled::Enter()
 
 void BoomerangRepelled::Exit()
 {
+
+}
+
+void BoomerangRepelled::RegistrationInformation(Boomerang* boomerang)
+{
+
+	m_boomerang = boomerang;
 
 }

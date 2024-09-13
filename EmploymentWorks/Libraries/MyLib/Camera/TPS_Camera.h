@@ -104,10 +104,13 @@ namespace mylib
 
 	public:
 		// コンストラクタ
-		TPS_Camera(Player* Player);
+		TPS_Camera();
 
 		// デストラクタ
 		~TPS_Camera() = default;
+
+		//クラスに必要な情報（ポインタ）を登録する
+		void RegistrationInformation(Player* Player);
 
 
 		//オーバーライド
@@ -133,5 +136,7 @@ namespace mylib
 
 		// カメラ座標を計算する
 		void CalculateEyePosition();
+
+
 	};
 }

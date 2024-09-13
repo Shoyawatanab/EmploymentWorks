@@ -76,12 +76,14 @@ namespace mylib
 
 	public:
 		// コンストラクタ
-		GameEndCamera(GameCameraManager* cameraManager,Enemy* enemy);
+		GameEndCamera();
 
 		// デストラクタ
 		~GameEndCamera() = default;
 
-		// 更新処理
+		//クラスに必要な情報（ポインタ）を登録する
+		void RegistrationInformation(GameCameraManager* cameraManager, Enemy* enemy);
+
 
 		//オーバーライド
 	public:
@@ -105,5 +107,7 @@ namespace mylib
 
 		// カメラ座標を計算する
 		void CalculateEyePosition();
+
+
 	};
 }

@@ -16,10 +16,12 @@
 class CommonResources;
 class Bounding;
 
+
 namespace mylib
 {
 	class DebugCamera;
 	class GridFloor;
+	class TPS_Camera;
 }
 
 
@@ -43,8 +45,8 @@ public:
 	void SetCameraRotate(DirectX::SimpleMath::Quaternion rotate) { m_cameraRatate = rotate; }
 	DirectX::SimpleMath::Quaternion GetCameraRotate() { return m_cameraRatate; }
 
-	int GetPlayerHP() { return m_hp; }
-	void SetPlayerHP(int hp) { m_hp = hp; }
+	float GetPlayerHP() { return m_hp; }
+	void SetPlayerHP(float hp) { m_hp = hp; }
 
 	DirectX::SimpleMath::Vector3 GetBlownAwayDirection() { return m_blownAwayDirection; }
 
@@ -85,8 +87,13 @@ private:
 	std::unique_ptr<PlayerUsually> m_usually;
 	std::unique_ptr<PlayerBlownAway> m_blownAway;
 
+	std::unique_ptr<DirectX::BasicEffect> m_basicEffect;
+
+	//TPSカメラ
+	mylib::TPS_Camera* m_tpsCamera;
+
 public:
-	Player(Enemy* enemy);
+	Player();
 	~Player() ;
 
 	void Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 position);
@@ -95,6 +102,12 @@ public:
 	void Finalize() ;
 
 	void ChangeState(IPlayerState* nextState);
+
+	//クラスに必要な情報（ポインタ）の登録
+	void RegistrationInformation(Enemy* enemy, mylib::TPS_Camera* tpsCamera);
+
+	//クラスのインスタンス
+	void Instances();
 
 	void DemandBlownAwayDirection(DirectX::SimpleMath::Vector3 pos);
 

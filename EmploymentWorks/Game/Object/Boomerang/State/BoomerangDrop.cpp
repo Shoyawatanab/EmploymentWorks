@@ -6,10 +6,10 @@
 const DirectX::SimpleMath::Vector3 GENERATEDISTANCE(0.5f, 0.8f, 0.0f);
 
 // コンストラクタ
-BoomerangDrop::BoomerangDrop(Boomerang* boomerang)
+BoomerangDrop::BoomerangDrop()
 	:
 	m_worldMatrix{},
-	m_boomerang{boomerang}
+	m_boomerang{}
 {
 }
 
@@ -55,5 +55,12 @@ void BoomerangDrop::Enter()
 
 void BoomerangDrop::Exit()
 {
+
+}
+
+void BoomerangDrop::RegistrationInformation(Boomerang* boomerang)
+{
+
+	m_boomerang = boomerang;
 
 }

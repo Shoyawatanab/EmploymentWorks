@@ -47,6 +47,7 @@ PlayScene::PlayScene()
 	, m_rock{}
 	, m_sky{}
 	, m_nextScene{ SceneID::NONE }
+	,m_state{}
 {
 }
 
@@ -92,45 +93,16 @@ void PlayScene::Initialize(CommonResources* resources)
 		0.1f, 1000.0f
 	);
 
+
+
 	m_floor = std::make_unique<Floor>();
 	m_enemy = std::make_unique<Enemy>();
-	m_player = std::make_unique<Player>(m_enemy.get());
-	m_cameraManager = std::make_unique<mylib::GameCameraManager>(this, m_player.get(), m_enemy.get());
-
-
-	m_enemy->SetPlayer(m_player.get());
-
+	m_player = std::make_unique<Player>();
+	m_cameraManager = std::make_unique<mylib::GameCameraManager>();
 	m_wall = std::make_unique<Wall>();
-
-
-	m_floor->Initialize(m_commonResources, Vector3::Zero, Vector3(36, 0.2f, 36), 8.0f);
-	m_player->Initialize(m_commonResources, Vector3(0, 3.75f, 10));
-	m_enemy->Initialize(m_commonResources, Vector3(0, 5.75f, -10));
-
-
-
-	//Wallクラスは当たり判定を持っているだけモデルの描画はない
-	m_wall->Initialize(m_commonResources,
-		Vector3::Zero, 36.0f);
-
-	m_cameraManager->Initialize();
-
-
-	m_lockOn = std::make_unique<LockOn>(m_player.get(), m_enemy.get(), m_cameraManager.get());
-	m_lockOn->Initialize(m_commonResources->GetDeviceResources(),
-		m_commonResources->GetDeviceResources()->GetOutputSize().right,
-		m_commonResources->GetDeviceResources()->GetOutputSize().bottom);
-
+	m_lockOn = std::make_unique<LockOn>();
 	m_collisionManager = std::make_unique<CollisionManager>();
-	m_collisionManager->Initialize(m_commonResources, m_player.get(), m_enemy.get());
-	m_collisionManager->SetTPS_Camera(m_cameraManager->GetTPSCamera());
-
-	m_ui = std::make_unique<UI>(this, m_player.get(), m_enemy.get());
-	m_ui->Initialize(m_commonResources,
-		m_commonResources->GetDeviceResources()->GetOutputSize().right,
-		m_commonResources->GetDeviceResources()->GetOutputSize().bottom);
-
-
+	m_ui = std::make_unique<UI>();
 	//石　岩
 	auto rock = std::make_unique<Rock>();
 	rock->Initialize(m_commonResources, Vector3(15, 0, 0), Vector3(3.8, 3.5f, 2.5f), 2);
@@ -139,6 +111,40 @@ void PlayScene::Initialize(CommonResources* resources)
 	rock = std::make_unique<Rock>();
 	rock->Initialize(m_commonResources, Vector3(-15, 0, 0), Vector3(3.8, 3.5f, 2.5f), 2);
 	m_rock.emplace_back(std::move(rock));
+
+	//各クラスに必要なクラスのインスタンス
+	m_player->Instances();
+	m_enemy->Instances();
+	m_cameraManager->Instances();
+
+
+
+	//各クラスの情報を登録とインスタンス
+	m_player->RegistrationInformation(m_enemy.get(), m_cameraManager->GetTPSCamera());
+	m_enemy->RegistrationInformation(m_player.get());
+	m_cameraManager->RegistrationInformation(this, m_player.get(), m_enemy.get());
+	m_lockOn->RegistrationInformationAndInstances(m_player.get(), m_enemy.get(), m_cameraManager.get());
+	m_ui->RegistrationInformationAndInstances(this, m_player.get(), m_enemy.get());
+
+
+	m_floor->Initialize(m_commonResources, Vector3::Zero, Vector3(36, 0.2f, 36), 8.0f);
+	m_player->Initialize(m_commonResources, Vector3(0, 3.75f, 10));
+	m_enemy->Initialize(m_commonResources, Vector3(0, 5.75f, -10));
+	//Wallクラスは当たり判定を持っているだけモデルの描画はない
+	m_wall->Initialize(m_commonResources,Vector3::Zero, 36.0f);
+	m_cameraManager->Initialize();
+	m_lockOn->Initialize(m_commonResources->GetDeviceResources(),
+		m_commonResources->GetDeviceResources()->GetOutputSize().right,
+		m_commonResources->GetDeviceResources()->GetOutputSize().bottom);
+	m_collisionManager->Initialize(m_commonResources, m_player.get(), m_enemy.get());
+	m_ui->Initialize(m_commonResources,
+		m_commonResources->GetDeviceResources()->GetOutputSize().right,
+		m_commonResources->GetDeviceResources()->GetOutputSize().bottom);
+
+
+
+
+	m_collisionManager->SetTPS_Camera(m_cameraManager->GetTPSCamera());
 
 
 
@@ -258,8 +264,6 @@ void PlayScene::Render()
 {
 	using namespace DirectX::SimpleMath;
 
-	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
-	auto states = m_commonResources->GetCommonStates();
 
 	// ビュー行列を取得する
 	const Matrix& view = m_cameraManager->GetViewMatrix();;
@@ -272,7 +276,6 @@ void PlayScene::Render()
 
 	m_enemy->Render(view, m_projection);
 
-	m_player->Render(view, m_projection);
 
 	for (auto& rock : m_rock)
 	{
@@ -298,6 +301,9 @@ void PlayScene::Render()
 		default:
 			break;
 	}
+
+	m_player->Render(view, m_projection);
+
 
 	m_commonResources->GetTimer()->PlaySceneRender(Vector2(100, 50), 0.3f);
 
@@ -330,5 +336,6 @@ IScene::SceneID PlayScene::GetNextSceneID() const
 	return m_nextScene;
 
 }
+
 
 

@@ -24,6 +24,7 @@ const float SCALE(8.6f);
 Wall::Wall()
 	:
 	m_commonResources{}
+	,m_scale{}
 {
 }
 
@@ -46,8 +47,6 @@ void Wall::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 p
 	m_position = position;
 	m_scale = Scale;
 
-	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
-
 
 	//L"Resources/Models/Wall.cmo"
 
@@ -61,6 +60,7 @@ void Wall::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 p
 //---------------------------------------------------------
 void Wall::Update(float elapsedTime, DirectX::SimpleMath::Quaternion cameraRotation)
 {
+	UNREFERENCED_PARAMETER(cameraRotation);
 	UNREFERENCED_PARAMETER(elapsedTime);
 
 
@@ -76,8 +76,6 @@ void Wall::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 {
 	using namespace DirectX::SimpleMath;
 
-	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
-	auto states = m_commonResources->GetCommonStates();
 
 
 	// ワールド行列を更新する
@@ -108,6 +106,7 @@ void Wall::RegistrationCollionManager(CollisionManager* collsionManager)
 
 void Wall::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos)
 {
-
+	UNREFERENCED_PARAMETER(PartnerTag);
+	UNREFERENCED_PARAMETER(Pos);
 }
 

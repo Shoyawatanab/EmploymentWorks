@@ -69,7 +69,7 @@ void Rock::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 p
 void Rock::Update(float elapsedTime, DirectX::SimpleMath::Quaternion cameraRotation)
 {
 	UNREFERENCED_PARAMETER(elapsedTime);
-
+	UNREFERENCED_PARAMETER(cameraRotation);
 
 	using namespace DirectX;
 	using namespace DirectX::SimpleMath;
@@ -116,6 +116,7 @@ void Rock::RegistrationCollionManager(CollisionManager* collsionManager)
 
 void Rock::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos)
 {
-
+	UNREFERENCED_PARAMETER(PartnerTag);
+	UNREFERENCED_PARAMETER(Pos);
 }
 

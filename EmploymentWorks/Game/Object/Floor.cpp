@@ -61,6 +61,8 @@ void Floor::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 
 	m_bounding->CreateBoundingBox(m_commonResources, m_position, Extens);
 	m_bounding->CreateBoundingSphere(m_commonResources, m_position, 40.0f);
 
+
+
 }
 
 //---------------------------------------------------------
@@ -69,7 +71,7 @@ void Floor::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 
 void Floor::Update(float elapsedTime, DirectX::SimpleMath::Quaternion cameraRotation)
 {
 	UNREFERENCED_PARAMETER(elapsedTime);
-
+	UNREFERENCED_PARAMETER(cameraRotation);
 
 	using namespace DirectX;
 	using namespace DirectX::SimpleMath;
@@ -116,6 +118,7 @@ void Floor::RegistrationCollionManager(CollisionManager* collsionManager)
 
 void Floor::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos)
 {
-
+	UNREFERENCED_PARAMETER(PartnerTag);
+	UNREFERENCED_PARAMETER(Pos);
 }
 

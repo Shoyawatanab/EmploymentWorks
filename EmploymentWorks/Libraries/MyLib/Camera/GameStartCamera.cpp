@@ -37,14 +37,14 @@ inline float Clamp(const float& value, const float& min, const float& max)
 //-------------------------------------------------------------------
 // コンストラクタ
 //-------------------------------------------------------------------
-mylib::GameStartCamera::GameStartCamera(Player* player)
+mylib::GameStartCamera::GameStartCamera()
 	:
 	m_view{},
 	m_projection{},
 	m_eye{},
 	m_target{ TARGET },
 	m_up{ DirectX::SimpleMath::Vector3::UnitY },
-	m_player{ player },
+	m_player{},
 	m_lerpTime{},
 	m_angle{},
 	m_height{},
@@ -53,9 +53,7 @@ mylib::GameStartCamera::GameStartCamera(Player* player)
 	m_endTarget{}
 {
 
-	CalculateEyePosition();
-	CalculateViewMatrix();
-	CalculateProjectionMatrix();
+
 }
 
 void mylib::GameStartCamera::Initialize()
@@ -67,6 +65,10 @@ void mylib::GameStartCamera::Initialize()
 	m_target = TARGET;
 	m_lerpTime = 0;
 	m_endTarget = m_player->GetPosition();
+
+	CalculateEyePosition();
+	CalculateViewMatrix();
+	CalculateProjectionMatrix();
 }
 
 //-------------------------------------------------------------------
@@ -74,6 +76,7 @@ void mylib::GameStartCamera::Initialize()
 //-------------------------------------------------------------------
 void mylib::GameStartCamera::Update(const float& elapsedTime)
 {
+	UNREFERENCED_PARAMETER(elapsedTime);
 	using namespace DirectX;
 	using namespace DirectX::SimpleMath;
 
@@ -128,10 +131,15 @@ void mylib::GameStartCamera::CalculateEyePosition()
 
 	//m_angle += 0.01f;
 	//m_angle = 1.55f;
-	float x = m_distanceFromTarget * cosf(m_angle);
-	float z = m_distanceFromTarget * sinf(m_angle);
 
 	m_eye = DirectX::SimpleMath::Vector3(0, m_height, m_distanceFromTarget);
+
+}
+
+void mylib::GameStartCamera::RegistrationInformation(Player* Player)
+{
+
+	m_player = Player;
 
 }
 

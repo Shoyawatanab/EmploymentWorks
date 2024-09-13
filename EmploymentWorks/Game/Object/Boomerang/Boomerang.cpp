@@ -26,9 +26,9 @@ const float SCALE = 0.5f; //オブジェクトの大きさ
 //---------------------------------------------------------
 // コンストラクタ
 //---------------------------------------------------------
-Boomerang::Boomerang(Player* player, Enemy* enemy)
+Boomerang::Boomerang()
 	:
-	m_player{player},
+	m_player{},
 	m_commonResources{},
 	m_model{},
 	m_position{},
@@ -36,7 +36,7 @@ Boomerang::Boomerang(Player* player, Enemy* enemy)
 	m_idling{},
 	m_throw{},
 	m_scale{},
-	m_enemy{ enemy },
+	m_enemy{},
 	m_orbit{}
 	, m_repelled{}
 	, m_previousFramePos{}
@@ -78,17 +78,12 @@ void Boomerang::Initialize(CommonResources* resources)
 
 	m_primitiveBatch = std::make_unique<PrimitiveBatch<VertexPositionColor>>(context);
 
-	m_idling = std::make_unique<BoomerangIdling>(this,m_player);
 	m_idling->Initialize();
-	m_throw = std::make_unique<BoomerangThrow>(this,m_player,m_enemy);
 	m_throw->Initialize();
-	m_getReady = std::make_unique<BoomerangGetReady>(this, m_player);
 	m_getReady->Initialize();
 
-	m_repelled = std::make_unique<BoomerangRepelled>(this);
 	m_repelled->Initialize();
 
-	m_drop = std::make_unique<BoomerangDrop>(this);
 	m_drop->Initialize();
 
 
@@ -97,7 +92,6 @@ void Boomerang::Initialize(CommonResources* resources)
 	m_position = m_player->GetPosition();
 	m_scale = SCALE;
 
-	m_bounding = std::make_unique<Bounding>();
 	m_bounding->CreateBoundingBox(m_commonResources, m_position, Vector3(0.3f, 0.5f, 0.3f));
 	m_bounding->CreateBoundingSphere(m_commonResources, m_position, 0.7f);
 
@@ -105,6 +99,10 @@ void Boomerang::Initialize(CommonResources* resources)
 	m_orbit->Initialize(m_commonResources);
 
 	m_onCollisionTag = CollsionObjectTag::None;
+
+
+
+
 
 }
 
@@ -249,6 +247,33 @@ void Boomerang::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleM
 			break;
 	}
 
+
+
+}
+
+void Boomerang::RegistrationInformation(Player* player, Enemy* enemy)
+{
+
+	m_player = player;
+	m_enemy = enemy;
+
+	m_idling->RegistrationInformation(this, m_player);
+	m_throw->RegistrationInformation(this, m_player, m_enemy);
+	m_getReady->RegistrationInformation(this, m_player);
+	m_repelled->RegistrationInformation(this);
+	m_drop->RegistrationInformation(this);
+	
+}
+
+void Boomerang::Instances()
+{
+
+	m_idling = std::make_unique<BoomerangIdling>();
+	m_throw = std::make_unique<BoomerangThrow>();
+	m_getReady = std::make_unique<BoomerangGetReady>();
+	m_repelled = std::make_unique<BoomerangRepelled>();
+	m_drop = std::make_unique<BoomerangDrop>();
+	m_bounding = std::make_unique<Bounding>();
 
 
 }

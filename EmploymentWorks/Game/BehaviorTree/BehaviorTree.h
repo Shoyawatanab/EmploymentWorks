@@ -38,7 +38,7 @@ private:
 	//現在の状態
 	IBehaviorNode::State m_currentState;
 public:
-	BehaviorTree(Player* player,Enemy* enemy);
+	BehaviorTree();
 	~BehaviorTree();
 
 	void Initialize(CommonResources* resources);
@@ -47,6 +47,10 @@ public:
 	void Finalize() ;
 
 	void Create();
+
+
+	//クラスに必要な情報（ポインタ）の登録
+	void RegistrationInformation(Player* player, Enemy* enemy);
 
 };
 

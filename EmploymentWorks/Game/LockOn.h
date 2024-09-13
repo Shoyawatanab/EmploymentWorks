@@ -46,13 +46,18 @@ private:
 
 
 public:
-	LockOn(Player* player, Enemy* enemy, mylib::GameCameraManager* gameCamera);
+	LockOn();
 	~LockOn() ;
 
 	void Initialize(DX::DeviceResources* pDR, int width, int height);
 	void Update(float elapsedTime);
 	void Render();
 
+	//クラスに必要な情報（ポインタ）を登録する
+	void RegistrationInformationAndInstances(Player* player, Enemy* enemy, mylib::GameCameraManager* gameCamera);
+
+	//クラスのインスタンス
+	void Instances();
 
 
 	void Add(const wchar_t* path

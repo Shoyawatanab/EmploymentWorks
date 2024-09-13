@@ -19,15 +19,15 @@
 //---------------------------------------------------------
 // コンストラクタ
 //---------------------------------------------------------
-UI::UI(PlayScene* playScene, Player* player, Enemy* enemy)
+UI::UI()
 	:
 	m_windowHeight(0)
 	, m_windowWidth(0)
 	, m_commonResources{}
-	, m_enemy{ enemy }
-	, m_player{ player }
+	, m_enemy{  }
+	, m_player{  }
 	, m_clearUI{}
-	, m_playScene{ playScene }
+	, m_playScene{  }
 	, m_clearTime{}
 
 {
@@ -102,6 +102,22 @@ void UI::Update(float elapsedTime)
 	//ratio = 0.5f;
 
 	m_enemyHP[1]->SetRenderRatio(ratio);
+
+
+}
+
+void UI::RegistrationInformationAndInstances(PlayScene* playScene, Player* player, Enemy* enemy)
+{
+
+
+	m_playScene = playScene;
+	m_player = player;
+	m_enemy = enemy;
+}
+
+void UI::Instances()
+{
+
 
 
 }

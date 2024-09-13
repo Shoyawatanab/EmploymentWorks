@@ -14,10 +14,10 @@
 #include "Game/Object/Player/Player.h"
 
 
-BehaviorTree::BehaviorTree(Player* player, Enemy* enemy)
+BehaviorTree::BehaviorTree()
 	:
-	m_player{ player },
-	m_enemy{ enemy }
+	m_player{},
+	m_enemy{}
 {
 }
 
@@ -166,6 +166,14 @@ void BehaviorTree::Finalize()
 
 void BehaviorTree::Create()
 {
+
+}
+
+void BehaviorTree::RegistrationInformation(Player* player, Enemy* enemy)
+{
+
+	m_player = player;
+	m_enemy = enemy;
 
 }
 

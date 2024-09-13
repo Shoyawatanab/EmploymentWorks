@@ -85,12 +85,14 @@ namespace mylib
 
 	public:
 		// コンストラクタ
-		GameStartCamera(Player* Player);
+		GameStartCamera();
 
 		// デストラクタ
 		~GameStartCamera() = default;
 
-		// 更新処理
+		//クラスに必要な情報（ポインタ）を登録する
+		void RegistrationInformation(Player* Player);
+
 
 		//オーバーライド
 	public:
@@ -114,5 +116,7 @@ namespace mylib
 
 		// カメラ座標を計算する
 		void CalculateEyePosition();
+
+
 	};
 }
