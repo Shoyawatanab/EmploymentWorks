@@ -55,8 +55,8 @@ void mylib::Mouse::Update(float elapsedTime)
 	GetCursorPos(&m_currentMousePos);
 
 	//·•ª‚ğ‹‚ß‚é
-	m_diffX = m_currentMousePos.x - m_initialMousePos.x;
-	m_diffY = m_currentMousePos.y - m_initialMousePos.y;
+	m_diffX = static_cast<float>( m_currentMousePos.x - m_initialMousePos.x);
+	m_diffY = static_cast<float>( m_currentMousePos.y - m_initialMousePos.y);
 	//‰Šú‚É–ß‚·
 	//m_currentMousePos = m_initialMousePos;
 	ShowCursor(FALSE);

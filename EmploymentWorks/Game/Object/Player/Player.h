@@ -21,7 +21,6 @@ namespace mylib
 {
 	class DebugCamera;
 	class GridFloor;
-	class TPS_Camera;
 }
 
 
@@ -89,8 +88,6 @@ private:
 
 	std::unique_ptr<DirectX::BasicEffect> m_basicEffect;
 
-	//TPSカメラ
-	mylib::TPS_Camera* m_tpsCamera;
 
 public:
 	Player();
@@ -104,7 +101,7 @@ public:
 	void ChangeState(IPlayerState* nextState);
 
 	//クラスに必要な情報（ポインタ）の登録
-	void RegistrationInformation(Enemy* enemy, mylib::TPS_Camera* tpsCamera);
+	void RegistrationInformation(Enemy* enemy);
 
 	//クラスのインスタンス
 	void Instances();

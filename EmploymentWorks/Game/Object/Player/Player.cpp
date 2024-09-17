@@ -36,7 +36,6 @@ Player::Player()
 	m_isLockOn{}
 	,m_currentState{}
 	,m_hp{}
-	,m_tpsCamera{}
 {
 }
 
@@ -139,7 +138,6 @@ void Player::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 			DirectX::Colors::White.v;
 
 			DirectX::FXMVECTOR colorValues {1.0f, 1.0f, 1.0f, 0.5f};
-			;
 
 			m_basicEffect->SetDiffuseColor(colorValues);
 
@@ -149,7 +147,7 @@ void Player::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 			context->OMSetDepthStencilState(states->DepthDefault(), 0);
 
 			//	ƒVƒF[ƒ_‚Ì“o˜^‚ð‰ðœ‚µ‚Ä‚¨‚­
-			context->PSSetShader(nullptr, nullptr, 0);
+			//context->PSSetShader(nullptr, nullptr, 0);
 
 		}
 	);
@@ -180,11 +178,9 @@ void Player::ChangeState(IPlayerState* nextState)
 }
 
 
-void Player::RegistrationInformation(Enemy* enemy, mylib::TPS_Camera* tpsCamera)
+void Player::RegistrationInformation(Enemy* enemy)
 {
-	assert(tpsCamera);
 	m_enemy = enemy;
-	m_tpsCamera = tpsCamera;
 
 	m_boomerang->RegistrationInformation(this, m_enemy);
 	m_usually->RegistrationInformation(m_boomerang.get(), this);

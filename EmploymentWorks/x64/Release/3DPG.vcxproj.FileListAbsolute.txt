@@ -1,5 +1,0 @@
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\3DPG.vcxproj.CopyComplete
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\3DPG.exe
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\xapobaseredist.pdb
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\xaudio2_9redist.pdb
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\xaudio2_9redist.dll

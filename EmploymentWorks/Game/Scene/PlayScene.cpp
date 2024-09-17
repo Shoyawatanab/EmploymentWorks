@@ -22,7 +22,7 @@
 #include "Game/EnemyHP.h"
 #include "Game/Object/Rock.h"
 #include "Game/Object/Sky.h"
-#include "Game/UI.h"
+#include "Game/UI/UI.h"
 
 #include <cassert>
 
@@ -116,15 +116,15 @@ void PlayScene::Initialize(CommonResources* resources)
 	m_player->Instances();
 	m_enemy->Instances();
 	m_cameraManager->Instances();
-
+	m_ui->Instances();
 
 
 	//各クラスの情報を登録とインスタンス
-	m_player->RegistrationInformation(m_enemy.get(), m_cameraManager->GetTPSCamera());
+	m_player->RegistrationInformation(m_enemy.get());
 	m_enemy->RegistrationInformation(m_player.get());
 	m_cameraManager->RegistrationInformation(this, m_player.get(), m_enemy.get());
-	m_lockOn->RegistrationInformationAndInstances(m_player.get(), m_enemy.get(), m_cameraManager.get());
-	m_ui->RegistrationInformationAndInstances(this, m_player.get(), m_enemy.get());
+	m_lockOn->RegistrationInformation(m_player.get(), m_enemy.get(), m_cameraManager.get());
+	m_ui->RegistrationInformation(this, m_player.get(), m_enemy.get());
 
 
 	m_floor->Initialize(m_commonResources, Vector3::Zero, Vector3(36, 0.2f, 36), 8.0f);
@@ -170,7 +170,6 @@ void PlayScene::Initialize(CommonResources* resources)
 	m_sky->Initialize(m_commonResources);
 
 	m_state = GameState::None;
-	//m_state = GameState::GameOver;
 }
 
 //---------------------------------------------------------
@@ -182,8 +181,10 @@ void PlayScene::Update(float elapsedTime)
 
 	m_cameraManager->Update(elapsedTime);
 
-
 	m_player->Update(elapsedTime, m_cameraManager->GetTPSCamera()->GetRotationX());
+
+
+	m_ui->Update(elapsedTime);
 
 	switch (m_state)
 	{
@@ -216,6 +217,9 @@ void PlayScene::Update(float elapsedTime)
 
 			m_ui->Update(elapsedTime);
 
+			m_commonResources->GetTimer()->Update(elapsedTime);
+
+
 			break;
 		case PlayScene::GameState::Clear:
 
@@ -226,23 +230,18 @@ void PlayScene::Update(float elapsedTime)
 			}
 
 			//敵を倒したときのアニメーションが終わったら
-			if (m_enemy->GetScale() <= 0)
+			if (m_enemy->GetScale() <= 0 && m_ui->GetCurrentUIState() != m_ui->GetGameClearUI())
 			{
-				m_ui->GameClearUpdate(elapsedTime);
+				m_ui->ChangeState(m_ui->GetGameClearUI());
 			}
-
-			if (m_ui->GetIsChangeResultScene())
-			{
-
-				SetNextSceneID(SceneID::RESULT);
-			}
-
-
 
 			break;
 		case PlayScene::GameState::GameOver:
 
-			m_ui->GameOverUpdate(elapsedTime);
+			if (m_ui->GetCurrentUIState() != m_ui->GetGameOverUI())
+			{
+				m_ui->ChangeState(m_ui->GetGameOverUI());
+			}
 
 			break;
 		default:
@@ -252,9 +251,9 @@ void PlayScene::Update(float elapsedTime)
 	m_collisionManager->Update();
 
 
-	m_commonResources->GetTimer()->Update(elapsedTime);
 
 	m_player->SetisLockOn(m_lockOn->GetIsLOckOn());
+
 }
 
 //---------------------------------------------------------
@@ -286,23 +285,11 @@ void PlayScene::Render()
 
 	m_ui->Render();
 
-	switch (m_state)
+	if (m_state == GameState::None)
 	{
-		case PlayScene::GameState::None:
-			m_lockOn->Render();
+		m_player->Render(view, m_projection);
 
-			break;
-		case PlayScene::GameState::Clear:
-			m_ui->ClearTexRender();
-			break;
-		case PlayScene::GameState::GameOver:
-			m_ui->GameOverRender();
-			break;
-		default:
-			break;
 	}
-
-	m_player->Render(view, m_projection);
 
 
 	m_commonResources->GetTimer()->PlaySceneRender(Vector2(100, 50), 0.3f);

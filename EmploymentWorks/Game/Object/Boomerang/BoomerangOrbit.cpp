@@ -22,6 +22,7 @@ static float Lerp(float a, float b, float t)
 // コンストラクタ
 BoomerangOrbit::BoomerangOrbit(Boomerang* boomerang, Player* player, Enemy* enemy)
 	:
+	m_commonResources{},
 	m_boundingSphereLeftLeg{},
 	m_boomerang{ boomerang },
 	m_player{ player }
