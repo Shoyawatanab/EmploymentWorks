@@ -106,6 +106,7 @@ void UserInterface::Create(DX::DeviceResources* pDR
 	auto device = pDR->GetD3DDevice();
 	m_position = position;
 	m_scale = scale;
+	m_baseScale = m_scale;
 	m_anchor = anchor;
 	m_kinds = kind;
 
@@ -248,6 +249,7 @@ void UserInterface::CreateUIShader()
 	bd.CPUAccessFlags = 0;
 	device->CreateBuffer(&bd, nullptr, &m_CBuffer);
 }
+
 
 
 /// <summary>

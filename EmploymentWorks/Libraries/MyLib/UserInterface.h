@@ -81,6 +81,7 @@ private:
 	int m_yoshiTextureWidth, m_yoshiTextureHeight;
 
 	DirectX::SimpleMath::Vector2 m_scale;
+	DirectX::SimpleMath::Vector2 m_baseScale;
 	DirectX::SimpleMath::Vector2 m_position;
 
 	ANCHOR m_anchor;
@@ -116,6 +117,7 @@ public:
 
 	void SetScale(DirectX::SimpleMath::Vector2 scale);
 	DirectX::SimpleMath::Vector2 GetScale() { return m_scale; }
+	DirectX::SimpleMath::Vector2 GetBaseScale() { return m_baseScale; }
 	void SetPosition(DirectX::SimpleMath::Vector2 position);
 	DirectX::SimpleMath::Vector2 GetPosition() { return m_position; }
 	void SetAnchor(ANCHOR anchor);

@@ -80,6 +80,12 @@
     <Filter Include="Game\Object\Player\State">
       <UniqueIdentifier>{10c39386-02c3-42cd-b414-8701094c8197}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\UI">
+      <UniqueIdentifier>{7d81aacd-c6a3-49e9-83e7-65ca11993c5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\UI\State">
+      <UniqueIdentifier>{6ebc7464-4f57-4f3d-8a8b-0e5472b5f8b8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -270,11 +276,32 @@
     <ClInclude Include="Game\Object\Player\State\PlayerUsually.h">
       <Filter>Game\Object\Player\State</Filter>
     </ClInclude>
-    <ClInclude Include="Game\UI.h">
-      <Filter>Game</Filter>
-    </ClInclude>
     <ClInclude Include="Libraries\MyLib\Camera\GameEndCamera.h">
       <Filter>Libraries\MyLib\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Libraries\MyLib\Texture.h">
+      <Filter>Libraries\MyLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Libraries\MyLib\Camera\TitleCamera.h">
+      <Filter>Libraries\MyLib\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Libraries\MyLib\Model3D.h">
+      <Filter>Libraries\MyLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\IUI.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\UI\UI.h">
+      <Filter>Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\UI\State\GmePlayUI.h">
+      <Filter>Game\UI\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\UI\State\GameClearUI.h">
+      <Filter>Game\UI\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\UI\State\GameOverUI.h">
+      <Filter>Game\UI\State</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -428,11 +455,29 @@
     <ClCompile Include="Game\Object\Player\State\PlayerUsually.cpp">
       <Filter>Game\Object\Player\State</Filter>
     </ClCompile>
-    <ClCompile Include="Game\UI.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
     <ClCompile Include="Libraries\MyLib\Camera\GameEndCamera.cpp">
       <Filter>Libraries\MyLib\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\MyLib\Texture.cpp">
+      <Filter>Libraries\MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\MyLib\Camera\TitleCamera.cpp">
+      <Filter>Libraries\MyLib\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\MyLib\Model3D.cpp">
+      <Filter>Libraries\MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\UI\UI.cpp">
+      <Filter>Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\UI\State\GmePlayUI.cpp">
+      <Filter>Game\UI\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\UI\State\GameClearUI.cpp">
+      <Filter>Game\UI\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\UI\State\GameOverUI.cpp">
+      <Filter>Game\UI\State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

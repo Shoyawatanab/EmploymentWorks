@@ -54,7 +54,7 @@ public:
 	void Render();
 
 	//クラスに必要な情報（ポインタ）を登録する
-	void RegistrationInformationAndInstances(Player* player, Enemy* enemy, mylib::GameCameraManager* gameCamera);
+	void RegistrationInformation(Player* player, Enemy* enemy, mylib::GameCameraManager* gameCamera);
 
 	//クラスのインスタンス
 	void Instances();

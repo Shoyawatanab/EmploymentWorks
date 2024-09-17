@@ -149,7 +149,7 @@ void LockOn::Render()
 
 }
 
-void LockOn::RegistrationInformationAndInstances(Player* player, Enemy* enemy, mylib::GameCameraManager* gameCamera)
+void LockOn::RegistrationInformation(Player* player, Enemy* enemy, mylib::GameCameraManager* gameCamera)
 {
 
 	m_player = player;

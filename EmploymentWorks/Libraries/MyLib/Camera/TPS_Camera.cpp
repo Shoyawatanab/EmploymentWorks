@@ -66,8 +66,8 @@ void mylib::TPS_Camera::Update(const float& elapsedTime)
 	// target‚ÌˆÊ’u‚ðXV‚·‚é
 	m_target = m_player->GetPosition();
 
-	m_angle.x -= m_mouse->GetDiffX();
-	m_angle.y -= m_mouse->GetDiffY();
+	m_angle.x -= static_cast<LONG>( m_mouse->GetDiffX());
+	m_angle.y -= static_cast<LONG>( m_mouse->GetDiffY());
 
 	//‰º‚Ì§ŒÀ
 	if (m_angle.y > 2100)
