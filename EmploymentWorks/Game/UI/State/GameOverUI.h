@@ -25,7 +25,7 @@ class PlayScene;
 
 
 	public:
-		void SetWindowSize(float width, float height)
+		void SetWindowSize(int width, int height)
 		{
 			m_windowWidth = width;
 			m_windowHeight = height;

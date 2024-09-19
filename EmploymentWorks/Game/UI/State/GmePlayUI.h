@@ -20,7 +20,7 @@ class Player;
 
 
 	public:
-		void SetWindowSize(float width,float height)
+		void SetWindowSize(int width,int height)
 		{
 			m_windowWidth = width;
 			m_windowHeight = height;
@@ -38,6 +38,11 @@ class Player;
 
 		std::vector<std::unique_ptr<UserInterface>> m_enemyHP;
 		std::vector<std::unique_ptr<UserInterface>> m_playerHP;
+
+		std::vector<std::unique_ptr<UserInterface>> m_boomerangUI;
+
+		std::vector<std::unique_ptr<UserInterface>> m_boomerangBackUI;
+
 		Enemy* m_enemy;
 
 		Player* m_player;
@@ -83,9 +88,22 @@ class Player;
 			, ANCHOR anchor
 			, UserInterface::Kinds kind);
 
+		void BoomerangAdd(const wchar_t* path
+			, DirectX::SimpleMath::Vector2 position
+			, DirectX::SimpleMath::Vector2 scale
+			, ANCHOR anchor
+			, UserInterface::Kinds kind);
+
+		void BoomerangBackAdd(const wchar_t* path
+			, DirectX::SimpleMath::Vector2 position
+			, DirectX::SimpleMath::Vector2 scale
+			, ANCHOR anchor
+			, UserInterface::Kinds kind);
+
+
 		void CreateEnemyHP();
 
 		void CreatePlayerHP();
 
-
+		void CreateBoomerang();
 	};

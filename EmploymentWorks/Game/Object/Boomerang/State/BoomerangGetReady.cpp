@@ -28,10 +28,6 @@ BoomerangGetReady::~BoomerangGetReady()
 void BoomerangGetReady::Initialize()
 {
 	
-	// ¶‹r‹«ŠE‹…‚ð¶¬‚·‚é
-	m_boundingSphereLeftLeg = DirectX::BoundingSphere();
-	// ¶‹r‹«ŠE‹…‚Ì”¼Œa‚ðÝ’è‚·‚é
-	m_boundingSphereLeftLeg.Radius = 0.01;
 
 }
 
@@ -62,13 +58,18 @@ void BoomerangGetReady::Update(const float& elapsedTime)
 
 void BoomerangGetReady::Enter()
 {
+	using namespace DirectX;
 	using namespace DirectX::SimpleMath;
+
 	Quaternion angle = m_boomerang->GetRotate();
 
 	//Y,X,Z‚Ì‡”Ô
 	angle *= Quaternion::CreateFromYawPitchRoll(0, 100.5f, 0);
 
    	m_boomerang->SetRotate(angle);
+
+
+
 
 
 }

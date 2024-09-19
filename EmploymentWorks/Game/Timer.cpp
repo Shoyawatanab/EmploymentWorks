@@ -98,7 +98,7 @@ void Timer::Render()
 	//ï∂éöÇÃä‘äu
 	int a = 60;
 
-	float gameTime = m_commonResources->GetStepTimer()->GetTotalSeconds();
+	float gameTime = static_cast<float> (m_commonResources->GetStepTimer()->GetTotalSeconds());
 	//2ïbÇí¥Ç¶ÇΩÇÁ0Ç…ñﬂÇÈ
 	float t = fmodf(gameTime, 2.0f);
 
@@ -123,7 +123,7 @@ void Timer::PlaySceneRender(DirectX::SimpleMath::Vector2 Pos, float Scale)
 	//ï∂éöÇÃä‘äu
 	int a = 30;
 
-	float gameTime = m_commonResources->GetStepTimer()->GetTotalSeconds();
+	float gameTime = static_cast<float> (m_commonResources->GetStepTimer()->GetTotalSeconds());
 	//2ïbÇí¥Ç¶ÇΩÇÁ0Ç…ñﬂÇÈ
 	float t = fmodf(gameTime, 2.0f);
 
@@ -179,8 +179,8 @@ void Timer::OneNumberRender(int number,DirectX::SimpleMath::Vector2 Pos, float S
 	float Width = 120;   //ïù
 	float Hight = 142;   //çÇÇ≥
 
-	RECT NumberRECT{ 0 + number * Width, 1,
-			110 + number * Width, Hight };
+	RECT NumberRECT{ 0 + number * static_cast<LONG>( Width), 1,
+			110 + number * static_cast<LONG>(Width), static_cast<LONG>(Hight) };
 
 	//PushSpaceÇÃï`âÊ
 	m_spriteBatch->Draw(
@@ -280,7 +280,7 @@ void Timer::CreateTex(const wchar_t* szFileName, Microsoft::WRL::ComPtr<ID3D11Sh
 /// </summary>
 void Timer::TimeCalculation()
 {
-	int time = m_totalTime;
+	int time = static_cast<int>( m_totalTime);
 	int min = (time % 3600) / 60;
 	int sec = time % 60;
 

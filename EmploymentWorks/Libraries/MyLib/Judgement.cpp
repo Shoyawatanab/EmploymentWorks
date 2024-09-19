@@ -136,6 +136,11 @@ float mylib::Judgement::GetLenght(DirectX::SimpleMath::Vector3 Pos1, DirectX::Si
 }
 
 
+float mylib::Judgement::Lerp(float a, float b, float t)
+{
+    return a + t * (b - a);
+}
+
 
 
 

@@ -45,7 +45,7 @@ void GamePlayUI::Initialize(CommonResources* resources)
 	m_commonResources = resources;
 	CreateEnemyHP();
 	CreatePlayerHP();
-
+	CreateBoomerang();
 
 	//ボスHPの割合をセットする
 	float EnemyHp = m_enemy->GetHp();
@@ -66,17 +66,32 @@ void GamePlayUI::Update(const float& elapsedTime)
 
 	DirectX::Keyboard::State key = DirectX::Keyboard::Get().GetState();
 
+	//敵のHPの取得
 	float EnemyHp = m_enemy->GetHp();
-
-
+	//割合を求める
 	float ratio = EnemyHp / m_enemy->GetMAXHp();
-
-	//ratio = 0.5f;
-
+	//割合を代入
 	m_enemyHP[1]->SetRenderRatio(ratio);
 
+	//ブーメランのUIの座標を初期値に
+	for (auto& boomerangUI : m_boomerangUI)
+	{
+		boomerangUI->SetPosition(boomerangUI->GetStartPosition());
+	}
 
 
+
+	//使用中のブーメランのIndexをもとにUIを
+	//使用中のブーメランのIndexの取得
+	int Index = m_player->GetUsingBoomerangIndex();
+	//使用中のブーメランのの座標の取得
+	DirectX::SimpleMath::Vector2 Pos = m_boomerangUI[Index]->GetStartPosition();
+	//Y座標を上に
+	Pos.y -= 20;
+	//座標の代入
+	m_boomerangUI[Index]->SetPosition(Pos);
+
+	m_boomerangBackUI[0]->SetPosition(Pos);
 
 }
 
@@ -96,6 +111,18 @@ void GamePlayUI::Render()
 		m_playerHP[i]->Render();
 
 	}
+
+	for (auto& boomerangUI : m_boomerangUI)
+	{
+		boomerangUI->Render();
+	}
+
+	for (auto& boomerangBackUI : m_boomerangBackUI)
+	{
+		boomerangBackUI->Render();
+	}
+
+
 
 }
 
@@ -158,6 +185,45 @@ void GamePlayUI::PlayerHPAdd(const wchar_t* path, DirectX::SimpleMath::Vector2 p
 
 }
 
+void GamePlayUI::BoomerangAdd(const wchar_t* path, DirectX::SimpleMath::Vector2 position, DirectX::SimpleMath::Vector2 scale, ANCHOR anchor, UserInterface::Kinds kind)
+{
+
+		//  メニューとしてアイテムを追加する
+	std::unique_ptr<UserInterface> userInterface = std::make_unique<UserInterface>();
+	//  指定された画像を表示するためのアイテムを作成する
+	userInterface->Create(m_commonResources->GetDeviceResources()
+		, path
+		, position
+		, scale
+		, anchor
+		, kind);
+
+	userInterface->SetWindowSize(m_windowWidth, m_windowHeight);
+
+	m_boomerangUI.push_back(std::move(userInterface));
+
+}
+
+void GamePlayUI::BoomerangBackAdd(const wchar_t* path, DirectX::SimpleMath::Vector2 position, DirectX::SimpleMath::Vector2 scale, ANCHOR anchor, UserInterface::Kinds kind)
+{
+
+	//  メニューとしてアイテムを追加する
+	std::unique_ptr<UserInterface> userInterface = std::make_unique<UserInterface>();
+	//  指定された画像を表示するためのアイテムを作成する
+	userInterface->Create(m_commonResources->GetDeviceResources()
+		, path
+		, position
+		, scale
+		, anchor
+		, kind);
+
+	userInterface->SetWindowSize(m_windowWidth, m_windowHeight);
+
+	m_boomerangBackUI.push_back(std::move(userInterface));
+
+
+}
+
 void GamePlayUI::CreateEnemyHP()
 {
 	using namespace DirectX::SimpleMath;
@@ -192,12 +258,40 @@ void GamePlayUI::CreatePlayerHP()
 	{
 		//  草画像を読み込む
 		PlayerHPAdd(L"Resources/Textures/HP.png"
-			, Vector2(50 + 70 * i, 680)
+			, Vector2(50 + 70 * static_cast<float>(i), 680)
 			, Vector2(1.0f, 1.0f)
 			, ANCHOR::MIDDLE_CENTER
 			, UserInterface::Kinds::UI);
 
 	}
+
+
+
+}
+
+void GamePlayUI::CreateBoomerang()
+{
+
+	using namespace DirectX::SimpleMath;
+
+	for (int i = 0; i < 3; i++)
+	{
+		//  草画像を読み込む
+		BoomerangAdd(L"Resources/Textures/BoomerangUI.png"
+			, Vector2(50 + 70 * static_cast<float>(i), 610)
+			, Vector2(0.1f, 0.1f)
+			, ANCHOR::MIDDLE_CENTER
+			, UserInterface::Kinds::UI);
+
+	}
+
+
+	//  草画像を読み込む
+	BoomerangBackAdd(L"Resources/Textures/UIboomerangBack.png"
+		, Vector2(50, 610)
+		, Vector2(0.1f, 0.1f)
+		, ANCHOR::MIDDLE_CENTER
+		, UserInterface::Kinds::UI);
 
 
 }

@@ -127,7 +127,7 @@ void ExecutionNode::DecideNextPosition()
 {
 
 	//隣接の数を求める
-	int size =  m_patrolPoint.at(m_currentPointNumber)->m_adjacentNumber.size() - 1;
+	int size =  static_cast<int> (m_patrolPoint.at(m_currentPointNumber)->m_adjacentNumber.size() - 1);
 	//ポイントの隣接番号の数をもとにランダムで番号の生成
 	int number = m_commonResources->GetJudgement()->GetRandom(0, size);
 	//番号をもとに次の隣接の番号を求める	

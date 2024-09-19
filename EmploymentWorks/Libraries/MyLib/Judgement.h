@@ -36,5 +36,7 @@ namespace mylib
         //‹——£‚ğ‹‚ß‚é
         float GetLenght(DirectX::SimpleMath::Vector3 Pos1, DirectX::SimpleMath::Vector3 Pos2);
 
+        float Lerp(float a, float b, float t);
+
     };
 }

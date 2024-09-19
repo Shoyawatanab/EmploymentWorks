@@ -30,12 +30,13 @@ Player::Player()
 	m_model{},
 	m_position{},
 	m_direction{INITIAL_DIRECTION},
-	m_boomerang{},
 	m_enemy{ },
 	m_graivty{},
 	m_isLockOn{}
 	,m_currentState{}
 	,m_hp{}
+	,m_boomerangIndex{}
+	,m_scrollWheelValue{}
 {
 }
 
@@ -45,6 +46,9 @@ Player::Player()
 Player::~Player()
 {
 	// do nothing.
+
+
+
 }
 
 //---------------------------------------------------------
@@ -74,11 +78,16 @@ void Player::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3
 
 	m_position = position;
 
-
-	m_boomerang->Initialize(m_commonResources);
-
 	m_bounding->CreateBoundingBox(m_commonResources, m_position, Vector3(0.4f, 0.8f, 0.4f));
 	m_bounding->CreateBoundingSphere(m_commonResources, m_position, 1.0f);
+
+	//ストック
+	for (auto& boomerang : m_boomerang)
+	{
+		boomerang->Initialize(m_commonResources);
+	}
+
+
 
 	m_usually->Initialize();
 
@@ -90,11 +99,14 @@ void Player::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3
 	m_graivty = 0.05f;
 	m_isLockOn = false;
 
-	m_hp = 1;
-
+	m_hp = 3;
+	
 	m_basicEffect = std::make_unique<DirectX::BasicEffect>(device);;
 
 
+	m_boomerangIndex = 0;
+
+	m_boomerang[m_boomerangIndex]->SetUseState(Boomerang::UseState::Using);
 
 }
 
@@ -103,6 +115,7 @@ void Player::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3
 //---------------------------------------------------------
 void Player::Update(float elapsedTime, DirectX::SimpleMath::Quaternion cameraRotation)
 {
+
 	UNREFERENCED_PARAMETER(elapsedTime);
 	UNREFERENCED_PARAMETER(cameraRotation);
 
@@ -110,9 +123,100 @@ void Player::Update(float elapsedTime, DirectX::SimpleMath::Quaternion cameraRot
 	using namespace DirectX::SimpleMath;
 
 
+	const auto& state = m_commonResources->GetInputManager()->GetMouseState();
+
+	m_boomerang[m_boomerangIndex]->SetUseState(Boomerang::UseState::Using);
+
+	// マウスのホイール値を取得
+	m_scrollWheelValue = state.scrollWheelValue;
+
+	if (m_scrollWheelValue > 0)
+	{
+		//投げられていないなら状態をストックに戻す
+		if (m_boomerang[m_boomerangIndex]->GetBoomerangState() == m_boomerang[m_boomerangIndex]->GetBoomerangIdling())
+		{
+			m_boomerang[m_boomerangIndex]->SetUseState(Boomerang::UseState::Stock);
+		}
+
+		//使用中のブーメランを切り替える
+		m_boomerangIndex++;
+
+
+		m_boomerangIndex = std::min(m_boomerangIndex, 2);
+
+		//状態を使用中に
+		m_boomerang[m_boomerangIndex]->SetUseState(Boomerang::UseState::Using);
+
+
+
+		Mouse::Get().ResetScrollWheelValue();
+
+	}
+	if (m_scrollWheelValue < 0)
+	{
+		//投げられていないなら状態をストックに戻す
+		if (m_boomerang[m_boomerangIndex]->GetBoomerangState() == m_boomerang[m_boomerangIndex]->GetBoomerangIdling())
+		{
+			m_boomerang[m_boomerangIndex]->SetUseState(Boomerang::UseState::Stock);
+		}
+
+
+
+		m_boomerangIndex--;
+		m_boomerangIndex = std::max(m_boomerangIndex, 0);
+
+		//状態を使用中に
+		m_boomerang[m_boomerangIndex]->SetUseState(Boomerang::UseState::Using);
+
+
+		Mouse::Get().ResetScrollWheelValue();
+
+
+
+	}
+
 	m_currentState->Update(elapsedTime);
 
-	m_boomerang->Update(elapsedTime);
+
+
+	for(std::unique_ptr<Boomerang>& boomerang : m_boomerang)
+	{
+
+
+
+		//ブーメランが落ちているなら
+		if(boomerang->GetBoomerangState() == boomerang->GetBoomerangDrop())
+		{
+
+			float distance = DirectX::SimpleMath::Vector3::Distance(boomerang->GetPos(), m_position);
+
+			if(distance <= 1)
+			{
+
+				const auto& kbTracker = m_commonResources->GetInputManager()->GetKeyboardTracker();
+
+				if (kbTracker->released.F)
+				{
+
+					boomerang->ChangeState(boomerang->GetBoomerangIdling());
+
+					boomerang->SetUseState(Boomerang::UseState::Stock);
+
+				}
+			}
+		}
+	}
+
+	for(auto& boomerang : m_boomerang)
+	{
+		boomerang->Update(elapsedTime);
+
+	}
+
+	
+	//m_boomerang[m_boomerangIndex]->Update(elapsedTime);
+
+
 
 }
 
@@ -121,13 +225,14 @@ void Player::Update(float elapsedTime, DirectX::SimpleMath::Quaternion cameraRot
 //---------------------------------------------------------
 void Player::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 {
+
 	using namespace DirectX::SimpleMath;
 
 	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
 	auto states = m_commonResources->GetCommonStates();
 
 	//	半透明描画指定
-	ID3D11BlendState* blendstate = states->NonPremultiplied();
+	//ID3D11BlendState* blendstate = states->NonPremultiplied();
 
 	// モデルを描画する
 	m_model->Draw(context, *states, m_currentState->GetMatrix(), view, projection,
@@ -135,16 +240,16 @@ void Player::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 		[&]()
 		{
 
-			DirectX::Colors::White.v;
+			//DirectX::Colors::White.v;
 
-			DirectX::FXMVECTOR colorValues {1.0f, 1.0f, 1.0f, 0.5f};
+			//DirectX::FXMVECTOR colorValues {1.0f, 1.0f, 1.0f, 0.5f};
 
-			m_basicEffect->SetDiffuseColor(colorValues);
+			//m_basicEffect->SetDiffuseColor(colorValues);
 
-			// ブレンドステートを設定する
-			context->OMSetBlendState(blendstate, nullptr, 0xffffffff);
+			//// ブレンドステートを設定する
+			//context->OMSetBlendState(blendstate, nullptr, 0xffffffff);
 
-			context->OMSetDepthStencilState(states->DepthDefault(), 0);
+			//context->OMSetDepthStencilState(states->DepthDefault(), 0);
 
 			//	シェーダの登録を解除しておく
 			//context->PSSetShader(nullptr, nullptr, 0);
@@ -154,9 +259,19 @@ void Player::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 	m_bounding->DrawBoundingBox(m_position, view, projection);
 	m_bounding->DrawBoundingSphere(m_position, view, projection);
 
-	m_boomerang->Render(view, projection);
+	for (auto& boomerang : m_boomerang)
+	{
+
+		//使用しているブーメラン
+		if (boomerang->GetUseState() == Boomerang::UseState::Using)
+		{
+
+			boomerang->Render(view, projection);
 
 
+		}
+
+	}
 
 }
 
@@ -182,22 +297,36 @@ void Player::RegistrationInformation(Enemy* enemy)
 {
 	m_enemy = enemy;
 
-	m_boomerang->RegistrationInformation(this, m_enemy);
-	m_usually->RegistrationInformation(m_boomerang.get(), this);
-	m_blownAway->RegistrationInformation(m_boomerang.get(), this);
+	m_usually->RegistrationInformation(this);
+	m_blownAway->RegistrationInformation(this);
+
+
+	//ストック
+	for (auto& stock : m_boomerang)
+	{
+		stock->RegistrationInformation(this, m_enemy);
+	}
 
 }
 
 void Player::Instances()
 {
 
-	m_boomerang = std::make_unique<Boomerang>();
+	//m_usingBoomerang = std::make_unique<Boomerang>();
 	m_bounding = std::make_unique<Bounding>();
 	m_usually = std::make_unique<PlayerUsually>();
 	m_blownAway = std::make_unique<PlayerBlownAway>();
 
-	m_boomerang->Instances();
 	
+	//ストックのブーメラン
+	for (int i = 0; i < 3; i++)
+	{
+		auto stock = std::make_unique<Boomerang>();
+		stock->Instances();
+		m_boomerang.push_back(std::move(stock));
+
+	}
+
 }
 
 void Player::DemandBlownAwayDirection(DirectX::SimpleMath::Vector3 pos)
@@ -216,7 +345,12 @@ void Player::DemandBlownAwayDirection(DirectX::SimpleMath::Vector3 pos)
 void Player::RegistrationCollionManager(CollisionManager* collsionManager)
 {
 	collsionManager->AddCollsion(this);
-	m_boomerang->RegistrationCollionManager(collsionManager);
+	//m_usingBoomerang->RegistrationCollionManager(collsionManager);
+
+	for (auto& boomerang : m_boomerang)
+	{
+		boomerang->RegistrationCollionManager(collsionManager);
+	}
 }
 
 

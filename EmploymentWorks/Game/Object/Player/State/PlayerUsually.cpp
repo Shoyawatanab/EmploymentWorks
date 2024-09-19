@@ -12,7 +12,6 @@ const DirectX::SimpleMath::Vector3 INITIAL_DIRECTION(0.0f, 0.0f, -1.0f); //‰Šú‚
 // ƒRƒ“ƒXƒgƒ‰ƒNƒ^
 PlayerUsually::PlayerUsually()
 	:
-	m_boomerang{},
 	m_player{}
 	,m_graivty{}
 {
@@ -37,6 +36,10 @@ void PlayerUsually::Update(const float& elapsedTime)
 	UNREFERENCED_PARAMETER(elapsedTime);
 	using namespace DirectX;
 	using namespace DirectX::SimpleMath;
+
+
+	//ƒ}ƒEƒX‚Ìæ“¾
+	
 
 
 	// ƒL[ƒ{[ƒhƒXƒe[ƒg‚ğæ“¾‚·‚é
@@ -96,10 +99,9 @@ void PlayerUsually::Exit()
 
 }
 
-void PlayerUsually::RegistrationInformation(Boomerang* boomerang, Player* player)
+void PlayerUsually::RegistrationInformation(Player* player)
 {
 
-	m_boomerang = boomerang;
 	m_player = player;
 
 }
@@ -128,17 +130,20 @@ void PlayerUsually::Attack(float elapsedTime, DirectX::Keyboard::State key)
 	using namespace DirectX;
 	UNREFERENCED_PARAMETER(elapsedTime);
 
+	
+
 	//“Š‚°‚é
-	if (m_boomerang->GetBoomerangState() == m_boomerang->GetBoomerangGetReady()
+	if (m_player->GetUsingBoomerang()->GetBoomerangState() == m_player->GetUsingBoomerang()->GetBoomerangGetReady()
 		&& key.IsKeyUp(Keyboard::Keys::Space))
 	{
-		m_boomerang->ChangeState(m_boomerang->GetBoomerangThrow());
+		m_player->GetUsingBoomerang()->ChangeState(m_player->GetUsingBoomerang()->GetBoomerangThrow());
 	}
+
 	//\‚¦‚é
-	if (m_boomerang->GetBoomerangState() == m_boomerang->GetBoomerangIdling()
+	if (m_player->GetUsingBoomerang()->GetBoomerangState() == m_player->GetUsingBoomerang()->GetBoomerangIdling()
 		&& key.IsKeyDown(Keyboard::Keys::Space))
 	{
-		m_boomerang->ChangeState(m_boomerang->GetBoomerangGetReady());
+		m_player->GetUsingBoomerang()->ChangeState(m_player->GetUsingBoomerang()->GetBoomerangGetReady());
 	}
 
 }
@@ -148,7 +153,7 @@ void PlayerUsually::Rotate(float elapsedTime, DirectX::SimpleMath::Vector3 moveD
 
 	using namespace DirectX::SimpleMath;
 
-	if (m_boomerang->GetBoomerangState() == m_boomerang->GetBoomerangGetReady())
+	if (m_player->GetUsingBoomerang()->GetBoomerangState() == m_player->GetUsingBoomerang()->GetBoomerangGetReady())
 	{
 		//ƒJƒƒ‰‚ÌŒü‚¢‚Ä‚¢‚é•ûŒü‚ÉƒvƒŒƒCƒ„‚Ì³–Ê‚ğ‡‚í‚¹‚é
 

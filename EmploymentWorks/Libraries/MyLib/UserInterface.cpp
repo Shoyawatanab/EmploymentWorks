@@ -51,7 +51,11 @@ UserInterface::UserInterface()
 	, m_renderRatio(1.0f)
 	, m_renderRatioOffset(0.0f),
 	m_kinds{}
-	, m_alphaValue{ 1.0f }
+	, m_alphaValue{ 1.0f },
+	m_endScale{},
+	m_startScale{},
+	m_startPosition{},
+	m_endPosition{}
 {
 
 }
@@ -105,8 +109,10 @@ void UserInterface::Create(DX::DeviceResources* pDR
 	m_pDR = pDR;
 	auto device = pDR->GetD3DDevice();
 	m_position = position;
+	m_startPosition = m_position;
 	m_scale = scale;
 	m_baseScale = m_scale;
+	m_startScale = m_scale;
 	m_anchor = anchor;
 	m_kinds = kind;
 

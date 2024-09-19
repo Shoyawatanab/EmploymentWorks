@@ -84,7 +84,7 @@ void BoomerangOrbit::Update(const float& elapsedTime)
 
 
 
-	m_index = m_spherePos.size() - 1;
+	m_index = static_cast<int>( m_spherePos.size() - 1);
 	m_startIndex = m_index;
 	m_transformRatio = 0;
 	m_totalTime = 0;

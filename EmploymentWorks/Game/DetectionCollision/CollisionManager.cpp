@@ -133,7 +133,6 @@ void CollisionManager::Update()
 					break;
 				case static_cast<uint32_t>(CollisionType::Player_NotMoveObject):
 					BoxExtrusion(m_collsionObjects[i], m_collsionObjects[j]);
-
 					break;
 				case static_cast<uint32_t>(CollisionType::Enemy_NotMoveObject):
 					BoxExtrusion(m_collsionObjects[i], m_collsionObjects[j]);
@@ -416,7 +415,7 @@ void CollisionManager::CameraCollision(ICollisionObject* object)
 		return;
 	}
 
-	distance /= 3;
+	distance /= 4.5f;
 
 	//ターゲットの座標を取得
 	DirectX::SimpleMath::Vector3 pos = m_tpsCamera->GetTargetPosition();
