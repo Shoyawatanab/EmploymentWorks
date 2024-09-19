@@ -13,7 +13,7 @@
 #include "Libraries/MyLib/Camera/GameEndCamera.h"
 #include "Game/Scene/PlayScene.h"
 
-const POINT MOUSESENSITIVITY = { 0.001f,0.001f };      // マウスの感度
+const POINT MOUSESENSITIVITY = { static_cast<LONG> (0.001f),static_cast<LONG> (0.001f) };      // マウスの感度
 const int MAXANGLEY = 100;
 
 const float EXPANSIOOSPEED = 0.7f;   //拡大時のスピード

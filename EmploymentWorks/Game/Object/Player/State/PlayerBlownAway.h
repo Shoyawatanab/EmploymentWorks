@@ -27,11 +27,10 @@ public:
 	void Exit();
 
 	//クラスに必要な情報（ポインタ）の登録
-	void RegistrationInformation(Boomerang* boomerang, Player* player);
+	void RegistrationInformation(Player* player);
 
 
 private:
-	Boomerang* m_boomerang;
 
 	Player* m_player;
 

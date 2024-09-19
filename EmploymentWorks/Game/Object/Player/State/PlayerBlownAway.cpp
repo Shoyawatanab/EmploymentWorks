@@ -10,7 +10,6 @@
 // コンストラクタ
 PlayerBlownAway::PlayerBlownAway()
 	:
-	m_boomerang{},
 	m_player{}
 {
 }
@@ -76,10 +75,9 @@ void PlayerBlownAway::Exit()
 
 }
 
-void PlayerBlownAway::RegistrationInformation(Boomerang* boomerang, Player* player)
+void PlayerBlownAway::RegistrationInformation(Player* player)
 {
 
-	m_boomerang = boomerang;
 	m_player = player;
 
 }

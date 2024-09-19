@@ -27,7 +27,7 @@ class PlayScene;
 
 
 	public:
-		void SetWindowSize(float width, float height)
+		void SetWindowSize(int width, int height)
 		{
 			m_windowWidth = width;
 			m_windowHeight = height;
@@ -53,6 +53,8 @@ class PlayScene;
 
 		NextState m_nextState;
 		PlayScene* m_playScene;
+
+		float m_lerpTime;
 
 	public:
 		// コンストラクタ

@@ -160,7 +160,7 @@ bool Beam::Attack(float elapsdTime)
 			//¶¬À•W‚ğŒˆ‚ß‚é
 
 			BoundingParameter bounding;
-			bounding.Position  = m_startPos + Orbit * a * i;
+			bounding.Position  = m_startPos + Orbit * a * static_cast<float>( i);
 			bounding.Life = 5;
 			
 			m_keepBoundingParameter.push_back(bounding);

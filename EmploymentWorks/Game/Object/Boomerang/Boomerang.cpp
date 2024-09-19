@@ -20,7 +20,7 @@
 #include "Game/Object/Boomerang/BoomerangOrbit.h"
 
 
-const float SCALE = 0.5f; //オブジェクトの大きさ
+const float SCALE = 4.0f; //オブジェクトの大きさ
 
 
 //---------------------------------------------------------
@@ -41,7 +41,8 @@ Boomerang::Boomerang()
 	, m_repelled{}
 	, m_previousFramePos{}
 	, m_drop{}
-
+	,m_onCollisionTag{}
+	,m_useState{}
 {
 }
 
@@ -92,15 +93,15 @@ void Boomerang::Initialize(CommonResources* resources)
 	m_position = m_player->GetPosition();
 	m_scale = SCALE;
 
-	m_bounding->CreateBoundingBox(m_commonResources, m_position, Vector3(0.3f, 0.5f, 0.3f));
-	m_bounding->CreateBoundingSphere(m_commonResources, m_position, 0.7f);
+	m_bounding->CreateBoundingBox(m_commonResources, m_position, Vector3(0.2f, 0.5f, 0.5f));
+	m_bounding->CreateBoundingSphere(m_commonResources, m_position, 0.9f);
 
 	m_orbit = std::make_unique<BoomerangOrbit>(this, m_player, m_enemy);
 	m_orbit->Initialize(m_commonResources);
 
 	m_onCollisionTag = CollsionObjectTag::None;
 
-
+	m_useState = UseState::Stock;
 
 
 
@@ -225,7 +226,10 @@ void Boomerang::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleM
 		case CollsionObjectTag::None:
 			break;
 		case CollsionObjectTag::Floor:
-			ChangeState(m_drop.get());
+			if (m_currentState == m_repelled.get())
+			{
+				ChangeState(m_drop.get());
+			}
 			break;
 		case CollsionObjectTag::NotMoveObject:
 			DemandBounceDirection(Pos, PartnerTag);

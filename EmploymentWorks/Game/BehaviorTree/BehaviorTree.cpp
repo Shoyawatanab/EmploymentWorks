@@ -50,8 +50,6 @@ void BehaviorTree::Initialize(CommonResources* resources)
 	//AttackMethods2Selector->AddNode(std::make_unique<ActionNode>(std::bind(&ExecutionNode::RangedAttack, m_executionNode.get(), std::placeholders::_1)));
 	AttackMethods2Selector->AddNode(std::make_unique<ActionNode>(std::bind(&Enemy::BeamAttack, m_enemy, std::placeholders::_1)));
 
-
-
 	//UŒ‚‚·‚é‚©‚Ç‚¤‚©‚ÌDecorator
 	auto IsAttack2 = std::make_unique<DecoratorNode>(std::bind(&Conditions::IsAttack, m_conditions.get(), std::placeholders::_1));
 	//UŒ‚‚Ìí—Ş‚ğŒˆ‚ß‚éƒZƒŒƒNƒ^[ƒm[ƒh‚Ì’Ç‰Á
@@ -63,10 +61,6 @@ void BehaviorTree::Initialize(CommonResources* resources)
 	Attack2Selector->AddNode(std::move(IsAttack2));
 	//UŒ‚•p“xŠO ‰½‚à‚µ‚È‚¢‚Ì’Ç‰Á
 	Attack2Selector->AddNode(std::make_unique<ActionNode>(std::bind(&ExecutionNode::DoNothing, m_executionNode.get())));
-
-
-
-
 
 	//‹ß‹——£UŒ‚‚©‚Ç‚¤‚©‚ÌDecoratorƒm[ƒh
 	auto IsCloseRangeAttack1 = std::make_unique<DecoratorNode>(std::bind(&Conditions::IsCloseRangeAttack, m_conditions.get()));

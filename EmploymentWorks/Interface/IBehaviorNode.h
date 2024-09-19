@@ -12,12 +12,14 @@
 class IBehaviorNode
 {
 public:
+
 	enum class State
 	{
 		Success,         //¬Œ÷
 		Failure,      //¸”s
 		Runngin      //Às’†
 	};
+
 public:
 	virtual ~IBehaviorNode() = default;
 

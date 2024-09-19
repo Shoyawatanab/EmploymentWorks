@@ -95,6 +95,14 @@ private:
 	//作るシェーダーの種類
 	Kinds m_kinds;
 
+	//大きさ
+	DirectX::SimpleMath::Vector2 m_startScale;   //初期の大きさ
+	DirectX::SimpleMath::Vector2 m_endScale;    //自分で設定
+
+	//座標
+	DirectX::SimpleMath::Vector2 m_startPosition; //初期の座標
+	DirectX::SimpleMath::Vector2 m_endPosition;  //設定する
+
 	//関数
 public:
 	static const std::vector<D3D11_INPUT_ELEMENT_DESC> INPUT_LAYOUT;
@@ -132,6 +140,16 @@ public:
 	void SetAlphaValue(float value) { m_alphaValue = value; }
 	float GetAlphaValue() { return m_alphaValue; }
 
+
+	void SetEndScale(DirectX::SimpleMath::Vector2 MaxScale) { m_endScale = MaxScale; }
+	DirectX::SimpleMath::Vector2 GetEndScale() { return m_endScale; }
+
+	DirectX::SimpleMath::Vector2 GetStartScale() { return m_startScale; }
+
+	void SetEndPosition(DirectX::SimpleMath::Vector2 Position) { m_endPosition = Position; }
+	DirectX::SimpleMath::Vector2 GetEndPosition() { return m_endPosition; }
+
+	DirectX::SimpleMath::Vector2 GetStartPosition() { return m_startPosition; }
 
 private:
 

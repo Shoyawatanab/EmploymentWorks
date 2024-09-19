@@ -91,7 +91,7 @@ void LockOn::Update(float elapsedTime)
 
 	//ƒu[ƒƒ‰ƒ“‚ğ\‚¦‚Ä‚¢‚È‚¢‚È‚ç
 
-	if (m_player->GetBoomerang()->GetBoomerangState() != m_player->GetBoomerang()->GetBoomerangGetReady())
+	if (m_player->GetUsingBoomerang()->GetBoomerangState() != m_player->GetUsingBoomerang()->GetBoomerangGetReady())
 	{
 		return;
 	}

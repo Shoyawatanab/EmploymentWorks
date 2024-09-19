@@ -31,6 +31,14 @@ class Boomerang : public ICollisionObject
 {
 public:
 
+	//使用中かどうか
+	enum class UseState
+	{
+
+		Stock,   //ストック状態　Update・描画なし
+		Using    //使用状態　　　Update・描画あり
+
+	};
 
 public:
 	DirectX::SimpleMath::Vector3 GetPosition() { return m_position; };
@@ -57,6 +65,10 @@ public:
 
 	DirectX::SimpleMath::Vector3 GetBounceDirection() { return m_bounceDirection; }
 	void SetBounceDirection(DirectX::SimpleMath::Vector3 direction) { m_bounceDirection = direction; }
+
+	UseState GetUseState() { return m_useState; }
+	void SetUseState(UseState State) { m_useState = State; }
+
 
 private:
 
@@ -100,6 +112,8 @@ private:
 	//ブーメランの弾かれる方向
 	DirectX::SimpleMath::Vector3 m_bounceDirection;
 
+	//ストック状態か使用状態か
+	UseState m_useState;
 
 public:
 	Boomerang();

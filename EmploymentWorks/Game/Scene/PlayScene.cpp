@@ -181,10 +181,8 @@ void PlayScene::Update(float elapsedTime)
 
 	m_cameraManager->Update(elapsedTime);
 
-	m_player->Update(elapsedTime, m_cameraManager->GetTPSCamera()->GetRotationX());
 
 
-	m_ui->Update(elapsedTime);
 
 	switch (m_state)
 	{
@@ -215,7 +213,6 @@ void PlayScene::Update(float elapsedTime)
 			m_lockOn->Update(elapsedTime);
 
 
-			m_ui->Update(elapsedTime);
 
 			m_commonResources->GetTimer()->Update(elapsedTime);
 
@@ -247,6 +244,12 @@ void PlayScene::Update(float elapsedTime)
 		default:
 			break;
 	}
+
+
+
+	m_player->Update(elapsedTime, m_cameraManager->GetTPSCamera()->GetRotationX());
+
+	m_ui->Update(elapsedTime);
 
 	m_collisionManager->Update();
 
@@ -283,14 +286,14 @@ void PlayScene::Render()
 
 	m_sky->Render(view, m_projection);
 
-	m_ui->Render();
 
 	if (m_state == GameState::None)
 	{
 		m_player->Render(view, m_projection);
-
+		m_lockOn->Render();
 	}
 
+	m_ui->Render();
 
 	m_commonResources->GetTimer()->PlaySceneRender(Vector2(100, 50), 0.3f);
 
@@ -298,11 +301,12 @@ void PlayScene::Render()
 	auto debugString = m_commonResources->GetDebugString();
 	//debugString->AddString("Play Scene");
 	//debugString->AddString("direction: %f, %f,%f", m_enemy->Getforward().x, m_enemy->Getforward().y, m_enemy->Getforward().z);
-	debugString->AddString("EyePos: %f, %f,%f", m_cameraManager->GetTPSCamera()->GetEyePosition().x, m_cameraManager->GetTPSCamera()->GetEyePosition().y, m_cameraManager->GetTPSCamera()->GetEyePosition().z);
-
+	//debugString->AddString("EyePos: %f, %f,%f", m_cameraManager->GetTPSCamera()->GetEyePosition().x, m_cameraManager->GetTPSCamera()->GetEyePosition().y, m_cameraManager->GetTPSCamera()->GetEyePosition().z);
 	//debugString->AddString("Pos: %f, %f", m_player->GetPos().x, m_player->GetPos().z);
 	//debugString->AddString("Pos: %f, %f", m_enemy->GetPos().x, m_enemy->GetPos().z);
 	//debugString->AddString("IsLockOn: %d ", m_lockOn->GetIsLOckOn());
+
+	debugString->AddString("index : %d", m_player->GetUsingBoomerangIndex());
 }
 
 //---------------------------------------------------------

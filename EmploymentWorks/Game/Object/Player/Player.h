@@ -29,11 +29,12 @@ class Player : public ICollisionObject
 {
 public:
 
+
 	DirectX::SimpleMath::Vector3 GetPosition() { return m_position; }
 
 	DirectX::SimpleMath::Quaternion GetRotate() { return m_rotate; }
 	void SetRotate(DirectX::SimpleMath::Quaternion rotate) { m_rotate = rotate; }
-	Boomerang* GetBoomerang() { return m_boomerang.get(); }
+	Boomerang* GetUsingBoomerang() { return m_boomerang[m_boomerangIndex].get(); }
 
 	bool GetIsLockOn() { return m_isLockOn; }
 	void SetisLockOn(bool isLockOn) { m_isLockOn = isLockOn; }
@@ -54,9 +55,18 @@ public:
 	PlayerUsually* GetPlayerUsually() { return m_usually.get(); }
 	PlayerBlownAway* GetPlayerBlownAway() { return m_blownAway.get(); }
 
+	//使用中のブーメランのIndexの取得
+	int GetUsingBoomerangIndex() { return m_boomerangIndex; }
+
 private:
+
 	// 共通リソース
 	CommonResources* m_commonResources;
+
+
+	// スクロールホイール値
+	int m_scrollWheelValue;
+
 
 	// モデル
 	std::unique_ptr<DirectX::Model> m_model;
@@ -68,7 +78,12 @@ private:
 	//飛んでく方向
 	DirectX::SimpleMath::Vector3 m_blownAwayDirection;
 
-	std::unique_ptr<Boomerang> m_boomerang;
+	//使用している
+	//Boomerang* m_usingBoomerang;
+	int m_boomerangIndex;
+
+	//ブーメラン
+	std::vector<std::unique_ptr<Boomerang>> m_boomerang;
 
 	Enemy* m_enemy;
 	std::unique_ptr<Bounding> m_bounding;

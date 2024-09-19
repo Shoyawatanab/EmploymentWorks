@@ -26,10 +26,7 @@ BoomerangIdling::~BoomerangIdling()
 void BoomerangIdling::Initialize()
 {
 	
-	// ¶‹r‹«ŠE‹…‚ð¶¬‚·‚é
-	m_boundingSphereLeftLeg = DirectX::BoundingSphere();
-	// ¶‹r‹«ŠE‹…‚Ì”¼Œa‚ðÝ’è‚·‚é
-	m_boundingSphereLeftLeg.Radius = 0.01;
+
 
 }
 
@@ -63,11 +60,50 @@ void BoomerangIdling::Update(const float& elapsedTime)
 
 void BoomerangIdling::Enter()
 {
+	using namespace DirectX;
+	using namespace DirectX::SimpleMath;
+
+	m_boomerang->SetRotate(m_player->GetRotate());
+	//m_boomerang->SetPosition(m_player->GetPosition() + GENERATEDISTANCE);
+
+	//ƒ}ƒgƒŠƒNƒX@Žq‹Ÿ‚ÌŒvŽZ@e‚ÌŒvŽZ‚Ì‡”Ô‚Å‚â‚ç‚È‚¢‚Æ‚¢‚¯‚È‚¢
+	m_worldMatrix = Matrix::CreateScale(m_boomerang->GetScale());
+
+	m_worldMatrix *= Matrix::CreateRotationZ(XMConvertToRadians(90));  //ƒu[ƒƒ‰ƒ“‚ð—§‚Ä‚é‚æ‚¤‚É‚X‚O“x‰ñ“]
+
+	m_worldMatrix *= Matrix::CreateTranslation(GENERATEDISTANCE);
+	m_worldMatrix *= Matrix::CreateFromQuaternion(m_player->GetRotate());
+	m_worldMatrix *= Matrix::CreateTranslation(m_player->GetPosition());
+
+	//À•W‚ðXV
+	Vector3 Pos = Vector3::Transform(Vector3::Zero, m_worldMatrix);
+	m_boomerang->SetPosition(Pos);
 
 }
 
 void BoomerangIdling::Exit()
 {
+
+	//using namespace DirectX;
+	//using namespace DirectX::SimpleMath;
+
+	//m_boomerang->SetRotate(m_player->GetRotate());
+	////m_boomerang->SetPosition(m_player->GetPosition() + GENERATEDISTANCE);
+
+	////ƒ}ƒgƒŠƒNƒX@Žq‹Ÿ‚ÌŒvŽZ@e‚ÌŒvŽZ‚Ì‡”Ô‚Å‚â‚ç‚È‚¢‚Æ‚¢‚¯‚È‚¢
+	//m_worldMatrix = Matrix::CreateScale(m_boomerang->GetScale());
+
+	//m_worldMatrix *= Matrix::CreateRotationZ(XMConvertToRadians(90));  //ƒu[ƒƒ‰ƒ“‚ð—§‚Ä‚é‚æ‚¤‚É‚X‚O“x‰ñ“]
+
+	//m_worldMatrix *= Matrix::CreateTranslation(GENERATEDISTANCE);
+	//m_worldMatrix *= Matrix::CreateFromQuaternion(m_player->GetRotate());
+	//m_worldMatrix *= Matrix::CreateTranslation(m_player->GetPosition());
+
+
+	////À•W‚ðXV
+	//Vector3 Pos = Vector3::Transform(Vector3::Zero, m_worldMatrix);
+	//m_boomerang->SetPosition(Pos);
+
 
 }
 
