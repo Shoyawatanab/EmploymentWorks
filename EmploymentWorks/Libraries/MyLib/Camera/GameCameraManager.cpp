@@ -9,7 +9,7 @@
 #include "Libraries/MyLib/Mouse.h"
 
 #include "Libraries/MyLib/Camera/GameStartCamera.h"
-#include "Libraries/MyLib/Camera/TPS_Camera.h"
+//#include "Libraries/MyLib/Camera/TPS_Camera.h"
 #include "Libraries/MyLib/Camera/GameEndCamera.h"
 #include "Game/Scene/PlayScene.h"
 
@@ -24,7 +24,7 @@ const float EXPANSIOOSPEED = 0.7f;   //拡大時のスピード
 mylib::GameCameraManager::GameCameraManager()
 	:
 	m_currentState{},
-	m_tpsCamera{},
+	m_fpsCamera{},
 	m_startCamera{},
 	m_player{ },
 	m_enemy{},
@@ -36,17 +36,14 @@ mylib::GameCameraManager::GameCameraManager()
 void mylib::GameCameraManager::Initialize()
 {
 
-	m_tpsCamera->Initialize();
+	m_fpsCamera->Initialize();
 	m_startCamera->Initialize();
 	m_endCamera->Initialize();
 
 
-	DirectX::SimpleMath::Vector3 TPSPos = m_tpsCamera->GetEyePosition();
-	DirectX::SimpleMath::Vector3 PlayerPos = m_player->GetPosition();
+	DirectX::SimpleMath::Vector3 Pos;
 
-	DirectX::SimpleMath::Vector3 Pos = DirectX::SimpleMath::Vector3(PlayerPos.x, TPSPos.y, PlayerPos.z + TPSPos.z);
-
-	Pos = m_tpsCamera->GetEyePosition();
+	Pos = m_fpsCamera->GetEyePosition();
 	//TPSカメラのスタート位置をスタートカメラの終点にする
 	m_startCamera->SetCameraEndPos(Pos);
 
@@ -69,7 +66,7 @@ void mylib::GameCameraManager::Update(float elapsedTime)
 
 	if (m_currentState == m_startCamera.get() && m_startCamera->GetLerpTime() >= 1)
 	{
-		ChangeState(m_tpsCamera.get());
+		ChangeState(m_fpsCamera.get());
 	}
 
 
@@ -92,7 +89,7 @@ void mylib::GameCameraManager::RegistrationInformation(PlayScene* playScene, Pla
 	m_player = Player;
 	m_enemy = enemy;
 
-	m_tpsCamera->RegistrationInformation(m_player);
+	m_fpsCamera->RegistrationInformation(m_player);
 	m_startCamera->RegistrationInformation(m_player);
 	m_endCamera->RegistrationInformation(this, m_enemy);
 
@@ -101,7 +98,7 @@ void mylib::GameCameraManager::RegistrationInformation(PlayScene* playScene, Pla
 void mylib::GameCameraManager::Instances()
 {
 
-	m_tpsCamera = std::make_unique<mylib::TPS_Camera>();
+	m_fpsCamera = std::make_unique<mylib::FPS_Camera>();
 	m_startCamera = std::make_unique<mylib::GameStartCamera>();
 	m_endCamera = std::make_unique<mylib::GameEndCamera>();
 

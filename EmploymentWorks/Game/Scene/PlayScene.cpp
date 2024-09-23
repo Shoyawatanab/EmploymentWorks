@@ -144,7 +144,7 @@ void PlayScene::Initialize(CommonResources* resources)
 
 
 
-	m_collisionManager->SetTPS_Camera(m_cameraManager->GetTPSCamera());
+	//m_collisionManager->SetTPS_Camera(m_cameraManager->GetTPSCamera());
 
 
 
@@ -247,7 +247,7 @@ void PlayScene::Update(float elapsedTime)
 
 
 
-	m_player->Update(elapsedTime, m_cameraManager->GetTPSCamera()->GetRotationX());
+	m_player->Update(elapsedTime);
 
 	m_ui->Update(elapsedTime);
 

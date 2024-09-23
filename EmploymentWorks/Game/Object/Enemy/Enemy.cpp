@@ -176,6 +176,9 @@ void Enemy::Update(float elapsedTime)
 
 	m_targetPos = m_position + Pos;
 
+	m_bounding->Update(m_position);
+
+
 }
 
 //---------------------------------------------------------

@@ -389,6 +389,7 @@ void CollisionManager::BeamAndPlayerCollision()
 	}
 
 
+
 }
 
 /// <summary>
@@ -399,31 +400,31 @@ void CollisionManager::CameraCollision(ICollisionObject* object)
 {
 
 
-	DirectX::BoundingBox* box = object->GetBounding()->GetBoundingBox();
+	//DirectX::BoundingBox* box = object->GetBounding()->GetBoundingBox();
 
 
-	DirectX::SimpleMath::Vector3 direction = m_tpsCamera->GetEyePosition() - m_tpsCamera->GetTargetPosition();
-	direction.Normalize();
-	//カメラの座標と注視点からの線分をRayとして作成
-	DirectX::SimpleMath::Ray ray { m_tpsCamera->GetTargetPosition(), direction };
-	//Ray(線分)の距離を求める
-	float distance = DirectX::SimpleMath::Vector3::Distance(m_tpsCamera->GetEyePosition(), m_tpsCamera->GetTargetPosition());
+	//DirectX::SimpleMath::Vector3 direction = m_tpsCamera->GetEyePosition() - m_tpsCamera->GetTargetPosition();
+	//direction.Normalize();
+	////カメラの座標と注視点からの線分をRayとして作成
+	//DirectX::SimpleMath::Ray ray { m_tpsCamera->GetTargetPosition(), direction };
+	////Ray(線分)の距離を求める
+	//float distance = DirectX::SimpleMath::Vector3::Distance(m_tpsCamera->GetEyePosition(), m_tpsCamera->GetTargetPosition());
 
-	//当たっていない
-	if (!ray.Intersects(*box, distance))
-	{
-		return;
-	}
+	////当たっていない
+	//if (!ray.Intersects(*box, distance))
+	//{
+	//	return;
+	//}
 
-	distance /= 4.5f;
+	//distance /= 4.5f;
 
-	//ターゲットの座標を取得
-	DirectX::SimpleMath::Vector3 pos = m_tpsCamera->GetTargetPosition();
-	//ターゲットに方向と当たった距離をかけたものを足してEyeの座標を求める
-	pos += direction * distance;
+	////ターゲットの座標を取得
+	//DirectX::SimpleMath::Vector3 pos = m_tpsCamera->GetTargetPosition();
+	////ターゲットに方向と当たった距離をかけたものを足してEyeの座標を求める
+	//pos += direction * distance;
 
 
-	m_tpsCamera->SetEyePosition(pos);
+	//m_tpsCamera->SetEyePosition(pos);
 
 }
 
