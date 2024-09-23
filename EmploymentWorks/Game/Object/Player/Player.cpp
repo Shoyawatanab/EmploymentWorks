@@ -113,11 +113,10 @@ void Player::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3
 //---------------------------------------------------------
 // 更新する
 //---------------------------------------------------------
-void Player::Update(float elapsedTime, DirectX::SimpleMath::Quaternion cameraRotation)
+void Player::Update(float elapsedTime)
 {
 
 	UNREFERENCED_PARAMETER(elapsedTime);
-	UNREFERENCED_PARAMETER(cameraRotation);
 
 	using namespace DirectX;
 	using namespace DirectX::SimpleMath;
@@ -216,7 +215,7 @@ void Player::Update(float elapsedTime, DirectX::SimpleMath::Quaternion cameraRot
 	
 	//m_boomerang[m_boomerangIndex]->Update(elapsedTime);
 
-
+	m_bounding->Update(m_position);
 
 }
 
@@ -235,27 +234,30 @@ void Player::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 	//ID3D11BlendState* blendstate = states->NonPremultiplied();
 
 	// モデルを描画する
-	m_model->Draw(context, *states, m_currentState->GetMatrix(), view, projection,
-		false,
-		[&]()
-		{
+	//m_model->Draw(context, *states, m_currentState->GetMatrix(), view, projection,
+	//	false,
+	//	[&]()
+	//	{
 
-			//DirectX::Colors::White.v;
+	//		//DirectX::Colors::White.v;
 
-			//DirectX::FXMVECTOR colorValues {1.0f, 1.0f, 1.0f, 0.5f};
+	//		//DirectX::FXMVECTOR colorValues {1.0f, 1.0f, 1.0f, 0.5f};
 
-			//m_basicEffect->SetDiffuseColor(colorValues);
+	//		//m_basicEffect->SetDiffuseColor(colorValues);
 
-			//// ブレンドステートを設定する
-			//context->OMSetBlendState(blendstate, nullptr, 0xffffffff);
+	//		//// ブレンドステートを設定する
+	//		//context->OMSetBlendState(blendstate, nullptr, 0xffffffff);
 
-			//context->OMSetDepthStencilState(states->DepthDefault(), 0);
+	//		//context->OMSetDepthStencilState(states->DepthDefault(), 0);
 
-			//	シェーダの登録を解除しておく
-			//context->PSSetShader(nullptr, nullptr, 0);
+	//		//	シェーダの登録を解除しておく
+	//		//context->PSSetShader(nullptr, nullptr, 0);
 
-		}
-	);
+	//	}
+	//);
+
+
+
 	m_bounding->DrawBoundingBox(m_position, view, projection);
 	m_bounding->DrawBoundingSphere(m_position, view, projection);
 

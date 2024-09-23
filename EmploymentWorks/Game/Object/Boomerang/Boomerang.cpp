@@ -126,6 +126,8 @@ void Boomerang::Update(float elapsedTime)
 
 	}
 
+	m_bounding->Update(m_position);
+
 
 }
 

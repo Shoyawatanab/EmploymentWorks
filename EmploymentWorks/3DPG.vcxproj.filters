@@ -303,6 +303,9 @@
     <ClInclude Include="Game\UI\State\GameOverUI.h">
       <Filter>Game\UI\State</Filter>
     </ClInclude>
+    <ClInclude Include="Libraries\MyLib\Camera\FPS_Camera.h">
+      <Filter>Libraries\MyLib\Camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -478,6 +481,9 @@
     </ClCompile>
     <ClCompile Include="Game\UI\State\GameOverUI.cpp">
       <Filter>Game\UI\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\MyLib\Camera\FPS_Camera.cpp">
+      <Filter>Libraries\MyLib\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
