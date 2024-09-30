@@ -9,7 +9,6 @@
 #include "Libraries/MyLib/Mouse.h"
 
 #include "Libraries/MyLib/Camera/GameStartCamera.h"
-//#include "Libraries/MyLib/Camera/TPS_Camera.h"
 #include "Libraries/MyLib/Camera/GameEndCamera.h"
 #include "Game/Scene/PlayScene.h"
 
@@ -40,6 +39,7 @@ void mylib::GameCameraManager::Initialize()
 	m_startCamera->Initialize();
 	m_endCamera->Initialize();
 
+	d_tpsCamera->Initialize();
 
 	DirectX::SimpleMath::Vector3 Pos;
 
@@ -50,6 +50,8 @@ void mylib::GameCameraManager::Initialize()
 	m_currentState = m_startCamera.get();
 	//m_currentState = m_tpsCamera.get();
 	//m_currentState = m_endCamera.get();
+
+	m_currentState = d_tpsCamera.get();
 }
 
 //-------------------------------------------------------------------
@@ -67,6 +69,7 @@ void mylib::GameCameraManager::Update(float elapsedTime)
 	if (m_currentState == m_startCamera.get() && m_startCamera->GetLerpTime() >= 1)
 	{
 		ChangeState(m_fpsCamera.get());
+
 	}
 
 
@@ -93,6 +96,7 @@ void mylib::GameCameraManager::RegistrationInformation(PlayScene* playScene, Pla
 	m_startCamera->RegistrationInformation(m_player);
 	m_endCamera->RegistrationInformation(this, m_enemy);
 
+	d_tpsCamera->RegistrationInformation(m_player);
 }
 
 void mylib::GameCameraManager::Instances()
@@ -102,6 +106,6 @@ void mylib::GameCameraManager::Instances()
 	m_startCamera = std::make_unique<mylib::GameStartCamera>();
 	m_endCamera = std::make_unique<mylib::GameEndCamera>();
 
-
+	d_tpsCamera = std::make_unique<mylib::TPS_Camera>();
 }
 

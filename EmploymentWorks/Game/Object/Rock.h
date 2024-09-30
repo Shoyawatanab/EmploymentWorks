@@ -12,6 +12,10 @@
 class CommonResources;
 class Bounding;
 
+namespace mylib
+{
+	class CollisionMesh;
+}
 
 
 
@@ -34,6 +38,11 @@ private:
 	DirectX::SimpleMath::Vector3 m_position;
 	float m_scale;
 
+	//ÉÅÉbÉVÉÖÇ∆ÇÃìñÇΩÇËîªíË
+	std::unique_ptr<mylib::CollisionMesh> m_collisionMesh;
+
+
+
 public:
 	Rock();
 	~Rock();
@@ -47,13 +56,14 @@ public:
 
 	Bounding* GetBounding() const override { return m_bounding.get(); };
 
-	CollsionObjectTag GetCollsionTag() const override { return CollsionObjectTag::NotMoveObject; }
+	CollsionObjectTag GetCollsionTag() const override { return CollsionObjectTag::Rock; }
 
 	void SetPos(DirectX::SimpleMath::Vector3& Pos) override { m_position = Pos; }
 
 	DirectX::SimpleMath::Vector3 GetPos() override { return DirectX::SimpleMath::Vector3::Zero; }
 	void OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos) override;
 
+	mylib::CollisionMesh* GetCollsionMesh() override { return m_collisionMesh.get(); }
 
 private:
 };

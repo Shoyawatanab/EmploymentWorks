@@ -5,6 +5,12 @@
 class CollisionManager;
 class Bounding;
 
+namespace  mylib
+{
+	class CollisionMesh;
+
+}
+
 static const uint32_t bit = 1 << 0;
 
 
@@ -15,9 +21,9 @@ enum  class CollsionObjectTag
 	, Player = 1 << 0
 	, Enemy = 1 << 1
 	, Boomerang = 1 << 2
-	, NotMoveObject = 1 << 3     //ステージの床と壁以外の動かないオブジェクト
-	, Wall = 1 << 4
-	, Floor = 1 << 5
+	, Floor = 1 << 3     //ステージの床と壁以外の動かないオブジェクト
+	, Rock = 1 << 4
+	, Tree1 = 1 << 5
 };
 
 //当たり判定の種類 ORで判定する
@@ -29,17 +35,20 @@ enum class CollisionType
 	, Player_Boomerang = static_cast<uint32_t>(CollsionObjectTag::Player) | static_cast<uint32_t>(CollsionObjectTag::Boomerang)
 	, Enemy_Boomerang = static_cast<uint32_t>(CollsionObjectTag::Enemy) | static_cast<uint32_t>(CollsionObjectTag::Boomerang)
 
-	, Player_NotMoveObject = static_cast<uint32_t>(CollsionObjectTag::Player) | static_cast<uint32_t>(CollsionObjectTag::NotMoveObject)
-	, Enemy_NotMoveObject = static_cast<uint32_t>(CollsionObjectTag::Enemy) | static_cast<uint32_t>(CollsionObjectTag::NotMoveObject)
-	, Boomerang_NotMoveObject = static_cast<uint32_t>(CollsionObjectTag::Boomerang) | static_cast<uint32_t>(CollsionObjectTag::NotMoveObject)
-
-	, Player_Wall = static_cast<uint32_t>(CollsionObjectTag::Player) | static_cast<uint32_t>(CollsionObjectTag::Wall)
-	, Enemy_Wall = static_cast<uint32_t>(CollsionObjectTag::Enemy) | static_cast<uint32_t>(CollsionObjectTag::Wall)
-	, Boomerang_Wall = static_cast<uint32_t>(CollsionObjectTag::Boomerang) | static_cast<uint32_t>(CollsionObjectTag::Wall)
-
 	, Player_Floor = static_cast<uint32_t>(CollsionObjectTag::Player) | static_cast<uint32_t>(CollsionObjectTag::Floor)
 	, Enemy_Floor = static_cast<uint32_t>(CollsionObjectTag::Enemy) | static_cast<uint32_t>(CollsionObjectTag::Floor)
 	, Boomerang_Floor = static_cast<uint32_t>(CollsionObjectTag::Boomerang) | static_cast<uint32_t>(CollsionObjectTag::Floor)
+
+	, Player_Rock = static_cast<uint32_t>(CollsionObjectTag::Player) | static_cast<uint32_t>(CollsionObjectTag::Rock)
+	, Enemy_Rock = static_cast<uint32_t>(CollsionObjectTag::Enemy) | static_cast<uint32_t>(CollsionObjectTag::Rock)
+	, Boomerang_Rock = static_cast<uint32_t>(CollsionObjectTag::Boomerang) | static_cast<uint32_t>(CollsionObjectTag::Rock)
+	, Floor_Rock = static_cast<uint32_t>(CollsionObjectTag::Floor) | static_cast<uint32_t>(CollsionObjectTag::Rock)
+
+	, Player_Tree1 = static_cast<uint32_t>(CollsionObjectTag::Player) | static_cast<uint32_t>(CollsionObjectTag::Tree1)
+	, Enemy_Tree1 = static_cast<uint32_t>(CollsionObjectTag::Enemy) | static_cast<uint32_t>(CollsionObjectTag::Tree1)
+	, Boomerang_Tree1 = static_cast<uint32_t>(CollsionObjectTag::Boomerang) | static_cast<uint32_t>(CollsionObjectTag::Tree1)
+	, Floor_Tree1 = static_cast<uint32_t>(CollsionObjectTag::Floor) | static_cast<uint32_t>(CollsionObjectTag::Tree1)
+	, Rock_Tree1 = static_cast<uint32_t>(CollsionObjectTag::Rock) | static_cast<uint32_t>(CollsionObjectTag::Tree1)
 
 
 };
@@ -82,6 +91,8 @@ public:
 	////何かと当たった時に継続的に呼ばれるUpdate
 	//virtual void OnCollisionUpdate(float elapsdTime) = 0;
 
+
+	virtual mylib::CollisionMesh* GetCollsionMesh() = 0;
 };
 
 #endif		// ICollisionObject_DEFINED

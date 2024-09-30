@@ -14,7 +14,6 @@ class ICollsionObject;
 
 namespace mylib
 {
-	class CollisionMesh;
 	class TPS_Camera;
 
 }
@@ -34,14 +33,14 @@ private:
 	CommonResources* m_commonResources;
 	Player* m_player;
 	Enemy* m_enemy;
+	Boomerang* m_boomerang;
 
 	//当たり判定オブジェクトの登録配列 
 	std::vector<ICollisionObject*> m_collsionObjects;
 
-	//メッシュとの当たり判定
-	std::unique_ptr<mylib::CollisionMesh> m_collisionMesh;
 	// ポリゴンとRayが衝突した座標
 	DirectX::SimpleMath::Vector3 m_hitPosition;
+
 
 
 	//ビームのバウンディング
@@ -68,9 +67,9 @@ public:
 
 	bool CheckIsSphere(ICollisionObject* Object1, ICollisionObject* Object2);
 
-	bool WallExtrusion(ICollisionObject* Object1, ICollisionObject* Object2);
+	bool RockExtrusion(ICollisionObject* Object1, ICollisionObject* Object2);
 
-	void BeamAndPlayerCollision();
+	bool Tree1Extrusion(ICollisionObject* Object1, ICollisionObject* Object2);
 
 	void CameraCollision(ICollisionObject* object);
 

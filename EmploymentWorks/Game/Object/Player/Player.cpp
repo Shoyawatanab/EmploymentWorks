@@ -16,8 +16,9 @@
 #include "Game/Object/Enemy/Enemy.h"
 #include "Libraries/MyLib/Bounding.h"
 #include "Game/DetectionCollision/CollisionManager.h"
-
 #include "Libraries/MyLib/Camera/TPS_Camera.h"
+#include "FrameWork/Resources.h"
+#include "Libraries/MyLib/CollisionMesh.h"
 
 const float MOVE_SPEED = 5.0f;                                        //動く時のスピード
 const DirectX::SimpleMath::Vector3 INITIAL_DIRECTION( 0.0f,0.0f,-1.0f); //初期の向いている方向
@@ -61,20 +62,15 @@ void Player::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3
 	assert(resources);
 	m_commonResources = resources;
 
-	
-
-
 	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
+	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
 
-
-
-
-	// モデルを読み込む準備
-	std::unique_ptr<DirectX::EffectFactory> fx = std::make_unique<DirectX::EffectFactory>(device);
-	fx->SetDirectory(L"Resources/Models");
-
-	// モデルを読み込む
-	m_model = DirectX::Model::CreateFromCMO(device, L"Resources/Models/NewPlayer.cmo", *fx);
+	//m_model = Resources::GetInstance()->GetPlayerModel();
+		// リソースディレクトリを設定する
+	std::unique_ptr<DirectX::EffectFactory> playerFx = std::make_unique<DirectX::EffectFactory>(device);
+	playerFx->SetDirectory(L"Resources/Models");
+	// 「プレイヤ」モデルをロードする
+	m_model = DirectX::Model::CreateFromCMO(device, L"Resources/Models/NewPlayer.cmo", *playerFx);
 
 	m_position = position;
 
@@ -101,12 +97,18 @@ void Player::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3
 
 	m_hp = 3;
 	
-	m_basicEffect = std::make_unique<DirectX::BasicEffect>(device);;
+	//m_basicEffect = std::make_unique<DirectX::BasicEffect>(device);;
 
 
 	m_boomerangIndex = 0;
 
 	m_boomerang[m_boomerangIndex]->SetUseState(Boomerang::UseState::Using);
+
+
+	// コリジョンメッシュを生成する
+	m_collisionMesh = std::make_unique<mylib::CollisionMesh>();
+	//岩のメッシュの読み込み
+	m_collisionMesh->Initialize(device, context, L"Rock", m_position, 3.0f);
 
 }
 
@@ -230,10 +232,12 @@ void Player::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
 	auto states = m_commonResources->GetCommonStates();
 
-	//	半透明描画指定
+		//半透明描画指定
 	//ID3D11BlendState* blendstate = states->NonPremultiplied();
 
-	// モデルを描画する
+	m_model->Draw(context, *states, m_currentState->GetMatrix(), view, projection);
+
+	// //モデルを描画する
 	//m_model->Draw(context, *states, m_currentState->GetMatrix(), view, projection,
 	//	false,
 	//	[&]()
@@ -258,8 +262,8 @@ void Player::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 
 
 
-	m_bounding->DrawBoundingBox(m_position, view, projection);
-	m_bounding->DrawBoundingSphere(m_position, view, projection);
+	//m_bounding->DrawBoundingBox(m_position, view, projection);
+	//m_bounding->DrawBoundingSphere(m_position, view, projection);
 
 	for (auto& boomerang : m_boomerang)
 	{
@@ -369,11 +373,7 @@ void Player::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath
 			break;
 		case CollsionObjectTag::Enemy:
 			break;
-		case CollsionObjectTag::NotMoveObject:
-			break;
 		case CollsionObjectTag::None:
-			break;
-		case CollsionObjectTag::Wall:
 			break;
 		case CollsionObjectTag::Floor:
 

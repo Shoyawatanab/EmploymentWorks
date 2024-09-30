@@ -7,6 +7,8 @@
 #include "Game/Screen.h"
 #include "Game/Scene/SceneManager.h"
 
+#include "FrameWork/Resources.h"
+
 extern void ExitGame() noexcept;
 
 using namespace DirectX;
@@ -80,6 +82,9 @@ void Game::Initialize(HWND window, int width, int height)
         m_debugString.get(),
         m_inputManager.get()
     );
+
+    //リソースを読み込む
+    Resources::GetInstance()->LoadResource(m_commonResources.get());
 
     // シーンマネージャを初期化する
     m_sceneManager = std::make_unique<SceneManager>();

@@ -37,7 +37,7 @@ void BoomerangRepelled::Update(const float& elapsedTime)
 
 
 	m_position = m_boomerang->GetPos();
-	m_position += m_direction * elapsedTime;
+	m_position += m_direction * elapsedTime; 
 
 	m_position.y -= m_graivty * elapsedTime;
 

@@ -24,6 +24,8 @@ namespace mylib
 {
 	class DebugCamera;
 	class GridFloor;
+	class CollisionMesh;
+
 }
 
 
@@ -39,6 +41,42 @@ public:
 		Using    //使用状態　　　Update・描画あり
 
 	};
+
+
+	//Rayの情報
+	struct RayParameter
+	{
+		//DirectX::SimpleMath::Vector3 Ray;
+		DirectX::SimpleMath::Vector3 TipPosition;  //先端の座標
+		DirectX::SimpleMath::Vector3 InitialPosition; //先端の初期座標　（Matrix時に使用）
+		float Lenght;                 //Rayの長さ
+		DirectX::SimpleMath::Vector3 BoomerangCenter; //ブーメランの中心座標
+
+		//ブーメランの中心とセンタの座標化からRayの作成して渡す
+		DirectX::SimpleMath::Vector3 GetRay()
+		{
+			return BoomerangCenter - TipPosition;
+
+		}
+
+		DirectX::SimpleMath::Vector3 GetDirection()
+		{
+			
+			DirectX::SimpleMath::Vector3 direction = BoomerangCenter - TipPosition;
+			direction.Normalize();
+			return direction;
+		}
+
+		//Rayの長さ
+		float GetLenght()
+		{
+			DirectX::SimpleMath::Vector3 lenght = BoomerangCenter - TipPosition;
+
+			return lenght.Length();
+		}
+
+	};
+
 
 public:
 	DirectX::SimpleMath::Vector3 GetPosition() { return m_position; };
@@ -69,6 +107,7 @@ public:
 	UseState GetUseState() { return m_useState; }
 	void SetUseState(UseState State) { m_useState = State; }
 
+	const std::vector<std::unique_ptr<RayParameter>>& GetRay() const { return m_ray; }
 
 private:
 
@@ -115,6 +154,11 @@ private:
 	//ストック状態か使用状態か
 	UseState m_useState;
 
+	std::unique_ptr<mylib::CollisionMesh> m_collisionMesh;
+
+	//Ray それぞれの羽の先端に伸びる
+	std::vector<std::unique_ptr<RayParameter>> m_ray;
+
 public:
 	Boomerang();
 	~Boomerang() ;
@@ -140,6 +184,9 @@ public:
 	DirectX::SimpleMath::Vector3 GetPos() override { return m_position; }
 
 	void OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos) override;
+
+	mylib::CollisionMesh* GetCollsionMesh() override { return m_collisionMesh.get(); }
+
 
 	//クラスに必要な情報（ポインタ）の登録
 	void RegistrationInformation(Player* player, Enemy* enemy);

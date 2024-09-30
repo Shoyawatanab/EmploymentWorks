@@ -12,7 +12,7 @@
 #include "Libraries/MyLib/InputManager.h"
 #include "Libraries/MyLib/MemoryLeakDetector.h"
 #include <cassert>
-
+#include "FrameWork/Resources.h"
 
 
 //---------------------------------------------------------
@@ -44,12 +44,15 @@ void Sky::Initialize(CommonResources* resources)
 
 	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
 
-	// モデルを読み込む準備
-	std::unique_ptr<DirectX::EffectFactory> fx = std::make_unique<DirectX::EffectFactory>(device);
-	fx->SetDirectory(L"Resources/Models");
 
 	// モデルを読み込む
-	m_model = DirectX::Model::CreateFromCMO(device, L"Resources/Models/Sky.cmo", *fx);
+	//m_model = Resources::GetInstance()->GetSkyModel();
+
+		// リソースディレクトリを設定する
+	std::unique_ptr<DirectX::EffectFactory> skyFx = std::make_unique<DirectX::EffectFactory>(device);
+	skyFx->SetDirectory(L"Resources/Models");
+	// 「空」モデルをロードする
+	m_model = DirectX::Model::CreateFromCMO(device, L"Resources/Models/Sky.cmo", *skyFx);
 
 
 }
@@ -102,7 +105,7 @@ void Sky::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 
 	// ワールド行列を更新する
 	Matrix world = Matrix::Identity;
-
+	world *= Matrix::CreateScale(2.0f);
 	// モデルを描画する
 	m_model->Draw(context, *states, world, view, projection);
 
