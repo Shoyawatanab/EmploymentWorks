@@ -77,7 +77,8 @@ namespace mylib
 		// ƒƒbƒVƒ…‚ÆRay‚Æ‚ÌÕ“Ë”»’è
 		bool IntersectRay(
 			const DirectX::SimpleMath::Ray& ray,
-			DirectX::SimpleMath::Vector3* hitPosition
+			DirectX::SimpleMath::Vector3* hitPosition,
+			float rayDistance
 		);
 
 	private:

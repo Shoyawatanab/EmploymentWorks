@@ -185,6 +185,8 @@ void mylib::TPS_Camera::CalculateEyePosition()
 	forward = DirectX::SimpleMath::Vector3::Transform(forward, Rotation);
 	// ƒJƒƒ‰À•W‚ğŒvZ‚·‚é
 	m_eye = m_target + forward;
+
+
 }
 
 void mylib::TPS_Camera::RegistrationInformation(Player* Player)

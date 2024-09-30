@@ -119,7 +119,8 @@ void mylib::CollisionMesh::Draw(
 //-----------------------------------------------------
 bool mylib::CollisionMesh::IntersectRay(
 	const DirectX::SimpleMath::Ray& ray,		// レイ
-	DirectX::SimpleMath::Vector3* hitPosition	// 衝突座標
+	DirectX::SimpleMath::Vector3* hitPosition,	// 衝突座標
+	float rayDistance
 )
 {
 	assert(hitPosition);
@@ -142,7 +143,7 @@ bool mylib::CollisionMesh::IntersectRay(
 	unitRay.direction = Vector3::Transform(ray.direction, invertWorld);
 	unitRay.direction.Normalize();
 	// レイと衝突点までの距離
-	float distance = 5.0f;
+	float distance = rayDistance;
 
 	// 衝突判定
 	for (int i = 0; i < m_triangles.size(); i++)

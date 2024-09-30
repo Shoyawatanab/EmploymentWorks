@@ -18,6 +18,8 @@
 #include "Libraries/MyLib/Bounding.h"
 #include "Game/DetectionCollision/CollisionManager.h"
 #include "Game/Object/Boomerang/BoomerangOrbit.h"
+#include "FrameWork/Resources.h"
+#include "Libraries/MyLib/CollisionMesh.h"
 
 
 const float SCALE = 4.0f; //オブジェクトの大きさ
@@ -43,6 +45,7 @@ Boomerang::Boomerang()
 	, m_drop{}
 	,m_onCollisionTag{}
 	,m_useState{}
+	,m_ray{}
 {
 }
 
@@ -69,12 +72,15 @@ void Boomerang::Initialize(CommonResources* resources)
 	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
 	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
 	
-	// モデルを読み込む準備
-	std::unique_ptr<DirectX::EffectFactory> fx = std::make_unique<DirectX::EffectFactory>(device);
-	fx->SetDirectory(L"Resources/Models");
 
 	// モデルを読み込む
-	m_model = DirectX::Model::CreateFromCMO(device, L"Resources/Models/Boomerang.cmo", *fx);
+	//m_model = Resources::GetInstance()->GetBoomerangModel();
+
+		// リソースディレクトリを設定する
+	std::unique_ptr<DirectX::EffectFactory> boomerangFx = std::make_unique<DirectX::EffectFactory>(device);
+	boomerangFx->SetDirectory(L"Resources/Models");
+	// 「ブーメラン」モデルをロードする
+	m_model = DirectX::Model::CreateFromCMO(device, L"Resources/Models/Boomerang.cmo", *boomerangFx);
 
 
 	m_primitiveBatch = std::make_unique<PrimitiveBatch<VertexPositionColor>>(context);
@@ -93,7 +99,7 @@ void Boomerang::Initialize(CommonResources* resources)
 	m_position = m_player->GetPosition();
 	m_scale = SCALE;
 
-	m_bounding->CreateBoundingBox(m_commonResources, m_position, Vector3(0.2f, 0.5f, 0.5f));
+	m_bounding->CreateBoundingBox(m_commonResources, m_position, Vector3(0.5f, 0.2f, 0.5f));
 	m_bounding->CreateBoundingSphere(m_commonResources, m_position, 0.9f);
 
 	m_orbit = std::make_unique<BoomerangOrbit>(this, m_player, m_enemy);
@@ -103,6 +109,26 @@ void Boomerang::Initialize(CommonResources* resources)
 
 	m_useState = UseState::Stock;
 
+	// コリジョンメッシュを生成する
+	m_collisionMesh = std::make_unique<mylib::CollisionMesh>();
+	//岩のメッシュの読み込み
+	m_collisionMesh->Initialize(device, context, L"Rock", m_position, 3.0f);
+
+
+	for (int i = 0; i < 3; i++)
+	{
+		//90Rayの初期角度　
+
+		float a = 90 + (120 * i);
+
+		auto ray = std::make_unique<RayParameter>();
+		ray->TipPosition.x = (0.12f) * std::cos(DirectX::XMConvertToRadians(a));
+		ray->TipPosition.z = (0.12f) * std::sin(DirectX::XMConvertToRadians(a));
+		ray->InitialPosition = ray->TipPosition;
+
+		m_ray.push_back(std::move(ray));
+
+	}
 
 
 }
@@ -128,6 +154,12 @@ void Boomerang::Update(float elapsedTime)
 
 	m_bounding->Update(m_position);
 
+	for (auto& ray : m_ray)
+	{
+		ray->BoomerangCenter = m_position;
+		ray->TipPosition = Vector3::Transform(ray->InitialPosition, m_currentState->GetMatrix());
+
+	}
 
 }
 
@@ -150,6 +182,14 @@ void Boomerang::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 	m_model->Draw(context, *states, m_currentState->GetMatrix(), view, projection);
 	m_bounding->DrawBoundingSphere(m_position, view, projection);
 	m_bounding->DrawBoundingBox(m_position, view, projection);
+
+
+	for (int i = 0; i < 3; i++)
+	{
+
+		//1ブーメランのMatrixをRayにも適用
+	}
+
 
 	if (m_currentState == m_getReady.get())
 	{
@@ -198,13 +238,11 @@ void Boomerang::DemandBounceDirection(DirectX::SimpleMath::Vector3 pos, Collsion
 			break;
 		case CollsionObjectTag::Boomerang:
 			break;
-		case CollsionObjectTag::NotMoveObject:
-			m_bounceDirection = m_position - pos;
-			break;
-		case CollsionObjectTag::Wall:
-			m_bounceDirection = m_previousFramePos - m_position;
-			break;
 		case CollsionObjectTag::Floor:
+		case CollsionObjectTag::Rock:
+		case CollsionObjectTag::Tree1:
+			m_bounceDirection = m_previousFramePos - m_position;
+
 			break;
 		default:
 			break;
@@ -233,16 +271,8 @@ void Boomerang::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleM
 				ChangeState(m_drop.get());
 			}
 			break;
-		case CollsionObjectTag::NotMoveObject:
-			DemandBounceDirection(Pos, PartnerTag);
-
-			if (m_currentState == m_throw.get())
-			{
-				//弾かれる処理に切り替え
-				ChangeState(m_repelled.get());
-			}
-			break;
-		case CollsionObjectTag::Wall:
+		case CollsionObjectTag::Rock:
+		case CollsionObjectTag::Tree1:
 			DemandBounceDirection(Pos, PartnerTag);
 			if (m_currentState == m_throw.get())
 			{

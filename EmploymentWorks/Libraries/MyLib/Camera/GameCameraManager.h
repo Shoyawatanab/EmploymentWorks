@@ -8,6 +8,8 @@
 #include "Libraries/MyLib/Camera/GameEndCamera.h"
 #include "Libraries/MyLib/Camera/FPS_Camera.h"
 
+#include "Libraries/MyLib/Camera/TPS_Camera.h"
+
 class PlayScene;
 class Player;
 class Enemy;
@@ -17,6 +19,7 @@ namespace mylib
 	class GameCameraManager
 	{
 	private:
+
 
 
 	public:
@@ -39,6 +42,10 @@ namespace mylib
 		PlayScene* m_playScene;
 		Player* m_player;
 		Enemy* m_enemy;
+
+		//デバック
+		std::unique_ptr<mylib::TPS_Camera> d_tpsCamera;
+
 
 	public:
 		// コンストラクタ
