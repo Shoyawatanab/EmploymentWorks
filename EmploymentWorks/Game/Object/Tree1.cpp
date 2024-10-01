@@ -58,8 +58,6 @@ void Tree1::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 
 	// モデルを読み込む
 	//m_model = Resources::GetInstance()->GetTree1Model();
 
-
-
 		// リソースディレクトリを設定する
 	std::unique_ptr<DirectX::EffectFactory> tree1Fx = std::make_unique<DirectX::EffectFactory>(device);
 	tree1Fx->SetDirectory(L"Resources/Models");

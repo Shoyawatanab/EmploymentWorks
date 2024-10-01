@@ -181,7 +181,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="DeviceResources.h" />
-    <ClInclude Include="FrameWork\Resources.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Game\BehaviorTree\ActionNode.h" />
     <ClInclude Include="Game\BehaviorTree\BehaviorTree.h" />
@@ -201,6 +200,8 @@
     <ClInclude Include="Game\Object\Boomerang\State\BoomerangIdling.h" />
     <ClInclude Include="Game\Object\Boomerang\State\BoomerangRepelled.h" />
     <ClInclude Include="Game\Object\Boomerang\State\BoomerangThrow.h" />
+    <ClInclude Include="Game\Object\Enemy\Beam.h" />
+    <ClInclude Include="Game\Object\Enemy\BeamModel.h" />
     <ClInclude Include="Game\Object\Enemy\Enemy.h" />
     <ClInclude Include="Game\Object\Floor.h" />
     <ClInclude Include="Game\Object\Player\Player.h" />
@@ -208,7 +209,7 @@
     <ClInclude Include="Game\Object\Player\State\PlayerUsually.h" />
     <ClInclude Include="Game\Object\Rock.h" />
     <ClInclude Include="Game\Object\Sky.h" />
-    <ClInclude Include="Game\Object\Tree1.h" />
+    <ClInclude Include="Game\Object\Wall.h" />
     <ClInclude Include="Game\Scene\IScene.h" />
     <ClInclude Include="Game\Scene\PlayScene.h" />
     <ClInclude Include="Game\Scene\ResultScene.h" />
@@ -233,7 +234,6 @@
     <ClInclude Include="Libraries\Microsoft\DebugDraw.h" />
     <ClInclude Include="Libraries\MyLib\BinaryFile.h" />
     <ClInclude Include="Libraries\MyLib\Bounding.h" />
-    <ClInclude Include="Libraries\MyLib\Camera\FPS_Camera.h" />
     <ClInclude Include="Libraries\MyLib\Camera\GameCameraManager.h" />
     <ClInclude Include="Libraries\MyLib\Camera\GameEndCamera.h" />
     <ClInclude Include="Libraries\MyLib\Camera\GameStartCamera.h" />
@@ -256,7 +256,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DeviceResources.cpp" />
-    <ClCompile Include="FrameWork\Resources.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Game\BehaviorTree\ActionNode.cpp" />
     <ClCompile Include="Game\BehaviorTree\BehaviorTree.cpp" />
@@ -276,6 +275,8 @@
     <ClCompile Include="Game\Object\Boomerang\State\BoomerangIdling.cpp" />
     <ClCompile Include="Game\Object\Boomerang\State\BoomerangRepelled.cpp" />
     <ClCompile Include="Game\Object\Boomerang\State\BoomerangThrow.cpp" />
+    <ClCompile Include="Game\Object\Enemy\Beam.cpp" />
+    <ClCompile Include="Game\Object\Enemy\BeamModel.cpp" />
     <ClCompile Include="Game\Object\Enemy\Enemy.cpp" />
     <ClCompile Include="Game\Object\Floor.cpp" />
     <ClCompile Include="Game\Object\Player\Player.cpp" />
@@ -283,7 +284,7 @@
     <ClCompile Include="Game\Object\Player\State\PlayerUsually.cpp" />
     <ClCompile Include="Game\Object\Rock.cpp" />
     <ClCompile Include="Game\Object\Sky.cpp" />
-    <ClCompile Include="Game\Object\Tree1.cpp" />
+    <ClCompile Include="Game\Object\Wall.cpp" />
     <ClCompile Include="Game\Scene\PlayScene.cpp" />
     <ClCompile Include="Game\Scene\ResultScene.cpp" />
     <ClCompile Include="Game\Scene\SceneManager.cpp" />
@@ -296,7 +297,6 @@
     <ClCompile Include="Libraries\Microsoft\DebugDraw.cpp" />
     <ClCompile Include="Libraries\MyLib\BinaryFile.cpp" />
     <ClCompile Include="Libraries\MyLib\Bounding.cpp" />
-    <ClCompile Include="Libraries\MyLib\Camera\FPS_Camera.cpp" />
     <ClCompile Include="Libraries\MyLib\Camera\GameCameraManager.cpp" />
     <ClCompile Include="Libraries\MyLib\Camera\GameEndCamera.cpp" />
     <ClCompile Include="Libraries\MyLib\Camera\GameStartCamera.cpp" />

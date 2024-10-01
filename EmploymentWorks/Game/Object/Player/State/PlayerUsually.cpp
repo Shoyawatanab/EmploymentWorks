@@ -151,20 +151,16 @@ void PlayerUsually::Attack(float elapsedTime, DirectX::Keyboard::State key)
 void PlayerUsually::Rotate(float elapsedTime, DirectX::SimpleMath::Vector3 moveDirection)
 {
 
-	
-	
 	using namespace DirectX::SimpleMath;
-
-	//カメラの向いている方向にプレイヤの正面を合わせる
-
-	m_player->SetRotate(m_player->GetCameraRotate());
-	m_player->SetPlayerForWard(Vector3::Transform(INITIAL_DIRECTION, m_player->GetRotate()));
-
-	m_player->GetPlayerForWard().Normalize();
-
 
 	if (m_player->GetUsingBoomerang()->GetBoomerangState() == m_player->GetUsingBoomerang()->GetBoomerangGetReady())
 	{
+		//カメラの向いている方向にプレイヤの正面を合わせる
+
+		m_player->SetRotate(m_player->GetCameraRotate());
+		m_player->SetPlayerForWard(Vector3::Transform(INITIAL_DIRECTION, m_player->GetRotate())) ;
+
+		m_player->GetPlayerForWard().Normalize();
 
 
 	}

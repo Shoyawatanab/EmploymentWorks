@@ -17,8 +17,8 @@
 #include "Game/DetectionCollision/CollisionManager.h"
 #include "Game/BehaviorTree/BehaviorTree.h"
 #include "Game/Object/Player/Player.h"
-#include "FrameWork/Resources.h"
-#include "Libraries/MyLib/CollisionMesh.h"
+#include "Game/Object/Enemy/Beam.h"
+
 
 //初期のターゲットの座標の距離
 const DirectX::SimpleMath::Vector3 Enemy::STAETTAEGETDIRECTION = DirectX::SimpleMath::Vector3(0, 0, 2.5f);
@@ -72,15 +72,16 @@ void Enemy::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 
 	m_commonResources = resources;
 
 	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
-	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
 
 
-	//m_model = Resources::GetInstance()->GetEnemyModel();
-		// リソースディレクトリを設定する
-	std::unique_ptr<DirectX::EffectFactory> enemyFx = std::make_unique<DirectX::EffectFactory>(device);
-	enemyFx->SetDirectory(L"Resources/Models");
-	// 「敵」モデルをロードする
-	m_model = DirectX::Model::CreateFromCMO(device, L"Resources/Models/kariEnemy.cmo", *enemyFx);
+
+
+	// モデルを読み込む準備
+	std::unique_ptr<DirectX::EffectFactory> fx = std::make_unique<DirectX::EffectFactory>(device);
+	fx->SetDirectory(L"Resources/Models");
+
+	// モデルを読み込む
+	m_model = DirectX::Model::CreateFromCMO(device, L"Resources/Models/kariEnemy.cmo", *fx);
 
 	m_position = position;
 
@@ -101,19 +102,14 @@ void Enemy::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 
 	m_behavior->Initialize(m_commonResources);
 
 
-
 	m_acceleration = 0;
 	m_knockbackDirection = DirectX::SimpleMath::Vector3::Zero;
 	m_knockbackTime = 0;
 
-	//m_beam->Initialize(m_commonResources, m_player, this);
+	m_beam->Initialize(m_commonResources, m_player, this);
 
 	m_onCollisionTag = CollsionObjectTag::None;
 
-	// コリジョンメッシュを生成する
-	m_collisionMesh = std::make_unique<mylib::CollisionMesh>();
-	//岩のメッシュの読み込み
-	m_collisionMesh->Initialize(device, context, L"Rock", m_position, 3.0f);
 
 }
 
@@ -127,7 +123,7 @@ void Enemy::Update(float elapsedTime)
 	// キーボードステートを取得する
 	DirectX::Keyboard::State keyboardState = DirectX::Keyboard::Get().GetState();
 
-	//m_behavior->Update(elapsedTime);
+	m_behavior->Update(elapsedTime);
 
 
 	if (m_isCollsionTime)
@@ -137,7 +133,10 @@ void Enemy::Update(float elapsedTime)
 		{
 
 
+
+
 			//弾かれる処理
+
 			m_acceleration += 90.0f * elapsedTime;
 
 			m_acceleration = std::min(m_acceleration, 60.0f);
@@ -177,9 +176,6 @@ void Enemy::Update(float elapsedTime)
 
 	m_targetPos = m_position + Pos;
 
-	m_bounding->Update(m_position);
-
-
 }
 
 //---------------------------------------------------------
@@ -192,7 +188,6 @@ void Enemy::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
 	auto states = m_commonResources->GetCommonStates();
 
-	
 
 	// ワールド行列を更新する
 	Matrix world = Matrix::CreateScale(m_scale);
@@ -209,7 +204,7 @@ void Enemy::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 	m_bounding->DrawBoundingBox(m_position, view, projection);
 	m_bounding->DrawBoundingSphere(m_position, view, projection);
 
-	//m_beam->Render(view, projection);
+	m_beam->Render(view, projection);
 
 
 }
@@ -247,6 +242,7 @@ void Enemy::Instances()
 
 	m_bounding = std::make_unique<Bounding>();
 	m_behavior = std::make_unique<BehaviorTree>();
+	m_beam = std::make_unique<Beam>();
 
 
 }
@@ -264,7 +260,14 @@ void Enemy::RegistrationCollionManager(CollisionManager* collsionManager)
 IBehaviorNode::State Enemy::BeamAttack(float elapsdTime)
 {
 
+	if (m_beam->Attack(elapsdTime))
+	{
+		m_isAttack = true;
+		//攻撃中
+		return IBehaviorNode::State::Runngin;
+	}
 
+	m_isAttack = false;
 
 	//攻撃終了
 	return IBehaviorNode::State::Success;
@@ -290,9 +293,12 @@ void Enemy::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath:
 
 		case CollsionObjectTag::Player:
 		case CollsionObjectTag::Enemy:
+		case CollsionObjectTag::NotMoveObject:
+
 			m_onCollisionTag = PartnerTag;
 			break;
 		case CollsionObjectTag::None:
+		case CollsionObjectTag::Wall:
 			break;
 		default:
 			break;

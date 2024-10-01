@@ -12,10 +12,10 @@ class Enemy;
 class Floor;
 class LockOn;
 class CollisionManager;
+class Wall;
 class Rock;
 class Sky;
 class UI;
-class Tree1;
 
 
 namespace mylib
@@ -68,6 +68,7 @@ private:
 	std::unique_ptr<LockOn> m_lockOn;
 
 
+	std::unique_ptr<Wall> m_wall;
 
 	std::unique_ptr<CollisionManager> m_collisionManager;
 
@@ -76,7 +77,6 @@ private:
 
 	std::vector< std::unique_ptr<Rock>> m_rock;
 
-	std::vector<std::unique_ptr<Tree1>> m_tree1;
 
 	std::unique_ptr<Sky> m_sky;
 
@@ -93,8 +93,5 @@ public:
 
 	SceneID GetNextSceneID() const override;
 
-	void CreateTree();
-
-	void CreateRock();
 
 };

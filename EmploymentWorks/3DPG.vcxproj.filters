@@ -86,9 +86,6 @@
     <Filter Include="Game\UI\State">
       <UniqueIdentifier>{6ebc7464-4f57-4f3d-8a8b-0e5472b5f8b8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="FrameWork">
-      <UniqueIdentifier>{6a6d4faa-fa97-460c-863d-76d33cf2aad0}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -183,6 +180,9 @@
     <ClInclude Include="Game\DetectionCollision\CollisionManager.h">
       <Filter>Game\DetectionCollision</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Object\Wall.h">
+      <Filter>Game\Object\StageObject</Filter>
+    </ClInclude>
     <ClInclude Include="Game\Scene\ResultScene.h">
       <Filter>Game\Scene</Filter>
     </ClInclude>
@@ -246,6 +246,12 @@
     <ClInclude Include="Libraries\MyLib\Judgement.h">
       <Filter>Libraries\MyLib</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\Beam.h">
+      <Filter>Game\Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\BeamModel.h">
+      <Filter>Game\Object\Enemy</Filter>
+    </ClInclude>
     <ClInclude Include="Game\Object\Sky.h">
       <Filter>Game\Object\StageObject</Filter>
     </ClInclude>
@@ -296,15 +302,6 @@
     </ClInclude>
     <ClInclude Include="Game\UI\State\GameOverUI.h">
       <Filter>Game\UI\State</Filter>
-    </ClInclude>
-    <ClInclude Include="Libraries\MyLib\Camera\FPS_Camera.h">
-      <Filter>Libraries\MyLib\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Tree1.h">
-      <Filter>Game\Object\StageObject</Filter>
-    </ClInclude>
-    <ClInclude Include="FrameWork\Resources.h">
-      <Filter>FrameWork</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -377,6 +374,9 @@
     <ClCompile Include="Game\DetectionCollision\CollisionManager.cpp">
       <Filter>Game\DetectionCollision</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Object\Wall.cpp">
+      <Filter>Game\Object\StageObject</Filter>
+    </ClCompile>
     <ClCompile Include="Game\Scene\ResultScene.cpp">
       <Filter>Game\Scene</Filter>
     </ClCompile>
@@ -428,6 +428,12 @@
     <ClCompile Include="Libraries\MyLib\Judgement.cpp">
       <Filter>Libraries\MyLib</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\Beam.cpp">
+      <Filter>Game\Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\BeamModel.cpp">
+      <Filter>Game\Object\Enemy</Filter>
+    </ClCompile>
     <ClCompile Include="Game\Object\Sky.cpp">
       <Filter>Game\Object\StageObject</Filter>
     </ClCompile>
@@ -472,15 +478,6 @@
     </ClCompile>
     <ClCompile Include="Game\UI\State\GameOverUI.cpp">
       <Filter>Game\UI\State</Filter>
-    </ClCompile>
-    <ClCompile Include="Libraries\MyLib\Camera\FPS_Camera.cpp">
-      <Filter>Libraries\MyLib\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\Tree1.cpp">
-      <Filter>Game\Object\StageObject</Filter>
-    </ClCompile>
-    <ClCompile Include="FrameWork\Resources.cpp">
-      <Filter>FrameWork</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

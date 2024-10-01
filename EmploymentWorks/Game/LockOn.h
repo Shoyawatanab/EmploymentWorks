@@ -16,7 +16,7 @@ class Enemy;
 namespace mylib
 {
 	class GameCameraManager;
-	class FPS_Camera;
+	class TPS_Camera;
 }
 
 
@@ -40,7 +40,7 @@ private:
 
 	Player* m_player;
 	Enemy*  m_enemy;
-	mylib::FPS_Camera* m_fpsCamera;
+	mylib::TPS_Camera* m_tpsCamera;
 
 	bool m_isLockOn;
 
