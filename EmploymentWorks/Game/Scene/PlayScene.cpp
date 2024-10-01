@@ -18,11 +18,11 @@
 #include "Game/Object/Floor.h"
 #include "Game/LockOn.h"
 #include "Game/DetectionCollision/CollisionManager.h"
+#include "Game/Object/Wall.h"
 #include "Game/EnemyHP.h"
 #include "Game/Object/Rock.h"
 #include "Game/Object/Sky.h"
 #include "Game/UI/UI.h"
-#include "Game/Object/Tree1.h"
 
 #include <cassert>
 
@@ -99,11 +99,18 @@ void PlayScene::Initialize(CommonResources* resources)
 	m_enemy = std::make_unique<Enemy>();
 	m_player = std::make_unique<Player>();
 	m_cameraManager = std::make_unique<mylib::GameCameraManager>();
+	m_wall = std::make_unique<Wall>();
 	m_lockOn = std::make_unique<LockOn>();
 	m_collisionManager = std::make_unique<CollisionManager>();
 	m_ui = std::make_unique<UI>();
-	CreateTree();
-	//CreateRock();
+	//石　岩
+	auto rock = std::make_unique<Rock>();
+	rock->Initialize(m_commonResources, Vector3(15, 0, 0), Vector3(3.8, 3.5f, 2.5f), 2);
+	m_rock.emplace_back(std::move(rock));
+
+	rock = std::make_unique<Rock>();
+	rock->Initialize(m_commonResources, Vector3(-15, 0, 0), Vector3(3.8, 3.5f, 2.5f), 2);
+	m_rock.emplace_back(std::move(rock));
 
 	//各クラスに必要なクラスのインスタンス
 	m_player->Instances();
@@ -120,10 +127,11 @@ void PlayScene::Initialize(CommonResources* resources)
 	m_ui->RegistrationInformation(this, m_player.get(), m_enemy.get());
 
 
-	m_floor->Initialize(m_commonResources, Vector3::Zero, Vector3(95, 0.2f, 95), 20.0f);
+	m_floor->Initialize(m_commonResources, Vector3::Zero, Vector3(36, 0.2f, 36), 8.0f);
 	m_player->Initialize(m_commonResources, Vector3(0, 3.75f, 10));
-	m_enemy->Initialize(m_commonResources, Vector3(10, 5.75f, -10));
+	m_enemy->Initialize(m_commonResources, Vector3(0, 5.75f, -10));
 	//Wallクラスは当たり判定を持っているだけモデルの描画はない
+	m_wall->Initialize(m_commonResources,Vector3::Zero, 36.0f);
 	m_cameraManager->Initialize();
 	m_lockOn->Initialize(m_commonResources->GetDeviceResources(),
 		m_commonResources->GetDeviceResources()->GetOutputSize().right,
@@ -134,22 +142,28 @@ void PlayScene::Initialize(CommonResources* resources)
 		m_commonResources->GetDeviceResources()->GetOutputSize().bottom);
 
 
+
+
+	m_collisionManager->SetTPS_Camera(m_cameraManager->GetTPSCamera());
+
+
+
+
+
 	///当たり判定をManagerに追加
 	m_player->RegistrationCollionManager(m_collisionManager.get());
 	m_enemy->RegistrationCollionManager(m_collisionManager.get());
 	m_floor->RegistrationCollionManager(m_collisionManager.get());
 
+	m_wall->RegistrationCollionManager(m_collisionManager.get());
 
-	for (auto& rock : m_rock)
-	{
-		rock->RegistrationCollionManager(m_collisionManager.get());
-	}
+	m_rock[0]->RegistrationCollionManager(m_collisionManager.get());
+	m_rock[1]->RegistrationCollionManager(m_collisionManager.get());
 
-	for (auto& tree : m_tree1)
-	{
-		tree->RegistrationCollionManager(m_collisionManager.get());
-	}
 
+	//Rayとの当たり判定を取るためにBoundingの登録
+	m_commonResources->GetJudgement()->SetBounding(m_rock[0]->GetBounding());
+	m_commonResources->GetJudgement()->SetBounding(m_rock[1]->GetBounding());
 
 
 	m_sky = std::make_unique<Sky>();
@@ -233,7 +247,7 @@ void PlayScene::Update(float elapsedTime)
 
 
 
-	m_player->Update(elapsedTime);
+	m_player->Update(elapsedTime, m_cameraManager->GetTPSCamera()->GetRotationX());
 
 	m_ui->Update(elapsedTime);
 
@@ -259,18 +273,15 @@ void PlayScene::Render()
 
 	m_floor->Render(view, m_projection);
 
+	m_wall->Render(view, m_projection);
 
-	//m_enemy->Render(view, m_projection);
+
+	m_enemy->Render(view, m_projection);
 
 
 	for (auto& rock : m_rock)
 	{
 		rock->Render(view, m_projection);
-	}
-
-	for (auto& tree : m_tree1)
-	{
-		tree->Render(view, m_projection);
 	}
 
 	m_sky->Render(view, m_projection);
@@ -317,87 +328,5 @@ IScene::SceneID PlayScene::GetNextSceneID() const
 
 }
 
-
-void PlayScene::CreateTree()
-{
-
-	using namespace DirectX::SimpleMath;
-
-	auto tree = std::make_unique<Tree1>();
-	tree->Initialize(m_commonResources, Vector3::Zero, Vector3(2.5, 10, 2.5), 2.0f);
-	m_tree1.push_back(std::move(tree));
-
-	return;
-
-	float scale = 2.0f;
-
-	//正方形の大きさ
-	float Lenght = 20;
-
-	//地面の大きさ
-	float FloorLenght = 200;
-
-	//ループ回数を求める
-	int Count = FloorLenght / Lenght;
-
-
-	for (int i = 0; i < Count; i++)
-	{
-		for (int j = 0; j < Count; j++)
-		{
-			//ランダムに座標を決める
-			DirectX::SimpleMath::Vector3 pos;
-			pos.x = m_commonResources->GetJudgement()->GetRandom(0, Lenght);
-			pos.z = m_commonResources->GetJudgement()->GetRandom(0, Lenght);
-			auto tree = std::make_unique<Tree1>();
-			tree->Initialize(m_commonResources, pos + Vector3(i * Lenght - (FloorLenght / 2), 0, j * Lenght - (FloorLenght / 2)), Vector3(2.5, 10, 2.5), scale);
-			m_tree1.push_back(std::move(tree));
-		}
-	}
-
-
-
-}
-
-void PlayScene::CreateRock()
-{
-
-	using namespace DirectX::SimpleMath;
-
-
-	return;
-
-	auto rock = std::make_unique<Rock>();
-	rock->Initialize(m_commonResources, Vector3::Zero, Vector3(1.5, 2, 1.5), 3.0f);
-	m_rock.push_back(std::move(rock));
-
-	return;
-
-	//正方形の大きさ
-	float Lenght = 50;
-
-	//地面の大きさ
-	float FloorLenght = 200;
-
-	//ループ回数を求める
-	int Count = FloorLenght / Lenght;
-
-
-	for (int i = 0; i < Count; i++)
-	{
-		for (int j = 0; j < Count; j++)
-		{
-			//ランダムに座標を決める
-			DirectX::SimpleMath::Vector3 pos;
-			pos.x = m_commonResources->GetJudgement()->GetRandom(0, Lenght);
-			pos.z = m_commonResources->GetJudgement()->GetRandom(0, Lenght);
-			auto rock = std::make_unique<Rock>();
-			rock->Initialize(m_commonResources, pos + Vector3(i * Lenght - (FloorLenght / 2), 0, j * Lenght - (FloorLenght / 2)), Vector3(1.5, 2, 1.5), 3.0f);
-			m_rock.push_back(std::move(rock));
-		}
-	}
-
-
-}
 
 

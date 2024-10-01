@@ -21,10 +21,7 @@ namespace mylib
 {
 	class DebugCamera;
 	class GridFloor;
-	class CollisionMesh;
-
 }
-
 
 
 class Player : public ICollisionObject
@@ -104,16 +101,15 @@ private:
 	std::unique_ptr<PlayerUsually> m_usually;
 	std::unique_ptr<PlayerBlownAway> m_blownAway;
 
-	//std::unique_ptr<DirectX::BasicEffect> m_basicEffect;
+	std::unique_ptr<DirectX::BasicEffect> m_basicEffect;
 
-	std::unique_ptr<mylib::CollisionMesh> m_collisionMesh;
 
 public:
 	Player();
 	~Player() ;
 
 	void Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 position);
-	void Update(float elapsedTime);
+	void Update(float elapsedTime, DirectX::SimpleMath::Quaternion cameraRotation);
 	void Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection) ;
 	void Finalize() ;
 
@@ -139,7 +135,5 @@ public:
 	DirectX::SimpleMath::Vector3 GetPos() override { return m_position; }
 
 	void OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos) override;
-
-	mylib::CollisionMesh* GetCollsionMesh() override { return m_collisionMesh.get(); }
 
 };

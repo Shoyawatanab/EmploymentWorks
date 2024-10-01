@@ -14,13 +14,13 @@ class CommonResources;
 class Bounding;
 class BehaviorTree;
 class Player;
+class Beam;
 
 
 namespace mylib
 {
 	class DebugCamera;
 	class GridFloor;
-	class CollisionMesh;
 }
 
 
@@ -43,6 +43,8 @@ public:
 
 
 	bool GetIsAttack() { return m_isAttack; }
+
+	Beam* GetBeam() { return m_beam.get(); }
 
 
 public:
@@ -95,6 +97,8 @@ private:
 	//ブーメランのターゲットの座標
 	DirectX::SimpleMath::Vector3 m_targetPos;
 
+	//ビームクラス
+	std::unique_ptr<Beam> m_beam;
 
 
 	//当たった時の相手のタグ
@@ -102,7 +106,6 @@ private:
 
 	bool m_isAttack;
 
-	std::unique_ptr<mylib::CollisionMesh> m_collisionMesh;
 
 public:
 	Enemy();
@@ -141,7 +144,5 @@ public:
 	float GetMAXHp() { return m_maxHP; }
 
 	void OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos) override;
-
-	mylib::CollisionMesh* GetCollsionMesh() override { return m_collisionMesh.get(); }
 
 };

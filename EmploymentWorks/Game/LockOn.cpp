@@ -14,7 +14,7 @@
 
 #include "Game/Object/Player/Player.h"
 #include "Game/Object/Enemy/Enemy.h"
-#include "Libraries/MyLib/Camera/FPS_Camera.h"
+#include "Libraries/MyLib/Camera/TPS_Camera.h"
 #include "Libraries/MyLib/Camera/GameCameraManager.h"
 
 const float LOCKONDISTANCE = 20.0f;
@@ -31,7 +31,7 @@ LockOn::LockOn()
 	, m_pDR(nullptr),
 	m_player{}
 	,m_enemy{}
-	, m_fpsCamera{ }
+	, m_tpsCamera{ }
 	, m_isLockOn{ false }
 
 {
@@ -116,8 +116,8 @@ void LockOn::Update(float elapsedTime)
 
     		Vector2 ScreenPos = WorldToScreen(m_enemy->GetPosition(),
 			Matrix::Identity,
-			m_fpsCamera->GetViewMatrix(),
-			m_fpsCamera->GetProjectionMatrix(),
+			m_tpsCamera->GetViewMatrix(),
+			m_tpsCamera->GetProjectionMatrix(),
 			m_windowWidth,
 			m_windowHeight
 		);
@@ -154,7 +154,7 @@ void LockOn::RegistrationInformation(Player* player, Enemy* enemy, mylib::GameCa
 
 	m_player = player;
 	m_enemy = enemy;
-	m_fpsCamera = gameCamera->GetFPSCamera();
+	m_tpsCamera = gameCamera->GetTPSCamera();
 
 }
 

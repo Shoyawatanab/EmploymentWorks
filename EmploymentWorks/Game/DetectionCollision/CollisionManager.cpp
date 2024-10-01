@@ -21,7 +21,6 @@
 
 #include "Game/Object/Enemy/Beam.h"
 #include "Libraries/MyLib/Camera/TPS_Camera.h"
-#include "Game/Object/Boomerang/Boomerang.h"
 
 //---------------------------------------------------------
 // コンストラクタ
@@ -48,12 +47,15 @@ void CollisionManager::Initialize(CommonResources* resources, Player* player, En
 	m_commonResources = resources;
 	m_player = player;
 	m_enemy = enemy;
-	m_boomerang = m_player->GetUsingBoomerang();
 
-	//auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
-	//auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
+	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
+	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
 
 
+	// コリジョンメッシュを生成する
+	m_collisionMesh = std::make_unique<mylib::CollisionMesh>();
+	//大きさをー0.1して壁にめり込まないようにしている
+	m_collisionMesh->Initialize(device, context, L"Stage", DirectX::SimpleMath::Vector3::Zero, 7.9f);
 
 
 
@@ -92,43 +94,26 @@ void CollisionManager::Update()
 			uint32_t kind = static_cast<uint32_t>(tagI) | static_cast<uint32_t>(tagJ);
 
 
+			if (kind == static_cast<uint32_t>(CollisionType::Player_Wall) ||
+				kind == static_cast<uint32_t>(CollisionType::Boomerang_Wall) ||
+				kind == static_cast<uint32_t>(CollisionType::Enemy_Wall)
+				)
+			{
+				//当たったら
+				if (WallExtrusion(m_collsionObjects[i], m_collsionObjects[j]))
+				{
+					m_collsionObjects[i]->OnCollisionEnter(tagJ, m_hitPosition);
+					m_collsionObjects[j]->OnCollisionEnter(tagI, m_hitPosition);
+				}
+
+				continue;
+			}
+
+
 
 			if (!CheckIsSphere(m_collsionObjects[i], m_collsionObjects[j]))
 			{
 				continue;
-			}
-
-			//ブーメランと岩
-			if (kind == static_cast<uint32_t>(CollisionType::Boomerang_Rock))
-			{
-
-				//当たったら
-				if (RockExtrusion(m_collsionObjects[i], m_collsionObjects[j]))
-				{
-
-					m_collsionObjects[i]->OnCollisionEnter(tagJ, m_hitPosition);
-					m_collsionObjects[j]->OnCollisionEnter(tagI, m_hitPosition);
-				
-				}
-
-				continue;
-
-			}
-
-
-			if (kind == static_cast<uint32_t>(CollisionType::Boomerang_Tree1))
-			{
-				if (Tree1Extrusion(m_collsionObjects[i], m_collsionObjects[j]))
-				{
-
-					m_collsionObjects[i]->OnCollisionEnter(tagJ, m_hitPosition);
-					m_collsionObjects[j]->OnCollisionEnter(tagI, m_hitPosition);
-
-
-				}
-
-				continue;
-
 			}
 
 			if (!CheckIsBox(m_collsionObjects[i], m_collsionObjects[j]))
@@ -145,6 +130,21 @@ void CollisionManager::Update()
 					break;
 				case static_cast<uint32_t>(CollisionType::Enemy_Boomerang):
 					BoxExtrusion(m_collsionObjects[i], m_collsionObjects[j]);
+					break;
+				case static_cast<uint32_t>(CollisionType::Player_NotMoveObject):
+					BoxExtrusion(m_collsionObjects[i], m_collsionObjects[j]);
+					break;
+				case static_cast<uint32_t>(CollisionType::Enemy_NotMoveObject):
+					BoxExtrusion(m_collsionObjects[i], m_collsionObjects[j]);
+					break;
+				case static_cast<uint32_t>(CollisionType::Boomerang_NotMoveObject):
+					BoxExtrusion(m_collsionObjects[i], m_collsionObjects[j]);
+					break;
+				case static_cast<uint32_t>(CollisionType::Player_Wall):
+					break;
+				case static_cast<uint32_t>(CollisionType::Enemy_Wall):
+					break;
+				case static_cast<uint32_t>(CollisionType::Boomerang_Wall):
 					break;
 				case static_cast<uint32_t>(CollisionType::Player_Floor):
 					BoxExtrusion(m_collsionObjects[i], m_collsionObjects[j]);
@@ -169,7 +169,7 @@ void CollisionManager::Update()
 		}
 	}
 
-
+	BeamAndPlayerCollision();
 
 
 	//カメラの当たり判定
@@ -189,6 +189,9 @@ void CollisionManager::Update()
 				break;
 			case CollsionObjectTag::Boomerang:
 				break;
+			case CollsionObjectTag::Wall:
+				break;
+			case CollsionObjectTag::NotMoveObject:
 			case CollsionObjectTag::Floor:
 				CameraCollision(m_collsionObjects[i]);
 				break;
@@ -318,53 +321,23 @@ bool CollisionManager::CheckIsSphere(ICollisionObject* Object1, ICollisionObject
 }
 
 
-//岩のメッシュとの判定　内側に押し出す
-bool CollisionManager::RockExtrusion(ICollisionObject* Object1, ICollisionObject* Object2)
+//壁との判定　内側に押し出す
+bool CollisionManager::WallExtrusion(ICollisionObject* Object1, ICollisionObject* Object2)
 {
 	using namespace DirectX::SimpleMath;
 
-
-	////Rayの方向
-	////Vector3 Direction = Object2->GetPos() - Object1->GetPos();
-	//Vector3 Direction = Object1->GetPos() - Object2->GetPos();
-
-	//Direction.Normalize();
-	//Vector3 Pos = Object1->GetPos();
-
-	const std::vector<std::unique_ptr<Boomerang::RayParameter>>& rays = m_boomerang->GetRay();
-
-	int nearIndex = 0;
-
-	//先端座標から一番近いものを探す
-	for (int i = 0; i < rays.size() - 1; i++)
-	{
-
-		float distance1 = Vector3::Distance(rays[i]->TipPosition, Object2->GetPos());
-		float distance2 = Vector3::Distance(rays[i + 1]->TipPosition, Object2->GetPos());
-
-		//1のほうが小さい
-		if (distance1 < distance2)
-		{
-			nearIndex = i;
-		}
-		else
-		{
-			nearIndex = i + 1;
-		}
-
-	}
-
-	//一番近いRay
-	const std::unique_ptr<Boomerang::RayParameter>& nearRay = rays[nearIndex];
-
+	//Rayの方向
+	Vector3 Direction = Object2->GetPos() - Object1->GetPos();
+	Direction.Normalize();
 
 	//Rayの作成
-	Ray ray{ nearRay->TipPosition ,nearRay->GetDirection()};
+	Ray ray{ Object1->GetPos(),Direction };
 
-	mylib::CollisionMesh* Mesh = Object2->GetCollsionMesh();
 
-	if (Mesh->IntersectRay(ray, &m_hitPosition,nearRay->GetLenght()))
+	if (m_collisionMesh->IntersectRay(ray, &m_hitPosition))
 	{
+
+		Object1->SetPos(m_hitPosition);
 
 		return true;
 	}
@@ -372,53 +345,51 @@ bool CollisionManager::RockExtrusion(ICollisionObject* Object1, ICollisionObject
 	return false;
 }
 
-bool CollisionManager::Tree1Extrusion(ICollisionObject* Object1, ICollisionObject* Object2)
+void CollisionManager::BeamAndPlayerCollision()
 {
 
-	using namespace DirectX::SimpleMath;
+	//プレイヤとビーム
+	if (m_player->GetPlayerState() != m_player->GetPlayerUsually() && !m_enemy->GetIsAttack())
+	{
+		return;
+	}
 
-	const std::vector<std::unique_ptr<Boomerang::RayParameter>>& rays = m_boomerang->GetRay();
 
-	int nearIndex = 0;
 
-	//先端座標から一番近いものを探す
-	for (int i = 0; i < rays.size() - 1; i++)
+	//ビームのBoundinの取得
+	std::vector<std::unique_ptr<Bounding>>& BeamBounding = m_enemy->GetBeam()->GetBounding();
+
+	//プレイヤのBoundingSphereの取得
+	DirectX::BoundingSphere* PlayerBoundingSphere = m_player->GetBounding()->GetBoundingSphere();
+
+	for (auto& beam : BeamBounding)
 	{
 
-		float distance1 = Vector3::Distance(rays[i]->TipPosition, Object2->GetPos());
-		float distance2 = Vector3::Distance(rays[i + 1]->TipPosition, Object2->GetPos());
+		DirectX::BoundingSphere* Sphere = beam->GetBoundingSphere();
 
-		//1のほうが小さい
-		if (distance1 < distance2)
+		//当たったら
+		if (PlayerBoundingSphere->Intersects(*Sphere))
 		{
-			nearIndex = i;
-		}
-		else
-		{
-			nearIndex = i + 1;
+			if (m_player->GetPlayerState() == m_player->GetPlayerUsually())
+			{
+				float hp = m_player->GetPlayerHP();
+				hp--;
+				m_player->SetPlayerHP(hp);
+			}
+
+			//飛ぶ方向を求める
+			m_player->DemandBlownAwayDirection(Sphere->Center);
+
+			//プレイヤの状態を飛ばされるに変更
+			m_player->ChangeState(m_player->GetPlayerBlownAway());
+
+			return;
 		}
 
 	}
 
-	//一番近いRay
-	const std::unique_ptr<Boomerang::RayParameter>& nearRay = rays[nearIndex];
 
-
-	//Rayの作成
-	Ray ray{ nearRay->TipPosition ,nearRay->GetDirection() };
-
-	mylib::CollisionMesh* Mesh = Object2->GetCollsionMesh();
-
-	if (Mesh->IntersectRay(ray, &m_hitPosition, nearRay->GetLenght()))
-	{
-
-		return true;
-	}
-
-
-	return false;
 }
-
 
 /// <summary>
 /// カメラとの当たり判定
@@ -428,31 +399,31 @@ void CollisionManager::CameraCollision(ICollisionObject* object)
 {
 
 
-	//DirectX::BoundingBox* box = object->GetBounding()->GetBoundingBox();
+	DirectX::BoundingBox* box = object->GetBounding()->GetBoundingBox();
 
 
-	//DirectX::SimpleMath::Vector3 direction = m_tpsCamera->GetEyePosition() - m_tpsCamera->GetTargetPosition();
-	//direction.Normalize();
-	////カメラの座標と注視点からの線分をRayとして作成
-	//DirectX::SimpleMath::Ray ray { m_tpsCamera->GetTargetPosition(), direction };
-	////Ray(線分)の距離を求める
-	//float distance = DirectX::SimpleMath::Vector3::Distance(m_tpsCamera->GetEyePosition(), m_tpsCamera->GetTargetPosition());
+	DirectX::SimpleMath::Vector3 direction = m_tpsCamera->GetEyePosition() - m_tpsCamera->GetTargetPosition();
+	direction.Normalize();
+	//カメラの座標と注視点からの線分をRayとして作成
+	DirectX::SimpleMath::Ray ray { m_tpsCamera->GetTargetPosition(), direction };
+	//Ray(線分)の距離を求める
+	float distance = DirectX::SimpleMath::Vector3::Distance(m_tpsCamera->GetEyePosition(), m_tpsCamera->GetTargetPosition());
 
-	////当たっていない
-	//if (!ray.Intersects(*box, distance))
-	//{
-	//	return;
-	//}
+	//当たっていない
+	if (!ray.Intersects(*box, distance))
+	{
+		return;
+	}
 
-	//distance /= 4.5f;
+	distance /= 4.5f;
 
-	////ターゲットの座標を取得
-	//DirectX::SimpleMath::Vector3 pos = m_tpsCamera->GetTargetPosition();
-	////ターゲットに方向と当たった距離をかけたものを足してEyeの座標を求める
-	//pos += direction * distance;
+	//ターゲットの座標を取得
+	DirectX::SimpleMath::Vector3 pos = m_tpsCamera->GetTargetPosition();
+	//ターゲットに方向と当たった距離をかけたものを足してEyeの座標を求める
+	pos += direction * distance;
 
 
-	//m_tpsCamera->SetEyePosition(pos);
+	m_tpsCamera->SetEyePosition(pos);
 
 }
 

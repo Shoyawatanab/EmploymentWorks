@@ -108,7 +108,7 @@ void BoomerangOrbit::Update(const float& elapsedTime)
 	if (!m_player->GetIsLockOn())
 	{
 		//‹——£‚ðŽ©•ª‚ÅŒˆ‚ß‚½‚à‚Ì‚É‚·‚é
-		m_target = Vector3(0, 6, 4);
+		m_target = Vector3(0, 3, 4);
 		PlayerToEnemyDistance = m_target;
 
 	}

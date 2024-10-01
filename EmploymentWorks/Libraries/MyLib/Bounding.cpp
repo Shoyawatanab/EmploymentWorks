@@ -60,15 +60,6 @@ void Bounding::CreateBoundingBox(CommonResources* resources, DirectX::SimpleMath
 	);
 }
 
-void Bounding::Update(DirectX::SimpleMath::Vector3 Position)
-{
-
-	m_boundingSphere.Center = Position;
-
-	m_boundingBox.Center = Position;
-
-}
-
 
 void Bounding::CreateBoundingSphere(CommonResources* resources, DirectX::SimpleMath::Vector3 CenterPos, float radius)
 {
@@ -99,6 +90,7 @@ void Bounding::CreateBoundingSphere(CommonResources* resources, DirectX::SimpleM
 
 void Bounding::DrawBoundingBox(const DirectX::SimpleMath::Vector3 CenterPos, DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 {
+	m_boundingBox.Center = CenterPos;
 	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
 	m_effect->SetView(view);
 	m_effect->SetProjection(projection);
@@ -132,6 +124,7 @@ void Bounding::DrawBoundingBox(const DirectX::SimpleMath::Vector3 CenterPos, Dir
 
 void Bounding::DrawBoundingSphere(const DirectX::SimpleMath::Vector3 CenterPos, DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 {
+	m_boundingSphere.Center = CenterPos;
 	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
 	m_effect->SetView(view);
 	m_effect->SetProjection(projection);
