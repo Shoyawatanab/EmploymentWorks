@@ -99,12 +99,7 @@ void CollisionManager::Update()
 				kind == static_cast<uint32_t>(CollisionType::Enemy_Wall)
 				)
 			{
-				//“–‚½‚Á‚½‚ç
-				if (WallExtrusion(m_collsionObjects[i], m_collsionObjects[j]))
-				{
-					m_collsionObjects[i]->OnCollisionEnter(tagJ, m_hitPosition);
-					m_collsionObjects[j]->OnCollisionEnter(tagI, m_hitPosition);
-				}
+
 
 				continue;
 			}

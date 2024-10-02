@@ -18,10 +18,16 @@ C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomeran
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\State\BoomerangIdling.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\BoomerangIdling.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\State\BoomerangRepelled.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\BoomerangRepelled.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\State\BoomerangThrow.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\BoomerangThrow.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Ceiling.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Ceiling.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Beam.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Beam.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\BeamModel.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\BeamModel.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Enemy.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Floor.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Floor.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Gimmick\Artillery\Artillery.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Artillery.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Gimmick\Artillery\ArtilleryBase.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\ArtilleryBase.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Gimmick\Artillery\ArtilleryBullet.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\ArtilleryBullet.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Gimmick\Artillery\ArtilleryTurret.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\ArtilleryTurret.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Pillar.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Pillar.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player\Player.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\Player.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player\State\PlayerBlownAway.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\PlayerBlownAway.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Player\State\PlayerUsually.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\PlayerUsually.obj

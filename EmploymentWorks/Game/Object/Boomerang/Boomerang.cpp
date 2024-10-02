@@ -20,6 +20,7 @@
 #include "Game/Object/Boomerang/BoomerangOrbit.h"
 
 
+
 const float SCALE = 4.0f; //オブジェクトの大きさ
 
 

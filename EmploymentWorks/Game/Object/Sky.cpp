@@ -57,10 +57,9 @@ void Sky::Initialize(CommonResources* resources)
 //---------------------------------------------------------
 // çXêVÇ∑ÇÈ
 //---------------------------------------------------------
-void Sky::Update(float elapsedTime, DirectX::SimpleMath::Quaternion cameraRotation)
+void Sky::Update(float elapsedTime)
 {
 	UNREFERENCED_PARAMETER(elapsedTime);
-	UNREFERENCED_PARAMETER(cameraRotation);
 
 	using namespace DirectX;
 	using namespace DirectX::SimpleMath;

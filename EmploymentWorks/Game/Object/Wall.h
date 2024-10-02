@@ -27,16 +27,20 @@ private:
 
 	std::unique_ptr<Bounding> m_bounding;
 
+	// ƒ‚ƒfƒ‹
+	std::unique_ptr<DirectX::Model> m_model;
 
 	DirectX::SimpleMath::Vector3 m_position;
-	float m_scale;
+	DirectX::SimpleMath::Vector3 m_scale;
+
+	DirectX::SimpleMath::Quaternion m_rotate;
 
 public:
 	Wall();
 	~Wall() ;
 
-	void Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 position, float Scale);
-	void Update(float elapsedTime, DirectX::SimpleMath::Quaternion cameraRotation);
+	void Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Vector3 Scale,DirectX::SimpleMath::Vector3 Rotate);
+	void Update(float elapsedTime);
 	void Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection) ;
 	void Finalize() ;
 

@@ -39,28 +39,36 @@ Wall::~Wall()
 //---------------------------------------------------------
 // 初期化する
 //---------------------------------------------------------
-void Wall::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 position, float Scale)
+void Wall::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Vector3 Scale, DirectX::SimpleMath::Vector3 Rotate)
 {
 	using namespace DirectX::SimpleMath;
 	assert(resources);
 	m_commonResources = resources;
 	m_position = position;
 	m_scale = Scale;
+	m_rotate = Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(Rotate.z), DirectX::XMConvertToRadians(Rotate.y), DirectX::XMConvertToRadians(Rotate.x));
+	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
+
+	// モデルを読み込む準備
+	std::unique_ptr<DirectX::EffectFactory> fx = std::make_unique<DirectX::EffectFactory>(device);
+	fx->SetDirectory(L"Resources/Models");
+
+	// モデルを読み込む
+	m_model = DirectX::Model::CreateFromCMO(device, L"Resources/Models/Stage.cmo", *fx);
 
 
-	//L"Resources/Models/Wall.cmo"
 
 	m_bounding = std::make_unique<Bounding>();
-	m_bounding->CreateBoundingSphere(m_commonResources,m_position, m_scale);
+	m_bounding->CreateBoundingBox(m_commonResources, m_position, m_scale);
+	m_bounding->CreateBoundingSphere(m_commonResources,m_position, 20.0f);
 
 }
 
 //---------------------------------------------------------
 // 更新する
 //---------------------------------------------------------
-void Wall::Update(float elapsedTime, DirectX::SimpleMath::Quaternion cameraRotation)
+void Wall::Update(float elapsedTime)
 {
-	UNREFERENCED_PARAMETER(cameraRotation);
 	UNREFERENCED_PARAMETER(elapsedTime);
 
 
@@ -76,11 +84,21 @@ void Wall::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 {
 	using namespace DirectX::SimpleMath;
 
+	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
+	auto states = m_commonResources->GetCommonStates();
+
+
 
 
 	// ワールド行列を更新する
 	Matrix world = Matrix::CreateScale(m_scale);
+	world *= Matrix::CreateFromQuaternion(m_rotate);
 	world *= Matrix::CreateTranslation(m_position);
+
+	// モデルを描画する
+	m_model->Draw(context, *states, world, view, projection);
+
+
 	m_bounding->DrawBoundingSphere(m_position, view, projection);
 	m_bounding->DrawBoundingBox(m_position, view, projection);
 

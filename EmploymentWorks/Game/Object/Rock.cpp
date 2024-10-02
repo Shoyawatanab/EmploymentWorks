@@ -40,13 +40,15 @@ Rock::~Rock()
 //---------------------------------------------------------
 // 初期化する
 //---------------------------------------------------------
-void Rock::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Vector3 Extens, float Scale)
+void Rock::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Vector3 Scale, DirectX::SimpleMath::Vector3 Rotate)
 {
 	using namespace DirectX::SimpleMath;
 	assert(resources);
 	m_commonResources = resources;
 	m_position = position;
 	m_scale = Scale;
+	m_rotate = Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(Rotate.z), DirectX::XMConvertToRadians(Rotate.y), DirectX::XMConvertToRadians(Rotate.x));
+
 
 	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
 
@@ -58,7 +60,7 @@ void Rock::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 p
 	m_model = DirectX::Model::CreateFromCMO(device, L"Resources/Models/Rock.cmo", *fx);
 
 	m_bounding = std::make_unique<Bounding>();
-	m_bounding->CreateBoundingBox(m_commonResources, m_position, Extens);
+	m_bounding->CreateBoundingBox(m_commonResources, m_position,m_scale);
 	m_bounding->CreateBoundingSphere(m_commonResources, m_position, 40.0f);
 
 }
@@ -66,10 +68,9 @@ void Rock::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 p
 //---------------------------------------------------------
 // 更新する
 //---------------------------------------------------------
-void Rock::Update(float elapsedTime, DirectX::SimpleMath::Quaternion cameraRotation)
+void Rock::Update(float elapsedTime)
 {
 	UNREFERENCED_PARAMETER(elapsedTime);
-	UNREFERENCED_PARAMETER(cameraRotation);
 
 	using namespace DirectX;
 	using namespace DirectX::SimpleMath;
@@ -89,6 +90,7 @@ void Rock::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 
 	// ワールド行列を更新する
 	Matrix world = Matrix::CreateScale(m_scale);
+	world *= Matrix::CreateFromQuaternion(m_rotate);
 	world *= Matrix::CreateTranslation(m_position);
 	// モデルを描画する
 	m_model->Draw(context, *states, world, view, projection);

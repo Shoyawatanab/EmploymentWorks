@@ -31,7 +31,7 @@ public:
 	~Sky();
 
 	void Initialize(CommonResources* resources);
-	void Update(float elapsedTime, DirectX::SimpleMath::Quaternion cameraRotation);
+	void Update(float elapsedTime);
 	void Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection);
 	void Finalize();
 

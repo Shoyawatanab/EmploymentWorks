@@ -18,6 +18,7 @@ C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomeran
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\State\BoomerangIdling.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\BoomerangIdling.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\State\BoomerangRepelled.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\BoomerangRepelled.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Boomerang\State\BoomerangThrow.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\BoomerangThrow.obj
+C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Ceiling.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\Ceiling.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Beam.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\Beam.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\BeamModel.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\BeamModel.obj
 C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Object\Enemy\Enemy.cpp;C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Release\Enemy.obj
