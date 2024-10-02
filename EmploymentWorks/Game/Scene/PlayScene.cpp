@@ -23,6 +23,9 @@
 #include "Game/Object/Rock.h"
 #include "Game/Object/Sky.h"
 #include "Game/UI/UI.h"
+#include "Game/Object/Ceiling.h"
+#include "Game/Object/Pillar.h"
+#include "Game/Object/Gimmick/Artillery/Artillery.h"
 
 #include <cassert>
 
@@ -48,6 +51,7 @@ PlayScene::PlayScene()
 	, m_sky{}
 	, m_nextScene{ SceneID::NONE }
 	,m_state{}
+	,m_ceiling{}
 {
 }
 
@@ -95,21 +99,44 @@ void PlayScene::Initialize(CommonResources* resources)
 
 
 
-	m_floor = std::make_unique<Floor>();
 	m_enemy = std::make_unique<Enemy>();
 	m_player = std::make_unique<Player>();
 	m_cameraManager = std::make_unique<mylib::GameCameraManager>();
-	m_wall = std::make_unique<Wall>();
+
+	m_floor = std::make_unique<Floor>();
+	for (int i = 0; i < 4; i++)
+	{
+		auto wall = std::make_unique<Wall>();
+		m_wall.push_back(std::move(wall));
+	}
+
+	for (int i = 0; i < 2; i++)
+	{
+		auto pillar = std::make_unique<Pillar>();
+		m_pillar.push_back(std::move(pillar));
+	}
+
+	m_ceiling = std::make_unique<Ceiling>();
+
+	for (int i = 0; i < 1; i++)
+	{
+		auto artillery = std::make_unique<Artillery>();
+		m_artillery.push_back(std::move(artillery));
+
+	}
+
+
 	m_lockOn = std::make_unique<LockOn>();
 	m_collisionManager = std::make_unique<CollisionManager>();
 	m_ui = std::make_unique<UI>();
+
 	//石　岩
 	auto rock = std::make_unique<Rock>();
-	rock->Initialize(m_commonResources, Vector3(15, 0, 0), Vector3(3.8, 3.5f, 2.5f), 2);
+	rock->Initialize(m_commonResources, Vector3(15, 0, 0), Vector3(3.8, 3.5f, 2.5f), Vector3(0,0,0));
 	m_rock.emplace_back(std::move(rock));
 
 	rock = std::make_unique<Rock>();
-	rock->Initialize(m_commonResources, Vector3(-15, 0, 0), Vector3(3.8, 3.5f, 2.5f), 2);
+	rock->Initialize(m_commonResources, Vector3(-15, 0, 0), Vector3(3.8, 3.5f, 2.5f), Vector3(0,0,0));
 	m_rock.emplace_back(std::move(rock));
 
 	//各クラスに必要なクラスのインスタンス
@@ -127,11 +154,27 @@ void PlayScene::Initialize(CommonResources* resources)
 	m_ui->RegistrationInformation(this, m_player.get(), m_enemy.get());
 
 
-	m_floor->Initialize(m_commonResources, Vector3::Zero, Vector3(36, 0.2f, 36), 8.0f);
+	Vector3 floorScale = Vector3(70, 0.1f, 50);
+	float height = 20.0f;
+
+	
+
+	m_floor->Initialize(m_commonResources, Vector3::Zero, floorScale,Vector3(0,0,0));
 	m_player->Initialize(m_commonResources, Vector3(0, 3.75f, 10));
 	m_enemy->Initialize(m_commonResources, Vector3(0, 5.75f, -10));
 	//Wallクラスは当たり判定を持っているだけモデルの描画はない
-	m_wall->Initialize(m_commonResources,Vector3::Zero, 36.0f);
+	m_wall[0]->Initialize(m_commonResources, Vector3(-floorScale.x, 0, 0), Vector3(1, height, floorScale.z),Vector3(0,0,0));
+	m_wall[1]->Initialize(m_commonResources, Vector3(floorScale.x, 0, 0), Vector3(1, height, floorScale.z),Vector3(0, 0, 0));
+	m_wall[2]->Initialize(m_commonResources, Vector3(0, 0, -floorScale.z), Vector3(floorScale.x, height, 1),Vector3(0, 0, 0));
+	m_wall[3]->Initialize(m_commonResources, Vector3(0, 0, floorScale.z), Vector3(floorScale.x, height, 1),Vector3(0, 0, 0));
+
+	m_pillar[0]->Initialize(m_commonResources, Vector3(0,1,0), Vector3(2, 5, 2),Vector3::Zero);
+	m_pillar[1]->Initialize(m_commonResources, Vector3(-8, 1, 0), Vector3(2, 5, 2), Vector3(0, 0, 0));
+
+	m_artillery[0]->Initialize(m_commonResources, Vector3(0, 1, 5), Vector3(1, 1, 1),Vector3(90,0,90));
+
+	m_ceiling->Initialize(m_commonResources,Vector3(0,height,0),floorScale,Vector3(0,0,0));
+	
 	m_cameraManager->Initialize();
 	m_lockOn->Initialize(m_commonResources->GetDeviceResources(),
 		m_commonResources->GetDeviceResources()->GetOutputSize().right,
@@ -141,21 +184,17 @@ void PlayScene::Initialize(CommonResources* resources)
 		m_commonResources->GetDeviceResources()->GetOutputSize().right,
 		m_commonResources->GetDeviceResources()->GetOutputSize().bottom);
 
-
-
-
 	m_collisionManager->SetTPS_Camera(m_cameraManager->GetTPSCamera());
-
-
-
-
 
 	///当たり判定をManagerに追加
 	m_player->RegistrationCollionManager(m_collisionManager.get());
 	m_enemy->RegistrationCollionManager(m_collisionManager.get());
 	m_floor->RegistrationCollionManager(m_collisionManager.get());
 
-	m_wall->RegistrationCollionManager(m_collisionManager.get());
+	for (auto& wall : m_wall)
+	{
+		wall->RegistrationCollionManager(m_collisionManager.get());
+	}
 
 	m_rock[0]->RegistrationCollionManager(m_collisionManager.get());
 	m_rock[1]->RegistrationCollionManager(m_collisionManager.get());
@@ -191,7 +230,11 @@ void PlayScene::Update(float elapsedTime)
 
 			if (m_cameraManager->GetGameCameraState() != m_cameraManager->GetGameStartCamera())
 			{
-				m_enemy->Update(elapsedTime);
+				//m_enemy->Update(elapsedTime);
+				for (auto& artillery : m_artillery)
+				{
+					artillery->Update(elapsedTime);
+				}
 			}
 
 
@@ -273,18 +316,32 @@ void PlayScene::Render()
 
 	m_floor->Render(view, m_projection);
 
-	m_wall->Render(view, m_projection);
+	for (auto& wall : m_wall)
+	{
+		wall->Render(view, m_projection);
+	}
 
+	for (auto& pillar : m_pillar)
+	{
+		pillar->Render(view, m_projection);
+	}
+
+	m_ceiling->Render(view, m_projection);
 
 	m_enemy->Render(view, m_projection);
 
 
 	for (auto& rock : m_rock)
 	{
-		rock->Render(view, m_projection);
+		//rock->Render(view, m_projection);
 	}
 
 	m_sky->Render(view, m_projection);
+
+	for (auto& artillery : m_artillery)
+	{
+		artillery->Render(view, m_projection);
+	}
 
 
 	if (m_state == GameState::None)

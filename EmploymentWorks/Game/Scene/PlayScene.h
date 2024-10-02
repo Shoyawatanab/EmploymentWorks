@@ -16,7 +16,9 @@ class Wall;
 class Rock;
 class Sky;
 class UI;
-
+class Ceiling;
+class Pillar;
+class Artillery;
 
 namespace mylib
 {
@@ -63,12 +65,18 @@ private:
 
 	std::unique_ptr<Player> m_player;
 	std::unique_ptr<Enemy> m_enemy;
-
+	//è∞
 	std::unique_ptr<Floor> m_floor;
 	std::unique_ptr<LockOn> m_lockOn;
 
-
-	std::unique_ptr<Wall> m_wall;
+	//ï«
+	std::vector<std::unique_ptr<Wall>> m_wall;
+	//ìVà‰
+	std::unique_ptr<Ceiling> m_ceiling;
+	//íå
+	std::vector<std::unique_ptr<Pillar>> m_pillar;
+	//ñCë‰
+	std::vector<std::unique_ptr<Artillery>> m_artillery;
 
 	std::unique_ptr<CollisionManager> m_collisionManager;
 

@@ -86,6 +86,12 @@
     <Filter Include="Game\UI\State">
       <UniqueIdentifier>{6ebc7464-4f57-4f3d-8a8b-0e5472b5f8b8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Object\Gimmick">
+      <UniqueIdentifier>{4db0da6e-7872-421f-bcf2-ea5eeef49388}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\Gimmick\Artillery">
+      <UniqueIdentifier>{4c514b04-a4a9-4ebd-88f6-925f862633cc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -303,6 +309,24 @@
     <ClInclude Include="Game\UI\State\GameOverUI.h">
       <Filter>Game\UI\State</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Object\Ceiling.h">
+      <Filter>Game\Object\StageObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Pillar.h">
+      <Filter>Game\Object\StageObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Gimmick\Artillery\ArtilleryBase.h">
+      <Filter>Game\Object\Gimmick\Artillery</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Gimmick\Artillery\ArtilleryTurret.h">
+      <Filter>Game\Object\Gimmick\Artillery</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Gimmick\Artillery\Artillery.h">
+      <Filter>Game\Object\Gimmick\Artillery</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Gimmick\Artillery\ArtilleryBullet.h">
+      <Filter>Game\Object\Gimmick\Artillery</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -478,6 +502,24 @@
     </ClCompile>
     <ClCompile Include="Game\UI\State\GameOverUI.cpp">
       <Filter>Game\UI\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Ceiling.cpp">
+      <Filter>Game\Object\StageObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Pillar.cpp">
+      <Filter>Game\Object\StageObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Gimmick\Artillery\ArtilleryBase.cpp">
+      <Filter>Game\Object\Gimmick\Artillery</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Gimmick\Artillery\ArtilleryTurret.cpp">
+      <Filter>Game\Object\Gimmick\Artillery</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Gimmick\Artillery\Artillery.cpp">
+      <Filter>Game\Object\Gimmick\Artillery</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Gimmick\Artillery\ArtilleryBullet.cpp">
+      <Filter>Game\Object\Gimmick\Artillery</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
