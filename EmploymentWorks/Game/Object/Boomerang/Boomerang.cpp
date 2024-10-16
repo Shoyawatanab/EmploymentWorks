@@ -91,7 +91,7 @@ void Boomerang::Initialize(CommonResources* resources)
 
 	m_currentState = m_idling.get();
 	
-	m_position = m_player->GetPosition();
+	m_position = m_player->GetPlayerEyePosition();
 	m_scale = SCALE;
 
 	m_bounding->CreateBoundingBox(m_commonResources, m_position, Vector3(0.2f, 0.5f, 0.5f));
@@ -127,6 +127,9 @@ void Boomerang::Update(float elapsedTime)
 
 	}
 
+	m_bounding->Update(m_position);
+
+
 
 }
 
@@ -142,17 +145,16 @@ void Boomerang::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 
 	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
 	auto states = m_commonResources->GetCommonStates();
-
-
+	
 
 	// ÉÇÉfÉãÇï`âÊÇ∑ÇÈ
 	m_model->Draw(context, *states, m_currentState->GetMatrix(), view, projection);
-	m_bounding->DrawBoundingSphere(m_position, view, projection);
-	m_bounding->DrawBoundingBox(m_position, view, projection);
+	//m_bounding->DrawBoundingSphere(m_position, view, projection);
+	//m_bounding->DrawBoundingBox(m_position, view, projection);
 
 	if (m_currentState == m_getReady.get())
 	{
-		m_orbit->Render();
+		m_orbit->Render(view,projection);
 
 	}
 
@@ -197,10 +199,7 @@ void Boomerang::DemandBounceDirection(DirectX::SimpleMath::Vector3 pos, Collsion
 			break;
 		case CollsionObjectTag::Boomerang:
 			break;
-		case CollsionObjectTag::NotMoveObject:
-			m_bounceDirection = m_position - pos;
-			break;
-		case CollsionObjectTag::Wall:
+		case CollsionObjectTag::Stage:
 			m_bounceDirection = m_previousFramePos - m_position;
 			break;
 		case CollsionObjectTag::Floor:
@@ -218,30 +217,13 @@ void Boomerang::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleM
 
 	switch (PartnerTag)
 	{
-		case CollsionObjectTag::Player:
-			break;
-		case CollsionObjectTag::Enemy:
-			break;
-		case CollsionObjectTag::Boomerang:
-			break;
-		case CollsionObjectTag::None:
-			break;
 		case CollsionObjectTag::Floor:
 			if (m_currentState == m_repelled.get())
 			{
 				ChangeState(m_drop.get());
 			}
 			break;
-		case CollsionObjectTag::NotMoveObject:
-			DemandBounceDirection(Pos, PartnerTag);
-
-			if (m_currentState == m_throw.get())
-			{
-				//íeÇ©ÇÍÇÈèàóùÇ…êÿÇËë÷Ç¶
-				ChangeState(m_repelled.get());
-			}
-			break;
-		case CollsionObjectTag::Wall:
+		case CollsionObjectTag::Stage:
 			DemandBounceDirection(Pos, PartnerTag);
 			if (m_currentState == m_throw.get())
 			{

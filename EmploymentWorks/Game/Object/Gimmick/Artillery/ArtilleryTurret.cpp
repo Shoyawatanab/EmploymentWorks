@@ -60,8 +60,6 @@ void ArtilleryTurret::Initialize(CommonResources* resources, DirectX::SimpleMath
 	m_model = DirectX::Model::CreateFromCMO(device, L"Resources/Models/ArtilleryTurret.cmo", *fx);
 
 	m_bounding = std::make_unique<Bounding>();
-	m_bounding->CreateBoundingBox(m_commonResources, m_position, m_scale);
-	m_bounding->CreateBoundingSphere(m_commonResources,m_position, 2.0f);
 
 	//íeÇÃê∂ê¨
 	for (int i = 0; i < 2; i++)
@@ -90,7 +88,7 @@ void ArtilleryTurret::Update(float elapsedTime)
 
 	for (auto& bullet : m_bullet)
 	{
-		if (bullet->GetBulletState() == ArtilleryBullet::BulletState::Loading)
+		if (bullet->GetBulletState() == ArtilleryBullet::BulletState::Flying)
 		{
 			bullet->Update(elapsedTime);
 		}
@@ -123,8 +121,6 @@ void ArtilleryTurret::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX project
 	m_model->Draw(context, *states, world, view, projection);
 
 
-	m_bounding->DrawBoundingSphere(m_position, view, projection);
-	m_bounding->DrawBoundingBox(m_position, view, projection);
 
 	//íeÇÃï`âÊ
 	for (auto& bullet : m_bullet)
@@ -150,7 +146,12 @@ void ArtilleryTurret::Finalize()
 
 void ArtilleryTurret::RegistrationCollionManager(CollisionManager* collsionManager)
 {
-	collsionManager->AddCollsion(this);
+	//collsionManager->AddCollsion(this);
+	
+	for (auto& bullet : m_bullet)
+	{
+		bullet->RegistrationCollionManager(collsionManager);
+	}
 }
 
 
@@ -159,5 +160,13 @@ void ArtilleryTurret::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::S
 {
 	UNREFERENCED_PARAMETER(PartnerTag);
 	UNREFERENCED_PARAMETER(Pos);
+}
+
+void ArtilleryTurret::Shot()
+{
+
+	m_bullet.begin()->get()->SetBulletState(ArtilleryBullet::BulletState::Flying);
+
+
 }
 

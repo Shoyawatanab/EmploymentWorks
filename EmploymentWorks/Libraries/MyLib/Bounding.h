@@ -20,6 +20,7 @@ private:
 
 	DirectX::BoundingBox m_boundingBox;
 	DirectX::BoundingSphere m_boundingSphere;
+	DirectX::BoundingOrientedBox m_orientexBox;
 
 	CommonResources* m_commonResources;
 
@@ -40,12 +41,18 @@ public:
 	//void Render(const DirectX::SimpleMath::Vector3 CenterPos, DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection);
 	void CreateBoundingSphere(CommonResources* resources, DirectX::SimpleMath::Vector3 CenterPos, float radius);
 	void CreateBoundingBox(CommonResources* resources, DirectX::SimpleMath::Vector3 CenterPos, DirectX::SimpleMath::Vector3 Extents);
+	void CreateOrientexBox(CommonResources* resources, DirectX::SimpleMath::Vector3 CenterPos, DirectX::SimpleMath::Vector3 Extents, DirectX::SimpleMath::Quaternion rotate);
+
+	void Update(DirectX::SimpleMath::Vector3 Position);
+	void OrientexBoxUpdate(DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Quaternion rotate);
 
 
 	void DrawBoundingSphere(const DirectX::SimpleMath::Vector3 CenterPos, DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection);
 	void DrawBoundingBox(const DirectX::SimpleMath::Vector3 CenterPos, DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection);
 
 	void DrawBoundingSphere(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection);
+	void DrawBoundingBox( DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection);
+	void DrawOrientexBox(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection);
 
 };
 

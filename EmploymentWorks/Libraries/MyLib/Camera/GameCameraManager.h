@@ -7,6 +7,7 @@
 #include "Libraries/MyLib/Camera/TPS_Camera.h"
 #include "Libraries/MyLib/Camera/GameStartCamera.h"
 #include "Libraries/MyLib/Camera/GameEndCamera.h"
+#include "Libraries/MyLib/Camera/FPS_Camera.h"
 
 class PlayScene;
 class Player;
@@ -28,6 +29,7 @@ namespace mylib
 		GameStartCamera* GetGameStartCamera() { return m_startCamera.get(); }
 		TPS_Camera* GetTPSCamera() { return m_tpsCamera.get(); }
 		GameEndCamera* GetGameEndCamera() { return m_endCamera.get(); }
+		FPS_Camera* GetFPSCamera() { return m_fpsCamera.get(); }
 
 	private:
 
@@ -35,6 +37,7 @@ namespace mylib
 		std::unique_ptr<mylib::TPS_Camera> m_tpsCamera;
 		std::unique_ptr<mylib::GameStartCamera> m_startCamera;
 		std::unique_ptr<mylib::GameEndCamera> m_endCamera;
+		std::unique_ptr<mylib::FPS_Camera> m_fpsCamera;
 
 		PlayScene* m_playScene;
 		Player* m_player;

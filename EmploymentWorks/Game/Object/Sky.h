@@ -32,7 +32,7 @@ public:
 
 	void Initialize(CommonResources* resources);
 	void Update(float elapsedTime);
-	void Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection);
+	void Render(DirectX::SimpleMath::Matrix view, DirectX::SimpleMath::Matrix projection);
 	void Finalize();
 
 

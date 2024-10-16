@@ -18,6 +18,8 @@
 
 const float SCALE(8.6f);
 
+const float BULLETSPEED(4.0f);
+
 //---------------------------------------------------------
 // コンストラクタ
 //---------------------------------------------------------
@@ -57,11 +59,13 @@ void ArtilleryBullet::Initialize(CommonResources* resources, DirectX::SimpleMath
 	m_model = DirectX::Model::CreateFromCMO(device, L"Resources/Models/ArtilleryBullet.cmo", *fx);
 
 	m_bounding = std::make_unique<Bounding>();
-	m_bounding->CreateBoundingBox(m_commonResources, m_position, m_scale * 0.5f);
+	m_bounding->CreateBoundingBox(m_commonResources, m_position, m_scale * 0.4f);
 	m_bounding->CreateBoundingSphere(m_commonResources,m_position, 1.0f);
 
 	//状態をストックにする
 	m_bulletState = BulletState::Stock;
+
+
 }
 
 //---------------------------------------------------------
@@ -78,7 +82,7 @@ void ArtilleryBullet::Update(float elapsedTime)
 
 	DirectX::SimpleMath::Vector3 velocity;
 	//速度の加算
-	velocity.y += 1.0f * elapsedTime;
+	velocity.y += BULLETSPEED * elapsedTime;
 	//回転を適用させる
 	velocity = Vector3::Transform(velocity, m_rotate);
 

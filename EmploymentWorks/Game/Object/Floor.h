@@ -38,9 +38,9 @@ public:
 	Floor();
 	~Floor();
 
-	void Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 position,  DirectX::SimpleMath::Vector3 Scale,DirectX::SimpleMath::Vector3 Rotate);
+	void Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 position,  DirectX::SimpleMath::Vector3 Scale,DirectX::SimpleMath::Vector3 Rotate,float BoundingSphereRadius);
 	void Update(float elapsedTime);
-	void Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection);
+	void Render(DirectX::SimpleMath::Matrix view, DirectX::SimpleMath::Matrix projection);
 	void Finalize();
 
 	void RegistrationCollionManager(CollisionManager* collsionManager) override;

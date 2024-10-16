@@ -57,8 +57,8 @@ namespace mylib
 
 	private:
 		// ターゲットからのデフォルト距離
-		const float CAMERA_DISTANCE = 7.0f;
-		const float CAMERA_HIGHT = 5.0f;
+		const float CAMERA_DISTANCE = 4.0f;
+		const float CAMERA_HIGHT = 4.0f;
 
 		// 画角
 		const float FOV = DirectX::XMConvertToRadians(45.0f);

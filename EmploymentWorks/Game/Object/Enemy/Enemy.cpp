@@ -18,6 +18,7 @@
 #include "Game/BehaviorTree/BehaviorTree.h"
 #include "Game/Object/Player/Player.h"
 #include "Game/Object/Enemy/Beam.h"
+#include "Game/Object/Enemy/BossEnemy/BossEnemyBottom.h"
 
 
 //初期のターゲットの座標の距離
@@ -31,11 +32,12 @@ const int MAXHP = 1;
 //---------------------------------------------------------
 // コンストラクタ
 //---------------------------------------------------------
-Enemy::Enemy()
+Enemy::Enemy(CommonResources* resources, IComponent* parent, const DirectX::SimpleMath::Vector3 initialScale, const DirectX::SimpleMath::Vector3& initialPosition, const DirectX::SimpleMath::Quaternion& initialAngle)
 	:
-	m_commonResources{},
-	m_model{},
-	m_position{},
+	BossEnemyBase(resources, parent, initialScale, DirectX::SimpleMath::Vector3::Zero, initialAngle),
+	m_commonResources{resources},
+	//m_model{},
+	m_position{initialPosition},
 	m_hp{},
 	m_behavior{},
 	m_player{},
@@ -65,37 +67,40 @@ Enemy::~Enemy()
 //---------------------------------------------------------
 // 初期化する
 //---------------------------------------------------------
-void Enemy::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 position)
+void Enemy::Initialize()
 {
 	using namespace DirectX::SimpleMath;
 
-	m_commonResources = resources;
+
+
+	//m_commonResources = resources;
 
 	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
 
 
 
 
-	// モデルを読み込む準備
-	std::unique_ptr<DirectX::EffectFactory> fx = std::make_unique<DirectX::EffectFactory>(device);
-	fx->SetDirectory(L"Resources/Models");
+	//// モデルを読み込む準備
+	//std::unique_ptr<DirectX::EffectFactory> fx = std::make_unique<DirectX::EffectFactory>(device);
+	//fx->SetDirectory(L"Resources/Models");
 
-	// モデルを読み込む
-	m_model = DirectX::Model::CreateFromCMO(device, L"Resources/Models/kariEnemy.cmo", *fx);
+	//// モデルを読み込む
+	//m_model = DirectX::Model::CreateFromCMO(device, L"Resources/Models/BossEnemy.cmo", *fx);
 
-	m_position = position;
+	//m_position = initialPosition;
 
 	m_initialRotate = DirectX::SimpleMath::Quaternion::CreateFromAxisAngle(DirectX::SimpleMath::Vector3::Up, DirectX::XMConvertToRadians(90.0f));
 	m_rotate = DirectX::SimpleMath::Quaternion::Identity;
 
 
-	m_bounding->CreateBoundingBox(m_commonResources, m_position, Vector3(3.5f, 4.9f, 1.8f));
+	m_bounding->CreateBoundingBox(m_commonResources, m_position + Vector3(0,1,0), Vector3(4.5f, 5.5f, 1.8f));
 	m_bounding->CreateBoundingSphere(m_commonResources, m_position, 6.0f);
 
 	m_hp = MAXHP;
 	m_maxHP = m_hp;
 	m_graivty = 0.05f;
-	m_scale = 1.8f;
+	//m_scale = 1.8f / 100;
+	m_scale = Vector3(1.5f, 1.5f, 1.5f);
 	m_isCollsionTime = false;
 	m_collisionTime = 0;
 
@@ -110,6 +115,8 @@ void Enemy::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 
 
 	m_onCollisionTag = CollsionObjectTag::None;
 
+	//「Bottom」を生成する
+	Attach(std::make_unique<BossEnemyBottom>(BossEnemyBase::GetResources(), this, BossEnemyBase::GetInitialScale(), Vector3(0.0f, -0.6f, 0.0f), Quaternion::Identity));
 
 }
 
@@ -126,14 +133,15 @@ void Enemy::Update(float elapsedTime)
 	m_behavior->Update(elapsedTime);
 
 
+	//部品を更新する
+	BossEnemyBase::Update(elapsedTime);
+
+
 	if (m_isCollsionTime)
 	{
 
 		if (m_knockbackTime < 0.2f)
 		{
-
-
-
 
 			//弾かれる処理
 
@@ -176,12 +184,14 @@ void Enemy::Update(float elapsedTime)
 
 	m_targetPos = m_position + Pos;
 
+	m_bounding->Update(m_position + DirectX::SimpleMath::Vector3(0,1,0));
+
 }
 
 //---------------------------------------------------------
 // 描画する
 //---------------------------------------------------------
-void Enemy::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
+void Enemy::Render(DirectX::SimpleMath::Matrix view, DirectX::SimpleMath::Matrix projection)
 {
 	using namespace DirectX::SimpleMath;
 
@@ -190,19 +200,21 @@ void Enemy::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 
 
 	// ワールド行列を更新する
-	Matrix world = Matrix::CreateScale(m_scale);
+	m_worldMatrix = Matrix::CreateScale(m_scale);
 	//のちに変更する　初期角度をここでやらないとプレイヤの方向に向く処理に影響が出て向かなくなる
-	world *= Matrix::CreateFromQuaternion(m_initialRotate);
+	m_worldMatrix *= Matrix::CreateFromQuaternion(m_initialRotate);
 
-	world *= Matrix::CreateFromQuaternion(m_rotate);
-	world *= Matrix::CreateTranslation(m_position);
+	m_worldMatrix *= Matrix::CreateFromQuaternion(m_rotate);
+	m_worldMatrix *= Matrix::CreateTranslation(m_position);
 
+	//部品を描画する
+	BossEnemyBase::Render(view, projection);
 
 	// モデルを描画する
-	m_model->Draw(context, *states, world, view, projection);
+	//m_model->Draw(context, *states, world, view, projection);
 
-	m_bounding->DrawBoundingBox(m_position, view, projection);
-	m_bounding->DrawBoundingSphere(m_position, view, projection);
+	m_bounding->DrawBoundingBox(view, projection);
+	m_bounding->DrawBoundingSphere(view, projection);
 
 	m_beam->Render(view, projection);
 
@@ -223,8 +235,8 @@ void Enemy::ReduceSize(float elapsdTime)
 
 	UNREFERENCED_PARAMETER(elapsdTime);
 
-	m_scale -= 0.01f;
-	m_scale = std::max(m_scale, 0.0f);
+	//m_scale -= 0.01f;
+	//m_scale = std::max(m_scale, 0.0f);
 }
 
 void Enemy::RegistrationInformation( Player* player)
@@ -290,15 +302,11 @@ void Enemy::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath:
 			m_hp--;
 
 			m_isCollsionTime = true;
-
-		case CollsionObjectTag::Player:
-		case CollsionObjectTag::Enemy:
-		case CollsionObjectTag::NotMoveObject:
-
-			m_onCollisionTag = PartnerTag;
 			break;
-		case CollsionObjectTag::None:
-		case CollsionObjectTag::Wall:
+		case CollsionObjectTag::ArtilleryBullet:
+			
+			m_hp -= 2;
+
 			break;
 		default:
 			break;

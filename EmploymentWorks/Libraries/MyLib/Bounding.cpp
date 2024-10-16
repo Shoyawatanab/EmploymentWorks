@@ -60,6 +60,54 @@ void Bounding::CreateBoundingBox(CommonResources* resources, DirectX::SimpleMath
 	);
 }
 
+void Bounding::CreateOrientexBox(CommonResources* resources, DirectX::SimpleMath::Vector3 CenterPos, DirectX::SimpleMath::Vector3 Extents, DirectX::SimpleMath::Quaternion rotate)
+{
+	using namespace DirectX;
+
+
+	m_commonResources = resources;
+	m_orientexBox.Center = CenterPos;
+	m_orientexBox.Extents = Extents;
+	m_orientexBox.Orientation = rotate;
+
+	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
+	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
+
+	// プリミティブバッチ、ベーシックエフェクトを準備する
+	m_batch = std::make_unique<PrimitiveBatch<VertexPositionColor>>(context);
+	m_effect = std::make_unique<BasicEffect>(device);
+	m_effect->SetVertexColorEnabled(true);
+
+	//// 入力レイアウトを作成する
+	DX::ThrowIfFailed(
+		CreateInputLayoutFromEffect<VertexPositionColor>(
+			device,
+			m_effect.get(),
+			m_layout.ReleaseAndGetAddressOf()
+		)
+	);
+
+}
+
+void Bounding::Update(DirectX::SimpleMath::Vector3 Position)
+{
+
+	m_boundingSphere.Center = Position;
+
+	m_boundingBox.Center = Position;
+
+
+}
+
+void Bounding::OrientexBoxUpdate(DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Quaternion rotate)
+{
+	m_boundingSphere.Center = position;
+
+	m_orientexBox.Center = position;
+	m_orientexBox.Orientation = rotate;
+
+}
+
 
 void Bounding::CreateBoundingSphere(CommonResources* resources, DirectX::SimpleMath::Vector3 CenterPos, float radius)
 {
@@ -186,6 +234,76 @@ void Bounding::DrawBoundingSphere(DirectX::CXMMATRIX view, DirectX::CXMMATRIX pr
 	m_batch->End();
 
 #endif
+
+}
+
+void Bounding::DrawBoundingBox(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
+{
+
+	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
+	m_effect->SetView(view);
+	m_effect->SetProjection(projection);
+	m_effect->Apply(context);
+
+	auto states = m_commonResources->GetCommonStates();
+	context->OMSetBlendState(states->Opaque(), nullptr, 0xFFFFFFFF);	// 透過しない
+	context->OMSetDepthStencilState(states->DepthDefault(), 0);			// Ｚバッファを使用する
+	context->RSSetState(states->CullCounterClockwise());							// ポリゴンの両面を描画する
+	context->IASetInputLayout(m_layout.Get());							// 入力レイアウトを設定する
+
+	DirectX::XMVECTOR color = DirectX::Colors::Green;
+
+	if (m_isBoxHit)
+	{
+		color = DirectX::Colors::Red;
+	}
+
+#ifdef _DEBUG
+	// プリミティブ描画を開始する
+	m_batch->Begin();
+
+	// 境界ボックスを描画する
+	DX::Draw(m_batch.get(), m_boundingBox, color);
+	// プリミティブ描画を終了する
+	m_batch->End();
+
+#endif
+
+
+}
+
+void Bounding::DrawOrientexBox(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
+{
+
+	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
+	m_effect->SetView(view);
+	m_effect->SetProjection(projection);
+	m_effect->Apply(context);
+
+	auto states = m_commonResources->GetCommonStates();
+	context->OMSetBlendState(states->Opaque(), nullptr, 0xFFFFFFFF);	// 透過しない
+	context->OMSetDepthStencilState(states->DepthDefault(), 0);			// Ｚバッファを使用する
+	context->RSSetState(states->CullCounterClockwise());							// ポリゴンの両面を描画する
+	context->IASetInputLayout(m_layout.Get());							// 入力レイアウトを設定する
+
+	DirectX::XMVECTOR color = DirectX::Colors::Green;
+
+	if (m_isBoxHit)
+	{
+		color = DirectX::Colors::Red;
+	}
+
+#ifdef _DEBUG
+	// プリミティブ描画を開始する
+	m_batch->Begin();
+
+	// 境界ボックスを描画する
+	DX::Draw(m_batch.get(), m_orientexBox, color);
+	// プリミティブ描画を終了する
+	m_batch->End();
+
+#endif
+
 
 }
 

@@ -51,12 +51,14 @@ public:
 
 	Bounding* GetBounding() const override { return m_bounding.get(); };
 
-	CollsionObjectTag GetCollsionTag() const override { return CollsionObjectTag::Wall; }
+	CollsionObjectTag GetCollsionTag() const override { return CollsionObjectTag::None; }
 
 	void SetPos(DirectX::SimpleMath::Vector3& Pos) override { m_position = Pos; }
 
 	DirectX::SimpleMath::Vector3 GetPos() override { return DirectX::SimpleMath::Vector3::Zero; }
 	void OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos) override;
 
+	//‹…‚ð‘Å‚Â
+	void Shot();
 private:
 };

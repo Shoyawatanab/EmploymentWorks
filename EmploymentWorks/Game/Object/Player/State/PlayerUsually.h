@@ -1,6 +1,7 @@
 #pragma once
 #include <pch.h>
 #include "Interface/IPlayerState.h"
+class CommonResources;
 
 class Boomerang;
 class Player;
@@ -11,6 +12,8 @@ class PlayerUsually : public IPlayerState
 public:
 
 	DirectX::SimpleMath::Matrix GetMatrix() { return m_worldMatrix; }
+
+	void SetResouces(CommonResources* resoure) { m_commonResources = resoure; }
 
 public:
 	// コンストラクタ
@@ -37,6 +40,11 @@ private:
 
 private:
 
+	// 共通リソース
+	CommonResources* m_commonResources;
+
+
+
 	Player* m_player;
 
 	// ワールドマトリックス
@@ -45,7 +53,7 @@ private:
 
 	float m_graivty;
 
-
+	DirectX::SimpleMath::Vector3 m_velocity;
 
 };
 

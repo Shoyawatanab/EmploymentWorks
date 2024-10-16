@@ -42,14 +42,17 @@ void mylib::Mouse::Initialize()
 
 	m_currentMousePos = m_initialMousePos;
 
+	SetCursorPos(m_initialMousePos.x, m_initialMousePos.y);
+
+
+
 }
 
 //---------------------------------------------------------
 // 更新する
 //---------------------------------------------------------
-void mylib::Mouse::Update(float elapsedTime)
+void mylib::Mouse::Update()
 {
-	elapsedTime;
 
 	//現在のマウス座標の取得
 	GetCursorPos(&m_currentMousePos);

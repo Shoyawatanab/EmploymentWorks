@@ -47,7 +47,7 @@ public:
 
 	Bounding* GetBounding() const override { return m_bounding.get(); };
 
-	CollsionObjectTag GetCollsionTag() const override { return CollsionObjectTag::NotMoveObject; }
+	CollsionObjectTag GetCollsionTag() const override { return CollsionObjectTag::None; }
 
 	void SetPos(DirectX::SimpleMath::Vector3& Pos) override { m_position = Pos; }
 

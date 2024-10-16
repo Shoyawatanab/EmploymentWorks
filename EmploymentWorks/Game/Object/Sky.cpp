@@ -69,7 +69,7 @@ void Sky::Update(float elapsedTime)
 //---------------------------------------------------------
 // •`‰æ‚·‚é
 //---------------------------------------------------------
-void Sky::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
+void Sky::Render(DirectX::SimpleMath::Matrix view, DirectX::SimpleMath::Matrix projection)
 {
 	using namespace DirectX::SimpleMath;
 	using namespace DirectX;
