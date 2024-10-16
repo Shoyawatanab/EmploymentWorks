@@ -39,14 +39,14 @@ Wall::~Wall()
 //---------------------------------------------------------
 // ‰Šú‰»‚·‚é
 //---------------------------------------------------------
-void Wall::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Vector3 Scale, DirectX::SimpleMath::Vector3 Rotate)
+void Wall::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Vector3 Scale, DirectX::SimpleMath::Vector3 Rotate, float BoundingSphereRadius)
 {
 	using namespace DirectX::SimpleMath;
 	assert(resources);
 	m_commonResources = resources;
 	m_position = position;
 	m_scale = Scale;
-	m_rotate = Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(Rotate.z), DirectX::XMConvertToRadians(Rotate.y), DirectX::XMConvertToRadians(Rotate.x));
+	m_rotate = Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(Rotate.x), DirectX::XMConvertToRadians(Rotate.y), DirectX::XMConvertToRadians(Rotate.z));
 	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
 
 	// ƒ‚ƒfƒ‹‚ğ“Ç‚İ‚Ş€”õ
@@ -60,7 +60,7 @@ void Wall::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 p
 
 	m_bounding = std::make_unique<Bounding>();
 	m_bounding->CreateBoundingBox(m_commonResources, m_position, m_scale);
-	m_bounding->CreateBoundingSphere(m_commonResources,m_position, 20.0f);
+	m_bounding->CreateBoundingSphere(m_commonResources,m_position, BoundingSphereRadius);
 
 }
 
@@ -80,7 +80,7 @@ void Wall::Update(float elapsedTime)
 //---------------------------------------------------------
 // •`‰æ‚·‚é
 //---------------------------------------------------------
-void Wall::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
+void Wall::Render(DirectX::SimpleMath::Matrix view, DirectX::SimpleMath::Matrix projection)
 {
 	using namespace DirectX::SimpleMath;
 
@@ -99,8 +99,8 @@ void Wall::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 	m_model->Draw(context, *states, world, view, projection);
 
 
-	m_bounding->DrawBoundingSphere(m_position, view, projection);
-	m_bounding->DrawBoundingBox(m_position, view, projection);
+	//m_bounding->DrawBoundingSphere( view, projection);
+	m_bounding->DrawBoundingBox( view, projection);
 
 
 

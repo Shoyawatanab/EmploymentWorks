@@ -25,6 +25,8 @@ namespace mylib
 	class DebugCamera;
 	class GridFloor;
 	class GameCameraManager;
+	class LoadJson;
+
 }
 
 
@@ -89,6 +91,10 @@ private:
 	std::unique_ptr<Sky> m_sky;
 
 	GameState m_state;
+
+	//Jsonファイルの読み込みクラス
+	std::unique_ptr<mylib::LoadJson> m_loadJson;
+
 
 public:
 	PlayScene();

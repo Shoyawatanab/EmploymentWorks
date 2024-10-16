@@ -51,7 +51,7 @@ void mylib::FPS_Camera::Update(const float& elapsedTime)
 	DirectX::SimpleMath::Vector3 oldEye = m_eye;
 
 	// eyeの位置を更新する
-	m_eye = m_player->GetPos() + DirectX::SimpleMath::Vector3::UnitY;
+	m_eye = m_player->GetPlayerEyePosition();
 
 	//m_eye = m_player->GetPos() + DirectX::SimpleMath::Vector3(0,3,5);
 
@@ -61,12 +61,12 @@ void mylib::FPS_Camera::Update(const float& elapsedTime)
 	// targetの位置を更新する
 	//m_target += velocity;
 
-	m_mouse->Update(elapsedTime);
+	m_mouse->Update();
 
 
 
-	m_angle.x -= m_mouse->GetDiffX() * 0.005f;
-	m_angle.y -= m_mouse->GetDiffY() * 0.005f;
+	m_angle.x -= m_mouse->GetDiffX() * 0.002f;
+	m_angle.y -= m_mouse->GetDiffY() * 0.002f;
 
 
 	if (m_angle.y > 1.5f)
@@ -84,11 +84,14 @@ void mylib::FPS_Camera::Update(const float& elapsedTime)
 
 	m_target = m_eye + forward;
 
+	//プレイヤの回転で横の回転が欲しいから
+	Quaternion RotateX = Quaternion::CreateFromYawPitchRoll(m_angle.x, 0, 0);
 
 	m_player->SetCameraRotate(Rotate);
 
 	// ビュー行列を更新する
 	CalculateViewMatrix();
+
 }
 
 void mylib::FPS_Camera::Enter()

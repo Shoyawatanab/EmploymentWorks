@@ -94,27 +94,13 @@ void CollisionManager::Update()
 			uint32_t kind = static_cast<uint32_t>(tagI) | static_cast<uint32_t>(tagJ);
 
 
-			if (kind == static_cast<uint32_t>(CollisionType::Player_Wall) ||
-				kind == static_cast<uint32_t>(CollisionType::Boomerang_Wall) ||
-				kind == static_cast<uint32_t>(CollisionType::Enemy_Wall)
-				)
-			{
 
-
-				continue;
-			}
-
-
-
+			//スフィアの当たり判定
 			if (!CheckIsSphere(m_collsionObjects[i], m_collsionObjects[j]))
 			{
 				continue;
 			}
 
-			if (!CheckIsBox(m_collsionObjects[i], m_collsionObjects[j]))
-			{
-				continue;
-			}
 
 			//どんな処理をするのか
 			switch (kind)
@@ -123,43 +109,122 @@ void CollisionManager::Update()
 					break;
 				case static_cast<uint32_t>(CollisionType::Player_Boomerang):
 					break;
-				case static_cast<uint32_t>(CollisionType::Enemy_Boomerang):
-					BoxExtrusion(m_collsionObjects[i], m_collsionObjects[j]);
-					break;
-				case static_cast<uint32_t>(CollisionType::Player_NotMoveObject):
-					BoxExtrusion(m_collsionObjects[i], m_collsionObjects[j]);
-					break;
-				case static_cast<uint32_t>(CollisionType::Enemy_NotMoveObject):
-					BoxExtrusion(m_collsionObjects[i], m_collsionObjects[j]);
-					break;
-				case static_cast<uint32_t>(CollisionType::Boomerang_NotMoveObject):
-					BoxExtrusion(m_collsionObjects[i], m_collsionObjects[j]);
-					break;
-				case static_cast<uint32_t>(CollisionType::Player_Wall):
-					break;
-				case static_cast<uint32_t>(CollisionType::Enemy_Wall):
-					break;
-				case static_cast<uint32_t>(CollisionType::Boomerang_Wall):
+				case static_cast<uint32_t>(CollisionType::Player_Stage):
+
+					//ボックスとの当たり判定
+					if (CheckIsBox(m_collsionObjects[i], m_collsionObjects[j]))
+					{
+						//押し出し処理
+						BoxExtrusion(m_collsionObjects[i], m_collsionObjects[j]);
+						//それぞれのクラスの判定
+						m_collsionObjects[i]->OnCollisionEnter(tagJ, m_collsionObjects[j]->GetBounding()->GetBoundingBox()->Center);
+						m_collsionObjects[j]->OnCollisionEnter(tagI, m_collsionObjects[i]->GetBounding()->GetBoundingBox()->Center);
+
+					}
 					break;
 				case static_cast<uint32_t>(CollisionType::Player_Floor):
-					BoxExtrusion(m_collsionObjects[i], m_collsionObjects[j]);
+					if (CheckIsBox(m_collsionObjects[i], m_collsionObjects[j]))
+					{
+						BoxExtrusion(m_collsionObjects[i], m_collsionObjects[j]);
+						m_collsionObjects[i]->OnCollisionEnter(tagJ, m_collsionObjects[j]->GetBounding()->GetBoundingBox()->Center);
+						m_collsionObjects[j]->OnCollisionEnter(tagI, m_collsionObjects[i]->GetBounding()->GetBoundingBox()->Center);
+					}
+					break;
+				case static_cast<uint32_t>(CollisionType::Player_Pillar):
+					break;
+				case static_cast<uint32_t>(CollisionType::Player_Artillery):
+					break;
+				case static_cast<uint32_t>(CollisionType::Player_ArtilleryBullet):
+					break;
 
+
+				case static_cast<uint32_t>(CollisionType::Enemy_Boomerang):
+					if (CheckIsBox(m_collsionObjects[i], m_collsionObjects[j]))
+					{
+						BoxExtrusion(m_collsionObjects[i], m_collsionObjects[j]);
+						m_collsionObjects[i]->OnCollisionEnter(tagJ, m_collsionObjects[j]->GetBounding()->GetBoundingBox()->Center);
+						m_collsionObjects[j]->OnCollisionEnter(tagI, m_collsionObjects[i]->GetBounding()->GetBoundingBox()->Center);
+
+
+					}
+					break;
+				case static_cast<uint32_t>(CollisionType::Enemy_Stage):
+					if (CheckIsBox(m_collsionObjects[i], m_collsionObjects[j]))
+					{
+						BoxExtrusion(m_collsionObjects[i], m_collsionObjects[j]);
+						m_collsionObjects[i]->OnCollisionEnter(tagJ, m_collsionObjects[j]->GetBounding()->GetBoundingBox()->Center);
+						m_collsionObjects[j]->OnCollisionEnter(tagI, m_collsionObjects[i]->GetBounding()->GetBoundingBox()->Center);
+					}
 					break;
 				case static_cast<uint32_t>(CollisionType::Enemy_Floor):
-					BoxExtrusion(m_collsionObjects[i], m_collsionObjects[j]);
+					if (CheckIsBox(m_collsionObjects[i], m_collsionObjects[j]))
+					{
+						//押し出し処理
+						BoxExtrusion(m_collsionObjects[i], m_collsionObjects[j]);
 
+						m_collsionObjects[i]->OnCollisionEnter(tagJ, m_collsionObjects[j]->GetBounding()->GetBoundingBox()->Center);
+						m_collsionObjects[j]->OnCollisionEnter(tagI, m_collsionObjects[i]->GetBounding()->GetBoundingBox()->Center);
+
+
+					}
+					break;
+				case static_cast<uint32_t>(CollisionType::Enemy_Pillar):
+					break;
+				case static_cast<uint32_t>(CollisionType::Enemy_Artillery):
+					break;
+				case static_cast<uint32_t>(CollisionType::Enemy_ArtilleryBullet):
+					if (CheckIsBox(m_collsionObjects[i], m_collsionObjects[j]))
+					{
+
+						m_collsionObjects[i]->OnCollisionEnter(tagJ, m_collsionObjects[j]->GetBounding()->GetBoundingBox()->Center);
+						m_collsionObjects[j]->OnCollisionEnter(tagI, m_collsionObjects[i]->GetBounding()->GetBoundingBox()->Center);
+
+					}
+
+					break;
+
+
+				case static_cast<uint32_t>(CollisionType::Boomerang_Stage):
+					if (CheckIsBox(m_collsionObjects[i], m_collsionObjects[j]))
+					{
+						BoxExtrusion(m_collsionObjects[i], m_collsionObjects[j]);
+						m_collsionObjects[i]->OnCollisionEnter(tagJ, m_collsionObjects[j]->GetBounding()->GetBoundingBox()->Center);
+						m_collsionObjects[j]->OnCollisionEnter(tagI, m_collsionObjects[i]->GetBounding()->GetBoundingBox()->Center);
+
+
+					}
 					break;
 				case static_cast<uint32_t>(CollisionType::Boomerang_Floor):
+					if (CheckIsBox(m_collsionObjects[i], m_collsionObjects[j]))
+					{
+						BoxExtrusion(m_collsionObjects[i], m_collsionObjects[j]);
+						m_collsionObjects[i]->OnCollisionEnter(tagJ, m_collsionObjects[j]->GetBounding()->GetBoundingBox()->Center);
+						m_collsionObjects[j]->OnCollisionEnter(tagI, m_collsionObjects[i]->GetBounding()->GetBoundingBox()->Center);
 
-					BoxExtrusion(m_collsionObjects[i], m_collsionObjects[j]);
+
+					}
+					break;
+				case static_cast<uint32_t>(CollisionType::Boomerang_Pillar):
+					break;
+				case static_cast<uint32_t>(CollisionType::Boomerang_Artillery):
+
+					if (CheckIsBox(m_collsionObjects[i], m_collsionObjects[j]))
+					{
+
+						m_collsionObjects[i]->OnCollisionEnter(tagJ, m_collsionObjects[j]->GetBounding()->GetBoundingBox()->Center);
+						m_collsionObjects[j]->OnCollisionEnter(tagI, m_collsionObjects[i]->GetBounding()->GetBoundingBox()->Center);
+
+					}
+					break;
 
 					break;
+				case static_cast<uint32_t>(CollisionType::Boomerang_ArtilleryBullet):
+					break;
+
+
 				default:
 					continue;
 			}
-
-			m_collsionObjects[i]->OnCollisionEnter(tagJ, m_collsionObjects[j]->GetBounding()->GetBoundingBox()->Center);
-			m_collsionObjects[j]->OnCollisionEnter(tagI, m_collsionObjects[i]->GetBounding()->GetBoundingBox()->Center);
 
 		}
 	}
@@ -174,20 +239,13 @@ void CollisionManager::Update()
 		CollsionObjectTag tag = m_collsionObjects[i]->GetCollsionTag();
 
 
+
 		switch (tag)
 		{
-			case CollsionObjectTag::None:
-				break;
-			case CollsionObjectTag::Player:
-				break;
-			case CollsionObjectTag::Enemy:
-				break;
-			case CollsionObjectTag::Boomerang:
-				break;
-			case CollsionObjectTag::Wall:
-				break;
-			case CollsionObjectTag::NotMoveObject:
+			//case CollsionObjectTag::Stage:
 			case CollsionObjectTag::Floor:
+			//case CollsionObjectTag::Pillar:
+			//case CollsionObjectTag::Artillery:
 				CameraCollision(m_collsionObjects[i]);
 				break;
 			default:

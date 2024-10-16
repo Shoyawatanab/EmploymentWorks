@@ -115,6 +115,8 @@ private:
 	//ストック状態か使用状態か
 	UseState m_useState;
 
+
+
 public:
 	Boomerang();
 	~Boomerang() ;

@@ -38,14 +38,14 @@ Ceiling::~Ceiling()
 //---------------------------------------------------------
 // ‰Šú‰»‚·‚é
 //---------------------------------------------------------
-void Ceiling::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Vector3 Scale, DirectX::SimpleMath::Vector3 Rotate)
+void Ceiling::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Vector3 Scale, DirectX::SimpleMath::Vector3 Rotate, float BoundingSphereRadius)
 {
 	using namespace DirectX::SimpleMath;
 	assert(resources);
 	m_commonResources = resources;
 	m_position = position;
 	m_scale = Scale;
-	m_rotate = Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(Rotate.z), DirectX::XMConvertToRadians(Rotate.y), DirectX::XMConvertToRadians(Rotate.x));
+	m_rotate = Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(Rotate.x), DirectX::XMConvertToRadians(Rotate.y), DirectX::XMConvertToRadians(Rotate.z));
 
 
 	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
@@ -56,13 +56,13 @@ void Ceiling::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector
 	fx->SetDirectory(L"Resources/Models");
 
 	// ƒ‚ƒfƒ‹‚ğ“Ç‚İ‚Ş
-	m_model = DirectX::Model::CreateFromCMO(device, L"Resources/Models/Stage.cmo", *fx);
+	m_model = DirectX::Model::CreateFromCMO(device, L"Resources/Models/Ceiling.cmo", *fx);
 
 
 
 	m_bounding = std::make_unique<Bounding>();
 	m_bounding->CreateBoundingBox(m_commonResources, m_position, m_scale);
-	m_bounding->CreateBoundingSphere(m_commonResources,m_position, 20.0f);
+	m_bounding->CreateBoundingSphere(m_commonResources,m_position, BoundingSphereRadius);
 
 }
 

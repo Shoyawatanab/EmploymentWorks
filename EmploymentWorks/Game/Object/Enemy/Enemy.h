@@ -8,6 +8,7 @@
 #include "Interface/ICollisionObject.h"
 #include "Interface/IBehaviorNode.h"
 
+#include "Game/Object/Enemy/BossEnemy/BossEnemyBase.h"
 
 // 前方宣言
 class CommonResources;
@@ -24,8 +25,8 @@ namespace mylib
 }
 
 
-class Enemy : public ICollisionObject
-
+class Enemy : public BossEnemyBase
+	
 {
 public:
 
@@ -34,7 +35,7 @@ public:
 	void SetPosition(DirectX::SimpleMath::Vector3 Pos) { m_position = Pos; }
 	DirectX::SimpleMath::Quaternion GetRotate() { return m_rotate; }
 	void SetRotate(DirectX::SimpleMath::Quaternion rotate) { m_rotate = rotate; }
-	float GetScale() { return m_scale; }
+	// GetScale() { return m_scale; }
 
 	DirectX::SimpleMath::Vector3 GetTargetPos() { return m_targetPos; }
 
@@ -61,13 +62,17 @@ private:
 	CommonResources* m_commonResources;
 
 	// モデル
-	std::unique_ptr<DirectX::Model> m_model;
+	//std::unique_ptr<DirectX::Model> m_model;
 
 	DirectX::SimpleMath::Vector3 m_position;
 	DirectX::SimpleMath::Quaternion m_initialRotate;
 	DirectX::SimpleMath::Quaternion m_rotate;
 
 	std::unique_ptr<Bounding> m_bounding;
+
+	//	ワールド行列
+	DirectX::SimpleMath::Matrix m_worldMatrix;
+
 
 	float m_hp;
 	float m_maxHP;
@@ -77,7 +82,7 @@ private:
 	float m_collisionTime;
 	bool m_isCollsionTime;
 
-	float m_scale;
+	DirectX::SimpleMath::Vector3 m_scale;
 
 
 	std::unique_ptr<BehaviorTree> m_behavior;
@@ -108,12 +113,12 @@ private:
 
 
 public:
-	Enemy();
+	Enemy(CommonResources* resources, IComponent* parent, const DirectX::SimpleMath::Vector3 initialScale, const DirectX::SimpleMath::Vector3& initialPosition, const DirectX::SimpleMath::Quaternion& initialAngle);
 	~Enemy() ;
 
-	void Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 position) ;
+	void Initialize() ;
 	void Update(float elapsedTime);
-	void Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection) ;
+	void Render(DirectX::SimpleMath::Matrix view, DirectX::SimpleMath::Matrix projection) ;
 	void Finalize() ;
 
 	void ReduceSize(float elapsdTime);
@@ -144,5 +149,21 @@ public:
 	float GetMAXHp() { return m_maxHP; }
 
 	void OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos) override;
+
+	//現在の大きさの取得
+	DirectX::SimpleMath::Vector3 GetScale() const { return m_scale; }
+	// 現在の位置を取得する
+	//DirectX::SimpleMath::Vector3 GetPosition() const { return m_currentPosition; }
+	// 現在の位置を設定する
+	//void SetPosition(const DirectX::SimpleMath::Vector3& currretPosition) { m_currentPosition = currretPosition; }
+	// 現在の回転角を取得する
+	DirectX::SimpleMath::Quaternion GetAngle() const { return m_rotate; }
+	// 現在の回転角を設定する
+	void SetAngle(const DirectX::SimpleMath::Quaternion& currentAngle) { m_rotate = currentAngle; }
+	// モデルを取得する
+	DirectX::Model* GetModel() { return nullptr; }
+	// ワールド行列を取得する
+	DirectX::SimpleMath::Matrix& GetWorldMatrix() { return m_worldMatrix; }
+
 
 };

@@ -47,7 +47,7 @@ void Rock::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 p
 	m_commonResources = resources;
 	m_position = position;
 	m_scale = Scale;
-	m_rotate = Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(Rotate.z), DirectX::XMConvertToRadians(Rotate.y), DirectX::XMConvertToRadians(Rotate.x));
+	m_rotate = Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(Rotate.x), DirectX::XMConvertToRadians(Rotate.y), DirectX::XMConvertToRadians(Rotate.z));
 
 
 	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();

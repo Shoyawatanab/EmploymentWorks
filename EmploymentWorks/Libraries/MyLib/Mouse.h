@@ -29,7 +29,7 @@ namespace mylib
         ~Mouse();
 
         void Initialize();
-        void Update(float elapsedTime);
+        void Update();
 
 
     };

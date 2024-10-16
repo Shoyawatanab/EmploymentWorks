@@ -59,8 +59,6 @@ void ArtilleryBase::Initialize(CommonResources* resources, DirectX::SimpleMath::
 	m_model = DirectX::Model::CreateFromCMO(device, L"Resources/Models/ArtilleryBase.cmo", *fx);
 
 	m_bounding = std::make_unique<Bounding>();
-	m_bounding->CreateBoundingBox(m_commonResources, m_position, m_scale);
-	m_bounding->CreateBoundingSphere(m_commonResources,m_position, 2.0f);
 
 
 
@@ -103,9 +101,6 @@ void ArtilleryBase::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projectio
 	m_model->Draw(context, *states, world, view, projection);
 
 
-	m_bounding->DrawBoundingSphere(m_position, view, projection);
-	m_bounding->DrawBoundingBox(m_position, view, projection);
-
 
 
 }
@@ -116,19 +111,5 @@ void ArtilleryBase::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projectio
 void ArtilleryBase::Finalize()
 {
 	// do nothing.
-}
-
-
-void ArtilleryBase::RegistrationCollionManager(CollisionManager* collsionManager)
-{
-	collsionManager->AddCollsion(this);
-}
-
-
-
-void ArtilleryBase::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos)
-{
-	UNREFERENCED_PARAMETER(PartnerTag);
-	UNREFERENCED_PARAMETER(Pos);
 }
 

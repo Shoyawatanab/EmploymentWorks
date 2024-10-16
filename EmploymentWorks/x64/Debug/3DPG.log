@@ -1,3 +1,1 @@
-﻿  PlayScene.cpp
-C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\Game\Scene\PlayScene.cpp(334,13): warning C4189: 'rock': ローカル変数が初期化されましたが、参照されていません
-  3DPG.vcxproj -> C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\3DPG.exe
+﻿  3DPG.vcxproj -> C:\Users\it232310\Documents\EmploymentWorks\EmploymentWorks\x64\Debug\3DPG.exe

@@ -45,11 +45,14 @@ BoomerangOrbit::~BoomerangOrbit()
 // 初期化する
 void BoomerangOrbit::Initialize(CommonResources* resources)
 {
+	using namespace DirectX;
 	using namespace DirectX::SimpleMath;
 
 	m_commonResources = resources;
 
+
 	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
+	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
 
 
 	// 左脚境界球を生成する
@@ -72,6 +75,20 @@ void BoomerangOrbit::Initialize(CommonResources* resources)
 	m_initialRotate = Quaternion::Identity;
 	m_direction = Vector3::Zero;
 
+	m_effect = std::make_unique<BasicEffect>(device);
+	m_effect->SetVertexColorEnabled(true);
+
+	// 入力レイアウトを作成する
+	DX::ThrowIfFailed(
+		CreateInputLayoutFromEffect<VertexPositionColor>(
+			device,
+			m_effect.get(),
+			m_inputLayout.ReleaseAndGetAddressOf()
+		)
+	);
+
+
+
 }
 
 
@@ -91,7 +108,6 @@ void BoomerangOrbit::Update(const float& elapsedTime)
 
 	m_initialRotate = m_boomerang->GetRotate();
 	m_position = m_boomerang->GetPosition();
-
 	m_target = m_enemy->GetPosition();
 
 	m_linePos.clear();
@@ -140,13 +156,15 @@ void BoomerangOrbit::Update(const float& elapsedTime)
 	}
 
 
+
 	//高さ調整
 	for (int i = 0; i < m_spherePos.size(); i++)
 	{
 		//初期値点から一番遠いところの距離と今の座標の割合を求める
 		float a = (m_moveSpherePos[i].z - m_moveSpherePos[0].z) / (m_moveSpherePos[3].z - m_moveSpherePos[0].z);
-		m_moveSpherePos[i].y = Lerp(m_boomerang->GetPos().y, m_target.y, a) - 1;
+		m_moveSpherePos[i].y = Lerp(0, m_target.y, a);
 	}
+
 
 	for (int i = 0; i < m_spherePos.size(); i++)
 	{
@@ -168,11 +186,27 @@ void BoomerangOrbit::Update(const float& elapsedTime)
   }
 
 
-void BoomerangOrbit::Render()
+void BoomerangOrbit::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 {
 
 	using namespace DirectX;
 	using namespace DirectX::SimpleMath;
+
+
+	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
+	auto states = m_commonResources->GetCommonStates();
+
+	// 各種パラメータを更新する
+	context->OMSetBlendState(states->Opaque(), nullptr, 0xFFFFFFFF);// ブレンドステート
+	context->OMSetDepthStencilState(states->DepthDefault(), 0);		// 深度バッファ/ステンシルバッファ
+	context->RSSetState(states->CullCounterClockwise());			// カリング
+	context->IASetInputLayout(m_inputLayout.Get());					// 入力レイアウト
+
+
+	m_effect->SetView(view);
+	m_effect->SetProjection(projection);
+	m_effect->Apply(context);
+
 
 
 	if (m_linePos.size() != 0)

@@ -14,7 +14,7 @@ class Bounding;
 
 
 
-class ArtilleryBase : public ICollisionObject
+class ArtilleryBase
 
 {
 public:
@@ -45,16 +45,6 @@ public:
 	void Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection) ;
 	void Finalize() ;
 
-	void RegistrationCollionManager(CollisionManager* collsionManager) override;
-
-	Bounding* GetBounding() const override { return m_bounding.get(); };
-
-	CollsionObjectTag GetCollsionTag() const override { return CollsionObjectTag::Wall; }
-
-	void SetPos(DirectX::SimpleMath::Vector3& Pos) override { m_position = Pos; }
-
-	DirectX::SimpleMath::Vector3 GetPos() override { return DirectX::SimpleMath::Vector3::Zero; }
-	void OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos) override;
 
 private:
 };

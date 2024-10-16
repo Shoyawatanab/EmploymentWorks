@@ -50,6 +50,10 @@ public:
 
 	DirectX::SimpleMath::Vector3 GetBlownAwayDirection() { return m_blownAwayDirection; }
 
+	//
+	DirectX::SimpleMath::Vector3 GetPlayerEyePosition() { return m_eyePosition; }
+	void SetPlayerEyePosition(DirectX::SimpleMath::Vector3 eyePosition) {  m_eyePosition = eyePosition; }
+
 	//State関係
 	IPlayerState* GetPlayerState() { return m_currentState; }
 	PlayerUsually* GetPlayerUsually() { return m_usually.get(); }
@@ -57,6 +61,9 @@ public:
 
 	//使用中のブーメランのIndexの取得
 	int GetUsingBoomerangIndex() { return m_boomerangIndex; }
+
+	void SetIsJump(bool isjump) { m_isJump = isjump; }
+	bool GetisJump() { return m_isJump; }
 
 private:
 
@@ -75,6 +82,9 @@ private:
 	DirectX::SimpleMath::Quaternion m_rotate;
 	DirectX::SimpleMath::Vector3 m_direction; // 今向いている方向
 
+	//目の座標
+	DirectX::SimpleMath::Vector3 m_eyePosition;
+
 	//飛んでく方向
 	DirectX::SimpleMath::Vector3 m_blownAwayDirection;
 
@@ -91,6 +101,8 @@ private:
 	float m_graivty;
 
 	bool m_isLockOn;
+
+	bool m_isJump;
 
 	float m_hp;
 
@@ -109,8 +121,8 @@ public:
 	~Player() ;
 
 	void Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 position);
-	void Update(float elapsedTime, DirectX::SimpleMath::Quaternion cameraRotation);
-	void Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection) ;
+	void Update(float elapsedTime);
+	void Render(DirectX::SimpleMath::Matrix view, DirectX::SimpleMath::Matrix projection) ;
 	void Finalize() ;
 
 	void ChangeState(IPlayerState* nextState);

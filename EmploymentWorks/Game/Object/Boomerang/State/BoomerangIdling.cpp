@@ -4,7 +4,7 @@
 #include "Game/Object/Boomerang/Boomerang.h"
 #include "Game/Object/Player/Player.h"
 
-const DirectX::SimpleMath::Vector3 GENERATEDISTANCE(0.5f, 0.8f, 0.0f);
+const DirectX::SimpleMath::Vector3 GENERATEDISTANCE(0.5f, 0.0f, -1.0f);
 
 // コンストラクタ
 BoomerangIdling::BoomerangIdling()
@@ -14,6 +14,7 @@ BoomerangIdling::BoomerangIdling()
 	m_boomerang{},
 	m_player{}
 {
+
 }
 
 // デストラクタ
@@ -49,7 +50,7 @@ void BoomerangIdling::Update(const float& elapsedTime)
 
 	m_worldMatrix *= Matrix::CreateTranslation(GENERATEDISTANCE);
 	m_worldMatrix *= Matrix::CreateFromQuaternion(m_player->GetRotate());
-	m_worldMatrix *= Matrix::CreateTranslation(m_player->GetPosition());
+	m_worldMatrix *= Matrix::CreateTranslation(m_player->GetPlayerEyePosition());
 
 	//座標を更新
 	Vector3 Pos = Vector3::Transform(Vector3::Zero, m_worldMatrix);

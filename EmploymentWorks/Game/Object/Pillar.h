@@ -40,16 +40,16 @@ public:
 	Pillar();
 	~Pillar();
 
-	void Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 position,  DirectX::SimpleMath::Vector3 Scale,DirectX::SimpleMath::Vector3 Rotate);
+	void Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 position,  DirectX::SimpleMath::Vector3 Scale,DirectX::SimpleMath::Vector3 Rotate, float BoundingSphereRadius);
 	void Update(float elapsedTime);
-	void Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection);
+	void Render(DirectX::SimpleMath::Matrix view, DirectX::SimpleMath::Matrix projection);
 	void Finalize();
 
 	void RegistrationCollionManager(CollisionManager* collsionManager) override;
 
 	Bounding* GetBounding() const override { return m_bounding.get(); };
 
-	CollsionObjectTag GetCollsionTag() const override { return CollsionObjectTag::Wall; }
+	CollsionObjectTag GetCollsionTag() const override { return CollsionObjectTag::Pillar; }
 
 	void SetPos(DirectX::SimpleMath::Vector3& Pos) override { m_position = Pos; }
 

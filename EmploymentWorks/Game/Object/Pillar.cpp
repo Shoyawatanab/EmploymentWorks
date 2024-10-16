@@ -40,14 +40,14 @@ Pillar::~Pillar()
 //---------------------------------------------------------
 // èâä˙âªÇ∑ÇÈ
 //---------------------------------------------------------
-void Pillar::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Vector3 Scale, DirectX::SimpleMath::Vector3 Rotate)
+void Pillar::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Vector3 Scale, DirectX::SimpleMath::Vector3 Rotate, float BoundingSphereRadius)
 {
 	using namespace DirectX::SimpleMath;
 	assert(resources);
 	m_commonResources = resources;
 	m_position = position;
 	m_scale = Scale;
-	m_rotate = Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(Rotate.z), DirectX::XMConvertToRadians(Rotate.y), DirectX::XMConvertToRadians(Rotate.x));
+	m_rotate = Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(Rotate.x), DirectX::XMConvertToRadians(Rotate.y), DirectX::XMConvertToRadians(Rotate.z));
 
 	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
 
@@ -58,9 +58,11 @@ void Pillar::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3
 	// ÉÇÉfÉãÇì«Ç›çûÇﬁ
 	m_model = DirectX::Model::CreateFromCMO(device, L"Resources/Models/Pillar.cmo", *fx);
 
+	Vector3 boxScale = m_scale;
+
 	m_bounding = std::make_unique<Bounding>();
-	m_bounding->CreateBoundingBox(m_commonResources, m_position, m_scale);
-	m_bounding->CreateBoundingSphere(m_commonResources, m_position, 100.0f);
+	m_bounding->CreateBoundingBox(m_commonResources, m_position, boxScale);
+	m_bounding->CreateBoundingSphere(m_commonResources, m_position, BoundingSphereRadius);
 
 
 
@@ -81,7 +83,7 @@ void Pillar::Update(float elapsedTime)
 //---------------------------------------------------------
 // ï`âÊÇ∑ÇÈ
 //---------------------------------------------------------
-void Pillar::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
+void Pillar::Render(DirectX::SimpleMath::Matrix view, DirectX::SimpleMath::Matrix projection)
 {
 	using namespace DirectX::SimpleMath;
 
@@ -95,8 +97,8 @@ void Pillar::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 	world *= Matrix::CreateTranslation(m_position);
 	// ÉÇÉfÉãÇï`âÊÇ∑ÇÈ
 	m_model->Draw(context, *states, world, view, projection);
-	//m_bounding->DrawBoundingSphere(POS, view, projection);
-	m_bounding->DrawBoundingBox(m_position, view, projection);
+	//m_bounding->DrawBoundingSphere(view, projection);
+	m_bounding->DrawBoundingBox( view, projection);
 
 
 

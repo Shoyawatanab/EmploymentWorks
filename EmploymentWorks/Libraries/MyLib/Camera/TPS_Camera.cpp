@@ -61,7 +61,7 @@ void mylib::TPS_Camera::Update(const float& elapsedTime)
 	DirectX::Keyboard::State key = DirectX::Keyboard::Get().GetState();
 
 
-	m_mouse->Update(elapsedTime);
+	m_mouse->Update();
 
 	// targetの位置を更新する
 	m_target = m_player->GetPosition();
@@ -79,12 +79,12 @@ void mylib::TPS_Camera::Update(const float& elapsedTime)
 	{
 		m_angle.y = -950;
 	}
-	if (key.IsKeyDown(Keyboard::Keyboard::Space))
+	if (m_player->GetUsingBoomerang()->GetBoomerangState() == m_player->GetUsingBoomerang()->GetBoomerangGetReady() && m_zoomState != ZoomState::ZoomIn)
 	{
 		m_zoomState = ZoomState::ZoomIn;
 	}
 
-	if (key.IsKeyUp(Keyboard::Keyboard::Space) && m_zoomState == ZoomState::ZoomIn)
+	if (m_player->GetUsingBoomerang()->GetBoomerangState() != m_player->GetUsingBoomerang()->GetBoomerangGetReady() && m_zoomState == ZoomState::ZoomIn)
 	{
 		m_zoomState = ZoomState::ZoomOut;
 	}
@@ -93,6 +93,7 @@ void mylib::TPS_Camera::Update(const float& elapsedTime)
 	switch (m_zoomState)
 	{
 		case mylib::TPS_Camera::ZoomState::None:
+
 			break;
 		case mylib::TPS_Camera::ZoomState::ZoomIn:
 			//向いている方向
@@ -128,7 +129,6 @@ void mylib::TPS_Camera::Update(const float& elapsedTime)
 
 
 
-
 	// カメラ座標を計算する
 	CalculateEyePosition();
 	// ビュー行列を更新する
@@ -140,7 +140,7 @@ void mylib::TPS_Camera::Update(const float& elapsedTime)
 //-------------------------------------------------------------------
 void mylib::TPS_Camera::CalculateViewMatrix()
 {
-	m_view = DirectX::SimpleMath::Matrix::CreateLookAt(m_eye + m_moveEye, m_target, m_up);
+	m_view = DirectX::SimpleMath::Matrix::CreateLookAt(m_eye, m_target, m_up);
 }
 
 //-------------------------------------------------------------------
@@ -180,11 +180,13 @@ void mylib::TPS_Camera::CalculateEyePosition()
 
 	m_player->SetCameraRotate(m_rotationX);
 
-
 	// ターゲットの向いている方向に追従する
 	forward = DirectX::SimpleMath::Vector3::Transform(forward, Rotation);
 	// カメラ座標を計算する
 	m_eye = m_target + forward;
+
+	//m_eye = DirectX::SimpleMath::Vector3::Transform(forward, Rotation);
+
 }
 
 void mylib::TPS_Camera::RegistrationInformation(Player* Player)

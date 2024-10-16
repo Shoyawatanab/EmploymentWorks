@@ -26,7 +26,7 @@ public:
 	// 更新する
 	void Update(const float& elapsedTime);
 
-	void Render();
+	void Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection);
 
 	void Finalize();
 
@@ -42,6 +42,8 @@ private:
 
 	std::unique_ptr<DirectX::PrimitiveBatch<DirectX::VertexPositionColor>> m_primitveBatch;
 
+	// 入力レイアウト
+	Microsoft::WRL::ComPtr<ID3D11InputLayout> m_inputLayout;
 
 	DirectX::SimpleMath::Quaternion m_initialRotate;
 	DirectX::SimpleMath::Vector3 m_position;
@@ -69,5 +71,8 @@ private:
 
 
 	std::vector<DirectX::VertexPositionColor> m_linePos;
+
+	std::unique_ptr<DirectX::BasicEffect> m_effect;
+
 };
 

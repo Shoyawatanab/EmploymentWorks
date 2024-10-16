@@ -92,6 +92,9 @@
     <Filter Include="Game\Object\Gimmick\Artillery">
       <UniqueIdentifier>{4c514b04-a4a9-4ebd-88f6-925f862633cc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Object\Enemy\BossEnemy">
+      <UniqueIdentifier>{6fa6bc25-da89-4bdd-ac5a-89a1c965a23e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -327,6 +330,60 @@
     <ClInclude Include="Game\Object\Gimmick\Artillery\ArtilleryBullet.h">
       <Filter>Game\Object\Gimmick\Artillery</Filter>
     </ClInclude>
+    <ClInclude Include="Libraries\MyLib\Camera\FPS_Camera.h">
+      <Filter>Libraries\MyLib\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Libraries\MyLib\LoadJson.h">
+      <Filter>Libraries\MyLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\BossEnemy\BossEnemyBase.h">
+      <Filter>Game\Object\Enemy\BossEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\BossEnemy\BossEnemyBottom.h">
+      <Filter>Game\Object\Enemy\BossEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\BossEnemy\BossEnemyHead.h">
+      <Filter>Game\Object\Enemy\BossEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\BossEnemy\BossEnemyLeftArm.h">
+      <Filter>Game\Object\Enemy\BossEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\BossEnemy\BossEnemyLeftArmJoint.h">
+      <Filter>Game\Object\Enemy\BossEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\BossEnemy\BossEnemyLeftLeg.h">
+      <Filter>Game\Object\Enemy\BossEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\BossEnemy\BossEnemyLeftShoulder.h">
+      <Filter>Game\Object\Enemy\BossEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\BossEnemy\BossEnemyLeftThigh.h">
+      <Filter>Game\Object\Enemy\BossEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\BossEnemy\BossEnemyPelvis .h">
+      <Filter>Game\Object\Enemy\BossEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\BossEnemy\BossEnemyRightArm.h">
+      <Filter>Game\Object\Enemy\BossEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\BossEnemy\BossEnemyRightArmJoint.h">
+      <Filter>Game\Object\Enemy\BossEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\BossEnemy\BossEnemyRightLeg.h">
+      <Filter>Game\Object\Enemy\BossEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\BossEnemy\BossEnemyRightShoulder.h">
+      <Filter>Game\Object\Enemy\BossEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\BossEnemy\BossEnemyRightThigh.h">
+      <Filter>Game\Object\Enemy\BossEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\BossEnemy\BossEnemyTorso.h">
+      <Filter>Game\Object\Enemy\BossEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\IComponent.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -520,6 +577,57 @@
     </ClCompile>
     <ClCompile Include="Game\Object\Gimmick\Artillery\ArtilleryBullet.cpp">
       <Filter>Game\Object\Gimmick\Artillery</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\MyLib\Camera\FPS_Camera.cpp">
+      <Filter>Libraries\MyLib\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\MyLib\LoadJson.cpp">
+      <Filter>Libraries\MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\BossEnemy\BossEnemyBase.cpp">
+      <Filter>Game\Object\Enemy\BossEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\BossEnemy\BossEnemyBottom.cpp">
+      <Filter>Game\Object\Enemy\BossEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\BossEnemy\BossEnemyHead.cpp">
+      <Filter>Game\Object\Enemy\BossEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\BossEnemy\BossEnemyLeftArm.cpp">
+      <Filter>Game\Object\Enemy\BossEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\BossEnemy\BossEnemyLeftArmJoint.cpp">
+      <Filter>Game\Object\Enemy\BossEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\BossEnemy\BossEnemyLeftLeg.cpp">
+      <Filter>Game\Object\Enemy\BossEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\BossEnemy\BossEnemyLeftShoulder.cpp">
+      <Filter>Game\Object\Enemy\BossEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\BossEnemy\BossEnemyLeftThigh.cpp">
+      <Filter>Game\Object\Enemy\BossEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\BossEnemy\BossEnemyPelvis .cpp">
+      <Filter>Game\Object\Enemy\BossEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\BossEnemy\BossEnemyRightArm.cpp">
+      <Filter>Game\Object\Enemy\BossEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\BossEnemy\BossEnemyRightArmJoint.cpp">
+      <Filter>Game\Object\Enemy\BossEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\BossEnemy\BossEnemyRightLeg.cpp">
+      <Filter>Game\Object\Enemy\BossEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\BossEnemy\BossEnemyRightShoulder.cpp">
+      <Filter>Game\Object\Enemy\BossEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\BossEnemy\BossEnemyRightThigh.cpp">
+      <Filter>Game\Object\Enemy\BossEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\BossEnemy\BossEnemyTorso.cpp">
+      <Filter>Game\Object\Enemy\BossEnemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

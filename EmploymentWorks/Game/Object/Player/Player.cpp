@@ -21,6 +21,9 @@
 
 const float MOVE_SPEED = 5.0f;                                        //動く時のスピード
 const DirectX::SimpleMath::Vector3 INITIAL_DIRECTION( 0.0f,0.0f,-1.0f); //初期の向いている方向
+
+const DirectX::SimpleMath::Vector3 EYE_TO_POSITION_DIFFERENCE(0.0f, 0.7f, 0.0f); //座標と目の座標の差分
+
 //---------------------------------------------------------
 // コンストラクタ
 //---------------------------------------------------------
@@ -77,6 +80,7 @@ void Player::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3
 	m_model = DirectX::Model::CreateFromCMO(device, L"Resources/Models/NewPlayer.cmo", *fx);
 
 	m_position = position;
+	m_eyePosition = m_position + EYE_TO_POSITION_DIFFERENCE;
 
 	m_bounding->CreateBoundingBox(m_commonResources, m_position, Vector3(0.4f, 0.8f, 0.4f));
 	m_bounding->CreateBoundingSphere(m_commonResources, m_position, 1.0f);
@@ -90,6 +94,7 @@ void Player::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3
 
 
 	m_usually->Initialize();
+	m_usually->SetResouces(m_commonResources);
 
 	m_blownAway->Initialize();
 
@@ -99,6 +104,7 @@ void Player::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3
 	m_graivty = 0.05f;
 	m_isLockOn = false;
 
+	m_isJump = false;
 	m_hp = 3;
 	
 	m_basicEffect = std::make_unique<DirectX::BasicEffect>(device);;
@@ -113,11 +119,10 @@ void Player::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3
 //---------------------------------------------------------
 // 更新する
 //---------------------------------------------------------
-void Player::Update(float elapsedTime, DirectX::SimpleMath::Quaternion cameraRotation)
+void Player::Update(float elapsedTime)
 {
 
 	UNREFERENCED_PARAMETER(elapsedTime);
-	UNREFERENCED_PARAMETER(cameraRotation);
 
 	using namespace DirectX;
 	using namespace DirectX::SimpleMath;
@@ -147,8 +152,6 @@ void Player::Update(float elapsedTime, DirectX::SimpleMath::Quaternion cameraRot
 		//状態を使用中に
 		m_boomerang[m_boomerangIndex]->SetUseState(Boomerang::UseState::Using);
 
-
-
 		Mouse::Get().ResetScrollWheelValue();
 
 	}
@@ -176,12 +179,20 @@ void Player::Update(float elapsedTime, DirectX::SimpleMath::Quaternion cameraRot
 	}
 
 	m_currentState->Update(elapsedTime);
+	//目の座標の更新
+	m_eyePosition = m_position + EYE_TO_POSITION_DIFFERENCE;
+
+
+	for (auto& boomerang : m_boomerang)
+	{
+		boomerang->Update(elapsedTime);
+
+	}
 
 
 
 	for(std::unique_ptr<Boomerang>& boomerang : m_boomerang)
 	{
-
 
 
 		//ブーメランが落ちているなら
@@ -207,23 +218,14 @@ void Player::Update(float elapsedTime, DirectX::SimpleMath::Quaternion cameraRot
 		}
 	}
 
-	for(auto& boomerang : m_boomerang)
-	{
-		boomerang->Update(elapsedTime);
-
-	}
-
-	
-	//m_boomerang[m_boomerangIndex]->Update(elapsedTime);
-
-
+	m_bounding->Update(m_position);
 
 }
 
 //---------------------------------------------------------
 // 描画する
 //---------------------------------------------------------
-void Player::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
+void Player::Render(DirectX::SimpleMath::Matrix view, DirectX::SimpleMath::Matrix projection)
 {
 
 	using namespace DirectX::SimpleMath;
@@ -234,30 +236,32 @@ void Player::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 	//	半透明描画指定
 	//ID3D11BlendState* blendstate = states->NonPremultiplied();
 
-	// モデルを描画する
-	m_model->Draw(context, *states, m_currentState->GetMatrix(), view, projection,
-		false,
-		[&]()
-		{
+	//// モデルを描画する
+	//m_model->Draw(context, *states, m_currentState->GetMatrix(), view, projection,
+	//	false,
+	//	[&]()
+	//	{
 
-			//DirectX::Colors::White.v;
+	//		//DirectX::Colors::White.v;
 
-			//DirectX::FXMVECTOR colorValues {1.0f, 1.0f, 1.0f, 0.5f};
+	//		//DirectX::FXMVECTOR colorValues {1.0f, 1.0f, 1.0f, 0.5f};
 
-			//m_basicEffect->SetDiffuseColor(colorValues);
+	//		//m_basicEffect->SetDiffuseColor(colorValues);
 
-			//// ブレンドステートを設定する
-			//context->OMSetBlendState(blendstate, nullptr, 0xffffffff);
+	//		//// ブレンドステートを設定する
+	//		//context->OMSetBlendState(blendstate, nullptr, 0xffffffff);
 
-			//context->OMSetDepthStencilState(states->DepthDefault(), 0);
+	//		//context->OMSetDepthStencilState(states->DepthDefault(), 0);
 
-			//	シェーダの登録を解除しておく
-			//context->PSSetShader(nullptr, nullptr, 0);
+	//		//	シェーダの登録を解除しておく
+	//		//context->PSSetShader(nullptr, nullptr, 0);
 
-		}
-	);
-	m_bounding->DrawBoundingBox(m_position, view, projection);
-	m_bounding->DrawBoundingSphere(m_position, view, projection);
+	//	}
+	//);
+	
+	m_model->Draw(context, *states, m_currentState->GetMatrix(), view, projection);
+	//m_bounding->DrawBoundingBox(m_position, view, projection);
+	//m_bounding->DrawBoundingSphere(m_position, view, projection);
 
 	for (auto& boomerang : m_boomerang)
 	{
@@ -361,25 +365,13 @@ void Player::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath
 	//動く簿部ジェクトのタグを
 	switch (PartnerTag)
 	{
-		case CollsionObjectTag::Boomerang:
-			break;
-		case CollsionObjectTag::Player:
-			break;
-		case CollsionObjectTag::Enemy:
-			break;
-		case CollsionObjectTag::NotMoveObject:
-			break;
-		case CollsionObjectTag::None:
-			break;
-		case CollsionObjectTag::Wall:
-			break;
 		case CollsionObjectTag::Floor:
 
 			if (m_currentState == m_blownAway.get())
 			{
 				ChangeState(m_usually.get());
 			}
-
+			m_isJump = false;
 			break;
 		default:
 			break;
