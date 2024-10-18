@@ -174,7 +174,7 @@ void PlayScene::Initialize(CommonResources* resources)
 
 
 	//各クラスの情報を登録とインスタンス
-	m_player->RegistrationInformation(m_enemy.get());
+	m_player->RegistrationInformation(m_enemy.get(),m_cameraManager->GetTPSCamera());
 	m_enemy->RegistrationInformation(m_player.get());
 	m_cameraManager->RegistrationInformation(this, m_player.get(), m_enemy.get());
 	m_lockOn->RegistrationInformation(m_player.get(), m_enemy.get(), m_cameraManager.get());
@@ -378,7 +378,7 @@ void PlayScene::Render()
 	//debugString->AddString("Pos: %f, %f", m_enemy->GetPos().x, m_enemy->GetPos().z);
 	//debugString->AddString("IsLockOn: %d ", m_lockOn->GetIsLOckOn());
 
-	debugString->AddString("index : %d", m_player->GetUsingBoomerangIndex());
+	debugString->AddString("EyePos : %f,%f,%f", m_player->GetTPS_Camera()->GetCameraForward().x, m_player->GetTPS_Camera()->GetCameraForward().y, m_player->GetTPS_Camera()->GetCameraForward().z);
 }
 
 //---------------------------------------------------------

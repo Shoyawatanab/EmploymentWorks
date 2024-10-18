@@ -21,6 +21,8 @@ namespace mylib
 {
 	class DebugCamera;
 	class GridFloor;
+	class TPS_Camera;
+
 }
 
 
@@ -65,6 +67,8 @@ public:
 	void SetIsJump(bool isjump) { m_isJump = isjump; }
 	bool GetisJump() { return m_isJump; }
 
+	mylib::TPS_Camera* GetTPS_Camera() { return m_tpsCamera; }
+
 private:
 
 	// 共通リソース
@@ -74,6 +78,8 @@ private:
 	// スクロールホイール値
 	int m_scrollWheelValue;
 
+	//ゲームカメラ プレイ中のカメラ
+	mylib::TPS_Camera* m_tpsCamera;
 
 	// モデル
 	std::unique_ptr<DirectX::Model> m_model;
@@ -128,7 +134,7 @@ public:
 	void ChangeState(IPlayerState* nextState);
 
 	//クラスに必要な情報（ポインタ）の登録
-	void RegistrationInformation(Enemy* enemy);
+	void RegistrationInformation(Enemy* enemy,mylib::TPS_Camera* tps_Camera);
 
 	//クラスのインスタンス
 	void Instances();

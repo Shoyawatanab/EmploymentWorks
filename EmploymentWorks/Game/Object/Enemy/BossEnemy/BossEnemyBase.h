@@ -77,6 +77,10 @@ public:
 	// 後処理を行う
 	virtual void Finalize();
 
+	virtual void RegistrationCollionManager(CollisionManager* collsionManager) override;
+
+	  Bounding* GetBounding() const { return m_bounding.get(); }
+
 public:
 
 	//バウンディングの生成

@@ -59,7 +59,7 @@ void Floor::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 
 	m_model = DirectX::Model::CreateFromCMO(device, L"Resources/Models/Floor.cmo", *fx);
 
 	m_bounding = std::make_unique<Bounding>();
-	m_bounding->CreateBoundingBox(m_commonResources, m_position, m_scale);
+	m_bounding->CreateBoundingBox(m_commonResources, m_position, m_scale * 1.2f);
 	m_bounding->CreateBoundingSphere(m_commonResources, m_position, BoundingSphereRadius);
 
 
@@ -97,7 +97,7 @@ void Floor::Render(DirectX::SimpleMath::Matrix view, DirectX::SimpleMath::Matrix
 	// ƒ‚ƒfƒ‹‚ð•`‰æ‚·‚é
 	m_model->Draw(context, *states, world, view, projection);
 	//m_bounding->DrawBoundingSphere(POS, view, projection);
-	m_bounding->DrawBoundingBox(m_position, view, projection);
+	m_bounding->DrawBoundingBox(view, projection);
 
 
 

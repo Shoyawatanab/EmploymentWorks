@@ -13,6 +13,8 @@ public:
 	DirectX::BoundingBox* GetBoundingBox() { return &m_boundingBox; }
 	DirectX::BoundingSphere* GetBoundingSphere() { return &m_boundingSphere; }
 
+	DirectX::BoundingOrientedBox* GetOrientedBox() { return &m_orientexBox; }
+
 	void SetIsBoxHit(bool isHit) { m_isBoxHit = isHit; }
 	void SetIsSphereHit(bool isHit) { m_isSphereHit = isHit; }
 
