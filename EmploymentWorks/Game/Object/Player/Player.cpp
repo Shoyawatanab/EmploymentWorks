@@ -81,7 +81,7 @@ void Player::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3
 
 	m_position = position;
 	m_eyePosition = m_position + EYE_TO_POSITION_DIFFERENCE;
-
+	m_bounding = std::make_unique<Bounding>();
 	m_bounding->CreateBoundingBox(m_commonResources, m_position, Vector3(0.4f, 0.8f, 0.4f));
 	m_bounding->CreateBoundingSphere(m_commonResources, m_position, 1.0f);
 
@@ -297,9 +297,10 @@ void Player::ChangeState(IPlayerState* nextState)
 }
 
 
-void Player::RegistrationInformation(Enemy* enemy)
+void Player::RegistrationInformation(Enemy* enemy, mylib::TPS_Camera* tps_Camera)
 {
 	m_enemy = enemy;
+	m_tpsCamera = tps_Camera;
 
 	m_usually->RegistrationInformation(this);
 	m_blownAway->RegistrationInformation(this);

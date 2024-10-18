@@ -12,14 +12,15 @@ enum  class CollsionObjectTag
 {
 
 	None = 0
-	, Player    = 1 << 0     //プレイヤ
-	, Enemy     = 1 << 1     //敵
+	, Player = 1 << 0     //プレイヤ
+	, Enemy = 1 << 1     //敵
 	, Boomerang = 1 << 2     //ブーメラン
-	, Stage     = 1 << 3     //床以外のステージオブジェック　壁や天井
-	, Floor     = 1 << 4     //床
-	, Pillar    = 1 << 5     //柱
+	, Stage = 1 << 3     //床以外のステージオブジェック　壁や天井
+	, Floor = 1 << 4     //床
+	, Pillar = 1 << 5     //柱
 	, Artillery = 1 << 6     //砲台
 	, ArtilleryBullet = 1 << 7     //砲台の弾
+	, EnemyParts = 1 << 8   
 
 };
 
@@ -49,6 +50,7 @@ enum class CollisionType
 	, Boomerang_Artillery = static_cast<uint32_t>(CollsionObjectTag::Boomerang) | static_cast<uint32_t>(CollsionObjectTag::Artillery)
 	, Boomerang_ArtilleryBullet = static_cast<uint32_t>(CollsionObjectTag::Boomerang) | static_cast<uint32_t>(CollsionObjectTag::ArtilleryBullet)
 
+	,EnemyParts_Boomerang = static_cast<uint32_t>(CollsionObjectTag::EnemyParts) | static_cast<uint32_t>(CollsionObjectTag::Boomerang)
 
 };
 

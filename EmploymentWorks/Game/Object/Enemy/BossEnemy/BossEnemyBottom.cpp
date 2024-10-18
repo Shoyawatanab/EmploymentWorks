@@ -6,13 +6,24 @@
 #include "Game/Object/Enemy/BossEnemy/BossEnemyLeftThigh.h"
 #include "Game/Object/Enemy/BossEnemy/BossEnemyRightThigh.h"
 #include "Game/Object/Enemy/BossEnemy/BossEnemyPelvis .h"
+#include "Game/DetectionCollision/CollisionManager.h"
 
 void BossEnemyBottom::RegistrationCollionManager(CollisionManager* collsionManager)
 {
+
+	collsionManager->AddCollsion(this);
+	BossEnemyBase::RegistrationCollionManager(collsionManager);
 }
 
 void BossEnemyBottom::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos)
 {
+	switch (PartnerTag)
+	{
+		case CollsionObjectTag::Boomerang:
+			break;
+		default:
+			break;
+	}
 }
 
 // コンストラクタ

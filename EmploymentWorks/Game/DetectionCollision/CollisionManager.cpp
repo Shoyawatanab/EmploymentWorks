@@ -52,6 +52,7 @@ void CollisionManager::Initialize(CommonResources* resources, Player* player, En
 	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
 
 
+
 	// コリジョンメッシュを生成する
 	m_collisionMesh = std::make_unique<mylib::CollisionMesh>();
 	//大きさをー0.1して壁にめり込まないようにしている
@@ -139,14 +140,7 @@ void CollisionManager::Update()
 
 
 				case static_cast<uint32_t>(CollisionType::Enemy_Boomerang):
-					if (CheckIsBox(m_collsionObjects[i], m_collsionObjects[j]))
-					{
-						BoxExtrusion(m_collsionObjects[i], m_collsionObjects[j]);
-						m_collsionObjects[i]->OnCollisionEnter(tagJ, m_collsionObjects[j]->GetBounding()->GetBoundingBox()->Center);
-						m_collsionObjects[j]->OnCollisionEnter(tagI, m_collsionObjects[i]->GetBounding()->GetBoundingBox()->Center);
 
-
-					}
 					break;
 				case static_cast<uint32_t>(CollisionType::Enemy_Stage):
 					if (CheckIsBox(m_collsionObjects[i], m_collsionObjects[j]))
@@ -221,7 +215,14 @@ void CollisionManager::Update()
 				case static_cast<uint32_t>(CollisionType::Boomerang_ArtilleryBullet):
 					break;
 
+				case static_cast<uint32_t>(CollisionType::EnemyParts_Boomerang):
+					if (CheckIsOrientexBox(m_collsionObjects[i], m_collsionObjects[j]))
+					{
 
+						m_collsionObjects[i]->OnCollisionEnter(tagJ, m_collsionObjects[j]->GetBounding()->GetBoundingBox()->Center);
+						m_collsionObjects[j]->OnCollisionEnter(tagI, m_collsionObjects[i]->GetBounding()->GetBoundingBox()->Center);
+					}
+					break;
 				default:
 					continue;
 			}
@@ -239,14 +240,14 @@ void CollisionManager::Update()
 		CollsionObjectTag tag = m_collsionObjects[i]->GetCollsionTag();
 
 
-
+		//ものによってRayの長さが変わるからtagで判定する
 		switch (tag)
 		{
-			//case CollsionObjectTag::Stage:
+			case CollsionObjectTag::Stage:
+				CameraCollision(m_collsionObjects[i], 5);
+				break;
 			case CollsionObjectTag::Floor:
-			//case CollsionObjectTag::Pillar:
-			//case CollsionObjectTag::Artillery:
-				CameraCollision(m_collsionObjects[i]);
+				CameraCollision(m_collsionObjects[i],5);
 				break;
 			default:
 				break;
@@ -351,6 +352,27 @@ bool CollisionManager::CheckIsBox(ICollisionObject* Object1, ICollisionObject* O
 	return false;
 }
 
+bool CollisionManager::CheckIsOrientexBox(ICollisionObject* Object1, ICollisionObject* Object2)
+{
+	//バウンディングボックスの取得
+	DirectX::BoundingBox* Box1 = Object1->GetBounding()->GetBoundingBox();
+	DirectX::BoundingOrientedBox* Box2 = Object2->GetBounding()->GetOrientedBox();
+
+	//バウンディングボックスと当たったかどうか
+	if (Box1->Intersects(*Box2))
+	{
+#ifdef _DEBUG
+
+		//ボックスの色の変更
+		Object1->GetBounding()->SetIsBoxHit(true);
+		Object2->GetBounding()->SetIsBoxHit(true);
+#endif
+		return true;
+	}
+	return false;
+
+}
+
 bool CollisionManager::CheckIsSphere(ICollisionObject* Object1, ICollisionObject* Object2)
 {
 
@@ -448,7 +470,7 @@ void CollisionManager::BeamAndPlayerCollision()
 /// カメラとの当たり判定
 /// </summary>
 /// <param name="object"></param>
-void CollisionManager::CameraCollision(ICollisionObject* object)
+void CollisionManager::CameraCollision(ICollisionObject* object, float rayDistance)
 {
 
 
@@ -461,14 +483,20 @@ void CollisionManager::CameraCollision(ICollisionObject* object)
 	DirectX::SimpleMath::Ray ray { m_tpsCamera->GetTargetPosition(), direction };
 	//Ray(線分)の距離を求める
 	float distance = DirectX::SimpleMath::Vector3::Distance(m_tpsCamera->GetEyePosition(), m_tpsCamera->GetTargetPosition());
-
+	distance = 1;
 	//当たっていない
 	if (!ray.Intersects(*box, distance))
 	{
 		return;
 	}
 
-	distance /= 4.5f;
+	//距離によって当たったかどうか判定
+	if (distance > rayDistance)
+	{
+		return;
+	}
+
+	//distance /= 4.5f;
 
 	//ターゲットの座標を取得
 	DirectX::SimpleMath::Vector3 pos = m_tpsCamera->GetTargetPosition();

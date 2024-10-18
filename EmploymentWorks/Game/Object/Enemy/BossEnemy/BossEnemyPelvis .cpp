@@ -4,7 +4,7 @@
 #include "DeviceResources.h"
 #include "Game/CommonResources.h"
 #include "Game/Object/Enemy/BossEnemy/BossEnemyTorso.h"
-
+#include "Game/DetectionCollision/CollisionManager.h"
 
 
 // コンストラクタ
@@ -114,8 +114,20 @@ DirectX::BoundingSphere BossEnemyPelvis::CreateBoundingSphere(const float& radiu
 
 void BossEnemyPelvis::RegistrationCollionManager(CollisionManager* collsionManager)
 {
+
+	collsionManager->AddCollsion(this);
+	BossEnemyBase::RegistrationCollionManager(collsionManager);
+
 }
 
 void BossEnemyPelvis::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos)
 {
+	switch (PartnerTag)
+	{
+		case CollsionObjectTag::Boomerang:
+			break;
+		default:
+			break;
+	}
+
 }

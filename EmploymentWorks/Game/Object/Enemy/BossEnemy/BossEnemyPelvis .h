@@ -28,9 +28,9 @@ public:
 
 	void RegistrationCollionManager(CollisionManager* collsionManager) override;
 
-	Bounding* GetBounding() const override { return nullptr ; };
+	Bounding* GetBounding() const override { return BossEnemyBase::GetBounding(); };
 
-	CollsionObjectTag GetCollsionTag() const override { return CollsionObjectTag::Player; }
+	CollsionObjectTag GetCollsionTag() const override { return CollsionObjectTag::EnemyParts; }
 
 	void SetPos(DirectX::SimpleMath::Vector3& Pos) override { m_currentPosition = Pos; }
 

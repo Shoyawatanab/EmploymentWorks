@@ -5,7 +5,7 @@
 #include "Game/CommonResources.h"
 #include <unordered_map>
 #include "Libraries/MyLib/Bounding.h"
-
+#include "Game/DetectionCollision/CollisionManager.h"
 // コンストラクタ
 BossEnemyBase::BossEnemyBase(CommonResources* resources,IComponent* parent, DirectX::SimpleMath::Vector3 initialScale, const DirectX::SimpleMath::Vector3& positonFromParent, const DirectX::SimpleMath::Quaternion& initialAngle)
 	:
@@ -158,6 +158,21 @@ void BossEnemyBase::DrawBoundingBox(const DirectX::SimpleMath::Matrix& matrix)
 // 後処理を行う
 void BossEnemyBase::Finalize()
 {
+}
+
+void BossEnemyBase::RegistrationCollionManager(CollisionManager* collsionManager)
+{
+
+
+	// 部品を当たり判定に登録
+	for (auto& turretPart : m_parts)
+	{
+		// 部品を描画する
+		turretPart->RegistrationCollionManager(collsionManager);
+	}
+
+
+
 }
 
 

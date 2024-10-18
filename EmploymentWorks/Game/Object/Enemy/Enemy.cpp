@@ -265,6 +265,8 @@ void Enemy::Instances()
 void Enemy::RegistrationCollionManager(CollisionManager* collsionManager)
 {
 	collsionManager->AddCollsion(this);
+
+	BossEnemyBase::RegistrationCollionManager(collsionManager);
 }
 
 

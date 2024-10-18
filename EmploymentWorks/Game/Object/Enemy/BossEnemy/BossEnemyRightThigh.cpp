@@ -4,14 +4,26 @@
 #include "DeviceResources.h"
 #include "Game/CommonResources.h"
 #include "Game/Object/Enemy/BossEnemy/BossEnemyRightLeg.h"
+#include "Game/DetectionCollision/CollisionManager.h"
 
 
 void BossEnemyRightThigh::RegistrationCollionManager(CollisionManager* collsionManager)
 {
+	collsionManager->AddCollsion(this);
+	BossEnemyBase::RegistrationCollionManager(collsionManager);
+
 }
 
 void BossEnemyRightThigh::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos)
 {
+	switch (PartnerTag)
+	{
+		case CollsionObjectTag::Boomerang:
+			break;
+		default:
+			break;
+	}
+
 }
 
 // コンストラクタ

@@ -66,13 +66,16 @@ public:
 
 	bool CheckIsBox(ICollisionObject* Object1, ICollisionObject* Object2);
 
+	bool CheckIsOrientexBox(ICollisionObject* Object1, ICollisionObject* Object2);
+
+
 	bool CheckIsSphere(ICollisionObject* Object1, ICollisionObject* Object2);
 
 	bool WallExtrusion(ICollisionObject* Object1, ICollisionObject* Object2);
 
 	void BeamAndPlayerCollision();
 
-	void CameraCollision(ICollisionObject* object);
+	void CameraCollision(ICollisionObject* object,float rayDistance);
 
 
 private:

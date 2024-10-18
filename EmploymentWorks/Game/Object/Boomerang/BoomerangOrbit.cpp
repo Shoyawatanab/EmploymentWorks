@@ -6,7 +6,7 @@
 #include "Game/Object/Enemy/Enemy.h"
 #include "Game/CommonResources.h"
 #include "DeviceResources.h"
-
+#include "Libraries/MyLib/Camera/TPS_Camera.h"
 
 
 const float SPEED = 5.0f;
@@ -108,26 +108,28 @@ void BoomerangOrbit::Update(const float& elapsedTime)
 
 	m_initialRotate = m_boomerang->GetRotate();
 	m_position = m_boomerang->GetPosition();
-	m_target = m_enemy->GetPosition();
+	//m_target = m_enemy->GetPosition();
 
 	m_linePos.clear();
 
+	m_target = m_player->GetTPS_Camera()->GetTargetPosition() + Vector3(0,0,-9);
 
-
+	m_target = m_player->GetTPS_Camera()->GetEyePosition() - m_player->GetTPS_Camera()->GetCameraForward() * 1.0f ;
+	//m_target *= -1;
 
 	Matrix SphereMatrix = Matrix::Identity;
 	SphereMatrix *= Matrix::CreateFromQuaternion(m_initialRotate);
 	//プレイヤと敵の距離
 	Vector3 PlayerToEnemyDistance = m_target - m_player->GetPosition();
 
-	//ロックオン状態じゃなければ
-	if (!m_player->GetIsLockOn())
-	{
-		//距離を自分で決めたものにする
-		m_target = Vector3(0, 3, 4);
-		PlayerToEnemyDistance = m_target;
+	////ロックオン状態じゃなければ
+	//if (!m_player->GetIsLockOn())
+	//{
+	//	//距離を自分で決めたものにする
+	//	m_target = Vector3(0, 3, 4);
+	//	PlayerToEnemyDistance = m_target;
 
-	}
+	//}
 
 	//距離をflaotに変換して半分にする
 	float PlayerToEnemyLenght = PlayerToEnemyDistance.Length() / 2;

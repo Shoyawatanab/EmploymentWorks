@@ -52,13 +52,15 @@ namespace mylib
 
 		DirectX::SimpleMath::Quaternion GetRotationX() { return m_rotationX; }
 
+		DirectX::SimpleMath::Vector3 GetCameraForward() { return m_forward; }
+
 		//デバック用
 		const POINT GetAngle() { return m_angle; }
 
 	private:
 		// ターゲットからのデフォルト距離
 		const float CAMERA_DISTANCE = 4.0f;
-		const float CAMERA_HIGHT = 4.0f;
+		const float CAMERA_HIGHT = 0.0f;
 
 		// 画角
 		const float FOV = DirectX::XMConvertToRadians(45.0f);
@@ -100,6 +102,8 @@ namespace mylib
 		DirectX::SimpleMath::Vector3 m_moveEye;
 
 		ZoomState m_zoomState;
+
+		DirectX::SimpleMath::Vector3 m_forward;
 
 
 	public:
