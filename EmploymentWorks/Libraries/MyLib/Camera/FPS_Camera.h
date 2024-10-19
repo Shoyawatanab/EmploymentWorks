@@ -63,7 +63,7 @@ namespace mylib
 		);
 
 		// デストラクタ
-		~FPS_Camera() = default;
+		~FPS_Camera();
 
 		//クラスに必要な情報（ポインタ）を登録する
 		void RegistrationInformation(Player* Player);

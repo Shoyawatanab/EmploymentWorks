@@ -118,6 +118,8 @@ void Enemy::Initialize()
 	//「Bottom」を生成する
 	Attach(std::make_unique<BossEnemyBottom>(BossEnemyBase::GetResources(), this, BossEnemyBase::GetInitialScale(), Vector3(0.0f, -0.6f, 0.0f), Quaternion::Identity));
 
+	RegistrationRungingAnimation("Beam");
+
 }
 
 //---------------------------------------------------------
@@ -131,6 +133,8 @@ void Enemy::Update(float elapsedTime)
 	DirectX::Keyboard::State keyboardState = DirectX::Keyboard::Get().GetState();
 
 	m_behavior->Update(elapsedTime);
+
+	BossEnemyBase::AnimationUdate(elapsedTime);
 
 
 	//部品を更新する

@@ -70,8 +70,8 @@ private:
 	//¶¬‚·‚éBoundint‚ÌÀ•W‚Ìˆê•ÛŠÇ
 	std::vector<BoundingParameter> m_keepBoundingParameter;
 
-	BeamModel* m_models;
-	std::vector<BeamModel*> m_drawModels;
+	std::unique_ptr<BeamModel> m_models;
+	std::vector<std::unique_ptr<BeamModel>> m_drawModels;
 
 public:
 	Beam();

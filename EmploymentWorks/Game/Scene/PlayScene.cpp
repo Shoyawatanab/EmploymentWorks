@@ -250,7 +250,7 @@ void PlayScene::Update(float elapsedTime)
 
 			if (m_cameraManager->GetGameCameraState() != m_cameraManager->GetGameStartCamera())
 			{
-				//m_enemy->Update(elapsedTime);
+				m_enemy->Update(elapsedTime);
 				for (auto& artillery : m_artillery)
 				{
 					artillery->Update(elapsedTime);

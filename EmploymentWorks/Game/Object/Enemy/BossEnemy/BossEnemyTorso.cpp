@@ -76,23 +76,6 @@ void BossEnemyTorso::Initialize()
 	//バウンディングの生成
 	BossEnemyBase::CreateBounding(m_currentPosition - Vector3(0, 0, 0), m_currentAngle, Vector3(1.9f, 1.6f, 1.15f) * m__currentScale, 3.0f * m__currentScale.x);
 
-	//アニメーションの生成　引数　大きさ　座標　回転　時間
-	std::vector<BossEnemyBase::AnimationKeyFrame> animation;
-	//test
-	animation.push_back({ Vector3(1, 1, 1), Vector3::Zero, DirectX::SimpleMath::Quaternion::Identity, 0.0f });            //初期値
-	animation.push_back({ Vector3(1, 1, 1), Vector3(0,0,0),
-		DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(0))
-		, 0.8f });            //腕の振り上げ
-	animation.push_back({ Vector3(1, 1, 1), Vector3(0,0,0),
-	DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(0))
-	, 2.0f });            //溜め時間
-	animation.push_back({ Vector3(1, 1, 1), Vector3(0,0,0.5f),
-		DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(20),DirectX::XMConvertToRadians(0))
-		, 0.5f });            //おろす
-	
-	//アニメーションを登録
-	BossEnemyBase::SetAnimations(animation, "SwingingDownBothArms");
-
 
 
 

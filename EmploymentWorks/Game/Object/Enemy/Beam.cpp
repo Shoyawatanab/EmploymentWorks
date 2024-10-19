@@ -44,7 +44,7 @@ Beam::Beam()
 Beam::~Beam()
 {
 	// do nothing.
- 	delete  m_models;
+
 }
 
 //---------------------------------------------------------
@@ -68,7 +68,7 @@ void Beam::Initialize(CommonResources* resources, Player* player, Enemy* enemy)
 	m_rotate = DirectX::SimpleMath::Quaternion::Identity;
 
 
-	m_models = new BeamModel;
+	m_models = std::make_unique<BeamModel>();
 	m_models->Initialize(m_commonResources, DirectX::SimpleMath::Vector3::Zero, 2.5f);
 
 }
@@ -101,7 +101,7 @@ void Beam::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 	}
 
 
-	for (auto Draw : m_drawModels)
+	for (auto& Draw : m_drawModels)
 	{
 		Draw->Render(view, projection);
 	}
@@ -114,6 +114,7 @@ void Beam::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 void Beam::Finalize()
 {
 	// do nothing.
+
 }
 
 
@@ -178,9 +179,9 @@ bool Beam::Attack(float elapsdTime)
 		m_models->SetPos(m_keepBoundingParameter.front().Position);
 
 		//描画モデルのコピー
-		BeamModel* Copy = m_models;
+		auto Copy = std::make_unique<BeamModel>(*m_models);
 
-		m_drawModels.push_back(Copy);
+		m_drawModels.push_back(std::move(Copy));
 
 		//先頭の座標を削除する
 		m_keepBoundingParameter.erase(m_keepBoundingParameter.begin());
@@ -199,9 +200,11 @@ bool Beam::Attack(float elapsdTime)
 		m_boundingParameter.push_back(m_keepBoundingParameter.front());
 		//座標の更新
 		m_models->SetPos(m_keepBoundingParameter.front().Position);
-		BeamModel* Copy = new BeamModel(*m_models);
+
 		//描画モデルのコピー
-		m_drawModels.push_back(Copy);
+		auto Copy = std::make_unique<BeamModel>(*m_models);
+
+		m_drawModels.push_back(std::move(Copy));
 
 
 		//先頭の座標を削除する

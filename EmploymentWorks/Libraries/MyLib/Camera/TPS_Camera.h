@@ -111,7 +111,7 @@ namespace mylib
 		TPS_Camera();
 
 		// デストラクタ
-		~TPS_Camera() = default;
+		~TPS_Camera();
 
 		//クラスに必要な情報（ポインタ）を登録する
 		void RegistrationInformation(Player* Player);
