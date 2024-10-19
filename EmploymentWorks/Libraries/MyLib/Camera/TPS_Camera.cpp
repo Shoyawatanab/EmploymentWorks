@@ -35,6 +35,11 @@ mylib::TPS_Camera::TPS_Camera()
 
 }
 
+mylib::TPS_Camera::~TPS_Camera()
+{
+	delete m_mouse;
+}
+
 
 void mylib::TPS_Camera::Initialize()
 {
@@ -202,7 +207,8 @@ void mylib::TPS_Camera::CalculateEyePosition()
 
 
 	//³–ÊƒxƒNƒgƒ‹‚ğ‹‚ß‚é
-	m_forward = DirectX::SimpleMath::Vector3::Transform(DirectX::SimpleMath::Vector3::Forward, Rotation);
+	m_forward = (m_target - m_eye);
+	m_forward.Normalize();
 
 }
 

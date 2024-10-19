@@ -74,23 +74,6 @@ void BossEnemyBottom::Initialize()
 	//バウンディングの生成
 	BossEnemyBase::CreateBounding(m_currentPosition, m_currentAngle,Vector3(1.65f, 0.5f, 1.1f)* m__currentScale ,2.5f * m__currentScale.x);
 
-	//アニメーションの生成　引数　大きさ　座標　回転　時間
-	std::vector<BossEnemyBase::AnimationKeyFrame> animation;
-
-	animation.push_back({ Vector3(1, 1, 1), Vector3::Zero, DirectX::SimpleMath::Quaternion::Identity, 0.0f });            //初期値
-	animation.push_back({ Vector3(1, 1, 1), Vector3(0,0,0),
-		DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(0))
-		, 0.8f });            //足の振り上げ
-	animation.push_back({ Vector3(1, 1, 1), Vector3(0,0,0),
-		DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(0))
-		, 2.0f });            //溜め時間
-	animation.push_back({ Vector3(1, 1, 1), Vector3(0,0,0.0f),
-		DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(0))
-		, 0.8f });            //おろす
-
-
-	//アニメーションを登録
-	BossEnemyBase::SetAnimations(animation, "Run");
 
 	
 	//「Pelvis」を生成する

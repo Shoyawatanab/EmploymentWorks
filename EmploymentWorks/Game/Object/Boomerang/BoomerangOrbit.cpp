@@ -112,15 +112,22 @@ void BoomerangOrbit::Update(const float& elapsedTime)
 
 	m_linePos.clear();
 
-	m_target = m_player->GetTPS_Camera()->GetTargetPosition() + Vector3(0,0,-9);
+	static float a;
+	//a += elapsedTime;
+	a = 5.0f;
 
-	m_target = m_player->GetTPS_Camera()->GetEyePosition() - m_player->GetTPS_Camera()->GetCameraForward() * 1.0f ;
-	//m_target *= -1;
+	//カメラの正面ベクトルの取得
+	m_target = m_player->GetTPS_Camera()->GetCameraForward() * a;
+	//カメラのターゲットを足す
+	m_target += m_player->GetTPS_Camera()->GetTargetPosition();
+
 
 	Matrix SphereMatrix = Matrix::Identity;
-	SphereMatrix *= Matrix::CreateFromQuaternion(m_initialRotate);
+	SphereMatrix = Matrix::CreateFromQuaternion(m_player->GetTPS_Camera()->GetRotationX());
 	//プレイヤと敵の距離
 	Vector3 PlayerToEnemyDistance = m_target - m_player->GetPosition();
+	//高さを０にする
+	PlayerToEnemyDistance.y = 0;
 
 	////ロックオン状態じゃなければ
 	//if (!m_player->GetIsLockOn())
@@ -153,6 +160,8 @@ void BoomerangOrbit::Update(const float& elapsedTime)
 
 		//一時的に保存する
 		m_moveSpherePos[i] = Pos;
+		//プレイヤの高さに合わせる
+		m_moveSpherePos[i].y = m_player->GetPos().y;
 
 
 	}
@@ -164,7 +173,7 @@ void BoomerangOrbit::Update(const float& elapsedTime)
 	{
 		//初期値点から一番遠いところの距離と今の座標の割合を求める
 		float a = (m_moveSpherePos[i].z - m_moveSpherePos[0].z) / (m_moveSpherePos[3].z - m_moveSpherePos[0].z);
-		m_moveSpherePos[i].y = Lerp(0, m_target.y, a);
+		m_moveSpherePos[i].y = Lerp(m_player->GetPos().y, m_target.y, a);
 	}
 
 
@@ -174,7 +183,9 @@ void BoomerangOrbit::Update(const float& elapsedTime)
 		//プレイヤの回転をもとに回転させる
 		m_moveSpherePos[i] = Vector3::Transform(m_moveSpherePos[i], SphereMatrix);
 		//原点からになっているからブーメランの位置を加算する
-		m_moveSpherePos[i] += m_position;
+		m_moveSpherePos[i].x += m_position.x;
+		m_moveSpherePos[i].z += m_position.z;
+
 	}
 
 

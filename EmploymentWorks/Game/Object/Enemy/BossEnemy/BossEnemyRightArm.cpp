@@ -75,18 +75,6 @@ void BossEnemyRightArm::Initialize()
 	BossEnemyBase::CreateBounding(m_currentPosition, m_currentAngle, Vector3(0.6f, 0.9f, 0.6f) * m__currentScale, 1.5f * m__currentScale.x);
 
 
-	//アニメーションの生成　引数　大きさ　座標　回転　時間
-	std::vector<BossEnemyBase::AnimationKeyFrame> animation;
-	//test
-	animation.push_back({ Vector3(1, 1, 1), Vector3::Zero, DirectX::SimpleMath::Quaternion::Identity, 0.0f });            //初期値
-	animation.push_back({ Vector3(1, 1, 1), Vector3(0,0,0),
-		DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(-20),DirectX::XMConvertToRadians(0))
-		, 0.8f });            //腕の振り上げ
-
-
-	//アニメーションを登録
-	BossEnemyBase::SetAnimations(animation, "SwingingDownBothArms");
-
 }
 
 

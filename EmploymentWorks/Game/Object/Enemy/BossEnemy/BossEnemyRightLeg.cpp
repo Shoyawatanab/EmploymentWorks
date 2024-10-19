@@ -74,35 +74,6 @@ void BossEnemyRightLeg::Initialize()
 	BossEnemyBase::CreateBounding(m_currentPosition - Vector3(0, 0.5f, 0), m_currentAngle, Vector3(0.4f, 0.55f, 0.4f) * m__currentScale, 1.0f * m__currentScale.x);
 
 
-	//アニメーションの生成　引数　大きさ　座標　回転　時間
-	std::vector<BossEnemyBase::AnimationKeyFrame> animation;
-
-	animation.push_back({ Vector3(1, 1, 1), Vector3::Zero, DirectX::SimpleMath::Quaternion::Identity, 0.0f });            //初期値
-	animation.push_back({ Vector3(1, 1, 1), Vector3(0,0,0),
-		DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(0))
-		, 0.2f });            //足の振り上げ
-	animation.push_back({ Vector3(1, 1, 1), Vector3(0,0,0),
-		DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(0))
-		, 0.2f });            //溜め時間
-	animation.push_back({ Vector3(1, 1, 1), Vector3(0,0,0.0f),
-		DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(0))
-		, 0.2f });            //おろす
-	animation.push_back({ Vector3(1, 1, 1), Vector3::Zero, DirectX::SimpleMath::Quaternion::Identity, 0.5f });
-
-	animation.push_back({ Vector3(1, 1, 1), Vector3(0,0,0.0f),
-		DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(80),DirectX::XMConvertToRadians(0))
-		, 0.2f });            //おろす
-	animation.push_back({ Vector3(1, 1, 1), Vector3(0,0,0.0f),
-		DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(80),DirectX::XMConvertToRadians(0))
-		, 0.2f });            //おろす
-	animation.push_back({ Vector3(1, 1, 1), Vector3(0,0,0.0f),
-		DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(0))
-		, 0.2f });            //おろす
-
-
-	//アニメーションを登録
-	BossEnemyBase::SetAnimations(animation, "Run");
-
 
 
 }

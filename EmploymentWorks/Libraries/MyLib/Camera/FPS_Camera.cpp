@@ -30,6 +30,12 @@ mylib::FPS_Camera::FPS_Camera(
 
 }
 
+mylib::FPS_Camera::~FPS_Camera()
+{
+	delete m_mouse;
+
+}
+
 
 void mylib::FPS_Camera::Initialize()
 {
