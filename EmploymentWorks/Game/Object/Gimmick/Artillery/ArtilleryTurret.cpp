@@ -62,7 +62,7 @@ void ArtilleryTurret::Initialize(CommonResources* resources, DirectX::SimpleMath
 	m_bounding = std::make_unique<Bounding>();
 
 	//íeÇÃê∂ê¨
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 1; i++)
 	{
 		auto bullet = std::make_unique<ArtilleryBullet>();
 		bullet->Initialize(m_commonResources, m_position, m_scale,m_rotate);

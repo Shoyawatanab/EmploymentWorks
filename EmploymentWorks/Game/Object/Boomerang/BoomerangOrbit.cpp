@@ -114,7 +114,7 @@ void BoomerangOrbit::Update(const float& elapsedTime)
 
 	static float a;
 	//a += elapsedTime;
-	a = 5.0f;
+	a = 10.0f;
 
 	//カメラの正面ベクトルの取得
 	m_target = m_player->GetTPS_Camera()->GetCameraForward() * a;

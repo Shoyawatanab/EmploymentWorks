@@ -111,6 +111,7 @@ private:
 
 	bool m_isAttack;
 
+	DirectX::SimpleMath::Vector3 m_boundingBoxCenter;
 
 public:
 	Enemy(CommonResources* resources, IComponent* parent, const DirectX::SimpleMath::Vector3 initialScale, const DirectX::SimpleMath::Vector3& initialPosition, const DirectX::SimpleMath::Quaternion& initialAngle);
@@ -121,7 +122,9 @@ public:
 	void Render(DirectX::SimpleMath::Matrix view, DirectX::SimpleMath::Matrix projection) ;
 	void Finalize() ;
 
-	void ReduceSize(float elapsdTime);
+	BossEnemyBase::AnimationStage FallDwonAnimation(float elapsdTime);
+
+	void SetAnimation(std::string name);
 
 	//クラスに必要な情報（ポインタ）を登録する
 	void RegistrationInformation(Player* player);

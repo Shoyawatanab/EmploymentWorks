@@ -46,6 +46,8 @@ public:
 	void CreateOrientexBox(CommonResources* resources, DirectX::SimpleMath::Vector3 CenterPos, DirectX::SimpleMath::Vector3 Extents, DirectX::SimpleMath::Quaternion rotate);
 
 	void Update(DirectX::SimpleMath::Vector3 Position);
+	void Update(DirectX::SimpleMath::Vector3 Position, DirectX::SimpleMath::Vector3 Extents);
+
 	void OrientexBoxUpdate(DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Quaternion rotate);
 
 

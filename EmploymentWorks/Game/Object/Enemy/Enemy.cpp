@@ -92,8 +92,9 @@ void Enemy::Initialize()
 	m_initialRotate = DirectX::SimpleMath::Quaternion::CreateFromAxisAngle(DirectX::SimpleMath::Vector3::Up, DirectX::XMConvertToRadians(90.0f));
 	m_rotate = DirectX::SimpleMath::Quaternion::Identity;
 
+	m_boundingBoxCenter = Vector3(0, 1, 0);
 
-	m_bounding->CreateBoundingBox(m_commonResources, m_position + Vector3(0,1,0), Vector3(4.5f, 5.5f, 1.8f));
+	m_bounding->CreateBoundingBox(m_commonResources, m_position + m_boundingBoxCenter, Vector3(4.5f, 5.5f, 1.8f));
 	m_bounding->CreateBoundingSphere(m_commonResources, m_position, 6.0f);
 
 	m_hp = MAXHP;
@@ -118,7 +119,7 @@ void Enemy::Initialize()
 	//「Bottom」を生成する
 	Attach(std::make_unique<BossEnemyBottom>(BossEnemyBase::GetResources(), this, BossEnemyBase::GetInitialScale(), Vector3(0.0f, -0.6f, 0.0f), Quaternion::Identity));
 
-	RegistrationRungingAnimation("Beam");
+
 
 }
 
@@ -132,7 +133,7 @@ void Enemy::Update(float elapsedTime)
 	// キーボードステートを取得する
 	DirectX::Keyboard::State keyboardState = DirectX::Keyboard::Get().GetState();
 
-	m_behavior->Update(elapsedTime);
+	//m_behavior->Update(elapsedTime);
 
 	BossEnemyBase::AnimationUdate(elapsedTime);
 
@@ -188,7 +189,7 @@ void Enemy::Update(float elapsedTime)
 
 	m_targetPos = m_position + Pos;
 
-	m_bounding->Update(m_position + DirectX::SimpleMath::Vector3(0,1,0));
+	m_bounding->Update(m_position + m_boundingBoxCenter);
 
 }
 
@@ -203,13 +204,13 @@ void Enemy::Render(DirectX::SimpleMath::Matrix view, DirectX::SimpleMath::Matrix
 	auto states = m_commonResources->GetCommonStates();
 
 
-	// ワールド行列を更新する
-	m_worldMatrix = Matrix::CreateScale(m_scale);
-	//のちに変更する　初期角度をここでやらないとプレイヤの方向に向く処理に影響が出て向かなくなる
-	m_worldMatrix *= Matrix::CreateFromQuaternion(m_initialRotate);
+	//// ワールド行列を更新する
+	//m_worldMatrix = Matrix::CreateScale(m_scale);
+	////のちに変更する　初期角度をここでやらないとプレイヤの方向に向く処理に影響が出て向かなくなる
+	//m_worldMatrix *= Matrix::CreateFromQuaternion(m_initialRotate);
 
-	m_worldMatrix *= Matrix::CreateFromQuaternion(m_rotate);
-	m_worldMatrix *= Matrix::CreateTranslation(m_position);
+	//m_worldMatrix *= Matrix::CreateFromQuaternion(m_rotate);
+	//m_worldMatrix *= Matrix::CreateTranslation(m_position);
 
 	//部品を描画する
 	BossEnemyBase::Render(view, projection);
@@ -234,13 +235,52 @@ void Enemy::Finalize()
 }
 
 //大きさを小さくする
-void Enemy::ReduceSize(float elapsdTime)
+BossEnemyBase::AnimationStage  Enemy::FallDwonAnimation(float elapsdTime)
 {
 
 	UNREFERENCED_PARAMETER(elapsdTime);
 
-	//m_scale -= 0.01f;
-	//m_scale = std::max(m_scale, 0.0f);
+	BossEnemyBase::AnimationStage state;
+
+	state = BossEnemyBase::AnimationUdate(elapsdTime);
+
+	if (state == AnimationStage::Runngin)
+	{
+
+		m_position.y -= 0.45f *elapsdTime;
+		m_position.z += 0.5f * elapsdTime;
+		m_boundingBoxCenter.y += 0.95f * elapsdTime;
+	}
+
+	//部品を更新する
+	BossEnemyBase::Update(elapsdTime);
+	m_position.y -= m_graivty;
+
+
+	//プレイヤと敵のベクトル
+	DirectX::SimpleMath::Vector3 vec = m_player->GetPos() - m_position;
+	vec.Normalize();
+	//プレイヤの方向に向けるための回転
+	DirectX::SimpleMath::Quaternion Rotate;
+
+	Rotate = DirectX::SimpleMath::Quaternion::FromToRotation(STAETTAEGETDIRECTION, vec);
+
+	DirectX::SimpleMath::Vector3 Pos = DirectX::SimpleMath::Vector3::Transform(STAETTAEGETDIRECTION, Rotate);
+
+	m_targetPos = m_position + Pos;
+
+	m_bounding->Update(m_position + m_boundingBoxCenter);
+
+	return state;
+
+}
+
+void Enemy::SetAnimation(std::string name)
+{
+
+	RegistrationRungingAnimation("FallDown");
+
+
 }
 
 void Enemy::RegistrationInformation( Player* player)

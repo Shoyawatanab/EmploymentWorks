@@ -42,6 +42,7 @@ private:
 	// ƒ‚ƒfƒ‹
 	std::unique_ptr<DirectX::Model> m_model;
 
+	DirectX::SimpleMath::Vector3 m_initialPosition;
 	DirectX::SimpleMath::Vector3 m_position;
 	DirectX::SimpleMath::Vector3 m_scale;
 	DirectX::SimpleMath::Quaternion m_rotate;
