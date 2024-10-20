@@ -218,6 +218,11 @@ void PlayScene::Initialize(CommonResources* resources)
 		artillery->RegistrationCollionManager(m_collisionManager.get());
 	}
 
+	for (auto& pillar : m_pillar)
+	{
+		pillar->RegistrationCollionManager(m_collisionManager.get());
+	}
+
 	//m_rock[0]->RegistrationCollionManager(m_collisionManager.get());
 	//m_rock[1]->RegistrationCollionManager(m_collisionManager.get());
 
@@ -265,6 +270,8 @@ void PlayScene::Update(float elapsedTime)
 				m_cameraManager->ChangeState(m_cameraManager->GetGameEndCamera());
 				//ゲーム状態をクリアに変更
 				m_state = GameState::Clear;
+				m_enemy->SetAnimation("FallDown");
+
 			}
 
 			//ゲームオーバーに変更
@@ -286,14 +293,19 @@ void PlayScene::Update(float elapsedTime)
 			//TPSカメラになってゲームが通常状態の時
 			if (m_cameraManager->GetGameCameraState() != m_cameraManager->GetGameStartCamera())
 			{
-				m_enemy->ReduceSize(elapsedTime);
+				
+				if (m_enemy->FallDwonAnimation(elapsedTime) == BossEnemyBase::AnimationStage::Success && m_ui->GetCurrentUIState() != m_ui->GetGameClearUI())
+				{
+					m_ui->ChangeState(m_ui->GetGameClearUI());
+
+				}
+			
 			}
 
 			////敵を倒したときのアニメーションが終わったら
-			//if (m_enemy->GetScale() <= 0 && m_ui->GetCurrentUIState() != m_ui->GetGameClearUI())
-			//{
-			//	m_ui->ChangeState(m_ui->GetGameClearUI());
-			//}
+			if (m_enemy->GetScale().x <= 0 && m_ui->GetCurrentUIState() != m_ui->GetGameClearUI())
+			{
+			}
 
 			break;
 		case PlayScene::GameState::GameOver:

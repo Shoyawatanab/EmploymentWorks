@@ -99,6 +99,15 @@ void Bounding::Update(DirectX::SimpleMath::Vector3 Position)
 
 }
 
+void Bounding::Update(DirectX::SimpleMath::Vector3 Position, DirectX::SimpleMath::Vector3 Extents)
+{
+
+	m_boundingSphere.Center = Position;
+
+	m_boundingBox.Center = Position;
+	m_boundingBox.Extents = Extents;
+}
+
 void Bounding::OrientexBoxUpdate(DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Quaternion rotate)
 {
 	m_boundingSphere.Center = position;

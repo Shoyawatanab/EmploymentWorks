@@ -50,6 +50,9 @@ enum class CollisionType
 	, Boomerang_Artillery = static_cast<uint32_t>(CollsionObjectTag::Boomerang) | static_cast<uint32_t>(CollsionObjectTag::Artillery)
 	, Boomerang_ArtilleryBullet = static_cast<uint32_t>(CollsionObjectTag::Boomerang) | static_cast<uint32_t>(CollsionObjectTag::ArtilleryBullet)
 
+	, ArtilleryBullet_Stage = static_cast<uint32_t>(CollsionObjectTag::ArtilleryBullet) | static_cast<uint32_t>(CollsionObjectTag::Stage)
+
+
 	,EnemyParts_Boomerang = static_cast<uint32_t>(CollsionObjectTag::EnemyParts) | static_cast<uint32_t>(CollsionObjectTag::Boomerang)
 
 };

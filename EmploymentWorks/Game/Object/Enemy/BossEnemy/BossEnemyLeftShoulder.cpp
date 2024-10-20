@@ -98,9 +98,13 @@ void BossEnemyLeftShoulder::Update(const float& elapsdTime)
 	Vector3 rotatedPosition = Vector3::Transform(BossEnemyBase::GetPositonFromParent() + BossEnemyBase::GetAnimationPosition(), Matrix::CreateFromQuaternion(BossEnemyBase::GetParent()->GetAngle()));
 	//現在の座標を更新　このクラスの座標と親の座標 大きさを変えても距離を変えないようにScaleをかける
 	m_currentPosition = (rotatedPosition * BossEnemyBase::GetParent()->GetScale()) + BossEnemyBase::GetParent()->GetPos();
+	//回転させるとずれるから　肩のオブジェクトの中心が上に設定されているからその分のずれ
+	DirectX::SimpleMath::Vector3 pos = Vector3(0, 0.45f, 0);
+
+	pos = Vector3::Transform(pos, m_currentAngle);
 
 	//バウンディングの座標の更新
-	BossEnemyBase::BoundingUdate(m_currentPosition - Vector3(0, 0.45f, 0), m_currentAngle);
+	BossEnemyBase::BoundingUdate(m_currentPosition - pos, m_currentAngle);
 
 
 	// 砲塔部品を更新する

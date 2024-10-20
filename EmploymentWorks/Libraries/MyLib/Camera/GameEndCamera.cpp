@@ -53,7 +53,6 @@ void mylib::GameEndCamera::Update(const float& elapsedTime)
 	using namespace DirectX;
 	using namespace DirectX::SimpleMath;
 
-	m_target = m_enemy->GetPos();
 
 
 	// ƒJƒƒ‰À•W‚ðŒvŽZ‚·‚é
@@ -125,6 +124,10 @@ void mylib::GameEndCamera::RegistrationInformation(GameCameraManager* cameraMana
 
 void mylib::GameEndCamera::Enter()
 {
+
+	m_target = m_enemy->GetPos();
+
+
 }
 
 

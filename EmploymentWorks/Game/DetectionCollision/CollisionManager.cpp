@@ -132,6 +132,14 @@ void CollisionManager::Update()
 					}
 					break;
 				case static_cast<uint32_t>(CollisionType::Player_Pillar):
+					if (CheckIsBox(m_collsionObjects[i], m_collsionObjects[j]))
+					{
+						BoxExtrusion(m_collsionObjects[i], m_collsionObjects[j]);
+						m_collsionObjects[i]->OnCollisionEnter(tagJ, m_collsionObjects[j]->GetBounding()->GetBoundingBox()->Center);
+						m_collsionObjects[j]->OnCollisionEnter(tagI, m_collsionObjects[i]->GetBounding()->GetBoundingBox()->Center);
+					}
+
+
 					break;
 				case static_cast<uint32_t>(CollisionType::Player_Artillery):
 					break;
@@ -140,6 +148,13 @@ void CollisionManager::Update()
 
 
 				case static_cast<uint32_t>(CollisionType::Enemy_Boomerang):
+					if (CheckIsBox(m_collsionObjects[i], m_collsionObjects[j]))
+					{
+
+						m_collsionObjects[i]->OnCollisionEnter(tagJ, m_collsionObjects[j]->GetBounding()->GetBoundingBox()->Center);
+						m_collsionObjects[j]->OnCollisionEnter(tagI, m_collsionObjects[i]->GetBounding()->GetBoundingBox()->Center);
+
+					}
 
 					break;
 				case static_cast<uint32_t>(CollisionType::Enemy_Stage):
@@ -214,6 +229,20 @@ void CollisionManager::Update()
 					break;
 				case static_cast<uint32_t>(CollisionType::Boomerang_ArtilleryBullet):
 					break;
+
+				case static_cast<uint32_t>(CollisionType::ArtilleryBullet_Stage):
+					
+					if (CheckIsBox(m_collsionObjects[i], m_collsionObjects[j]))
+					{
+						m_collsionObjects[i]->OnCollisionEnter(tagJ, m_collsionObjects[j]->GetBounding()->GetBoundingBox()->Center);
+						m_collsionObjects[j]->OnCollisionEnter(tagI, m_collsionObjects[i]->GetBounding()->GetBoundingBox()->Center);
+
+					}
+
+					break;
+
+
+				
 
 				case static_cast<uint32_t>(CollisionType::EnemyParts_Boomerang):
 					if (CheckIsOrientexBox(m_collsionObjects[i], m_collsionObjects[j]))

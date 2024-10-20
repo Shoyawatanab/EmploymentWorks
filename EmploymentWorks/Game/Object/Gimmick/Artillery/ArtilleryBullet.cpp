@@ -49,6 +49,7 @@ void ArtilleryBullet::Initialize(CommonResources* resources, DirectX::SimpleMath
 	m_position = position;
 	m_scale = Scale;
 	m_rotate = Rotate;
+	m_initialPosition = m_position;
 	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
 
 	// ƒ‚ƒfƒ‹‚ğ“Ç‚İ‚Ş€”õ
@@ -139,5 +140,17 @@ void ArtilleryBullet::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::S
 {
 	UNREFERENCED_PARAMETER(PartnerTag);
 	UNREFERENCED_PARAMETER(Pos);
+
+	switch (PartnerTag)
+	{
+		case CollsionObjectTag::Stage:
+		case CollsionObjectTag::Enemy:
+			m_position = m_initialPosition;
+			m_bulletState = Loading;
+			break;
+		default:
+			break;
+	}
+
 }
 
