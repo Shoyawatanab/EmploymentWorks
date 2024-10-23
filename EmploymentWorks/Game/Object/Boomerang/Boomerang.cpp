@@ -188,6 +188,8 @@ void Boomerang::ChangeState(IBoomerangState* nextState)
 
 void Boomerang::DemandBounceDirection(DirectX::SimpleMath::Vector3 pos, CollsionObjectTag& tag)
 {
+	UNREFERENCED_PARAMETER(pos);
+
 
 	switch (tag)
 	{

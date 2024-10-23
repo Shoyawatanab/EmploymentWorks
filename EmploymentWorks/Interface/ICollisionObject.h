@@ -88,9 +88,9 @@ public:
 	/// <param name="tag">“–‚½‚Á‚½Žž‚Ì‘ŠŽè‚Ìƒ^ƒO</param>
 	virtual void OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos1) = 0;
 
-	virtual void SetPos(DirectX::SimpleMath::Vector3& Pos) = 0;
+	virtual void SetPosition(DirectX::SimpleMath::Vector3& Pos) = 0;
 
-	virtual DirectX::SimpleMath::Vector3 GetPos() = 0;
+	virtual DirectX::SimpleMath::Vector3 GetPosition() = 0;
 
 	////‰½‚©‚Æ“–‚½‚Á‚½Žž‚ÉŒp‘±“I‚ÉŒÄ‚Î‚ê‚éUpdate
 	//virtual void OnCollisionUpdate(float elapsdTime) = 0;

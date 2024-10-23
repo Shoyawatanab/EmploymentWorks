@@ -199,7 +199,7 @@ void Player::Update(float elapsedTime)
 		if(boomerang->GetBoomerangState() == boomerang->GetBoomerangDrop())
 		{
 
-			float distance = DirectX::SimpleMath::Vector3::Distance(boomerang->GetPos(), m_position);
+			float distance = DirectX::SimpleMath::Vector3::Distance(boomerang->GetPosition(), m_position);
 
 			if(distance <= 1)
 			{

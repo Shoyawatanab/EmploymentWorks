@@ -35,7 +35,7 @@ mylib::GameEndCamera::GameEndCamera()
 void mylib::GameEndCamera::Initialize()
 {
 	m_angle = 0;
-	m_target = m_enemy->GetPos();
+	m_target = m_enemy->GetPosition();
 
 	CalculateEyePosition();
 	CalculateViewMatrix();
@@ -125,7 +125,7 @@ void mylib::GameEndCamera::RegistrationInformation(GameCameraManager* cameraMana
 void mylib::GameEndCamera::Enter()
 {
 
-	m_target = m_enemy->GetPos();
+	m_target = m_enemy->GetPosition();
 
 
 }

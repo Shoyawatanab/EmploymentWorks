@@ -16,6 +16,8 @@ void BossEnemyRightArm::RegistrationCollionManager(CollisionManager* collsionMan
 
 void BossEnemyRightArm::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos)
 {
+	UNREFERENCED_PARAMETER(Pos);
+
 	switch (PartnerTag)
 	{
 		case CollsionObjectTag::Boomerang:
@@ -67,7 +69,7 @@ void BossEnemyRightArm::Initialize()
 	//回転から座標を計算する
 	Vector3 rotatedPosition = Vector3::Transform(BossEnemyBase::GetPositonFromParent() + BossEnemyBase::GetAnimationPosition(), Matrix::CreateFromQuaternion(BossEnemyBase::GetParent()->GetAngle()));
 	//現在の座標を更新　このクラスの座標と親の座標 大きさを変えても距離を変えないようにScaleをかける
-	m_currentPosition = (rotatedPosition * BossEnemyBase::GetParent()->GetScale()) + BossEnemyBase::GetParent()->GetPos();
+	m_currentPosition = (rotatedPosition * BossEnemyBase::GetParent()->GetScale()) + BossEnemyBase::GetParent()->GetPosition();
 
 
 	BossEnemyBase::Initialize(std::move(m_model));
@@ -91,7 +93,7 @@ void BossEnemyRightArm::Update(const float& elapsdTime)
 	//回転から座標を計算する
 	Vector3 rotatedPosition = Vector3::Transform(BossEnemyBase::GetPositonFromParent() + BossEnemyBase::GetAnimationPosition(), Matrix::CreateFromQuaternion(BossEnemyBase::GetParent()->GetAngle()));
 	//現在の座標を更新　このクラスの座標と親の座標 大きさを変えても距離を変えないようにScaleをかける
-	m_currentPosition = (rotatedPosition * BossEnemyBase::GetParent()->GetScale()) + BossEnemyBase::GetParent()->GetPos();
+	m_currentPosition = (rotatedPosition * BossEnemyBase::GetParent()->GetScale()) + BossEnemyBase::GetParent()->GetPosition();
 	//バウンディングの座標の更新
 	BossEnemyBase::BoundingUdate(m_currentPosition, m_currentAngle);
 

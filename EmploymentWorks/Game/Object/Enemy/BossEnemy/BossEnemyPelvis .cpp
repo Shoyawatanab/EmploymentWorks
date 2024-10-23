@@ -48,7 +48,7 @@ void BossEnemyPelvis::Initialize()
 	//回転から座標を計算する
 	Vector3 rotatedPosition = Vector3::Transform(BossEnemyBase::GetPositonFromParent() + BossEnemyBase::GetAnimationPosition(), Matrix::CreateFromQuaternion(BossEnemyBase::GetParent()->GetAngle()));
 	//現在の座標を更新　このクラスの座標と親の座標 大きさを変えても距離を変えないようにScaleをかける
-	m_currentPosition = (rotatedPosition * BossEnemyBase::GetParent()->GetScale()) + BossEnemyBase::GetParent()->GetPos();
+	m_currentPosition = (rotatedPosition * BossEnemyBase::GetParent()->GetScale()) + BossEnemyBase::GetParent()->GetPosition();
 
 	BossEnemyBase::Initialize(std::move(m_model));
 	// 「砲塔下部」を生成する
@@ -71,7 +71,7 @@ void BossEnemyPelvis::Update(const float& elapsdTime)
 	//回転から座標を計算する
 	Vector3 rotatedPosition = Vector3::Transform(BossEnemyBase::GetPositonFromParent() + BossEnemyBase::GetAnimationPosition(), Matrix::CreateFromQuaternion(BossEnemyBase::GetParent()->GetAngle()));
 	//現在の座標を更新　このクラスの座標と親の座標 大きさを変えても距離を変えないようにScaleをかける
-	m_currentPosition = (rotatedPosition * BossEnemyBase::GetParent()->GetScale()) + BossEnemyBase::GetParent()->GetPos();
+	m_currentPosition = (rotatedPosition * BossEnemyBase::GetParent()->GetScale()) + BossEnemyBase::GetParent()->GetPosition();
 	// 砲塔部品を更新する
 	BossEnemyBase::Update(elapsdTime);
 }
@@ -122,6 +122,8 @@ void BossEnemyPelvis::RegistrationCollionManager(CollisionManager* collsionManag
 
 void BossEnemyPelvis::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos)
 {
+	UNREFERENCED_PARAMETER(Pos);
+
 	switch (PartnerTag)
 	{
 		case CollsionObjectTag::Boomerang:

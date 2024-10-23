@@ -83,7 +83,7 @@ void LockOn::Update(float elapsedTime)
 	m_isLockOn = false;
 
 	////Ž‹–ìŠpŠO‚È‚ç
-	if (!IsEnemyInview(m_player->GetPos(), m_player->GetPlayerForWard(), m_enemy->GetPos()))
+	if (!IsEnemyInview(m_player->GetPosition(), m_player->GetPlayerForWard(), m_enemy->GetPosition()))
 	{
 		return;
 	}

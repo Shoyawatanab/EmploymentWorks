@@ -50,6 +50,7 @@ void mylib::FPS_Camera::Initialize()
 
 void mylib::FPS_Camera::Update(const float& elapsedTime)
 {
+	UNREFERENCED_PARAMETER(elapsedTime);
 	using namespace DirectX::SimpleMath;
 
 

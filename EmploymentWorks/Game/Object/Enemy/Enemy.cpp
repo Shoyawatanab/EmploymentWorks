@@ -75,7 +75,7 @@ void Enemy::Initialize()
 
 	//m_commonResources = resources;
 
-	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
+	//auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
 
 
 
@@ -92,8 +92,11 @@ void Enemy::Initialize()
 	m_initialRotate = DirectX::SimpleMath::Quaternion::CreateFromAxisAngle(DirectX::SimpleMath::Vector3::Up, DirectX::XMConvertToRadians(90.0f));
 	m_rotate = DirectX::SimpleMath::Quaternion::Identity;
 
+	//m_rotate = DirectX::SimpleMath::Quaternion::CreateFromAxisAngle(DirectX::SimpleMath::Vector3::UnitY, DirectX::XMConvertToRadians(180.0f));
+
 	m_boundingBoxCenter = Vector3(0, 1, 0);
 
+	m_bounding = std::make_unique<Bounding>();
 	m_bounding->CreateBoundingBox(m_commonResources, m_position + m_boundingBoxCenter, Vector3(4.5f, 5.5f, 1.8f));
 	m_bounding->CreateBoundingSphere(m_commonResources, m_position, 6.0f);
 
@@ -119,7 +122,12 @@ void Enemy::Initialize()
 	//「Bottom」を生成する
 	Attach(std::make_unique<BossEnemyBottom>(BossEnemyBase::GetResources(), this, BossEnemyBase::GetInitialScale(), Vector3(0.0f, -0.6f, 0.0f), Quaternion::Identity));
 
+	m_rightHandPos = m_position + Vector3(-1.5f,1, 7.50);
 
+	m_beamStartPosition = Vector3::Transform(m_rightHandPos, m_rotate);
+
+	//RegistrationRungingAnimation("Beam");
+	//BossEnemyBase::AnimationUdate(1.0f);
 
 }
 
@@ -128,12 +136,13 @@ void Enemy::Initialize()
 //---------------------------------------------------------
 void Enemy::Update(float elapsedTime)
 {
+	using namespace DirectX::SimpleMath;
 	UNREFERENCED_PARAMETER(elapsedTime);
 
 	// キーボードステートを取得する
 	DirectX::Keyboard::State keyboardState = DirectX::Keyboard::Get().GetState();
 
-	//m_behavior->Update(elapsedTime);
+	m_behavior->Update(elapsedTime);
 
 	BossEnemyBase::AnimationUdate(elapsedTime);
 
@@ -141,6 +150,9 @@ void Enemy::Update(float elapsedTime)
 	//部品を更新する
 	BossEnemyBase::Update(elapsedTime);
 
+	//m_rotate *= DirectX::SimpleMath::Quaternion::CreateFromAxisAngle(DirectX::SimpleMath::Vector3::UnitY, DirectX::XMConvertToRadians(0.1f))
+
+	m_beamStartPosition = Vector3::Transform(m_rightHandPos, m_rotate);
 
 	if (m_isCollsionTime)
 	{
@@ -178,7 +190,7 @@ void Enemy::Update(float elapsedTime)
 
 
 	//プレイヤと敵のベクトル
-	DirectX::SimpleMath::Vector3 vec = m_player->GetPos() - m_position;
+	DirectX::SimpleMath::Vector3 vec = m_player->GetPosition() - m_position;
 	vec.Normalize();
 	//プレイヤの方向に向けるための回転
 	DirectX::SimpleMath::Quaternion Rotate;
@@ -200,8 +212,8 @@ void Enemy::Render(DirectX::SimpleMath::Matrix view, DirectX::SimpleMath::Matrix
 {
 	using namespace DirectX::SimpleMath;
 
-	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
-	auto states = m_commonResources->GetCommonStates();
+	//auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
+	//auto states = m_commonResources->GetCommonStates();
 
 
 	//// ワールド行列を更新する
@@ -258,7 +270,7 @@ BossEnemyBase::AnimationStage  Enemy::FallDwonAnimation(float elapsdTime)
 
 
 	//プレイヤと敵のベクトル
-	DirectX::SimpleMath::Vector3 vec = m_player->GetPos() - m_position;
+	DirectX::SimpleMath::Vector3 vec = m_player->GetPosition() - m_position;
 	vec.Normalize();
 	//プレイヤの方向に向けるための回転
 	DirectX::SimpleMath::Quaternion Rotate;

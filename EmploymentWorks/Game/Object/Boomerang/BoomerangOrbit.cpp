@@ -112,12 +112,9 @@ void BoomerangOrbit::Update(const float& elapsedTime)
 
 	m_linePos.clear();
 
-	static float a;
-	//a += elapsedTime;
-	a = 10.0f;
 
 	//カメラの正面ベクトルの取得
-	m_target = m_player->GetTPS_Camera()->GetCameraForward() * a;
+	m_target = m_player->GetTPS_Camera()->GetCameraForward() * 10;
 	//カメラのターゲットを足す
 	m_target += m_player->GetTPS_Camera()->GetTargetPosition();
 
@@ -161,19 +158,19 @@ void BoomerangOrbit::Update(const float& elapsedTime)
 		//一時的に保存する
 		m_moveSpherePos[i] = Pos;
 		//プレイヤの高さに合わせる
-		m_moveSpherePos[i].y = m_player->GetPos().y;
+		m_moveSpherePos[i].y = m_player->GetPosition().y;
 
 
 	}
 
 
-
+	float a;
 	//高さ調整
 	for (int i = 0; i < m_spherePos.size(); i++)
 	{
 		//初期値点から一番遠いところの距離と今の座標の割合を求める
-		float a = (m_moveSpherePos[i].z - m_moveSpherePos[0].z) / (m_moveSpherePos[3].z - m_moveSpherePos[0].z);
-		m_moveSpherePos[i].y = Lerp(m_player->GetPos().y, m_target.y, a);
+		a = (m_moveSpherePos[i].z - m_moveSpherePos[0].z) / (m_moveSpherePos[3].z - m_moveSpherePos[0].z);
+		m_moveSpherePos[i].y = Lerp(m_player->GetPosition().y, m_target.y, a);
 	}
 
 

@@ -41,8 +41,6 @@ public:
 	};
 
 public:
-	DirectX::SimpleMath::Vector3 GetPosition() { return m_position; };
-	void SetPosition(DirectX::SimpleMath::Vector3 Pos) { m_position = Pos; }
 	DirectX::SimpleMath::Quaternion GetRotate() { return m_rotate; }
 	void SetRotate(DirectX::SimpleMath::Quaternion Rotate) { m_rotate = Rotate; }
 
@@ -137,9 +135,9 @@ public:
 
 	CollsionObjectTag GetCollsionTag() const override { return CollsionObjectTag::Boomerang; }
 
-	void SetPos(DirectX::SimpleMath::Vector3& Pos) override { m_position = Pos; }
+	void SetPosition(DirectX::SimpleMath::Vector3& Pos) override { m_position = Pos; }
 
-	DirectX::SimpleMath::Vector3 GetPos() override { return m_position; }
+	DirectX::SimpleMath::Vector3 GetPosition() override { return m_position; }
 
 	void OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos) override;
 

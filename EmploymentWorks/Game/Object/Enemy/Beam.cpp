@@ -128,7 +128,10 @@ bool Beam::Attack(float elapsdTime)
 	//予備動作
 	if (m_preliminaryActionTime < 4)
 	{
-
+		if (m_preliminaryActionTime == 0)
+		{
+			m_enemy->RegistrationRungingAnimation("Beam");
+		}
 
 		m_preliminaryActionTime += elapsdTime;
 		return true;
@@ -138,9 +141,9 @@ bool Beam::Attack(float elapsdTime)
 	if (m_bounding.empty())
 	{
 		//
-		m_startPos = m_enemy->GetPos();
+		m_startPos = m_enemy->GetBeamStartPosition();
 		//プレイヤの座標をビームの終わりに
-		m_endPos = m_player->GetPos();
+		m_endPos = m_player->GetPosition();
 
 		//ビームの軌道を求める
 		DirectX::SimpleMath::Vector3 Orbit = m_endPos - m_startPos;
@@ -233,6 +236,9 @@ bool Beam::Attack(float elapsdTime)
 
 	if (m_bounding.empty())
 	{
+		//予備動作の時間の初期化
+		m_preliminaryActionTime = 0;
+		m_enemy->RegistrationRungingAnimation("BeamEnd");
 		//攻撃終了
 		return false;
 	}
