@@ -80,6 +80,9 @@ void BoomerangIdling::Enter()
 	Vector3 Pos = Vector3::Transform(Vector3::Zero, m_worldMatrix);
 	m_boomerang->SetPosition(Pos);
 
+
+	m_boomerang->SetUseState(Boomerang::UseState::Stock);
+
 }
 
 void BoomerangIdling::Exit()

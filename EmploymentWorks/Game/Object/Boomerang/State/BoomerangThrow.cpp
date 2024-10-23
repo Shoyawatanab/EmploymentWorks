@@ -139,6 +139,8 @@ void BoomerangThrow::Enter()
 
 	m_state = BoomerangThrowState::SplineCurve;
 
+	m_boomerang->SetUseState(Boomerang::UseState::Throw);
+
 }
 
 void BoomerangThrow::Exit()

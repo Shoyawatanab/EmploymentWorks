@@ -35,8 +35,10 @@ public:
 	enum class UseState
 	{
 
-		Stock,   //ストック状態　Update・描画なし
-		Using    //使用状態　　　Update・描画あり
+		Stock,    //ストック状態　　　Update・描画なし
+		Have,     //持っている状態   Updateなし・描画あり
+		GetReady, // 構えている　　　Update・描画あり
+		Throw     //使用状態　　　　　Update・描画あり
 
 	};
 

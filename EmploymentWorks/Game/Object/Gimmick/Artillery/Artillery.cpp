@@ -42,7 +42,7 @@ Artillery::~Artillery()
 //---------------------------------------------------------
 // ‰Šú‰»‚·‚é
 //---------------------------------------------------------
-void Artillery::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Vector3 Scale, DirectX::SimpleMath::Vector3 Rotate, float BoundingSphereRadius)
+void Artillery::Initialize(CommonResources* resources, PlayScene* playScene, DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Vector3 Scale, DirectX::SimpleMath::Vector3 Rotate, float BoundingSphereRadius)
 {
 	using namespace DirectX::SimpleMath;
 	using namespace DirectX;
@@ -71,7 +71,7 @@ void Artillery::Initialize(CommonResources* resources, DirectX::SimpleMath::Vect
 	m_base->Initialize(m_commonResources, m_position, m_scale, Quaternion::Identity);
 
 	m_turret = std::make_unique<ArtilleryTurret>();
-	m_turret->Initialize(m_commonResources, m_position, m_scale, m_rotate);
+	m_turret->Initialize(m_commonResources,playScene, m_position, m_scale, m_rotate);
 
 
 	/*

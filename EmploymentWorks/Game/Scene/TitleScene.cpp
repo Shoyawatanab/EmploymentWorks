@@ -150,7 +150,7 @@ void TitleScene::Initialize(CommonResources* resources)
 		{
 			//–C‘ä
 			auto artillery = std::make_unique<Artillery>();
-			artillery->Initialize(m_commonResources, parameter.Position, parameter.Scale, parameter.Rotation, parameter.BoundingSphereRadius);
+			artillery->Initialize(m_commonResources,nullptr, parameter.Position, parameter.Scale, parameter.Rotation, parameter.BoundingSphereRadius);
 			m_artillery.push_back(std::move(artillery));
 
 		}

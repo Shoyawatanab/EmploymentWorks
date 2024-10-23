@@ -40,7 +40,7 @@ ArtilleryTurret::~ArtilleryTurret()
 //---------------------------------------------------------
 // èâä˙âªÇ∑ÇÈ
 //---------------------------------------------------------
-void ArtilleryTurret::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Vector3 Scale, DirectX::SimpleMath::Quaternion Rotate)
+void ArtilleryTurret::Initialize(CommonResources* resources, PlayScene* playScene, DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Vector3 Scale, DirectX::SimpleMath::Quaternion Rotate)
 {
 	using namespace DirectX::SimpleMath;
 	assert(resources);
@@ -65,7 +65,7 @@ void ArtilleryTurret::Initialize(CommonResources* resources, DirectX::SimpleMath
 	for (int i = 0; i < 1; i++)
 	{
 		auto bullet = std::make_unique<ArtilleryBullet>();
-		bullet->Initialize(m_commonResources, m_position, m_scale,m_rotate);
+		bullet->Initialize(m_commonResources,playScene ,m_position, m_scale,m_rotate);
 		m_bullet.push_back(std::move(bullet));
 	}
 

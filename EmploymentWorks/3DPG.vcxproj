@@ -273,6 +273,7 @@
     <ClInclude Include="Libraries\MyLib\MemoryLeakDetector.h" />
     <ClInclude Include="Libraries\MyLib\Model3D.h" />
     <ClInclude Include="Libraries\MyLib\Mouse.h" />
+    <ClInclude Include="Libraries\MyLib\Particle.h" />
     <ClInclude Include="Libraries\MyLib\Texture.h" />
     <ClInclude Include="Libraries\MyLib\UserInterface.h" />
     <ClInclude Include="pch.h" />
@@ -358,6 +359,7 @@
     <ClCompile Include="Libraries\MyLib\LoadJson.cpp" />
     <ClCompile Include="Libraries\MyLib\Model3D.cpp" />
     <ClCompile Include="Libraries\MyLib\Mouse.cpp" />
+    <ClCompile Include="Libraries\MyLib\Particle.cpp" />
     <ClCompile Include="Libraries\MyLib\Texture.cpp" />
     <ClCompile Include="Libraries\MyLib\UserInterface.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -380,6 +382,7 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Resources\Shaders\LockOn\LockOnUI.hlsli" />
+    <None Include="Resources\Shaders\Particle\Particle.hlsli" />
     <None Include="Resources\Shaders\UI\UI.hlsli" />
   </ItemGroup>
   <ItemGroup>
@@ -402,6 +405,18 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\LockOn\%(Filename).cso</ObjectFileOutput>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\LockOn\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Particle\ParticlePS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\Particle\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\Particle\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Particle\ParticleVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\Particle\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\Particle\%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="Resources\Shaders\UI\UIGS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>

@@ -11,7 +11,7 @@
 // ëOï˚êÈåæ
 class CommonResources;
 class Bounding;
-
+class PlayScene;
 
 
 
@@ -49,11 +49,13 @@ private:
 
 	BulletState m_bulletState;
 
+	PlayScene* m_playScene;
+
 public:
 	ArtilleryBullet();
 	~ArtilleryBullet() ;
 
-	void Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Vector3 Scale,DirectX::SimpleMath::Quaternion Rotate);
+	void Initialize(CommonResources* resources, PlayScene* playScene, DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Vector3 Scale,DirectX::SimpleMath::Quaternion Rotate);
 	void Update(float elapsedTime);
 	void Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection) ;
 	void Finalize() ;

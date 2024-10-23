@@ -363,7 +363,7 @@ void Enemy::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath:
 			break;
 		case CollsionObjectTag::ArtilleryBullet:
 			
-			m_hp -= 2;
+			//m_hp -= 2;
 
 			break;
 		default:

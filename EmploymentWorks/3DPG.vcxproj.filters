@@ -95,6 +95,9 @@
     <Filter Include="Game\Object\Enemy\BossEnemy">
       <UniqueIdentifier>{6fa6bc25-da89-4bdd-ac5a-89a1c965a23e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources\Shaders\Particle">
+      <UniqueIdentifier>{9f3312fc-b4d3-40d4-8471-ab43f54dc9bc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -384,6 +387,9 @@
     <ClInclude Include="Interface\IComponent.h">
       <Filter>Interface</Filter>
     </ClInclude>
+    <ClInclude Include="Libraries\MyLib\Particle.h">
+      <Filter>Libraries\MyLib</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -629,6 +635,9 @@
     <ClCompile Include="Game\Object\Enemy\BossEnemy\BossEnemyTorso.cpp">
       <Filter>Game\Object\Enemy\BossEnemy</Filter>
     </ClCompile>
+    <ClCompile Include="Libraries\MyLib\Particle.cpp">
+      <Filter>Libraries\MyLib</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />
@@ -651,6 +660,9 @@
     <None Include="Resources\Shaders\UI\UI.hlsli">
       <Filter>Resources\Shaders\UI</Filter>
     </None>
+    <None Include="Resources\Shaders\Particle\Particle.hlsli">
+      <Filter>Resources\Shaders\Particle</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\LockOn\LockOnUIGS.hlsl">
@@ -670,6 +682,12 @@
     </FxCompile>
     <FxCompile Include="Resources\Shaders\UI\UIVS.hlsl">
       <Filter>Resources\Shaders\UI</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Particle\ParticlePS.hlsl">
+      <Filter>Resources\Shaders\Particle</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Particle\ParticleVS.hlsl">
+      <Filter>Resources\Shaders\Particle</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

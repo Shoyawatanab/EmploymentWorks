@@ -19,6 +19,8 @@ class UI;
 class Ceiling;
 class Pillar;
 class Artillery;
+class Particle;
+
 
 namespace mylib
 {
@@ -95,6 +97,9 @@ private:
 	//Jsonファイルの読み込みクラス
 	std::unique_ptr<mylib::LoadJson> m_loadJson;
 
+	//パーティクルクラス 爆発エフェクト
+	std::vector<std::unique_ptr<Particle>> m_particle;
+
 
 public:
 	PlayScene();
@@ -107,5 +112,6 @@ public:
 
 	SceneID GetNextSceneID() const override;
 
+	void CreateParticle(DirectX::SimpleMath::Vector3 Pos);
 
 };
