@@ -7,6 +7,13 @@
 
 // ‘O•ûéŒ¾
 class CommonResources;
+class Player;
+class Enemy;
+class Floor;
+class Wall;
+class Ceiling;
+class Pillar;
+class Artillery;
 
 
 
@@ -16,6 +23,8 @@ namespace mylib
 	class GridFloor;
 	class Texture;
 	class Model3D;
+	class LoadJson;
+
 }
 
 
@@ -53,6 +62,21 @@ private:
 
 
 	std::vector<std::unique_ptr<mylib::Model3D>> m_models;
+
+	std::unique_ptr<mylib::LoadJson> m_loadJson;
+	std::unique_ptr<Player> m_player;
+	std::unique_ptr<Enemy> m_enemy;
+	//°
+	std::unique_ptr<Floor> m_floor;
+
+	//•Ç
+	std::vector<std::unique_ptr<Wall>> m_wall;
+	//“Vˆä
+	std::unique_ptr<Ceiling> m_ceiling;
+	//’Œ
+	std::vector<std::unique_ptr<Pillar>> m_pillar;
+	//–C‘ä
+	std::vector<std::unique_ptr<Artillery>> m_artillery;
 
 
 public:

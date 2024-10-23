@@ -31,20 +31,20 @@ Conditions::~Conditions()
 bool Conditions::IsFindToPlayer()
 {
 	//視野角外
-	if (!m_commonResources->GetJudgement()->IsWithinTheSector(m_palyer->GetPos(), m_enemy->Getforward(), m_enemy->GetPos(), 20, 90))
+	if (!m_commonResources->GetJudgement()->IsWithinTheSector(m_palyer->GetPosition(), m_enemy->Getforward(), m_enemy->GetPosition(), 20, 90))
 	{
 		//巡回に行ってほしから見つけていないときにtrue
 		return true;
 	}
 
 	//Rayのための方向ベクトルの作成
-	DirectX::SimpleMath::Vector3 Direction = m_palyer->GetPos() - m_enemy->GetPos();
+	DirectX::SimpleMath::Vector3 Direction = m_palyer->GetPosition() - m_enemy->GetPosition();
 	//正規化
 	Direction.Normalize();
 
 	//Rayの作成
 	DirectX::SimpleMath::Ray ray;
-	ray.position = m_enemy->GetPos();
+	ray.position = m_enemy->GetPosition();
 	//Rayのdirectionは正規化されていること
 	ray.direction = Direction;
 
@@ -81,7 +81,7 @@ bool Conditions::IsAttack(float elapsdTime)
 {
 
 	//５秒に一回攻撃
-	if (m_attackCoolTime >= 2)
+	if (m_attackCoolTime >= 5)
 	{
 		//どっかでクールタイムのリセットが必要
 		m_attackCoolTime = 0;

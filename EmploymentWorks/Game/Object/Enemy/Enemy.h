@@ -31,8 +31,6 @@ class Enemy : public BossEnemyBase
 public:
 
 
-	DirectX::SimpleMath::Vector3 GetPosition() { return m_position; }
-	void SetPosition(DirectX::SimpleMath::Vector3 Pos) { m_position = Pos; }
 	DirectX::SimpleMath::Quaternion GetRotate() { return m_rotate; }
 	void SetRotate(DirectX::SimpleMath::Quaternion rotate) { m_rotate = rotate; }
 	// GetScale() { return m_scale; }
@@ -47,6 +45,7 @@ public:
 
 	Beam* GetBeam() { return m_beam.get(); }
 
+	DirectX::SimpleMath::Vector3 GetBeamStartPosition() { return m_beamStartPosition; }
 
 public:
 
@@ -113,6 +112,12 @@ private:
 
 	DirectX::SimpleMath::Vector3 m_boundingBoxCenter;
 
+	//ビーム攻撃のスタート座標
+	DirectX::SimpleMath::Vector3 m_beamStartPosition;
+
+	//ビームを右手で打つ時の敵の中心からの距離
+	DirectX::SimpleMath::Vector3 m_rightHandPos;
+
 public:
 	Enemy(CommonResources* resources, IComponent* parent, const DirectX::SimpleMath::Vector3 initialScale, const DirectX::SimpleMath::Vector3& initialPosition, const DirectX::SimpleMath::Quaternion& initialAngle);
 	~Enemy() ;
@@ -143,9 +148,9 @@ public:
 
 	CollsionObjectTag GetCollsionTag() const override { return CollsionObjectTag::Enemy; }
 
-	void SetPos(DirectX::SimpleMath::Vector3& Pos) override { m_position = Pos; }
+	void SetPosition(DirectX::SimpleMath::Vector3& Pos) override { m_position = Pos; }
 
-	DirectX::SimpleMath::Vector3 GetPos()override { return m_position; }
+	DirectX::SimpleMath::Vector3 GetPosition()override { return m_position; }
 
 	float GetHp() { return m_hp; }
 

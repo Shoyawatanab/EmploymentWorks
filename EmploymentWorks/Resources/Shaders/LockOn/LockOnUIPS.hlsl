@@ -9,8 +9,8 @@ float4 main(PS_INPUT input) : SV_TARGET
     float4 output = tex.Sample(samLinear, input.tex);
 
 // 透明度を急峻に変化させる
-    float smoothValue = input.color;
-    float alpha = lerp(1.0f, 0.0f, smoothstep(smoothValue, smoothValue + 0.1f, input.tex.x));
+    float4 smoothValue = input.color;
+    float4 alpha = lerp(1.0f, 0.0f, smoothstep(smoothValue, smoothValue + 0.1f, input.tex.x));
     output.a *= alpha;
 
     //// テクスチャ座標xがsmoothValueを超えたら透明にする

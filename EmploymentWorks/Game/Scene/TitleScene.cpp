@@ -15,6 +15,16 @@
 #include "Libraries/MyLib/Texture.h"
 #include "Libraries/MyLib/Model3D.h"
 #include "Libraries/MyLib/Camera/TitleCamera.h"
+#include "Game/Object/Wall.h"
+#include "Game/Object/Rock.h"
+#include "Game/Object/Ceiling.h"
+#include "Game/Object/Pillar.h"
+#include "Game/Object/Floor.h"
+#include "Game/Object/Player/Player.h"
+#include "Game/Object/Enemy/Enemy.h"
+
+#include "Game/Object/Gimmick/Artillery/Artillery.h"
+#include "Libraries/MyLib/LoadJson.h"
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
@@ -84,30 +94,67 @@ void TitleScene::Initialize(CommonResources* resources)
 
 	//プレイヤモデルの追加
 	auto model = std::make_unique<mylib::Model3D>();
-	model->Initialize(m_commonResources, L"Resources/Models/NewPlayer.cmo" ,Vector3(0, 3.75f, 10),0.4f);
+	model->Initialize(m_commonResources, L"Resources/Models/NewPlayer.cmo" ,Vector3(0, 0.75f, 15),0.4f);
 	model->SetRotate(DirectX::SimpleMath::Quaternion::CreateFromAxisAngle( DirectX::SimpleMath::Vector3::UnitY, DirectX::XMConvertToRadians(180)));
-	m_models.push_back(std::move(model));
-	//ステージモデル
-	model = std::make_unique<mylib::Model3D>();
-	model->Initialize(m_commonResources, L"Resources/Models/Stage.cmo", Vector3::Zero, 8.0f);
 	m_models.push_back(std::move(model));
 	//敵
 	model = std::make_unique<mylib::Model3D>();
-	model->Initialize(m_commonResources, L"Resources/Models/kariEnemy.cmo", Vector3(0, 5.75f, -10), 1.8f);
-	model->SetRotate(DirectX::SimpleMath::Quaternion::CreateFromAxisAngle(DirectX::SimpleMath::Vector3::UnitY, DirectX::XMConvertToRadians(90)));
-	m_models.push_back(std::move(model));
-	//岩
-	model = std::make_unique<mylib::Model3D>();
-	model->Initialize(m_commonResources, L"Resources/Models/Rock.cmo", Vector3(15, 0, 0),  2.0f);
-	m_models.push_back(std::move(model));
-	//岩
-	model = std::make_unique<mylib::Model3D>();
-	model->Initialize(m_commonResources, L"Resources/Models/Rock.cmo", Vector3(-15, 0, 0), 2.0f);
+	model->Initialize(m_commonResources, L"Resources/Models/BossEnemy.cmo", Vector3(0, 5.0f, 0), 1.0f);
+	model->SetRotate(DirectX::SimpleMath::Quaternion::CreateFromAxisAngle(DirectX::SimpleMath::Vector3::UnitY, DirectX::XMConvertToRadians(0)));
 	m_models.push_back(std::move(model));
 
 	// シーン変更フラグを初期化する
 	m_isChangeScene = false;
 
+
+	m_loadJson = std::make_unique<mylib::LoadJson>();
+
+	//ステージのデータを読み込む
+	std::vector<mylib::LoadJson::Parameters> parameters = m_loadJson->GetStageDatas(L"Resources/Dates/Stage.json");
+
+
+	//ステージオブジェックとの生成
+	for (auto& parameter : parameters)
+	{
+
+		//ステージの壁
+		if (parameter.ModelName == "Stage.cmo")
+		{
+			auto wall = std::make_unique<Wall>();
+			wall->Initialize(m_commonResources, parameter.Position, parameter.Scale, parameter.Rotation, parameter.BoundingSphereRadius);
+			m_wall.push_back(std::move(wall));
+		}
+		else if (parameter.ModelName == "Floor.cmo")
+		{
+			//床	 
+			m_floor = std::make_unique<Floor>();
+			m_floor->Initialize(m_commonResources, parameter.Position, parameter.Scale, parameter.Rotation, parameter.BoundingSphereRadius);
+
+		}
+		else if (parameter.ModelName == "Ceiling.cmo")
+		{
+			//天井
+			m_ceiling = std::make_unique<Ceiling>();
+			m_ceiling->Initialize(m_commonResources, parameter.Position, parameter.Scale, parameter.Rotation, parameter.BoundingSphereRadius);
+
+		}
+		else if (parameter.ModelName == "Pillar.cmo")
+		{
+			//柱
+			auto pillar = std::make_unique<Pillar>();
+			pillar->Initialize(m_commonResources, parameter.Position, parameter.Scale, parameter.Rotation, parameter.BoundingSphereRadius);
+			m_pillar.push_back(std::move(pillar));
+
+		}
+		else if (parameter.ModelName == "Artillery.cmo")
+		{
+			//砲台
+			auto artillery = std::make_unique<Artillery>();
+			artillery->Initialize(m_commonResources, parameter.Position, parameter.Scale, parameter.Rotation, parameter.BoundingSphereRadius);
+			m_artillery.push_back(std::move(artillery));
+
+		}
+	}
 
 
 
@@ -177,6 +224,30 @@ void TitleScene::Render()
 	for (auto& model : m_models)
 	{
 		model->Render(view, m_projection);
+	}
+
+
+
+	m_floor->Render(view, m_projection);
+
+	for (auto& wall : m_wall)
+	{
+		wall->Render(view, m_projection);
+	}
+
+	for (auto& pillar : m_pillar)
+	{
+		pillar->Render(view, m_projection);
+	}
+
+	//m_ceiling->Render(view, m_projection);
+
+
+
+
+	for (auto& artillery : m_artillery)
+	{
+		artillery->Render(view, m_projection);
 	}
 
 

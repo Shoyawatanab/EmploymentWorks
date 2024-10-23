@@ -151,7 +151,7 @@ void ExecutionNode::DecideNextPosition()
 /// <returns></returns>
 IBehaviorNode::State ExecutionNode::Patrol(float elapsdTime)
 {
-	DirectX::SimpleMath::Vector3 EnemyPos = m_enemy->GetPos();
+	DirectX::SimpleMath::Vector3 EnemyPos = m_enemy->GetPosition();
 
 	//i‚Þ•ûŒü‚ð‹‚ß‚é
 	DirectX::SimpleMath::Vector3 MoveDirection = m_endPatrolPos - EnemyPos;
@@ -161,7 +161,7 @@ IBehaviorNode::State ExecutionNode::Patrol(float elapsdTime)
 
 	EnemyPos += MoveDirection;
 
-	m_enemy->SetPos(EnemyPos);
+	m_enemy->SetPosition(EnemyPos);
 
 	//‹——£‚ð‹‚ß‚é
 	float distance = (m_endPatrolPos - EnemyPos).Length();
@@ -225,7 +225,7 @@ IBehaviorNode::State ExecutionNode::Patrol(float elapsdTime)
 IBehaviorNode::State ExecutionNode::FacingThePlayer(float elapsdTime)
 {
 	//Œü‚«‚½‚¢•ûŒü
-	DirectX::SimpleMath::Vector3 direction = m_palyer->GetPos() - m_enemy->GetPos();
+	DirectX::SimpleMath::Vector3 direction = m_palyer->GetPosition() - m_enemy->GetPosition();
 	direction.Normalize();
 	//¡‚Ì“G‚Ì‘O•ûŒü
 	DirectX::SimpleMath::Vector3 forward = m_enemy->Getforward();

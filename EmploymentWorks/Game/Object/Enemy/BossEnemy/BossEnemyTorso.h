@@ -32,9 +32,9 @@ public:
 
 	CollsionObjectTag GetCollsionTag() const override { return CollsionObjectTag::EnemyParts; }
 
-	void SetPos(DirectX::SimpleMath::Vector3& Pos) override { m_currentPosition = Pos; }
+	void SetPosition(DirectX::SimpleMath::Vector3& Pos) override { m_currentPosition = Pos; }
 
-	DirectX::SimpleMath::Vector3 GetPos() override { return m_currentPosition; }
+	DirectX::SimpleMath::Vector3 GetPosition() override { return m_currentPosition; }
 
 	void OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos) override;
 

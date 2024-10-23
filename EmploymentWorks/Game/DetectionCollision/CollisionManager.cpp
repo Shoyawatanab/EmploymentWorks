@@ -354,9 +354,9 @@ void CollisionManager::BoxExtrusion(ICollisionObject* Object1, ICollisionObject*
 	//押し出す
 	//押す側と押される側をどうするか　
 	//座標の更新の仕方
-	Vector3 a = Object1->GetPos();
+	Vector3 a = Object1->GetPosition();
 	a += pushBackVec;
-	Object1->SetPos(a);
+	Object1->SetPosition(a);
 
 
 }
@@ -431,17 +431,17 @@ bool CollisionManager::WallExtrusion(ICollisionObject* Object1, ICollisionObject
 	using namespace DirectX::SimpleMath;
 
 	//Rayの方向
-	Vector3 Direction = Object2->GetPos() - Object1->GetPos();
+	Vector3 Direction = Object2->GetPosition() - Object1->GetPosition();
 	Direction.Normalize();
 
 	//Rayの作成
-	Ray ray{ Object1->GetPos(),Direction };
+	Ray ray{ Object1->GetPosition(),Direction };
 
 
 	if (m_collisionMesh->IntersectRay(ray, &m_hitPosition))
 	{
 
-		Object1->SetPos(m_hitPosition);
+		Object1->SetPosition(m_hitPosition);
 
 		return true;
 	}

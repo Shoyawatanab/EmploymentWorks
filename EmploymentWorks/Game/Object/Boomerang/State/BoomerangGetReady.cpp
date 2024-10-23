@@ -42,7 +42,9 @@ void BoomerangGetReady::Update(const float& elapsedTime)
 
 
 	m_boomerang->SetRotate(m_player->GetRotate()) ;
-	m_boomerang->SetPosition(m_player->GetPosition());
+
+	Vector3 Pos = m_player->GetPosition();
+	m_boomerang->SetPosition(Pos);
 
 
 	//マトリクス　子供の計算　親の計算の順番でやらないといけない

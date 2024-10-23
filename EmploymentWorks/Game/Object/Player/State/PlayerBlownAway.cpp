@@ -34,13 +34,13 @@ void PlayerBlownAway::Update(const float& elapsedTime)
 	using namespace DirectX;
 	using namespace DirectX::SimpleMath;
 
-	m_position = m_player->GetPos();
+	m_position = m_player->GetPosition();
 
 	m_position += m_direction * 6 * elapsedTime;
 
 	m_position.y -= m_graivty * elapsedTime;
 
-	m_player->SetPos(m_position);
+	m_player->SetPosition(m_position);
 
 	//d—Í‚Ì‰ÁŽZ
 	m_graivty += 4.0f * elapsedTime;
@@ -50,7 +50,7 @@ void PlayerBlownAway::Update(const float& elapsedTime)
 	//ƒ‚ƒfƒ‹‚ª”»’è‚µ‚Ä‚¢‚é‚©‚ç‚â‚Á‚Ä‚¢‚é–{“–‚ÍBlender‚ÅŽ²‚ðŒˆ‚ß‚Ä‚â‚é
 	m_worldMatrix *= Matrix::CreateRotationY(DirectX::XMConvertToRadians(180));
 	//m_worldMatrix *= Matrix::CreateFromQuaternion(m_player->GetRotate());
-	m_worldMatrix *= Matrix::CreateTranslation(m_player->GetPos());
+	m_worldMatrix *= Matrix::CreateTranslation(m_player->GetPosition());
 
 
 }

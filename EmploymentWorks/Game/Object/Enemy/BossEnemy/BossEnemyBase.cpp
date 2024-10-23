@@ -152,6 +152,8 @@ void BossEnemyBase::DrawModel(const DirectX::SimpleMath::Matrix& matrix, DirectX
 // 境界ボックスを描画する
 void BossEnemyBase::DrawBoundingBox(const DirectX::SimpleMath::Matrix& matrix)
 {
+	UNREFERENCED_PARAMETER(matrix);
+
 }
 
 
@@ -274,7 +276,7 @@ void BossEnemyBase::RegistrationRungingAnimation(std::string name)
 		//アニメーションをコピー
 		m_runningKeyFrames = m_animations[name];
 		//実行中アニメーションのサイズをもとにアニメーションの切り替え回数を求める
-		m_animationSwitchingCount = m_runningKeyFrames.size();
+		m_animationSwitchingCount = static_cast<int>( m_runningKeyFrames.size());
 		//アニメーション時間の初期化
 		m_animetionTime = 0;
 

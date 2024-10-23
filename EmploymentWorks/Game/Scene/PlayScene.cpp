@@ -182,11 +182,9 @@ void PlayScene::Initialize(CommonResources* resources)
 
 
 	Vector3 floorScale = Vector3(70, 0.1f, 50);
-	float height = 20.0f;
 
-	
 
-	m_player->Initialize(m_commonResources, Vector3(0, 3.75f, 10));
+	m_player->Initialize(m_commonResources, Vector3(0, 3.75f, 15));
 	m_enemy->Initialize();
 
 
@@ -236,6 +234,8 @@ void PlayScene::Initialize(CommonResources* resources)
 	m_sky->Initialize(m_commonResources);
 
 	m_state = GameState::None;
+
+	Vector3 pos = m_enemy->GetBeamStartPosition();
 
 }
 

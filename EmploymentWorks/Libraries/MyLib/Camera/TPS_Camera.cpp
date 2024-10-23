@@ -60,6 +60,8 @@ void mylib::TPS_Camera::Initialize()
 //-------------------------------------------------------------------
 void mylib::TPS_Camera::Update(const float& elapsedTime)
 {
+	UNREFERENCED_PARAMETER(elapsedTime);
+
 	using namespace DirectX;
 	using namespace DirectX::SimpleMath;
 

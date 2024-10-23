@@ -51,7 +51,7 @@ void Artillery::Initialize(CommonResources* resources, DirectX::SimpleMath::Vect
 
 	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
 	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
-	auto states = m_commonResources->GetCommonStates();
+	//auto states = m_commonResources->GetCommonStates();
 
 
 
@@ -110,7 +110,7 @@ void Artillery::Initialize(CommonResources* resources, DirectX::SimpleMath::Vect
 		)
 	);
 
-	DirectX::SimpleMath::Vector3 scale = Vector3(3, 3, 0);
+	DirectX::SimpleMath::Vector3 scale = Vector3(2, 2, 0);
 
 
 	// ビルボードの頂点情報を設定する：今回は「VertexPositionTexture」を使用する

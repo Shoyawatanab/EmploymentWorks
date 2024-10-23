@@ -36,15 +36,15 @@ void BoomerangRepelled::Update(const float& elapsedTime)
 	using namespace DirectX::SimpleMath;
 
 
-	m_position = m_boomerang->GetPos();
+	m_position = m_boomerang->GetPosition();
 	m_position += m_direction * elapsedTime;
 
 	m_position.y -= m_graivty * elapsedTime;
 
-	m_boomerang->SetPos(m_position);
+	m_boomerang->SetPosition(m_position);
 
 	m_worldMatrix = Matrix::CreateScale(m_boomerang->GetScale());
-	m_worldMatrix *= Matrix::CreateTranslation(m_boomerang->GetPos());
+	m_worldMatrix *= Matrix::CreateTranslation(m_boomerang->GetPosition());
 
 
 	m_graivty += 5.5f * elapsedTime;
@@ -71,7 +71,7 @@ void BoomerangRepelled::Update(const float& elapsedTime)
 void BoomerangRepelled::Enter()
 {
 
-	m_position = m_boomerang->GetPos();
+	m_position = m_boomerang->GetPosition();
 
 	m_direction = m_boomerang->GetBounceDirection();
 

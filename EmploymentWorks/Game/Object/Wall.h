@@ -50,9 +50,9 @@ public:
 
 	CollsionObjectTag GetCollsionTag() const override { return CollsionObjectTag::Stage; }
 
-	void SetPos(DirectX::SimpleMath::Vector3& Pos) override { m_position = Pos; }
+	void SetPosition(DirectX::SimpleMath::Vector3& Pos) override { m_position = Pos; }
 
-	DirectX::SimpleMath::Vector3 GetPos() override { return DirectX::SimpleMath::Vector3::Zero; }
+	DirectX::SimpleMath::Vector3 GetPosition() override { return DirectX::SimpleMath::Vector3::Zero; }
 	void OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos) override;
 
 private:

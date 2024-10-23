@@ -90,16 +90,16 @@ void PlayerUsually::Update(const float& elapsedTime)
 
 	}
 
-	m_graivty += 2.0 * elapsedTime;
+	m_graivty += 2.0f * elapsedTime;
 
-	DirectX::SimpleMath::Vector3 Pos = m_player->GetPos();
+	DirectX::SimpleMath::Vector3 Pos = m_player->GetPosition();
 	Pos.y -= m_graivty - m_velocity.y;
 	
 
 	m_velocity.y += 1.0f * elapsedTime;
 
 
-	m_player->SetPos(Pos);
+	m_player->SetPosition(Pos);
 
 
 	if (!m_player->GetisJump())
@@ -114,7 +114,7 @@ void PlayerUsually::Update(const float& elapsedTime)
 	//モデルが判定しているからやっている本当はBlenderで軸を決めてやる
 	m_worldMatrix *= Matrix::CreateRotationY(DirectX::XMConvertToRadians(180));
 	m_worldMatrix *= Matrix::CreateFromQuaternion(m_player->GetRotate());
-	m_worldMatrix *= Matrix::CreateTranslation(m_player->GetPos());
+	m_worldMatrix *= Matrix::CreateTranslation(m_player->GetPosition());
 
 
 
@@ -149,11 +149,11 @@ void PlayerUsually::Move(float elapsedTime,  DirectX::SimpleMath::Vector3 moveDi
 	}
 
 	moveDirection;
-	DirectX::SimpleMath::Vector3 Pos = m_player->GetPos();
+	DirectX::SimpleMath::Vector3 Pos = m_player->GetPosition();
 
 	Pos += moveDirection *= MOVE_SPEED * elapsedTime;
 
-	m_player->SetPos(Pos);
+	m_player->SetPosition(Pos);
 }
 
 void PlayerUsually::Attack(float elapsedTime, DirectX::Keyboard::State key)
@@ -161,6 +161,7 @@ void PlayerUsually::Attack(float elapsedTime, DirectX::Keyboard::State key)
 
 	using namespace DirectX;
 	UNREFERENCED_PARAMETER(elapsedTime);
+	UNREFERENCED_PARAMETER(key);
 
 	const auto& tracker = m_commonResources->GetInputManager()->GetMouseTracker();
 
@@ -201,6 +202,8 @@ void PlayerUsually::Attack(float elapsedTime, DirectX::Keyboard::State key)
 void PlayerUsually::Rotate(float elapsedTime, DirectX::SimpleMath::Vector3 moveDirection)
 {
 
+	UNREFERENCED_PARAMETER(elapsedTime);
+	UNREFERENCED_PARAMETER(moveDirection);
 	using namespace DirectX::SimpleMath;
 
 	DirectX::SimpleMath::Vector3 Direction = m_player->GetPlayerForWard();
@@ -220,65 +223,65 @@ void PlayerUsually::Rotate(float elapsedTime, DirectX::SimpleMath::Vector3 moveD
 	return;
 
 
-	//ブーメランを構えたら
-	if (m_player->GetUsingBoomerang()->GetBoomerangState() == m_player->GetUsingBoomerang()->GetBoomerangGetReady())
-	{
-		//カメラの向いている方向にプレイヤの正面を合わせる
+	////ブーメランを構えたら
+	//if (m_player->GetUsingBoomerang()->GetBoomerangState() == m_player->GetUsingBoomerang()->GetBoomerangGetReady())
+	//{
+	//	//カメラの向いている方向にプレイヤの正面を合わせる
 
-		m_player->SetRotate(m_player->GetCameraRotate());
-		m_player->SetPlayerForWard(Vector3::Transform(INITIAL_DIRECTION, m_player->GetRotate())) ;
+	//	m_player->SetRotate(m_player->GetCameraRotate());
+	//	m_player->SetPlayerForWard(Vector3::Transform(INITIAL_DIRECTION, m_player->GetRotate())) ;
 
-		m_player->GetPlayerForWard().Normalize();
-
-
-	}
-	else
-	{
-		////構えていないとき
-		//DirectX::SimpleMath::Vector3 Direction = m_player->GetPlayerForWard();
-		//Quaternion rotation = m_player->GetCameraRotate();
+	//	m_player->GetPlayerForWard().Normalize();
 
 
-
-		//m_player->SetRotate(rotation);
-
-		//Direction = Vector3::Transform(INITIAL_DIRECTION, rotation);
-
-		//Direction.Normalize();
-
-		//m_player->SetPlayerForWard(Direction);
-
-
-		//if (moveDirection == Vector3::Zero)
-		//{
-		//	return;
-		//}
-		//moveDirection.Normalize();
-
-		//DirectX::SimpleMath::Vector3 Direction = m_player->GetPlayerForWard();
-
-		////現在の向きと動く方向から軸を作る
-		//Vector3 axis = moveDirection.Cross(Direction);
-
-		//if (axis == Vector3::Zero)
-		//{
-		//	axis = Vector3::UnitY;
-		//}
-
-		////
-		//axis *= -1;
-
-		//float  angle = Vector3::Distance(moveDirection, Direction);
-		//angle *= elapsedTime * 10.0f;
-		//Quaternion rotation = m_player->GetRotate();
-		//rotation *= Quaternion::CreateFromAxisAngle(axis, angle);
-
-		//m_player->SetRotate(rotation);
+	//}
+	//else
+	//{
+	//	////構えていないとき
+	//	DirectX::SimpleMath::Vector3 Direction = m_player->GetPlayerForWard();
+	//	Quaternion rotation = m_player->GetCameraRotate();
 
 
 
+	//	m_player->SetRotate(rotation);
 
-	}
+	//	Direction = Vector3::Transform(INITIAL_DIRECTION, rotation);
+
+	//	Direction.Normalize();
+
+	//	m_player->SetPlayerForWard(Direction);
+
+
+	//	if (moveDirection == Vector3::Zero)
+	//	{
+	//		return;
+	//	}
+	//	moveDirection.Normalize();
+
+	//	DirectX::SimpleMath::Vector3 Direction = m_player->GetPlayerForWard();
+
+	//	//現在の向きと動く方向から軸を作る
+	//	Vector3 axis = moveDirection.Cross(Direction);
+
+	//	if (axis == Vector3::Zero)
+	//	{
+	//		axis = Vector3::UnitY;
+	//	}
+
+	//	//
+	//	axis *= -1;
+
+	//	float  angle = Vector3::Distance(moveDirection, Direction);
+	//	angle *= elapsedTime * 10.0f;
+	//	Quaternion rotation = m_player->GetRotate();
+	//	rotation *= Quaternion::CreateFromAxisAngle(axis, angle);
+
+	//	m_player->SetRotate(rotation);
+
+
+
+
+	//}
 
 
 }

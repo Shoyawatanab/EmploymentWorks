@@ -129,11 +129,11 @@ std::vector<mylib::LoadJson::Parameters> mylib::LoadJson::ParseJSON()
         m_modelData[index].replace(position, strlen(",z:"), " ");
 
         //scaleの文字列を検索する
-        position = m_modelData[index].find(",scale:");
+        position = static_cast<int> (m_modelData[index].find(",scale:"));
         //scaleの文字列を削除
         m_modelData[index].replace(position, strlen(",scale:"), " ");
         //rotationの文字列を検索する
-        position = m_modelData[index].find(",rotation:");
+        position = static_cast<int>(m_modelData[index].find(",rotation:"));
         //scaleの文字列を削除
         m_modelData[index].replace(position, strlen(",rotation:"), " ");
 
@@ -253,8 +253,6 @@ std::vector<mylib::LoadJson::Parameters> mylib::LoadJson::GetStageDatas(const st
         //回転
         DirectX::SimpleMath::Vector3 rotation;
 
-        //1行目にモデルの名前　２行目にパラメータがあるので１行目を飛ばす
-        std::stringstream ss(modelData[index].c_str());
 
 
 
@@ -309,7 +307,7 @@ std::vector<mylib::LoadJson::Parameters> mylib::LoadJson::GetStageDatas(const st
         modelData[index].replace(string, strlen(",z:"), " ");
 
         //scaleの文字列を検索する
-        string = modelData[index].find(",Scale:x:");
+        string =static_cast<int> (modelData[index].find(",Scale:x:"));
         //scaleの文字列を削除
         modelData[index].replace(string, strlen(",Scale:x:"), " ");
 
@@ -323,7 +321,7 @@ std::vector<mylib::LoadJson::Parameters> mylib::LoadJson::GetStageDatas(const st
         modelData[index].replace(string, strlen(",z:"), " ");
 
         //rotationの文字列を検索する
-        string = modelData[index].find(",Rotation:x:");
+        string =static_cast<int>( modelData[index].find(",Rotation:x:"));
         //scaleの文字列を削除
         modelData[index].replace(string, strlen(",Rotation:x:"), " ");
 
