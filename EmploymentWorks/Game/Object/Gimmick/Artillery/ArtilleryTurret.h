@@ -12,7 +12,7 @@
 class CommonResources;
 class Bounding;
 class ArtilleryBullet;
-
+class PlayScene;
 
 
 class ArtilleryTurret : public ICollisionObject
@@ -43,7 +43,7 @@ public:
 	ArtilleryTurret();
 	~ArtilleryTurret() ;
 
-	void Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Vector3 Scale ,DirectX::SimpleMath::Quaternion Rotate);
+	void Initialize(CommonResources* resources, PlayScene* playScene, DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Vector3 Scale ,DirectX::SimpleMath::Quaternion Rotate);
 	void Update(float elapsedTime);
 	void Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection) ;
 	void Finalize() ;

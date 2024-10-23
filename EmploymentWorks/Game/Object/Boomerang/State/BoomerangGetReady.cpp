@@ -71,6 +71,7 @@ void BoomerangGetReady::Enter()
    	m_boomerang->SetRotate(angle);
 
 
+	m_boomerang->SetUseState(Boomerang::UseState::GetReady);
 
 
 

@@ -13,7 +13,7 @@ class CommonResources;
 class Bounding;
 class ArtilleryBase;
 class ArtilleryTurret;
-
+class PlayScene;
 
 class Artillery : public ICollisionObject
 
@@ -61,10 +61,12 @@ public:
 	Artillery();
 	~Artillery() ;
 
-	void Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Vector3 Scale ,DirectX::SimpleMath::Vector3 Rotate, float BoundingSphereRadius);
+	void Initialize(CommonResources* resources,PlayScene* playScene ,DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Vector3 Scale ,DirectX::SimpleMath::Vector3 Rotate, float BoundingSphereRadius);
 	void Update(float elapsedTime);
 	void Render(DirectX::SimpleMath::Matrix view, DirectX::SimpleMath::Matrix projection) ;
 	void Finalize() ;
+
+
 
 	void RegistrationCollionManager(CollisionManager* collsionManager) override;
 

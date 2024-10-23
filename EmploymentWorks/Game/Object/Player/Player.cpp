@@ -109,10 +109,9 @@ void Player::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3
 	
 	m_basicEffect = std::make_unique<DirectX::BasicEffect>(device);;
 
-
 	m_boomerangIndex = 0;
 
-	m_boomerang[m_boomerangIndex]->SetUseState(Boomerang::UseState::Using);
+	m_boomerang[m_boomerangIndex]->SetUseState(Boomerang::UseState::Have);
 
 }
 
@@ -130,46 +129,98 @@ void Player::Update(float elapsedTime)
 
 	const auto& state = m_commonResources->GetInputManager()->GetMouseState();
 
-	m_boomerang[m_boomerangIndex]->SetUseState(Boomerang::UseState::Using);
+	//所持しているブーメランがStock状態なら
+	if (m_boomerang[m_boomerangIndex]->GetUseState() == Boomerang::UseState::Stock)
+	{
+		m_boomerang[m_boomerangIndex]->SetUseState(Boomerang::UseState::Have);
+	}
 
 	// マウスのホイール値を取得
 	m_scrollWheelValue = state.scrollWheelValue;
 
 	if (m_scrollWheelValue > 0)
 	{
-		//投げられていないなら状態をストックに戻す
-		if (m_boomerang[m_boomerangIndex]->GetBoomerangState() == m_boomerang[m_boomerangIndex]->GetBoomerangIdling())
+		//変更前のブーメラン
+		switch (m_boomerang[m_boomerangIndex]->GetUseState())
 		{
-			m_boomerang[m_boomerangIndex]->SetUseState(Boomerang::UseState::Stock);
+
+			case Boomerang::UseState::Stock:
+				break;
+			case Boomerang::UseState::Have:
+			case Boomerang::UseState::GetReady:
+				m_boomerang[m_boomerangIndex]->SetUseState(Boomerang::UseState::Stock);
+				m_boomerang[m_boomerangIndex]->ChangeState(m_boomerang[m_boomerangIndex]->GetBoomerangIdling());
+				break;
+			case Boomerang::UseState::Throw:
+				break;
+			default:
+				break;
 		}
 
 		//使用中のブーメランを切り替える
 		m_boomerangIndex++;
-
-
 		m_boomerangIndex = std::min(m_boomerangIndex, 2);
 
-		//状態を使用中に
-		m_boomerang[m_boomerangIndex]->SetUseState(Boomerang::UseState::Using);
+		switch (m_boomerang[m_boomerangIndex]->GetUseState())
+		{
+
+			case Boomerang::UseState::Stock:
+				m_boomerang[m_boomerangIndex]->SetUseState(Boomerang::UseState::Have);
+				break;
+			case Boomerang::UseState::Have:
+			
+				break;
+			case Boomerang::UseState::GetReady:
+				break;
+			case Boomerang::UseState::Throw:
+				break;
+			default:
+				break;
+		}
 
 		Mouse::Get().ResetScrollWheelValue();
 
 	}
 	if (m_scrollWheelValue < 0)
 	{
-		//投げられていないなら状態をストックに戻す
-		if (m_boomerang[m_boomerangIndex]->GetBoomerangState() == m_boomerang[m_boomerangIndex]->GetBoomerangIdling())
+
+		//変更前のブーメラン
+		switch (m_boomerang[m_boomerangIndex]->GetUseState())
 		{
-			m_boomerang[m_boomerangIndex]->SetUseState(Boomerang::UseState::Stock);
+
+			case Boomerang::UseState::Stock:
+				break;
+			case Boomerang::UseState::Have:
+			case Boomerang::UseState::GetReady:
+				m_boomerang[m_boomerangIndex]->SetUseState(Boomerang::UseState::Stock);
+				m_boomerang[m_boomerangIndex]->ChangeState(m_boomerang[m_boomerangIndex]->GetBoomerangIdling());
+
+				break;
+			case Boomerang::UseState::Throw:
+				break;
+			default:
+				break;
 		}
-
-
 
 		m_boomerangIndex--;
 		m_boomerangIndex = std::max(m_boomerangIndex, 0);
 
-		//状態を使用中に
-		m_boomerang[m_boomerangIndex]->SetUseState(Boomerang::UseState::Using);
+		switch (m_boomerang[m_boomerangIndex]->GetUseState())
+		{
+
+			case Boomerang::UseState::Stock:
+				m_boomerang[m_boomerangIndex]->SetUseState(Boomerang::UseState::Have);
+				break;
+			case Boomerang::UseState::Have:
+				break;
+			case Boomerang::UseState::GetReady:
+				break;
+			case Boomerang::UseState::Throw:
+				break;
+			default:
+				break;
+		}
+
 
 
 		Mouse::Get().ResetScrollWheelValue();
@@ -267,7 +318,7 @@ void Player::Render(DirectX::SimpleMath::Matrix view, DirectX::SimpleMath::Matri
 	{
 
 		//使用しているブーメラン
-		if (boomerang->GetUseState() == Boomerang::UseState::Using)
+		if (boomerang->GetUseState() != Boomerang::UseState::Stock)
 		{
 
 			boomerang->Render(view, projection);

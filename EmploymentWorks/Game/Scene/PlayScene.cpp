@@ -27,6 +27,7 @@
 #include "Game/Object/Pillar.h"
 #include "Game/Object/Gimmick/Artillery/Artillery.h"
 #include "Libraries/MyLib/LoadJson.h"
+#include "Libraries/MyLib/Particle.h"
 
 #include <cassert>
 
@@ -104,8 +105,6 @@ void PlayScene::Initialize(CommonResources* resources)
 	//ステージのデータを読み込む
 	std::vector<mylib::LoadJson::Parameters> parameters = m_loadJson->GetStageDatas(L"Resources/Dates/Stage.json");
 
-
-
 	//ステージオブジェックとの生成
 	for (auto& parameter : parameters)
 	{
@@ -143,7 +142,7 @@ void PlayScene::Initialize(CommonResources* resources)
 		{
 			//砲台
 			auto artillery = std::make_unique<Artillery>();
-			artillery->Initialize(m_commonResources, parameter.Position, parameter.Scale, parameter.Rotation, parameter.BoundingSphereRadius);
+			artillery->Initialize(m_commonResources,this, parameter.Position, parameter.Scale, parameter.Rotation, parameter.BoundingSphereRadius);
 			m_artillery.push_back(std::move(artillery));
 
 		}
@@ -233,9 +232,17 @@ void PlayScene::Initialize(CommonResources* resources)
 	m_sky = std::make_unique<Sky>();
 	m_sky->Initialize(m_commonResources);
 
+	//決めた数だけ爆発エフェクトを生成しておく
+	for (int i = 0; i < 10; i++)
+	{
+		auto particle = std::make_unique<Particle>();
+		particle->Initialize(m_commonResources);
+		m_particle.push_back(std::move(particle));
+	}
+
+
 	m_state = GameState::None;
 
-	Vector3 pos = m_enemy->GetBeamStartPosition();
 
 }
 
@@ -246,6 +253,15 @@ void PlayScene::Update(float elapsedTime)
 {
 	UNREFERENCED_PARAMETER(elapsedTime);
 
+	// キーボードステートトラッカーを取得する
+	const auto& kbTracker = m_commonResources->GetInputManager()->GetKeyboardTracker();
+
+	//PLAYを選ぶ
+	if (kbTracker->released.L)
+	{
+		CreateParticle(DirectX::SimpleMath::Vector3(6, 2, 0));
+	}
+
 	m_cameraManager->Update(elapsedTime);
 
 	switch (m_state)
@@ -255,7 +271,7 @@ void PlayScene::Update(float elapsedTime)
 
 			if (m_cameraManager->GetGameCameraState() != m_cameraManager->GetGameStartCamera())
 			{
-				m_enemy->Update(elapsedTime);
+				//m_enemy->Update(elapsedTime);
 				for (auto& artillery : m_artillery)
 				{
 					artillery->Update(elapsedTime);
@@ -302,10 +318,6 @@ void PlayScene::Update(float elapsedTime)
 			
 			}
 
-			////敵を倒したときのアニメーションが終わったら
-			if (m_enemy->GetScale().x <= 0 && m_ui->GetCurrentUIState() != m_ui->GetGameClearUI())
-			{
-			}
 
 			break;
 		case PlayScene::GameState::GameOver:
@@ -328,6 +340,13 @@ void PlayScene::Update(float elapsedTime)
 
 	m_collisionManager->Update();
 
+	for (auto& particle : m_particle)
+	{
+		if (particle->GetState() == Particle::State::Using)
+		{
+			particle->Update(elapsedTime);
+		}
+	}
 
 
 	m_player->SetisLockOn(m_lockOn->GetIsLOckOn());
@@ -376,6 +395,14 @@ void PlayScene::Render()
 		m_player->Render(view, m_projection);
 		m_lockOn->Render();
 	}
+	for (auto& particle : m_particle)
+	{
+		if (particle->GetState() == Particle::State::Using)
+		{
+			particle->Render(view, m_projection);
+		}
+	}
+
 
 	m_ui->Render();
 
@@ -409,6 +436,25 @@ IScene::SceneID PlayScene::GetNextSceneID() const
 
 	//Noneなら切り替えしない
 	return m_nextScene;
+
+}
+
+//爆発エフェクトを生成する
+void PlayScene::CreateParticle(DirectX::SimpleMath::Vector3 Pos)
+{
+	//Bulletで生成している
+
+	for (auto& particle : m_particle)
+	{
+		//使用していなければ
+		if (particle->GetState() == Particle::State::None)
+		{
+			particle->Create(Pos);
+			break;
+		}
+
+
+	}
 
 }
 

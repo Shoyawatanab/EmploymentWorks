@@ -68,6 +68,8 @@ public:
 
 	mylib::TPS_Camera* GetTPS_Camera() { return m_tpsCamera; }
 
+	int GetBoomerangIndex() { return m_boomerangIndex; }
+
 private:
 
 	// ‹¤’ÊƒŠƒ\[ƒX

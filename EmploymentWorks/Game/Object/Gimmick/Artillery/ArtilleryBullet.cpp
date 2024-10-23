@@ -15,7 +15,7 @@
 
 #include "Game/DetectionCollision/CollisionManager.h"
 #include "Libraries/MyLib/Bounding.h"
-
+#include "Game/Scene/PlayScene.h"
 const float SCALE(8.6f);
 
 const float BULLETSPEED(4.0f);
@@ -41,11 +41,12 @@ ArtilleryBullet::~ArtilleryBullet()
 //---------------------------------------------------------
 // 初期化する
 //---------------------------------------------------------
-void ArtilleryBullet::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Vector3 Scale, DirectX::SimpleMath::Quaternion Rotate)
+void ArtilleryBullet::Initialize(CommonResources* resources, PlayScene* playScene, DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Vector3 Scale, DirectX::SimpleMath::Quaternion Rotate)
 {
 	using namespace DirectX::SimpleMath;
 	assert(resources);
 	m_commonResources = resources;
+	m_playScene = playScene;
 	m_position = position;
 	m_scale = Scale;
 	m_rotate = Rotate;
@@ -145,7 +146,11 @@ void ArtilleryBullet::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::S
 	{
 		case CollsionObjectTag::Stage:
 		case CollsionObjectTag::Enemy:
+			//爆発エフェクトを生成
+			m_playScene->CreateParticle(m_position);
+			//初期化
 			m_position = m_initialPosition;
+			//状態変化
 			m_bulletState = Loading;
 			break;
 		default:
