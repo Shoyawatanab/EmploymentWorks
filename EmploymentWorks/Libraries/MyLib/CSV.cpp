@@ -25,7 +25,7 @@ std::vector<DirectX::SimpleMath::Vector3> CSV::LoadCSVBoomerang()
 {
 	std::string line;  //1行
 	//ファイルのオープン
-	std::ifstream fin("Date\\Boomerang.csv");
+	std::ifstream fin(L"Resources/Dates/Boomerang.csv");
 	//オーオウンできたか
 	if (!fin.is_open())
 	{

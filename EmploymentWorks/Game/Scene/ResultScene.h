@@ -43,6 +43,8 @@ private:
 
 	// シーンチェンジフラグ
 	bool m_isChangeScene;
+	DirectX::SimpleMath::Matrix m_projection;
+	DirectX::SimpleMath::Matrix* m_view;
 
 
 public:
@@ -55,6 +57,8 @@ public:
     void Finalize() override;
 
     SceneID GetNextSceneID() const;
+
+
 
 	void CreateTex(const wchar_t* szFileName, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& tex, DirectX::SimpleMath::Vector2& texCenter);
 

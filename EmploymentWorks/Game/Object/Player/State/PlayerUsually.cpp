@@ -10,12 +10,19 @@
 const float MOVE_SPEED = 5.0f;                                        //動く時のスピード
 const DirectX::SimpleMath::Vector3 INITIAL_DIRECTION(0.0f, 0.0f, -1.0f); //初期の向いている方向
 
+void PlayerUsually::ResetGravity()
+{
+
+	//m_graivty = 0;
+
+}
+
 // コンストラクタ
 PlayerUsually::PlayerUsually()
 	:
+	m_commonResources{},
 	m_player{}
 	,m_graivty{}
-	,m_velocity{}
 {
 
 
@@ -31,7 +38,7 @@ PlayerUsually::~PlayerUsually()
 // 初期化する
 void PlayerUsually::Initialize()
 {
-	m_graivty = 0.0f;
+	m_graivty = 0.5f;
 }
 
 
@@ -39,12 +46,12 @@ void PlayerUsually::Initialize()
 void PlayerUsually::Update(const float& elapsedTime)
 {
 	UNREFERENCED_PARAMETER(elapsedTime);
+
 	using namespace DirectX;
 	using namespace DirectX::SimpleMath;
 
 
 	//マウスの取得
-	
 
 
 	// キーボードステートを取得する
@@ -72,51 +79,29 @@ void PlayerUsually::Update(const float& elapsedTime)
 	}
 
 	moveDirection = Vector3::Transform(moveDirection, m_player->GetCameraRotate());
-
-
+	
 	Rotate(elapsedTime, moveDirection);
 
 	Move(elapsedTime,   moveDirection);
-	Attack(elapsedTime,  key);
+	
 
-
-	//ジャンプ
 	// スペースキーが押されたら
 	if (kbTracker->released.Space)
 	{
-		
-		m_velocity.y = 0.4f;
-		m_player->SetIsJump(true);
+		//状態をジャンプに変更
+		m_player->ChangeState(m_player->GetPlayerJump());
 
 	}
 
-	m_graivty += 2.0f * elapsedTime;
+	DirectX::SimpleMath::Vector3 velocity = m_player->GetVelocity();
+	velocity.y -= m_graivty * elapsedTime;
 
+	//座標の更新
 	DirectX::SimpleMath::Vector3 Pos = m_player->GetPosition();
-	Pos.y -= m_graivty - m_velocity.y;
-	
-
-	m_velocity.y += 1.0f * elapsedTime;
-
+	Pos += velocity;
 
 	m_player->SetPosition(Pos);
-
-
-	if (!m_player->GetisJump())
-	{
-		m_velocity.y = 0;
-		m_graivty = 0;
-	}
-
-
-	//// ワールド行列を更新する
-	m_worldMatrix = Matrix::CreateScale(0.4f);
-	//モデルが判定しているからやっている本当はBlenderで軸を決めてやる
-	m_worldMatrix *= Matrix::CreateRotationY(DirectX::XMConvertToRadians(180));
-	m_worldMatrix *= Matrix::CreateFromQuaternion(m_player->GetRotate());
-	m_worldMatrix *= Matrix::CreateTranslation(m_player->GetPosition());
-
-
+	m_player->SetVelocity(velocity);
 
 }
 
@@ -131,9 +116,9 @@ void PlayerUsually::Exit()
 
 }
 
-void PlayerUsually::RegistrationInformation(Player* player)
+void PlayerUsually::RegistrationInformation(CommonResources* resoure,Player* player)
 {
-
+	m_commonResources = resoure;
 	m_player = player;
 
 }
@@ -147,7 +132,7 @@ void PlayerUsually::Move(float elapsedTime,  DirectX::SimpleMath::Vector3 moveDi
 	{
 		return;
 	}
-
+	
 	moveDirection;
 	DirectX::SimpleMath::Vector3 Pos = m_player->GetPosition();
 
@@ -156,48 +141,6 @@ void PlayerUsually::Move(float elapsedTime,  DirectX::SimpleMath::Vector3 moveDi
 	m_player->SetPosition(Pos);
 }
 
-void PlayerUsually::Attack(float elapsedTime, DirectX::Keyboard::State key)
-{
-
-	using namespace DirectX;
-	UNREFERENCED_PARAMETER(elapsedTime);
-	UNREFERENCED_PARAMETER(key);
-
-	const auto& tracker = m_commonResources->GetInputManager()->GetMouseTracker();
-
-	//投げる
-	//if (m_player->GetUsingBoomerang()->GetBoomerangState() == m_player->GetUsingBoomerang()->GetBoomerangGetReady()
-	//	&& key.IsKeyUp(Keyboard::Keys::Space))
-	//{
-	//	m_player->GetUsingBoomerang()->ChangeState(m_player->GetUsingBoomerang()->GetBoomerangThrow());
-	//}
-
-	//構える
-	//if (m_player->GetUsingBoomerang()->GetBoomerangState() == m_player->GetUsingBoomerang()->GetBoomerangIdling()
-	//	&& key.IsKeyDown(Keyboard::Keys::Space))
-	//{
-	//	m_player->GetUsingBoomerang()->ChangeState(m_player->GetUsingBoomerang()->GetBoomerangGetReady());
-	//}
-
-
-		// マウスの左ボタンが押された
-	if (tracker->leftButton == Mouse::ButtonStateTracker::ButtonState::PRESSED &&
-		m_player->GetUsingBoomerang()->GetBoomerangState() == m_player->GetUsingBoomerang()->GetBoomerangGetReady())
-	{
-		m_player->GetUsingBoomerang()->ChangeState(m_player->GetUsingBoomerang()->GetBoomerangThrow());
-	}
-
-
-
-	//構える
-		// マウスの左ボタンが押された
-	if (tracker->leftButton == Mouse::ButtonStateTracker::ButtonState::PRESSED &&
-		m_player->GetUsingBoomerang()->GetBoomerangState() == m_player->GetUsingBoomerang()->GetBoomerangIdling())
-	{
-		m_player->GetUsingBoomerang()->ChangeState(m_player->GetUsingBoomerang()->GetBoomerangGetReady());
-	}
-
-}
 
 void PlayerUsually::Rotate(float elapsedTime, DirectX::SimpleMath::Vector3 moveDirection)
 {
@@ -216,8 +159,9 @@ void PlayerUsually::Rotate(float elapsedTime, DirectX::SimpleMath::Vector3 moveD
 
 	m_player->SetPlayerForWard(Direction);
 
-	rotation;
-	m_player->SetRotate(rotation);
+	//rotation;
+	//初期値とカメラの回転をもとにする
+	m_player->SetAngle(m_player->GetInitialAngle() *  rotation);
 
 
 	return;

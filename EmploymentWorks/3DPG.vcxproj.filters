@@ -98,6 +98,12 @@
     <Filter Include="Resources\Shaders\Particle">
       <UniqueIdentifier>{9f3312fc-b4d3-40d4-8471-ab43f54dc9bc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources\Shaders\Fade">
+      <UniqueIdentifier>{97573755-e06e-4a91-9048-2d9bb3e14793}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\Player\PlayerParts">
+      <UniqueIdentifier>{f2a6c197-3da3-4d1b-a668-112312847a62}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -390,6 +396,39 @@
     <ClInclude Include="Libraries\MyLib\Particle.h">
       <Filter>Libraries\MyLib</Filter>
     </ClInclude>
+    <ClInclude Include="Libraries\MyLib\Fade.h">
+      <Filter>Libraries\MyLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Player\PlayerParts\PlayerBase.h">
+      <Filter>Game\Object\Player\PlayerParts</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Player\PlayerParts\PlayerBody.h">
+      <Filter>Game\Object\Player\PlayerParts</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Player\PlayerParts\PlayerHead.h">
+      <Filter>Game\Object\Player\PlayerParts</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Player\PlayerParts\PlayerLeftArm.h">
+      <Filter>Game\Object\Player\PlayerParts</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Player\PlayerParts\PlayerLeftFeet.h">
+      <Filter>Game\Object\Player\PlayerParts</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Player\PlayerParts\PlayerRightArm.h">
+      <Filter>Game\Object\Player\PlayerParts</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Player\PlayerParts\PlayerRightFeet.h">
+      <Filter>Game\Object\Player\PlayerParts</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Player\State\PlayerAttack.h">
+      <Filter>Game\Object\Player\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Player\State\PlayerJump.h">
+      <Filter>Game\Object\Player\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Player\State\PlayerIdling.h">
+      <Filter>Game\Object\Player\State</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -638,6 +677,39 @@
     <ClCompile Include="Libraries\MyLib\Particle.cpp">
       <Filter>Libraries\MyLib</Filter>
     </ClCompile>
+    <ClCompile Include="Libraries\MyLib\Fade.cpp">
+      <Filter>Libraries\MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Player\PlayerParts\PlayerBase.cpp">
+      <Filter>Game\Object\Player\PlayerParts</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Player\PlayerParts\PlayerBody.cpp">
+      <Filter>Game\Object\Player\PlayerParts</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Player\PlayerParts\PlayerHead.cpp">
+      <Filter>Game\Object\Player\PlayerParts</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Player\PlayerParts\PlayerLeftArm.cpp">
+      <Filter>Game\Object\Player\PlayerParts</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Player\PlayerParts\PlayerLeftFeet.cpp">
+      <Filter>Game\Object\Player\PlayerParts</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Player\PlayerParts\PlayerRightArm.cpp">
+      <Filter>Game\Object\Player\PlayerParts</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Player\PlayerParts\PlayerRightFeet.cpp">
+      <Filter>Game\Object\Player\PlayerParts</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Player\State\PlayerAttack.cpp">
+      <Filter>Game\Object\Player\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Player\State\PlayerJump.cpp">
+      <Filter>Game\Object\Player\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Player\State\PlayerIdling.cpp">
+      <Filter>Game\Object\Player\State</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />
@@ -662,6 +734,9 @@
     </None>
     <None Include="Resources\Shaders\Particle\Particle.hlsli">
       <Filter>Resources\Shaders\Particle</Filter>
+    </None>
+    <None Include="Resources\Shaders\Fade\Fade.hlsli">
+      <Filter>Resources\Shaders\Fade</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -688,6 +763,15 @@
     </FxCompile>
     <FxCompile Include="Resources\Shaders\Particle\ParticleVS.hlsl">
       <Filter>Resources\Shaders\Particle</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Fade\FadeGS.hlsl">
+      <Filter>Resources\Shaders\Fade</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Fade\FadePS.hlsl">
+      <Filter>Resources\Shaders\Fade</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Fade\FadeVS.hlsl">
+      <Filter>Resources\Shaders\Fade</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

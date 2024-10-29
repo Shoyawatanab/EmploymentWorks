@@ -1,6 +1,7 @@
 #pragma once
 #include <pch.h>
 #include "Interface/IPlayerState.h"
+class CommonResources;
 
 class Boomerang;
 class Player;
@@ -10,7 +11,9 @@ class PlayerBlownAway : public IPlayerState
 {
 public:
 
-	DirectX::SimpleMath::Matrix GetMatrix() { return m_worldMatrix; }
+
+	void ResetGravity() override;
+
 
 public:
 	// コンストラクタ
@@ -27,15 +30,16 @@ public:
 	void Exit();
 
 	//クラスに必要な情報（ポインタ）の登録
-	void RegistrationInformation(Player* player);
+	void RegistrationInformation(CommonResources* resoure, Player* player);
 
 
 private:
+	CommonResources* m_commonResources;
+
+
 
 	Player* m_player;
 
-	// ワールドマトリックス
-	DirectX::SimpleMath::Matrix m_worldMatrix;
 
 	DirectX::SimpleMath::Vector3 m_position;
 

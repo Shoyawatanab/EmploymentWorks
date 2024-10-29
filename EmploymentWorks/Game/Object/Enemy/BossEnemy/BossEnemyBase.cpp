@@ -210,6 +210,8 @@ IComponent::AnimationStage BossEnemyBase::AnimationUdate(const float& elapsdTime
 	//初期値としてアニメーション中とする
 	AnimationStage state = AnimationStage::Runngin;
 
+
+
 	//残りアニメーションが１つ以上  
 	if (m_runningKeyFrames.size() > 1)
 	{

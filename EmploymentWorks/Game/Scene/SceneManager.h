@@ -7,6 +7,7 @@
 
 // ‘O•ûéŒ¾
 class CommonResources;
+class Fade;
 
 class SceneManager
 {
@@ -14,6 +15,9 @@ private:
 	std::unique_ptr<IScene> m_currentScene;
 	CommonResources* m_commonResources;
 
+	std::unique_ptr<Fade> m_fade;
+
+	bool m_isFade;
 
 public:
 	SceneManager();

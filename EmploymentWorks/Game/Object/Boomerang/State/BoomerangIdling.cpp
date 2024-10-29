@@ -40,7 +40,7 @@ void BoomerangIdling::Update(const float& elapsedTime)
 	using namespace DirectX::SimpleMath;
 
 
-	m_boomerang->SetRotate(m_player->GetRotate());
+	m_boomerang->SetRotate(m_player->GetAngle());
 	//m_boomerang->SetPosition(m_player->GetPosition() + GENERATEDISTANCE);
 
 	//マトリクス　子供の計算　親の計算の順番でやらないといけない
@@ -49,7 +49,7 @@ void BoomerangIdling::Update(const float& elapsedTime)
 	m_worldMatrix *= Matrix::CreateRotationZ(XMConvertToRadians(90));  //ブーメランを立てるように９０度回転
 
 	m_worldMatrix *= Matrix::CreateTranslation(GENERATEDISTANCE);
-	m_worldMatrix *= Matrix::CreateFromQuaternion(m_player->GetRotate());
+	m_worldMatrix *= Matrix::CreateFromQuaternion(m_player->GetAngle());
 	m_worldMatrix *= Matrix::CreateTranslation(m_player->GetPlayerEyePosition());
 
 	//座標を更新
@@ -64,7 +64,7 @@ void BoomerangIdling::Enter()
 	using namespace DirectX;
 	using namespace DirectX::SimpleMath;
 
-	m_boomerang->SetRotate(m_player->GetRotate());
+	m_boomerang->SetRotate(m_player->GetAngle());
 	//m_boomerang->SetPosition(m_player->GetPosition() + GENERATEDISTANCE);
 
 	//マトリクス　子供の計算　親の計算の順番でやらないといけない
@@ -73,7 +73,7 @@ void BoomerangIdling::Enter()
 	m_worldMatrix *= Matrix::CreateRotationZ(XMConvertToRadians(90));  //ブーメランを立てるように９０度回転
 
 	m_worldMatrix *= Matrix::CreateTranslation(GENERATEDISTANCE);
-	m_worldMatrix *= Matrix::CreateFromQuaternion(m_player->GetRotate());
+	m_worldMatrix *= Matrix::CreateFromQuaternion(m_player->GetAngle());
 	m_worldMatrix *= Matrix::CreateTranslation(m_player->GetPosition());
 
 	//座標を更新

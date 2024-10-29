@@ -226,7 +226,17 @@
     <ClInclude Include="Game\Object\Gimmick\Artillery\ArtilleryTurret.h" />
     <ClInclude Include="Game\Object\Pillar.h" />
     <ClInclude Include="Game\Object\Player\Player.h" />
+    <ClInclude Include="Game\Object\Player\PlayerParts\PlayerBase.h" />
+    <ClInclude Include="Game\Object\Player\PlayerParts\PlayerBody.h" />
+    <ClInclude Include="Game\Object\Player\PlayerParts\PlayerHead.h" />
+    <ClInclude Include="Game\Object\Player\PlayerParts\PlayerLeftArm.h" />
+    <ClInclude Include="Game\Object\Player\PlayerParts\PlayerLeftFeet.h" />
+    <ClInclude Include="Game\Object\Player\PlayerParts\PlayerRightArm.h" />
+    <ClInclude Include="Game\Object\Player\PlayerParts\PlayerRightFeet.h" />
+    <ClInclude Include="Game\Object\Player\State\PlayerAttack.h" />
     <ClInclude Include="Game\Object\Player\State\PlayerBlownAway.h" />
+    <ClInclude Include="Game\Object\Player\State\PlayerIdling.h" />
+    <ClInclude Include="Game\Object\Player\State\PlayerJump.h" />
     <ClInclude Include="Game\Object\Player\State\PlayerUsually.h" />
     <ClInclude Include="Game\Object\Rock.h" />
     <ClInclude Include="Game\Object\Sky.h" />
@@ -266,6 +276,7 @@
     <ClInclude Include="Libraries\MyLib\CSV.h" />
     <ClInclude Include="Libraries\MyLib\DebugCamera.h" />
     <ClInclude Include="Libraries\MyLib\DebugString.h" />
+    <ClInclude Include="Libraries\MyLib\Fade.h" />
     <ClInclude Include="Libraries\MyLib\GridFloor.h" />
     <ClInclude Include="Libraries\MyLib\InputManager.h" />
     <ClInclude Include="Libraries\MyLib\Judgement.h" />
@@ -326,7 +337,17 @@
     <ClCompile Include="Game\Object\Gimmick\Artillery\ArtilleryTurret.cpp" />
     <ClCompile Include="Game\Object\Pillar.cpp" />
     <ClCompile Include="Game\Object\Player\Player.cpp" />
+    <ClCompile Include="Game\Object\Player\PlayerParts\PlayerBase.cpp" />
+    <ClCompile Include="Game\Object\Player\PlayerParts\PlayerBody.cpp" />
+    <ClCompile Include="Game\Object\Player\PlayerParts\PlayerHead.cpp" />
+    <ClCompile Include="Game\Object\Player\PlayerParts\PlayerLeftArm.cpp" />
+    <ClCompile Include="Game\Object\Player\PlayerParts\PlayerLeftFeet.cpp" />
+    <ClCompile Include="Game\Object\Player\PlayerParts\PlayerRightArm.cpp" />
+    <ClCompile Include="Game\Object\Player\PlayerParts\PlayerRightFeet.cpp" />
+    <ClCompile Include="Game\Object\Player\State\PlayerAttack.cpp" />
     <ClCompile Include="Game\Object\Player\State\PlayerBlownAway.cpp" />
+    <ClCompile Include="Game\Object\Player\State\PlayerIdling.cpp" />
+    <ClCompile Include="Game\Object\Player\State\PlayerJump.cpp" />
     <ClCompile Include="Game\Object\Player\State\PlayerUsually.cpp" />
     <ClCompile Include="Game\Object\Rock.cpp" />
     <ClCompile Include="Game\Object\Sky.cpp" />
@@ -353,6 +374,7 @@
     <ClCompile Include="Libraries\MyLib\CSV.cpp" />
     <ClCompile Include="Libraries\MyLib\DebugCamera.cpp" />
     <ClCompile Include="Libraries\MyLib\DebugString.cpp" />
+    <ClCompile Include="Libraries\MyLib\Fade.cpp" />
     <ClCompile Include="Libraries\MyLib\GridFloor.cpp" />
     <ClCompile Include="Libraries\MyLib\InputManager.cpp" />
     <ClCompile Include="Libraries\MyLib\Judgement.cpp" />
@@ -381,11 +403,32 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Resources\Shaders\Fade\Fade.hlsli" />
     <None Include="Resources\Shaders\LockOn\LockOnUI.hlsli" />
     <None Include="Resources\Shaders\Particle\Particle.hlsli" />
     <None Include="Resources\Shaders\UI\UI.hlsli" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="Resources\Shaders\Fade\FadeGS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\Fade\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\Fade\%(Filename).cso</ObjectFileOutput>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Fade\FadePS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\Fade\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\Fade\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Fade\FadeVS.hlsl">
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\Fade\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\Fade\%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
     <FxCompile Include="Resources\Shaders\LockOn\LockOnUIGS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>

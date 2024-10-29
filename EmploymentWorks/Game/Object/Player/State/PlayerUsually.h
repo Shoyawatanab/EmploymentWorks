@@ -11,7 +11,8 @@ class PlayerUsually : public IPlayerState
 {
 public:
 
-	DirectX::SimpleMath::Matrix GetMatrix() { return m_worldMatrix; }
+
+	void ResetGravity() override;
 
 	void SetResouces(CommonResources* resoure) { m_commonResources = resoure; }
 
@@ -30,12 +31,11 @@ public:
 	void Exit();
 
 	//クラスに必要な情報（ポインタ）の登録
-	void RegistrationInformation(Player* player);
+	void RegistrationInformation(CommonResources* resoure,Player* player);
 
 
 private:
 	void Move(float elapsedTime,  DirectX::SimpleMath::Vector3 moveDirection);
-	void Attack(float elapsedTime, DirectX::Keyboard::State key);
 	void Rotate(float elapsedTime, DirectX::SimpleMath::Vector3 moveDirection);
 
 private:
@@ -47,13 +47,10 @@ private:
 
 	Player* m_player;
 
-	// ワールドマトリックス
-	DirectX::SimpleMath::Matrix m_worldMatrix;
 
 
 	float m_graivty;
 
-	DirectX::SimpleMath::Vector3 m_velocity;
 
 };
 

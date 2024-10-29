@@ -64,6 +64,14 @@ PlayScene::PlayScene()
 PlayScene::~PlayScene()
 {
 	// do nothing.
+
+		// オーディオエンジンの後始末
+	m_soundEffectInstanceBGM->Stop(true);
+	if (m_audioEngine)
+	{
+		m_audioEngine->Suspend();
+	}
+
 }
 
 //---------------------------------------------------------
@@ -90,8 +98,6 @@ void PlayScene::Initialize(CommonResources* resources)
 	RECT rect{ m_commonResources->GetDeviceResources()->GetOutputSize() };
 	//m_debugCamera = std::make_unique<mylib::DebugCamera>();
 	//m_debugCamera->Initialize(rect.right, rect.bottom);
-
-
 
 	// 射影行列を作成する
 	m_projection = SimpleMath::Matrix::CreatePerspectiveFieldOfView(
@@ -147,18 +153,15 @@ void PlayScene::Initialize(CommonResources* resources)
 
 		}
 	}
-
-
+	
 	DirectX::SimpleMath::Quaternion rotation = Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0), 0, DirectX::XMConvertToRadians(0));
 
 	float scale = 1.0f;
 
-
 	m_enemy = std::make_unique<Enemy>(m_commonResources,nullptr,  DirectX::SimpleMath::Vector3(scale, scale, scale), Vector3(0, 5, 0), rotation);
-	m_player = std::make_unique<Player>();
+	m_player = std::make_unique<Player>(m_commonResources,nullptr, Vector3(0.2,0.2,0.2), Vector3(0, 4.75f, 15), 
+		Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(180), DirectX::XMConvertToRadians(0), DirectX::XMConvertToRadians(0)));
 	m_cameraManager = std::make_unique<mylib::GameCameraManager>();
-
-
 
 	m_lockOn = std::make_unique<LockOn>();
 	m_collisionManager = std::make_unique<CollisionManager>();
@@ -169,9 +172,7 @@ void PlayScene::Initialize(CommonResources* resources)
 	m_enemy->Instances();
 	m_cameraManager->Instances();
 	m_ui->Instances();
-
-
-
+	
 	//各クラスの情報を登録とインスタンス
 	m_player->RegistrationInformation(m_enemy.get(),m_cameraManager->GetTPSCamera());
 	m_enemy->RegistrationInformation(m_player.get());
@@ -180,14 +181,9 @@ void PlayScene::Initialize(CommonResources* resources)
 	m_ui->RegistrationInformation(this, m_player.get(), m_enemy.get());
 
 
-	Vector3 floorScale = Vector3(70, 0.1f, 50);
-
-
-	m_player->Initialize(m_commonResources, Vector3(0, 3.75f, 15));
+	m_player->Initialize();
 	m_enemy->Initialize();
 
-
-	
 	m_cameraManager->Initialize();
 	m_lockOn->Initialize(m_commonResources->GetDeviceResources(),
 		m_commonResources->GetDeviceResources()->GetOutputSize().right,
@@ -243,6 +239,25 @@ void PlayScene::Initialize(CommonResources* resources)
 
 	m_state = GameState::None;
 
+	m_commonResources->GetTimer()->TimeReset();
+
+		// オーディオエンジンのフラグ
+	AUDIO_ENGINE_FLAGS eflags = AudioEngine_Default;
+#ifdef _DEBUG
+	eflags |= AudioEngine_Debug;
+#endif
+
+	// オーディオエンジンを作成する
+	m_audioEngine = std::make_unique<AudioEngine>(eflags);
+
+	// サウンドエフェクトBGMをロードする
+	m_soundEffectBGM = std::make_unique<SoundEffect>(
+		m_audioEngine.get(), L"Resources/Sounds/maou_game_dangeon08.wav");
+
+	// サウンドエフェクトBGMをインスタンス化する
+	m_soundEffectInstanceBGM = m_soundEffectBGM->CreateInstance();
+	// BGMのループ再生
+	m_soundEffectInstanceBGM->Play(true);
 
 }
 
@@ -257,10 +272,10 @@ void PlayScene::Update(float elapsedTime)
 	const auto& kbTracker = m_commonResources->GetInputManager()->GetKeyboardTracker();
 
 	//PLAYを選ぶ
-	if (kbTracker->released.L)
-	{
-		CreateParticle(DirectX::SimpleMath::Vector3(6, 2, 0));
-	}
+	//if (kbTracker->released.L)
+	//{
+	//	CreateParticle(DirectX::SimpleMath::Vector3(6, 2, 0));
+	//}
 
 	m_cameraManager->Update(elapsedTime);
 
@@ -362,7 +377,7 @@ void PlayScene::Render()
 
 
 	// ビュー行列を取得する
-	const Matrix& view = m_cameraManager->GetViewMatrix();;
+	const Matrix& view = m_cameraManager->GetViewMatrix();
 
 
 	m_floor->Render(view, m_projection);
@@ -377,7 +392,7 @@ void PlayScene::Render()
 		pillar->Render(view, m_projection);
 	}
 
-	//m_ceiling->Render(view, m_projection);
+	//m_ceiling->Render(m_view, m_projection);
 
 	m_enemy->Render(view, m_projection);
 
@@ -411,13 +426,12 @@ void PlayScene::Render()
 	//// デバッグ情報を「DebugString」で表示する
 	auto debugString = m_commonResources->GetDebugString();
 	//debugString->AddString("Play Scene");
-	//debugString->AddString("direction: %f, %f,%f", m_enemy->Getforward().x, m_enemy->Getforward().y, m_enemy->Getforward().z);
+	debugString->AddString("velocity: %f, %f,%f", m_player->GetVelocity().x, m_player->GetVelocity().y, m_player->GetVelocity().z);
 	//debugString->AddString("EyePos: %f, %f,%f", m_cameraManager->GetTPSCamera()->GetEyePosition().x, m_cameraManager->GetTPSCamera()->GetEyePosition().y, m_cameraManager->GetTPSCamera()->GetEyePosition().z);
 	//debugString->AddString("Pos: %f, %f", m_player->GetPos().x, m_player->GetPos().z);
 	//debugString->AddString("Pos: %f, %f", m_enemy->GetPos().x, m_enemy->GetPos().z);
 	//debugString->AddString("IsLockOn: %d ", m_lockOn->GetIsLOckOn());
 
-	debugString->AddString("EyePos : %f,%f,%f", m_player->GetTPS_Camera()->GetCameraForward().x, m_player->GetTPS_Camera()->GetCameraForward().y, m_player->GetTPS_Camera()->GetCameraForward().z);
 }
 
 //---------------------------------------------------------

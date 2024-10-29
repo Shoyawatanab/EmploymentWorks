@@ -100,6 +100,10 @@ private:
 	//パーティクルクラス 爆発エフェクト
 	std::vector<std::unique_ptr<Particle>> m_particle;
 
+	// オーディオ関連
+	std::unique_ptr<DirectX::AudioEngine> m_audioEngine;
+	std::unique_ptr<DirectX::SoundEffect> m_soundEffectBGM;
+	std::unique_ptr<DirectX::SoundEffectInstance> m_soundEffectInstanceBGM;
 
 public:
 	PlayScene();
@@ -111,6 +115,8 @@ public:
 	void Finalize() override;
 
 	SceneID GetNextSceneID() const override;
+
+
 
 	void CreateParticle(DirectX::SimpleMath::Vector3 Pos);
 

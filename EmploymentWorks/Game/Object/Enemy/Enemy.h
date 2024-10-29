@@ -159,19 +159,19 @@ public:
 	void OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos) override;
 
 	//Œ»İ‚Ì‘å‚«‚³‚Ìæ“¾
-	DirectX::SimpleMath::Vector3 GetScale() const { return m_scale; }
+	DirectX::SimpleMath::Vector3 GetScale() const override { return m_scale; }
 	// Œ»İ‚ÌˆÊ’u‚ğæ“¾‚·‚é
 	//DirectX::SimpleMath::Vector3 GetPosition() const { return m_currentPosition; }
 	// Œ»İ‚ÌˆÊ’u‚ğİ’è‚·‚é
 	//void SetPosition(const DirectX::SimpleMath::Vector3& currretPosition) { m_currentPosition = currretPosition; }
 	// Œ»İ‚Ì‰ñ“]Šp‚ğæ“¾‚·‚é
-	DirectX::SimpleMath::Quaternion GetAngle() const { return m_rotate; }
+	DirectX::SimpleMath::Quaternion GetAngle() const override  { return m_rotate; }
 	// Œ»İ‚Ì‰ñ“]Šp‚ğİ’è‚·‚é
-	void SetAngle(const DirectX::SimpleMath::Quaternion& currentAngle) { m_rotate = currentAngle; }
+	void SetAngle(const DirectX::SimpleMath::Quaternion& currentAngle) override { m_rotate = currentAngle; }
 	// ƒ‚ƒfƒ‹‚ğæ“¾‚·‚é
-	DirectX::Model* GetModel() { return nullptr; }
+	DirectX::Model* GetModel() override { return nullptr; }
 	// ƒ[ƒ‹ƒhs—ñ‚ğæ“¾‚·‚é
-	DirectX::SimpleMath::Matrix& GetWorldMatrix() { return m_worldMatrix; }
+	DirectX::SimpleMath::Matrix& GetWorldMatrix()  { return m_worldMatrix; }
 
 
 };

@@ -289,3 +289,10 @@ void Timer::TimeCalculation()
 	m_secFirstDigit = sec / 10;
 	m_secSecondDigit = sec % 10;
 }
+
+void Timer::TimeReset()
+{
+
+	m_totalTime = 0;
+
+}
