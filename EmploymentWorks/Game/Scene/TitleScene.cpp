@@ -220,7 +220,9 @@ void TitleScene::Render()
 {
 
 	// ƒrƒ…[s—ñ‚ðŽæ“¾‚·‚é
-	const Matrix& view = m_camera->GetViewMatrix();;
+	const Matrix&view = m_camera->GetViewMatrix();
+	
+
 	for (auto& model : m_models)
 	{
 		model->Render(view, m_projection);

@@ -17,7 +17,9 @@ public:
 	//ó‘Ô‚ğ”²‚¯‚½
 	virtual void Exit() = 0;
 
-	virtual DirectX::SimpleMath::Matrix GetMatrix() = 0 ;
+
+	virtual void ResetGravity() = 0;
+
 };
 
 #endif		// IBOOMERANGSTATE_DEFINED

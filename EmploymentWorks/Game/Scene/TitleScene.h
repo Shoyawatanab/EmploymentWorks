@@ -44,6 +44,7 @@ private:
 	// 射影行列
 	DirectX::SimpleMath::Matrix m_projection;
 
+
 	std::unique_ptr<mylib::TitleCamera> m_camera;
 
 	// シーンチェンジフラグ
@@ -89,7 +90,6 @@ public:
     void Finalize() override;
 
     SceneID GetNextSceneID() const;
-
 
 
 };

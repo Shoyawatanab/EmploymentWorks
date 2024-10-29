@@ -126,12 +126,12 @@ void Beam::Finalize()
 bool Beam::Attack(float elapsdTime)
 {
 	//—\”õ“®ì
-	if (m_preliminaryActionTime < 4)
+	if (m_preliminaryActionTime < 2)
 	{
-		if (m_preliminaryActionTime == 0)
-		{
-			m_enemy->RegistrationRungingAnimation("Beam");
-		}
+		//if (m_preliminaryActionTime == 0)
+		//{
+		//	m_enemy->RegistrationRungingAnimation("Beam");
+		//}
 
 		m_preliminaryActionTime += elapsdTime;
 		return true;

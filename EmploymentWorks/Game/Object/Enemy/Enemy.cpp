@@ -129,6 +129,7 @@ void Enemy::Initialize()
 	//RegistrationRungingAnimation("Beam");
 	//BossEnemyBase::AnimationUdate(1.0f);
 
+	m_hp = 1;
 }
 
 //---------------------------------------------------------

@@ -6,11 +6,14 @@
 #pragma once
 #include "pch.h"
 #include "Game/Object/Boomerang/Boomerang.h"
-#include "Interface/ICollisionObject.h"
+#include "Game/Object/Player/PlayerParts/PlayerBase.h"
 
 #include "Interface/IPlayerState.h"
 #include "Game/Object/Player/State/PlayerUsually.h"
 #include "Game/Object/Player/State/PlayerBlownAway.h"
+#include "Game/Object/Player/State/PlayerAttack.h"
+#include "Game/Object/Player/State/PlayerJump.h"
+#include "Game/Object/Player/State/PlayerIdling.h"
 
 // 前方宣言
 class CommonResources;
@@ -26,15 +29,15 @@ namespace mylib
 }
 
 
-class Player : public ICollisionObject
+class Player : public PlayerBase
 
 {
 public:
 
 
 
-	DirectX::SimpleMath::Quaternion GetRotate() { return m_rotate; }
-	void SetRotate(DirectX::SimpleMath::Quaternion rotate) { m_rotate = rotate; }
+	//DirectX::SimpleMath::Quaternion GetRotate() { return m_rotate; }
+	//void SetRotate(DirectX::SimpleMath::Quaternion rotate) { m_rotate = rotate; }
 	Boomerang* GetUsingBoomerang() { return m_boomerang[m_boomerangIndex].get(); }
 
 	bool GetIsLockOn() { return m_isLockOn; }
@@ -59,6 +62,9 @@ public:
 	IPlayerState* GetPlayerState() { return m_currentState; }
 	PlayerUsually* GetPlayerUsually() { return m_usually.get(); }
 	PlayerBlownAway* GetPlayerBlownAway() { return m_blownAway.get(); }
+	PlayerAttack* GetPlayerAttack() { return m_attack.get(); }
+	PlayerJump* GetPlayerJump() { return m_jump.get(); }
+	PlayerIdling* GetPlayerIding() { return m_idling.get(); }
 
 	//使用中のブーメランのIndexの取得
 	int GetUsingBoomerangIndex() { return m_boomerangIndex; }
@@ -69,6 +75,12 @@ public:
 	mylib::TPS_Camera* GetTPS_Camera() { return m_tpsCamera; }
 
 	int GetBoomerangIndex() { return m_boomerangIndex; }
+
+	DirectX::SimpleMath::Vector3 InitialRotate() { return m_initialRotate; }
+
+	DirectX::SimpleMath::Vector3 GetVelocity() { return m_velocity; }
+
+	void SetVelocity(DirectX::SimpleMath::Vector3 velocity) { m_velocity = velocity; }
 
 private:
 
@@ -82,11 +94,12 @@ private:
 	//ゲームカメラ プレイ中のカメラ
 	mylib::TPS_Camera* m_tpsCamera;
 
-	// モデル
-	std::unique_ptr<DirectX::Model> m_model;
 
+
+	DirectX::SimpleMath::Vector3 m_scale;
 	DirectX::SimpleMath::Vector3 m_position;
 	DirectX::SimpleMath::Quaternion m_rotate;
+	DirectX::SimpleMath::Vector3 m_initialRotate;
 	DirectX::SimpleMath::Vector3 m_direction; // 今向いている方向
 
 	//目の座標
@@ -107,6 +120,8 @@ private:
 
 	float m_graivty;
 
+	DirectX::SimpleMath::Vector3 m_velocity;
+
 	bool m_isLockOn;
 
 	bool m_isJump;
@@ -115,19 +130,23 @@ private:
 
 	DirectX::SimpleMath::Quaternion m_cameraRatate;
 
+	std::unique_ptr<PlayerUsually>    m_usually;
+
 	//State関係
 	IPlayerState* m_currentState;
-	std::unique_ptr<PlayerUsually> m_usually;
-	std::unique_ptr<PlayerBlownAway> m_blownAway;
+	std::unique_ptr<PlayerIdling>    m_idling;
+	std::unique_ptr<PlayerBlownAway>  m_blownAway;
+	std::unique_ptr<PlayerAttack>     m_attack;
+	std::unique_ptr<PlayerJump>       m_jump;
 
 	std::unique_ptr<DirectX::BasicEffect> m_basicEffect;
 
 
 public:
-	Player();
+	Player(CommonResources* resources, IComponent* parent, const DirectX::SimpleMath::Vector3 initialScale, const DirectX::SimpleMath::Vector3& initialPosition, const DirectX::SimpleMath::Quaternion& initialAngle);
 	~Player() ;
 
-	void Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 position);
+	void Initialize();
 	void Update(float elapsedTime);
 	void Render(DirectX::SimpleMath::Matrix view, DirectX::SimpleMath::Matrix projection) ;
 	void Finalize() ;
@@ -154,5 +173,13 @@ public:
 	DirectX::SimpleMath::Vector3 GetPosition() override { return m_position; }
 
 	void OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos) override;
+
+	//現在の大きさの取得
+	DirectX::SimpleMath::Vector3 GetScale() const override { return m_scale; }
+	// 現在の回転角を取得する
+	DirectX::SimpleMath::Quaternion GetAngle() const override { return m_rotate; }
+	// 現在の回転角を設定する
+	void SetAngle(const DirectX::SimpleMath::Quaternion& currentAngle) override { m_rotate = currentAngle; }
+
 
 };

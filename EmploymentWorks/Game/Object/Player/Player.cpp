@@ -19,7 +19,9 @@
 
 #include "Libraries/MyLib/Camera/TPS_Camera.h"
 
-const float MOVE_SPEED = 5.0f;                                        //動く時のスピード
+#include "Game/Object/Player/PlayerParts/PlayerBody.h"
+
+//const float MOVE_SPEED = 5.0f;                                        //動く時のスピード
 const DirectX::SimpleMath::Vector3 INITIAL_DIRECTION( 0.0f,0.0f,-1.0f); //初期の向いている方向
 
 const DirectX::SimpleMath::Vector3 EYE_TO_POSITION_DIFFERENCE(0.0f, 0.7f, 0.0f); //座標と目の座標の差分
@@ -27,11 +29,14 @@ const DirectX::SimpleMath::Vector3 EYE_TO_POSITION_DIFFERENCE(0.0f, 0.7f, 0.0f);
 //---------------------------------------------------------
 // コンストラクタ
 //---------------------------------------------------------
-Player::Player()
+Player::Player(CommonResources* resources, IComponent* parent, const DirectX::SimpleMath::Vector3 initialScale, const DirectX::SimpleMath::Vector3& initialPosition, const DirectX::SimpleMath::Quaternion& initialAngle)
 	:
-	m_commonResources{},
-	m_model{},
-	m_position{},
+	PlayerBase(resources, parent, initialScale, DirectX::SimpleMath::Vector3::Zero, initialAngle),
+	m_commonResources{resources},
+	m_scale{initialScale},
+	m_rotate{},
+	m_initialRotate{initialAngle},
+	m_position{initialPosition},
 	m_direction{INITIAL_DIRECTION},
 	m_enemy{ },
 	m_graivty{},
@@ -40,6 +45,9 @@ Player::Player()
 	,m_hp{}
 	,m_boomerangIndex{}
 	,m_scrollWheelValue{}
+	,m_attack{}
+	,m_jump{}
+	,m_velocity{}
 {
 }
 
@@ -57,32 +65,15 @@ Player::~Player()
 //---------------------------------------------------------
 // 初期化する
 //---------------------------------------------------------
-void Player::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 position)
+void Player::Initialize()
 {
 	using namespace DirectX::SimpleMath;
 
-	assert(resources);
-	m_commonResources = resources;
-
-	
-
-
 	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
 
-
-
-
-	// モデルを読み込む準備
-	std::unique_ptr<DirectX::EffectFactory> fx = std::make_unique<DirectX::EffectFactory>(device);
-	fx->SetDirectory(L"Resources/Models");
-
-	// モデルを読み込む
-	m_model = DirectX::Model::CreateFromCMO(device, L"Resources/Models/NewPlayer.cmo", *fx);
-
-	m_position = position;
 	m_eyePosition = m_position + EYE_TO_POSITION_DIFFERENCE;
 	m_bounding = std::make_unique<Bounding>();
-	m_bounding->CreateBoundingBox(m_commonResources, m_position, Vector3(0.4f, 0.8f, 0.4f));
+	m_bounding->CreateBoundingBox(m_commonResources, m_position, Vector3(0.4f, 0.6f, 0.4f));
 	m_bounding->CreateBoundingSphere(m_commonResources, m_position, 1.0f);
 
 	//ストック
@@ -91,14 +82,20 @@ void Player::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3
 		boomerang->Initialize(m_commonResources);
 	}
 
-
-
+	//共通
 	m_usually->Initialize();
-	m_usually->SetResouces(m_commonResources);
-
+	//m_usually->SetResouces(m_commonResources);
+	//攻撃
+	m_attack->Initialize();
+	//ジャンプ
+	m_jump->Initialize();
+	//吹き飛ばし
 	m_blownAway->Initialize();
+	//立ち状態
+	m_idling->Initialize();
 
-	m_currentState = m_usually.get();
+
+	m_currentState = m_idling.get();
 
 
 	m_graivty = 0.05f;
@@ -112,6 +109,11 @@ void Player::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3
 	m_boomerangIndex = 0;
 
 	m_boomerang[m_boomerangIndex]->SetUseState(Boomerang::UseState::Have);
+
+
+	//「Head」を生成する
+	Attach(std::make_unique<PlayerBody>(PlayerBase::GetResources(), this, PlayerBase::GetInitialScale(), Vector3(0.0f, 0.0f, 0.0f),
+		Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0), DirectX::XMConvertToRadians(0), DirectX::XMConvertToRadians(0))));
 
 }
 
@@ -128,6 +130,8 @@ void Player::Update(float elapsedTime)
 
 
 	const auto& state = m_commonResources->GetInputManager()->GetMouseState();
+
+
 
 	//所持しているブーメランがStock状態なら
 	if (m_boomerang[m_boomerangIndex]->GetUseState() == Boomerang::UseState::Stock)
@@ -230,6 +234,8 @@ void Player::Update(float elapsedTime)
 	}
 
 	m_currentState->Update(elapsedTime);
+	m_usually->Update(elapsedTime);
+
 	//目の座標の更新
 	m_eyePosition = m_position + EYE_TO_POSITION_DIFFERENCE;
 
@@ -271,6 +277,9 @@ void Player::Update(float elapsedTime)
 
 	m_bounding->Update(m_position);
 
+	//部品を更新する
+	PlayerBase::Update(elapsedTime);
+
 }
 
 //---------------------------------------------------------
@@ -310,8 +319,10 @@ void Player::Render(DirectX::SimpleMath::Matrix view, DirectX::SimpleMath::Matri
 	//	}
 	//);
 	
-	m_model->Draw(context, *states, m_currentState->GetMatrix(), view, projection);
-	//m_bounding->DrawBoundingBox(m_position, view, projection);
+	//部品を描画する
+	PlayerBase::Render(view, projection);
+
+	m_bounding->DrawBoundingBox(m_position, view, projection);
 	//m_bounding->DrawBoundingSphere(m_position, view, projection);
 
 	for (auto& boomerang : m_boomerang)
@@ -353,9 +364,11 @@ void Player::RegistrationInformation(Enemy* enemy, mylib::TPS_Camera* tps_Camera
 	m_enemy = enemy;
 	m_tpsCamera = tps_Camera;
 
-	m_usually->RegistrationInformation(this);
-	m_blownAway->RegistrationInformation(this);
-
+	m_usually->RegistrationInformation(m_commonResources, this);
+	m_idling->RegistrationInformation(m_commonResources, this);
+	m_attack->RegistrationInformation(m_commonResources, this);
+	m_jump->RegistrationInformation(m_commonResources, this);
+	m_blownAway->RegistrationInformation(m_commonResources, this);
 
 	//ストック
 	for (auto& stock : m_boomerang)
@@ -372,6 +385,10 @@ void Player::Instances()
 	m_bounding = std::make_unique<Bounding>();
 	m_usually = std::make_unique<PlayerUsually>();
 	m_blownAway = std::make_unique<PlayerBlownAway>();
+
+	m_attack = std::make_unique<PlayerAttack>();
+	m_jump = std::make_unique<PlayerJump>();
+	m_idling = std::make_unique<PlayerIdling>();
 
 	
 	//ストックのブーメラン
@@ -423,7 +440,7 @@ void Player::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath
 			{
 				ChangeState(m_usually.get());
 			}
-			m_isJump = false;
+			m_velocity.y = 0;
 			break;
 		default:
 			break;

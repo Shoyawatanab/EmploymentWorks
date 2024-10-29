@@ -41,7 +41,7 @@ void BoomerangGetReady::Update(const float& elapsedTime)
 	using namespace DirectX::SimpleMath;
 
 
-	m_boomerang->SetRotate(m_player->GetRotate()) ;
+	m_boomerang->SetRotate(m_player->GetAngle()) ;
 
 	Vector3 Pos = m_player->GetPosition();
 	m_boomerang->SetPosition(Pos);

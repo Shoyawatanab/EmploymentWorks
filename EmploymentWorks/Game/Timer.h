@@ -79,6 +79,8 @@ public:
 
 	void TimeCalculation();
 
+	void TimeReset();
+
 private:
 
 

@@ -7,6 +7,10 @@
 
 
 
+void PlayerBlownAway::ResetGravity()
+{
+}
+
 // コンストラクタ
 PlayerBlownAway::PlayerBlownAway()
 	:
@@ -45,12 +49,6 @@ void PlayerBlownAway::Update(const float& elapsedTime)
 	//重力の加算
 	m_graivty += 4.0f * elapsedTime;
 
-	//// ワールド行列を更新する
-	m_worldMatrix = Matrix::CreateScale(0.4f);
-	//モデルが判定しているからやっている本当はBlenderで軸を決めてやる
-	m_worldMatrix *= Matrix::CreateRotationY(DirectX::XMConvertToRadians(180));
-	//m_worldMatrix *= Matrix::CreateFromQuaternion(m_player->GetRotate());
-	m_worldMatrix *= Matrix::CreateTranslation(m_player->GetPosition());
 
 
 }
@@ -75,9 +73,9 @@ void PlayerBlownAway::Exit()
 
 }
 
-void PlayerBlownAway::RegistrationInformation(Player* player)
+void PlayerBlownAway::RegistrationInformation(CommonResources* resoure, Player* player)
 {
-
+	m_commonResources = resoure;
 	m_player = player;
 
 }
