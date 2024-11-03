@@ -3,6 +3,7 @@
 //#include "PlayScene.h"
 #include "DeviceResources.h"
 #include "Game/CommonResources.h"
+#include "Libraries/MyLib/Animation.h"
 
 
 void PlayerRightFeet::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos)
@@ -54,38 +55,36 @@ void PlayerRightFeet::Initialize()
 
 	PlayerBase::Initialize(std::move(m_model));
 
-	//アニメーションの生成　引数　大きさ　座標　回転　時間
-	std::vector<PlayerBase::AnimationKeyFrame> animation;
+
+	//アニメーションの生成
+	std::vector<Animation::AnimationKeyFrame> keyFram;
+	keyFram.push_back({ DirectX::SimpleMath::Quaternion::Identity, 0.0f });            //初期値
+	keyFram.push_back({ DirectX::SimpleMath::Quaternion::Identity, 0.5f });            //初期値
+
+	//アニメーションクラスの作成
+	auto animation = std::make_unique<Animation>();
+	//アニメーションKeyFramの登録
+	animation->SetAnimation(keyFram, Animation::AnimationPlayBackType::Loop);
+
+	PlayerBase::SetAnimations(std::move(animation), "Idling");
 
 
-	animation.push_back({ Vector3(1, 1, 1), Vector3::Zero, DirectX::SimpleMath::Quaternion::Identity, 0.0f });            //初期値
-	animation.push_back({ Vector3(1, 1, 1), Vector3(0,0,0),
-		DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(0))
-		, 0.2f });            //足の振り上げ
-	animation.push_back({ Vector3(1, 1, 1), Vector3(0,0,0),
-		DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(0))
-		, 0.2f });            //溜め時間
-	animation.push_back({ Vector3(1, 1, 1), Vector3(0,0,0.0f),
-		DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(0))
-		, 0.2f });            //おろす
+	//アニメーションの生成
+	keyFram.clear();
+	keyFram.push_back({ DirectX::SimpleMath::Quaternion::Identity, 0.0f });            //初期値
+	keyFram.push_back({ DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(45),DirectX::XMConvertToRadians(0))
+		, 0.5f });            //腕の振り上げ
+	keyFram.push_back({ DirectX::SimpleMath::Quaternion::Identity, 0.5f });            //初期値
+	keyFram.push_back({ DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(-45),DirectX::XMConvertToRadians(0))
+		, 0.5f });            //溜め時間
+	keyFram.push_back({ DirectX::SimpleMath::Quaternion::Identity, 0.5f });            //初期値
 
-	animation.push_back({ Vector3(1, 1, 1), Vector3::Zero, DirectX::SimpleMath::Quaternion::Identity, 0.5f });
+	//アニメーションクラスの作成
+	animation = std::make_unique<Animation>();
+	//アニメーションKeyFramの登録
+	animation->SetAnimation(keyFram, Animation::AnimationPlayBackType::Loop);
 
-
-
-	animation.push_back({ Vector3(1, 1, 1), Vector3(0,0,0),
-		DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(-70),DirectX::XMConvertToRadians(0))
-		, 0.2f });            //足の振り上げ
-	animation.push_back({ Vector3(1, 1, 1), Vector3(0,0,0),
-		DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(-70),DirectX::XMConvertToRadians(0))
-		, 0.2f });            //溜め時間
-	animation.push_back({ Vector3(1, 1, 1), Vector3(0,0,0.0f),
-		DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(0))
-		, 0.2f });            //おろす
-
-
-	//アニメーションを登録
-	PlayerBase::SetAnimations(animation, "Run");
+	PlayerBase::SetAnimations(std::move(animation), "Walk");
 
 
 

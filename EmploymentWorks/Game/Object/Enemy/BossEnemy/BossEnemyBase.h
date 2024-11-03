@@ -3,6 +3,7 @@
 #define BossEnemyBase_DEFINED
 #include "Interface/IComponent.h"
 #include <unordered_map>
+#include "Libraries/MyLib/Animation.h"
 
 class CommonResources;
 class Bounding;
@@ -12,13 +13,6 @@ class BossEnemyBase : public IComponent
 {
 public:
 
-	struct AnimationKeyFrame
-	{
-		DirectX::SimpleMath::Vector3 Scale;        //大きさ
-		DirectX::SimpleMath::Vector3 Position;      //座標
-		DirectX::SimpleMath::Quaternion Rotation;   //回転　
-		float Time;                                 //発生する時間
-	};
 
 
 public:
@@ -37,7 +31,10 @@ public:
 	CommonResources* GetResources() { return m_commonResources; }
 
 	//アニメーションの登録 
-	void SetAnimations(std::vector<AnimationKeyFrame> animations, std::string name) { m_animations[name] = animations; }
+	void SetAnimations(std::unique_ptr<Animation> animations, std::string name) { m_animations[name] = std::move(animations); }
+
+	//実行するアニメーションの名前
+	void SetRunnginAnimationName(std::string name) override;
 
 
 	//アニメーション座標の取得
@@ -91,10 +88,8 @@ public:
 	void BoundingRender(DirectX::SimpleMath::Matrix view, DirectX::SimpleMath::Matrix projection);
 
 	//アニメーションの実行
-	AnimationStage AnimationUdate(const float& elapsdTime);
+	Animation::AnimationState AnimationUdate(const float& elapsdTime)override ;
 
-	//アニメーションを実行中アニメーションに登録
-	void RegistrationRungingAnimation(std::string name);
 
 private:
 	// 砲塔部品カウント
@@ -121,10 +116,10 @@ private:
 	DirectX::SimpleMath::Vector3 m_positonFromParent;
 	// 共通リソース
 	CommonResources* m_commonResources;
-	//実行中のアニメーション
-	std::vector<AnimationKeyFrame> m_runningKeyFrames;
+	//実行するアニメーションの名前
+	std::string m_runningAnimationName;
 	//アニメーションの保存変数
-	std::unordered_map<std::string, std::vector<AnimationKeyFrame>> m_animations;
+	std::unordered_map<std::string, std::unique_ptr<Animation>> m_animations;
 	//アニメーションの座標
 	DirectX::SimpleMath::Vector3 m_animationPosition;
 	//アニメーションの回転

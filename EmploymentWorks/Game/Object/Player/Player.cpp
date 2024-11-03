@@ -16,9 +16,7 @@
 #include "Game/Object/Enemy/Enemy.h"
 #include "Libraries/MyLib/Bounding.h"
 #include "Game/DetectionCollision/CollisionManager.h"
-
 #include "Libraries/MyLib/Camera/TPS_Camera.h"
-
 #include "Game/Object/Player/PlayerParts/PlayerBody.h"
 
 //const float MOVE_SPEED = 5.0f;                                        //動く時のスピード
@@ -84,7 +82,6 @@ void Player::Initialize()
 
 	//共通
 	m_usually->Initialize();
-	//m_usually->SetResouces(m_commonResources);
 	//攻撃
 	m_attack->Initialize();
 	//ジャンプ
@@ -184,6 +181,13 @@ void Player::Update(float elapsedTime)
 
 		Mouse::Get().ResetScrollWheelValue();
 
+
+		if (m_currentState != m_jump.get())
+		{
+			m_currentState = m_idling.get();
+
+		}
+
 	}
 	if (m_scrollWheelValue < 0)
 	{
@@ -229,6 +233,11 @@ void Player::Update(float elapsedTime)
 
 		Mouse::Get().ResetScrollWheelValue();
 
+		if (m_currentState != m_jump.get())
+		{
+			m_currentState = m_idling.get();
+
+		}
 
 
 	}
@@ -440,6 +449,13 @@ void Player::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath
 			{
 				ChangeState(m_usually.get());
 			}
+			else if (m_currentState == m_jump.get())
+			{
+				ChangeState(m_idling.get());
+			}
+			
+
+
 			m_velocity.y = 0;
 			break;
 		default:

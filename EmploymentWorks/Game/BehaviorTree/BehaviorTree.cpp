@@ -34,9 +34,7 @@ void BehaviorTree::Initialize(CommonResources* resources)
 	m_executionNode->Initialize(m_commonResources);
 	//条件ノードの作成
 	m_conditions = std::make_unique<Conditions>(m_commonResources, m_player, m_enemy);
-
-
-
+	
 	//攻撃するかどうか
 	auto IsAttackDecorator = std::make_unique<DecoratorNode>(std::bind(&Conditions::IsAttack, m_conditions.get(), std::placeholders::_1));
 	//ビーム攻撃のアクションノードの追加
@@ -75,6 +73,8 @@ void BehaviorTree::Update(float elapsedTime)
 		default:
 			break;
 	}
+
+
 
 }
 

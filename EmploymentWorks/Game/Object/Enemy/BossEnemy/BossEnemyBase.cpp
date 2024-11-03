@@ -6,6 +6,43 @@
 #include <unordered_map>
 #include "Libraries/MyLib/Bounding.h"
 #include "Game/DetectionCollision/CollisionManager.h"
+
+void BossEnemyBase::SetRunnginAnimationName(std::string name)
+{
+	//名前が同じなら
+	if (m_runningAnimationName == name)
+	{
+		return;
+	}
+
+	//アニメーションがあるか探す
+	auto it = m_animations.find(m_runningAnimationName);
+	//あれば
+	if (it != m_animations.end())
+	{
+		//変更前のアニメーションをリセット
+		m_animations[m_runningAnimationName]->ResetAnimation();
+		//回転もリセット　これはのちにいらなくなる　前のアニメーションと次のアニメーションの切り替えを違和感なくするために
+		m_animationRotation = DirectX::SimpleMath::Quaternion::Identity;
+
+	}
+
+
+	m_runningAnimationName = name;
+
+
+
+
+
+	// 部品を更新する
+	for (auto& part : m_parts)
+	{
+		part->SetRunnginAnimationName(name);
+	}
+
+}
+
+
 // コンストラクタ
 BossEnemyBase::BossEnemyBase(CommonResources* resources,IComponent* parent, DirectX::SimpleMath::Vector3 initialScale, const DirectX::SimpleMath::Vector3& positonFromParent, const DirectX::SimpleMath::Quaternion& initialAngle)
 	:
@@ -17,7 +54,6 @@ BossEnemyBase::BossEnemyBase(CommonResources* resources,IComponent* parent, Dire
 	m_model{},
 	m_parts{},
 	m_worldMatrix{},
-	m_runningKeyFrames{},
 	m_animationPosition{},
 	m_animationRotation{},
 	m_animetionTime{}
@@ -203,45 +239,19 @@ void BossEnemyBase::BoundingRender(DirectX::SimpleMath::Matrix view, DirectX::Si
 
 }
 
-IComponent::AnimationStage BossEnemyBase::AnimationUdate(const float& elapsdTime)
+Animation::AnimationState BossEnemyBase::AnimationUdate(const float& elapsdTime)
 {
 	using namespace DirectX::SimpleMath;
-	
+
 	//初期値としてアニメーション中とする
-	AnimationStage state = AnimationStage::Runngin;
-
-
-
-	//残りアニメーションが１つ以上  
-	if (m_runningKeyFrames.size() > 1)
+	Animation::AnimationState state = Animation::AnimationState::End;
+	//アニメーションを探す
+	auto it = m_animations.find(m_runningAnimationName);
+	//アニメーションがあれば
+	if (it != m_animations.end())
 	{
-		//時間の割合を求める
-		float ratio = m_animetionTime / m_runningKeyFrames[1].Time;
-		//割合が１を超えないようにする
-		ratio = std::min(ratio, 1.0f);
-		//Lerp関数で座標を更新
-		m_animationPosition = Vector3::Lerp(m_runningKeyFrames.begin()->Position, m_runningKeyFrames[1].Position, ratio);
-		//Lerp関数で回転を更新
-		m_animationRotation = Quaternion::Lerp(m_runningKeyFrames.begin()->Rotation, m_runningKeyFrames[1].Rotation, ratio);
-
-
-
-		//アニメーション時間の更新
-		m_animetionTime += elapsdTime;
-		//区切りが終わったら
-		if (ratio >= 1)
-		{
-			//時間の初期化
-			//m_animetionTime -= m_runningKeyFrames.begin()->Time;
-			m_animetionTime = 0;
-			//実行中アニメーションの先頭を消す
-			m_runningKeyFrames.erase(m_runningKeyFrames.begin());
-		}
-	}
-	else
-	{
-		//アニメーション終了
-		state = AnimationStage::Success;
+		state = m_animations[m_runningAnimationName]->Update(elapsdTime);
+		m_animationRotation = m_animations[m_runningAnimationName]->GetAnimationRotate();
 	}
 
 
@@ -249,49 +259,18 @@ IComponent::AnimationStage BossEnemyBase::AnimationUdate(const float& elapsdTime
 	for (auto& part : m_parts)
 	{
 		//子が実行中なら
-		if (part->AnimationUdate(elapsdTime) == AnimationStage::Runngin)
+		if (part->AnimationUdate(elapsdTime) == Animation::AnimationState::Running)
 		{
 			//アニメーション実行中に
-			state = AnimationStage::Runngin;
+			state = Animation::AnimationState::Running;
 		}
 	}
 
-
-	//親・子含めて１つでも実行中があれば実行中を返す
 	return state;
 
 }
 
-/// <summary>
-/// アニメーションを実行中アニメーションに登録
-/// </summary>
-/// <param name="name">アニメーション名</param>
-void BossEnemyBase::RegistrationRungingAnimation(std::string name)
-{
-	//nameのアニメーションがあるかどうか
-	auto it =  m_animations.find(name);
 
-	//アニメーションがあるかどうか
-	if (it != m_animations.end())
-	{
-		//ある場合
-		//アニメーションをコピー
-		m_runningKeyFrames = m_animations[name];
-		//実行中アニメーションのサイズをもとにアニメーションの切り替え回数を求める
-		m_animationSwitchingCount = static_cast<int>( m_runningKeyFrames.size());
-		//アニメーション時間の初期化
-		m_animetionTime = 0;
-
-
-	}
-
-
-	// 部品のアニメーションを登録する
-	for (auto& part : m_parts)
-	{
-		part->RegistrationRungingAnimation(name);
-	}
-}
 
 
 

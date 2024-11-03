@@ -9,6 +9,7 @@
 #include "Interface/IBehaviorNode.h"
 
 #include "Game/Object/Enemy/BossEnemy/BossEnemyBase.h"
+#include "Libraries/MyLib/Animation.h"
 
 // ëOï˚êÈåæ
 class CommonResources;
@@ -127,7 +128,7 @@ public:
 	void Render(DirectX::SimpleMath::Matrix view, DirectX::SimpleMath::Matrix projection) ;
 	void Finalize() ;
 
-	BossEnemyBase::AnimationStage FallDwonAnimation(float elapsdTime);
+	Animation::AnimationState FallDwonAnimation(float elapsdTime);
 
 	void SetAnimation(std::string name);
 

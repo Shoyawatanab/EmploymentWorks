@@ -214,6 +214,14 @@ void CollisionManager::Update()
 					}
 					break;
 				case static_cast<uint32_t>(CollisionType::Boomerang_Pillar):
+					if (CheckIsBox(m_collsionObjects[i], m_collsionObjects[j]))
+					{
+
+						m_collsionObjects[i]->OnCollisionEnter(tagJ, m_collsionObjects[j]->GetBounding()->GetBoundingBox()->Center);
+						m_collsionObjects[j]->OnCollisionEnter(tagI, m_collsionObjects[i]->GetBounding()->GetBoundingBox()->Center);
+
+					}
+
 					break;
 				case static_cast<uint32_t>(CollisionType::Boomerang_Artillery):
 

@@ -90,7 +90,7 @@ void BossEnemyTorso::Initialize()
 	//Attach(std::make_unique<BossEnemyLeftShoulder>(BossEnemyBase::GetResources(), this, BossEnemyBase::GetInitialScale(), Vector3(2.6f, 0.5f, 0.0f),
 	//	Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0), DirectX::XMConvertToRadians(0), DirectX::XMConvertToRadians(0))));
 
-		//「RightShouder」を生成する
+	//「RightShouder」を生成する
 	Attach(std::make_unique<BossEnemyRightShoulder>(BossEnemyBase::GetResources(), this, BossEnemyBase::GetInitialScale(), Vector3(-2.4f, 1.0f, 0.0f),
 		Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0), DirectX::XMConvertToRadians(0), DirectX::XMConvertToRadians(00))));
 

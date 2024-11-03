@@ -286,7 +286,7 @@ void PlayScene::Update(float elapsedTime)
 
 			if (m_cameraManager->GetGameCameraState() != m_cameraManager->GetGameStartCamera())
 			{
-				//m_enemy->Update(elapsedTime);
+				m_enemy->Update(elapsedTime);
 				for (auto& artillery : m_artillery)
 				{
 					artillery->Update(elapsedTime);
@@ -325,7 +325,7 @@ void PlayScene::Update(float elapsedTime)
 			if (m_cameraManager->GetGameCameraState() != m_cameraManager->GetGameStartCamera())
 			{
 				
-				if (m_enemy->FallDwonAnimation(elapsedTime) == BossEnemyBase::AnimationStage::Success && m_ui->GetCurrentUIState() != m_ui->GetGameClearUI())
+				if (m_enemy->FallDwonAnimation(elapsedTime) == Animation::AnimationState::End && m_ui->GetCurrentUIState() != m_ui->GetGameClearUI())
 				{
 					m_ui->ChangeState(m_ui->GetGameClearUI());
 
