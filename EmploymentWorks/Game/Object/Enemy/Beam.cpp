@@ -238,7 +238,8 @@ bool Beam::Attack(float elapsdTime)
 	{
 		//—\”õ“®ì‚ÌŠÔ‚Ì‰Šú‰»
 		m_preliminaryActionTime = 0;
-		m_enemy->RegistrationRungingAnimation("BeamEnd");
+		//m_enemy->RegistrationRungingAnimation("BeamEnd");
+		m_enemy->SetRunnginAnimationName("BeamEnd");
 		//UŒ‚I—¹
 		return false;
 	}

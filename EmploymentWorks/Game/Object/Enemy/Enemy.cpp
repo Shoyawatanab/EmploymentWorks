@@ -143,13 +143,15 @@ void Enemy::Update(float elapsedTime)
 	// キーボードステートを取得する
 	DirectX::Keyboard::State keyboardState = DirectX::Keyboard::Get().GetState();
 
-	m_behavior->Update(elapsedTime);
+	//m_behavior->Update(elapsedTime);
 
-	BossEnemyBase::AnimationUdate(elapsedTime);
 
 
 	//部品を更新する
 	BossEnemyBase::Update(elapsedTime);
+
+	BossEnemyBase::AnimationUdate(elapsedTime);
+
 
 	//m_rotate *= DirectX::SimpleMath::Quaternion::CreateFromAxisAngle(DirectX::SimpleMath::Vector3::UnitY, DirectX::XMConvertToRadians(0.1f))
 
@@ -248,25 +250,31 @@ void Enemy::Finalize()
 }
 
 //大きさを小さくする
-BossEnemyBase::AnimationStage  Enemy::FallDwonAnimation(float elapsdTime)
+Animation::AnimationState  Enemy::FallDwonAnimation(float elapsdTime)
 {
 
 	UNREFERENCED_PARAMETER(elapsdTime);
 
-	BossEnemyBase::AnimationStage state;
+	Animation::AnimationState state;
 
 	state = BossEnemyBase::AnimationUdate(elapsdTime);
 
-	if (state == AnimationStage::Runngin)
-	{
 
-		m_position.y -= 0.45f *elapsdTime;
+	//部品を更新する
+	BossEnemyBase::Update(elapsdTime);
+
+
+
+
+
+
+	if (state == Animation::AnimationState::Running)
+	{
+		m_position.y -= 0.3f *elapsdTime;
 		m_position.z += 0.5f * elapsdTime;
 		m_boundingBoxCenter.y += 0.95f * elapsdTime;
 	}
 
-	//部品を更新する
-	BossEnemyBase::Update(elapsdTime);
 	m_position.y -= m_graivty;
 
 
@@ -291,8 +299,9 @@ BossEnemyBase::AnimationStage  Enemy::FallDwonAnimation(float elapsdTime)
 void Enemy::SetAnimation(std::string name)
 {
 
-	RegistrationRungingAnimation("FallDown");
+	//RegistrationRungingAnimation("FallDown");
 
+	SetRunnginAnimationName("FallDown");
 
 }
 

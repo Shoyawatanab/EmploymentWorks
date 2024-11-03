@@ -8,6 +8,7 @@
 #include "Game/Object/Player/PlayerParts/PlayerLeftFeet.h"
 #include "Game/Object/Player/PlayerParts/PlayerRightArm.h"
 #include "Game/Object/Player/PlayerParts/PlayerRightFeet.h"
+#include "Libraries/MyLib/Animation.h"
 
 
 void PlayerBody::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos)
@@ -78,19 +79,6 @@ void PlayerBody::Initialize()
 		Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0), DirectX::XMConvertToRadians(0), DirectX::XMConvertToRadians(0))));
 
 
-	//アニメーションの生成　引数　大きさ　座標　回転　時間
-	std::vector<PlayerBase::AnimationKeyFrame> animation;
-	//test
-	animation.push_back({ Vector3(1, 1, 1), Vector3::Zero, DirectX::SimpleMath::Quaternion::Identity, 0.0f });            //初期値
-	animation.push_back({ Vector3(1, 1, 1), Vector3(0,0,0),
-	DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(0))
-	, 1.0f });            //溜め時間
-	animation.push_back({ Vector3(1, 1, 1), Vector3(0,0,0.0f),
-		DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(90),DirectX::XMConvertToRadians(0))
-		, 2.0f });            //おろす
-
-	//アニメーションを登録
-	PlayerBase::SetAnimations(animation, "FallDown");
 
 
 	

@@ -4,18 +4,14 @@
 #include "StepTimer.h"
 #include "Interface/ICollisionObject.h"
 
+#include "Libraries/MyLib/Animation.h"
+
 //敵だけに必要な物もあるので今後分ける
 
 // IComponentインターフェースを定義する
 class IComponent : public ICollisionObject
 {
 public:
-	enum AnimationStage
-	{
-		Success,         //成功
-		Runngin      //実行中
-
-	};
 public:
 	// 親を取得する
 	virtual IComponent* GetParent() const = 0;
@@ -48,9 +44,11 @@ public:
 	// 後処理を行う
 	virtual void Finalize() = 0;
 
-	virtual AnimationStage AnimationUdate(const float& elapsdTime) = 0;
-	//アニメーションを実行中アニメーションに登録
-	virtual void RegistrationRungingAnimation(std::string name) = 0;
+	virtual Animation::AnimationState AnimationUdate(const float& elapsdTime) = 0;
+
+	//実行するアニメーションの名前
+	virtual void SetRunnginAnimationName(std::string name) = 0;
+
 
 };
 

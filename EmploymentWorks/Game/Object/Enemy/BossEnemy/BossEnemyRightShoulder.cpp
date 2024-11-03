@@ -5,7 +5,7 @@
 #include "Game/CommonResources.h"
 #include "Game/Object/Enemy/BossEnemy/BossEnemyRightArmJoint.h"
 #include "Game/DetectionCollision/CollisionManager.h"
-
+#include "Libraries/MyLib/Animation.h"
 
 void BossEnemyRightShoulder::RegistrationCollionManager(CollisionManager* collsionManager)
 {
@@ -74,26 +74,34 @@ void BossEnemyRightShoulder::Initialize()
 	//バウンディングの生成
 	BossEnemyBase::CreateBounding(m_currentPosition - Vector3(0, 0.45f, 0), m_currentAngle, Vector3(0.67f, 1.0f, 0.67f) * m__currentScale, 1.6f * m__currentScale.x);
 
-
-	////アニメーションの生成　引数　大きさ　座標　回転　時間
-	std::vector<BossEnemyBase::AnimationKeyFrame> animation;
-	animation.push_back({ Vector3(1, 1, 1), Vector3::Zero, DirectX::SimpleMath::Quaternion::Identity, 0.0f });            //初期値
-	animation.push_back({ Vector3(1, 1, 1), Vector3(0,0,0),
-		DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(15),DirectX::XMConvertToRadians(-70),DirectX::XMConvertToRadians(0))
+	//アニメーションの生成
+	std::vector<Animation::AnimationKeyFrame> keyFram;
+	keyFram.push_back({ DirectX::SimpleMath::Quaternion::Identity, 0.0f });            //初期値
+	keyFram.push_back({ DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(15),DirectX::XMConvertToRadians(-70),DirectX::XMConvertToRadians(0))
 		, 0.8f });            //腕の振り上げ
-	animation.push_back({ Vector3(1, 1, 1), Vector3(0,0,0),
-		DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(15),DirectX::XMConvertToRadians(-70),DirectX::XMConvertToRadians(0))
+	keyFram.push_back({ DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(15),DirectX::XMConvertToRadians(-70),DirectX::XMConvertToRadians(0))
 		, 2.0f });            //溜め時間
-	//animation.push_back({ Vector3(1, 1, 1), Vector3::Zero, DirectX::SimpleMath::Quaternion::Identity, 0.8f });            //戻す
-	//アニメーションを登録
-	BossEnemyBase::SetAnimations(animation, "Beam");
 
-	animation.clear();
-	animation.push_back({ Vector3(1, 1, 1), Vector3(0,0,0),
-	DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(15),DirectX::XMConvertToRadians(-70),DirectX::XMConvertToRadians(0))
-	, 0.0f });            
-	animation.push_back({ Vector3(1, 1, 1), Vector3::Zero, DirectX::SimpleMath::Quaternion::Identity, 2.0f });            //初期値
-	BossEnemyBase::SetAnimations(animation, "BeamEnd");
+	keyFram.push_back({ DirectX::SimpleMath::Quaternion::Identity, 0.5f });            //初期値
+	//アニメーションクラスの作成
+	auto animation = std::make_unique<Animation>();
+	//アニメーションKeyFramの登録
+	animation->SetAnimation(keyFram, Animation::AnimationPlayBackType::Once);
+
+	BossEnemyBase::SetAnimations(std::move(animation), "Beam");
+
+	keyFram.clear();
+	keyFram.push_back({ DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(15),DirectX::XMConvertToRadians(-70),DirectX::XMConvertToRadians(0))
+	, 0.0f });
+
+
+	keyFram.push_back({ DirectX::SimpleMath::Quaternion::Identity, 2.0f });            //初期値
+	//アニメーションクラスの作成
+	animation = std::make_unique<Animation>();
+	//アニメーションKeyFramの登録
+	animation->SetAnimation(keyFram, Animation::AnimationPlayBackType::Once);
+
+	BossEnemyBase::SetAnimations(std::move(animation), "BeamEnd");
 
 
 

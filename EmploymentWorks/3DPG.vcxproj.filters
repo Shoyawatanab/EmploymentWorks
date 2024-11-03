@@ -429,6 +429,9 @@
     <ClInclude Include="Game\Object\Player\State\PlayerIdling.h">
       <Filter>Game\Object\Player\State</Filter>
     </ClInclude>
+    <ClInclude Include="Libraries\MyLib\Animation.h">
+      <Filter>Libraries\MyLib</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -709,6 +712,9 @@
     </ClCompile>
     <ClCompile Include="Game\Object\Player\State\PlayerIdling.cpp">
       <Filter>Game\Object\Player\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\MyLib\Animation.cpp">
+      <Filter>Libraries\MyLib</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

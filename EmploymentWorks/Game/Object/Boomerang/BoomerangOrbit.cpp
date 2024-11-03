@@ -77,7 +77,7 @@ void BoomerangOrbit::Initialize(CommonResources* resources)
 
 	m_effect = std::make_unique<BasicEffect>(device);
 	m_effect->SetVertexColorEnabled(true);
-
+	
 	// 入力レイアウトを作成する
 	DX::ThrowIfFailed(
 		CreateInputLayoutFromEffect<VertexPositionColor>(
@@ -222,11 +222,8 @@ void BoomerangOrbit::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projecti
 	if (m_linePos.size() != 0)
 	{
 
-
-
 		m_primitveBatch->Begin();
-
-
+		
 		for (int i = 0; i < m_linePos.size() - 1; i++)
 		{
 			m_primitveBatch->DrawLine(m_linePos[i], m_linePos[i + 1]);

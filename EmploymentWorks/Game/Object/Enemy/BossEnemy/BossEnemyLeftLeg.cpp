@@ -5,6 +5,7 @@
 #include "Game/CommonResources.h"
 #include "Game/Object/Enemy/BossEnemy/BossEnemyHead.h"
 #include "Game/DetectionCollision/CollisionManager.h"
+#include "Libraries/MyLib/Animation.h"
 
 
 void BossEnemyLeftLeg::RegistrationCollionManager(CollisionManager* collsionManager)
@@ -76,21 +77,21 @@ void BossEnemyLeftLeg::Initialize()
 	//バウンディングの生成
 	BossEnemyBase::CreateBounding(m_currentPosition - Vector3(0, 0.5f, 0), m_currentAngle, Vector3(0.4f, 0.55f, 0.4f) * m__currentScale, 1.0f * m__currentScale.x);
 
-	std::vector<BossEnemyBase::AnimationKeyFrame> animation;
-	//test
-	animation.push_back({ Vector3(1, 1, 1), Vector3::Zero, DirectX::SimpleMath::Quaternion::Identity, 0.0f });            //初期値
-	animation.push_back({ Vector3(1, 1, 1), Vector3(0,0,0),
-	DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(90),DirectX::XMConvertToRadians(0))
+	//アニメーションの生成
+	std::vector<Animation::AnimationKeyFrame> keyFram;
+	keyFram.push_back({ DirectX::SimpleMath::Quaternion::Identity, 0.0f });            //初期値
+	keyFram.push_back({ DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(90),DirectX::XMConvertToRadians(0))
 	, 1.0f });            //溜め時間
-	animation.push_back({ Vector3(1, 1, 1), Vector3(0,0,0.0f),
-		DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(0))
+	keyFram.push_back({ DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(0),DirectX::XMConvertToRadians(0))
 		, 2.0f });            //おろす
+	//keyFram.push_back({ DirectX::SimpleMath::Quaternion::Identity, 0.5f });            //初期値
 
-	//アニメーションを登録
-	BossEnemyBase::SetAnimations(animation, "FallDown");
+	//アニメーションクラスの作成
+	auto animation = std::make_unique<Animation>();
+	//アニメーションKeyFramの登録
+	animation->SetAnimation(keyFram, Animation::AnimationPlayBackType::Once);
 
-
-
+	BossEnemyBase::SetAnimations(std::move(animation), "FallDown");
 
 }
 

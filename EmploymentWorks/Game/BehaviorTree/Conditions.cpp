@@ -85,8 +85,8 @@ bool Conditions::IsAttack(float elapsdTime)
 	{
 		//どっかでクールタイムのリセットが必要
 		m_attackCoolTime = 0;
-		m_enemy->RegistrationRungingAnimation("Beam");
-
+		//m_enemy->RegistrationRungingAnimation("Beam");
+		m_enemy->SetRunnginAnimationName("Beam");
 		//攻撃
 		return true;
 	}

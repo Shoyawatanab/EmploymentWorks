@@ -264,6 +264,7 @@
     <ClInclude Include="Interface\IPlayerState.h" />
     <ClInclude Include="Interface\IUI.h" />
     <ClInclude Include="Libraries\Microsoft\DebugDraw.h" />
+    <ClInclude Include="Libraries\MyLib\Animation.h" />
     <ClInclude Include="Libraries\MyLib\BinaryFile.h" />
     <ClInclude Include="Libraries\MyLib\Bounding.h" />
     <ClInclude Include="Libraries\MyLib\Camera\FPS_Camera.h" />
@@ -362,6 +363,7 @@
     <ClCompile Include="Game\UI\State\GmePlayUI.cpp" />
     <ClCompile Include="Game\UI\UI.cpp" />
     <ClCompile Include="Libraries\Microsoft\DebugDraw.cpp" />
+    <ClCompile Include="Libraries\MyLib\Animation.cpp" />
     <ClCompile Include="Libraries\MyLib\BinaryFile.cpp" />
     <ClCompile Include="Libraries\MyLib\Bounding.cpp" />
     <ClCompile Include="Libraries\MyLib\Camera\FPS_Camera.cpp" />

@@ -201,6 +201,7 @@ void Boomerang::DemandBounceDirection(DirectX::SimpleMath::Vector3 pos, Collsion
 			break;
 		case CollsionObjectTag::Boomerang:
 			break;
+		case CollsionObjectTag::Pillar:
 		case CollsionObjectTag::Stage:
 			m_bounceDirection = m_previousFramePos - m_position;
 			break;
@@ -225,6 +226,7 @@ void Boomerang::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleM
 				ChangeState(m_drop.get());
 			}
 			break;
+		case CollsionObjectTag::Pillar:
 		case CollsionObjectTag::Stage:
 			DemandBounceDirection(Pos, PartnerTag);
 			if (m_currentState == m_throw.get())
