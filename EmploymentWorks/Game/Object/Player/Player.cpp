@@ -101,6 +101,10 @@ void Player::Initialize()
 	m_isJump = false;
 	m_hp = 3;
 	
+	m_isInvincible = false;
+	m_invincibleTime = 0;
+
+
 	m_basicEffect = std::make_unique<DirectX::BasicEffect>(device);;
 
 	m_boomerangIndex = 0;
@@ -284,6 +288,30 @@ void Player::Update(float elapsedTime)
 		}
 	}
 
+	//無敵状態の時
+	if (m_isInvincible)
+	{
+		m_invincibleTime += elapsedTime;
+
+		//無敵状態が終わるかどうか
+		if (m_invincibleTime > 3)
+		{
+			m_invincibleTime = 0;
+			m_isInvincible = false;
+		}
+
+		//奇数か偶数か
+		if (static_cast<int>(m_invincibleTime) % 2 == 0)
+		{
+			m_isVisible = false;
+		}
+		else
+		{
+			m_isVisible = true;
+		}
+	}
+
+
 	m_bounding->Update(m_position);
 
 	//部品を更新する
@@ -299,8 +327,8 @@ void Player::Render(DirectX::SimpleMath::Matrix view, DirectX::SimpleMath::Matri
 
 	using namespace DirectX::SimpleMath;
 
-	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
-	auto states = m_commonResources->GetCommonStates();
+	//auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
+	//auto states = m_commonResources->GetCommonStates();
 
 	//	半透明描画指定
 	//ID3D11BlendState* blendstate = states->NonPremultiplied();
@@ -328,26 +356,52 @@ void Player::Render(DirectX::SimpleMath::Matrix view, DirectX::SimpleMath::Matri
 	//	}
 	//);
 	
-	//部品を描画する
-	PlayerBase::Render(view, projection);
-
-	m_bounding->DrawBoundingBox(m_position, view, projection);
-	//m_bounding->DrawBoundingSphere(m_position, view, projection);
-
-	for (auto& boomerang : m_boomerang)
+	if (!m_isInvincible)
 	{
 
-		//使用しているブーメラン
-		if (boomerang->GetUseState() != Boomerang::UseState::Stock)
-		{
+		//部品を描画する
+		PlayerBase::Render(view, projection);
 
-			boomerang->Render(view, projection);
+		m_bounding->DrawBoundingBox(m_position, view, projection);
+		//m_bounding->DrawBoundingSphere(m_position, view, projection);
+
+		for (auto& boomerang : m_boomerang)
+		{
+			//使用しているブーメラン
+			if (boomerang->GetUseState() != Boomerang::UseState::Stock)
+			{
+				boomerang->Render(view, projection);
+			}
+		}
+	}
+	else
+	{
+		//点滅
+		if (m_isVisible)
+		{
+			for (auto& boomerang : m_boomerang)
+			{
+
+				//部品を描画する
+				PlayerBase::Render(view, projection);
+
+				m_bounding->DrawBoundingBox(m_position, view, projection);
+
+				//使用しているブーメラン
+				if (boomerang->GetUseState() != Boomerang::UseState::Stock)
+				{
+
+					boomerang->Render(view, projection);
+
+
+				}
+
+			}
 
 
 		}
 
 	}
-
 }
 
 //---------------------------------------------------------

@@ -53,7 +53,7 @@ void PlayerAttack::Update(const float& elapsedTime)
 	// キーボードステートを取得する
 	DirectX::Keyboard::State key = DirectX::Keyboard::Get().GetState();
 	// キーボードステートトラッカーを取得する
-	const auto& kbTracker = m_commonResources->GetInputManager()->GetKeyboardTracker();
+	//const auto& kbTracker = m_commonResources->GetInputManager()->GetKeyboardTracker();
 
 	Vector3 moveDirection = Vector3::Zero;
 

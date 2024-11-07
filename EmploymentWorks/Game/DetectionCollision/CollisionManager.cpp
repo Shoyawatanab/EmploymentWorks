@@ -270,6 +270,11 @@ void CollisionManager::Update()
 	BeamAndPlayerCollision();
 
 
+	DirectX::SimpleMath::Vector3 targetPosition = m_tpsCamera->GetTargetPosition();
+	DirectX::SimpleMath::Vector3 eyePosition = m_tpsCamera->GetEyePosition();
+
+	float distance = Vector3::Distance(targetPosition, eyePosition);
+
 	//ƒJƒƒ‰‚Ì“–‚½‚è”»’è
 	for (int i = 0; i < m_collsionObjects.size(); i++)
 	{
@@ -281,10 +286,10 @@ void CollisionManager::Update()
 		switch (tag)
 		{
 			case CollsionObjectTag::Stage:
-				CameraCollision(m_collsionObjects[i], 5);
+				CameraCollision(m_collsionObjects[i], distance);
 				break;
 			case CollsionObjectTag::Floor:
-				CameraCollision(m_collsionObjects[i],5);
+				CameraCollision(m_collsionObjects[i],distance);
 				break;
 			default:
 				break;
@@ -482,11 +487,14 @@ void CollisionManager::BeamAndPlayerCollision()
 		//“–‚½‚Á‚½‚ç
 		if (PlayerBoundingSphere->Intersects(*Sphere))
 		{
-			if (m_player->GetPlayerState() == m_player->GetPlayerUsually())
+			if (m_player->GetPlayerState() == m_player->GetPlayerUsually() && !m_player->GetIsInvincible())
 			{
 				float hp = m_player->GetPlayerHP();
 				hp--;
 				m_player->SetPlayerHP(hp);
+				//ƒvƒŒƒCƒ„‚ğ–³“Gó‘Ô‚É
+				m_player->SetIsInvincible(true);
+
 			}
 
 			//”ò‚Ô•ûŒü‚ğ‹‚ß‚é

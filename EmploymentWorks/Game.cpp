@@ -150,10 +150,11 @@ void Game::Render()
     // ★追記ココから↓↓↓★
 
     UNREFERENCED_PARAMETER(context);
+#ifdef _DEBUG
 
     // デバッグ文字列を作成する：FPS
     m_debugString->AddString("fps : %d", m_timer.GetFramesPerSecond());
-
+#endif
     // シーンマネージャを描画する
     m_sceneManager->Render();
 

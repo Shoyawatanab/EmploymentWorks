@@ -117,7 +117,7 @@ void BoomerangThrow::Enter()
 {
 	using namespace DirectX::SimpleMath;
 
-	m_index = static_cast<int> (m_spherePos.size() - 1);
+	m_index = static_cast<int>(m_spherePos.size() - 1);
 	m_startIndex = m_index;
 	m_transformRatio = 0;
 	m_totalTime = 0;
@@ -165,26 +165,28 @@ void BoomerangThrow::SplineCurve(const float& elapsedTime)
 {
 	using namespace DirectX::SimpleMath;
 
-	//m_moveSpeed -= 0.12f * elapsedTime;
-
-
+	//距離を求める
 	float distance = (m_moveSpherePos[(m_index + 2) % m_moveSpherePos.size()] -
 		m_moveSpherePos[(m_index + 1) % m_moveSpherePos.size()]).Length();
 	//移動割合
 	m_transformRatio = m_totalTime * m_moveSpeed / distance;
 
 	Vector3 Pos = m_boomerang->GetPosition();
-		Pos = Vector3::CatmullRom(
+	//スプライン曲線をもとに座標を
+	Pos = Vector3::CatmullRom(
 			m_moveSpherePos[(m_index + 0) % m_moveSpherePos.size()] ,
 			m_moveSpherePos[(m_index + 1) % m_moveSpherePos.size()],
 			m_moveSpherePos[(m_index + 2) % m_moveSpherePos.size()],
 			m_moveSpherePos[(m_index + 3) % m_moveSpherePos.size()],
 			m_transformRatio
 		);
-
+	
+	//座標の更新
 	m_boomerang->SetPosition(Pos);
+	
 	m_direction = Pos - m_previousFrameDirection;
 
+	//割合が１を超えたら次の点に移動
 	if (m_transformRatio > 1.0f)
 	{
 		m_index++;

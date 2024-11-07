@@ -82,6 +82,11 @@ public:
 
 	void SetVelocity(DirectX::SimpleMath::Vector3 velocity) { m_velocity = velocity; }
 
+
+	void SetIsInvincible(bool is) { m_isInvincible = is; }
+
+	bool GetIsInvincible() { return m_isInvincible; }
+
 private:
 
 	// 共通リソース
@@ -141,6 +146,11 @@ private:
 
 	std::unique_ptr<DirectX::BasicEffect> m_basicEffect;
 
+	//無敵かどうか
+	bool m_isInvincible;
+	float m_invincibleTime;
+	//点滅　true 表示　false 非常時
+	bool m_isVisible;
 
 public:
 	Player(CommonResources* resources, IComponent* parent, const DirectX::SimpleMath::Vector3 initialScale, const DirectX::SimpleMath::Vector3& initialPosition, const DirectX::SimpleMath::Quaternion& initialAngle);

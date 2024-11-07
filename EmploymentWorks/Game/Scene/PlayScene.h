@@ -105,6 +105,9 @@ private:
 	std::unique_ptr<DirectX::SoundEffect> m_soundEffectBGM;
 	std::unique_ptr<DirectX::SoundEffectInstance> m_soundEffectInstanceBGM;
 
+
+	//初めのカウントダウン
+	float m_startCountDown;
 public:
 	PlayScene();
 	~PlayScene() override;

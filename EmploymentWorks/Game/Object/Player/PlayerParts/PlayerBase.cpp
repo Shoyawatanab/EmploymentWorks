@@ -188,6 +188,7 @@ void PlayerBase::DrawModel(const DirectX::SimpleMath::Matrix& matrix, DirectX::S
 // 境界ボックスを描画する
 void PlayerBase::DrawBoundingBox(const DirectX::SimpleMath::Matrix& matrix)
 {
+	UNREFERENCED_PARAMETER(matrix);
 }
 
 
@@ -198,7 +199,7 @@ void PlayerBase::Finalize()
 
 void PlayerBase::RegistrationCollionManager(CollisionManager* collsionManager)
 {
-
+	UNREFERENCED_PARAMETER(collsionManager);
 
 }
 

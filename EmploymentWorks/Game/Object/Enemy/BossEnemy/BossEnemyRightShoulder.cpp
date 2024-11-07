@@ -82,7 +82,7 @@ void BossEnemyRightShoulder::Initialize()
 	keyFram.push_back({ DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(15),DirectX::XMConvertToRadians(-70),DirectX::XMConvertToRadians(0))
 		, 2.0f });            //溜め時間
 
-	keyFram.push_back({ DirectX::SimpleMath::Quaternion::Identity, 0.5f });            //初期値
+	//keyFram.push_back({ DirectX::SimpleMath::Quaternion::Identity, 0.5f });            //初期値
 	//アニメーションクラスの作成
 	auto animation = std::make_unique<Animation>();
 	//アニメーションKeyFramの登録

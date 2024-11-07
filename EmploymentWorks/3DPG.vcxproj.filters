@@ -744,6 +744,8 @@
     <None Include="Resources\Shaders\Fade\Fade.hlsli">
       <Filter>Resources\Shaders\Fade</Filter>
     </None>
+    <None Include="ClassDiagram2.cd" />
+    <None Include="ClassDiagram21.cd" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\LockOn\LockOnUIGS.hlsl">

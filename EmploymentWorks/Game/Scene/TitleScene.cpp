@@ -94,7 +94,7 @@ void TitleScene::Initialize(CommonResources* resources)
 
 	//ƒvƒŒƒCƒ„ƒ‚ƒfƒ‹‚Ì’Ç‰Á
 	auto model = std::make_unique<mylib::Model3D>();
-	model->Initialize(m_commonResources, L"Resources/Models/NewPlayer.cmo" ,Vector3(0, 0.75f, 15),0.4f);
+	model->Initialize(m_commonResources, L"Resources/Models/Player.cmo" ,Vector3(0, 0.75f, 15),0.4f);
 	model->SetRotate(DirectX::SimpleMath::Quaternion::CreateFromAxisAngle( DirectX::SimpleMath::Vector3::UnitY, DirectX::XMConvertToRadians(180)));
 	m_models.push_back(std::move(model));
 	//“G

@@ -24,59 +24,29 @@ Conditions::~Conditions()
 
 
 
+//
+
 /// <summary>
-/// プレイヤを見つけたかどうか
+///HPがMAXかどうか 
 /// </summary>
-/// <returns>見つてない:true ,見つけた:false</returns>
-bool Conditions::IsFindToPlayer()
+/// <returns>true : MAX　false : NotMAX</returns>
+bool Conditions::IsHPMax()
 {
-	//視野角外
-	if (!m_commonResources->GetJudgement()->IsWithinTheSector(m_palyer->GetPosition(), m_enemy->Getforward(), m_enemy->GetPosition(), 20, 90))
-	{
-		//巡回に行ってほしから見つけていないときにtrue
-		return true;
-	}
-
-	//Rayのための方向ベクトルの作成
-	DirectX::SimpleMath::Vector3 Direction = m_palyer->GetPosition() - m_enemy->GetPosition();
-	//正規化
-	Direction.Normalize();
-
-	//Rayの作成
-	DirectX::SimpleMath::Ray ray;
-	ray.position = m_enemy->GetPosition();
-	//Rayのdirectionは正規化されていること
-	ray.direction = Direction;
-
-
-	//障害物があるかどうか
-	if (m_commonResources->GetJudgement()->IsRayToBoundingBox(ray, 1000))
+	//MAXなら
+	if (m_enemy->GetMAXHp() == m_enemy->GetHp())
 	{
 		return true;
 	}
 
-	//攻撃などのノードに行く
+
 	return false;
 }
 
 /// <summary>
-/// Hpが半分以上かどうか
+///攻撃するかどうか 
 /// </summary>
-/// <returns></returns>
-bool Conditions::IsMoreThanHalfHP()
-{
-
-	if (m_commonResources->GetJudgement()->GetRatio(m_enemy->GetHp(), m_enemy->GetMAXHp()) >= 0.5f)
-	{
-		//半分以上
-		return true;
-	}
-
-	//半分未満
-	return false;
-}
-
-//攻撃するかどうか
+/// <param name="elapsdTime"></param>
+/// <returns>true : 攻撃　false : 攻撃しない</returns>
 bool Conditions::IsAttack(float elapsdTime)
 {
 
@@ -86,10 +56,11 @@ bool Conditions::IsAttack(float elapsdTime)
 		//どっかでクールタイムのリセットが必要
 		m_attackCoolTime = 0;
 		//m_enemy->RegistrationRungingAnimation("Beam");
-		m_enemy->SetRunnginAnimationName("Beam");
+		//m_enemy->SetRunnginAnimationName("Beam");
 		//攻撃
 		return true;
 	}
+
 
 
 
@@ -98,20 +69,127 @@ bool Conditions::IsAttack(float elapsdTime)
 	return false;
 }
 
+//
+
 /// <summary>
-/// 近距離攻撃かどうか
+/// HPがHP以上かどうか
 /// </summary>
-/// <returns></returns>
-bool Conditions::IsCloseRangeAttack()
+/// <returns>true : 半分以上　false : 半分未満</returns>
+bool Conditions::IsHPMoreThanHalf()
 {
 
-	//if (m_commonResources->GetJudgement()->GetLenght(m_palyer->GetPos(), m_enemy->GetPos()) <= 7)
-	//{
-	//	//近距離攻撃
-	//	return true;
-	//}
+	float halfHP = m_enemy->GetMAXHp() / 2;
 
-	//遠距離攻撃
+
+	//半分以上なら
+	if (halfHP <= m_enemy->GetHp())
+	{
+		return true;
+	}
+
+	return false;
+}
+
+//
+
+/// <summary>
+/// 一定の距離より遠いかどうか
+/// </summary>
+/// <returns>true : 遠い　false :　近い</returns>
+bool Conditions::IsFarDistance()
+{
+	//座標の取得
+	DirectX::SimpleMath::Vector3 PlayerPosition = m_palyer->GetPosition();
+	DirectX::SimpleMath::Vector3 EnemyPosition = m_enemy->GetPosition();
+
+	//Y座標を統一する
+	PlayerPosition.y = 0;
+	EnemyPosition.y = 0;
+
+	//距離を求める
+	float Distance = DirectX::SimpleMath::Vector3::Distance(PlayerPosition, EnemyPosition);
+
+	//規定値より遠いかどうか
+	if (Distance >= 30)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+//
+
+///// <summary>
+///// 距離が近いかどうか
+///// </summary>
+///// <returns> true : 近い　false : 近くない</returns>
+//bool Conditions::IsCloseDistance()
+//{
+//
+//	//座標の取得
+//	DirectX::SimpleMath::Vector3 PlayerPosition = m_palyer->GetPosition();
+//	DirectX::SimpleMath::Vector3 EnemyPosition = m_enemy->GetPosition();
+//
+//	//Y座標を統一する
+//	PlayerPosition.y = 0;
+//	EnemyPosition.y = 0;
+//
+//	//距離を求める
+//	float Distance = DirectX::SimpleMath::Vector3::Distance(PlayerPosition, EnemyPosition);
+//
+//	//規定値より近いかどうか
+//	if (Distance < 5)
+//	{
+//		return true;
+//	}
+//
+//
+//	return false;
+//}
+
+///// <summary>
+///// 近距離攻撃かどうか
+///// </summary>
+///// <returns> true : 近距離攻撃　false : 遠距離攻撃</returns>
+//bool Conditions::IsCloseRangeAttack()
+//{
+//
+//	//if (m_commonResources->GetJudgement()->GetLenght(m_palyer->GetPos(), m_enemy->GetPos()) <= 7)
+//	//{
+//	//	//近距離攻撃
+//	//	return true;
+//	//}
+//
+//	//遠距離攻撃
+//	return false;
+//}
+
+/// <summary>
+/// 近距離攻撃範囲内かどうか
+/// </summary>
+/// <returns></returns>
+bool Conditions::IsInCloseRangeAttack()
+{
+
+
+	//座標の取得
+	DirectX::SimpleMath::Vector3 PlayerPosition = m_palyer->GetPosition();
+	DirectX::SimpleMath::Vector3 EnemyPosition = m_enemy->GetPosition();
+
+	//Y座標を統一する
+	PlayerPosition.y = 0;
+	EnemyPosition.y = 0;
+
+	//距離を求める
+	float Distance = DirectX::SimpleMath::Vector3::Distance(PlayerPosition, EnemyPosition);
+
+	//攻撃範囲内かどうか
+	if(Distance < 15.0f)
+	{
+		return true;
+	}
+
 	return false;
 }
 
