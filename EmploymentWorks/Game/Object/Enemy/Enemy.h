@@ -118,6 +118,28 @@ private:
 
 	//ビームを右手で打つ時の敵の中心からの距離
 	DirectX::SimpleMath::Vector3 m_rightHandPos;
+	//攻撃の予備動作時間
+	float m_preliminaryActionTime;
+
+	//Walkに関する関数
+	float m_walkSpeed;
+	float m_walkAccelration;
+	float m_stepDuration;
+	float m_stepTime;
+	bool m_isStep;
+
+	//ジャンプ関係関数
+	//ジャンプの座標　１．初期値　２　中間座標　３最終座標　４　スプライン曲線用に求める
+	std::vector<DirectX::SimpleMath::Vector3> m_jumpPosition;
+	//ジャンプの高さ
+	float m_jumpHeight;
+	//
+	bool m_isJumpAttack;
+	//ジャンプ攻撃座標のインデックス
+	int m_jumpAttackIndex;
+	//点と点の間の移動割合
+	float m_transformRatio;
+	float m_jumpAttackTime;
 
 public:
 	Enemy(CommonResources* resources, IComponent* parent, const DirectX::SimpleMath::Vector3 initialScale, const DirectX::SimpleMath::Vector3& initialPosition, const DirectX::SimpleMath::Quaternion& initialAngle);
@@ -138,10 +160,14 @@ public:
 	//クラスのインスタンス
 	void Instances();
 
+	void Walk(float elapsdTime);
+
+	IBehaviorNode::State JumpAttack(float elapstTime);
 
 	//遠距離攻撃　ビヘイビアツリーで呼び出す
 	IBehaviorNode::State BeamAttack(float elapsdTime);
-
+	//近距離攻撃　ビヘイビアツリーで呼び出す
+	IBehaviorNode::State CloseRangeAttack(float elapsdTime);
 
 	void RegistrationCollionManager(CollisionManager* collsionManager) override;
 
@@ -174,5 +200,9 @@ public:
 	// ワールド行列を取得する
 	DirectX::SimpleMath::Matrix& GetWorldMatrix()  { return m_worldMatrix; }
 
+
+
+	//プレイヤのほうに向く  ビヘイビアツリーにもおんなじのがあるからどうにかしたい　攻撃の予備動作中でもプレイヤの方向を向いてほしいからここに追加した
+	void  FacingThePlayer(float elapsdTime);
 
 };

@@ -4,7 +4,7 @@
 #include "Game/Object/Boomerang/Boomerang.h"
 #include "Game/Object/Player/Player.h"
 
-const DirectX::SimpleMath::Vector3 GENERATEDISTANCE(0.5f, 0.0f, -1.0f);
+const DirectX::SimpleMath::Vector3 GENERATEDISTANCE(-0.5f, 0.0f, 0.0f);
 
 // コンストラクタ
 BoomerangIdling::BoomerangIdling()

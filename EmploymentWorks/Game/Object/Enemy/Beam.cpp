@@ -125,17 +125,17 @@ void Beam::Finalize()
 /// <returns>true:UŒ‚’†@false:UŒ‚I—¹</returns>
 bool Beam::Attack(float elapsdTime)
 {
-	//—\”õ“®ì
-	if (m_preliminaryActionTime < 2)
-	{
-		//if (m_preliminaryActionTime == 0)
-		//{
-		//	m_enemy->RegistrationRungingAnimation("Beam");
-		//}
+	////—\”õ“®ì
+	//if (m_preliminaryActionTime < 2)
+	//{
+	//	//if (m_preliminaryActionTime == 0)
+	//	//{
+	//	//	m_enemy->RegistrationRungingAnimation("Beam");
+	//	//}
 
-		m_preliminaryActionTime += elapsdTime;
-		return true;
-	}
+	//	m_preliminaryActionTime += elapsdTime;
+	//	return true;
+	//}
 
 	//—\”õ“®ì‚ªI‚í‚Á‚Ä‚©‚ç‚P‰ñ‚¾‚¯ŒÄ‚Ñ‚½‚¢
 	if (m_bounding.empty())
@@ -195,7 +195,7 @@ bool Beam::Attack(float elapsdTime)
 
 	//UŒ‚
 	//2ŒÂ–ÚˆÈ~‚Ì¶¬
-	if (m_generationInterval >= 0.1f && !m_keepBoundingParameter.empty())
+	if (m_generationInterval >= 0.3f && !m_keepBoundingParameter.empty())
 	{
 		//À•W‚Ìæ“ª‚ğg—p
 		CreateBounding(m_keepBoundingParameter.front().Position, 3.0f);

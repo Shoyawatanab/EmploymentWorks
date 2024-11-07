@@ -43,6 +43,7 @@ IBehaviorNode::State DecoratorNode::RunningUpdate(float elapsedTime)
 
 void DecoratorNode::Render()
 {
+
 }
 
 void DecoratorNode::Finalize()
@@ -55,6 +56,7 @@ void DecoratorNode::Finalize()
 /// <param name="node"></param>
 void DecoratorNode::AddNode(std::unique_ptr<IBehaviorNode> node)
 {
+	//Žqƒm[ƒh‚Ì‰Šú‰»
 	node->Initialize();
 
 	m_childNode = std::move(node);

@@ -8,6 +8,8 @@
 
 void PlayerRightFeet::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos)
 {
+	UNREFERENCED_PARAMETER(PartnerTag);
+	UNREFERENCED_PARAMETER(Pos);
 }
 
 // コンストラクタ

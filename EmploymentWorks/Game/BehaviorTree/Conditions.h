@@ -31,14 +31,22 @@ public:
 	Conditions(CommonResources* resources, Player* player, Enemy* enmey);
 	~Conditions();
 
-	//ƒvƒŒƒCƒ„‚ğŒ©‚Â‚¯‚½‚©‚Ç‚¤‚©
-	bool IsFindToPlayer();
-	//HP‚ª”¼•ªˆÈã‚©‚Ç‚¤‚©
-	bool IsMoreThanHalfHP();
+
+	//HP‚ªMAX‚©‚Ç‚¤‚©
+	bool IsHPMax();
 	//UŒ‚‚·‚é‚©‚Ç‚¤‚©
 	bool IsAttack(float elapsdTime);
+	//HP‚ªHPˆÈã‚©‚Ç‚¤‚©
+	bool IsHPMoreThanHalf();
+	//‹——£‚ª‰“‚¢‚©‚Ç‚¤‚©
+	bool IsFarDistance();
+	//‹——£‚ª‹ß‚¢‚©‚Ç‚¤‚©
+	//bool IsCloseDistance();
 	//‹ß‹——£UŒ‚‚©‚Ç‚¤‚©
-	bool IsCloseRangeAttack();
+	//bool IsCloseRangeAttack();
+	//‹ß‹——£UŒ‚”ÍˆÍ“à‚©‚Ç‚¤‚©
+	bool IsInCloseRangeAttack();
+
 };
 
 

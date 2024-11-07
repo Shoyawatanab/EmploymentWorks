@@ -404,6 +404,8 @@
     <Manifest Include="settings.manifest" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram2.cd" />
+    <None Include="ClassDiagram21.cd" />
     <None Include="packages.config" />
     <None Include="Resources\Shaders\Fade\Fade.hlsli" />
     <None Include="Resources\Shaders\LockOn\LockOnUI.hlsli" />

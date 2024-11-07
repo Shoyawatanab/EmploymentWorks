@@ -158,8 +158,8 @@ void PlayScene::Initialize(CommonResources* resources)
 
 	float scale = 1.0f;
 
-	m_enemy = std::make_unique<Enemy>(m_commonResources,nullptr,  DirectX::SimpleMath::Vector3(scale, scale, scale), Vector3(0, 5, 0), rotation);
-	m_player = std::make_unique<Player>(m_commonResources,nullptr, Vector3(0.2,0.2,0.2), Vector3(0, 4.75f, 15), 
+	m_enemy = std::make_unique<Enemy>(m_commonResources,nullptr,  DirectX::SimpleMath::Vector3(scale, scale, scale), Vector3(0, 4, 0), rotation);
+	m_player = std::make_unique<Player>(m_commonResources,nullptr, Vector3(0.2,0.2,0.2), Vector3(0, 0.75f, 15), 
 		Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(180), DirectX::XMConvertToRadians(0), DirectX::XMConvertToRadians(0)));
 	m_cameraManager = std::make_unique<mylib::GameCameraManager>();
 
@@ -259,6 +259,8 @@ void PlayScene::Initialize(CommonResources* resources)
 	// BGMのループ再生
 	m_soundEffectInstanceBGM->Play(true);
 
+	m_startCountDown = 0;
+
 }
 
 //---------------------------------------------------------
@@ -268,8 +270,13 @@ void PlayScene::Update(float elapsedTime)
 {
 	UNREFERENCED_PARAMETER(elapsedTime);
 
-	// キーボードステートトラッカーを取得する
-	const auto& kbTracker = m_commonResources->GetInputManager()->GetKeyboardTracker();
+	if (m_startCountDown < 0.5f)
+	{
+		m_startCountDown += elapsedTime;
+		return;
+	}
+
+
 
 	//PLAYを選ぶ
 	//if (kbTracker->released.L)
@@ -423,14 +430,17 @@ void PlayScene::Render()
 
 	m_commonResources->GetTimer()->PlaySceneRender(Vector2(100, 50), 0.3f);
 
+#ifdef _DEBUG
+
 	//// デバッグ情報を「DebugString」で表示する
 	auto debugString = m_commonResources->GetDebugString();
 	//debugString->AddString("Play Scene");
-	debugString->AddString("velocity: %f, %f,%f", m_player->GetVelocity().x, m_player->GetVelocity().y, m_player->GetVelocity().z);
+	debugString->AddString("PlayerPos: %f, %f,%f", m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z);
 	//debugString->AddString("EyePos: %f, %f,%f", m_cameraManager->GetTPSCamera()->GetEyePosition().x, m_cameraManager->GetTPSCamera()->GetEyePosition().y, m_cameraManager->GetTPSCamera()->GetEyePosition().z);
 	//debugString->AddString("Pos: %f, %f", m_player->GetPos().x, m_player->GetPos().z);
 	//debugString->AddString("Pos: %f, %f", m_enemy->GetPos().x, m_enemy->GetPos().z);
 	//debugString->AddString("IsLockOn: %d ", m_lockOn->GetIsLOckOn());
+#endif
 
 }
 

@@ -49,7 +49,7 @@ void SceneManager::Initialize(CommonResources* resources)
 
 	m_isFade = false;
 
-	ChangeScene(IScene::SceneID::PLAY);
+	ChangeScene(IScene::SceneID::TITLE);
 }
 
 //---------------------------------------------------------

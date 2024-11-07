@@ -27,7 +27,12 @@ const DirectX::SimpleMath::Vector3 Enemy::STAETTAEGETDIRECTION = DirectX::Simple
 //敵の初期の向いている方向
 const DirectX::SimpleMath::Vector3 Enemy::INITIALFORWARD = DirectX::SimpleMath::Vector3(0, 0, 1);
 
-const int MAXHP = 1;
+const int MAXHP = 10;
+
+//ビーム攻撃の予備動作時間
+const float BEAMATTACKPRELIMINRRYACTIONTIME = 2.0f;
+
+const float WALKMAXSPEED = 2.0f;
 
 //---------------------------------------------------------
 // コンストラクタ
@@ -122,14 +127,26 @@ void Enemy::Initialize()
 	//「Bottom」を生成する
 	Attach(std::make_unique<BossEnemyBottom>(BossEnemyBase::GetResources(), this, BossEnemyBase::GetInitialScale(), Vector3(0.0f, -0.6f, 0.0f), Quaternion::Identity));
 
-	m_rightHandPos = m_position + Vector3(-1.5f,1, 7.50);
+	m_rightHandPos = m_position + Vector3(-1.5f,-3, 7.50);
 
 	m_beamStartPosition = Vector3::Transform(m_rightHandPos, m_rotate);
 
-	//RegistrationRungingAnimation("Beam");
-	//BossEnemyBase::AnimationUdate(1.0f);
+	//m_hp = 7;
+	//攻撃の予備動作時間の初期化
+	m_preliminaryActionTime = 0;
 
-	m_hp = 1;
+	//Walk関係の変数の初期化
+	m_walkSpeed = 0.0f;
+	m_walkAccelration = 5.0f;
+	m_stepDuration = 0.5f;
+	m_stepTime = 0.0f;
+	m_isStep = true;
+
+	//JumpAttack
+	m_jumpHeight = 3.0f;
+	m_jumpAttackTime = 0;
+	m_transformRatio = 0;
+
 }
 
 //---------------------------------------------------------
@@ -140,11 +157,18 @@ void Enemy::Update(float elapsedTime)
 	using namespace DirectX::SimpleMath;
 	UNREFERENCED_PARAMETER(elapsedTime);
 
-	// キーボードステートを取得する
-	DirectX::Keyboard::State keyboardState = DirectX::Keyboard::Get().GetState();
 
-	//m_behavior->Update(elapsedTime);
+	// キーボードステートトラッカーを取得する
+	const auto& kbTracker = m_commonResources->GetInputManager()->GetKeyboardTracker();
 
+	//デバック用
+	if (kbTracker->released.Q)
+	{
+		m_hp = 1;
+	}
+
+
+	m_behavior->Update(elapsedTime);
 
 
 	//部品を更新する
@@ -153,9 +177,10 @@ void Enemy::Update(float elapsedTime)
 	BossEnemyBase::AnimationUdate(elapsedTime);
 
 
-	//m_rotate *= DirectX::SimpleMath::Quaternion::CreateFromAxisAngle(DirectX::SimpleMath::Vector3::UnitY, DirectX::XMConvertToRadians(0.1f))
 
-	m_beamStartPosition = Vector3::Transform(m_rightHandPos, m_rotate);
+	//m_rotate *= DirectX::SimpleMath::Quaternion::CreateFromAxisAngle(DirectX::SimpleMath::Vector3::UnitY, DirectX::XMConvertToRadians(0.1f))
+	//ビームの開始地点を求める
+	m_beamStartPosition = Vector3::Transform(m_rightHandPos, m_rotate) + m_position;
 
 	if (m_isCollsionTime)
 	{
@@ -236,7 +261,11 @@ void Enemy::Render(DirectX::SimpleMath::Matrix view, DirectX::SimpleMath::Matrix
 	m_bounding->DrawBoundingBox(view, projection);
 	m_bounding->DrawBoundingSphere(view, projection);
 
-	m_beam->Render(view, projection);
+	if (m_hp > 0)
+	{
+		m_beam->Render(view, projection);
+
+	}
 
 
 }
@@ -270,8 +299,15 @@ Animation::AnimationState  Enemy::FallDwonAnimation(float elapsdTime)
 
 	if (state == Animation::AnimationState::Running)
 	{
-		m_position.y -= 0.3f *elapsdTime;
-		m_position.z += 0.5f * elapsdTime;
+		m_position.y += 2.0f *elapsdTime;
+
+		DirectX::SimpleMath::Vector3 velocity = m_forward *  0.5f * elapsdTime;
+
+		
+
+		m_position += velocity;
+		
+
 		m_boundingBoxCenter.y += 0.95f * elapsdTime;
 	}
 
@@ -325,6 +361,166 @@ void Enemy::Instances()
 
 }
 
+//歩きの関数
+void Enemy::Walk(float elapsdTime)
+{
+
+	//プレイヤの座標の取得
+	DirectX::SimpleMath::Vector3 playerPosition = m_player->GetPosition();
+
+	//方向を求める
+	DirectX::SimpleMath::Vector3 direction = playerPosition - m_position;
+
+	//正規化
+	direction.Normalize();
+
+	//
+	if (m_isStep)
+	{
+
+		m_walkSpeed += m_walkAccelration * elapsdTime;
+
+		m_walkSpeed = std::min(m_walkSpeed, WALKMAXSPEED);
+
+		direction *= m_walkSpeed * elapsdTime;
+
+		m_position += direction;
+
+		m_stepTime += elapsdTime;
+
+		//1歩が終了したら
+		if (m_stepTime >= m_stepDuration)
+		{
+			m_isStep = false;
+			m_walkSpeed = 0.0f;
+			m_stepTime = 0.0f;
+		}
+
+	}
+	else if(!m_isStep)
+	{
+
+		m_stepTime += elapsdTime;
+
+		if (m_stepTime >= m_stepDuration)
+		{
+			m_isStep = true;
+			m_stepTime = 0.0f;
+		}
+
+	}
+}
+
+/// <summary>
+/// ジャンプして踏みつける攻撃
+/// </summary>
+/// <param name="elapstTime"></param>
+IBehaviorNode::State Enemy::JumpAttack(float elapstTime)
+{
+	using namespace DirectX::SimpleMath;
+
+	//初めの１回だけ呼びたい
+	if (!m_isAttack)
+	{
+		m_jumpHeight = 2.0f;
+		m_isAttack = true;
+		//プレイヤの座標を初期値に
+		m_jumpPosition.push_back(m_position);
+		//中間座標を求める
+		DirectX::SimpleMath::Vector3 middlePosition = (m_player->GetPosition() - m_position) / 2;
+		middlePosition += m_position;
+		//高さを指定したものに変更する
+		middlePosition.y = m_jumpHeight + m_position.y;
+		//中間座標を登録
+		m_jumpPosition.push_back(middlePosition );
+
+		DirectX::SimpleMath::Vector3 targetPosition = m_player->GetPosition();
+		targetPosition.y = m_position.y;
+		//最終座標を登録
+		m_jumpPosition.push_back(targetPosition);
+		//中間地点のｙ座標を反転させる
+		middlePosition.y *= -1;
+		//４つ目の座標を登録
+		m_jumpPosition.push_back(middlePosition);
+
+		m_jumpAttackIndex =static_cast<int>( m_jumpPosition.size() - 1);
+
+	}
+
+	//予備動作
+	if (m_preliminaryActionTime < 2)
+	{
+
+		m_preliminaryActionTime += elapstTime;
+
+		return IBehaviorNode::State::Runngin;
+
+	}
+
+
+	//距離を求める
+	float distance = (m_jumpPosition[(m_jumpAttackIndex + 2) % m_jumpPosition.size()] -
+		m_jumpPosition[(m_jumpAttackIndex + 1) % m_jumpPosition.size()]).Length();
+	//移動割合
+	m_transformRatio = m_jumpAttackTime * 5.0f / distance;
+
+	m_transformRatio = std::min(m_transformRatio, 1.0f);
+
+	DirectX::SimpleMath::Vector3  Pos = Vector3::CatmullRom(
+		m_jumpPosition[(m_jumpAttackIndex + 0) % m_jumpPosition.size()],
+		m_jumpPosition[(m_jumpAttackIndex + 1) % m_jumpPosition.size()],
+		m_jumpPosition[(m_jumpAttackIndex + 2) % m_jumpPosition.size()],
+		m_jumpPosition[(m_jumpAttackIndex + 3) % m_jumpPosition.size()],
+		m_transformRatio
+	);
+
+	m_position = Pos;
+
+	//割合が１を超えたら次の点に移動
+	if (m_transformRatio >= 1.0f)
+	{
+		m_jumpAttackIndex++;
+		m_jumpAttackTime = 0.0f;
+	}
+
+	//最後の点についたらプレイヤを追いかける処理に切り替える
+	if (m_jumpAttackIndex >= m_jumpPosition.size() + 1)
+	{
+
+		m_jumpPosition.clear();
+		m_isAttack = false;
+		m_preliminaryActionTime = 0;
+		m_jumpAttackTime = 0;
+
+
+		Vector3 playerPosition = m_player->GetPosition();
+		Vector3 enemyPosition = m_position;
+
+		//高さを考慮しないため
+		playerPosition.y = 0;
+		enemyPosition.y = 0;
+
+		//ダメージ範囲内かどうか
+		float distance = Vector3::Distance(enemyPosition,playerPosition);
+
+		if (distance <= 2)
+		{
+			int hp = m_player->GetPlayerHP();
+			hp -= 1;
+			m_player->SetPlayerHP(hp);
+		}
+
+
+		return IBehaviorNode::State::Success;
+
+	}
+
+	m_jumpAttackTime += elapstTime;
+
+	//攻撃中
+	return IBehaviorNode::State::Runngin;
+}
+
 
 
 
@@ -339,6 +535,24 @@ void Enemy::RegistrationCollionManager(CollisionManager* collsionManager)
 
 IBehaviorNode::State Enemy::BeamAttack(float elapsdTime)
 {
+	//攻撃の初めに1回だけ予備隊
+	if (m_preliminaryActionTime == 0)
+	{
+		//アニメーションの登録
+		SetRunnginAnimationName("Beam");
+	}
+
+
+	//予備動作時間ないかどうか
+	if (m_preliminaryActionTime < BEAMATTACKPRELIMINRRYACTIONTIME)
+	{
+		//予備動作時間の加算
+		m_preliminaryActionTime += elapsdTime;
+		FacingThePlayer(elapsdTime);
+		//攻撃中
+		return IBehaviorNode::State::Runngin;
+	}
+
 
 	if (m_beam->Attack(elapsdTime))
 	{
@@ -346,12 +560,27 @@ IBehaviorNode::State Enemy::BeamAttack(float elapsdTime)
 		//攻撃中
 		return IBehaviorNode::State::Runngin;
 	}
-
+	//攻撃かどうかの初期化
 	m_isAttack = false;
+
+	//攻撃の予備動作時間の初期化
+	m_preliminaryActionTime = 0;
 
 	//攻撃終了
 	return IBehaviorNode::State::Success;
 
+}
+
+/// <summary>
+/// 近距離攻撃　ビヘイビアツリーないで呼び出す
+/// </summary>
+/// <returns></returns>
+IBehaviorNode::State Enemy::CloseRangeAttack(float elapsdTime)
+{
+
+
+
+	return JumpAttack(elapsdTime);
 }
 
 
@@ -373,7 +602,7 @@ void Enemy::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath:
 			break;
 		case CollsionObjectTag::ArtilleryBullet:
 			
-			//m_hp -= 2;
+			m_hp -= 2;
 
 			break;
 		default:
@@ -389,5 +618,54 @@ void Enemy::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath:
 	m_knockbackDirection.Normalize();
 
 	m_acceleration = 0;
+
+}
+
+void Enemy::FacingThePlayer(float elapsdTime)
+{
+
+	//向きたい方向
+	DirectX::SimpleMath::Vector3 direction = m_player->GetPosition() - m_position;
+	direction.Normalize();
+	//今の敵の前方向
+	DirectX::SimpleMath::Vector3 forward = m_forward;
+	//forward.Normalize();
+
+	DirectX::SimpleMath::Vector3 moveAxis = forward.Cross(direction);
+
+	if (moveAxis.y >= 0.0f)
+	{
+		moveAxis = DirectX::SimpleMath::Vector3::Up;
+	}
+	else
+	{
+		moveAxis = DirectX::SimpleMath::Vector3::Down;
+	}
+
+	//角度を求める
+	float moveAngle = forward.Dot(direction);
+
+	//if (moveAngle < 0.01f)
+	//{
+	//	return IBehaviorNode::State::Failure;
+	//}
+
+//ラジアン値に変換
+	moveAngle = acosf(moveAngle);
+
+	//角度と速度の比較で小さいほうを取得
+	moveAngle = std::min(moveAngle, 1.0f * elapsdTime);
+
+	//敵の回転の取得
+	DirectX::SimpleMath::Quaternion Rotate = m_rotate;
+	//Y軸に対して回転をかける
+	Rotate *= DirectX::SimpleMath::Quaternion::CreateFromAxisAngle(moveAxis, moveAngle);
+	m_rotate = Rotate;
+
+	//回転をもとに敵の初期の方向ベクトルの更新
+	forward = DirectX::SimpleMath::Vector3::Transform(Enemy::INITIALFORWARD, Rotate);
+	forward.Normalize();
+	m_forward = forward;
+
 
 }
