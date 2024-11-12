@@ -6,6 +6,7 @@
 
 #include "Game/CommonResources.h"
 #include "Libraries/MyLib/InputManager.h"
+#include "Game/Observer/Messenger.h"
 
 const float MOVE_SPEED = 5.0f;                                        //動く時のスピード
 const DirectX::SimpleMath::Vector3 INITIAL_DIRECTION(0.0f, 0.0f, -1.0f); //初期の向いている方向
@@ -55,26 +56,26 @@ void PlayerAttack::Update(const float& elapsedTime)
 	// キーボードステートトラッカーを取得する
 	//const auto& kbTracker = m_commonResources->GetInputManager()->GetKeyboardTracker();
 
-	Vector3 moveDirection = Vector3::Zero;
+	//Vector3 moveDirection = Vector3::Zero;
 
-	if (key.IsKeyDown(Keyboard::Keyboard::W))
-	{
-		moveDirection.z--;
-	}
-	if (key.IsKeyDown(Keyboard::Keyboard::S))
-	{
-		moveDirection.z++;
-	}
-	if (key.IsKeyDown(Keyboard::Keyboard::A))
-	{
-		moveDirection.x--;
-	}
-	if (key.IsKeyDown(Keyboard::Keyboard::D))
-	{
-		moveDirection.x++;
-	}
+	//if (key.IsKeyDown(Keyboard::Keyboard::W))
+	//{
+	//	moveDirection.z--;
+	//}
+	//if (key.IsKeyDown(Keyboard::Keyboard::S))
+	//{
+	//	moveDirection.z++;
+	//}
+	//if (key.IsKeyDown(Keyboard::Keyboard::A))
+	//{
+	//	moveDirection.x--;
+	//}
+	//if (key.IsKeyDown(Keyboard::Keyboard::D))
+	//{
+	//	moveDirection.x++;
+	//}
 
-	moveDirection = Vector3::Transform(moveDirection, m_player->GetCameraRotate());
+	//moveDirection = Vector3::Transform(moveDirection, m_player->GetCameraRotate());
 
 
 	Attack(elapsedTime,  key);
@@ -141,7 +142,8 @@ void PlayerAttack::Attack(float elapsedTime, DirectX::Keyboard::State key)
 	{
 		m_player->GetUsingBoomerang()->ChangeState(m_player->GetUsingBoomerang()->GetBoomerangThrow());
 		m_player->ChangeState(m_player->GetPlayerIding());
-
+		
+		Messenger::Notify(Messenger::SLOWMOTIONEND);
 	}
 
 

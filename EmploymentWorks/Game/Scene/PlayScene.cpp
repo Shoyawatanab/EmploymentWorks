@@ -28,12 +28,17 @@
 #include "Game/Object/Gimmick/Artillery/Artillery.h"
 #include "Libraries/MyLib/LoadJson.h"
 #include "Libraries/MyLib/Particle.h"
+#include "Game/Observer/Messenger.h"
+#include "Libraries/MyLib/Texture.h"
 
+#include <functional>
 #include <cassert>
 
 const int WALLSIZE = 4;
 const float WALLHEITH = 2;
 
+//イベント名
+const std::string SLOWMOTION = "SlowMotion";
 
 //---------------------------------------------------------
 // コンストラクタ
@@ -174,7 +179,7 @@ void PlayScene::Initialize(CommonResources* resources)
 	m_ui->Instances();
 	
 	//各クラスの情報を登録とインスタンス
-	m_player->RegistrationInformation(m_enemy.get(),m_cameraManager->GetTPSCamera());
+	m_player->RegistrationInformation(m_enemy.get(),m_cameraManager->GetTPSCamera(),this);
 	m_enemy->RegistrationInformation(m_player.get());
 	m_cameraManager->RegistrationInformation(this, m_player.get(), m_enemy.get());
 	m_lockOn->RegistrationInformation(m_player.get(), m_enemy.get(), m_cameraManager.get());
@@ -261,6 +266,19 @@ void PlayScene::Initialize(CommonResources* resources)
 
 	m_startCountDown = 0;
 
+	m_slowMotionSpeed = 1.0f;
+	m_slowMotionTime = 0;
+	m_isSlowMotion = false;
+
+	//イベントの登録 プレイシーンの最後で行う
+	//スロー演出の開始イベント
+ 	Messenger::Attach(Messenger::SLOWMOTION, std::bind(&PlayScene::BoomerangSlowMotion,this));
+	//スロー演出の終了イベント
+	Messenger::Attach(Messenger::SLOWMOTIONEND, std::bind(&PlayScene::BoomerangSlowMotionEnd, this));
+
+	m_slowTexture = std::make_unique<mylib::Texture>();
+	m_slowTexture->Initialize(m_commonResources, L"Resources/Textures/SlowMotionTex.png", Vector2(640, 360), 1.0f);
+
 }
 
 //---------------------------------------------------------
@@ -270,21 +288,40 @@ void PlayScene::Update(float elapsedTime)
 {
 	UNREFERENCED_PARAMETER(elapsedTime);
 
+
 	if (m_startCountDown < 0.5f)
 	{
 		m_startCountDown += elapsedTime;
 		return;
 	}
 
+	//イベントの更新
+	for (auto& ecent : m_eventUpdate)
+	{
+		ecent.second(elapsedTime);
+	}
+
+	//イベント名があればイベント関数から削除する
+	m_deleteEventName.erase(
+		std::remove_if(m_deleteEventName.begin(), m_deleteEventName.end(),
+			[this](const auto& name) 
+			{
+				//nameを削除する
+				m_eventUpdate.erase(name);
+				//ture : nameを削除対象にする
+				return true;
+			}
+		),
+		m_deleteEventName.end()
+	);
 
 
-	//PLAYを選ぶ
-	//if (kbTracker->released.L)
-	//{
-	//	CreateParticle(DirectX::SimpleMath::Vector3(6, 2, 0));
-	//}
 
 	m_cameraManager->Update(elapsedTime);
+
+	//スロー演出の速度をかける
+	elapsedTime *= m_slowMotionSpeed;
+
 
 	switch (m_state)
 	{
@@ -309,7 +346,6 @@ void PlayScene::Update(float elapsedTime)
 				//ゲーム状態をクリアに変更
 				m_state = GameState::Clear;
 				m_enemy->SetAnimation("FallDown");
-
 			}
 
 			//ゲームオーバーに変更
@@ -335,7 +371,6 @@ void PlayScene::Update(float elapsedTime)
 				if (m_enemy->FallDwonAnimation(elapsedTime) == Animation::AnimationState::End && m_ui->GetCurrentUIState() != m_ui->GetGameClearUI())
 				{
 					m_ui->ChangeState(m_ui->GetGameClearUI());
-
 				}
 			
 			}
@@ -357,6 +392,8 @@ void PlayScene::Update(float elapsedTime)
 
 
 	m_player->Update(elapsedTime);
+
+
 
 	m_ui->Update(elapsedTime);
 
@@ -417,6 +454,8 @@ void PlayScene::Render()
 		m_player->Render(view, m_projection);
 		m_lockOn->Render();
 	}
+
+
 	for (auto& particle : m_particle)
 	{
 		if (particle->GetState() == Particle::State::Using)
@@ -425,6 +464,12 @@ void PlayScene::Render()
 		}
 	}
 
+	if (m_isSlowMotion)
+	{
+		m_slowTexture->Render();
+		m_ui->GetGamePlayUI()->BoomerangMakerRender();
+
+	}
 
 	m_ui->Render();
 
@@ -481,6 +526,97 @@ void PlayScene::CreateParticle(DirectX::SimpleMath::Vector3 Pos)
 	}
 
 }
+
+
+
+//　ブーメランを投げるときのスロー演出
+void PlayScene::BoomerangSlowMotion()
+{
+	//スロー演出の時間の
+	m_slowMotionSpeed = 0.3f;
+
+	//スロー演出の最大時間
+	m_slowMotionMaxTime = 3.0f;
+	
+	m_isSlowMotion = true;
+
+	m_slowMotionTime = 0;
+
+	//進行割合の初期化
+	m_progressRate = 0.0f;
+
+
+	//スロー演出のUpdateの追加
+	m_eventUpdate[SLOWMOTION] = std::function<void(float)>(std::bind(&PlayScene::SlowMotion, this, std::placeholders::_1));
+
+}
+
+void PlayScene::BoomerangSlowMotionEnd()
+{
+
+	//名前を削除に登録
+	m_deleteEventName.push_back(SLOWMOTION);
+
+	//時間の初期化
+	m_slowMotionTime = 0;
+
+	m_isSlowMotion = false;
+
+	//進行割合を最大に
+	m_progressRate = 1.0f;
+
+	//スロースピードの初期化
+	m_slowMotionSpeed = 1.0f;
+
+	m_progressRate = 0.0f;
+}
+
+void PlayScene::SlowMotion(float elapsdTime)
+{
+
+	m_ui->GetGamePlayUI()->BoomerangMakerUpdate();
+
+
+	if (m_slowMotionTime >= m_slowMotionMaxTime)
+	{
+		//名前を削除に登録
+		m_deleteEventName.push_back(SLOWMOTION);
+
+		//時間の初期化
+		m_slowMotionTime = 0;
+
+		m_isSlowMotion = false;
+
+		//進行割合を最大に
+		m_progressRate = 1.0f;
+
+		//スロースピードの初期化
+		m_slowMotionSpeed = 1.0f;
+
+		m_progressRate = 0.0f;
+
+		if (m_player->GetUsingBoomerang()->GetBoomerangState() == m_player->GetUsingBoomerang()->GetBoomerangGetReady())
+		{
+			
+			m_player->GetUsingBoomerang()->ChangeState(m_player->GetUsingBoomerang()->GetBoomerangThrow());
+			m_player->ChangeState(m_player->GetPlayerIding());
+		}
+
+
+
+
+
+
+		return;
+	}
+
+	m_slowMotionTime += elapsdTime;
+
+	//進行割合を求める
+	m_progressRate = m_slowMotionTime / m_slowMotionMaxTime;
+
+}
+
 
 
 

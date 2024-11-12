@@ -30,14 +30,15 @@ IBehaviorNode::State SelectorNode::Update(float elapsedTime)
 		{
 			
 			case IBehaviorNode::State::Success:
+				//¬Œ÷‚ğ•Ô‚·
 				return State::Success;
 			case IBehaviorNode::State::Failure:
+				//‘¼‚Ìqƒm[ƒh‚ª‚¹‚¢‚±‚¤‚·‚é‚©‚à‚µ‚ê‚È‚¢‚©‚ç‰½‚à•Ô‚³‚¸Œp‘±‚·‚é
 				break;
 			case IBehaviorNode::State::Runngin:
 				//Às’†ƒm[ƒh‚ğŠi”[
 				m_runningNode = node.get();
 				return State::Runngin;
-
 			default:
 				break;
 		}

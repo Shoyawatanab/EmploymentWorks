@@ -76,8 +76,11 @@ void BossEnemyBase::Initialize(std::unique_ptr<DirectX::Model> model)
 {
 	// モデルを設定する
 	m_model = std::move(model);
-
+	//当たり判定の生成
 	m_bounding = std::make_unique<Bounding>();
+
+
+
 }
 
 // 更新する
@@ -136,8 +139,6 @@ void BossEnemyBase::Render(DirectX::SimpleMath::Matrix view, DirectX::SimpleMath
 void BossEnemyBase::Render(const DirectX::SimpleMath::Matrix& matrix, DirectX::SimpleMath::Matrix view, DirectX::SimpleMath::Matrix projection)
 {
 	using namespace DirectX::SimpleMath;
-
-
 
 	m_worldMatrix = matrix;
 	// モデルを描画する

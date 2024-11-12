@@ -64,9 +64,12 @@ public:
 
 	void BoxExtrusion(ICollisionObject* Object1, ICollisionObject* Object2);
 
-	bool CheckIsBox(ICollisionObject* Object1, ICollisionObject* Object2);
+	bool CheckIsBoxToBox(ICollisionObject* Object1, ICollisionObject* Object2);
 
-	bool CheckIsOrientexBox(ICollisionObject* Object1, ICollisionObject* Object2);
+
+	bool CheckIsOrientexdBoxToBox(ICollisionObject* Object1, ICollisionObject* Object2);
+
+	bool CheckIsOrientexdBoxToOrientexdBox(ICollisionObject* Object1, ICollisionObject* Object2);
 
 
 	bool CheckIsSphere(ICollisionObject* Object1, ICollisionObject* Object2);

@@ -104,6 +104,9 @@
     <Filter Include="Game\Object\Player\PlayerParts">
       <UniqueIdentifier>{f2a6c197-3da3-4d1b-a668-112312847a62}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Observer">
+      <UniqueIdentifier>{4eb531a3-f991-47c0-9a6b-ccd199d62b42}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -432,6 +435,15 @@
     <ClInclude Include="Libraries\MyLib\Animation.h">
       <Filter>Libraries\MyLib</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Observer\Messenger.h">
+      <Filter>Game\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\IObserver.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\ISubject.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -715,6 +727,9 @@
     </ClCompile>
     <ClCompile Include="Libraries\MyLib\Animation.cpp">
       <Filter>Libraries\MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Observer\Messenger.cpp">
+      <Filter>Game\Observer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

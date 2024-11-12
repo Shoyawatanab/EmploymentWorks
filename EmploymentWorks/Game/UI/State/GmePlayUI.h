@@ -11,6 +11,8 @@
 class CommonResources;
 class Enemy;
 class Player;
+class PlayScene;
+
 
 
 	class GamePlayUI : public IUI
@@ -47,7 +49,11 @@ class Player;
 
 		Player* m_player;
 
+		PlayScene* m_playScene;
 
+		//スロー演出時のターゲットマーカー
+		std::unique_ptr<UserInterface> m_boomerangMarkerUI;
+		DirectX::SimpleMath::Vector2 m_boomerangMakerUIScale;
 
 	public:
 		// コンストラクタ
@@ -71,30 +77,16 @@ class Player;
 		void Exit() override;
 
 		//クラスに必要な情報（ポインタ）を登録する
-		void RegistrationInformation( Player* player, Enemy* enemy);
+		void RegistrationInformation( Player* player, Enemy* enemy, PlayScene* playScene);
+
+		void BoomerangMakerUpdate();
+
+		void BoomerangMakerRender();
 
 	private:
 
-		void EnemyHPAdd(const wchar_t* path
-			, DirectX::SimpleMath::Vector2 position
-			, DirectX::SimpleMath::Vector2 scale
-			, ANCHOR anchor
-			, UserInterface::Kinds kind);
-
-
-		void PlayerHPAdd(const wchar_t* path
-			, DirectX::SimpleMath::Vector2 position
-			, DirectX::SimpleMath::Vector2 scale
-			, ANCHOR anchor
-			, UserInterface::Kinds kind);
-
-		void BoomerangAdd(const wchar_t* path
-			, DirectX::SimpleMath::Vector2 position
-			, DirectX::SimpleMath::Vector2 scale
-			, ANCHOR anchor
-			, UserInterface::Kinds kind);
-
-		void BoomerangBackAdd(const wchar_t* path
+		//画像の読み込み
+		std::unique_ptr<UserInterface> Add(const wchar_t* path
 			, DirectX::SimpleMath::Vector2 position
 			, DirectX::SimpleMath::Vector2 scale
 			, ANCHOR anchor
@@ -106,4 +98,6 @@ class Player;
 		void CreatePlayerHP();
 
 		void CreateBoomerang();
+
+		void CreateBoomerangMaker();
 	};

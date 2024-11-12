@@ -37,20 +37,20 @@ void BehaviorTree::Initialize(CommonResources* resources)
 	
 //Hpが半分未満の時
 
-	//近距離攻撃範囲かどうかの生成
-	auto InCloseRangeAttackDecorator = std::make_unique<DecoratorNode>(std::bind(&Conditions::IsInCloseRangeAttack,m_conditions.get()));
+	////近距離攻撃範囲かどうかの生成
+	//auto InCloseRangeAttackDecorator = std::make_unique<DecoratorNode>(std::bind(&Conditions::IsInCloseRangeAttack,m_conditions.get()));
 
-	//近距離攻撃をするかどうかのSelectorの生成
-	auto IsCloseRangeAttackSelector = std::make_unique<SelectorNode>();
-	//近距離攻撃範囲なかどうかの追加
-	IsCloseRangeAttackSelector->AddNode(std::move(InCloseRangeAttackDecorator));
-	//何もしないの追加
-	IsCloseRangeAttackSelector->AddNode(std::make_unique<ActionNode>(std::bind(&ExecutionNode::DoNothing, m_executionNode.get())));
-	//Sequenceの生成
-	auto LessThanHalfHPSequence = std::make_unique<SequenceNode>();
-	//プレイヤに近づくの追加
-	LessThanHalfHPSequence->AddNode(std::make_unique<ActionNode>(std::bind(&ExecutionNode::ApproachingThePlayer, m_executionNode.get(), std::placeholders::_1)));
-	//近距離攻撃をするかどうかのSelectorの追加
+	////近距離攻撃をするかどうかのSelectorの生成
+	//auto IsCloseRangeAttackSelector = std::make_unique<SelectorNode>();
+	////近距離攻撃範囲なかどうかの追加
+	//IsCloseRangeAttackSelector->AddNode(std::move(InCloseRangeAttackDecorator));
+	////何もしないの追加
+	//IsCloseRangeAttackSelector->AddNode(std::make_unique<ActionNode>(std::bind(&ExecutionNode::DoNothing, m_executionNode.get())));
+	////Sequenceの生成
+	//auto LessThanHalfHPSequence = std::make_unique<SequenceNode>();
+	////プレイヤに近づくの追加
+	//LessThanHalfHPSequence->AddNode(std::make_unique<ActionNode>(std::bind(&ExecutionNode::ApproachingThePlayer, m_executionNode.get(), std::placeholders::_1)));
+	////近距離攻撃をするかどうかのSelectorの追加
 
 //HPが半分以上のとき
 
@@ -66,10 +66,10 @@ void BehaviorTree::Initialize(CommonResources* resources)
 	//プレイヤに近づくの追加
 	MidDistanceSelector->AddNode(std::make_unique<ActionNode>(std::bind(&ExecutionNode::ApproachingThePlayer, m_executionNode.get(), std::placeholders::_1)));
 
-  //プレイヤとの距離が近い時
-	auto CloseDistanceDecorator = std::make_unique<DecoratorNode>(std::bind(&Conditions::IsInCloseRangeAttack, m_conditions.get()));
-	//近距離攻撃のアクションノードの追加
-	CloseDistanceDecorator->AddNode(std::make_unique<ActionNode>(std::bind(&ExecutionNode::CloseRangeAttacks, m_executionNode.get(), std::placeholders::_1)));
+ // //プレイヤとの距離が近い時
+	//auto CloseDistanceDecorator = std::make_unique<DecoratorNode>(std::bind(&Conditions::IsInCloseRangeAttack, m_conditions.get()));
+	////近距離攻撃のアクションノードの追加
+	//CloseDistanceDecorator->AddNode(std::make_unique<ActionNode>(std::bind(&ExecutionNode::CloseRangeAttacks, m_executionNode.get(), std::placeholders::_1)));
 
 	//プレイヤとの距離が遠いかのDecorator
 	auto IsFarDistanceDecorator = std::make_unique<DecoratorNode>(std::bind(&Conditions::IsFarDistance, m_conditions.get()));
@@ -80,7 +80,7 @@ void BehaviorTree::Initialize(CommonResources* resources)
 	//プレイヤとの距離が遠い時の追加
 	HPHalfSelector->AddNode(std::move(IsFarDistanceDecorator));
 	//プレイヤとの距離が近い時
-	HPHalfSelector->AddNode(std::move(CloseDistanceDecorator));
+	//HPHalfSelector->AddNode(std::move(CloseDistanceDecorator));
 	//中距離のときのSelectorの追加
 	HPHalfSelector->AddNode(std::move(MidDistanceSelector));
  
@@ -124,7 +124,7 @@ void BehaviorTree::Initialize(CommonResources* resources)
 	//RootSequenceノードの追加
 	m_root->AddNode(std::move(RootSelector));
 
-
+	//状態の初期化
 	m_currentState = IBehaviorNode::State::Failure;
 
 }

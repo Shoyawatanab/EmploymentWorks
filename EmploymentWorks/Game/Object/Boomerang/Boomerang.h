@@ -18,7 +18,7 @@ class CommonResources;
 class Player;
 class Bounding;
 class BoomerangOrbit;
-
+class PlayScene;
 
 namespace mylib
 {
@@ -102,6 +102,8 @@ private:
 
 	Enemy* m_enemy;
 
+	PlayScene* m_playScene;
+
 	//当たった時の相手のタグ
 	CollsionObjectTag m_onCollisionTag;
 
@@ -144,7 +146,7 @@ public:
 	void OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos) override;
 
 	//クラスに必要な情報（ポインタ）の登録
-	void RegistrationInformation(Player* player, Enemy* enemy);
+	void RegistrationInformation(Player* player, Enemy* enemy,PlayScene* playScene);
 
 	//クラスのインスタンス
 	void Instances();

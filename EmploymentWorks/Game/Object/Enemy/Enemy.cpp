@@ -162,13 +162,14 @@ void Enemy::Update(float elapsedTime)
 	const auto& kbTracker = m_commonResources->GetInputManager()->GetKeyboardTracker();
 
 	//デバック用
-	if (kbTracker->released.Q)
-	{
-		m_hp = 1;
-	}
+	//if (kbTracker->released.Q)
+	//{
+	//	m_hp = 1;
+	//}
 
 
-	m_behavior->Update(elapsedTime);
+
+	//m_behavior->Update(elapsedTime);
 
 
 	//部品を更新する

@@ -6,6 +6,7 @@
 
 #include "Game/CommonResources.h"
 #include "Libraries/MyLib/InputManager.h"
+#include "Game/Observer/Messenger.h"
 
 const float MOVE_SPEED = 5.0f;                                        //動く時のスピード
 const DirectX::SimpleMath::Vector3 INITIAL_DIRECTION(0.0f, 0.0f, -1.0f); //初期の向いている方向
@@ -54,6 +55,8 @@ void PlayerIdling::Update(const float& elapsedTime)
 	if (tracker->leftButton == Mouse::ButtonStateTracker::ButtonState::PRESSED &&
 		m_player->GetUsingBoomerang()->GetBoomerangState() == m_player->GetUsingBoomerang()->GetBoomerangIdling())
 	{
+		//スロー演出のイベントを呼ぶ
+		Messenger::Notify(Messenger::SLOWMOTION);
 		m_player->GetUsingBoomerang()->ChangeState(m_player->GetUsingBoomerang()->GetBoomerangGetReady());
 		m_player->ChangeState(m_player->GetPlayerAttack());
 	}

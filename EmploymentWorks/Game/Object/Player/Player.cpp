@@ -422,7 +422,7 @@ void Player::ChangeState(IPlayerState* nextState)
 }
 
 
-void Player::RegistrationInformation(Enemy* enemy, mylib::TPS_Camera* tps_Camera)
+void Player::RegistrationInformation(Enemy* enemy, mylib::TPS_Camera* tps_Camera, PlayScene* playScene)
 {
 	m_enemy = enemy;
 	m_tpsCamera = tps_Camera;
@@ -436,7 +436,7 @@ void Player::RegistrationInformation(Enemy* enemy, mylib::TPS_Camera* tps_Camera
 	//ストック
 	for (auto& stock : m_boomerang)
 	{
-		stock->RegistrationInformation(this, m_enemy);
+		stock->RegistrationInformation(this, m_enemy,playScene);
 	}
 
 }

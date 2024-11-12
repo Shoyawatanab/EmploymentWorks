@@ -71,7 +71,7 @@ void BossEnemyBottom::Initialize()
 	Vector3 rotatedPosition = Vector3::Transform(BossEnemyBase::GetPositonFromParent() + BossEnemyBase::GetAnimationPosition(), Matrix::CreateFromQuaternion(BossEnemyBase::GetParent()->GetAngle()));
 	//現在の座標を更新　このクラスの座標と親の座標 大きさを変えても距離を変えないようにScaleをかける
 	m_currentPosition = (rotatedPosition * BossEnemyBase::GetParent()->GetScale()) + BossEnemyBase::GetParent()->GetPosition();
-
+	//初期化
 	BossEnemyBase::Initialize(std::move(m_model));
 
 	//バウンディングの生成
@@ -92,9 +92,8 @@ void BossEnemyBottom::Initialize()
 	auto animation = std::make_unique<Animation>();
 	//アニメーションKeyFramの登録
 	animation->SetAnimation(keyFram, Animation::AnimationPlayBackType::Once);
-
+	//アニメーションの登録
 	BossEnemyBase::SetAnimations(std::move(animation), "FallDown");
-
 
 
 	//「Pelvis」を生成する

@@ -7,6 +7,7 @@ class CommonResources;
 class Boomerang;
 class Player;
 class Enemy;
+class PlayScene;
 
 
 // BoomerangOrbitクラスを定義する
@@ -17,7 +18,7 @@ public:
 
 public:
 	// コンストラクタ
-	BoomerangOrbit(Boomerang* boomerang, Player* player, Enemy* enemy);
+	BoomerangOrbit(Boomerang* boomerang, Player* player, Enemy* enemy,PlayScene* playScene);
 	// デストラクタ
 	~BoomerangOrbit();
 	// 初期化する
@@ -39,6 +40,7 @@ private:
 	Boomerang* m_boomerang;
 	Player* m_player;
 	Enemy* m_enemy;
+	PlayScene* m_playScene;
 
 	std::unique_ptr<DirectX::PrimitiveBatch<DirectX::VertexPositionColor>> m_primitveBatch;
 
