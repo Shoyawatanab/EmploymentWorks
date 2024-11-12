@@ -83,7 +83,7 @@ void UI::RegistrationInformation(PlayScene* playScene, Player* player, Enemy* en
 {
 
 	//必要なポインタ情報を渡す
-	m_playUI->RegistrationInformation(player, enemy);
+	m_playUI->RegistrationInformation(player, enemy,playScene);
 	m_overUI->RegistrationInformation(playScene);
 	m_clearUI->RegistrationInformation(playScene);
 

@@ -18,7 +18,7 @@
 // 前方宣言
 class CommonResources;
 class Bounding;
-
+class PlayScene;
 
 namespace mylib
 {
@@ -164,7 +164,7 @@ public:
 	void ChangeState(IPlayerState* nextState);
 
 	//クラスに必要な情報（ポインタ）の登録
-	void RegistrationInformation(Enemy* enemy,mylib::TPS_Camera* tps_Camera);
+	void RegistrationInformation(Enemy* enemy,mylib::TPS_Camera* tps_Camera,PlayScene* playScene);
 
 	//クラスのインスタンス
 	void Instances();

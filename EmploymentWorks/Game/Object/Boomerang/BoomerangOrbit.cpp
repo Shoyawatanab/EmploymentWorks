@@ -7,7 +7,7 @@
 #include "Game/CommonResources.h"
 #include "DeviceResources.h"
 #include "Libraries/MyLib/Camera/TPS_Camera.h"
-
+#include "Game/Scene/PlayScene.h"
 
 const float SPEED = 5.0f;
 
@@ -20,7 +20,7 @@ static float Lerp(float a, float b, float t)
 }
 
 // コンストラクタ
-BoomerangOrbit::BoomerangOrbit(Boomerang* boomerang, Player* player, Enemy* enemy)
+BoomerangOrbit::BoomerangOrbit(Boomerang* boomerang, Player* player, Enemy* enemy,PlayScene* playScene)
 	:
 	m_commonResources{},
 	m_boundingSphereLeftLeg{},
@@ -33,6 +33,7 @@ BoomerangOrbit::BoomerangOrbit(Boomerang* boomerang, Player* player, Enemy* enem
 	m_transformRatio{},
 	m_startIndex{},
 	m_totalTime{}
+	,m_playScene{playScene}
 {
 }
 
@@ -99,8 +100,6 @@ void BoomerangOrbit::Update(const float& elapsedTime)
 	UNREFERENCED_PARAMETER(elapsedTime);
 	using namespace DirectX::SimpleMath;
 
-
-
 	m_index = static_cast<int>( m_spherePos.size() - 1);
 	m_startIndex = m_index;
 	m_transformRatio = 0;
@@ -114,7 +113,16 @@ void BoomerangOrbit::Update(const float& elapsedTime)
 
 
 	//カメラの正面ベクトルの取得
-	m_target = m_player->GetTPS_Camera()->GetCameraForward() * 10;
+	m_target = m_player->GetTPS_Camera()->GetCameraForward();
+
+	//距離を書ける
+	float rate = m_playScene->GetSlowMotionProgressRate() * 1.5f;
+	//
+	rate = std::min(rate, 1.0f);
+	//
+	float length = Lerp(5.0f, 17.0f, rate);
+	//
+	m_target *= length;
 	//カメラのターゲットを足す
 	m_target += m_player->GetTPS_Camera()->GetTargetPosition();
 

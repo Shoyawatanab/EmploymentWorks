@@ -4,6 +4,7 @@
 */
 #pragma once
 #include "IScene.h"
+#include <unordered_map>
 
 // 前方宣言
 class CommonResources;
@@ -28,6 +29,7 @@ namespace mylib
 	class GridFloor;
 	class GameCameraManager;
 	class LoadJson;
+	class Texture;
 
 }
 
@@ -48,6 +50,9 @@ public:
 public:
 
 	void SetNextSceneID(SceneID ID) { m_nextScene = ID; }
+
+	//スロー演出の進行割合を取得
+	float GetSlowMotionProgressRate() { return m_progressRate; }
 
 private:
 
@@ -108,6 +113,27 @@ private:
 
 	//初めのカウントダウン
 	float m_startCountDown;
+
+
+	//イベントの更新関数の格納変数
+	std::unordered_map<std::string, std::function<void(float)>> m_eventUpdate;
+	//削除したいイベント名の登録変数
+	std::vector<std::string> m_deleteEventName;
+
+	//スロー演出時の速度
+	float m_slowMotionSpeed;
+	//スロー演出の時間
+	float m_slowMotionTime;
+	//スロー演出の最大時間
+	float m_slowMotionMaxTime;
+	//スロー演出の表示画像
+	std::unique_ptr<mylib::Texture> m_slowTexture;
+	//スロー演出中かどうか
+	bool m_isSlowMotion;
+	//スロー演出の進行割合
+	float m_progressRate;
+
+
 public:
 	PlayScene();
 	~PlayScene() override;
@@ -120,7 +146,15 @@ public:
 	SceneID GetNextSceneID() const override;
 
 
-
+	//爆発エフェクトを生成
 	void CreateParticle(DirectX::SimpleMath::Vector3 Pos);
+
+	//ブーメランを投げるときのスロー演出時に呼ばれる関数
+	void BoomerangSlowMotion();
+	//ブーメランの投げ終わり
+	void BoomerangSlowMotionEnd();
+
+	//スロー演出のUpdate
+	void SlowMotion(float elapsdTime);
 
 };

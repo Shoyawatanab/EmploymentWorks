@@ -132,9 +132,6 @@ IBehaviorNode::State ExecutionNode::CloseRangeAttacks(float elapsdTime)
 {
 	assert(elapsdTime);
 
-	//プレイヤの方向を向く
-	FacingThePlayer(elapsdTime);
-
 	//Enemyクラスの関数を使用
 	return m_enemy->CloseRangeAttack(elapsdTime);
 }
@@ -152,8 +149,6 @@ IBehaviorNode::State ExecutionNode::RangedAttack(float elapsdTime)
 
 	return m_enemy->BeamAttack(elapsdTime);
 
-	//攻撃中
-	//return IBehaviorNode::State::Runngin;
 }
 
 /// <summary>

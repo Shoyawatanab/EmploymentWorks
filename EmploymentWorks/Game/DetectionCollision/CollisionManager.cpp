@@ -113,7 +113,7 @@ void CollisionManager::Update()
 				case static_cast<uint32_t>(CollisionType::Player_Stage):
 
 					//ボックスとの当たり判定
-					if (CheckIsBox(m_collsionObjects[i], m_collsionObjects[j]))
+					if (CheckIsBoxToBox(m_collsionObjects[i], m_collsionObjects[j]))
 					{
 						//押し出し処理
 						BoxExtrusion(m_collsionObjects[i], m_collsionObjects[j]);
@@ -124,7 +124,7 @@ void CollisionManager::Update()
 					}
 					break;
 				case static_cast<uint32_t>(CollisionType::Player_Floor):
-					if (CheckIsBox(m_collsionObjects[i], m_collsionObjects[j]))
+					if (CheckIsBoxToBox(m_collsionObjects[i], m_collsionObjects[j]))
 					{
 						BoxExtrusion(m_collsionObjects[i], m_collsionObjects[j]);
 						m_collsionObjects[i]->OnCollisionEnter(tagJ, m_collsionObjects[j]->GetBounding()->GetBoundingBox()->Center);
@@ -132,7 +132,7 @@ void CollisionManager::Update()
 					}
 					break;
 				case static_cast<uint32_t>(CollisionType::Player_Pillar):
-					if (CheckIsBox(m_collsionObjects[i], m_collsionObjects[j]))
+					if (CheckIsBoxToBox(m_collsionObjects[i], m_collsionObjects[j]))
 					{
 						BoxExtrusion(m_collsionObjects[i], m_collsionObjects[j]);
 						m_collsionObjects[i]->OnCollisionEnter(tagJ, m_collsionObjects[j]->GetBounding()->GetBoundingBox()->Center);
@@ -148,7 +148,7 @@ void CollisionManager::Update()
 
 
 				case static_cast<uint32_t>(CollisionType::Enemy_Boomerang):
-					if (CheckIsBox(m_collsionObjects[i], m_collsionObjects[j]))
+					if (CheckIsBoxToBox(m_collsionObjects[i], m_collsionObjects[j]))
 					{
 
 						m_collsionObjects[i]->OnCollisionEnter(tagJ, m_collsionObjects[j]->GetBounding()->GetBoundingBox()->Center);
@@ -158,15 +158,26 @@ void CollisionManager::Update()
 
 					break;
 				case static_cast<uint32_t>(CollisionType::Enemy_Stage):
-					if (CheckIsBox(m_collsionObjects[i], m_collsionObjects[j]))
+
+					//if (CheckIsBoxToBox(m_collsionObjects[i], m_collsionObjects[j]))
+					//{
+					//	BoxExtrusion(m_collsionObjects[i], m_collsionObjects[j]);
+					//	m_collsionObjects[i]->OnCollisionEnter(tagJ, m_collsionObjects[j]->GetBounding()->GetBoundingBox()->Center);
+					//	m_collsionObjects[j]->OnCollisionEnter(tagI, m_collsionObjects[i]->GetBounding()->GetBoundingBox()->Center);
+					//}
+
+					//敵のほうが先に登録されているから引数がJ　I　の順番
+					if (CheckIsOrientexdBoxToBox(m_collsionObjects[j], m_collsionObjects[i]))
 					{
 						BoxExtrusion(m_collsionObjects[i], m_collsionObjects[j]);
 						m_collsionObjects[i]->OnCollisionEnter(tagJ, m_collsionObjects[j]->GetBounding()->GetBoundingBox()->Center);
 						m_collsionObjects[j]->OnCollisionEnter(tagI, m_collsionObjects[i]->GetBounding()->GetBoundingBox()->Center);
+
 					}
+
 					break;
 				case static_cast<uint32_t>(CollisionType::Enemy_Floor):
-					if (CheckIsBox(m_collsionObjects[i], m_collsionObjects[j]))
+					if (CheckIsBoxToBox(m_collsionObjects[i], m_collsionObjects[j]))
 					{
 						//押し出し処理
 						BoxExtrusion(m_collsionObjects[i], m_collsionObjects[j]);
@@ -182,7 +193,7 @@ void CollisionManager::Update()
 				case static_cast<uint32_t>(CollisionType::Enemy_Artillery):
 					break;
 				case static_cast<uint32_t>(CollisionType::Enemy_ArtilleryBullet):
-					if (CheckIsBox(m_collsionObjects[i], m_collsionObjects[j]))
+					if (CheckIsBoxToBox(m_collsionObjects[i], m_collsionObjects[j]))
 					{
 
 						m_collsionObjects[i]->OnCollisionEnter(tagJ, m_collsionObjects[j]->GetBounding()->GetBoundingBox()->Center);
@@ -194,7 +205,7 @@ void CollisionManager::Update()
 
 
 				case static_cast<uint32_t>(CollisionType::Boomerang_Stage):
-					if (CheckIsBox(m_collsionObjects[i], m_collsionObjects[j]))
+					if (CheckIsBoxToBox(m_collsionObjects[i], m_collsionObjects[j]))
 					{
 						BoxExtrusion(m_collsionObjects[i], m_collsionObjects[j]);
 						m_collsionObjects[i]->OnCollisionEnter(tagJ, m_collsionObjects[j]->GetBounding()->GetBoundingBox()->Center);
@@ -204,7 +215,7 @@ void CollisionManager::Update()
 					}
 					break;
 				case static_cast<uint32_t>(CollisionType::Boomerang_Floor):
-					if (CheckIsBox(m_collsionObjects[i], m_collsionObjects[j]))
+					if (CheckIsBoxToBox(m_collsionObjects[i], m_collsionObjects[j]))
 					{
 						BoxExtrusion(m_collsionObjects[i], m_collsionObjects[j]);
 						m_collsionObjects[i]->OnCollisionEnter(tagJ, m_collsionObjects[j]->GetBounding()->GetBoundingBox()->Center);
@@ -214,7 +225,7 @@ void CollisionManager::Update()
 					}
 					break;
 				case static_cast<uint32_t>(CollisionType::Boomerang_Pillar):
-					if (CheckIsBox(m_collsionObjects[i], m_collsionObjects[j]))
+					if (CheckIsBoxToBox(m_collsionObjects[i], m_collsionObjects[j]))
 					{
 
 						m_collsionObjects[i]->OnCollisionEnter(tagJ, m_collsionObjects[j]->GetBounding()->GetBoundingBox()->Center);
@@ -225,7 +236,7 @@ void CollisionManager::Update()
 					break;
 				case static_cast<uint32_t>(CollisionType::Boomerang_Artillery):
 
-					if (CheckIsBox(m_collsionObjects[i], m_collsionObjects[j]))
+					if (CheckIsBoxToBox(m_collsionObjects[i], m_collsionObjects[j]))
 					{
 
 						m_collsionObjects[i]->OnCollisionEnter(tagJ, m_collsionObjects[j]->GetBounding()->GetBoundingBox()->Center);
@@ -240,7 +251,7 @@ void CollisionManager::Update()
 
 				case static_cast<uint32_t>(CollisionType::ArtilleryBullet_Stage):
 					
-					if (CheckIsBox(m_collsionObjects[i], m_collsionObjects[j]))
+					if (CheckIsBoxToBox(m_collsionObjects[i], m_collsionObjects[j]))
 					{
 						m_collsionObjects[i]->OnCollisionEnter(tagJ, m_collsionObjects[j]->GetBounding()->GetBoundingBox()->Center);
 						m_collsionObjects[j]->OnCollisionEnter(tagI, m_collsionObjects[i]->GetBounding()->GetBoundingBox()->Center);
@@ -253,7 +264,7 @@ void CollisionManager::Update()
 				
 
 				case static_cast<uint32_t>(CollisionType::EnemyParts_Boomerang):
-					if (CheckIsOrientexBox(m_collsionObjects[i], m_collsionObjects[j]))
+					if (CheckIsOrientexdBoxToBox(m_collsionObjects[i], m_collsionObjects[j]))
 					{
 
 						m_collsionObjects[i]->OnCollisionEnter(tagJ, m_collsionObjects[j]->GetBounding()->GetBoundingBox()->Center);
@@ -374,7 +385,13 @@ void CollisionManager::BoxExtrusion(ICollisionObject* Object1, ICollisionObject*
 
 }
 
-bool CollisionManager::CheckIsBox(ICollisionObject* Object1, ICollisionObject* Object2)
+/// <summary>
+/// AABBの当たり判定
+/// </summary>
+/// <param name="Object1"></param>
+/// <param name="Object2"></param>
+/// <returns></returns>
+bool CollisionManager::CheckIsBoxToBox(ICollisionObject* Object1, ICollisionObject* Object2)
 {
 	//バウンディングボックスの取得
 	DirectX::BoundingBox* Box1 = Object1->GetBounding()->GetBoundingBox();
@@ -392,9 +409,17 @@ bool CollisionManager::CheckIsBox(ICollisionObject* Object1, ICollisionObject* O
 		return true;
 	}
 	return false;
+
+	
 }
 
-bool CollisionManager::CheckIsOrientexBox(ICollisionObject* Object1, ICollisionObject* Object2)
+/// <summary>
+/// OBB  BoundingBox To BoundingOrientexsBox
+/// </summary>
+/// <param name="Object1">BoundingBox</param>
+/// <param name="Object2">BoundingOrientedBox</param>
+/// <returns></returns>
+bool CollisionManager::CheckIsOrientexdBoxToBox(ICollisionObject* Object1, ICollisionObject* Object2)
 {
 	//バウンディングボックスの取得
 	DirectX::BoundingBox* Box1 = Object1->GetBounding()->GetBoundingBox();
@@ -411,8 +436,36 @@ bool CollisionManager::CheckIsOrientexBox(ICollisionObject* Object1, ICollisionO
 #endif
 		return true;
 	}
+
 	return false;
 
+}
+
+/// <summary>
+/// OBB  BoundingOrientexsBox To BoundingOrientexsBox
+/// </summary>
+/// <param name="Object1">BoundingOrientexsBox</param>
+/// <param name="Object2">BoundingOrientexsBox</param>
+/// <returns></returns>
+bool CollisionManager::CheckIsOrientexdBoxToOrientexdBox(ICollisionObject* Object1, ICollisionObject* Object2)
+{
+	//バウンディングボックスの取得
+	DirectX::BoundingOrientedBox* Box1 = Object1->GetBounding()->GetOrientedBox();
+	DirectX::BoundingOrientedBox* Box2 = Object2->GetBounding()->GetOrientedBox();
+
+	//バウンディングボックスと当たったかどうか
+	if (Box1->Intersects(*Box2))
+	{
+#ifdef _DEBUG
+
+		//ボックスの色の変更
+		Object1->GetBounding()->SetIsBoxHit(true);
+		Object2->GetBounding()->SetIsBoxHit(true);
+#endif
+		return true;
+	}
+
+	return false;
 }
 
 bool CollisionManager::CheckIsSphere(ICollisionObject* Object1, ICollisionObject* Object2)

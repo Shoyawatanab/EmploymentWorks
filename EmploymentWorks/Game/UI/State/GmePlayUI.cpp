@@ -13,6 +13,7 @@
 #include "Game/Object/Enemy/Enemy.h"
 #include "Game/CommonResources.h"
 #include "DeviceResources.h"
+#include "Game/Scene/PlayScene.h"
 
 
 const int MAXANGLEY = 100;
@@ -46,6 +47,8 @@ void GamePlayUI::Initialize(CommonResources* resources)
 	CreateEnemyHP();
 	CreatePlayerHP();
 	CreateBoomerang();
+
+	CreateBoomerangMaker();
 
 	//ボスHPの割合をセットする
 	float EnemyHp = m_enemy->GetHp();
@@ -93,6 +96,9 @@ void GamePlayUI::Update(const float& elapsedTime)
 
 	m_boomerangBackUI[0]->SetPosition(Pos);
 
+
+
+
 }
 
 void GamePlayUI::Render()
@@ -123,7 +129,6 @@ void GamePlayUI::Render()
 	}
 
 
-
 }
 
 
@@ -140,15 +145,44 @@ void GamePlayUI::Exit()
 
 }
 
-void GamePlayUI::RegistrationInformation(Player* player, Enemy* enemy)
+void GamePlayUI::RegistrationInformation(Player* player, Enemy* enemy, PlayScene* playScene)
 {
 
 	m_player = player;
 	m_enemy = enemy;
+	m_playScene = playScene;
 
 }
 
-void GamePlayUI::EnemyHPAdd(const wchar_t* path, DirectX::SimpleMath::Vector2 position, DirectX::SimpleMath::Vector2 scale, ANCHOR anchor, UserInterface::Kinds kind)
+void GamePlayUI::BoomerangMakerUpdate()
+{
+
+
+	DirectX::SimpleMath::Vector2 minScale(0.1f,0.1f);
+
+	DirectX::SimpleMath::Vector2 maxScale(0.5f, 0.5f);
+
+	//スロー演出の進行割合からLerpの割合を求める　かけてるのはマーカーのほうが早く小さくなるように
+	float lerpTime = m_playScene->GetSlowMotionProgressRate() * 1.5f;
+
+	m_boomerangMakerUIScale = DirectX::SimpleMath::Vector2::Lerp(maxScale, minScale,lerpTime);
+
+	m_boomerangMakerUIScale.x = std::max(m_boomerangMakerUIScale.x, 0.1f);
+
+	m_boomerangMakerUIScale.y = std::max(m_boomerangMakerUIScale.y, 0.1f);
+
+	m_boomerangMarkerUI->SetScale(m_boomerangMakerUIScale);
+
+}
+
+void GamePlayUI::BoomerangMakerRender()
+{
+
+	m_boomerangMarkerUI->Render();
+
+}
+
+std::unique_ptr<UserInterface> GamePlayUI::Add(const wchar_t* path, DirectX::SimpleMath::Vector2 position, DirectX::SimpleMath::Vector2 scale, ANCHOR anchor, UserInterface::Kinds kind)
 {
 	//  メニューとしてアイテムを追加する
 	std::unique_ptr<UserInterface> userInterface = std::make_unique<UserInterface>();
@@ -162,90 +196,34 @@ void GamePlayUI::EnemyHPAdd(const wchar_t* path, DirectX::SimpleMath::Vector2 po
 
 	userInterface->SetWindowSize(m_windowWidth, m_windowHeight);
 
-	m_enemyHP.push_back(std::move(userInterface));
 
+	return userInterface;
 }
 
-void GamePlayUI::PlayerHPAdd(const wchar_t* path, DirectX::SimpleMath::Vector2 position, DirectX::SimpleMath::Vector2 scale, ANCHOR anchor, UserInterface::Kinds kind)
-{
 
-	//  メニューとしてアイテムを追加する
-	std::unique_ptr<UserInterface> userInterface = std::make_unique<UserInterface>();
-	//  指定された画像を表示するためのアイテムを作成する
-	userInterface->Create(m_commonResources->GetDeviceResources()
-		, path
-		, position
-		, scale
-		, anchor
-		, kind);
-
-	userInterface->SetWindowSize(m_windowWidth, m_windowHeight);
-
-	m_playerHP.push_back(std::move(userInterface));
-
-}
-
-void GamePlayUI::BoomerangAdd(const wchar_t* path, DirectX::SimpleMath::Vector2 position, DirectX::SimpleMath::Vector2 scale, ANCHOR anchor, UserInterface::Kinds kind)
-{
-
-		//  メニューとしてアイテムを追加する
-	std::unique_ptr<UserInterface> userInterface = std::make_unique<UserInterface>();
-	//  指定された画像を表示するためのアイテムを作成する
-	userInterface->Create(m_commonResources->GetDeviceResources()
-		, path
-		, position
-		, scale
-		, anchor
-		, kind);
-
-	userInterface->SetWindowSize(m_windowWidth, m_windowHeight);
-
-	m_boomerangUI.push_back(std::move(userInterface));
-
-}
-
-void GamePlayUI::BoomerangBackAdd(const wchar_t* path, DirectX::SimpleMath::Vector2 position, DirectX::SimpleMath::Vector2 scale, ANCHOR anchor, UserInterface::Kinds kind)
-{
-
-	//  メニューとしてアイテムを追加する
-	std::unique_ptr<UserInterface> userInterface = std::make_unique<UserInterface>();
-	//  指定された画像を表示するためのアイテムを作成する
-	userInterface->Create(m_commonResources->GetDeviceResources()
-		, path
-		, position
-		, scale
-		, anchor
-		, kind);
-
-	userInterface->SetWindowSize(m_windowWidth, m_windowHeight);
-
-	m_boomerangBackUI.push_back(std::move(userInterface));
-
-
-}
 
 void GamePlayUI::CreateEnemyHP()
 {
 	using namespace DirectX::SimpleMath;
 	//  背景となるウィンドウ画像を読み込む
 
-	EnemyHPAdd(L"Resources/Textures/BossHPBase.png"
+	 m_enemyHP.push_back( Add(L"Resources/Textures/BossHPBase.png"
 		, Vector2(640, 50)
 		, Vector2(0.9f, 0.5f)
 		, ANCHOR::MIDDLE_CENTER
-		, UserInterface::Kinds::UI);
+		, UserInterface::Kinds::UI));
 
-	EnemyHPAdd(L"Resources/Textures/EnemyHP.png"
+	m_enemyHP.push_back(Add(L"Resources/Textures/EnemyHP.png"
 		, Vector2(640, 50)
 		, Vector2(0.91f, 0.39f)
 		, ANCHOR::MIDDLE_CENTER
-		, UserInterface::Kinds::UI);
+		, UserInterface::Kinds::UI));
 
-	EnemyHPAdd(L"Resources/Textures/EnemyName.png"
+	m_enemyHP.push_back(Add(L"Resources/Textures/EnemyName.png"
 		, Vector2(640, 25)
 		, Vector2(0.3f, 0.3f)
 		, ANCHOR::MIDDLE_CENTER
-		, UserInterface::Kinds::UI);
+		, UserInterface::Kinds::UI));
 
 
 }
@@ -256,13 +234,11 @@ void GamePlayUI::CreatePlayerHP()
 
 	for (int i = 0; i < 3; i++)
 	{
-		//  草画像を読み込む
-		PlayerHPAdd(L"Resources/Textures/HP.png"
+		m_playerHP.push_back(Add(L"Resources/Textures/HP.png"
 			, Vector2(50 + 70 * static_cast<float>(i), 680)
 			, Vector2(1.0f, 1.0f)
 			, ANCHOR::MIDDLE_CENTER
-			, UserInterface::Kinds::UI);
-
+			, UserInterface::Kinds::UI));
 	}
 
 
@@ -276,22 +252,33 @@ void GamePlayUI::CreateBoomerang()
 
 	for (int i = 0; i < 3; i++)
 	{
-		//  草画像を読み込む
-		BoomerangAdd(L"Resources/Textures/BoomerangUI.png"
+		m_boomerangUI.push_back(Add(L"Resources/Textures/BoomerangUI.png"
 			, Vector2(50 + 70 * static_cast<float>(i), 610)
 			, Vector2(0.1f, 0.1f)
 			, ANCHOR::MIDDLE_CENTER
-			, UserInterface::Kinds::UI);
-
+			, UserInterface::Kinds::UI));
 	}
 
 
-	//  草画像を読み込む
-	BoomerangBackAdd(L"Resources/Textures/UIboomerangBack.png"
+
+	m_boomerangBackUI.push_back( Add(L"Resources/Textures/UIboomerangBack.png"
 		, Vector2(50, 610)
 		, Vector2(0.1f, 0.1f)
 		, ANCHOR::MIDDLE_CENTER
-		, UserInterface::Kinds::UI);
+		, UserInterface::Kinds::UI));
 
+}
+
+void GamePlayUI::CreateBoomerangMaker()
+{
+	using namespace DirectX::SimpleMath;
+
+	m_boomerangMakerUIScale = Vector2(0.5f, 0.5f);
+
+	m_boomerangMarkerUI =  Add(L"Resources/Textures/SlowMotionMarker.png"
+		, Vector2(640, 320)
+		, m_boomerangMakerUIScale
+		, ANCHOR::MIDDLE_CENTER
+		, UserInterface::Kinds::UI);
 
 }

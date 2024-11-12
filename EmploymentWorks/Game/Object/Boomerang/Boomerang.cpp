@@ -18,6 +18,7 @@
 #include "Libraries/MyLib/Bounding.h"
 #include "Game/DetectionCollision/CollisionManager.h"
 #include "Game/Object/Boomerang/BoomerangOrbit.h"
+#include "Game/Scene/PlayScene.h"
 
 
 
@@ -97,7 +98,7 @@ void Boomerang::Initialize(CommonResources* resources)
 	m_bounding->CreateBoundingBox(m_commonResources, m_position, Vector3(0.2f, 0.5f, 0.5f));
 	m_bounding->CreateBoundingSphere(m_commonResources, m_position, 0.9f);
 
-	m_orbit = std::make_unique<BoomerangOrbit>(this, m_player, m_enemy);
+	m_orbit = std::make_unique<BoomerangOrbit>(this, m_player, m_enemy,m_playScene);
 	m_orbit->Initialize(m_commonResources);
 
 	m_onCollisionTag = CollsionObjectTag::None;
@@ -242,11 +243,12 @@ void Boomerang::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleM
 
 }
 
-void Boomerang::RegistrationInformation(Player* player, Enemy* enemy)
+void Boomerang::RegistrationInformation(Player* player, Enemy* enemy, PlayScene* playScene)
 {
 
 	m_player = player;
 	m_enemy = enemy;
+	m_playScene = playScene;
 
 	m_idling->RegistrationInformation(this, m_player);
 	m_throw->RegistrationInformation(this, m_player, m_enemy);

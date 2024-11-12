@@ -80,20 +80,22 @@ void PlayerUsually::Update(const float& elapsedTime)
 
 	moveDirection = Vector3::Transform(moveDirection, m_player->GetCameraRotate());
 	
+	//回転
 	Rotate(elapsedTime, moveDirection);
-
+	//移動
 	Move(elapsedTime,   moveDirection);
 	
 
 	// スペースキーが押されたら
-	if (kbTracker->released.Space)
+	if (kbTracker->released.Space && m_player->GetPlayerState() != m_player->GetPlayerJump())
 	{
 		//状態をジャンプに変更
 		m_player->ChangeState(m_player->GetPlayerJump());
 
 	}
-
+	//加速度を取得
 	DirectX::SimpleMath::Vector3 velocity = m_player->GetVelocity();
+	//加速度に重力を加算
 	velocity.y -= m_graivty * elapsedTime;
 
 	//座標の更新
@@ -128,6 +130,7 @@ void PlayerUsually::Move(float elapsedTime,  DirectX::SimpleMath::Vector3 moveDi
 
 	using namespace DirectX::SimpleMath;
 
+	//移動していないなら
 	if (moveDirection == Vector3::Zero)
 	{
 		return;
@@ -151,6 +154,7 @@ void PlayerUsually::Rotate(float elapsedTime, DirectX::SimpleMath::Vector3 moveD
 
 	DirectX::SimpleMath::Vector3 Direction = m_player->GetPlayerForWard();
 	Quaternion rotation = m_player->GetCameraRotate();
+
 
 
 	Direction = Vector3::Transform(INITIAL_DIRECTION, rotation);

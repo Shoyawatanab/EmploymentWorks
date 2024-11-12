@@ -143,7 +143,7 @@ void LockOn::Render()
 
 	for (int i = 0; i < m_userInterface.size(); i++)
 	{
-		m_userInterface[i]->Render();
+		//m_userInterface[i]->Render();
 	}
 
 
