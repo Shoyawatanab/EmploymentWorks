@@ -13,7 +13,7 @@
 #include <cassert>
 
 #include "Game/Object/Player/Player.h"
-#include "Game/Object/Enemy/Enemy.h"
+#include "Game/Object/Enemy/BossEnemy.h"
 #include "Libraries/MyLib/Camera/TPS_Camera.h"
 #include "Libraries/MyLib/Camera/GameCameraManager.h"
 

@@ -3,7 +3,7 @@
 #include "Game/Object/Boomerang/State/BoomerangThrow.h"
 #include "Game/Object/Boomerang/Boomerang.h"
 #include "Game/Object/Player/Player.h"
-#include "Game/Object/Enemy/Enemy.h"
+#include "Game/Object/Enemy/BossEnemy.h"
 #include "Game/Object/Boomerang/BoomerangOrbit.h"
 
 

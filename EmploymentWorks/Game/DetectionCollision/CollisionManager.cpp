@@ -13,7 +13,7 @@
 #include <cassert>
 
 #include "Game/Object/Player/Player.h"
-#include "Game/Object/Enemy/Enemy.h"
+#include "Game/Object/Enemy/BossEnemy.h"
 #include "Libraries/MyLib/Bounding.h"
 #include "Interface/ICollisionObject.h"
 #include "Interface/IMoveCollisionObject.h"

@@ -17,7 +17,7 @@
 #include "Game/DetectionCollision/CollisionManager.h"
 
 #include "Game/Object/Player/Player.h"
-#include "Game/Object/Enemy/Enemy.h"
+#include "Game/Object/Enemy/BossEnemy.h"
 #include "Game/Object/Enemy/BeamModel.h"
 
 static const int MAXMODELS = 50;

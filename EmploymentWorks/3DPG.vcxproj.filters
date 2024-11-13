@@ -107,6 +107,9 @@
     <Filter Include="Game\Observer">
       <UniqueIdentifier>{4eb531a3-f991-47c0-9a6b-ccd199d62b42}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Object\BirdEnemy">
+      <UniqueIdentifier>{23b196b1-49d0-45fd-9725-8c8f38e1fc52}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -207,7 +210,7 @@
     <ClInclude Include="Game\Scene\ResultScene.h">
       <Filter>Game\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Object\Enemy\Enemy.h">
+    <ClInclude Include="Game\Object\Enemy\BossEnemy.h">
       <Filter>Game\Object\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Interface\IEnemyState.h">
@@ -444,6 +447,21 @@
     <ClInclude Include="Interface\ISubject.h">
       <Filter>Interface</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Object\BirdEnemy\BirdEnemy.h">
+      <Filter>Game\Object\BirdEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\BirdEnemy\BirdEnemyBase.h">
+      <Filter>Game\Object\BirdEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\BirdEnemy\BirdEnemyBody.h">
+      <Filter>Game\Object\BirdEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\BirdEnemy\BirdEnemyLeftFeather.h">
+      <Filter>Game\Object\BirdEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\BirdEnemy\BirdEnemyRightFeather.h">
+      <Filter>Game\Object\BirdEnemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -521,7 +539,7 @@
     <ClCompile Include="Game\Scene\ResultScene.cpp">
       <Filter>Game\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Object\Enemy\Enemy.cpp">
+    <ClCompile Include="Game\Object\Enemy\BossEnemy.cpp">
       <Filter>Game\Object\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Game\Timer.cpp">
@@ -730,6 +748,21 @@
     </ClCompile>
     <ClCompile Include="Game\Observer\Messenger.cpp">
       <Filter>Game\Observer</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\BirdEnemy\BirdEnemy.cpp">
+      <Filter>Game\Object\BirdEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\BirdEnemy\BirdEnemyBase.cpp">
+      <Filter>Game\Object\BirdEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\BirdEnemy\BirdEnemyBody.cpp">
+      <Filter>Game\Object\BirdEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\BirdEnemy\BirdEnemyLeftFeather.cpp">
+      <Filter>Game\Object\BirdEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\BirdEnemy\BirdEnemyRightFeather.cpp">
+      <Filter>Game\Object\BirdEnemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

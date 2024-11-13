@@ -6,7 +6,7 @@
 #include "GameEndCamera.h"
 #include "Game/Screen.h"
 #include "Libraries/MyLib/Mouse.h"
-#include "Game/Object/Enemy/Enemy.h"
+#include "Game/Object/Enemy/BossEnemy.h"
 #include "Libraries/MyLib/Camera/GameCameraManager.h"
 
 const DirectX::SimpleMath::Vector3 TARGET = DirectX::SimpleMath::Vector3(0, 1, 0); //ステージの中心

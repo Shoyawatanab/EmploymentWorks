@@ -193,6 +193,11 @@
     <ClInclude Include="Game\CommonResources.h" />
     <ClInclude Include="Game\DetectionCollision\CollisionManager.h" />
     <ClInclude Include="Game\LockOn.h" />
+    <ClInclude Include="Game\Object\BirdEnemy\BirdEnemy.h" />
+    <ClInclude Include="Game\Object\BirdEnemy\BirdEnemyBase.h" />
+    <ClInclude Include="Game\Object\BirdEnemy\BirdEnemyBody.h" />
+    <ClInclude Include="Game\Object\BirdEnemy\BirdEnemyLeftFeather.h" />
+    <ClInclude Include="Game\Object\BirdEnemy\BirdEnemyRightFeather.h" />
     <ClInclude Include="Game\Object\Boomerang\Boomerang.h" />
     <ClInclude Include="Game\Object\Boomerang\BoomerangOrbit.h" />
     <ClInclude Include="Game\Object\Boomerang\State\BoomerangDrop.h" />
@@ -218,7 +223,7 @@
     <ClInclude Include="Game\Object\Enemy\BossEnemy\BossEnemyRightShoulder.h" />
     <ClInclude Include="Game\Object\Enemy\BossEnemy\BossEnemyRightThigh.h" />
     <ClInclude Include="Game\Object\Enemy\BossEnemy\BossEnemyTorso.h" />
-    <ClInclude Include="Game\Object\Enemy\Enemy.h" />
+    <ClInclude Include="Game\Object\Enemy\BossEnemy.h" />
     <ClInclude Include="Game\Object\Floor.h" />
     <ClInclude Include="Game\Object\Gimmick\Artillery\Artillery.h" />
     <ClInclude Include="Game\Object\Gimmick\Artillery\ArtilleryBase.h" />
@@ -308,6 +313,11 @@
     <ClCompile Include="Game\CommonResources.cpp" />
     <ClCompile Include="Game\DetectionCollision\CollisionManager.cpp" />
     <ClCompile Include="Game\LockOn.cpp" />
+    <ClCompile Include="Game\Object\BirdEnemy\BirdEnemy.cpp" />
+    <ClCompile Include="Game\Object\BirdEnemy\BirdEnemyBase.cpp" />
+    <ClCompile Include="Game\Object\BirdEnemy\BirdEnemyBody.cpp" />
+    <ClCompile Include="Game\Object\BirdEnemy\BirdEnemyLeftFeather.cpp" />
+    <ClCompile Include="Game\Object\BirdEnemy\BirdEnemyRightFeather.cpp" />
     <ClCompile Include="Game\Object\Boomerang\Boomerang.cpp" />
     <ClCompile Include="Game\Object\Boomerang\BoomerangOrbit.cpp" />
     <ClCompile Include="Game\Object\Boomerang\State\BoomerangDrop.cpp" />
@@ -333,7 +343,7 @@
     <ClCompile Include="Game\Object\Enemy\BossEnemy\BossEnemyRightShoulder.cpp" />
     <ClCompile Include="Game\Object\Enemy\BossEnemy\BossEnemyRightThigh.cpp" />
     <ClCompile Include="Game\Object\Enemy\BossEnemy\BossEnemyTorso.cpp" />
-    <ClCompile Include="Game\Object\Enemy\Enemy.cpp" />
+    <ClCompile Include="Game\Object\Enemy\BossEnemy.cpp" />
     <ClCompile Include="Game\Object\Floor.cpp" />
     <ClCompile Include="Game\Object\Gimmick\Artillery\Artillery.cpp" />
     <ClCompile Include="Game\Object\Gimmick\Artillery\ArtilleryBase.cpp" />
