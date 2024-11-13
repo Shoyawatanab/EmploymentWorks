@@ -21,7 +21,7 @@
 #include "Game/Object/Pillar.h"
 #include "Game/Object/Floor.h"
 #include "Game/Object/Player/Player.h"
-#include "Game/Object/Enemy/Enemy.h"
+#include "Game/Object/Enemy/BossEnemy.h"
 
 #include "Game/Object/Gimmick/Artillery/Artillery.h"
 #include "Libraries/MyLib/LoadJson.h"

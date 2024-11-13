@@ -14,7 +14,7 @@
 
 #include "Libraries/MyLib/Camera/GameCameraManager.h"
 #include "Game/Object/Player/Player.h"
-#include "Game/Object/Enemy/Enemy.h"
+#include "Game/Object/Enemy/BossEnemy.h"
 #include "Game/Object/Floor.h"
 #include "Game/LockOn.h"
 #include "Game/DetectionCollision/CollisionManager.h"
@@ -30,6 +30,7 @@
 #include "Libraries/MyLib/Particle.h"
 #include "Game/Observer/Messenger.h"
 #include "Libraries/MyLib/Texture.h"
+#include "Game/Object/BirdEnemy/BirdEnemy.h"
 
 #include <functional>
 #include <cassert>
@@ -166,6 +167,10 @@ void PlayScene::Initialize(CommonResources* resources)
 	m_enemy = std::make_unique<Enemy>(m_commonResources,nullptr,  DirectX::SimpleMath::Vector3(scale, scale, scale), Vector3(0, 4, 0), rotation);
 	m_player = std::make_unique<Player>(m_commonResources,nullptr, Vector3(0.2,0.2,0.2), Vector3(0, 0.75f, 15), 
 		Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(180), DirectX::XMConvertToRadians(0), DirectX::XMConvertToRadians(0)));
+
+	scale = 5.0f;
+	m_birdEnemy = std::make_unique<BirdEnemy>(m_commonResources, nullptr, DirectX::SimpleMath::Vector3(scale, scale, scale), Vector3(0, 1, 4), rotation);
+
 	m_cameraManager = std::make_unique<mylib::GameCameraManager>();
 
 	m_lockOn = std::make_unique<LockOn>();
@@ -175,6 +180,7 @@ void PlayScene::Initialize(CommonResources* resources)
 	//各クラスに必要なクラスのインスタンス
 	m_player->Instances();
 	m_enemy->Instances();
+	m_birdEnemy->Instances();
 	m_cameraManager->Instances();
 	m_ui->Instances();
 	
@@ -188,6 +194,7 @@ void PlayScene::Initialize(CommonResources* resources)
 
 	m_player->Initialize();
 	m_enemy->Initialize();
+	m_birdEnemy->Initialize();
 
 	m_cameraManager->Initialize();
 	m_lockOn->Initialize(m_commonResources->GetDeviceResources(),
@@ -331,6 +338,7 @@ void PlayScene::Update(float elapsedTime)
 			if (m_cameraManager->GetGameCameraState() != m_cameraManager->GetGameStartCamera())
 			{
 				m_enemy->Update(elapsedTime);
+				m_birdEnemy->Update(elapsedTime);
 				for (auto& artillery : m_artillery)
 				{
 					artillery->Update(elapsedTime);
@@ -440,7 +448,7 @@ void PlayScene::Render()
 
 	m_enemy->Render(view, m_projection);
 
-
+	m_birdEnemy->Render(view, m_projection);
 	m_sky->Render(view, m_projection);
 
 	for (auto& artillery : m_artillery)

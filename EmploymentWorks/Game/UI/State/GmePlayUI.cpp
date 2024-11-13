@@ -10,7 +10,7 @@
 #include "Game/CommonResources.h"
 #include "DeviceResources.h"
 #include "Game/Object/Player/Player.h"
-#include "Game/Object/Enemy/Enemy.h"
+#include "Game/Object/Enemy/BossEnemy.h"
 #include "Game/CommonResources.h"
 #include "DeviceResources.h"
 #include "Game/Scene/PlayScene.h"

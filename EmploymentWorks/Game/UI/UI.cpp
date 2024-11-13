@@ -12,7 +12,7 @@
 #include "Libraries/MyLib/MemoryLeakDetector.h"
 #include <cassert>
 
-#include "Game/Object/Enemy/Enemy.h"
+#include "Game/Object/Enemy/BossEnemy.h"
 #include "Game/Object/Player/Player.h"
 #include "Game/Scene/PlayScene.h"
 

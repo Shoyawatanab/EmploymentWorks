@@ -53,6 +53,7 @@ class PlayScene;
 
 		//スロー演出時のターゲットマーカー
 		std::unique_ptr<UserInterface> m_boomerangMarkerUI;
+		//ターゲットマーカーの大きさ
 		DirectX::SimpleMath::Vector2 m_boomerangMakerUIScale;
 
 	public:
