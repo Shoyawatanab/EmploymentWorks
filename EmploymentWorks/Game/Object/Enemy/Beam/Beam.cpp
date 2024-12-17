@@ -126,15 +126,15 @@ void Beam::Initialize()
 
 	m_chargyBallParamater->MaxScale = Vector3(1.0f, 1.0f, 1.0f) * scale;
 	//—\”õ“®ì‚ÌŽžŠÔ
-	m_chargyBallParamater->MaxPreliminaryActionTime = 4.0f;
+	m_chargyBallParamater->MaxPreliminaryActionTime = 2.0f;
 	//ƒGƒlƒ‹ƒM[’e‚Ì—­‚ßŽžŠÔ
-	m_chargyBallParamater->AccumulationTime = 3.0f;
+	m_chargyBallParamater->AccumulationTime = 2.0f;
 
-	m_chargyBallParamater->ChargeEffectCreateTime = 1.0f;
+	m_chargyBallParamater->ChargeEffectCreateTime = 0.5f;
 
 	m_chargyBallParamater->ShrinkTime = 0.6f;
 
-	m_chargyBallParamater->MoveSpeed = 5.0f;
+	m_chargyBallParamater->MoveSpeed = 20.0f;
 
 
 	m_raysParameter->InitialScale = Vector3(0.0f,0.0f,0.0f);

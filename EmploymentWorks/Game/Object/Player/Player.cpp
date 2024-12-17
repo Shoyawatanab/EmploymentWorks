@@ -547,6 +547,16 @@ void Player::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath
 
 			m_velocity.y = 0;
 			break;
+		case CollsionObjectTag::Beam:
+
+			if (!m_isInvincible)
+			{
+				m_hp--;
+				m_isInvincible = true;
+
+			}
+
+			break;
 		default:
 			break;
 	}

@@ -95,6 +95,7 @@ void BeamAttackEnd::Enter()
 
 void BeamAttackEnd::Exit()
 {
+	m_beam->GetBeamEnergyBall()->BoundingPositionReSet();
 
 }
 

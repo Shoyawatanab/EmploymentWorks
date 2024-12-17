@@ -112,7 +112,7 @@ void BoomerangOrbit::Update(const float& elapsedTime)
 
 	m_linePos.clear();
 
-
+///スローモーションでだんだん遠くになるときのターゲット
 	//カメラの正面ベクトルの取得
 	m_target = m_player->GetTPS_Camera()->GetCameraForward();
 
@@ -127,6 +127,9 @@ void BoomerangOrbit::Update(const float& elapsedTime)
 	//カメラのターゲットを足す
 	m_target += m_player->GetTPS_Camera()->GetTargetPosition();
 
+
+///ターゲットマーカーをターゲットに
+	m_target = m_player->GetBoomerangTargetPosition();
 
 	Matrix SphereMatrix = Matrix::Identity;
 	SphereMatrix = Matrix::CreateFromQuaternion(m_player->GetTPS_Camera()->GetRotationX());

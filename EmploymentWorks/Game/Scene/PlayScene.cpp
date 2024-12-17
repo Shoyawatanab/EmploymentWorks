@@ -170,7 +170,7 @@ void PlayScene::Initialize(CommonResources* resources)
 		Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(180), DirectX::XMConvertToRadians(0), DirectX::XMConvertToRadians(0)));
 
 	scale = 5.0f;
-	m_birdEnemy = std::make_unique<BirdEnemy>(m_commonResources, nullptr, DirectX::SimpleMath::Vector3(scale, scale, scale), Vector3(0, 1, 4), rotation);
+	m_birdEnemy = std::make_unique<BirdEnemy>(m_commonResources, nullptr, DirectX::SimpleMath::Vector3(scale, scale, scale), Vector3(0, 10, 4), rotation);
 
 	m_cameraManager = std::make_unique<mylib::GameCameraManager>();
 
@@ -297,6 +297,10 @@ void PlayScene::Initialize(CommonResources* resources)
 	m_slowTexture->Initialize(m_commonResources, L"Resources/Textures/SlowMotionTex.png", Vector2(640, 360), 1.0f);
 
 	//Messenger::Notify2(Messenger::CREATEHITEFFECTS, Vector3(0, 2, 0));
+
+	m_lockOn->AddTargetObject(m_enemy.get());
+	m_lockOn->AddTargetObject(m_birdEnemy.get());
+
 
 }
 
@@ -440,7 +444,7 @@ void PlayScene::Update(float elapsedTime)
 	}
 
 	m_player->SetisLockOn(m_lockOn->GetIsLOckOn());
-
+	m_player->SetBoomerangTargetPosition(m_lockOn->GetTargetPosition());
 }
 
 //---------------------------------------------------------
@@ -471,7 +475,7 @@ void PlayScene::Render()
 
 	m_enemy->Render(view, m_projection);
 
-	//m_birdEnemy->Render(view, m_projection);
+	m_birdEnemy->Render(view, m_projection);
 
 	m_sky->Render(view, m_projection);
 

@@ -21,11 +21,13 @@ namespace mylib
 
 
 
-class LockOn final 
+class LockOn final
 
 {
 public:
 	bool GetIsLOckOn() { return m_isLockOn; }
+
+	DirectX::SimpleMath::Vector3 GetTargetPosition() { return m_target; }
 
 private:
 
@@ -39,15 +41,19 @@ private:
 
 
 	Player* m_player;
-	Enemy*  m_enemy;
+	Enemy* m_enemy;
 	mylib::TPS_Camera* m_tpsCamera;
 
 	bool m_isLockOn;
 
+	std::vector<ICollisionObject*> m_targetObject;
+
+
+	DirectX::SimpleMath::Vector3 m_target;
 
 public:
 	LockOn();
-	~LockOn() ;
+	~LockOn();
 
 	void Initialize(DX::DeviceResources* pDR, int width, int height);
 	void Update(float elapsedTime);
@@ -66,6 +72,10 @@ public:
 		, ANCHOR anchor);
 
 
+	DirectX::SimpleMath::Vector2 FilterWithinRange(const std::vector<DirectX::SimpleMath::Vector3>& points, const DirectX::SimpleMath::Vector2& center, float range);
+
+	void AddTargetObject(ICollisionObject* object) { m_targetObject.push_back(object); }
+
 private:
 	//ワールド座標をスクリーン座標に変換する
 	DirectX::SimpleMath::Vector2 WorldToScreen(const DirectX::SimpleMath::Vector3& worldPos,
@@ -75,6 +85,7 @@ private:
 		int screenWidth, int screenHeight);
 
 	bool IsEnemyInview(const DirectX::SimpleMath::Vector3& playerPos, const DirectX::SimpleMath::Vector3& playerForward, const DirectX::SimpleMath::Vector3& enemyPos);
+
 
 
 };

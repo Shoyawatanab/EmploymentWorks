@@ -245,4 +245,11 @@ void BeamEnergyBall::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::Si
 
 }
 
+void BeamEnergyBall::BoundingPositionReSet()
+{
+
+	m_bounding->Update(Vector3(100,100,100));
+
+}
+
 
