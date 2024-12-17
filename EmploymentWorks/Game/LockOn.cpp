@@ -11,6 +11,8 @@
 #include "Libraries/MyLib/InputManager.h"
 #include "Libraries/MyLib/MemoryLeakDetector.h"
 #include <cassert>
+#include "Game/Screen.h"
+
 
 #include "Game/Object/Player/Player.h"
 #include "Game/Object/Enemy/BossEnemy.h"
@@ -30,7 +32,7 @@ LockOn::LockOn()
 	, m_windowWidth(0)
 	, m_pDR(nullptr),
 	m_player{}
-	,m_enemy{}
+	, m_enemy{}
 	, m_tpsCamera{ }
 	, m_isLockOn{ false }
 
@@ -62,13 +64,68 @@ void LockOn::Initialize(DX::DeviceResources* pDR, int width, int height)
 
 	//  草画像を読み込む
 	Add(L"Resources/Textures/LockOnTex.png"
-		,Vector2(300, 300)
-		,Vector2(0.1f, 0.1f)
-		,ANCHOR::MIDDLE_CENTER);
+		, Vector2(300, 300)
+		, Vector2(0.3f, 0.3f)
+		, ANCHOR::MIDDLE_CENTER);
+
 	m_isLockOn = false;
 
 }
 
+//
+
+/// <summary>
+/// 範囲内のオブジェクトを探す
+/// </summary>
+/// <param name="points">座標の配列</param>
+/// <param name="center">中心座標</param>
+/// <param name="range">半径</param>
+/// <returns>範囲内の座標</returns>
+DirectX::SimpleMath::Vector2 LockOn::FilterWithinRange(const std::vector<DirectX::SimpleMath::Vector3>& points, const DirectX::SimpleMath::Vector2& center, float range)
+{
+
+	using namespace DirectX::SimpleMath;
+	//変数宣言
+	DirectX::SimpleMath::Vector2 result = Vector2(-100, -100);
+
+	float minLength = 1000;
+
+	//
+	for (const auto& point : points)
+	{
+		//座標をスクリーン座標に変換
+		Vector2 ScreenPos = WorldToScreen(point,
+			Matrix::Identity,
+			m_tpsCamera->GetViewMatrix(),
+			m_tpsCamera->GetProjectionMatrix(),
+			m_windowWidth,
+			m_windowHeight
+		);
+
+		float distance = Vector2::Distance(ScreenPos, center);
+
+		//raneg内の座標かどうかの判定
+		if (distance <= range)
+		{
+			//最小値よりも小さければ
+			if (minLength > distance)
+			{
+
+				//配列に格納
+				result = ScreenPos;
+				//最小値を更新
+				minLength = distance;
+				//ターゲットを更新
+				m_target = point;
+
+			}
+
+		}
+	}
+
+	return result;
+
+}
 //---------------------------------------------------------
 // 更新する
 //---------------------------------------------------------
@@ -82,49 +139,34 @@ void LockOn::Update(float elapsedTime)
 	//ロックオンのリセット
 	m_isLockOn = false;
 
-	////視野角外なら
-	if (!IsEnemyInview(m_player->GetPosition(), m_player->GetPlayerForWard(), m_enemy->GetPosition()))
-	{
-		return;
-	}
-
-
 	//ブーメランを構えていないなら
-
 	if (m_player->GetUsingBoomerang()->GetBoomerangState() != m_player->GetUsingBoomerang()->GetBoomerangGetReady())
 	{
 		return;
 	}
 
+	std::vector<DirectX::SimpleMath::Vector3> positions;
 
-
-	Vector3 PlayerPos = m_player->GetPosition();
-	Vector3 EnemyPos = m_enemy->GetPosition();
-
-	Vector3 Distance = PlayerPos - EnemyPos;
-
-	//距離外なら
-	if (Distance.Length() >= LOCKONDISTANCE)
+	for (auto& object : m_targetObject)
 	{
-		m_isLockOn = false;
+		positions.push_back(object->GetPosition());
+	}
+
+	DirectX::SimpleMath::Vector2 center = Vector2(Screen::CENTER_X, Screen::CENTER_Y);
+
+	DirectX::SimpleMath::Vector2 result = FilterWithinRange(positions, center, 200.0f);
+
+	if (result == Vector2(-100, -100))
+	{
 		return;
 	}
-	else // 距離内なら
-	{
-   		m_isLockOn = true;
 
 
-    		Vector2 ScreenPos = WorldToScreen(m_enemy->GetPosition(),
-			Matrix::Identity,
-			m_tpsCamera->GetViewMatrix(),
-			m_tpsCamera->GetProjectionMatrix(),
-			m_windowWidth,
-			m_windowHeight
-		);
+	DirectX::SimpleMath::Vector2 minPosition;
 
-		m_userInterface[0]->SetPosition(ScreenPos);
+	m_isLockOn = true;
 
-	}
+	m_userInterface[0]->SetPosition(result);
 
 }
 
@@ -143,7 +185,7 @@ void LockOn::Render()
 
 	for (int i = 0; i < m_userInterface.size(); i++)
 	{
-		//m_userInterface[i]->Render();
+		m_userInterface[i]->Render();
 	}
 
 
@@ -176,7 +218,7 @@ void LockOn::Add(const wchar_t* path, DirectX::SimpleMath::Vector2 position, Dir
 		, position
 		, scale
 		, anchor
-		,UserInterface::Kinds::LockOn);
+		, UserInterface::Kinds::LockOn);
 	userInterface->SetWindowSize(m_windowWidth, m_windowHeight);
 
 	//  アイテムを新しく追加
@@ -198,7 +240,7 @@ void LockOn::Add(const wchar_t* path, DirectX::SimpleMath::Vector2 position, Dir
 /// <param name="screenWidth"></param>
 /// <param name="screenHeight"></param>
 /// <returns></returns>
-DirectX::SimpleMath::Vector2 LockOn::WorldToScreen(const DirectX::SimpleMath::Vector3& worldPos, 
+DirectX::SimpleMath::Vector2 LockOn::WorldToScreen(const DirectX::SimpleMath::Vector3& worldPos,
 	const DirectX::SimpleMath::Matrix& worldMatrix,
 	const DirectX::SimpleMath::Matrix& viewMatrix,
 	const DirectX::SimpleMath::Matrix& projectionMatrix,
@@ -233,7 +275,7 @@ bool LockOn::IsEnemyInview(const DirectX::SimpleMath::Vector3& playerPos, const 
 	using namespace DirectX;
 	using namespace DirectX::SimpleMath;
 	//角度をラジアンに変換
-	 float radianViewAngle = XMConvertToRadians(VIEWANGLE);
+	float radianViewAngle = XMConvertToRadians(VIEWANGLE);
 	float cosViewAngle = cos(radianViewAngle / 2);
 
 	//敵へのベクトルの計算
@@ -246,4 +288,6 @@ bool LockOn::IsEnemyInview(const DirectX::SimpleMath::Vector3& playerPos, const 
 	return dotProduct >= cosViewAngle;
 
 }
+
+
 

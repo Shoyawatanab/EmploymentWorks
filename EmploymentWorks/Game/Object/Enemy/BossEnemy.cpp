@@ -574,15 +574,7 @@ IBehaviorNode::State Enemy::BeamAttack(float elapsdTime)
 		//UŒ‚’†
 		return IBehaviorNode::State::Runngin;
 	}
-	else
-	{
 
-		//m_beam->ChangeState(m_beam->GetBeamPreliminaryAction());
-		//m_beam->SetPosition(m_beamStartPosition);
-		//m_beam->SetRotate(m_rotate);
-
-		//m_beam->SetTarget(m_player->GetPosition());
-	}
 
 	
 

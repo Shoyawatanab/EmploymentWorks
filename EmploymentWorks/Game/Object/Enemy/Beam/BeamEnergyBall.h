@@ -114,4 +114,6 @@ public :
 
 	void OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos) override;
 
+	void BoundingPositionReSet();
+
 };

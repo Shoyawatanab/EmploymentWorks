@@ -93,6 +93,9 @@ public:
 	//デバック用
 	bool GetIsOrbit() { return m_isOrbit; }
 
+	DirectX::SimpleMath::Vector3 GetBoomerangTargetPosition() { return m_boomerangTarget; }
+
+	void SetBoomerangTargetPosition(DirectX::SimpleMath::Vector3 pos) { m_boomerangTarget = pos; }
 
 private:
 
@@ -165,6 +168,8 @@ private:
 
 	// 影オブジェクト
 	std::unique_ptr<Shadow> m_shadow;
+
+	DirectX::SimpleMath::Vector3 m_boomerangTarget;
 
 
 
