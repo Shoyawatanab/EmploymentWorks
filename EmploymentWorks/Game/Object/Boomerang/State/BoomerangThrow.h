@@ -55,7 +55,6 @@ private:
 
 
 	DirectX::SimpleMath::Quaternion m_initialRotate;
-	DirectX::SimpleMath::Vector3 m_position;
 
 	std::unique_ptr<CSV> m_csv;
 
@@ -80,10 +79,22 @@ private:
 
 	float m_rotationalMotion;
 	float  m_rotateY;
-	DirectX::SimpleMath::Vector3 m_target;
 
 	BoomerangThrowState m_state;
 
+	//ƒu[ƒƒ‰ƒ“‚Ì‰ñ“]ŠÖŒW
 
+	DirectX::SimpleMath::Vector3 m_startPosition;
+
+	DirectX::SimpleMath::Vector3 m_targetPosition;
+
+	//‚Í‚¶‚ß‚Æˆê”Ô‰“‚¢ˆÊ’u‚Ì‹——£
+	float m_maxDistance;
+	//‰ñ“]‚ÌŠ„‡
+	float m_rotateRate;
+
+	DirectX::SimpleMath::Quaternion m_startRotate;
+
+	DirectX::SimpleMath::Quaternion m_endRotate;
 };
 

@@ -85,6 +85,7 @@ void mylib::TitleCamera::CalculateProjectionMatrix()
 
 	m_projection = DirectX::SimpleMath::Matrix::CreatePerspectiveFieldOfView(
 		FOV, aspectRatio, NEAR_PLANE, FAR_PLANE);
+
 }
 
 //-------------------------------------------------------------------
@@ -98,6 +99,8 @@ void mylib::TitleCamera::CalculateEyePosition()
 	float z = 30.0f * sinf(m_angle);
 
 	m_eye = DirectX::SimpleMath::Vector3(x, 20.0f, z);
+
+
 
 }
 

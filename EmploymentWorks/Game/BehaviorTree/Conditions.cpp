@@ -105,7 +105,7 @@ bool Conditions::IsFarDistance()
 	float Distance = DirectX::SimpleMath::Vector3::Distance(PlayerPosition, EnemyPosition);
 
 	//‹K’è’l‚æ‚è‰“‚¢‚©‚Ç‚¤‚©
-	if (Distance >= 30)
+	if (Distance >= 25)
 	{
 		return true;
 	}

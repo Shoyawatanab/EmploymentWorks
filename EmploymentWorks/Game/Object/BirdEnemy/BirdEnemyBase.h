@@ -12,13 +12,6 @@ class BirdEnemyBase : public IComponent
 {
 public:
 
-	struct AnimationKeyFrame
-	{
-		DirectX::SimpleMath::Vector3 Scale;        //‘å‚«‚³
-		DirectX::SimpleMath::Vector3 Position;      //À•W
-		DirectX::SimpleMath::Quaternion Rotation;   //‰ñ“]@
-		float Time;                                 //”­¶‚·‚éŠÔ
-	};
 
 
 public:

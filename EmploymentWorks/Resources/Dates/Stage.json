@@ -7,9 +7,9 @@
 			"z": 0.0
 		},
 		"Scale": {
-			"x" : 30.0,
-			"y" : 0.1,
-			"z" : 40.0
+			"x" : 41.0,
+			"y" : 0.01,
+			"z" : 41.0
 		},
 		"Rotation": {
 			"x": 0.0,
@@ -17,61 +17,43 @@
 			"z": 0.0
 		}
 	},
-	"Stage.cmo": {
+	"Wall.cmo": {
 		"BoundingSphereRadius": 100,
 		"Position": {
-			"x": 30.0,
+			"x": 40.0,
 			"y": 0.0,
 			"z": 0.0
 		},
 		"Scale": {
-			"x" : 0.1,
-			"y" : 20.0,
-			"z" : 40.0
+			"x" : 41.0,
+			"y" : 0.5,
+			"z" : 20.0
 		},
 		"Rotation": {
-			"x": 0.0,
-			"y": 0.0,
+			"x": 90.0,
+			"y": 270.0,
 			"z": 0.0
 		}
 	},
-	"Stage.cmo": {
+	"Wall.cmo": {
 		"BoundingSphereRadius": 100,
 		"Position": {
-			"x": -30.0,
+			"x": -40.0,
 			"y": 0.0,
 			"z": 0.0
 		},
 		"Scale": {
-			"x" : 0.1,
-			"y" : 20.0,
-			"z" : 40.0
+			"x" : 41.0,
+			"y" : 0.5,
+			"z" : 20.0
 		},
 		"Rotation": {
-			"x": 0.0,
-			"y": 0.0,
+			"x": 90.0,
+			"y": 90.0,
 			"z": 0.0
 		}
 	},
-	"Stage.cmo": {
-		"BoundingSphereRadius": 100,
-		"Position": {
-			"x": 0.0,
-			"y": 0.0,
-			"z": 40.0
-		},
-		"Scale": {
-			"x" : 40.0,
-			"y" : 20.0,
-			"z" : 0.1
-		},
-		"Rotation": {
-			"x": 0.0,
-			"y": 0.0,
-			"z": 0.0
-		}
-	},
-	"Stage.cmo": {
+	"Wall.cmo": {
 		"BoundingSphereRadius": 100,
 		"Position": {
 			"x": 0.0,
@@ -79,157 +61,31 @@
 			"z": -40.0
 		},
 		"Scale": {
-			"x" : 40.0,
-			"y" : 20.0,
-			"z" : 0.1
+			"x" : 41.0,
+			"y" : 0.5,
+			"z" : 20.0
 		},
 		"Rotation": {
-			"x": 0.0,
+			"x": 90.0,
 			"y": 0.0,
 			"z": 0.0
 		}
 	},
-	"Pillar.cmo": {
-		"BoundingSphereRadius": 10,
+	"Wall.cmo": {
+		"BoundingSphereRadius": 100,
 		"Position": {
-			"x": 6.0,
-			"y": 0.0,
-			"z": 25.0
-		},
-		"Scale": {
-			"x" : 1.0,
-			"y" : 10.0,
-			"z" : 1.0
-		},
-		"Rotation": {
 			"x": 0.0,
 			"y": 0.0,
-			"z": 0.0
-		}
-	},
-	"Pillar.cmo": {
-		"BoundingSphereRadius": 10,
-		"Position": {
-			"x": 18.0,
-			"y": 0.0,
-			"z": 25.0
+			"z": 40.0
 		},
 		"Scale": {
-			"x" : 1.0,
-			"y" : 10.0,
-			"z" : 1.0
+			"x" : 41.0,
+			"y" : 0.5,
+			"z" : 20.0
 		},
 		"Rotation": {
-			"x": 0.0,
-			"y": 0.0,
-			"z": 0.0
-		}
-	},	
-	"Pillar.cmo": {
-		"BoundingSphereRadius": 10,
-		"Position": {
-			"x": -6.0,
-			"y": 0.0,
-			"z": 25.0
-		},
-		"Scale": {
-			"x" : 1.0,
-			"y" : 10.0,
-			"z" : 1.0
-		},
-		"Rotation": {
-			"x": 0.0,
-			"y": 0.0,
-			"z": 0.0
-		}
-	},	
-	"Pillar.cmo": {
-		"BoundingSphereRadius": 10,
-		"Position": {
-			"x": -18.0,
-			"y": 0.0,
-			"z": 25.0
-		},
-		"Scale": {
-			"x" : 1.0,
-			"y" : 10.0,
-			"z" : 1.0
-		},
-		"Rotation": {
-			"x": 0.0,
-			"y": 0.0,
-			"z": 0.0
-		}
-	},	
-	"Pillar.cmo": {
-		"BoundingSphereRadius": 10,
-		"Position": {
-			"x": 6.0,
-			"y": 0.0,
-			"z": -25.0
-		},
-		"Scale": {
-			"x" : 1.0,
-			"y" : 10.0,
-			"z" : 1.0
-		},
-		"Rotation": {
-			"x": 0.0,
-			"y": 0.0,
-			"z": 0.0
-		}
-	},
-	"Pillar.cmo": {
-		"BoundingSphereRadius": 10,
-		"Position": {
-			"x": 18.0,
-			"y": 0.0,
-			"z": -25.0
-		},
-		"Scale": {
-			"x" : 1.0,
-			"y" : 10.0,
-			"z" : 1.0
-		},
-		"Rotation": {
-			"x": 0.0,
-			"y": 0.0,
-			"z": 0.0
-		}
-	},	
-	"Pillar.cmo": {
-		"BoundingSphereRadius": 10,
-		"Position": {
-			"x": -6.0,
-			"y": 0.0,
-			"z": -25.0
-		},
-		"Scale": {
-			"x" : 1.0,
-			"y" : 10.0,
-			"z" : 1.0
-		},
-		"Rotation": {
-			"x": 0.0,
-			"y": 0.0,
-			"z": 0.0
-		}
-	},	
-	"Pillar.cmo": {
-		"BoundingSphereRadius": 10,
-		"Position": {
-			"x": -18.0,
-			"y": 0.0,
-			"z": -25.0
-		},
-		"Scale": {
-			"x" : 1.0,
-			"y" : 10.0,
-			"z" : 1.0
-		},
-		"Rotation": {
-			"x": 0.0,
-			"y": 0.0,
+			"x": 90.0,
+			"y": 180.0,
 			"z": 0.0
 		}
 	},

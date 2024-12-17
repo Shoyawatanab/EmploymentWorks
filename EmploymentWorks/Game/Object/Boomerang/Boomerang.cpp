@@ -19,7 +19,7 @@
 #include "Game/DetectionCollision/CollisionManager.h"
 #include "Game/Object/Boomerang/BoomerangOrbit.h"
 #include "Game/Scene/PlayScene.h"
-
+#include "Game/Observer/Messenger.h"
 
 
 const float SCALE = 4.0f; //オブジェクトの大きさ
@@ -70,7 +70,8 @@ void Boomerang::Initialize(CommonResources* resources)
 
 	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
 	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
-	
+	auto states = m_commonResources->GetCommonStates();
+
 	// モデルを読み込む準備
 	std::unique_ptr<DirectX::EffectFactory> fx = std::make_unique<DirectX::EffectFactory>(device);
 	fx->SetDirectory(L"Resources/Models");
@@ -95,7 +96,7 @@ void Boomerang::Initialize(CommonResources* resources)
 	m_position = m_player->GetPlayerEyePosition();
 	m_scale = SCALE;
 
-	m_bounding->CreateBoundingBox(m_commonResources, m_position, Vector3(0.2f, 0.5f, 0.5f));
+	m_bounding->CreateBoundingBox(m_commonResources, m_position, Vector3(0.5f, 0.1f, 0.5f));
 	m_bounding->CreateBoundingSphere(m_commonResources, m_position, 0.9f);
 
 	m_orbit = std::make_unique<BoomerangOrbit>(this, m_player, m_enemy,m_playScene);
@@ -105,6 +106,13 @@ void Boomerang::Initialize(CommonResources* resources)
 
 	m_useState = UseState::Stock;
 
+	m_enemyHitTime = 0;
+
+	m_isEnemyHit = false;
+
+	// 影を作成する
+	m_shadow = std::make_unique<Shadow>();
+	m_shadow->Initialize(device, context, states);
 
 
 }
@@ -117,6 +125,8 @@ void Boomerang::Update(float elapsedTime)
 {
 	using namespace DirectX::SimpleMath;
 	UNREFERENCED_PARAMETER(elapsedTime);
+
+
 
 	m_previousFramePos = m_position;
 
@@ -131,6 +141,19 @@ void Boomerang::Update(float elapsedTime)
 	m_bounding->Update(m_position);
 
 
+	if (m_enemyHitTime >= 4.0f)
+	{
+		m_isEnemyHit = false;
+
+		return;
+	}
+
+	if (m_isEnemyHit)
+	{
+		m_enemyHitTime += elapsedTime;
+	}
+
+	
 
 }
 
@@ -151,15 +174,23 @@ void Boomerang::Render(DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 	// モデルを描画する
 	m_model->Draw(context, *states, m_currentState->GetMatrix(), view, projection);
 	//m_bounding->DrawBoundingSphere(m_position, view, projection);
-	//m_bounding->DrawBoundingBox(m_position, view, projection);
+	m_bounding->DrawBoundingBox(m_position, view, projection);
 
-	if (m_currentState == m_getReady.get())
+	if (m_currentState == m_getReady.get() && m_player->GetIsOrbit())
 	{
 		m_orbit->Render(view,projection);
 
 	}
 
+	if (m_useState == UseState::Throw)
+	{
+		DirectX::SimpleMath::Vector3 shadowPos = m_position;
+		shadowPos.y = 0.1f;
 
+		// 自機の影を描画する
+		m_shadow->Render(context, states, view, projection, shadowPos, 0.5f);
+
+	}
 
 	// プリミティブ描画を開始する
 
@@ -226,6 +257,11 @@ void Boomerang::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleM
 			{
 				ChangeState(m_drop.get());
 			}
+			if (m_currentState == m_throw.get())
+			{
+				ChangeState(m_repelled.get());
+			}
+
 			break;
 		case CollsionObjectTag::Pillar:
 		case CollsionObjectTag::Stage:
@@ -234,6 +270,15 @@ void Boomerang::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleM
 			{
 				ChangeState(m_repelled.get());
 			}
+			break;
+		case CollsionObjectTag::EnemyParts:
+			if (!m_isEnemyHit)
+			{
+				m_isEnemyHit = true;
+				Messenger::Notify2(Messenger::CREATEHITEFFECTS, m_position);
+
+			}
+
 			break;
 		default:
 			break;

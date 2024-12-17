@@ -7,9 +7,17 @@
 #include "Game/Object/Boomerang/BoomerangOrbit.h"
 
 
-const float SPEED = 5.0f;
+const float SPEED = 10.0f;
+
+const float ROTATESPEED = 100.0f;
 
 const DirectX::SimpleMath::Vector3 AxisOfRotation(0,1,0);  //âÒì]é≤
+
+const DirectX::SimpleMath::Quaternion STARTROTATE(DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(0.0f, 0.0f, DirectX::XMConvertToRadians(45)));
+
+const DirectX::SimpleMath::Quaternion MIDDLEROTATE(DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(0.0f, 0.0f, DirectX::XMConvertToRadians(0)));
+
+const DirectX::SimpleMath::Quaternion ENDROTATE(DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(0.0f, 0.0f, DirectX::XMConvertToRadians(-45)));
 
 
 static float Lerp(float a, float b, float t)
@@ -56,9 +64,16 @@ void BoomerangThrow::Initialize()
 	{
 		m_moveSpherePos.emplace_back(DirectX::SimpleMath::Vector3());
 	}
+
 	m_worldMatrix = DirectX::SimpleMath::Matrix::Identity;
 
 	
+	m_startRotate = STARTROTATE;
+
+	m_endRotate = MIDDLEROTATE;
+
+	m_rotateRate = 0;
+
 }
 
 
@@ -100,12 +115,48 @@ void BoomerangThrow::Update(const float& elapsedTime)
 
 	//m_rotate = RotationalMotion;
 	//m_rotationalMotion = angle;
-	m_rotateY += elapsedTime * 20.0f;
+	m_rotateY += elapsedTime * ROTATESPEED;
+
+	//vec13 = maxDistance
+
+	//1Ç…Ç»ÇÈëOÇ…ñﬂÇËÇ…Ç»Ç¡ÇƒÇµÇ‹Ç§Ç©ÇÁ0.94Ç…ÇµÇƒÇ¢ÇÈ
+	if (m_rotateRate < 0.999f)
+	{
+		//äOêœÇóòópÇµÇƒãóó£ÇãÅÇﬂÇÈ
+
+		Vector3 vec13 = m_moveSpherePos[m_moveSpherePos.size() / 2] - m_startPosition;
+		Vector3 vec12 = m_boomerang->GetPosition() - m_startPosition;
+
+		vec13;
+		vec13.Normalize();
+
+		Vector3 projection = vec13 * vec12.Dot(vec13);
+
+		Vector3 pos = m_startPosition + projection;
+
+		float distance = Vector3::Distance(m_startPosition, pos);
+
+		m_rotateRate = distance / m_maxDistance;
+
+		m_rotate = Quaternion::Lerp(m_startRotate, m_endRotate, m_rotateRate);
+
+	}
+	else
+	{
+		m_startRotate = m_rotate;
+
+		m_endRotate = ENDROTATE;
+
+		m_rotateRate = 0;
+	}
+
 
 
 	m_worldMatrix = Matrix::CreateScale(m_boomerang->GetScale());
-	m_worldMatrix *= Matrix::CreateFromQuaternion(m_rotate);
+	//âÒì]
 	m_worldMatrix *= Matrix::CreateRotationY(m_rotateY);
+	//åXÇ´
+	m_worldMatrix *= Matrix::CreateFromQuaternion(m_rotate);
 	m_worldMatrix *= Matrix::CreateTranslation(m_boomerang->GetPosition());
 
 	m_previousFrameDirection = m_direction;
@@ -129,10 +180,7 @@ void BoomerangThrow::Enter()
 	m_rotationalMotion = 0;
 
 	m_initialRotate = m_boomerang->GetRotate();
-	m_position = m_boomerang->GetPosition();
-	m_previousFrameDirection = m_position;
-
-	m_target = m_enemy->GetPosition();
+	m_previousFrameDirection = m_boomerang->GetPosition();
 
 
 	m_moveSpherePos = m_boomerang->GetOrbit()->GetMovePos();
@@ -140,6 +188,21 @@ void BoomerangThrow::Enter()
 	m_state = BoomerangThrowState::SplineCurve;
 
 	m_boomerang->SetUseState(Boomerang::UseState::Throw);
+
+	m_startPosition = m_boomerang->GetPosition();
+
+	int index = static_cast<int>( m_moveSpherePos.size() / 2);
+
+	//ãóó£ÇãÅÇﬂÇÈ
+	m_maxDistance =  Vector3::Distance( m_moveSpherePos[index], m_startPosition);
+
+
+	m_startRotate = STARTROTATE;
+
+	m_endRotate = MIDDLEROTATE;
+
+	m_rotateRate = 0;
+
 
 }
 

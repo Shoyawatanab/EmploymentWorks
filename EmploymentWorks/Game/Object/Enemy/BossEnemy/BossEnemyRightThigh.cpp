@@ -21,6 +21,8 @@ void BossEnemyRightThigh::OnCollisionEnter(CollsionObjectTag& PartnerTag, Direct
 	switch (PartnerTag)
 	{
 		case CollsionObjectTag::Boomerang:
+			BossEnemyBase::PartsDamage(BossEnemyBase::BOOMERANGDAMEGE);
+
 			break;
 		default:
 			break;
@@ -28,10 +30,18 @@ void BossEnemyRightThigh::OnCollisionEnter(CollsionObjectTag& PartnerTag, Direct
 
 }
 
+void BossEnemyRightThigh::Damage(const int damage)
+{
+	BossEnemyBase::Damage(damage);
+
+}
+
 // コンストラクタ
-BossEnemyRightThigh::BossEnemyRightThigh(CommonResources* resources, IComponent* parent,const DirectX::SimpleMath::Vector3 initialScale, const DirectX::SimpleMath::Vector3& positonFromParent, const DirectX::SimpleMath::Quaternion& initialAngle)
+BossEnemyRightThigh::BossEnemyRightThigh(CommonResources* resources, BossEnemyBase* parent,
+	const DirectX::SimpleMath::Vector3 initialScale, const DirectX::SimpleMath::Vector3& positonFromParent, 
+	const DirectX::SimpleMath::Quaternion& initialAngle, int partsHp)
 	:
-	BossEnemyBase(resources,parent,initialScale, positonFromParent, initialAngle),
+	BossEnemyBase(resources,parent,initialScale, positonFromParent, initialAngle,partsHp),
 	m_currentPosition{},
 	m_currentAngle{},
 	m_BossEnemyRightThighParts{},
@@ -78,7 +88,7 @@ void BossEnemyRightThigh::Initialize()
 
 
 	//「RightLeg」を生成する
-	Attach(std::make_unique<BossEnemyRightLeg>(BossEnemyBase::GetResources(), this, BossEnemyBase::GetInitialScale(), Vector3(0.0f, -0.6f, 0.0f), Quaternion::Identity));
+	Attach(std::make_unique<BossEnemyRightLeg>(BossEnemyBase::GetResources(), this, BossEnemyBase::GetInitialScale(), Vector3(0.0f, -0.6f, 0.0f), Quaternion::Identity, BossEnemyBase::LEGHP));
 
 }
 

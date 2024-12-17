@@ -52,6 +52,7 @@ void BoomerangOrbit::Initialize(CommonResources* resources)
 	m_commonResources = resources;
 
 
+
 	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
 	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
 
@@ -121,7 +122,7 @@ void BoomerangOrbit::Update(const float& elapsedTime)
 	rate = std::min(rate, 1.0f);
 	//
 	float length = Lerp(5.0f, 17.0f, rate);
-	//
+	//ターゲットの距離を
 	m_target *= length;
 	//カメラのターゲットを足す
 	m_target += m_player->GetTPS_Camera()->GetTargetPosition();

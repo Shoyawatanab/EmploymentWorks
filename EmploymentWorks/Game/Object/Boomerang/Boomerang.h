@@ -12,6 +12,7 @@
 #include "Interface/ICollisionObject.h"
 #include "Game/Object/Boomerang/State/BoomerangRepelled.h"
 #include "Game/Object/Boomerang/State/BoomerangDrop.h"
+#include "Libraries/MyLib/Shadow.h"
 
 // 前方宣言
 class CommonResources;
@@ -69,6 +70,7 @@ public:
 	UseState GetUseState() { return m_useState; }
 	void SetUseState(UseState State) { m_useState = State; }
 
+	bool GetIsEnemyHit() { return m_isEnemyHit; }
 
 private:
 
@@ -116,6 +118,14 @@ private:
 
 	//ストック状態か使用状態か
 	UseState m_useState;
+
+	bool m_isEnemyHit;
+
+	float m_enemyHitTime;
+
+
+	// 影オブジェクト
+	std::unique_ptr<Shadow> m_shadow;
 
 
 

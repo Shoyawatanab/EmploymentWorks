@@ -55,6 +55,8 @@ private:
 	std::vector<DirectX::SimpleMath::Vector3> m_spherePos;
 	std::vector<DirectX::SimpleMath::Vector3> m_moveSpherePos;
 
+	
+
 	DirectX::SimpleMath::Vector3 m_direction;
 	//DirectX::SimpleMath::Vector3 m_previousFrameDirection;
 

@@ -5,12 +5,16 @@
 
 
 std::unordered_map<std::string, std::function<void()>> Messenger::m_eventList;
+std::unordered_map<std::string, std::function<void(DirectX::SimpleMath::Vector3)>> Messenger::m_eventList2;
 
 //イベント名の設定
 
 const std::string Messenger::SLOWMOTION = "SlowMotion";
 
 const std::string Messenger::SLOWMOTIONEND = "SlowMotionEnd";
+
+const std::string Messenger::CREATEHITEFFECTS = "CreateHitEffects";
+
 
 /// <summary>
 /// 観察者をアタッチ
@@ -21,7 +25,13 @@ void Messenger::Attach(std::string name, std::function<void()> eventFunction)
 {
 	//イベントを登録
 	m_eventList[name] = eventFunction;
+}
 
+void Messenger::Attach2(std::string name, std::function<void(DirectX::SimpleMath::Vector3)> eventFunction)
+{
+
+	//イベントを登録
+	m_eventList2[name] = eventFunction;
 
 
 }
@@ -37,11 +47,7 @@ void Messenger::Detach(std::string name)
 		//ある場合
 		//イベントを削除
 		m_eventList.erase(name);
-
 	}
-
-
-
 }
 
 // 観察者に通知する
@@ -49,6 +55,11 @@ void Messenger::Notify(std::string name)
 {
 	//登録された関数の実行
 	m_eventList[name]();
+}
+
+void Messenger::Notify2(std::string name, DirectX::SimpleMath::Vector3 pos)
+{
+	m_eventList2[name](pos);
 }
 
 

@@ -24,6 +24,8 @@ void BossEnemyTorso::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::Si
 	switch (PartnerTag)
 	{
 		case CollsionObjectTag::Boomerang:
+			BossEnemyBase::PartsDamage(BossEnemyBase::BOOMERANGDAMEGE);
+
 			break;
 		default:
 			break;
@@ -31,10 +33,18 @@ void BossEnemyTorso::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::Si
 
 }
 
+void BossEnemyTorso::Damage(const int damage)
+{
+	BossEnemyBase::Damage(damage);
+
+}
+
 // コンストラクタ
-BossEnemyTorso::BossEnemyTorso(CommonResources* resources, IComponent* parent,const DirectX::SimpleMath::Vector3 initialScale, const DirectX::SimpleMath::Vector3& positonFromParent, const DirectX::SimpleMath::Quaternion& initialAngle)
+BossEnemyTorso::BossEnemyTorso(CommonResources* resources, BossEnemyBase* parent,
+	const DirectX::SimpleMath::Vector3 initialScale, const DirectX::SimpleMath::Vector3& positonFromParent, 
+	const DirectX::SimpleMath::Quaternion& initialAngle, int partsHp)
 	:
-	BossEnemyBase(resources,parent,initialScale, positonFromParent, initialAngle),
+	BossEnemyBase(resources,parent,initialScale, positonFromParent, initialAngle,partsHp),
 	m_currentPosition{},
 	m_currentAngle{},
 	m_BossEnemyTorsoParts{},
@@ -82,17 +92,17 @@ void BossEnemyTorso::Initialize()
 
 
 	//「Head」を生成する
-	Attach(std::make_unique<BossEnemyHead>(BossEnemyBase::GetResources(), this, BossEnemyBase::GetInitialScale(), Vector3(0.0f, 2.1f, 0.0f) , Quaternion::Identity));
+	Attach(std::make_unique<BossEnemyHead>(BossEnemyBase::GetResources(), this, BossEnemyBase::GetInitialScale(), Vector3(0.0f, 2.1f, 0.0f) , Quaternion::Identity,BossEnemyBase::BODYHP));
 		
 	//「LeftShouder」を生成する
 	Attach(std::make_unique<BossEnemyLeftShoulder>(BossEnemyBase::GetResources(), this, BossEnemyBase::GetInitialScale(), Vector3(2.4f, 1.0f, 0.0f),
-		Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0), DirectX::XMConvertToRadians(0), DirectX::XMConvertToRadians(00))));
+		Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0), DirectX::XMConvertToRadians(0), DirectX::XMConvertToRadians(00)), BossEnemyBase::ARMHP));
 	//Attach(std::make_unique<BossEnemyLeftShoulder>(BossEnemyBase::GetResources(), this, BossEnemyBase::GetInitialScale(), Vector3(2.6f, 0.5f, 0.0f),
 	//	Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0), DirectX::XMConvertToRadians(0), DirectX::XMConvertToRadians(0))));
 
 	//「RightShouder」を生成する
 	Attach(std::make_unique<BossEnemyRightShoulder>(BossEnemyBase::GetResources(), this, BossEnemyBase::GetInitialScale(), Vector3(-2.4f, 1.0f, 0.0f),
-		Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0), DirectX::XMConvertToRadians(0), DirectX::XMConvertToRadians(00))));
+		Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0), DirectX::XMConvertToRadians(0), DirectX::XMConvertToRadians(00)), BossEnemyBase::ARMHP));
 
 }
 

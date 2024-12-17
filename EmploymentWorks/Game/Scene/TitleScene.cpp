@@ -118,7 +118,7 @@ void TitleScene::Initialize(CommonResources* resources)
 	{
 
 		//ステージの壁
-		if (parameter.ModelName == "Stage.cmo")
+		if (parameter.ModelName == "Wall.cmo")
 		{
 			auto wall = std::make_unique<Wall>();
 			wall->Initialize(m_commonResources, parameter.Position, parameter.Scale, parameter.Rotation, parameter.BoundingSphereRadius);
@@ -131,29 +131,29 @@ void TitleScene::Initialize(CommonResources* resources)
 			m_floor->Initialize(m_commonResources, parameter.Position, parameter.Scale, parameter.Rotation, parameter.BoundingSphereRadius);
 
 		}
-		else if (parameter.ModelName == "Ceiling.cmo")
-		{
-			//天井
-			m_ceiling = std::make_unique<Ceiling>();
-			m_ceiling->Initialize(m_commonResources, parameter.Position, parameter.Scale, parameter.Rotation, parameter.BoundingSphereRadius);
+		//else if (parameter.ModelName == "Ceiling.cmo")
+		//{
+		//	//天井
+		//	m_ceiling = std::make_unique<Ceiling>();
+		//	m_ceiling->Initialize(m_commonResources, parameter.Position, parameter.Scale, parameter.Rotation, parameter.BoundingSphereRadius);
 
-		}
-		else if (parameter.ModelName == "Pillar.cmo")
-		{
-			//柱
-			auto pillar = std::make_unique<Pillar>();
-			pillar->Initialize(m_commonResources, parameter.Position, parameter.Scale, parameter.Rotation, parameter.BoundingSphereRadius);
-			m_pillar.push_back(std::move(pillar));
+		//}
+		//else if (parameter.ModelName == "Pillar.cmo")
+		//{
+		//	//柱
+		//	auto pillar = std::make_unique<Pillar>();
+		//	pillar->Initialize(m_commonResources, parameter.Position, parameter.Scale, parameter.Rotation, parameter.BoundingSphereRadius);
+		//	m_pillar.push_back(std::move(pillar));
 
-		}
-		else if (parameter.ModelName == "Artillery.cmo")
-		{
-			//砲台
-			auto artillery = std::make_unique<Artillery>();
-			artillery->Initialize(m_commonResources,nullptr, parameter.Position, parameter.Scale, parameter.Rotation, parameter.BoundingSphereRadius);
-			m_artillery.push_back(std::move(artillery));
+		//}
+		//else if (parameter.ModelName == "Artillery.cmo")
+		//{
+		//	//砲台
+		//	auto artillery = std::make_unique<Artillery>();
+		//	artillery->Initialize(m_commonResources,nullptr, parameter.Position, parameter.Scale, parameter.Rotation, parameter.BoundingSphereRadius);
+		//	m_artillery.push_back(std::move(artillery));
 
-		}
+		//}
 	}
 
 
@@ -167,6 +167,9 @@ void TitleScene::Update(float elapsedTime)
 {
 	// 宣言をしたが、実際は使用していない変数
 	UNREFERENCED_PARAMETER(elapsedTime);
+
+	ShowCursor(FALSE);
+
 
 	// キーボードステートトラッカーを取得する
 	const auto& kbTracker = m_commonResources->GetInputManager()->GetKeyboardTracker();

@@ -46,7 +46,7 @@ void Wall::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 p
 	m_commonResources = resources;
 	m_position = position;
 	m_scale = Scale;
-	m_rotate = Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(Rotate.x), DirectX::XMConvertToRadians(Rotate.y), DirectX::XMConvertToRadians(Rotate.z));
+	m_rotate = Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(Rotate.y), DirectX::XMConvertToRadians(Rotate.x), DirectX::XMConvertToRadians(Rotate.z));
 	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
 
 	// ÉÇÉfÉãÇì«Ç›çûÇﬁèÄîı
@@ -54,12 +54,17 @@ void Wall::Initialize(CommonResources* resources, DirectX::SimpleMath::Vector3 p
 	fx->SetDirectory(L"Resources/Models");
 
 	// ÉÇÉfÉãÇì«Ç›çûÇﬁ
-	m_model = DirectX::Model::CreateFromCMO(device, L"Resources/Models/Stage.cmo", *fx);
+	m_model = DirectX::Model::CreateFromCMO(device, L"Resources/Models/Wall.cmo", *fx);
 
+	DirectX::SimpleMath::Vector3 scale = Vector3::Transform(m_scale, m_rotate);
+
+	scale.x = std::abs(scale.x);
+	scale.y = std::abs(scale.y);
+	scale.z = std::abs(scale.z);
 
 
 	m_bounding = std::make_unique<Bounding>();
-	m_bounding->CreateBoundingBox(m_commonResources, m_position, m_scale);
+	m_bounding->CreateBoundingBox(m_commonResources, m_position, scale);
 	m_bounding->CreateBoundingSphere(m_commonResources,m_position, BoundingSphereRadius);
 
 }

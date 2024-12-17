@@ -34,6 +34,15 @@ void BirdEnemy::Initialize()
 	m_bounding->CreateBoundingBox(m_commonResources, m_position, Vector3(0.7f, 0.4f,0.5f));
 	m_bounding->CreateBoundingSphere(m_commonResources, m_position, 6.0f);
 
+	m_idling->Initialize();
+
+	m_attack->Initialize();
+
+	m_currentState = m_idling.get();
+	//m_currentState = m_attack.get();
+
+
+
 	float scale = 0.5f;
 
 	m_scale = Vector3(scale, scale, scale);
@@ -56,7 +65,6 @@ void BirdEnemy::HandleKeyboardEvent()
 
 
 
-
 }
 
 // 更新する
@@ -72,16 +80,9 @@ void BirdEnemy::Update(const float& elapsdTime)
 	DirectX::Keyboard::State keyboardState = DirectX::Keyboard::Get().GetState();
 
 
-	//大きさを変えるとアニメーションの位置がずれるので直す
-	//m_currentAngle *= Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0.1f), 0, DirectX::XMConvertToRadians(0.0f));
-	//m_currentPosition.z += 0.01f;
 
+	m_currentState->Update(elapsdTime);
 
-	//m_currentPosition += BirdEnemyBase::GetAnimationPosition();
-
-	if (keyboardState.IsKeyDown(DirectX::Keyboard::Keyboard::D))
-	{
-	}
 
 	// 砲塔部品を更新する
 	BirdEnemyBase::Update(elapsdTime);
@@ -124,14 +125,22 @@ void BirdEnemy::SetAnimation(std::string name)
 
 }
 
-void BirdEnemy::RegistrationInformation()
+void BirdEnemy::RegistrationInformation(Player* player)
 {
+	m_player = player;
 
+	m_idling->RegistrationInformation(m_commonResources, m_player, this);
+	m_attack->RegistrationInformation(m_commonResources, m_player, this);
 }
+
 
 void BirdEnemy::Instances()
 {
 	m_bounding = std::make_unique<Bounding>();
+
+	m_idling = std::make_unique<BirdEnemyldling>();
+
+	m_attack = std::make_unique<BirdEnemyAttack>();
 
 }
 

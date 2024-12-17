@@ -20,7 +20,8 @@ enum  class CollsionObjectTag
 	, Pillar = 1 << 5     //’Œ
 	, Artillery = 1 << 6     //–C‘ä
 	, ArtilleryBullet = 1 << 7     //–C‘ä‚Ì’e
-	, EnemyParts = 1 << 8   
+	, EnemyParts = 1 << 8     //“G‚Ì•”•i
+	, Beam = 1 << 9
 
 };
 
@@ -54,6 +55,9 @@ enum class CollisionType
 
 
 	,EnemyParts_Boomerang = static_cast<uint32_t>(CollsionObjectTag::EnemyParts) | static_cast<uint32_t>(CollsionObjectTag::Boomerang)
+
+	,Beam_Player = static_cast<uint32_t>(CollsionObjectTag::Beam) | static_cast<uint32_t>(CollsionObjectTag::Player)
+	,Beam_Floor = static_cast<uint32_t>(CollsionObjectTag::Beam) | static_cast<uint32_t>(CollsionObjectTag::Floor)
 
 };
 

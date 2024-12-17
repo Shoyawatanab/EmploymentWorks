@@ -18,6 +18,7 @@
 #include "Game/DetectionCollision/CollisionManager.h"
 #include "Libraries/MyLib/Camera/TPS_Camera.h"
 #include "Game/Object/Player/PlayerParts/PlayerBody.h"
+#include "Game/Observer/Messenger.h"
 
 //const float MOVE_SPEED = 5.0f;                                        //動く時のスピード
 const DirectX::SimpleMath::Vector3 INITIAL_DIRECTION( 0.0f,0.0f,-1.0f); //初期の向いている方向
@@ -68,6 +69,8 @@ void Player::Initialize()
 	using namespace DirectX::SimpleMath;
 
 	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
+	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
+	auto states = m_commonResources->GetCommonStates();
 
 	m_eyePosition = m_position + EYE_TO_POSITION_DIFFERENCE;
 	m_bounding = std::make_unique<Bounding>();
@@ -111,6 +114,12 @@ void Player::Initialize()
 
 	m_boomerang[m_boomerangIndex]->SetUseState(Boomerang::UseState::Have);
 
+	m_isOrbit = false;
+
+	// 影を作成する
+	m_shadow = std::make_unique<Shadow>();
+	m_shadow->Initialize(device, context, states);
+
 
 	//「Head」を生成する
 	Attach(std::make_unique<PlayerBody>(PlayerBase::GetResources(), this, PlayerBase::GetInitialScale(), Vector3(0.0f, 0.0f, 0.0f),
@@ -128,6 +137,21 @@ void Player::Update(float elapsedTime)
 
 	using namespace DirectX;
 	using namespace DirectX::SimpleMath;
+
+	const auto& kbTracker = m_commonResources->GetInputManager()->GetKeyboardTracker();
+
+	if (kbTracker->released.P)
+	{
+		if (m_isOrbit)
+		{
+			m_isOrbit = false;
+		}
+		else
+		{
+			m_isOrbit = true;
+
+		}
+	}
 
 
 	const auto& state = m_commonResources->GetInputManager()->GetMouseState();
@@ -171,6 +195,7 @@ void Player::Update(float elapsedTime)
 
 			case Boomerang::UseState::Stock:
 				m_boomerang[m_boomerangIndex]->SetUseState(Boomerang::UseState::Have);
+				Messenger::Notify(Messenger::SLOWMOTIONEND);
 				break;
 			case Boomerang::UseState::Have:
 			
@@ -222,6 +247,8 @@ void Player::Update(float elapsedTime)
 
 			case Boomerang::UseState::Stock:
 				m_boomerang[m_boomerangIndex]->SetUseState(Boomerang::UseState::Have);
+				Messenger::Notify(Messenger::SLOWMOTIONEND);
+
 				break;
 			case Boomerang::UseState::Have:
 				break;
@@ -327,8 +354,8 @@ void Player::Render(DirectX::SimpleMath::Matrix view, DirectX::SimpleMath::Matri
 
 	using namespace DirectX::SimpleMath;
 
-	//auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
-	//auto states = m_commonResources->GetCommonStates();
+	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
+	auto states = m_commonResources->GetCommonStates();
 
 	//	半透明描画指定
 	//ID3D11BlendState* blendstate = states->NonPremultiplied();
@@ -402,6 +429,14 @@ void Player::Render(DirectX::SimpleMath::Matrix view, DirectX::SimpleMath::Matri
 		}
 
 	}
+
+	DirectX::SimpleMath::Vector3 shadowPos = m_position;
+	shadowPos.y = 0.1f;
+
+	// 自機の影を描画する
+	m_shadow->Render(context, states, view, projection, shadowPos, 0.3f);
+
+
 }
 
 //---------------------------------------------------------

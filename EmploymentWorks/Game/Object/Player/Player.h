@@ -14,6 +14,8 @@
 #include "Game/Object/Player/State/PlayerAttack.h"
 #include "Game/Object/Player/State/PlayerJump.h"
 #include "Game/Object/Player/State/PlayerIdling.h"
+#include "Libraries/MyLib/Shadow.h"
+
 
 // 前方宣言
 class CommonResources;
@@ -87,6 +89,11 @@ public:
 
 	bool GetIsInvincible() { return m_isInvincible; }
 
+
+	//デバック用
+	bool GetIsOrbit() { return m_isOrbit; }
+
+
 private:
 
 	// 共通リソース
@@ -151,6 +158,15 @@ private:
 	float m_invincibleTime;
 	//点滅　true 表示　false 非常時
 	bool m_isVisible;
+
+	//デバック用　予測線を出すかどうか
+	bool m_isOrbit;
+
+
+	// 影オブジェクト
+	std::unique_ptr<Shadow> m_shadow;
+
+
 
 public:
 	Player(CommonResources* resources, IComponent* parent, const DirectX::SimpleMath::Vector3 initialScale, const DirectX::SimpleMath::Vector3& initialPosition, const DirectX::SimpleMath::Quaternion& initialAngle);

@@ -3,8 +3,12 @@
 #define BirdEnemy_DEFINED
 #include "Interface/IComponent.h"
 #include  "Game/Object/BirdEnemy/BirdEnemyBase.h"
+#include "Interface/IBirdEnemyState.h"
+#include "Game/Object/BirdEnemy/State/BirdEnemyIdling.h"
+#include "Game/Object/BirdEnemy/State/BirdEnemyAttack.h"
+//#include "Game/Object/BirdEnemy/State/BirdEnemyUsually.h"
 
-
+class Player;
 
 // 「砲塔」クラスを定義する
 class BirdEnemy : public BirdEnemyBase
@@ -20,6 +24,11 @@ public:
 	DirectX::Model* GetModel() { return nullptr; }
 	// ワールド行列を取得する
 	DirectX::SimpleMath::Matrix& GetWorldMatrix() { return m_worldMatrix; }
+
+	//State
+	IBirdEnemyState* GetCurrentState() { return m_currentState; }
+	BirdEnemyldling* GetIdling() { return m_idling.get(); }
+	BirdEnemyAttack* GetAttack() { return m_attack.get(); }
 
 public:
 	// コンストラクタ
@@ -43,7 +52,7 @@ public:
 	void SetAnimation(std::string name);
 
 	//クラスに必要な情報（ポインタ）を登録する
-	void RegistrationInformation();
+	void RegistrationInformation(Player* player);
 
 	//クラスのインスタンス
 	void Instances();
@@ -62,6 +71,7 @@ public:
 
 	void OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos) override;
 
+	//State
 
 
 private:
@@ -77,6 +87,15 @@ private:
 	DirectX::SimpleMath::Matrix m_worldMatrix;
 
 	DirectX::SimpleMath::Vector3 m_scale;
+
+	Player* m_player;
+
+
+	//State
+	IBirdEnemyState* m_currentState;
+	std::unique_ptr<BirdEnemyldling> m_idling;
+	std::unique_ptr<BirdEnemyAttack> m_attack;
+
 
 
 };

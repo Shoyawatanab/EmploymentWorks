@@ -269,6 +269,8 @@ void GamePlayUI::CreateBoomerang()
 
 }
 
+
+
 void GamePlayUI::CreateBoomerangMaker()
 {
 	using namespace DirectX::SimpleMath;
@@ -276,7 +278,7 @@ void GamePlayUI::CreateBoomerangMaker()
 	m_boomerangMakerUIScale = Vector2(0.5f, 0.5f);
 
 	m_boomerangMarkerUI =  Add(L"Resources/Textures/SlowMotionMarker.png"
-		, Vector2(640, 320)
+		, Vector2(640, 360)
 		, m_boomerangMakerUIScale
 		, ANCHOR::MIDDLE_CENTER
 		, UserInterface::Kinds::UI);

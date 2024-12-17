@@ -7,6 +7,9 @@
 #include "Libraries/MyLib/Bounding.h"
 #include "Game/DetectionCollision/CollisionManager.h"
 
+
+
+
 void BossEnemyBase::SetRunnginAnimationName(std::string name)
 {
 	//名前が同じなら
@@ -44,7 +47,7 @@ void BossEnemyBase::SetRunnginAnimationName(std::string name)
 
 
 // コンストラクタ
-BossEnemyBase::BossEnemyBase(CommonResources* resources,IComponent* parent, DirectX::SimpleMath::Vector3 initialScale, const DirectX::SimpleMath::Vector3& positonFromParent, const DirectX::SimpleMath::Quaternion& initialAngle)
+BossEnemyBase::BossEnemyBase(CommonResources* resources, BossEnemyBase* parent, DirectX::SimpleMath::Vector3 initialScale, const DirectX::SimpleMath::Vector3& positonFromParent, const DirectX::SimpleMath::Quaternion& initialAngle, int partsHp)
 	:
 	m_commonResources{resources},
 	m_parent(parent),
@@ -57,6 +60,8 @@ BossEnemyBase::BossEnemyBase(CommonResources* resources,IComponent* parent, Dire
 	m_animationPosition{},
 	m_animationRotation{},
 	m_animetionTime{}
+	,m_hp{partsHp}
+	,m_isHit{false}
 {
 }
 
@@ -87,6 +92,22 @@ void BossEnemyBase::Initialize(std::unique_ptr<DirectX::Model> model)
 void BossEnemyBase::Update(const float& elapsdTime)
 {
 	UNREFERENCED_PARAMETER(elapsdTime);
+
+
+	//１秒間は当たり判定を取らない
+	if (m_isHit)
+	{
+		m_hitTime += elapsdTime;
+		
+		if (m_hitTime >= 1)
+		{
+			m_isHit = false;
+			m_hitTime = 0;
+		}
+
+	}
+
+
 
 
 	// 部品を更新する
@@ -174,12 +195,29 @@ void BossEnemyBase::DrawModel(const DirectX::SimpleMath::Matrix& matrix, DirectX
 		{
 			// ベイシックエフェクトを取得する
 			auto basicEffect = dynamic_cast<DirectX::BasicEffect*>(effect);
+			if (m_hp > 0)
+			{
+				//通常色
+
 				// ディフューズカラーを設定する
 				basicEffect->SetDiffuseColor(DirectX::Colors::LightSlateGray);
 				// スペキュラカラーを設定する
 				basicEffect->SetSpecularColor(DirectX::Colors::LightSlateGray);
+
+			}
+			else
+			{
+				//黒色
+
+				// ディフューズカラーを設定する
+				basicEffect->SetDiffuseColor(DirectX::Colors::Black);
+				// スペキュラカラーを設定する
+				basicEffect->SetSpecularColor(DirectX::Colors::Black);
+
+			}
+
 				// スペキュラパワーを設定する
-				basicEffect->SetSpecularPower(20.0f);
+			basicEffect->SetSpecularPower(20.0f);
 		});
 	// 部品を描画する
 	//m_graphics->DrawModel(m_model, matrix);
@@ -262,12 +300,52 @@ Animation::AnimationState BossEnemyBase::AnimationUdate(const float& elapsdTime)
 		//子が実行中なら
 		if (part->AnimationUdate(elapsdTime) == Animation::AnimationState::Running)
 		{
+
 			//アニメーション実行中に
 			state = Animation::AnimationState::Running;
 		}
 	}
 
 	return state;
+
+}
+
+
+
+//親にダメージを伝える
+void BossEnemyBase::Damage(const int  damage)
+{
+
+
+	//親のダメージかんすうをよぶ
+	m_parent->Damage(damage);
+
+
+}
+
+void BossEnemyBase::PartsDamage(const int damage)
+{
+
+
+	if (!m_isHit)
+	{
+		//パーツのHPを減らす
+		m_hp -= damage;
+		//0以下にならないように
+		m_hp =  std::max(m_hp, 0);
+
+		m_isHit = true;
+		m_hitTime = 0;
+
+		//部位破壊されたらダメージ
+		if (m_hp <= 0)
+		{
+			m_parent->Damage(damage);
+
+		}
+
+	}
+
 
 }
 

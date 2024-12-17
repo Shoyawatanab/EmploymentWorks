@@ -21,6 +21,8 @@ void BossEnemyLeftArm::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::
 	switch (PartnerTag)
 	{
 		case CollsionObjectTag::Boomerang:
+			BossEnemyBase::PartsDamage(BossEnemyBase::BOOMERANGDAMEGE);
+
 			break;
 		default:
 			break;
@@ -28,10 +30,18 @@ void BossEnemyLeftArm::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::
 
 }
 
+void BossEnemyLeftArm::Damage(const int damage)
+{
+	BossEnemyBase::Damage(damage);
+
+}
+
 // コンストラクタ
-BossEnemyLeftArm::BossEnemyLeftArm(CommonResources* resources, IComponent* parent,const DirectX::SimpleMath::Vector3 initialScale, const DirectX::SimpleMath::Vector3& positonFromParent, const DirectX::SimpleMath::Quaternion& initialAngle)
+BossEnemyLeftArm::BossEnemyLeftArm(CommonResources* resources, BossEnemyBase* parent,
+	const DirectX::SimpleMath::Vector3 initialScale, const DirectX::SimpleMath::Vector3& positonFromParent, 
+	const DirectX::SimpleMath::Quaternion& initialAngle, int partsHp)
 	:
-	BossEnemyBase(resources,parent,initialScale, positonFromParent, initialAngle),
+	BossEnemyBase(resources,parent,initialScale, positonFromParent, initialAngle,partsHp),
 	m_currentPosition{},
 	m_currentAngle{},
 	m_BossEnemyLeftArmParts{},

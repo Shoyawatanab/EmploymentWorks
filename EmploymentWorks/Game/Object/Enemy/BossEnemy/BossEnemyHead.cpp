@@ -20,6 +20,8 @@ void BossEnemyHead::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::Sim
 	switch (PartnerTag)
 	{
 		case CollsionObjectTag::Boomerang:
+			BossEnemyBase::PartsDamage(BossEnemyBase::BOOMERANGDAMEGE);
+
 			break;
 		default:
 			break;
@@ -27,10 +29,18 @@ void BossEnemyHead::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::Sim
 
 }
 
+void BossEnemyHead::Damage(const int damage)
+{
+	BossEnemyBase::Damage(damage);
+
+}
+
 // コンストラクタ
-BossEnemyHead::BossEnemyHead(CommonResources* resources, IComponent* parent,const DirectX::SimpleMath::Vector3 initialScale, const DirectX::SimpleMath::Vector3& positonFromParent, const DirectX::SimpleMath::Quaternion& initialAngle)
+BossEnemyHead::BossEnemyHead(CommonResources* resources, BossEnemyBase* parent,
+	const DirectX::SimpleMath::Vector3 initialScale, const DirectX::SimpleMath::Vector3& positonFromParent, 
+	const DirectX::SimpleMath::Quaternion& initialAngle, int partsHp)
 	:
-	BossEnemyBase(resources,parent,initialScale, positonFromParent, initialAngle),
+	BossEnemyBase(resources,parent,initialScale, positonFromParent, initialAngle,partsHp),
 	m_currentPosition{},
 	m_currentAngle{},
 	m_BossEnemyHeadParts{},

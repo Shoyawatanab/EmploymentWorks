@@ -31,6 +31,7 @@
 #include "Game/Observer/Messenger.h"
 #include "Libraries/MyLib/Texture.h"
 #include "Game/Object/BirdEnemy/BirdEnemy.h"
+#include "Libraries/MyLib/HitEffects.h"
 
 #include <functional>
 #include <cassert>
@@ -122,17 +123,17 @@ void PlayScene::Initialize(CommonResources* resources)
 	{
 
 		//ステージの壁
-		if (parameter.ModelName == "Stage.cmo")
+		if (parameter.ModelName == "Wall.cmo")
 		{
 			auto wall = std::make_unique<Wall>();
 			wall->Initialize(m_commonResources, parameter.Position, parameter.Scale, parameter.Rotation, parameter.BoundingSphereRadius);
 			m_wall.push_back(std::move(wall));
 		}
-		else if(parameter.ModelName == "Floor.cmo")
+		else if (parameter.ModelName == "Floor.cmo")
 		{
 			//床	 
 			m_floor = std::make_unique<Floor>();
-			m_floor->Initialize(m_commonResources, parameter.Position, parameter.Scale, parameter.Rotation,parameter.BoundingSphereRadius);
+			m_floor->Initialize(m_commonResources, parameter.Position, parameter.Scale, parameter.Rotation, parameter.BoundingSphereRadius);
 
 		}
 		else if (parameter.ModelName == "Ceiling.cmo")
@@ -164,7 +165,7 @@ void PlayScene::Initialize(CommonResources* resources)
 
 	float scale = 1.0f;
 
-	m_enemy = std::make_unique<Enemy>(m_commonResources,nullptr,  DirectX::SimpleMath::Vector3(scale, scale, scale), Vector3(0, 4, 0), rotation);
+	m_enemy = std::make_unique<Enemy>(m_commonResources,nullptr,  DirectX::SimpleMath::Vector3(scale, scale, scale), Vector3(0, 4, 0), rotation,4);
 	m_player = std::make_unique<Player>(m_commonResources,nullptr, Vector3(0.2,0.2,0.2), Vector3(0, 0.75f, 15), 
 		Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(180), DirectX::XMConvertToRadians(0), DirectX::XMConvertToRadians(0)));
 
@@ -187,6 +188,9 @@ void PlayScene::Initialize(CommonResources* resources)
 	//各クラスの情報を登録とインスタンス
 	m_player->RegistrationInformation(m_enemy.get(),m_cameraManager->GetTPSCamera(),this);
 	m_enemy->RegistrationInformation(m_player.get());
+
+	m_birdEnemy->RegistrationInformation(m_player.get());
+
 	m_cameraManager->RegistrationInformation(this, m_player.get(), m_enemy.get());
 	m_lockOn->RegistrationInformation(m_player.get(), m_enemy.get(), m_cameraManager.get());
 	m_ui->RegistrationInformation(this, m_player.get(), m_enemy.get());
@@ -228,13 +232,7 @@ void PlayScene::Initialize(CommonResources* resources)
 		pillar->RegistrationCollionManager(m_collisionManager.get());
 	}
 
-	//m_rock[0]->RegistrationCollionManager(m_collisionManager.get());
-	//m_rock[1]->RegistrationCollionManager(m_collisionManager.get());
-
-
-	//Rayとの当たり判定を取るためにBoundingの登録
-	//m_commonResources->GetJudgement()->SetBounding(m_rock[0]->GetBounding());
-	//m_commonResources->GetJudgement()->SetBounding(m_rock[1]->GetBounding());
+	
 
 
 	m_sky = std::make_unique<Sky>();
@@ -246,6 +244,16 @@ void PlayScene::Initialize(CommonResources* resources)
 		auto particle = std::make_unique<Particle>();
 		particle->Initialize(m_commonResources);
 		m_particle.push_back(std::move(particle));
+	}
+
+	for (int i = 0; i < 1; i ++)
+	{
+
+		auto effect = std::make_unique<HitEffects>();
+		effect->Initialize(m_commonResources);
+
+		m_hitEffects.push_back(std::move(effect));
+
 	}
 
 
@@ -282,9 +290,13 @@ void PlayScene::Initialize(CommonResources* resources)
  	Messenger::Attach(Messenger::SLOWMOTION, std::bind(&PlayScene::BoomerangSlowMotion,this));
 	//スロー演出の終了イベント
 	Messenger::Attach(Messenger::SLOWMOTIONEND, std::bind(&PlayScene::BoomerangSlowMotionEnd, this));
+	//ヒットエフェクトの生成
+	Messenger::Attach2(Messenger::CREATEHITEFFECTS, std::bind(&PlayScene::CreateHitEffects, this, std::placeholders::_1));
 
 	m_slowTexture = std::make_unique<mylib::Texture>();
 	m_slowTexture->Initialize(m_commonResources, L"Resources/Textures/SlowMotionTex.png", Vector2(640, 360), 1.0f);
+
+	//Messenger::Notify2(Messenger::CREATEHITEFFECTS, Vector3(0, 2, 0));
 
 }
 
@@ -343,6 +355,10 @@ void PlayScene::Update(float elapsedTime)
 				{
 					artillery->Update(elapsedTime);
 				}
+
+
+
+
 			}
 
 
@@ -415,6 +431,13 @@ void PlayScene::Update(float elapsedTime)
 		}
 	}
 
+	for (auto& hiteffect : m_hitEffects)
+	{
+		if (hiteffect->GetState() == HitEffects::State::Using)
+		{
+			hiteffect->Update(elapsedTime);
+		}
+	}
 
 	m_player->SetisLockOn(m_lockOn->GetIsLOckOn());
 
@@ -448,7 +471,8 @@ void PlayScene::Render()
 
 	m_enemy->Render(view, m_projection);
 
-	m_birdEnemy->Render(view, m_projection);
+	//m_birdEnemy->Render(view, m_projection);
+
 	m_sky->Render(view, m_projection);
 
 	for (auto& artillery : m_artillery)
@@ -463,7 +487,6 @@ void PlayScene::Render()
 		m_lockOn->Render();
 	}
 
-
 	for (auto& particle : m_particle)
 	{
 		if (particle->GetState() == Particle::State::Using)
@@ -471,6 +494,15 @@ void PlayScene::Render()
 			particle->Render(view, m_projection);
 		}
 	}
+
+	for (auto& effect : m_hitEffects)
+	{
+		if (effect->GetState() == HitEffects::State::Using)
+		{
+			effect->Render(view, m_projection);
+		}
+	}
+
 
 	if (m_isSlowMotion)
 	{
@@ -486,9 +518,9 @@ void PlayScene::Render()
 #ifdef _DEBUG
 
 	//// デバッグ情報を「DebugString」で表示する
-	auto debugString = m_commonResources->GetDebugString();
+	//auto debugString = m_commonResources->GetDebugString();
 	//debugString->AddString("Play Scene");
-	debugString->AddString("PlayerPos: %f, %f,%f", m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z);
+	//debugString->AddString("PlayerPos: %f, %f,%f", m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z);
 	//debugString->AddString("EyePos: %f, %f,%f", m_cameraManager->GetTPSCamera()->GetEyePosition().x, m_cameraManager->GetTPSCamera()->GetEyePosition().y, m_cameraManager->GetTPSCamera()->GetEyePosition().z);
 	//debugString->AddString("Pos: %f, %f", m_player->GetPos().x, m_player->GetPos().z);
 	//debugString->AddString("Pos: %f, %f", m_enemy->GetPos().x, m_enemy->GetPos().z);
@@ -519,7 +551,6 @@ IScene::SceneID PlayScene::GetNextSceneID() const
 //爆発エフェクトを生成する
 void PlayScene::CreateParticle(DirectX::SimpleMath::Vector3 Pos)
 {
-	//Bulletで生成している
 
 	for (auto& particle : m_particle)
 	{
@@ -530,6 +561,21 @@ void PlayScene::CreateParticle(DirectX::SimpleMath::Vector3 Pos)
 			break;
 		}
 
+
+	}
+
+}
+
+void PlayScene::CreateHitEffects(DirectX::SimpleMath::Vector3 Pos)
+{
+
+	for (auto& effect : m_hitEffects)
+	{
+		if (effect->GetState() == HitEffects::State::None)
+		{
+			effect->Create(Pos);
+			break;
+		}
 
 	}
 

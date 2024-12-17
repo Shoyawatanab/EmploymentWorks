@@ -64,7 +64,7 @@ void BehaviorTree::Initialize(CommonResources* resources)
 	//攻撃するかどうかの追加
 	MidDistanceSelector->AddNode(std::move(IsAttackDecorator3));
 	//プレイヤに近づくの追加
-	MidDistanceSelector->AddNode(std::make_unique<ActionNode>(std::bind(&ExecutionNode::ApproachingThePlayer, m_executionNode.get(), std::placeholders::_1)));
+	//MidDistanceSelector->AddNode(std::make_unique<ActionNode>(std::bind(&ExecutionNode::ApproachingThePlayer, m_executionNode.get(), std::placeholders::_1)));
 
  // //プレイヤとの距離が近い時
 	//auto CloseDistanceDecorator = std::make_unique<DecoratorNode>(std::bind(&Conditions::IsInCloseRangeAttack, m_conditions.get()));
@@ -119,10 +119,15 @@ void BehaviorTree::Initialize(CommonResources* resources)
 	RootSelector->AddNode(std::move(IsHPMAXDecorator));
 	//ＨＰ半分以上のDecoratoｒの追加
 	RootSelector->AddNode(std::move(IsHPHalfDecorator));
+
+
+
 	//ルートの作成
 	m_root = std::make_unique<Root>();
 	//RootSequenceノードの追加
 	m_root->AddNode(std::move(RootSelector));
+
+	//m_root->AddNode(std::make_unique<ActionNode>(std::bind(&ExecutionNode::ApproachingThePlayer, m_executionNode.get(), std::placeholders::_1)));
 
 	//状態の初期化
 	m_currentState = IBehaviorNode::State::Failure;

@@ -198,6 +198,9 @@
     <ClInclude Include="Game\Object\BirdEnemy\BirdEnemyBody.h" />
     <ClInclude Include="Game\Object\BirdEnemy\BirdEnemyLeftFeather.h" />
     <ClInclude Include="Game\Object\BirdEnemy\BirdEnemyRightFeather.h" />
+    <ClInclude Include="Game\Object\BirdEnemy\State\BirdEnemyAttack.h" />
+    <ClInclude Include="Game\Object\BirdEnemy\State\BirdEnemyIdling.h" />
+    <ClInclude Include="Game\Object\BirdEnemy\State\BirdEnemyUsually.h" />
     <ClInclude Include="Game\Object\Boomerang\Boomerang.h" />
     <ClInclude Include="Game\Object\Boomerang\BoomerangOrbit.h" />
     <ClInclude Include="Game\Object\Boomerang\State\BoomerangDrop.h" />
@@ -206,8 +209,14 @@
     <ClInclude Include="Game\Object\Boomerang\State\BoomerangRepelled.h" />
     <ClInclude Include="Game\Object\Boomerang\State\BoomerangThrow.h" />
     <ClInclude Include="Game\Object\Ceiling.h" />
-    <ClInclude Include="Game\Object\Enemy\Beam.h" />
-    <ClInclude Include="Game\Object\Enemy\BeamModel.h" />
+    <ClInclude Include="Game\Object\Enemy\Beam\Beam.h" />
+    <ClInclude Include="Game\Object\Enemy\Beam\BeamChargeEffect.h" />
+    <ClInclude Include="Game\Object\Enemy\Beam\BeamEnergyBall.h" />
+    <ClInclude Include="Game\Object\Enemy\Beam\BeamRays.h" />
+    <ClInclude Include="Game\Object\Enemy\Beam\BeamState\BeamAttack.h" />
+    <ClInclude Include="Game\Object\Enemy\Beam\BeamState\BeamAttackEnd.h" />
+    <ClInclude Include="Game\Object\Enemy\Beam\BeamState\BeamIdling.h" />
+    <ClInclude Include="Game\Object\Enemy\Beam\BeamState\BeamPreliminaryAction.h" />
     <ClInclude Include="Game\Object\Enemy\BossEnemy\BossEnemyBase.h" />
     <ClInclude Include="Game\Object\Enemy\BossEnemy\BossEnemyBottom.h" />
     <ClInclude Include="Game\Object\Enemy\BossEnemy\BossEnemyHead.h" />
@@ -259,6 +268,7 @@
     <ClInclude Include="Game\UI\State\GmePlayUI.h" />
     <ClInclude Include="Game\UI\UI.h" />
     <ClInclude Include="Interface\IBehaviorNode.h" />
+    <ClInclude Include="Interface\IBirdEnemyState.h" />
     <ClInclude Include="Interface\IBoomerangState.h" />
     <ClInclude Include="Interface\ICollisionObject.h" />
     <ClInclude Include="Interface\IComponent.h" />
@@ -287,6 +297,7 @@
     <ClInclude Include="Libraries\MyLib\DebugString.h" />
     <ClInclude Include="Libraries\MyLib\Fade.h" />
     <ClInclude Include="Libraries\MyLib\GridFloor.h" />
+    <ClInclude Include="Libraries\MyLib\HitEffects.h" />
     <ClInclude Include="Libraries\MyLib\InputManager.h" />
     <ClInclude Include="Libraries\MyLib\Judgement.h" />
     <ClInclude Include="Libraries\MyLib\LoadJson.h" />
@@ -294,6 +305,7 @@
     <ClInclude Include="Libraries\MyLib\Model3D.h" />
     <ClInclude Include="Libraries\MyLib\Mouse.h" />
     <ClInclude Include="Libraries\MyLib\Particle.h" />
+    <ClInclude Include="Libraries\MyLib\Shadow.h" />
     <ClInclude Include="Libraries\MyLib\Texture.h" />
     <ClInclude Include="Libraries\MyLib\UserInterface.h" />
     <ClInclude Include="pch.h" />
@@ -318,6 +330,9 @@
     <ClCompile Include="Game\Object\BirdEnemy\BirdEnemyBody.cpp" />
     <ClCompile Include="Game\Object\BirdEnemy\BirdEnemyLeftFeather.cpp" />
     <ClCompile Include="Game\Object\BirdEnemy\BirdEnemyRightFeather.cpp" />
+    <ClCompile Include="Game\Object\BirdEnemy\State\BirdEnemyAttack.cpp" />
+    <ClCompile Include="Game\Object\BirdEnemy\State\BirdEnemyIdling.cpp" />
+    <ClCompile Include="Game\Object\BirdEnemy\State\BirdEnemyUsually.cpp" />
     <ClCompile Include="Game\Object\Boomerang\Boomerang.cpp" />
     <ClCompile Include="Game\Object\Boomerang\BoomerangOrbit.cpp" />
     <ClCompile Include="Game\Object\Boomerang\State\BoomerangDrop.cpp" />
@@ -326,8 +341,14 @@
     <ClCompile Include="Game\Object\Boomerang\State\BoomerangRepelled.cpp" />
     <ClCompile Include="Game\Object\Boomerang\State\BoomerangThrow.cpp" />
     <ClCompile Include="Game\Object\Ceiling.cpp" />
-    <ClCompile Include="Game\Object\Enemy\Beam.cpp" />
-    <ClCompile Include="Game\Object\Enemy\BeamModel.cpp" />
+    <ClCompile Include="Game\Object\Enemy\Beam\Beam.cpp" />
+    <ClCompile Include="Game\Object\Enemy\Beam\BeamChargeEffect.cpp" />
+    <ClCompile Include="Game\Object\Enemy\Beam\BeamEnergyBall.cpp" />
+    <ClCompile Include="Game\Object\Enemy\Beam\BeamRays.cpp" />
+    <ClCompile Include="Game\Object\Enemy\Beam\BeamState\BeamAttack.cpp" />
+    <ClCompile Include="Game\Object\Enemy\Beam\BeamState\BeamAttackEnd.cpp" />
+    <ClCompile Include="Game\Object\Enemy\Beam\BeamState\BeamIdling.cpp" />
+    <ClCompile Include="Game\Object\Enemy\Beam\BeamState\BeamPreliminaryAction.cpp" />
     <ClCompile Include="Game\Object\Enemy\BossEnemy\BossEnemyBase.cpp" />
     <ClCompile Include="Game\Object\Enemy\BossEnemy\BossEnemyBottom.cpp" />
     <ClCompile Include="Game\Object\Enemy\BossEnemy\BossEnemyHead.cpp" />
@@ -392,12 +413,14 @@
     <ClCompile Include="Libraries\MyLib\DebugString.cpp" />
     <ClCompile Include="Libraries\MyLib\Fade.cpp" />
     <ClCompile Include="Libraries\MyLib\GridFloor.cpp" />
+    <ClCompile Include="Libraries\MyLib\HitEffects.cpp" />
     <ClCompile Include="Libraries\MyLib\InputManager.cpp" />
     <ClCompile Include="Libraries\MyLib\Judgement.cpp" />
     <ClCompile Include="Libraries\MyLib\LoadJson.cpp" />
     <ClCompile Include="Libraries\MyLib\Model3D.cpp" />
     <ClCompile Include="Libraries\MyLib\Mouse.cpp" />
     <ClCompile Include="Libraries\MyLib\Particle.cpp" />
+    <ClCompile Include="Libraries\MyLib\Shadow.cpp" />
     <ClCompile Include="Libraries\MyLib\Texture.cpp" />
     <ClCompile Include="Libraries\MyLib\UserInterface.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -422,6 +445,7 @@
     <None Include="ClassDiagram21.cd" />
     <None Include="packages.config" />
     <None Include="Resources\Shaders\Fade\Fade.hlsli" />
+    <None Include="Resources\Shaders\HitEffects\HitEffects.hlsli" />
     <None Include="Resources\Shaders\LockOn\LockOnUI.hlsli" />
     <None Include="Resources\Shaders\Particle\Particle.hlsli" />
     <None Include="Resources\Shaders\UI\UI.hlsli" />
@@ -446,6 +470,18 @@
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\Fade\%(Filename).cso</ObjectFileOutput>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\HitEffects\HitEffectsPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\HitEffects\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\HitEffects\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\HitEffects\HitEffectsVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\HitEffects\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\HitEffects\%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="Resources\Shaders\LockOn\LockOnUIGS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>

@@ -10,6 +10,7 @@
 
 #include "Game/Object/Enemy/BossEnemy/BossEnemyBase.h"
 #include "Libraries/MyLib/Animation.h"
+#include "Libraries/MyLib/Shadow.h"
 
 // 前方宣言
 class CommonResources;
@@ -141,8 +142,15 @@ private:
 	float m_transformRatio;
 	float m_jumpAttackTime;
 
+
+	// 影オブジェクト
+	std::unique_ptr<Shadow> m_shadow;
+
+
 public:
-	Enemy(CommonResources* resources, IComponent* parent, const DirectX::SimpleMath::Vector3 initialScale, const DirectX::SimpleMath::Vector3& initialPosition, const DirectX::SimpleMath::Quaternion& initialAngle);
+	Enemy(CommonResources* resources, BossEnemyBase* parent,
+		const DirectX::SimpleMath::Vector3 initialScale, const DirectX::SimpleMath::Vector3& initialPosition, 
+		const DirectX::SimpleMath::Quaternion& initialAngle, int partsHp);
 	~Enemy() ;
 
 	void Initialize() ;
@@ -185,6 +193,7 @@ public:
 
 	void OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos) override;
 
+	void Damage(const int  damage) override;
 
 
 	//現在の大きさの取得

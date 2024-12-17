@@ -110,6 +110,18 @@
     <Filter Include="Game\Object\BirdEnemy">
       <UniqueIdentifier>{23b196b1-49d0-45fd-9725-8c8f38e1fc52}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Object\BirdEnemy\State">
+      <UniqueIdentifier>{a4ac39b2-716f-4db3-86a6-e317f1d653fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Shaders\HitEffects">
+      <UniqueIdentifier>{89d950f9-5ed0-4691-b37d-5c14662d0768}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\Enemy\Beam">
+      <UniqueIdentifier>{bdae52b4-1272-4b8f-8306-abcf56d38409}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Object\Enemy\Beam\BeamState">
+      <UniqueIdentifier>{8c42cb49-6eb9-4e31-ae62-4e7f7e84f8b8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -269,12 +281,6 @@
     </ClInclude>
     <ClInclude Include="Libraries\MyLib\Judgement.h">
       <Filter>Libraries\MyLib</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Enemy\Beam.h">
-      <Filter>Game\Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Object\Enemy\BeamModel.h">
-      <Filter>Game\Object\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Game\Object\Sky.h">
       <Filter>Game\Object\StageObject</Filter>
@@ -462,6 +468,48 @@
     <ClInclude Include="Game\Object\BirdEnemy\BirdEnemyRightFeather.h">
       <Filter>Game\Object\BirdEnemy</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Object\BirdEnemy\State\BirdEnemyAttack.h">
+      <Filter>Game\Object\BirdEnemy\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\BirdEnemy\State\BirdEnemyIdling.h">
+      <Filter>Game\Object\BirdEnemy\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\IBirdEnemyState.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\BirdEnemy\State\BirdEnemyUsually.h">
+      <Filter>Game\Object\BirdEnemy\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Libraries\MyLib\HitEffects.h">
+      <Filter>Libraries\MyLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Libraries\MyLib\Shadow.h">
+      <Filter>Libraries\MyLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\Beam\Beam.h">
+      <Filter>Game\Object\Enemy\Beam</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\Beam\BeamChargeEffect.h">
+      <Filter>Game\Object\Enemy\Beam</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\Beam\BeamEnergyBall.h">
+      <Filter>Game\Object\Enemy\Beam</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\Beam\BeamRays.h">
+      <Filter>Game\Object\Enemy\Beam</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\Beam\BeamState\BeamAttack.h">
+      <Filter>Game\Object\Enemy\Beam\BeamState</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\Beam\BeamState\BeamAttackEnd.h">
+      <Filter>Game\Object\Enemy\Beam\BeamState</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\Beam\BeamState\BeamIdling.h">
+      <Filter>Game\Object\Enemy\Beam\BeamState</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\Beam\BeamState\BeamPreliminaryAction.h">
+      <Filter>Game\Object\Enemy\Beam\BeamState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -586,12 +634,6 @@
     </ClCompile>
     <ClCompile Include="Libraries\MyLib\Judgement.cpp">
       <Filter>Libraries\MyLib</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\Enemy\Beam.cpp">
-      <Filter>Game\Object\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Object\Enemy\BeamModel.cpp">
-      <Filter>Game\Object\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Game\Object\Sky.cpp">
       <Filter>Game\Object\StageObject</Filter>
@@ -764,6 +806,45 @@
     <ClCompile Include="Game\Object\BirdEnemy\BirdEnemyRightFeather.cpp">
       <Filter>Game\Object\BirdEnemy</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Object\BirdEnemy\State\BirdEnemyAttack.cpp">
+      <Filter>Game\Object\BirdEnemy\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\BirdEnemy\State\BirdEnemyIdling.cpp">
+      <Filter>Game\Object\BirdEnemy\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\BirdEnemy\State\BirdEnemyUsually.cpp">
+      <Filter>Game\Object\BirdEnemy\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\MyLib\HitEffects.cpp">
+      <Filter>Libraries\MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\MyLib\Shadow.cpp">
+      <Filter>Libraries\MyLib</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\Beam\Beam.cpp">
+      <Filter>Game\Object\Enemy\Beam</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\Beam\BeamChargeEffect.cpp">
+      <Filter>Game\Object\Enemy\Beam</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\Beam\BeamEnergyBall.cpp">
+      <Filter>Game\Object\Enemy\Beam</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\Beam\BeamRays.cpp">
+      <Filter>Game\Object\Enemy\Beam</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\Beam\BeamState\BeamAttack.cpp">
+      <Filter>Game\Object\Enemy\Beam\BeamState</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\Beam\BeamState\BeamAttackEnd.cpp">
+      <Filter>Game\Object\Enemy\Beam\BeamState</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\Beam\BeamState\BeamIdling.cpp">
+      <Filter>Game\Object\Enemy\Beam\BeamState</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\Beam\BeamState\BeamPreliminaryAction.cpp">
+      <Filter>Game\Object\Enemy\Beam\BeamState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />
@@ -794,6 +875,9 @@
     </None>
     <None Include="ClassDiagram2.cd" />
     <None Include="ClassDiagram21.cd" />
+    <None Include="Resources\Shaders\HitEffects\HitEffects.hlsli">
+      <Filter>Resources\Shaders\HitEffects</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\LockOn\LockOnUIGS.hlsl">
@@ -828,6 +912,12 @@
     </FxCompile>
     <FxCompile Include="Resources\Shaders\Fade\FadeVS.hlsl">
       <Filter>Resources\Shaders\Fade</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\HitEffects\HitEffectsPS.hlsl">
+      <Filter>Resources\Shaders\HitEffects</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\HitEffects\HitEffectsVS.hlsl">
+      <Filter>Resources\Shaders\HitEffects</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

@@ -23,16 +23,27 @@ void BossEnemyBottom::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::S
 	switch (PartnerTag)
 	{
 		case CollsionObjectTag::Boomerang:
+			BossEnemyBase::PartsDamage(BossEnemyBase::BOOMERANGDAMEGE);
+
 			break;
 		default:
 			break;
 	}
 }
 
+void BossEnemyBottom::Damage(const int damage)
+{
+
+	BossEnemyBase::Damage(damage);
+
+}
+
 // コンストラクタ
-BossEnemyBottom::BossEnemyBottom(CommonResources* resources, IComponent* parent,const DirectX::SimpleMath::Vector3 initialScale, const DirectX::SimpleMath::Vector3& positonFromParent, const DirectX::SimpleMath::Quaternion& initialAngle)
+BossEnemyBottom::BossEnemyBottom(CommonResources* resources, BossEnemyBase* parent,
+	const DirectX::SimpleMath::Vector3 initialScale, const DirectX::SimpleMath::Vector3& positonFromParent, 
+	const DirectX::SimpleMath::Quaternion& initialAngle, int partsHp)
 	:
-	BossEnemyBase(resources,parent,initialScale, positonFromParent, initialAngle),
+	BossEnemyBase(resources,parent,initialScale, positonFromParent, initialAngle,partsHp),
 	m_currentPosition{},
 	m_currentAngle{},
 	m_BossEnemyBottomParts{},
@@ -97,12 +108,12 @@ void BossEnemyBottom::Initialize()
 
 
 	//「Pelvis」を生成する
-	Attach(std::make_unique<BossEnemyPelvis>(BossEnemyBase::GetResources(), this, BossEnemyBase::GetInitialScale(), Vector3(0.0f, 0.7f, 0.0f), Quaternion::Identity));
+	Attach(std::make_unique<BossEnemyPelvis>(BossEnemyBase::GetResources(), this, BossEnemyBase::GetInitialScale(), Vector3(0.0f, 0.7f, 0.0f), Quaternion::Identity, BossEnemyBase::BODYHP));
 
 	//「LeftThigh」を生成する
-	Attach(std::make_unique<BossEnemyLeftThigh>(BossEnemyBase::GetResources(), this, BossEnemyBase::GetInitialScale(), Vector3(0.9f, -0.7f, 0.0f), Quaternion::Identity));
+	Attach(std::make_unique<BossEnemyLeftThigh>(BossEnemyBase::GetResources(), this, BossEnemyBase::GetInitialScale(), Vector3(0.9f, -0.7f, 0.0f), Quaternion::Identity, BossEnemyBase::LEGHP));
 	//「RightThigh」を生成する
-	Attach(std::make_unique<BossEnemyRightThigh>(BossEnemyBase::GetResources(), this, BossEnemyBase::GetInitialScale(), Vector3(-0.9f, -0.7f, 0.0f), Quaternion::Identity));
+	Attach(std::make_unique<BossEnemyRightThigh>(BossEnemyBase::GetResources(), this, BossEnemyBase::GetInitialScale(), Vector3(-0.9f, -0.7f, 0.0f), Quaternion::Identity, BossEnemyBase::LEGHP));
 
 }
 

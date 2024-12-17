@@ -36,10 +36,13 @@ public:
 
 	void OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath::Vector3 Pos) override;
 
+	void Damage(const int  damage) override;
 
 public:
 	// コンストラクタ
-	BossEnemyLeftArmJoint(CommonResources* resources, IComponent* parent,const  DirectX::SimpleMath::Vector3 scale, const DirectX::SimpleMath::Vector3& positonFromParent, const DirectX::SimpleMath::Quaternion& initialAngleRL);
+	BossEnemyLeftArmJoint(CommonResources* resources, BossEnemyBase* parent,
+		const  DirectX::SimpleMath::Vector3 scale, const DirectX::SimpleMath::Vector3& positonFromParent, 
+		const DirectX::SimpleMath::Quaternion& initialAngleRL, int partsHp);
 	// デストラクタ
 	~BossEnemyLeftArmJoint() override;
 	// 初期化する

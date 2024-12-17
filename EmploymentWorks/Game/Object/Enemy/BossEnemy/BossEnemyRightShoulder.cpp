@@ -21,6 +21,8 @@ void BossEnemyRightShoulder::OnCollisionEnter(CollsionObjectTag& PartnerTag, Dir
 	switch (PartnerTag)
 	{
 		case CollsionObjectTag::Boomerang:
+			BossEnemyBase::PartsDamage(BossEnemyBase::BOOMERANGDAMEGE);
+
 			break;
 		default:
 			break;
@@ -28,10 +30,18 @@ void BossEnemyRightShoulder::OnCollisionEnter(CollsionObjectTag& PartnerTag, Dir
 
 }
 
+void BossEnemyRightShoulder::Damage(const int damage)
+{
+	BossEnemyBase::Damage(damage);
+
+}
+
 // コンストラクタ
-BossEnemyRightShoulder::BossEnemyRightShoulder(CommonResources* resources, IComponent* parent,const DirectX::SimpleMath::Vector3 initialScale, const DirectX::SimpleMath::Vector3& positonFromParent, const DirectX::SimpleMath::Quaternion& initialAngle)
+BossEnemyRightShoulder::BossEnemyRightShoulder(CommonResources* resources, BossEnemyBase* parent,
+	const DirectX::SimpleMath::Vector3 initialScale, const DirectX::SimpleMath::Vector3& positonFromParent,
+	const DirectX::SimpleMath::Quaternion& initialAngle, int partsHp)
 	:
-	BossEnemyBase(resources,parent,initialScale, positonFromParent, initialAngle),
+	BossEnemyBase(resources,parent,initialScale, positonFromParent, initialAngle,partsHp),
 	m_currentPosition{},
 	m_currentAngle{},
 	m_BossEnemyRightShoulderParts{},
@@ -106,7 +116,7 @@ void BossEnemyRightShoulder::Initialize()
 
 
 	//「RightArmJoint」を生成する
-	Attach(std::make_unique<BossEnemyRightArmJoint>(BossEnemyBase::GetResources(), this, BossEnemyBase::GetInitialScale(), Vector3(0.0, -1.7f, 0.0f),Quaternion::Identity));
+	Attach(std::make_unique<BossEnemyRightArmJoint>(BossEnemyBase::GetResources(), this, BossEnemyBase::GetInitialScale(), Vector3(0.0, -1.7f, 0.0f),Quaternion::Identity, BossEnemyBase::ARMHP));
 
 
 }

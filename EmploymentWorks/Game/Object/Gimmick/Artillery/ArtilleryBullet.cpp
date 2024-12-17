@@ -18,7 +18,7 @@
 #include "Game/Scene/PlayScene.h"
 const float SCALE(8.6f);
 
-const float BULLETSPEED(4.0f);
+const float BULLETSPEED(15.0f);
 
 //---------------------------------------------------------
 // コンストラクタ

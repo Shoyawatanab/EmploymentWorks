@@ -42,6 +42,8 @@ public:
 	//アニメーションの回転の取得
 	DirectX::SimpleMath::Quaternion GetAnimationRotation() { return m_animationRotation; }
 
+
+
 public:
 	// 砲塔部品番号をリセットする(-1から開始する)
 	static int ResetPartsNumber() { s_partsNumber = -1;  return s_partsNumber; }
@@ -50,7 +52,9 @@ public:
 
 public:
 	// コンストラクタ
-	BossEnemyBase(CommonResources* resources,IComponent* parent,DirectX::SimpleMath::Vector3 initialScale, const DirectX::SimpleMath::Vector3& positonFromParent, const DirectX::SimpleMath::Quaternion& initialAngle);
+	BossEnemyBase(CommonResources* resources,BossEnemyBase* parent,
+		const DirectX::SimpleMath::Vector3 initialScale, const DirectX::SimpleMath::Vector3& positonFromParent,
+		const DirectX::SimpleMath::Quaternion& initialAngle,int partsHp);
 	// デストラクタ
 	virtual ~BossEnemyBase();
 	// 初期化する
@@ -76,7 +80,13 @@ public:
 
 	virtual void RegistrationCollionManager(CollisionManager* collsionManager) override;
 
-	  Bounding* GetBounding() const { return m_bounding.get(); }
+	virtual void Damage(const int  damage);
+
+	virtual void PartsDamage(const int  damage);
+
+	Bounding* GetBounding() const { return m_bounding.get(); }
+
+	
 
 public:
 
@@ -102,7 +112,7 @@ private:
 	std::unique_ptr<Bounding> m_bounding;
 
 	// 親
-	IComponent* m_parent;
+	BossEnemyBase* m_parent;
 	//初期大きさ
 	DirectX::SimpleMath::Vector3 m_initialScale;
 	// 初期回転角
@@ -129,5 +139,25 @@ private:
 	//アニメーションの実行中時間
 	float m_animetionTime;
 
+	//バーツごとのHP
+	int m_hp;
+
+	//多重ヒットを防ぐための変数
+	bool m_isHit;
+
+	float m_hitTime;
+
+
+
+public:
+
+	const int BOOMERANGDAMEGE = 2;
+
+	//腕のHP
+	const int ARMHP = 4;
+	//胴体のHP
+	const  int BODYHP = 10;
+	//足のHP
+	const int LEGHP = 6;
 };
 #endif		// BossEnemyBase_DEFINED

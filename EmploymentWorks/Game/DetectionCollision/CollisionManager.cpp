@@ -19,7 +19,7 @@
 #include "Interface/IMoveCollisionObject.h"
 #include "Libraries/MyLib/CollisionMesh.h"
 
-#include "Game/Object/Enemy/Beam.h"
+#include "Game/Object/Enemy/Beam/Beam.h"
 #include "Libraries/MyLib/Camera/TPS_Camera.h"
 
 //---------------------------------------------------------
@@ -101,6 +101,7 @@ void CollisionManager::Update()
 			{
 				continue;
 			}
+
 
 
 			//どんな処理をするのか
@@ -260,16 +261,35 @@ void CollisionManager::Update()
 
 					break;
 
-
-				
-
 				case static_cast<uint32_t>(CollisionType::EnemyParts_Boomerang):
+
+
 					if (CheckIsOrientexdBoxToBox(m_collsionObjects[i], m_collsionObjects[j]))
 					{
 
 						m_collsionObjects[i]->OnCollisionEnter(tagJ, m_collsionObjects[j]->GetBounding()->GetBoundingBox()->Center);
 						m_collsionObjects[j]->OnCollisionEnter(tagI, m_collsionObjects[i]->GetBounding()->GetBoundingBox()->Center);
 					}
+					break;
+				case  static_cast<uint32_t>(CollisionType::Beam_Player):
+					if (CheckIsBoxToBox(m_collsionObjects[i], m_collsionObjects[j]))
+					{
+
+						m_collsionObjects[i]->OnCollisionEnter(tagJ, m_collsionObjects[j]->GetBounding()->GetBoundingBox()->Center);
+						m_collsionObjects[j]->OnCollisionEnter(tagI, m_collsionObjects[i]->GetBounding()->GetBoundingBox()->Center);
+					}
+
+					break;
+				case  static_cast<uint32_t>(CollisionType::Beam_Floor):
+
+					if (CheckIsBoxToBox(m_collsionObjects[i], m_collsionObjects[j]))
+					{
+
+						m_collsionObjects[i]->OnCollisionEnter(tagJ, m_collsionObjects[j]->GetBounding()->GetBoundingBox()->Center);
+						m_collsionObjects[j]->OnCollisionEnter(tagI, m_collsionObjects[i]->GetBounding()->GetBoundingBox()->Center);
+					}
+
+
 					break;
 				default:
 					continue;
@@ -526,40 +546,40 @@ void CollisionManager::BeamAndPlayerCollision()
 
 
 
-	//ビームのBoundinの取得
-	std::vector<std::unique_ptr<Bounding>>& BeamBounding = m_enemy->GetBeam()->GetBounding();
+	////ビームのBoundinの取得
+	//std::vector<std::unique_ptr<Bounding>>& BeamBounding = m_enemy->GetBeam()->GetBounding();
 
-	//プレイヤのBoundingSphereの取得
-	DirectX::BoundingSphere* PlayerBoundingSphere = m_player->GetBounding()->GetBoundingSphere();
+	////プレイヤのBoundingSphereの取得
+	//DirectX::BoundingSphere* PlayerBoundingSphere = m_player->GetBounding()->GetBoundingSphere();
 
-	for (auto& beam : BeamBounding)
-	{
+	//for (auto& beam : BeamBounding)
+	//{
 
-		DirectX::BoundingSphere* Sphere = beam->GetBoundingSphere();
+	//	DirectX::BoundingSphere* Sphere = beam->GetBoundingSphere();
 
-		//当たったら
-		if (PlayerBoundingSphere->Intersects(*Sphere))
-		{
-			if (m_player->GetPlayerState() == m_player->GetPlayerUsually() && !m_player->GetIsInvincible())
-			{
-				float hp = m_player->GetPlayerHP();
-				hp--;
-				m_player->SetPlayerHP(hp);
-				//プレイヤを無敵状態に
-				m_player->SetIsInvincible(true);
+	//	//当たったら
+	//	if (PlayerBoundingSphere->Intersects(*Sphere))
+	//	{
+	//		if (m_player->GetPlayerState() == m_player->GetPlayerUsually() && !m_player->GetIsInvincible())
+	//		{
+	//			float hp = m_player->GetPlayerHP();
+	//			hp--;
+	//			m_player->SetPlayerHP(hp);
+	//			//プレイヤを無敵状態に
+	//			m_player->SetIsInvincible(true);
 
-			}
+	//		}
 
-			//飛ぶ方向を求める
-			m_player->DemandBlownAwayDirection(Sphere->Center);
+	//		//飛ぶ方向を求める
+	//		m_player->DemandBlownAwayDirection(Sphere->Center);
 
-			//プレイヤの状態を飛ばされるに変更
-			m_player->ChangeState(m_player->GetPlayerBlownAway());
+	//		//プレイヤの状態を飛ばされるに変更
+	//		m_player->ChangeState(m_player->GetPlayerBlownAway());
 
-			return;
-		}
+	//		return;
+	//	}
 
-	}
+	//}
 
 
 }

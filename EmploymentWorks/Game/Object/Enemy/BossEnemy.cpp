@@ -17,7 +17,7 @@
 #include "Game/DetectionCollision/CollisionManager.h"
 #include "Game/BehaviorTree/BehaviorTree.h"
 #include "Game/Object/Player/Player.h"
-#include "Game/Object/Enemy/Beam.h"
+#include "Game/Object/Enemy/Beam/Beam.h"
 #include "Game/Object/Enemy/BossEnemy/BossEnemyBottom.h"
 
 
@@ -37,9 +37,11 @@ const float WALKMAXSPEED = 2.0f;
 //---------------------------------------------------------
 // コンストラクタ
 //---------------------------------------------------------
-Enemy::Enemy(CommonResources* resources, IComponent* parent, const DirectX::SimpleMath::Vector3 initialScale, const DirectX::SimpleMath::Vector3& initialPosition, const DirectX::SimpleMath::Quaternion& initialAngle)
+Enemy::Enemy(CommonResources* resources, BossEnemyBase* parent,
+	const DirectX::SimpleMath::Vector3 initialScale, const DirectX::SimpleMath::Vector3& initialPosition, 
+	const DirectX::SimpleMath::Quaternion& initialAngle, int partsHp)
 	:
-	BossEnemyBase(resources, parent, initialScale, DirectX::SimpleMath::Vector3::Zero, initialAngle),
+	BossEnemyBase(resources, parent, initialScale, DirectX::SimpleMath::Vector3::Zero, initialAngle,partsHp),
 	m_commonResources{resources},
 	//m_model{},
 	m_position{initialPosition},
@@ -58,6 +60,7 @@ Enemy::Enemy(CommonResources* resources, IComponent* parent, const DirectX::Simp
 	,m_maxHP{}
 	,m_onCollisionTag{}
 	,m_scale{}
+	,m_shadow{}
 {
 }
 
@@ -78,9 +81,11 @@ void Enemy::Initialize()
 
 
 
-	//m_commonResources = resources;
 
-	//auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
+
+	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
+	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
+	auto states = m_commonResources->GetCommonStates();
 
 
 
@@ -120,12 +125,12 @@ void Enemy::Initialize()
 	m_knockbackDirection = DirectX::SimpleMath::Vector3::Zero;
 	m_knockbackTime = 0;
 
-	m_beam->Initialize(m_commonResources, m_player, this);
+	m_beam->Initialize();
 
 	m_onCollisionTag = CollsionObjectTag::None;
 
 	//「Bottom」を生成する
-	Attach(std::make_unique<BossEnemyBottom>(BossEnemyBase::GetResources(), this, BossEnemyBase::GetInitialScale(), Vector3(0.0f, -0.6f, 0.0f), Quaternion::Identity));
+	Attach(std::make_unique<BossEnemyBottom>(BossEnemyBase::GetResources(), this, BossEnemyBase::GetInitialScale(), Vector3(0.0f, -0.6f, 0.0f), Quaternion::Identity, 4));
 
 	m_rightHandPos = m_position + Vector3(-1.5f,-3, 7.50);
 
@@ -147,6 +152,10 @@ void Enemy::Initialize()
 	m_jumpAttackTime = 0;
 	m_transformRatio = 0;
 
+	// 影を作成する
+	m_shadow = std::make_unique<Shadow>();
+	m_shadow->Initialize(device, context, states);
+
 }
 
 //---------------------------------------------------------
@@ -159,7 +168,7 @@ void Enemy::Update(float elapsedTime)
 
 
 	// キーボードステートトラッカーを取得する
-	const auto& kbTracker = m_commonResources->GetInputManager()->GetKeyboardTracker();
+	//const auto& kbTracker = m_commonResources->GetInputManager()->GetKeyboardTracker();
 
 	//デバック用
 	//if (kbTracker->released.Q)
@@ -169,7 +178,7 @@ void Enemy::Update(float elapsedTime)
 
 
 
-	//m_behavior->Update(elapsedTime);
+	m_behavior->Update(elapsedTime);
 
 
 	//部品を更新する
@@ -177,7 +186,7 @@ void Enemy::Update(float elapsedTime)
 
 	BossEnemyBase::AnimationUdate(elapsedTime);
 
-
+	m_beam->Update(elapsedTime);
 
 	//m_rotate *= DirectX::SimpleMath::Quaternion::CreateFromAxisAngle(DirectX::SimpleMath::Vector3::UnitY, DirectX::XMConvertToRadians(0.1f))
 	//ビームの開始地点を求める
@@ -241,8 +250,8 @@ void Enemy::Render(DirectX::SimpleMath::Matrix view, DirectX::SimpleMath::Matrix
 {
 	using namespace DirectX::SimpleMath;
 
-	//auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
-	//auto states = m_commonResources->GetCommonStates();
+	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
+	auto states = m_commonResources->GetCommonStates();
 
 
 	//// ワールド行列を更新する
@@ -262,11 +271,20 @@ void Enemy::Render(DirectX::SimpleMath::Matrix view, DirectX::SimpleMath::Matrix
 	m_bounding->DrawBoundingBox(view, projection);
 	m_bounding->DrawBoundingSphere(view, projection);
 
+	DirectX::SimpleMath::Vector3 shadowPos = m_position;
+	shadowPos.y = 0.1f;
+
+
+
+	// 自機の影を描画する
+	m_shadow->Render(context, states, view, projection, shadowPos,5);
+
 	if (m_hp > 0)
 	{
 		m_beam->Render(view, projection);
 
 	}
+
 
 
 }
@@ -349,6 +367,7 @@ void Enemy::RegistrationInformation( Player* player)
 	
 	m_behavior->RegistrationInformation(m_player, this);
 
+	m_beam->RegistrationInformation(m_commonResources);
 }
 
 
@@ -359,8 +378,11 @@ void Enemy::Instances()
 	m_behavior = std::make_unique<BehaviorTree>();
 	m_beam = std::make_unique<Beam>();
 
+	m_beam->Instances();
 
 }
+
+
 
 //歩きの関数
 void Enemy::Walk(float elapsdTime)
@@ -502,11 +524,11 @@ IBehaviorNode::State Enemy::JumpAttack(float elapstTime)
 		enemyPosition.y = 0;
 
 		//ダメージ範囲内かどうか
-		float distance = Vector3::Distance(enemyPosition,playerPosition);
+		float damageDistance = Vector3::Distance(enemyPosition,playerPosition);
 
-		if (distance <= 2)
+		if (damageDistance <= 2)
 		{
-			int hp = m_player->GetPlayerHP();
+			float hp = m_player->GetPlayerHP();
 			hp -= 1;
 			m_player->SetPlayerHP(hp);
 		}
@@ -530,6 +552,8 @@ void Enemy::RegistrationCollionManager(CollisionManager* collsionManager)
 	collsionManager->AddCollsion(this);
 
 	BossEnemyBase::RegistrationCollionManager(collsionManager);
+
+	m_beam->RegistrationCollionManager(collsionManager);
 }
 
 
@@ -543,24 +567,55 @@ IBehaviorNode::State Enemy::BeamAttack(float elapsdTime)
 		SetRunnginAnimationName("Beam");
 	}
 
-
-	//予備動作時間ないかどうか
-	if (m_preliminaryActionTime < BEAMATTACKPRELIMINRRYACTIONTIME)
-	{
-		//予備動作時間の加算
-		m_preliminaryActionTime += elapsdTime;
-		FacingThePlayer(elapsdTime);
-		//攻撃中
-		return IBehaviorNode::State::Runngin;
-	}
-
-
-	if (m_beam->Attack(elapsdTime))
+	//通常状態の時
+	if (m_beam->GetCurrentState() != m_beam->GetBeamIdling())
 	{
 		m_isAttack = true;
 		//攻撃中
 		return IBehaviorNode::State::Runngin;
 	}
+	else
+	{
+
+		//m_beam->ChangeState(m_beam->GetBeamPreliminaryAction());
+		//m_beam->SetPosition(m_beamStartPosition);
+		//m_beam->SetRotate(m_rotate);
+
+		//m_beam->SetTarget(m_player->GetPosition());
+	}
+
+	
+
+	if (!m_isAttack)
+	{
+		//アニメーションの登録
+		SetRunnginAnimationName("Beam");
+
+
+		m_beam->ChangeState(m_beam->GetBeamPreliminaryAction());
+		m_beam->SetPosition(m_beamStartPosition);
+		m_beam->SetRotate(m_rotate);
+
+		m_beam->SetTarget(m_player->GetPosition());
+
+		m_isAttack = true;
+
+		//攻撃中
+		return IBehaviorNode::State::Runngin;
+
+
+	}
+
+
+	if (m_beam->GetCurrentState() != m_beam->GetBeamIdling())
+	{
+		//攻撃中
+		return IBehaviorNode::State::Runngin;
+
+	}
+
+
+
 	//攻撃かどうかの初期化
 	m_isAttack = false;
 
@@ -619,6 +674,14 @@ void Enemy::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::SimpleMath:
 	m_knockbackDirection.Normalize();
 
 	m_acceleration = 0;
+
+}
+
+void Enemy::Damage(const int damage)
+{
+
+	m_hp -= damage;
+
 
 }
 

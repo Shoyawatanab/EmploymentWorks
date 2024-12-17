@@ -22,6 +22,7 @@ class Pillar;
 class Artillery;
 class Particle;
 class BirdEnemy;
+class HitEffects;
 
 
 namespace mylib
@@ -137,6 +138,9 @@ private:
 	float m_progressRate;
 
 
+	//ヒットエフェクト
+	std::vector<std::unique_ptr<HitEffects>> m_hitEffects;
+
 public:
 	PlayScene();
 	~PlayScene() override;
@@ -151,6 +155,9 @@ public:
 
 	//爆発エフェクトを生成
 	void CreateParticle(DirectX::SimpleMath::Vector3 Pos);
+
+	void CreateHitEffects(DirectX::SimpleMath::Vector3 Pos);
+
 
 	//ブーメランを投げるときのスロー演出時に呼ばれる関数
 	void BoomerangSlowMotion();

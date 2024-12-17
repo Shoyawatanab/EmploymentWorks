@@ -8,9 +8,11 @@
 
 
 // コンストラクタ
-BossEnemyPelvis::BossEnemyPelvis(CommonResources* resources, IComponent* parent,const DirectX::SimpleMath::Vector3 initialScale, const DirectX::SimpleMath::Vector3& positonFromParent, const DirectX::SimpleMath::Quaternion& initialAngle)
+BossEnemyPelvis::BossEnemyPelvis(CommonResources* resources, BossEnemyBase* parent,
+	const DirectX::SimpleMath::Vector3 initialScale, const DirectX::SimpleMath::Vector3& positonFromParent, 
+	const DirectX::SimpleMath::Quaternion& initialAngle, int partsHp)
 	:
-	BossEnemyBase(resources,parent,initialScale, positonFromParent, initialAngle),
+	BossEnemyBase(resources,parent,initialScale, positonFromParent, initialAngle,partsHp),
 	m_currentPosition{},
 	m_currentAngle{},
 	m_BossEnemyPelvisParts{},
@@ -52,7 +54,7 @@ void BossEnemyPelvis::Initialize()
 
 	BossEnemyBase::Initialize(std::move(m_model));
 	// 「砲塔下部」を生成する
-	Attach(std::make_unique<BossEnemyTorso>(BossEnemyBase::GetResources(), this, m__currentScale, Vector3(0.0f, 1.7f, 0.0f), m_currentAngle));
+	Attach(std::make_unique<BossEnemyTorso>(BossEnemyBase::GetResources(), this, m__currentScale, Vector3(0.0f, 1.7f, 0.0f), m_currentAngle, BossEnemyBase::BODYHP));
 
 
 }
@@ -127,9 +129,17 @@ void BossEnemyPelvis::OnCollisionEnter(CollsionObjectTag& PartnerTag, DirectX::S
 	switch (PartnerTag)
 	{
 		case CollsionObjectTag::Boomerang:
+			BossEnemyBase::PartsDamage(BossEnemyBase::BOOMERANGDAMEGE);
+
 			break;
 		default:
 			break;
 	}
+
+}
+
+void BossEnemyPelvis::Damage(const int damage)
+{
+	BossEnemyBase::Damage(damage);
 
 }
