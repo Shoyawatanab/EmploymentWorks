@@ -26,12 +26,13 @@
 #include "Game/Object/Ceiling.h"
 #include "Game/Object/Pillar.h"
 #include "Game/Object/Gimmick/Artillery/Artillery.h"
-#include "Libraries/MyLib/LoadJson.h"
 #include "Libraries/MyLib/Particle.h"
 #include "Game/Observer/Messenger.h"
 #include "Libraries/MyLib/Texture.h"
 #include "Game/Object/BirdEnemy/BirdEnemy.h"
 #include "Libraries/MyLib/HitEffects.h"
+
+#include "Libraries/MyLib/Json.h"
 
 #include <functional>
 #include <cassert>
@@ -45,7 +46,7 @@ const std::string SLOWMOTION = "SlowMotion";
 //---------------------------------------------------------
 // コンストラクタ
 //---------------------------------------------------------
-PlayScene::PlayScene()
+PlayScene::PlayScene(SceneManager::StageID stageID)
 	:
 	m_commonResources{},
 	//m_debugCamera{},
@@ -61,7 +62,7 @@ PlayScene::PlayScene()
 	, m_nextScene{ SceneID::NONE }
 	,m_state{}
 	,m_ceiling{}
-	,m_loadJson{}
+	,m_stageID{stageID}
 {
 }
 
@@ -113,64 +114,12 @@ void PlayScene::Initialize(CommonResources* resources)
 		0.1f, 1000.0f
 	);
 
-	m_loadJson = std::make_unique<mylib::LoadJson>();
 
-	//ステージのデータを読み込む
-	std::vector<mylib::LoadJson::Parameters> parameters = m_loadJson->GetStageDatas(L"Resources/Dates/Stage.json");
-
-	//ステージオブジェックとの生成
-	for (auto& parameter : parameters)
-	{
-
-		//ステージの壁
-		if (parameter.ModelName == "Wall.cmo")
-		{
-			auto wall = std::make_unique<Wall>();
-			wall->Initialize(m_commonResources, parameter.Position, parameter.Scale, parameter.Rotation, parameter.BoundingSphereRadius);
-			m_wall.push_back(std::move(wall));
-		}
-		else if (parameter.ModelName == "Floor.cmo")
-		{
-			//床	 
-			m_floor = std::make_unique<Floor>();
-			m_floor->Initialize(m_commonResources, parameter.Position, parameter.Scale, parameter.Rotation, parameter.BoundingSphereRadius);
-
-		}
-		else if (parameter.ModelName == "Ceiling.cmo")
-		{
-			//天井
-			m_ceiling = std::make_unique<Ceiling>();
-			m_ceiling->Initialize(m_commonResources, parameter.Position, parameter.Scale, parameter.Rotation, parameter.BoundingSphereRadius);
-
-		}
-		else if (parameter.ModelName == "Pillar.cmo")
-		{
-			//柱
-			auto pillar = std::make_unique<Pillar>();
-			pillar->Initialize(m_commonResources, parameter.Position, parameter.Scale, parameter.Rotation, parameter.BoundingSphereRadius);
-			m_pillar.push_back(std::move(pillar));
-
-		}
-		else if (parameter.ModelName == "Artillery.cmo")
-		{
-			//砲台
-			auto artillery = std::make_unique<Artillery>();
-			artillery->Initialize(m_commonResources,this, parameter.Position, parameter.Scale, parameter.Rotation, parameter.BoundingSphereRadius);
-			m_artillery.push_back(std::move(artillery));
-
-		}
-	}
+	//ステージの生成
+	CreateStage();
+	//オブジェクトの生成
+	CreateObject();
 	
-	DirectX::SimpleMath::Quaternion rotation = Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0), 0, DirectX::XMConvertToRadians(0));
-
-	float scale = 1.0f;
-
-	m_enemy = std::make_unique<Enemy>(m_commonResources,nullptr,  DirectX::SimpleMath::Vector3(scale, scale, scale), Vector3(0, 4, 0), rotation,4);
-	m_player = std::make_unique<Player>(m_commonResources,nullptr, Vector3(0.2,0.2,0.2), Vector3(0, 0.75f, 15), 
-		Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(180), DirectX::XMConvertToRadians(0), DirectX::XMConvertToRadians(0)));
-
-	scale = 5.0f;
-	m_birdEnemy = std::make_unique<BirdEnemy>(m_commonResources, nullptr, DirectX::SimpleMath::Vector3(scale, scale, scale), Vector3(0, 10, 4), rotation);
 
 	m_cameraManager = std::make_unique<mylib::GameCameraManager>();
 
@@ -299,7 +248,7 @@ void PlayScene::Initialize(CommonResources* resources)
 	//Messenger::Notify2(Messenger::CREATEHITEFFECTS, Vector3(0, 2, 0));
 
 	m_lockOn->AddTargetObject(m_enemy.get());
-	m_lockOn->AddTargetObject(m_birdEnemy.get());
+	//m_lockOn->AddTargetObject(m_birdEnemy.get());
 
 
 }
@@ -359,9 +308,6 @@ void PlayScene::Update(float elapsedTime)
 				{
 					artillery->Update(elapsedTime);
 				}
-
-
-
 
 			}
 
@@ -468,20 +414,20 @@ void PlayScene::Render()
 
 	for (auto& pillar : m_pillar)
 	{
-		pillar->Render(view, m_projection);
+		//pillar->Render(view, m_projection);
 	}
 
 	//m_ceiling->Render(m_view, m_projection);
 
 	m_enemy->Render(view, m_projection);
 
-	m_birdEnemy->Render(view, m_projection);
+	//m_birdEnemy->Render(view, m_projection);
 
 	m_sky->Render(view, m_projection);
 
 	for (auto& artillery : m_artillery)
 	{
-		artillery->Render(view, m_projection);
+		//artillery->Render(view, m_projection);
 	}
 
 
@@ -510,7 +456,7 @@ void PlayScene::Render()
 
 	if (m_isSlowMotion)
 	{
-		m_slowTexture->Render();
+		//m_slowTexture->Render();
 		m_ui->GetGamePlayUI()->BoomerangMakerRender();
 
 	}
@@ -549,6 +495,68 @@ IScene::SceneID PlayScene::GetNextSceneID() const
 
 	//Noneなら切り替えしない
 	return m_nextScene;
+
+}
+
+//ステージの生成
+void PlayScene::CreateStage()
+{
+
+	std::vector<Json::StageParamater> stageParameters;
+
+	std::unique_ptr<Json> json = std::make_unique<Json>();
+
+
+	//ステージのデータを読み込む
+	switch (m_stageID)
+	{
+		case SceneManager::Stage1:
+			stageParameters = json->LoadStageParameter(L"Stage");
+			break;
+		case SceneManager::Stage2:
+			stageParameters = json->LoadStageParameter(L"Stage2");
+			break;
+		default:
+			break;
+	}
+
+	//ステージオブジェックとの生成
+	for (auto& parameter : stageParameters)
+	{
+
+		//ステージの壁
+		if (parameter.ModelName == "Wall")
+		{
+			auto wall = std::make_unique<Wall>();
+			wall->Initialize(m_commonResources, parameter.Position, parameter.Scale, parameter.Rotation, parameter.BoundingSphereRadius);
+			m_wall.push_back(std::move(wall));
+		}
+		else if (parameter.ModelName == "Floor")
+		{
+			//床	 
+			m_floor = std::make_unique<Floor>();
+			m_floor->Initialize(m_commonResources, parameter.Position, parameter.Scale, parameter.Rotation, parameter.BoundingSphereRadius);
+
+		}
+	}
+
+}
+
+void PlayScene::CreateObject()
+{
+	using namespace DirectX::SimpleMath;
+
+	DirectX::SimpleMath::Quaternion rotation = Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0), 0, DirectX::XMConvertToRadians(0));
+
+	float scale = 1.0f;
+
+	m_enemy = std::make_unique<Enemy>(m_commonResources, nullptr, DirectX::SimpleMath::Vector3(scale, scale, scale), Vector3(0, 4, 0), rotation, 4);
+	m_player = std::make_unique<Player>(m_commonResources, nullptr, Vector3(0.2, 0.2, 0.2), Vector3(0, 0.75f, 15),
+		Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(180), DirectX::XMConvertToRadians(0), DirectX::XMConvertToRadians(0)));
+
+	scale = 5.0f;
+	m_birdEnemy = std::make_unique<BirdEnemy>(m_commonResources, nullptr, DirectX::SimpleMath::Vector3(scale, scale, scale), Vector3(6, 10, 4), rotation);
+
 
 }
 

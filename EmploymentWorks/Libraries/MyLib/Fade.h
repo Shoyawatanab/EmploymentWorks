@@ -99,6 +99,8 @@
 
 		bool GetIsSceneChange() { return m_isSceneChange; }
 
+		void Initialize();
+
 	private:
 
 		void CreateShader();

@@ -7,6 +7,7 @@
 #include "TitleScene.h"
 #include "PlayScene.h"
 #include "ResultScene.h"
+#include "StageSelectScene.h"
 #include "Game/Screen.h"
 #include "Game/CommonResources.h"
 #include "DeviceResources.h"
@@ -49,7 +50,9 @@ void SceneManager::Initialize(CommonResources* resources)
 
 	m_isFade = false;
 
-	ChangeScene(IScene::SceneID::TITLE);
+	m_stageID = StageID::Stage1;
+
+	ChangeScene(IScene::SceneID::STAGESELECT);
 }
 
 //---------------------------------------------------------
@@ -74,6 +77,7 @@ void SceneManager::Update(float elapsedTime)
 		//フェードしていないなら
 		case Fade::FadeState::None:
 			m_fade->SetFadeState(Fade::FadeState::FadeIn);
+			m_fade->Initialize();
 			break;
 		//フェードイン中
 		case Fade::FadeState::FadeIn:
@@ -132,13 +136,20 @@ void SceneManager::CreateScene(IScene::SceneID sceneID)
 {
 	assert(m_currentScene == nullptr);
 
+
+
 	switch (sceneID)
 	{
 		case IScene::SceneID::TITLE:
 			m_currentScene = std::make_unique<TitleScene>();
 			break;
 		case IScene::SceneID::PLAY:
-			m_currentScene = std::make_unique<PlayScene>();
+
+
+			m_currentScene = std::make_unique<PlayScene>(m_stageID);
+			break;
+		case IScene::SceneID::STAGESELECT:
+			m_currentScene = std::make_unique<StageSelectScene>(this);
 			break;
 		case IScene::SceneID::RESULT:
 			m_currentScene = std::make_unique<ResultScene>();

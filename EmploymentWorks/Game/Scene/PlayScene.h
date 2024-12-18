@@ -5,7 +5,7 @@
 #pragma once
 #include "IScene.h"
 #include <unordered_map>
-
+#include "Game/Scene/SceneManager.h"
 // 前方宣言
 class CommonResources;
 class Player;
@@ -30,7 +30,6 @@ namespace mylib
 	class DebugCamera;
 	class GridFloor;
 	class GameCameraManager;
-	class LoadJson;
 	class Texture;
 
 }
@@ -103,8 +102,6 @@ private:
 
 	GameState m_state;
 
-	//Jsonファイルの読み込みクラス
-	std::unique_ptr<mylib::LoadJson> m_loadJson;
 
 	//パーティクルクラス 爆発エフェクト
 	std::vector<std::unique_ptr<Particle>> m_particle;
@@ -140,9 +137,11 @@ private:
 
 	//ヒットエフェクト
 	std::vector<std::unique_ptr<HitEffects>> m_hitEffects;
+	
+	SceneManager::StageID m_stageID;
 
 public:
-	PlayScene();
+	PlayScene(SceneManager::StageID stageID);
 	~PlayScene() override;
 
 	void Initialize(CommonResources* resources) override;
@@ -152,6 +151,10 @@ public:
 
 	SceneID GetNextSceneID() const override;
 
+
+	void CreateStage();
+
+	void CreateObject();
 
 	//爆発エフェクトを生成
 	void CreateParticle(DirectX::SimpleMath::Vector3 Pos);

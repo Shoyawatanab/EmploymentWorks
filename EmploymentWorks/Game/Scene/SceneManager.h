@@ -11,6 +11,19 @@ class Fade;
 
 class SceneManager
 {
+public:
+	enum StageID
+	{
+		Stage1 = 0,
+		Stage2
+
+	};
+
+public:
+
+	void  SetStageID(StageID stageID) { m_stageID = stageID; }
+
+
 private:
 	std::unique_ptr<IScene> m_currentScene;
 	CommonResources* m_commonResources;
@@ -18,6 +31,9 @@ private:
 	std::unique_ptr<Fade> m_fade;
 
 	bool m_isFade;
+
+	StageID m_stageID;
+
 
 public:
 	SceneManager();

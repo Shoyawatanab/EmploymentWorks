@@ -282,7 +282,7 @@ IScene::SceneID TitleScene::GetNextSceneID() const
 	// シーン変更がある場合
 	if (m_isChangeScene)
 	{
-		return IScene::SceneID::PLAY;
+		return IScene::SceneID::STAGESELECT;
 	}
 
 	// シーン変更がない場合
