@@ -158,9 +158,9 @@ void GamePlayUI::BoomerangMakerUpdate()
 {
 
 
-	DirectX::SimpleMath::Vector2 minScale(0.1f,0.1f);
+	DirectX::SimpleMath::Vector2 minScale(0.2f,0.2f);
 
-	DirectX::SimpleMath::Vector2 maxScale(0.5f, 0.5f);
+	DirectX::SimpleMath::Vector2 maxScale(0.2f, 0.2f);
 
 	//スロー演出の進行割合からLerpの割合を求める　かけてるのはマーカーのほうが早く小さくなるように
 	float lerpTime = m_playScene->GetSlowMotionProgressRate() * 1.5f;

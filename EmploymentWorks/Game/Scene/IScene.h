@@ -15,6 +15,7 @@ public:
 	{
 		NONE,
 		TITLE,
+		STAGESELECT,
 		PLAY,
 		RESULT
 	};

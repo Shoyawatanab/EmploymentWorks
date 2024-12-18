@@ -510,6 +510,12 @@
     <ClInclude Include="Game\Object\Enemy\Beam\BeamState\BeamPreliminaryAction.h">
       <Filter>Game\Object\Enemy\Beam\BeamState</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Scene\StageSelectScene.h">
+      <Filter>Game\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Libraries\MyLib\Json.h">
+      <Filter>Libraries\MyLib</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -844,6 +850,12 @@
     </ClCompile>
     <ClCompile Include="Game\Object\Enemy\Beam\BeamState\BeamPreliminaryAction.cpp">
       <Filter>Game\Object\Enemy\Beam\BeamState</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Scene\StageSelectScene.cpp">
+      <Filter>Game\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\MyLib\Json.cpp">
+      <Filter>Libraries\MyLib</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -260,6 +260,7 @@
     <ClInclude Include="Game\Scene\PlayScene.h" />
     <ClInclude Include="Game\Scene\ResultScene.h" />
     <ClInclude Include="Game\Scene\SceneManager.h" />
+    <ClInclude Include="Game\Scene\StageSelectScene.h" />
     <ClInclude Include="Game\Scene\TitleScene.h" />
     <ClInclude Include="Game\Screen.h" />
     <ClInclude Include="Game\Timer.h" />
@@ -299,6 +300,7 @@
     <ClInclude Include="Libraries\MyLib\GridFloor.h" />
     <ClInclude Include="Libraries\MyLib\HitEffects.h" />
     <ClInclude Include="Libraries\MyLib\InputManager.h" />
+    <ClInclude Include="Libraries\MyLib\Json.h" />
     <ClInclude Include="Libraries\MyLib\Judgement.h" />
     <ClInclude Include="Libraries\MyLib\LoadJson.h" />
     <ClInclude Include="Libraries\MyLib\MemoryLeakDetector.h" />
@@ -391,6 +393,7 @@
     <ClCompile Include="Game\Scene\PlayScene.cpp" />
     <ClCompile Include="Game\Scene\ResultScene.cpp" />
     <ClCompile Include="Game\Scene\SceneManager.cpp" />
+    <ClCompile Include="Game\Scene\StageSelectScene.cpp" />
     <ClCompile Include="Game\Scene\TitleScene.cpp" />
     <ClCompile Include="Game\Timer.cpp" />
     <ClCompile Include="Game\UI\State\GameClearUI.cpp" />
@@ -415,6 +418,7 @@
     <ClCompile Include="Libraries\MyLib\GridFloor.cpp" />
     <ClCompile Include="Libraries\MyLib\HitEffects.cpp" />
     <ClCompile Include="Libraries\MyLib\InputManager.cpp" />
+    <ClCompile Include="Libraries\MyLib\Json.cpp" />
     <ClCompile Include="Libraries\MyLib\Judgement.cpp" />
     <ClCompile Include="Libraries\MyLib\LoadJson.cpp" />
     <ClCompile Include="Libraries\MyLib\Model3D.cpp" />
@@ -540,6 +544,7 @@
   <ImportGroup Label="ExtensionTargets">
     <Import Project="packages\Microsoft.XAudio2.Redist.1.2.11\build\native\Microsoft.XAudio2.Redist.targets" Condition="Exists('packages\Microsoft.XAudio2.Redist.1.2.11\build\native\Microsoft.XAudio2.Redist.targets')" />
     <Import Project="packages\directxtk_desktop_2019.2024.1.1.1\build\native\directxtk_desktop_2019.targets" Condition="Exists('packages\directxtk_desktop_2019.2024.1.1.1\build\native\directxtk_desktop_2019.targets')" />
+    <Import Project="packages\nlohmann.json.3.11.2\build\native\nlohmann.json.targets" Condition="Exists('packages\nlohmann.json.3.11.2\build\native\nlohmann.json.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -547,5 +552,6 @@
     </PropertyGroup>
     <Error Condition="!Exists('packages\Microsoft.XAudio2.Redist.1.2.11\build\native\Microsoft.XAudio2.Redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.XAudio2.Redist.1.2.11\build\native\Microsoft.XAudio2.Redist.targets'))" />
     <Error Condition="!Exists('packages\directxtk_desktop_2019.2024.1.1.1\build\native\directxtk_desktop_2019.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\directxtk_desktop_2019.2024.1.1.1\build\native\directxtk_desktop_2019.targets'))" />
+    <Error Condition="!Exists('packages\nlohmann.json.3.11.2\build\native\nlohmann.json.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\nlohmann.json.3.11.2\build\native\nlohmann.json.targets'))" />
   </Target>
 </Project>

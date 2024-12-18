@@ -119,6 +119,13 @@ void Fade::Create(DX::DeviceResources* pDR)
 	m_isSceneChange = false;
 }
 
+void Fade::Initialize()
+{
+	m_time = 0;
+	m_isSceneChange = false;
+
+}
+
 ///	<summary>
 ///	Shaderì¬•”•ª‚¾‚¯•ª—£‚µ‚½ŠÖ”
 ///	</summary>
