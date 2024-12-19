@@ -24,8 +24,6 @@ SceneManager::SceneManager()
 	:
 	m_currentScene{},
 	m_commonResources{}
-	,m_fade{}
-	,m_isFade{}
 {
 }
 
@@ -45,10 +43,6 @@ void SceneManager::Initialize(CommonResources* resources)
 	assert(resources);
 	m_commonResources = resources;
 
-	m_fade = std::make_unique<Fade>();
-	m_fade->Create(m_commonResources->GetDeviceResources());
-
-	m_isFade = false;
 
 	m_stageID = StageID::Stage1;
 
@@ -60,8 +54,6 @@ void SceneManager::Initialize(CommonResources* resources)
 //---------------------------------------------------------
 void SceneManager::Update(float elapsedTime)
 {
-	//フェードの更新
-	m_fade->Update(elapsedTime);
 	//現在のシーンの更新
 	m_currentScene->Update(elapsedTime);
 
@@ -71,30 +63,15 @@ void SceneManager::Update(float elapsedTime)
 	// シーンを変更しないとき
 	if (nextSceneID == IScene::SceneID::NONE) return;
 
-
-	switch (m_fade->GetFadeState())
+	if (m_commonResources->GetFade()->GetIsSceneChange())
 	{
-		//フェードしていないなら
-		case Fade::FadeState::None:
-			m_fade->SetFadeState(Fade::FadeState::FadeIn);
-			m_fade->Initialize();
-			break;
-		//フェードイン中
-		case Fade::FadeState::FadeIn:
-			//FadeInが終わったら
-			if (m_fade->GetIsSceneChange())
-			{
-				// シーンを変更する
-				ChangeScene(nextSceneID);
-				//FadeOutに変化
-				m_fade->SetFadeState(Fade::FadeState::FadeOut);
-			}
-			break;
-		case Fade::FadeState::FadeOut:
-			break;
-		default:
-			break;
+		// シーンを変更する
+		ChangeScene(nextSceneID);
 	}
+
+	
+
+
 
 
 
@@ -107,8 +84,6 @@ void SceneManager::Render()
 {
 	//現在のシーンの描画
 	m_currentScene->Render();
-	//フェードの描画
-	m_fade->Render();
 
 }
 

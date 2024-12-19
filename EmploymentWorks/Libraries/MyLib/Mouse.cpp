@@ -44,6 +44,7 @@ void mylib::Mouse::Initialize()
 
 	SetCursorPos(m_initialMousePos.x, m_initialMousePos.y);
 
+	ShowCursor(FALSE);
 
 
 }

@@ -62,6 +62,9 @@ void Game::Initialize(HWND window, int width, int height)
     // コモンステートを作成する
     m_commonStates = std::make_unique<CommonStates>(device);
 
+    //フェードの作成
+    m_fade = std::make_unique<Fade>(device,context);
+
     // デバッグ文字列を作成する
     m_debugString = std::make_unique<mylib::DebugString>(
         device,
@@ -78,7 +81,8 @@ void Game::Initialize(HWND window, int width, int height)
         m_deviceResources.get(),
         m_commonStates.get(),
         m_debugString.get(),
-        m_inputManager.get()
+        m_inputManager.get(),
+        m_fade.get()
     );
 
     // シーンマネージャを初期化する
@@ -125,6 +129,8 @@ void Game::Update(DX::StepTimer const& timer)
     // シーンマネージャを更新する
     m_sceneManager->Update(elapsedTime);
 
+    m_fade->Update(elapsedTime);
+
     // ★追記ココまで↑↑↑★
 }
 #pragma endregion
@@ -157,6 +163,8 @@ void Game::Render()
 #endif
     // シーンマネージャを描画する
     m_sceneManager->Render();
+
+    m_fade->Render();
 
     // デバッグ文字列を描画する
     m_debugString->Render(m_commonStates.get());

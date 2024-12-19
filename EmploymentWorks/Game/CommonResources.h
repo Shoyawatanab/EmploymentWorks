@@ -6,6 +6,7 @@
 #include "Game/Timer.h"
 #include "Libraries/MyLib/Judgement.h"
 
+class Fade;
 
 // ‘O•ûéŒ¾
 namespace DX
@@ -39,6 +40,7 @@ private:
 
 	std::unique_ptr<mylib::Judgement> m_judgement;
 
+	Fade* m_fade;
 
 public:
 	CommonResources();
@@ -49,7 +51,8 @@ public:
 		DX::DeviceResources* dr,
 		DirectX::CommonStates* commonStates,
 		mylib::DebugString* debugString,
-		mylib::InputManager* inputManager
+		mylib::InputManager* inputManager,
+		Fade*  fade
 	);
 
 	// getter
@@ -79,6 +82,11 @@ public:
 	}
 
 
+	Fade* GetFade() const
+	{
+		return m_fade;
+	}
+
 
 	Timer* GetTimer() const
 	{
@@ -89,5 +97,6 @@ public:
 	{
 		return m_judgement.get();
 	}
+
 
 };

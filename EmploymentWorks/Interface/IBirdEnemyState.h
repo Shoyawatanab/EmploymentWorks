@@ -17,8 +17,6 @@ public:
 	//ó‘Ô‚ğ”²‚¯‚½
 	virtual void Exit() = 0;
 
-
-
 };
 
 #endif		// IBOOMERANGSTATE_DEFINED

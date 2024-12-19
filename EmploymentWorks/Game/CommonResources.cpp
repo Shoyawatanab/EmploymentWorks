@@ -15,7 +15,8 @@ CommonResources::CommonResources()
 	m_deviceResources{ nullptr },
 	m_commonStates{ nullptr },
 	m_debugString{ nullptr },
-	m_inputManager{ nullptr }
+	m_inputManager{ nullptr },
+	m_fade{nullptr}
 {
 }
 
@@ -27,7 +28,8 @@ void CommonResources::Initialize(
 	DX::DeviceResources* dr,
 	DirectX::CommonStates* commonStates,
 	mylib::DebugString* debugString,
-	mylib::InputManager* inputManager
+	mylib::InputManager* inputManager,
+	Fade* fade
 )
 {
 	assert(timer);
@@ -41,6 +43,7 @@ void CommonResources::Initialize(
 	m_commonStates = commonStates;
 	m_debugString = debugString;
 	m_inputManager = inputManager;
+	m_fade = fade;
 
 	m_timer = std::make_unique<Timer>();
 	m_timer->Initialize(this);

@@ -43,10 +43,11 @@ void BirdEnemy::Initialize()
 
 
 
-	float scale = 0.5f;
+	float scale = 2.5f;
 
 	m_scale = Vector3(scale, scale, scale);
 
+	m_scale = BirdEnemyBase::GetInitialScale();
 
 }
 

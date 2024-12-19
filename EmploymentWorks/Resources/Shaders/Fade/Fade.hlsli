@@ -4,7 +4,7 @@ cbuffer ConstBuffer	: register(b0)
 	matrix matView;
 	matrix matProj;
 	float4 diffuse;
-    float4 time;
+    float4 Time;
 
 };
 

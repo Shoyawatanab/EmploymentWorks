@@ -21,8 +21,8 @@ class Ceiling;
 class Pillar;
 class Artillery;
 class Particle;
-class BirdEnemy;
 class HitEffects;
+class EnemyManager;
 
 
 namespace mylib
@@ -75,7 +75,7 @@ private:
 
 	std::unique_ptr<Player> m_player;
 	std::unique_ptr<Enemy> m_enemy;
-	std::unique_ptr<BirdEnemy> m_birdEnemy;
+	std::unique_ptr<EnemyManager> m_enemyManager;
 
 	//è∞
 	std::unique_ptr<Floor> m_floor;

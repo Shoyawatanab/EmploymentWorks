@@ -11,6 +11,8 @@
 #include "Libraries/MyLib/InputManager.h"
 #include <cassert>
 
+#include "Libraries/MyLib/Fade.h"
+
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
 
@@ -55,6 +57,8 @@ void StageSelectScene::Initialize(CommonResources* resources)
 	m_isChangeScene = false;
 
 	m_sceneManager->SetStageID(SceneManager::StageID::Stage1);
+
+	//m_commonResources->GetFade()->SetFadeState(Fade::FadeState::FadeOut);
 
 }
 
@@ -113,6 +117,12 @@ IScene::SceneID StageSelectScene::GetNextSceneID() const
 	// ƒV[ƒ“•ÏX‚ª‚ ‚éê‡
 	if (m_isChangeScene)
 	{
+		if (m_commonResources->GetFade()->GetFadeState() == Fade::FadeState::None)
+		{
+			m_commonResources->GetFade()->StartNormalFadeIn();
+
+		}
+
 		return IScene::SceneID::PLAY;
 	}
 
