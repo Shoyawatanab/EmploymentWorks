@@ -233,6 +233,7 @@
     <ClInclude Include="Game\Object\Enemy\BossEnemy\BossEnemyRightThigh.h" />
     <ClInclude Include="Game\Object\Enemy\BossEnemy\BossEnemyTorso.h" />
     <ClInclude Include="Game\Object\Enemy\BossEnemy.h" />
+    <ClInclude Include="Game\Object\Enemy\EnemyManager.h" />
     <ClInclude Include="Game\Object\Floor.h" />
     <ClInclude Include="Game\Object\Gimmick\Artillery\Artillery.h" />
     <ClInclude Include="Game\Object\Gimmick\Artillery\ArtilleryBase.h" />
@@ -274,6 +275,7 @@
     <ClInclude Include="Interface\ICollisionObject.h" />
     <ClInclude Include="Interface\IComponent.h" />
     <ClInclude Include="Interface\ICompositeNode.h" />
+    <ClInclude Include="Interface\IEnemy.h" />
     <ClInclude Include="Interface\IEnemyState.h" />
     <ClInclude Include="Interface\ILeafNode.h" />
     <ClInclude Include="Interface\IMoveCollisionObject.h" />
@@ -367,6 +369,7 @@
     <ClCompile Include="Game\Object\Enemy\BossEnemy\BossEnemyRightThigh.cpp" />
     <ClCompile Include="Game\Object\Enemy\BossEnemy\BossEnemyTorso.cpp" />
     <ClCompile Include="Game\Object\Enemy\BossEnemy.cpp" />
+    <ClCompile Include="Game\Object\Enemy\EnemyManager.cpp" />
     <ClCompile Include="Game\Object\Floor.cpp" />
     <ClCompile Include="Game\Object\Gimmick\Artillery\Artillery.cpp" />
     <ClCompile Include="Game\Object\Gimmick\Artillery\ArtilleryBase.cpp" />
@@ -445,8 +448,6 @@
     <Manifest Include="settings.manifest" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram2.cd" />
-    <None Include="ClassDiagram21.cd" />
     <None Include="packages.config" />
     <None Include="Resources\Shaders\Fade\Fade.hlsli" />
     <None Include="Resources\Shaders\HitEffects\HitEffects.hlsli" />
@@ -463,17 +464,23 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="Resources\Shaders\Fade\FadePS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\Fade\%(Filename).cso</ObjectFileOutput>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\Fade\%(Filename).cso</ObjectFileOutput>
-    </FxCompile>
     <FxCompile Include="Resources\Shaders\Fade\FadeVS.hlsl">
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\Fade\%(Filename).cso</ObjectFileOutput>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\Fade\%(Filename).cso</ObjectFileOutput>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Fade\NormalFadeInPS.hlsl">
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\Fade\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\Fade\%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Fade\NormalFadeOutPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\Fade\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\Fade\%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="Resources\Shaders\HitEffects\HitEffectsPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>

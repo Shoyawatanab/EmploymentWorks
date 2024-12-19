@@ -33,9 +33,12 @@
 #include "Libraries/MyLib/HitEffects.h"
 
 #include "Libraries/MyLib/Json.h"
+#include "Game/Object/Enemy/EnemyManager.h"
 
 #include <functional>
 #include <cassert>
+
+#include "Libraries/MyLib/Fade.h"
 
 const int WALLSIZE = 4;
 const float WALLHEITH = 2;
@@ -130,7 +133,6 @@ void PlayScene::Initialize(CommonResources* resources)
 	//各クラスに必要なクラスのインスタンス
 	m_player->Instances();
 	m_enemy->Instances();
-	m_birdEnemy->Instances();
 	m_cameraManager->Instances();
 	m_ui->Instances();
 	
@@ -138,16 +140,15 @@ void PlayScene::Initialize(CommonResources* resources)
 	m_player->RegistrationInformation(m_enemy.get(),m_cameraManager->GetTPSCamera(),this);
 	m_enemy->RegistrationInformation(m_player.get());
 
-	m_birdEnemy->RegistrationInformation(m_player.get());
 
 	m_cameraManager->RegistrationInformation(this, m_player.get(), m_enemy.get());
 	m_lockOn->RegistrationInformation(m_player.get(), m_enemy.get(), m_cameraManager.get());
 	m_ui->RegistrationInformation(this, m_player.get(), m_enemy.get());
 
 
+
 	m_player->Initialize();
 	m_enemy->Initialize();
-	m_birdEnemy->Initialize();
 
 	m_cameraManager->Initialize();
 	m_lockOn->Initialize(m_commonResources->GetDeviceResources(),
@@ -159,6 +160,7 @@ void PlayScene::Initialize(CommonResources* resources)
 		m_commonResources->GetDeviceResources()->GetOutputSize().bottom);
 
 	m_collisionManager->SetTPS_Camera(m_cameraManager->GetTPSCamera());
+
 
 
 	///当たり判定をManagerに追加
@@ -250,7 +252,7 @@ void PlayScene::Initialize(CommonResources* resources)
 	m_lockOn->AddTargetObject(m_enemy.get());
 	//m_lockOn->AddTargetObject(m_birdEnemy.get());
 
-
+	m_commonResources->GetFade()->StartNormalFadeOut();
 }
 
 //---------------------------------------------------------
@@ -303,7 +305,7 @@ void PlayScene::Update(float elapsedTime)
 			if (m_cameraManager->GetGameCameraState() != m_cameraManager->GetGameStartCamera())
 			{
 				m_enemy->Update(elapsedTime);
-				m_birdEnemy->Update(elapsedTime);
+				m_enemyManager->Update(elapsedTime);
 				for (auto& artillery : m_artillery)
 				{
 					artillery->Update(elapsedTime);
@@ -419,9 +421,9 @@ void PlayScene::Render()
 
 	//m_ceiling->Render(m_view, m_projection);
 
-	m_enemy->Render(view, m_projection);
+	//m_enemy->Render(view, m_projection);
 
-	//m_birdEnemy->Render(view, m_projection);
+	m_enemyManager->Render(view, m_projection);
 
 	m_sky->Render(view, m_projection);
 
@@ -502,7 +504,7 @@ IScene::SceneID PlayScene::GetNextSceneID() const
 void PlayScene::CreateStage()
 {
 
-	std::vector<Json::StageParamater> stageParameters;
+	std::vector<Json::StageData> stageParameters;
 
 	std::unique_ptr<Json> json = std::make_unique<Json>();
 
@@ -511,10 +513,10 @@ void PlayScene::CreateStage()
 	switch (m_stageID)
 	{
 		case SceneManager::Stage1:
-			stageParameters = json->LoadStageParameter(L"Stage");
+			stageParameters = json->LoadStageDatas(L"Stage");
 			break;
 		case SceneManager::Stage2:
-			stageParameters = json->LoadStageParameter(L"Stage2");
+			stageParameters = json->LoadStageDatas(L"Stage2");
 			break;
 		default:
 			break;
@@ -554,9 +556,9 @@ void PlayScene::CreateObject()
 	m_player = std::make_unique<Player>(m_commonResources, nullptr, Vector3(0.2, 0.2, 0.2), Vector3(0, 0.75f, 15),
 		Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(180), DirectX::XMConvertToRadians(0), DirectX::XMConvertToRadians(0)));
 
-	scale = 5.0f;
-	m_birdEnemy = std::make_unique<BirdEnemy>(m_commonResources, nullptr, DirectX::SimpleMath::Vector3(scale, scale, scale), Vector3(6, 10, 4), rotation);
-
+	m_enemyManager = std::make_unique<EnemyManager>();
+	m_enemyManager->Instances(m_player.get(), m_commonResources);
+	m_enemyManager->Initialize();
 
 }
 

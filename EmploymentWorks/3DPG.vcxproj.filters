@@ -516,6 +516,12 @@
     <ClInclude Include="Libraries\MyLib\Json.h">
       <Filter>Libraries\MyLib</Filter>
     </ClInclude>
+    <ClInclude Include="Interface\IEnemy.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Object\Enemy\EnemyManager.h">
+      <Filter>Game\Object\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -857,6 +863,9 @@
     <ClCompile Include="Libraries\MyLib\Json.cpp">
       <Filter>Libraries\MyLib</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Object\Enemy\EnemyManager.cpp">
+      <Filter>Game\Object\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />
@@ -885,8 +894,6 @@
     <None Include="Resources\Shaders\Fade\Fade.hlsli">
       <Filter>Resources\Shaders\Fade</Filter>
     </None>
-    <None Include="ClassDiagram2.cd" />
-    <None Include="ClassDiagram21.cd" />
     <None Include="Resources\Shaders\HitEffects\HitEffects.hlsli">
       <Filter>Resources\Shaders\HitEffects</Filter>
     </None>
@@ -919,9 +926,6 @@
     <FxCompile Include="Resources\Shaders\Fade\FadeGS.hlsl">
       <Filter>Resources\Shaders\Fade</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\Shaders\Fade\FadePS.hlsl">
-      <Filter>Resources\Shaders\Fade</Filter>
-    </FxCompile>
     <FxCompile Include="Resources\Shaders\Fade\FadeVS.hlsl">
       <Filter>Resources\Shaders\Fade</Filter>
     </FxCompile>
@@ -930,6 +934,12 @@
     </FxCompile>
     <FxCompile Include="Resources\Shaders\HitEffects\HitEffectsVS.hlsl">
       <Filter>Resources\Shaders\HitEffects</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Fade\NormalFadeInPS.hlsl">
+      <Filter>Resources\Shaders\Fade</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Fade\NormalFadeOutPS.hlsl">
+      <Filter>Resources\Shaders\Fade</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

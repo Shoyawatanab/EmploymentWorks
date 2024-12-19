@@ -13,6 +13,7 @@
 #include "Game/Scene/SceneManager.h"
 #include "Libraries/MyLib/DebugString.h"
 #include "Libraries/MyLib/InputManager.h"
+#include "Libraries/MyLib/Fade.h"
 
 
 // A basic game implementation that creates a D3D11 device and
@@ -85,6 +86,9 @@ private:
 
     // シーンマネージャ
     std::unique_ptr<SceneManager>           m_sceneManager;
+
+    //フェード処理
+    std::unique_ptr<Fade>                  m_fade;
 
     // ★追記ココまで↑↑↑★
 
