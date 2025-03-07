@@ -22,6 +22,7 @@ Game::Game() noexcept(false)
     m_debugString{},
     m_inputManager{},
     m_sceneManager{}
+    ,m_fade{}
 {
     m_deviceResources = std::make_unique<DX::DeviceResources>();
     // TODO: Provide parameters for swapchain format, depth/stencil format, and backbuffer count.
@@ -63,7 +64,7 @@ void Game::Initialize(HWND window, int width, int height)
     m_commonStates = std::make_unique<CommonStates>(device);
 
     //フェードの作成
-    m_fade = std::make_unique<Fade>(device,context);
+    m_fade = std::make_unique<Fade>(device, context);
 
     // デバッグ文字列を作成する
     m_debugString = std::make_unique<mylib::DebugString>(
@@ -83,13 +84,17 @@ void Game::Initialize(HWND window, int width, int height)
         m_debugString.get(),
         m_inputManager.get(),
         m_fade.get()
+
     );
 
     // シーンマネージャを初期化する
     m_sceneManager = std::make_unique<SceneManager>();
     m_sceneManager->Initialize(m_commonResources.get());
 
+    m_timer.SetFixedTimeStep(true);
+
     // ★追記ココまで↑↑↑★
+
 }
 
 #pragma region Frame Update
@@ -131,6 +136,7 @@ void Game::Update(DX::StepTimer const& timer)
 
     m_fade->Update(elapsedTime);
 
+
     // ★追記ココまで↑↑↑★
 }
 #pragma endregion
@@ -156,11 +162,10 @@ void Game::Render()
     // ★追記ココから↓↓↓★
 
     UNREFERENCED_PARAMETER(context);
-#ifdef _DEBUG
 
     // デバッグ文字列を作成する：FPS
-    m_debugString->AddString("fps : %d", m_timer.GetFramesPerSecond());
-#endif
+    //m_debugString->AddString("fps : %d", m_timer.GetFramesPerSecond());
+
     // シーンマネージャを描画する
     m_sceneManager->Render();
 
@@ -229,7 +234,6 @@ void Game::OnWindowMoved()
     auto const r = m_deviceResources->GetOutputSize();
     m_deviceResources->WindowSizeChanged(r.right, r.bottom);
 
-
     // ★追記
     BOOL fullScreen = FALSE;
 
@@ -240,6 +244,7 @@ void Game::OnWindowMoved()
         m_fullScreen = fullScreen;
         m_deviceResources->CreateWindowSizeDependentResources();
     }
+
 }
 
 void Game::OnDisplayChange()

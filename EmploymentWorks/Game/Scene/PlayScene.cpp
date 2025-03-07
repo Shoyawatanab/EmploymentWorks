@@ -11,40 +11,26 @@
 #include "Libraries/MyLib/GridFloor.h"
 #include "Libraries/MyLib/InputManager.h"
 #include "Libraries/MyLib/MemoryLeakDetector.h"
-
-#include "Libraries/MyLib/Camera/GameCameraManager.h"
-#include "Game/Object/Player/Player.h"
-#include "Game/Object/Enemy/BossEnemy.h"
-#include "Game/Object/Floor.h"
-#include "Game/LockOn.h"
-#include "Game/DetectionCollision/CollisionManager.h"
-#include "Game/Object/Wall.h"
-#include "Game/EnemyHP.h"
-#include "Game/Object/Rock.h"
-#include "Game/Object/Sky.h"
-#include "Game/UI/UI.h"
-#include "Game/Object/Ceiling.h"
-#include "Game/Object/Pillar.h"
-#include "Game/Object/Gimmick/Artillery/Artillery.h"
-#include "Libraries/MyLib/Particle.h"
-#include "Game/Observer/Messenger.h"
-#include "Libraries/MyLib/Texture.h"
-#include "Game/Object/BirdEnemy/BirdEnemy.h"
-#include "Libraries/MyLib/HitEffects.h"
-
-#include "Libraries/MyLib/Json.h"
-#include "Game/Object/Enemy/EnemyManager.h"
-
-#include <functional>
+#include "Libraries/WataLib/Fade.h"
 #include <cassert>
 
-#include "Libraries/MyLib/Fade.h"
+#include "Game/StageObject/StageObjectManager.h"
+#include "Game/Player/Player.h"
+#include "Libraries/WataLib/Json.h"
+#include "Libraries/WataLib/Camera/CameraManager.h"
+#include "Game/Enemys/EnemyManager.h"
+#include "Game/CollisiionManager.h"
+#include "Game/UI/UIManager.h"
+#include "Game//TargetMarker.h"
+#include "Game/Effect/EffectsManager.h"
+#include "Libraries/WataLib/DrawTexture.h"
+#include "Game/StageObject/Sky.h"
+#include "Game/StageObject/Floor.h"
+#include "Game/StageObject/Wall.h"
+#include "Game/ItemAcquisition.h"
 
-const int WALLSIZE = 4;
-const float WALLHEITH = 2;
-
-//イベント名
-const std::string SLOWMOTION = "SlowMotion";
+using namespace DirectX;
+using namespace DirectX::SimpleMath;
 
 //---------------------------------------------------------
 // コンストラクタ
@@ -52,20 +38,19 @@ const std::string SLOWMOTION = "SlowMotion";
 PlayScene::PlayScene(SceneManager::StageID stageID)
 	:
 	m_commonResources{},
-	//m_debugCamera{},
-	m_gridFloor{},
 	m_projection{},
-	m_player{},
-	m_enemy{},
-	m_cameraManager{},
-	m_floor{}
-	, m_lockOn{}
-	, m_rock{}
-	, m_sky{}
-	, m_nextScene{ SceneID::NONE }
-	,m_state{}
-	,m_ceiling{}
+	m_isChangeScene{},
+	m_player{}
+	,m_stageObjectManager{}
+	,m_enemyManager{}
+	,m_cameraManager{}
+	,m_collisionManager{}
+	,m_uiManager{}
+	,m_targetMarker{}
+	,m_effectsManager{}
+	,m_nextScene{SceneID::NONE}
 	,m_stageID{stageID}
+	,m_tutorialTex{}
 {
 }
 
@@ -75,13 +60,17 @@ PlayScene::PlayScene(SceneManager::StageID stageID)
 PlayScene::~PlayScene()
 {
 	// do nothing.
+	//イベントの削除
 
-		// オーディオエンジンの後始末
+
+	// オーディオエンジンの後始末
 	m_soundEffectInstanceBGM->Stop(true);
 	if (m_audioEngine)
 	{
 		m_audioEngine->Suspend();
 	}
+
+	Messenger::m_eventList.clear();
 
 }
 
@@ -90,9 +79,6 @@ PlayScene::~PlayScene()
 //---------------------------------------------------------
 void PlayScene::Initialize(CommonResources* resources)
 {
-	using namespace DirectX;
-	using namespace DirectX::SimpleMath;
-
 	assert(resources);
 	m_commonResources = resources;
 
@@ -100,119 +86,72 @@ void PlayScene::Initialize(CommonResources* resources)
 	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
 	auto states = m_commonResources->GetCommonStates();
 
-	m_nextScene = SceneID::NONE;
-
-	// グリッド床を作成する
-	m_gridFloor = std::make_unique<mylib::GridFloor>(device, context, states);
-
 	// デバッグカメラを作成する
 	RECT rect{ m_commonResources->GetDeviceResources()->GetOutputSize() };
-	//m_debugCamera = std::make_unique<mylib::DebugCamera>();
-	//m_debugCamera->Initialize(rect.right, rect.bottom);
 
 	// 射影行列を作成する
 	m_projection = SimpleMath::Matrix::CreatePerspectiveFieldOfView(
 		XMConvertToRadians(45.0f),
 		static_cast<float>(rect.right) / static_cast<float>(rect.bottom),
-		0.1f, 1000.0f
+		0.1f, 150.0f
 	);
 
 
-	//ステージの生成
-	CreateStage();
-	//オブジェクトの生成
-	CreateObject();
-	
+	m_nextScene = SceneID::NONE;
 
-	m_cameraManager = std::make_unique<mylib::GameCameraManager>();
-
-	m_lockOn = std::make_unique<LockOn>();
+	//クラスの生成
+	m_stageObjectManager = std::make_unique<StageObjectManager>(m_commonResources);
+	m_player = std::make_unique<Player>(m_commonResources);
+	m_cameraManager = std::make_unique<WataLib::CameraManager>();
+	m_enemyManager = std::make_unique<EnemyManager>(m_player.get(),m_stageObjectManager.get());
 	m_collisionManager = std::make_unique<CollisionManager>();
-	m_ui = std::make_unique<UI>();
+	m_uiManager = std::make_unique<UIManager>();
+	m_targetMarker = std::make_unique<TargetMarker>();
+	m_effectsManager = std::make_unique<EffectsManager>();
+	m_sky = std::make_unique<Sky>(m_commonResources,Vector3::Zero,Vector3::Zero,Quaternion::Identity);
 
-	//各クラスに必要なクラスのインスタンス
-	m_player->Instances();
-	m_enemy->Instances();
-	m_cameraManager->Instances();
-	m_ui->Instances();
-	
-	//各クラスの情報を登録とインスタンス
-	m_player->RegistrationInformation(m_enemy.get(),m_cameraManager->GetTPSCamera(),this);
-	m_enemy->RegistrationInformation(m_player.get());
+	//各クラスに必要なポインタを登録
+	m_cameraManager->AddPointer(m_player.get(),m_enemyManager.get());
+	m_player->AddPointer(m_cameraManager->GetTPSCamera(),m_targetMarker.get());
+	m_uiManager->AddPointer(m_player.get(),this,m_enemyManager.get());
+	m_targetMarker->AddPointer(m_cameraManager->GetTPSCamera());
 
-
-	m_cameraManager->RegistrationInformation(this, m_player.get(), m_enemy.get());
-	m_lockOn->RegistrationInformation(m_player.get(), m_enemy.get(), m_cameraManager.get());
-	m_ui->RegistrationInformation(this, m_player.get(), m_enemy.get());
+	//ステージの作成
+	CreateStageObject();
 
 
-
+	//初期化
+	m_stageObjectManager->Initialize();
+	m_enemyManager->Initialize(m_commonResources);
 	m_player->Initialize();
-	m_enemy->Initialize();
+	m_cameraManager->Initialize(m_commonResources);
+	m_collisionManager->Initialize(m_commonResources);
+	m_uiManager->Initialize(m_commonResources);
+	m_targetMarker->Initialize(m_commonResources);
+	m_effectsManager->Initialize(m_commonResources);
+	m_sky->Initialize();
+	ItemAcquisition::GetInstance()->Initialize(m_commonResources);
 
-	m_cameraManager->Initialize();
-	m_lockOn->Initialize(m_commonResources->GetDeviceResources(),
-		m_commonResources->GetDeviceResources()->GetOutputSize().right,
-		m_commonResources->GetDeviceResources()->GetOutputSize().bottom);
-	m_collisionManager->Initialize(m_commonResources, m_player.get(), m_enemy.get());
-	m_ui->Initialize(m_commonResources,
-		m_commonResources->GetDeviceResources()->GetOutputSize().right,
-		m_commonResources->GetDeviceResources()->GetOutputSize().bottom);
+	//当たり判定の登録
+	m_player->AddCollision(m_collisionManager.get());
+	m_enemyManager->AddCollision(m_collisionManager.get());
+	m_stageObjectManager->AddCollision(m_collisionManager.get());
 
-	m_collisionManager->SetTPS_Camera(m_cameraManager->GetTPSCamera());
+	//ターゲットの追加
+	m_targetMarker->AddTargetObject(m_enemyManager->GetEnemys());
+
+	//アイテム回収クラスに
+	ItemAcquisition::GetInstance()->AddPlayer(m_player.get());
 
 
-
-	///当たり判定をManagerに追加
-	m_player->RegistrationCollionManager(m_collisionManager.get());
-	m_enemy->RegistrationCollionManager(m_collisionManager.get());
-	m_floor->RegistrationCollionManager(m_collisionManager.get());
-
-	for (auto& wall : m_wall)
-	{
-		wall->RegistrationCollionManager(m_collisionManager.get());
-	}
-
-	for (auto& artillery : m_artillery)
-	{
-		artillery->RegistrationCollionManager(m_collisionManager.get());
-	}
-
-	for (auto& pillar : m_pillar)
-	{
-		pillar->RegistrationCollionManager(m_collisionManager.get());
-	}
-
+	// シーン変更フラグを初期化する
+	m_isChangeScene = false;
 	
+	//フェードアウトの開始
+	m_commonResources->GetFade()->StartNormalFadeOut();
 
 
-	m_sky = std::make_unique<Sky>();
-	m_sky->Initialize(m_commonResources);
-
-	//決めた数だけ爆発エフェクトを生成しておく
-	for (int i = 0; i < 10; i++)
-	{
-		auto particle = std::make_unique<Particle>();
-		particle->Initialize(m_commonResources);
-		m_particle.push_back(std::move(particle));
-	}
-
-	for (int i = 0; i < 1; i ++)
-	{
-
-		auto effect = std::make_unique<HitEffects>();
-		effect->Initialize(m_commonResources);
-
-		m_hitEffects.push_back(std::move(effect));
-
-	}
-
-
-	m_state = GameState::None;
-
-	m_commonResources->GetTimer()->TimeReset();
-
-		// オーディオエンジンのフラグ
+	// オーディオエンジンのフラグ
 	AUDIO_ENGINE_FLAGS eflags = AudioEngine_Default;
 #ifdef _DEBUG
 	eflags |= AudioEngine_Debug;
@@ -228,31 +167,14 @@ void PlayScene::Initialize(CommonResources* resources)
 	// サウンドエフェクトBGMをインスタンス化する
 	m_soundEffectInstanceBGM = m_soundEffectBGM->CreateInstance();
 	// BGMのループ再生
-	m_soundEffectInstanceBGM->Play(true);
+	//sm_soundEffectInstanceBGM->Play(true);
 
-	m_startCountDown = 0;
+	m_tutorialTex = std::make_unique<WataLib::DrawTexture>();
+	m_tutorialTex->Initialize(m_commonResources, L"Resources/Textures/Tex.png", Vector2(640, 360), Vector2::One);
 
-	m_slowMotionSpeed = 1.0f;
-	m_slowMotionTime = 0;
-	m_isSlowMotion = false;
+	m_isTutolialTex = false;
 
-	//イベントの登録 プレイシーンの最後で行う
-	//スロー演出の開始イベント
- 	Messenger::Attach(Messenger::SLOWMOTION, std::bind(&PlayScene::BoomerangSlowMotion,this));
-	//スロー演出の終了イベント
-	Messenger::Attach(Messenger::SLOWMOTIONEND, std::bind(&PlayScene::BoomerangSlowMotionEnd, this));
-	//ヒットエフェクトの生成
-	Messenger::Attach2(Messenger::CREATEHITEFFECTS, std::bind(&PlayScene::CreateHitEffects, this, std::placeholders::_1));
 
-	m_slowTexture = std::make_unique<mylib::Texture>();
-	m_slowTexture->Initialize(m_commonResources, L"Resources/Textures/SlowMotionTex.png", Vector2(640, 360), 1.0f);
-
-	//Messenger::Notify2(Messenger::CREATEHITEFFECTS, Vector3(0, 2, 0));
-
-	m_lockOn->AddTargetObject(m_enemy.get());
-	//m_lockOn->AddTargetObject(m_birdEnemy.get());
-
-	m_commonResources->GetFade()->StartNormalFadeOut();
 }
 
 //---------------------------------------------------------
@@ -261,138 +183,38 @@ void PlayScene::Initialize(CommonResources* resources)
 void PlayScene::Update(float elapsedTime)
 {
 	UNREFERENCED_PARAMETER(elapsedTime);
-
-
-	if (m_startCountDown < 0.5f)
+	//フェードが終わるまで
+	if (m_commonResources->GetFade()->GetFadeState() != Fade::FadeState::None)
 	{
-		m_startCountDown += elapsedTime;
 		return;
 	}
 
-	//イベントの更新
-	for (auto& ecent : m_eventUpdate)
+	// キーボードステートトラッカーを取得する
+	const auto& kbTracker = m_commonResources->GetInputManager()->GetKeyboardTracker();
+
+	if (m_isTutolialTex && kbTracker->released.Space)
 	{
-		ecent.second(elapsedTime);
+		m_tutorialTex->SetScale(Vector2::Zero);
+		m_isTutolialTex = false;
 	}
 
-	//イベント名があればイベント関数から削除する
-	m_deleteEventName.erase(
-		std::remove_if(m_deleteEventName.begin(), m_deleteEventName.end(),
-			[this](const auto& name) 
-			{
-				//nameを削除する
-				m_eventUpdate.erase(name);
-				//ture : nameを削除対象にする
-				return true;
-			}
-		),
-		m_deleteEventName.end()
-	);
-
-
-
-	m_cameraManager->Update(elapsedTime);
-
-	//スロー演出の速度をかける
-	elapsedTime *= m_slowMotionSpeed;
-
-
-	switch (m_state)
+	if (m_isTutolialTex)
 	{
-		case PlayScene::GameState::None:
-
-
-			if (m_cameraManager->GetGameCameraState() != m_cameraManager->GetGameStartCamera())
-			{
-				m_enemy->Update(elapsedTime);
-				m_enemyManager->Update(elapsedTime);
-				for (auto& artillery : m_artillery)
-				{
-					artillery->Update(elapsedTime);
-				}
-
-			}
-
-
-			//ゲームクリア時に１度だけ呼びたい
-			if (m_enemy->GetHp() <= 0)
-			{
-				//カメラの切り替え
-				m_cameraManager->ChangeState(m_cameraManager->GetGameEndCamera());
-				//ゲーム状態をクリアに変更
-				m_state = GameState::Clear;
-				m_enemy->SetAnimation("FallDown");
-			}
-
-			//ゲームオーバーに変更
-			if (m_player->GetPlayerHP() <= 0)
-			{
-				m_state = GameState::GameOver;
-			}
-
-			m_lockOn->Update(elapsedTime);
-
-
-
-			m_commonResources->GetTimer()->Update(elapsedTime);
-
-
-			break;
-		case PlayScene::GameState::Clear:
-
-			//TPSカメラになってゲームが通常状態の時
-			if (m_cameraManager->GetGameCameraState() != m_cameraManager->GetGameStartCamera())
-			{
-				
-				if (m_enemy->FallDwonAnimation(elapsedTime) == Animation::AnimationState::End && m_ui->GetCurrentUIState() != m_ui->GetGameClearUI())
-				{
-					m_ui->ChangeState(m_ui->GetGameClearUI());
-				}
-			
-			}
-
-
-			break;
-		case PlayScene::GameState::GameOver:
-
-			if (m_ui->GetCurrentUIState() != m_ui->GetGameOverUI())
-			{
-				m_ui->ChangeState(m_ui->GetGameOverUI());
-			}
-
-			break;
-		default:
-			break;
+		return;
 	}
 
 
 
+	//更新
 	m_player->Update(elapsedTime);
-
-
-
-	m_ui->Update(elapsedTime);
-
+	m_enemyManager->Update(elapsedTime);
+	ItemAcquisition::GetInstance()->Update();
 	m_collisionManager->Update();
+	m_cameraManager->Update(elapsedTime);
+	m_uiManager->Update(elapsedTime);
+	m_targetMarker->Update(elapsedTime);
+	m_effectsManager->Update(elapsedTime);
 
-	for (auto& particle : m_particle)
-	{
-		if (particle->GetState() == Particle::State::Using)
-		{
-			particle->Update(elapsedTime);
-		}
-	}
-
-	for (auto& hiteffect : m_hitEffects)
-	{
-		if (hiteffect->GetState() == HitEffects::State::Using)
-		{
-			hiteffect->Update(elapsedTime);
-		}
-	}
-
-	m_player->SetisLockOn(m_lockOn->GetIsLOckOn());
-	m_player->SetBoomerangTargetPosition(m_lockOn->GetTargetPosition());
 }
 
 //---------------------------------------------------------
@@ -400,84 +222,26 @@ void PlayScene::Update(float elapsedTime)
 //---------------------------------------------------------
 void PlayScene::Render()
 {
-	using namespace DirectX::SimpleMath;
-
+	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
+	auto states = m_commonResources->GetCommonStates();
 
 	// ビュー行列を取得する
 	const Matrix& view = m_cameraManager->GetViewMatrix();
 
-
-	m_floor->Render(view, m_projection);
-
-	for (auto& wall : m_wall)
-	{
-		wall->Render(view, m_projection);
-	}
-
-	for (auto& pillar : m_pillar)
-	{
-		//pillar->Render(view, m_projection);
-	}
-
-	//m_ceiling->Render(m_view, m_projection);
-
-	//m_enemy->Render(view, m_projection);
-
-	m_enemyManager->Render(view, m_projection);
-
+	//描画
 	m_sky->Render(view, m_projection);
-
-	for (auto& artillery : m_artillery)
-	{
-		//artillery->Render(view, m_projection);
-	}
-
-
-	if (m_state == GameState::None)
-	{
-		m_player->Render(view, m_projection);
-		m_lockOn->Render();
-	}
-
-	for (auto& particle : m_particle)
-	{
-		if (particle->GetState() == Particle::State::Using)
-		{
-			particle->Render(view, m_projection);
-		}
-	}
-
-	for (auto& effect : m_hitEffects)
-	{
-		if (effect->GetState() == HitEffects::State::Using)
-		{
-			effect->Render(view, m_projection);
-		}
-	}
+	m_stageObjectManager->Render(view, m_projection);
+	m_player->Render(view, m_projection);
+	m_enemyManager->Render(view, m_projection);
+	m_effectsManager->Render(view, m_projection);
+	m_uiManager->Render(view, m_projection);
+	m_targetMarker->Render();
 
 
-	if (m_isSlowMotion)
-	{
-		//m_slowTexture->Render();
-		m_ui->GetGamePlayUI()->BoomerangMakerRender();
-
-	}
-
-	m_ui->Render();
-
-	m_commonResources->GetTimer()->PlaySceneRender(Vector2(100, 50), 0.3f);
-
-#ifdef _DEBUG
-
-	//// デバッグ情報を「DebugString」で表示する
-	//auto debugString = m_commonResources->GetDebugString();
-	//debugString->AddString("Play Scene");
-	//debugString->AddString("PlayerPos: %f, %f,%f", m_player->GetPosition().x, m_player->GetPosition().y, m_player->GetPosition().z);
-	//debugString->AddString("EyePos: %f, %f,%f", m_cameraManager->GetTPSCamera()->GetEyePosition().x, m_cameraManager->GetTPSCamera()->GetEyePosition().y, m_cameraManager->GetTPSCamera()->GetEyePosition().z);
-	//debugString->AddString("Pos: %f, %f", m_player->GetPos().x, m_player->GetPos().z);
-	//debugString->AddString("Pos: %f, %f", m_enemy->GetPos().x, m_enemy->GetPos().z);
-	//debugString->AddString("IsLockOn: %d ", m_lockOn->GetIsLOckOn());
-#endif
+	//if (m_stageID == SceneManager::Stage1)
+	//{
+	//	m_tutorialTex->Render();
+	//}
 
 }
 
@@ -495,28 +259,39 @@ void PlayScene::Finalize()
 IScene::SceneID PlayScene::GetNextSceneID() const
 {
 
+	if (m_nextScene == IScene::SceneID::NONE)
+	{
+		return  m_nextScene;
+	}
+
+	//フェード中でないなら
+	if (m_commonResources->GetFade()->GetFadeState() == Fade::FadeState::None)
+	{
+		//フェードインを開始
+		m_commonResources->GetFade()->StartNormalFadeIn();
+
+	}
+
 	//Noneなら切り替えしない
 	return m_nextScene;
-
 }
 
-//ステージの生成
-void PlayScene::CreateStage()
+void PlayScene::CreateStageObject()
 {
 
-	std::vector<Json::StageData> stageParameters;
+	std::vector<WataLib::Json::StageData> stageParameters;
 
-	std::unique_ptr<Json> json = std::make_unique<Json>();
+	std::unique_ptr<WataLib::Json> json = std::make_unique<WataLib::Json>();
 
-
-	//ステージのデータを読み込む
 	switch (m_stageID)
 	{
 		case SceneManager::Stage1:
-			stageParameters = json->LoadStageDatas(L"Stage");
+			stageParameters = json->LoadStageDatas(L"Stage2");
+			m_isTutolialTex = true;
 			break;
 		case SceneManager::Stage2:
-			stageParameters = json->LoadStageDatas(L"Stage2");
+			stageParameters = json->LoadStageDatas(L"Stage");
+			m_isTutolialTex = false;
 			break;
 		default:
 			break;
@@ -526,165 +301,39 @@ void PlayScene::CreateStage()
 	for (auto& parameter : stageParameters)
 	{
 
-		//ステージの壁
-		if (parameter.ModelName == "Wall")
+		if (parameter.ModelName == "Floor")
 		{
-			auto wall = std::make_unique<Wall>();
-			wall->Initialize(m_commonResources, parameter.Position, parameter.Scale, parameter.Rotation, parameter.BoundingSphereRadius);
-			m_wall.push_back(std::move(wall));
+			auto floor = std::make_unique<Floor>(
+				m_commonResources,
+				parameter.Scale, parameter.Position,
+				Quaternion::CreateFromYawPitchRoll(
+					DirectX::XMConvertToRadians(parameter.Rotation.y),
+					DirectX::XMConvertToRadians(parameter.Rotation.x),
+					DirectX::XMConvertToRadians(parameter.Rotation.z)));
+
+			m_stageObjectManager->AddObject(parameter.ModelName, std::move(floor));
+
 		}
-		else if (parameter.ModelName == "Floor")
+		else if (parameter.ModelName == "Wall")
 		{
-			//床	 
-			m_floor = std::make_unique<Floor>();
-			m_floor->Initialize(m_commonResources, parameter.Position, parameter.Scale, parameter.Rotation, parameter.BoundingSphereRadius);
+
+			auto wall = std::make_unique<Wall>(
+				m_commonResources,
+				parameter.Scale, parameter.Position,
+				Quaternion::CreateFromYawPitchRoll(
+					DirectX::XMConvertToRadians(parameter.Rotation.y),
+					DirectX::XMConvertToRadians(parameter.Rotation.x),
+					DirectX::XMConvertToRadians(parameter.Rotation.z)));
+
+			m_stageObjectManager->AddObject(parameter.ModelName, std::move(wall));
 
 		}
-	}
-
-}
-
-void PlayScene::CreateObject()
-{
-	using namespace DirectX::SimpleMath;
-
-	DirectX::SimpleMath::Quaternion rotation = Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0), 0, DirectX::XMConvertToRadians(0));
-
-	float scale = 1.0f;
-
-	m_enemy = std::make_unique<Enemy>(m_commonResources, nullptr, DirectX::SimpleMath::Vector3(scale, scale, scale), Vector3(0, 4, 0), rotation, 4);
-	m_player = std::make_unique<Player>(m_commonResources, nullptr, Vector3(0.2, 0.2, 0.2), Vector3(0, 0.75f, 15),
-		Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(180), DirectX::XMConvertToRadians(0), DirectX::XMConvertToRadians(0)));
-
-	m_enemyManager = std::make_unique<EnemyManager>();
-	m_enemyManager->Instances(m_player.get(), m_commonResources);
-	m_enemyManager->Initialize();
-
-}
-
-//爆発エフェクトを生成する
-void PlayScene::CreateParticle(DirectX::SimpleMath::Vector3 Pos)
-{
-
-	for (auto& particle : m_particle)
-	{
-		//使用していなければ
-		if (particle->GetState() == Particle::State::None)
+		else if (parameter.ModelName == "BossEnemy" || parameter.ModelName == "BirdEnemy")
 		{
-			particle->Create(Pos);
-			break;
-		}
 
+			m_enemyManager->AddEnemyData(parameter);
 
-	}
-
-}
-
-void PlayScene::CreateHitEffects(DirectX::SimpleMath::Vector3 Pos)
-{
-
-	for (auto& effect : m_hitEffects)
-	{
-		if (effect->GetState() == HitEffects::State::None)
-		{
-			effect->Create(Pos);
-			break;
 		}
 
 	}
-
 }
-
-
-
-//　ブーメランを投げるときのスロー演出
-void PlayScene::BoomerangSlowMotion()
-{
-	//スロー演出の時間の
-	m_slowMotionSpeed = 0.3f;
-
-	//スロー演出の最大時間
-	m_slowMotionMaxTime = 3.0f;
-	
-	m_isSlowMotion = true;
-
-	m_slowMotionTime = 0;
-
-	//進行割合の初期化
-	m_progressRate = 0.0f;
-
-
-	//スロー演出のUpdateの追加
-	m_eventUpdate[SLOWMOTION] = std::function<void(float)>(std::bind(&PlayScene::SlowMotion, this, std::placeholders::_1));
-
-}
-
-void PlayScene::BoomerangSlowMotionEnd()
-{
-
-	//名前を削除に登録
-	m_deleteEventName.push_back(SLOWMOTION);
-
-	//時間の初期化
-	m_slowMotionTime = 0;
-
-	m_isSlowMotion = false;
-
-	//進行割合を最大に
-	m_progressRate = 1.0f;
-
-	//スロースピードの初期化
-	m_slowMotionSpeed = 1.0f;
-
-	m_progressRate = 0.0f;
-}
-
-void PlayScene::SlowMotion(float elapsdTime)
-{
-
-	m_ui->GetGamePlayUI()->BoomerangMakerUpdate();
-
-
-	if (m_slowMotionTime >= m_slowMotionMaxTime)
-	{
-		//名前を削除に登録
-		m_deleteEventName.push_back(SLOWMOTION);
-
-		//時間の初期化
-		m_slowMotionTime = 0;
-
-		m_isSlowMotion = false;
-
-		//進行割合を最大に
-		m_progressRate = 1.0f;
-
-		//スロースピードの初期化
-		m_slowMotionSpeed = 1.0f;
-
-		m_progressRate = 0.0f;
-
-		if (m_player->GetUsingBoomerang()->GetBoomerangState() == m_player->GetUsingBoomerang()->GetBoomerangGetReady())
-		{
-			
-			m_player->GetUsingBoomerang()->ChangeState(m_player->GetUsingBoomerang()->GetBoomerangThrow());
-			m_player->ChangeState(m_player->GetPlayerIding());
-		}
-
-
-
-
-
-
-		return;
-	}
-
-	m_slowMotionTime += elapsdTime;
-
-	//進行割合を求める
-	m_progressRate = m_slowMotionTime / m_slowMotionMaxTime;
-
-}
-
-
-
-

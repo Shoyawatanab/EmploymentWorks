@@ -1,98 +1,113 @@
 /*
-	@file	GameOverUI.h
-	@brief	TPSカメラクラス
+* プレイヤの通常状態クラス
 */
 #pragma once
-#include "Interface/IUI.h"
-#include <Libraries/MyLib/UserInterface.h>
+#include <unordered_map>
+#include "Game/Interface/IState.h"
+#include "Game/Interface/IObserver.h"
+
+#include "Libraries/WataLib/UserInterface.h"
 
 
-// 前方宣言
-class CommonResources;
-class PlayScene;
+class Player;
+class UserInterface;
+
+namespace WataLib
+{
+	class DrawTexture;
+}
+
+class GameOverUI : public IState ,  public IObserver
+{
+
+private :
+
+	static constexpr int HP_COUNT{ 3 };
+	static constexpr DirectX::SimpleMath::Vector2 HP_POSITION        { 50.0f,680.0f};
+	static constexpr DirectX::SimpleMath::Vector2 HP_POSITION_OFFSET { 70.0f,1.0f};
+	static constexpr DirectX::SimpleMath::Vector2 HP_SCALE { 1.0f,1.0f};
+
+	static constexpr int BOOMERANG_COUNT{ 3 };
+	static constexpr DirectX::SimpleMath::Vector2 BOOMERANG_POSITION        { 50.0f, 600.0f};
+	static constexpr DirectX::SimpleMath::Vector2 BOOMERANG_POSITION_OFFSET { 70.0f, 1.0f};
+	static constexpr DirectX::SimpleMath::Vector2 BOOMERANG_SCALE { 0.1f, 0.1f};
+
+public:
+	//コンストラクタ
+	GameOverUI() ;
+	//デストラクタ
+	~GameOverUI() override;
+
+	void Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection) override;
+
+	//必要なポインタの登録
+	void AddPointer(Player* player);
+
+private:
+
+	//画像の読み込み
+	std::unique_ptr<UserInterface> AddTexture(const wchar_t* path
+		, DirectX::SimpleMath::Vector2 position
+		, DirectX::SimpleMath::Vector2 scale
+		, ANCHOR anchor
+		, UserInterface::Kinds kind);
 
 
-	class GameOverUI : public IUI
-	{
-	public:
-		enum class NextState
-		{
-			ReTry,
-			End
-		};
+
+	void CreateEnemyHP();
+
+	void CreatePlayerHP();
+
+	void CreateBoomerang();
 
 
 
-
-	public:
-		void SetWindowSize(int width, int height)
-		{
-			m_windowWidth = width;
-			m_windowHeight = height;
-		}
-
-
-
-	private:
-
-		// 共通リソース
-		CommonResources* m_commonResources;
-		int m_windowWidth, m_windowHeight;
-
-		std::unique_ptr<UserInterface> m_gameOverUI;
-		std::unique_ptr<UserInterface> m_gameOverReTryUI;
-		std::unique_ptr<UserInterface> m_gameOverEndUI;
-		PlayScene* m_playScene;
-
-		NextState m_nextState;
-
-	public:
-		// コンストラクタ
-		GameOverUI();
-
-		// デストラクタ
-		~GameOverUI() = default;
-
-		//オーバーライド
-	public:
-
-		void Initialize(CommonResources* resources) override;
+//継承関数
+public:
+//IState
+	//初期化
+	void Initialize(CommonResources* resources) override;
+	// 更新する
+	void Update(const float& elapsedTime) override;
+	//状態に入った時
+	void Enter() override;
+	//状態を抜けた時
+	void Exit() override;
 
 
-		void Update(const float& elapsedTime) override;
+	//IObserver
+//通知時に呼ばれる関数
+	void Notify(EventManager::EventTypeName type) override;
 
-		void Render() override;
+public:
+	// 共通リソース
+	CommonResources* m_commonResources;
+	//プレイアy
+	Player* m_player;
+	//プレイヤHP
+	std::vector<std::unique_ptr<WataLib::DrawTexture>> m_playerHP;
+	//ブーメラン残機
+	std::vector<std::unique_ptr<WataLib::DrawTexture>> m_boomerang;
 
-		void Enter() override;
-
-		void Exit() override;
-
-		//クラスに必要な情報（ポインタ）を登録する
-		void RegistrationInformation(PlayScene* playScene);
-
-	private:
-
-
-		void GameOverTexAdd(const wchar_t* path
-			, DirectX::SimpleMath::Vector2 position
-			, DirectX::SimpleMath::Vector2 scale
-			, ANCHOR anchor
-			, UserInterface::Kinds kind);
-
-		void GameOverReTryTexAdd(const wchar_t* path
-			, DirectX::SimpleMath::Vector2 position
-			, DirectX::SimpleMath::Vector2 scale
-			, ANCHOR anchor
-			, UserInterface::Kinds kind);
-
-		void GameOverEndTexAdd(const wchar_t* path
-			, DirectX::SimpleMath::Vector2 position
-			, DirectX::SimpleMath::Vector2 scale
-			, ANCHOR anchor
-			, UserInterface::Kinds kind);
+	std::unique_ptr<UserInterface> m_enemyHP;
+	std::vector<std::unique_ptr<UserInterface>> m_enemyHPBase;
 
 
-		void CreateGameOverTex();
 
+private :
 
-	};
+	std::pair<int, int> m_windowSize;
+
+	//座標
+	DirectX::SimpleMath::Vector3 m_position;
+	//大きさ
+	DirectX::SimpleMath::Vector3 m_scale;
+	//回転
+	DirectX::SimpleMath::Quaternion m_rotation;
+	
+	int m_playerHPCount;
+
+	int m_boomerangCount;
+	
+
+};

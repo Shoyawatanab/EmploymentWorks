@@ -1,66 +1,48 @@
 #include "pch.h"
 #include "Game/Observer/Messenger.h"
-#include "Interface/IObserver.h"
 
 
 
-std::unordered_map<std::string, std::function<void()>> Messenger::m_eventList;
-std::unordered_map<std::string, std::function<void(DirectX::SimpleMath::Vector3)>> Messenger::m_eventList2;
-
-//イベント名の設定
-
-const std::string Messenger::SLOWMOTION = "SlowMotion";
-
-const std::string Messenger::SLOWMOTIONEND = "SlowMotionEnd";
-
-const std::string Messenger::CREATEHITEFFECTS = "CreateHitEffects";
+std::unordered_map<EventParams::EventType, std::vector<IObserver*>> Messenger::m_eventList;
 
 
 /// <summary>
-/// 観察者をアタッチ
+/// イベントのオブザーバーの追加
 /// </summary>
-/// <param name="name">イベント名</param>
-/// <param name="event">登録関数</param>
-void Messenger::Attach(std::string name, std::function<void()> eventFunction)
-{
-	//イベントを登録
-	m_eventList[name] = eventFunction;
-}
-
-void Messenger::Attach2(std::string name, std::function<void(DirectX::SimpleMath::Vector3)> eventFunction)
+/// <param name="type">イベントの種類</param>
+/// <param name="observer">オブザーバー</param>
+void Messenger::Attach(EventParams::EventType type, IObserver* observer)
 {
 
-	//イベントを登録
-	m_eventList2[name] = eventFunction;
-
+	m_eventList[type].push_back(observer);
 
 }
 
-// 観察者をデタッチする
-void Messenger::Detach(std::string name)
+/// <summary>
+/// イベントを呼ぶ
+/// </summary>
+/// <param name="type">イベントの種類</param>
+/// <param name="datas">必要なデータ</param>
+void Messenger::Notify(EventParams::EventType type, void* datas)
 {
-	//イベントを探す
-	auto it = m_eventList.find(name);
-	//イベントがあるかどうか
+
+	auto it = m_eventList.find(type);
+
+	//あれば
 	if (it != m_eventList.end())
 	{
-		//ある場合
-		//イベントを削除
-		m_eventList.erase(name);
+
+		for (auto& obsever : it->second)
+		{
+			obsever->Notify(type,datas);
+		}
+
 	}
+
+
 }
 
-// 観察者に通知する
-void Messenger::Notify(std::string name)
-{
-	//登録された関数の実行
-	m_eventList[name]();
-}
 
-void Messenger::Notify2(std::string name, DirectX::SimpleMath::Vector3 pos)
-{
-	m_eventList2[name](pos);
-}
 
 
 

@@ -9,43 +9,16 @@
 // 前方宣言
 class CommonResources;
 
-namespace mylib
+namespace WataLib
 {
-	class DebugCamera;
-	class GridFloor;
+	class DrawTexture;
 }
+
 
 
 class StageSelectScene final :
     public IScene
 {
-
-public:
-
-
-
-private:
-	// 共通リソース
-	CommonResources* m_commonResources;
-
-	SceneManager* m_sceneManager;
-
-	// スプライトバッチ
-	std::unique_ptr<DirectX::SpriteBatch> m_spriteBatch;
-
-	// スプライトフォント
-	std::unique_ptr<DirectX::SpriteFont> m_spriteFont;
-
-	// テクスチャ
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_texture;
-
-	// テクスチャの半分の大きさ
-	DirectX::SimpleMath::Vector2 m_texCenter;
-
-	// シーンチェンジフラグ
-	bool m_isChangeScene;
-
-
 
 public:
     StageSelectScene(SceneManager* sceneManager);
@@ -57,4 +30,23 @@ public:
     void Finalize() override;
 
     SceneID GetNextSceneID() const;
+
+private:
+	// 共通リソース
+	CommonResources* m_commonResources;
+
+	SceneManager* m_sceneManager;
+
+	std::unique_ptr<WataLib::DrawTexture > m_stage1UI;
+	std::unique_ptr<WataLib::DrawTexture > m_tutorialUI;
+
+	std::unique_ptr<WataLib::DrawTexture > m_backGround;
+
+	std::vector < std::unique_ptr<WataLib::DrawTexture>> m_textures;
+
+	std::unique_ptr<WataLib::DrawTexture > m_arrow;
+
+	// シーンチェンジフラグ
+	bool m_isChangeScene;
+
 };

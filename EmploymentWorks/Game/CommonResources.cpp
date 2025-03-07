@@ -16,7 +16,7 @@ CommonResources::CommonResources()
 	m_commonStates{ nullptr },
 	m_debugString{ nullptr },
 	m_inputManager{ nullptr },
-	m_fade{nullptr}
+	m_fade{ nullptr }
 {
 }
 
@@ -44,11 +44,4 @@ void CommonResources::Initialize(
 	m_debugString = debugString;
 	m_inputManager = inputManager;
 	m_fade = fade;
-
-	m_timer = std::make_unique<Timer>();
-	m_timer->Initialize(this);
-
-
-	m_judgement = std::make_unique<mylib::Judgement>();
-
 }
