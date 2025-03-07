@@ -1,0 +1,282 @@
+#include "pch.h"
+#include "GamePlayUI.h"
+#include "Game/CommonResources.h"
+#include "DeviceResources.h"
+#include "Libraries/MyLib/InputManager.h"
+
+#include "Libraries/WataLib/Camera/TPS_Camera.h"
+#include "Game/Player/Player.h"
+#include "Game/Player/State/PlayerStateMachine.h"
+#include "Game/Weapon/Boomerang/State/BoomerangStateMachine.h"
+#include "Libraries/WataLib/DrawTexture.h"
+#include "Game/Enemys/EnemyManager.h"
+#include "Game/Observer/Messenger.h"
+
+using namespace DirectX;
+using namespace DirectX::SimpleMath;
+
+/// <summary>
+/// コンストラクタ
+/// </summary>
+GamePlayUI::GamePlayUI()
+	:
+	m_commonResources{}
+	,m_position{}
+	,m_scale{}
+	,m_rotation{}
+	,m_player{}
+	,m_playerHP{}
+	,m_boomerang{}
+	,m_windowSize{}
+	,m_playerHPCount{}
+	,m_boomerangCount{}
+	,m_enemyHP{}
+	,m_enemyHPBase{}
+	, m_itemAcquisitionUI{}
+{
+}
+
+/// <summary>
+/// デストラクタ
+/// </summary>
+GamePlayUI::~GamePlayUI()
+{
+}
+
+/// <summary>
+/// 描画
+/// </summary>
+/// <param name="view">ビュー行列</param>
+/// <param name="projection">射影行列</param>
+void GamePlayUI::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
+{
+
+
+	for (int i = 0; i < m_playerHPCount; i ++)
+	{
+		m_playerHP[i]->Render();
+	}
+
+	for (int i = 0; i < m_boomerangCount; i++)
+	{
+		m_boomerang[i]->Render();
+	}
+
+	if (m_enemyManager->GetBossEnemy() != nullptr)
+	{
+		for (auto& enemyHP : m_enemyHPBase)
+		{
+			enemyHP->Render();
+
+		}
+
+		m_enemyHP->Render();
+
+	}
+
+	//m_itemAcquisitionUI->Render();
+
+}
+
+
+/// <summary>
+/// 必要なポインタの追加
+/// </summary>
+/// <param name="player">プレイヤ</param>
+/// <param name="enemyManager">エネミーマネージャー</param>
+void GamePlayUI::AddPointer(Player* player, EnemyManager* enemyManager)
+{
+	m_player = player;
+	m_enemyManager = enemyManager;
+}
+
+/// <summary>
+/// 画像の追加
+/// </summary>
+/// <param name="path">読み込みのパス</param>
+/// <param name="position">座標</param>
+/// <param name="scale">大きさ</param>
+/// <param name="anchor">アンカー</param>
+/// <param name="kind">種類</param>
+/// <returns>UIのポインタ</returns>
+std::unique_ptr<UserInterface> GamePlayUI::AddTexture(const wchar_t* path, DirectX::SimpleMath::Vector2 position, DirectX::SimpleMath::Vector2 scale, ANCHOR anchor, UserInterface::Kinds kind)
+{
+	//  メニューとしてアイテムを追加する
+	std::unique_ptr<UserInterface> userInterface = std::make_unique<UserInterface>();
+	//  指定された画像を表示するためのアイテムを作成する
+	userInterface->Create(m_commonResources->GetDeviceResources()
+		, path
+		, position
+		, scale
+		, anchor
+		, kind);
+
+	userInterface->SetWindowSize(m_windowSize.first, m_windowSize.second);
+
+
+	return userInterface;
+}
+
+/// <summary>
+/// 敵HPの作成
+/// </summary>
+void GamePlayUI::CreateEnemyHP()
+{
+
+	m_enemyHPBase.push_back(AddTexture(L"Resources/Textures/BossHPBase.png"
+		, Vector2(640, 50)
+		, Vector2(0.9f, 0.5f)
+		, ANCHOR::MIDDLE_CENTER
+		, UserInterface::Kinds::UI));
+
+	m_enemyHP = AddTexture(L"Resources/Textures/EnemyHP.png"
+		, Vector2(640, 50)
+		, Vector2(0.91f, 0.39f)
+		, ANCHOR::MIDDLE_CENTER
+		, UserInterface::Kinds::UI);
+
+	m_enemyHPBase.push_back(AddTexture(L"Resources/Textures/EnemyName.png"
+		, Vector2(640, 25)
+		, Vector2(0.3f, 0.3f)
+		, ANCHOR::MIDDLE_CENTER
+		, UserInterface::Kinds::UI));
+
+
+
+}
+
+/// <summary>
+/// プレイヤHPの作成
+/// </summary>
+void GamePlayUI::CreatePlayerHP()
+{
+
+	for (int i = 0; i < HP_COUNT; i++)
+	{
+		auto texture = std::make_unique<WataLib::DrawTexture>();
+		texture->Initialize(m_commonResources, L"Resources/Textures/HP.png"
+			, HP_POSITION + (HP_POSITION_OFFSET * i), HP_SCALE);
+
+		m_playerHP.push_back(std::move(texture));
+	}
+
+}
+
+/// <summary>
+/// ブーメラン残機の生成
+/// </summary>
+void GamePlayUI::CreateBoomerang()
+{
+
+	for (int i = 0; i < BOOMERANG_COUNT; i++)
+	{
+		auto texture = std::make_unique<WataLib::DrawTexture>();
+		texture->Initialize(m_commonResources, L"Resources/Textures/BoomerangUI.png"
+			, BOOMERANG_POSITION + (BOOMERANG_POSITION_OFFSET * i), BOOMERANG_SCALE);
+
+		m_boomerang.push_back(std::move(texture));
+	}
+
+
+}
+
+/// <summary>
+/// 初期化
+/// </summary>
+/// <param name="resources">共通リソース</param>
+void GamePlayUI::Initialize(CommonResources* resources)
+{
+	m_commonResources = resources;
+
+	//画面サイズの取得
+	m_windowSize.first = m_commonResources->GetDeviceResources()->GetOutputSize().right;
+	m_windowSize.second = m_commonResources->GetDeviceResources()->GetOutputSize().bottom;
+
+	m_playerHPCount = HP_COUNT;
+
+	m_boomerangCount = BOOMERANG_COUNT;
+
+	CreatePlayerHP();
+	CreateBoomerang();
+	CreateEnemyHP();
+
+	m_itemAcquisitionUI = AddTexture(L"Resources/Textures/F.png"
+		, Vector2(750, 600)
+		, Vector2(0.15f, 0.15f)
+		, ANCHOR::MIDDLE_CENTER
+		, UserInterface::Kinds::UI);
+
+
+
+	Messenger::Attach(EventParams::EventType::BoomerangThrow, this);
+	Messenger::Attach(EventParams::EventType::GetBoomerang, this);
+	Messenger::Attach(EventParams::EventType::PlayerDamage, this);
+
+}
+
+
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="elapsedTime">経過時間</param>
+void GamePlayUI::Update(const float& elapsedTime)
+{
+
+	if (m_enemyManager->GetBossEnemy() != nullptr)
+	{
+		m_enemyHP->SetRenderRatio(m_enemyManager->GetBossHPRation());
+
+	}
+
+}
+
+/// <summary>
+/// 状態に入った時
+/// </summary>
+void GamePlayUI::Enter()
+{
+
+
+
+}
+
+/// <summary>
+/// 状態を抜けた時
+/// </summary>
+void GamePlayUI::Exit()
+{
+}
+
+/// <summary>
+/// 通知を受け取る関数
+/// </summary>
+/// <param name="type">イベントの種類</param>
+/// <param name="datas">イベントのデータ</param>
+void GamePlayUI::Notify(EventParams::EventType type, void* datas)
+{
+
+	switch (type)
+	{
+		case EventParams::EventType::BoomerangThrow:
+			m_boomerangCount--;
+
+			m_boomerangCount = std::max(m_boomerangCount, 0);
+
+			break;
+		case EventParams::EventType::GetBoomerang:
+			m_boomerangCount++;
+			m_boomerangCount = std::min(m_boomerangCount, 3);
+
+			break;
+		case EventParams::EventType::PlayerDamage:
+			m_playerHPCount--;
+			break;
+		default:
+			break;
+	}
+}
+
+
+
+
+

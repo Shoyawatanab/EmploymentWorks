@@ -3,8 +3,6 @@
 	@brief	シーンへ渡す、ゲーム内で使用する共通リソース
 */
 #pragma once
-#include "Game/Timer.h"
-#include "Libraries/MyLib/Judgement.h"
 
 class Fade;
 
@@ -36,10 +34,6 @@ private:
 
 	mylib::InputManager* m_inputManager;
 
-	std::unique_ptr<Timer> m_timer;
-
-	std::unique_ptr<mylib::Judgement> m_judgement;
-
 	Fade* m_fade;
 
 public:
@@ -52,7 +46,8 @@ public:
 		DirectX::CommonStates* commonStates,
 		mylib::DebugString* debugString,
 		mylib::InputManager* inputManager,
-		Fade*  fade
+		Fade* fade
+
 	);
 
 	// getter
@@ -81,22 +76,9 @@ public:
 		return m_inputManager;
 	}
 
-
 	Fade* GetFade() const
 	{
 		return m_fade;
 	}
-
-
-	Timer* GetTimer() const
-	{
-		return m_timer.get();
-	}
-
-	mylib::Judgement* GetJudgement() const
-	{
-		return m_judgement.get();
-	}
-
 
 };

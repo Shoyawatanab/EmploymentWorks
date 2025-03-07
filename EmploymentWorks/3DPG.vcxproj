@@ -117,6 +117,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -167,6 +168,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -180,256 +182,315 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Base.h" />
     <ClInclude Include="DeviceResources.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="Game\BehaviorTree\ActionNode.h" />
-    <ClInclude Include="Game\BehaviorTree\BehaviorTree.h" />
-    <ClInclude Include="Game\BehaviorTree\Conditions.h" />
-    <ClInclude Include="Game\BehaviorTree\DecoratorNode.h" />
-    <ClInclude Include="Game\BehaviorTree\ExecutionNode.h" />
-    <ClInclude Include="Game\BehaviorTree\Root.h" />
-    <ClInclude Include="Game\BehaviorTree\SelectorNode.h" />
-    <ClInclude Include="Game\BehaviorTree\SequenceNode.h" />
+    <ClInclude Include="Game\CollisiionManager.h" />
     <ClInclude Include="Game\CommonResources.h" />
-    <ClInclude Include="Game\DetectionCollision\CollisionManager.h" />
-    <ClInclude Include="Game\LockOn.h" />
-    <ClInclude Include="Game\Object\BirdEnemy\BirdEnemy.h" />
-    <ClInclude Include="Game\Object\BirdEnemy\BirdEnemyBase.h" />
-    <ClInclude Include="Game\Object\BirdEnemy\BirdEnemyBody.h" />
-    <ClInclude Include="Game\Object\BirdEnemy\BirdEnemyLeftFeather.h" />
-    <ClInclude Include="Game\Object\BirdEnemy\BirdEnemyRightFeather.h" />
-    <ClInclude Include="Game\Object\BirdEnemy\State\BirdEnemyAttack.h" />
-    <ClInclude Include="Game\Object\BirdEnemy\State\BirdEnemyIdling.h" />
-    <ClInclude Include="Game\Object\BirdEnemy\State\BirdEnemyUsually.h" />
-    <ClInclude Include="Game\Object\Boomerang\Boomerang.h" />
-    <ClInclude Include="Game\Object\Boomerang\BoomerangOrbit.h" />
-    <ClInclude Include="Game\Object\Boomerang\State\BoomerangDrop.h" />
-    <ClInclude Include="Game\Object\Boomerang\State\BoomerangGetReady.h" />
-    <ClInclude Include="Game\Object\Boomerang\State\BoomerangIdling.h" />
-    <ClInclude Include="Game\Object\Boomerang\State\BoomerangRepelled.h" />
-    <ClInclude Include="Game\Object\Boomerang\State\BoomerangThrow.h" />
-    <ClInclude Include="Game\Object\Ceiling.h" />
-    <ClInclude Include="Game\Object\Enemy\Beam\Beam.h" />
-    <ClInclude Include="Game\Object\Enemy\Beam\BeamChargeEffect.h" />
-    <ClInclude Include="Game\Object\Enemy\Beam\BeamEnergyBall.h" />
-    <ClInclude Include="Game\Object\Enemy\Beam\BeamRays.h" />
-    <ClInclude Include="Game\Object\Enemy\Beam\BeamState\BeamAttack.h" />
-    <ClInclude Include="Game\Object\Enemy\Beam\BeamState\BeamAttackEnd.h" />
-    <ClInclude Include="Game\Object\Enemy\Beam\BeamState\BeamIdling.h" />
-    <ClInclude Include="Game\Object\Enemy\Beam\BeamState\BeamPreliminaryAction.h" />
-    <ClInclude Include="Game\Object\Enemy\BossEnemy\BossEnemyBase.h" />
-    <ClInclude Include="Game\Object\Enemy\BossEnemy\BossEnemyBottom.h" />
-    <ClInclude Include="Game\Object\Enemy\BossEnemy\BossEnemyHead.h" />
-    <ClInclude Include="Game\Object\Enemy\BossEnemy\BossEnemyLeftArm.h" />
-    <ClInclude Include="Game\Object\Enemy\BossEnemy\BossEnemyLeftArmJoint.h" />
-    <ClInclude Include="Game\Object\Enemy\BossEnemy\BossEnemyLeftLeg.h" />
-    <ClInclude Include="Game\Object\Enemy\BossEnemy\BossEnemyLeftShoulder.h" />
-    <ClInclude Include="Game\Object\Enemy\BossEnemy\BossEnemyLeftThigh.h" />
-    <ClInclude Include="Game\Object\Enemy\BossEnemy\BossEnemyPelvis .h" />
-    <ClInclude Include="Game\Object\Enemy\BossEnemy\BossEnemyRightArm.h" />
-    <ClInclude Include="Game\Object\Enemy\BossEnemy\BossEnemyRightArmJoint.h" />
-    <ClInclude Include="Game\Object\Enemy\BossEnemy\BossEnemyRightLeg.h" />
-    <ClInclude Include="Game\Object\Enemy\BossEnemy\BossEnemyRightShoulder.h" />
-    <ClInclude Include="Game\Object\Enemy\BossEnemy\BossEnemyRightThigh.h" />
-    <ClInclude Include="Game\Object\Enemy\BossEnemy\BossEnemyTorso.h" />
-    <ClInclude Include="Game\Object\Enemy\BossEnemy.h" />
-    <ClInclude Include="Game\Object\Enemy\EnemyManager.h" />
-    <ClInclude Include="Game\Object\Floor.h" />
-    <ClInclude Include="Game\Object\Gimmick\Artillery\Artillery.h" />
-    <ClInclude Include="Game\Object\Gimmick\Artillery\ArtilleryBase.h" />
-    <ClInclude Include="Game\Object\Gimmick\Artillery\ArtilleryBullet.h" />
-    <ClInclude Include="Game\Object\Gimmick\Artillery\ArtilleryTurret.h" />
-    <ClInclude Include="Game\Object\Pillar.h" />
-    <ClInclude Include="Game\Object\Player\Player.h" />
-    <ClInclude Include="Game\Object\Player\PlayerParts\PlayerBase.h" />
-    <ClInclude Include="Game\Object\Player\PlayerParts\PlayerBody.h" />
-    <ClInclude Include="Game\Object\Player\PlayerParts\PlayerHead.h" />
-    <ClInclude Include="Game\Object\Player\PlayerParts\PlayerLeftArm.h" />
-    <ClInclude Include="Game\Object\Player\PlayerParts\PlayerLeftFeet.h" />
-    <ClInclude Include="Game\Object\Player\PlayerParts\PlayerRightArm.h" />
-    <ClInclude Include="Game\Object\Player\PlayerParts\PlayerRightFeet.h" />
-    <ClInclude Include="Game\Object\Player\State\PlayerAttack.h" />
-    <ClInclude Include="Game\Object\Player\State\PlayerBlownAway.h" />
-    <ClInclude Include="Game\Object\Player\State\PlayerIdling.h" />
-    <ClInclude Include="Game\Object\Player\State\PlayerJump.h" />
-    <ClInclude Include="Game\Object\Player\State\PlayerUsually.h" />
-    <ClInclude Include="Game\Object\Rock.h" />
-    <ClInclude Include="Game\Object\Sky.h" />
-    <ClInclude Include="Game\Object\Wall.h" />
+    <ClInclude Include="Game\Effect\DamageVignette.h" />
+    <ClInclude Include="Game\Effect\EffectsManager.h" />
+    <ClInclude Include="Game\Effect\ExplosionEffects.h" />
+    <ClInclude Include="Game\Effect\HitEffect\CircleParticle.h" />
+    <ClInclude Include="Game\Effect\HitEffect\HitEffect.h" />
+    <ClInclude Include="Game\Effect\Particle\Particle.h" />
+    <ClInclude Include="Game\Effect\Particle\ParticleUtility.h" />
+    <ClInclude Include="Game\Enemys\BirdEnemy\Beam\BeamState\BirdEnemyBeamAttack.h" />
+    <ClInclude Include="Game\Enemys\BirdEnemy\Beam\BeamState\BirdEnemyBeamIdling.h" />
+    <ClInclude Include="Game\Enemys\BirdEnemy\Beam\BeamState\BirdEnemyBeamPreliminaryAction.h" />
+    <ClInclude Include="Game\Enemys\BirdEnemy\Beam\BeamState\BirdEnemyBeamStateMachine.h" />
+    <ClInclude Include="Game\Enemys\BirdEnemy\Beam\BirdEnemyBeam.h" />
+    <ClInclude Include="Game\Enemys\BirdEnemy\Beam\BirdEnemyBeamEnergyBall.h" />
+    <ClInclude Include="Game\Enemys\BirdEnemy\BirdEnemy.h" />
+    <ClInclude Include="Game\Enemys\BirdEnemy\BirdEnemyBody.h" />
+    <ClInclude Include="Game\Enemys\BirdEnemy\BirdEnemyFeather.h" />
+    <ClInclude Include="Game\Enemys\BirdEnemy\BirdEnemyPartsBase.h" />
+    <ClInclude Include="Game\Enemys\BirdEnemy\State\BirdEnemyAttack.h" />
+    <ClInclude Include="Game\Enemys\BirdEnemy\State\BirdEnemyIdling.h" />
+    <ClInclude Include="Game\Enemys\BirdEnemy\State\BirdEnemyMove.h" />
+    <ClInclude Include="Game\Enemys\BirdEnemy\State\BirdEnemyStateMachine.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\BarrierDefense\BarrierDefenseAction.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\BarrierDefense\BarrierDeployment.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\BarrierDefense\BarrierIdel.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\BarrierDefense\BarrierPreliminaryAction.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\BeamAttack\BossBeamAttackAction.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\BeamAttack\BossBeamAttackCharge.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\BeamAttack\BossBeamAttackEnd.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\BeamAttack\BossBeamAttackIdel.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\BeamAttack\BossBeamAttackPreliminaryAction.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\BeamAttack\BossBeamAttackShot.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\RisingPillar\RisingPillarIdel.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\RisingPillar\RisingPillarPreliminaryAction.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\RisingPillar\RisingPillarRise.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\RisingPillar\RisingPillarvAction.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\Barrier\Barrier.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\Barrier\State\BarrierGenerate.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\Barrier\State\BarrierShrink.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\Barrier\State\BarrierStateMachine.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\Beam\Beam.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\Beam\BeamChargeEffect.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\Beam\BeamEnergyBall.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\Beam\BeamRays.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\BehaviorTree\ActionNode.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\BehaviorTree\BehaviorTree.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\BehaviorTree\Conditions.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\BehaviorTree\DecoratorNode.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\BehaviorTree\ExecutionNode.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\BehaviorTree\Root.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\BehaviorTree\SelectorNode.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\BehaviorTree\SequenceNode.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\BossEnemy.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\BossEnemyPartsBase.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\PlayerParts\BossEnemyBottom.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\PlayerParts\BossEnemyHead.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\PlayerParts\BossEnemyLeftArm.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\PlayerParts\BossEnemyLeftArmJoint.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\PlayerParts\BossEnemyLeftLeg.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\PlayerParts\BossEnemyLeftShoulder.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\PlayerParts\BossEnemyLeftThigh.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\PlayerParts\BossEnemyPelvis.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\PlayerParts\BossEnemyRightArm.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\PlayerParts\BossEnemyRightArmJoint.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\PlayerParts\BossEnemyRightLeg.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\PlayerParts\BossEnemyRightShoulder.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\PlayerParts\BossEnemyRightThigh.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\PlayerParts\BossEnemyTorso.h" />
+    <ClInclude Include="Game\Enemys\EnemyManager.h" />
+    <ClInclude Include="Game\Entities\BaseEntity.h" />
+    <ClInclude Include="Game\Entities\CharacterEntity.h" />
+    <ClInclude Include="Game\Entities\CollisionEntity.h" />
+    <ClInclude Include="Game\Entities\CompositeEntity.h" />
+    <ClInclude Include="Game\Entities\EnemyEntity.h" />
+    <ClInclude Include="Game\Entities\INotMoveEntity.h" />
+    <ClInclude Include="Game\Entities\ItemEntity.h" />
+    <ClInclude Include="Game\Entities\MoveEntity.h" />
+    <ClInclude Include="Game\EntityManager.h" />
+    <ClInclude Include="Game\Interface\IActione.h" />
+    <ClInclude Include="Game\Interface\IActionState.h" />
+    <ClInclude Include="Game\Interface\IBehaviorNode.h" />
+    <ClInclude Include="Game\Interface\ICamera.h" />
+    <ClInclude Include="Game\Interface\ICharacter.h" />
+    <ClInclude Include="Game\Interface\ICollisionObject.h" />
+    <ClInclude Include="Game\Interface\IComposite.h" />
+    <ClInclude Include="Game\Interface\ICompositeNode.h" />
+    <ClInclude Include="Game\Interface\ICompositeRoot.h" />
+    <ClInclude Include="Game\Interface\IEffect.h" />
+    <ClInclude Include="Game\Interface\IEnemy.h" />
+    <ClInclude Include="Game\Interface\ILeaf.h" />
+    <ClInclude Include="Game\Interface\ILeafNode.h" />
+    <ClInclude Include="Game\Interface\IMoveObject.h" />
+    <ClInclude Include="Game\Interface\INotMoveObject.h" />
+    <ClInclude Include="Game\Interface\IObject.h" />
+    <ClInclude Include="Game\Interface\IObserver.h" />
+    <ClInclude Include="Game\Interface\IState.h" />
+    <ClInclude Include="Game\Interface\IStateMachine.h" />
+    <ClInclude Include="Game\Interface\IWeapon.h" />
+    <ClInclude Include="Game\ItemAcquisition.h" />
+    <ClInclude Include="Game\MathUtil.h" />
+    <ClInclude Include="Game\Observer\EventParams.h" />
     <ClInclude Include="Game\Observer\Messenger.h" />
+    <ClInclude Include="Game\Params.h" />
+    <ClInclude Include="Game\Player\Player.h" />
+    <ClInclude Include="Game\Player\PlayerPartsBase.h" />
+    <ClInclude Include="Game\Player\PlayerParts\PlayerBody.h" />
+    <ClInclude Include="Game\Player\PlayerParts\PlayerHead.h" />
+    <ClInclude Include="Game\Player\PlayerParts\PlayerLeftArm.h" />
+    <ClInclude Include="Game\Player\PlayerParts\PlayerLeftFeet.h" />
+    <ClInclude Include="Game\Player\PlayerParts\PlayerRightArm.h" />
+    <ClInclude Include="Game\Player\PlayerParts\PlayerRightFeet.h" />
+    <ClInclude Include="Game\Player\PlayerUsually.h" />
+    <ClInclude Include="Game\Player\State\PlayerAttack.h" />
+    <ClInclude Include="Game\Player\State\PlayerIdle.h" />
+    <ClInclude Include="Game\Player\State\PlayerStateMachine.h" />
     <ClInclude Include="Game\Scene\IScene.h" />
     <ClInclude Include="Game\Scene\PlayScene.h" />
-    <ClInclude Include="Game\Scene\ResultScene.h" />
     <ClInclude Include="Game\Scene\SceneManager.h" />
     <ClInclude Include="Game\Scene\StageSelectScene.h" />
     <ClInclude Include="Game\Scene\TitleScene.h" />
     <ClInclude Include="Game\Screen.h" />
-    <ClInclude Include="Game\Timer.h" />
-    <ClInclude Include="Game\UI\State\GameClearUI.h" />
-    <ClInclude Include="Game\UI\State\GameOverUI.h" />
-    <ClInclude Include="Game\UI\State\GmePlayUI.h" />
-    <ClInclude Include="Game\UI\UI.h" />
-    <ClInclude Include="Interface\IBehaviorNode.h" />
-    <ClInclude Include="Interface\IBirdEnemyState.h" />
-    <ClInclude Include="Interface\IBoomerangState.h" />
-    <ClInclude Include="Interface\ICollisionObject.h" />
-    <ClInclude Include="Interface\IComponent.h" />
-    <ClInclude Include="Interface\ICompositeNode.h" />
-    <ClInclude Include="Interface\IEnemy.h" />
-    <ClInclude Include="Interface\IEnemyState.h" />
-    <ClInclude Include="Interface\ILeafNode.h" />
-    <ClInclude Include="Interface\IMoveCollisionObject.h" />
-    <ClInclude Include="Interface\INotMoveCollisionObject.h" />
-    <ClInclude Include="Interface\IObserver.h" />
-    <ClInclude Include="Interface\IPlayerState.h" />
-    <ClInclude Include="Interface\ISubject.h" />
-    <ClInclude Include="Interface\IUI.h" />
+    <ClInclude Include="Game\StageObject\Floor.h" />
+    <ClInclude Include="Game\StageObject\Pillar\Pillar.h" />
+    <ClInclude Include="Game\StageObject\Sky.h" />
+    <ClInclude Include="Game\StageObject\StageObjectManager.h" />
+    <ClInclude Include="Game\StageObject\Wall.h" />
+    <ClInclude Include="Game\TargetMarker.h" />
+    <ClInclude Include="Game\UI\State\GameEndUI.h" />
+    <ClInclude Include="Game\UI\State\GamePlayUI.h" />
+    <ClInclude Include="Game\UI\State\UIStateMachine.h" />
+    <ClInclude Include="Game\UI\UIManager.h" />
+    <ClInclude Include="Game\Weapon\Boomerang\Boomerang.h" />
+    <ClInclude Include="Game\Weapon\Boomerang\State\BoomerangDrop.h" />
+    <ClInclude Include="Game\Weapon\Boomerang\State\BoomerangGetReady.h" />
+    <ClInclude Include="Game\Weapon\Boomerang\State\BoomerangIdle.h" />
+    <ClInclude Include="Game\Weapon\Boomerang\State\BoomerangRepelled.h" />
+    <ClInclude Include="Game\Weapon\Boomerang\State\BoomerangStateMachine.h" />
+    <ClInclude Include="Game\Weapon\Boomerang\State\BoomerangThrow.h" />
     <ClInclude Include="Libraries\Microsoft\DebugDraw.h" />
-    <ClInclude Include="Libraries\MyLib\Animation.h" />
     <ClInclude Include="Libraries\MyLib\BinaryFile.h" />
-    <ClInclude Include="Libraries\MyLib\Bounding.h" />
-    <ClInclude Include="Libraries\MyLib\Camera\FPS_Camera.h" />
-    <ClInclude Include="Libraries\MyLib\Camera\GameCameraManager.h" />
-    <ClInclude Include="Libraries\MyLib\Camera\GameEndCamera.h" />
-    <ClInclude Include="Libraries\MyLib\Camera\GameStartCamera.h" />
-    <ClInclude Include="Libraries\MyLib\Camera\TitleCamera.h" />
-    <ClInclude Include="Libraries\MyLib\Camera\TPS_Camera.h" />
-    <ClInclude Include="Libraries\MyLib\CollisionMesh.h" />
-    <ClInclude Include="Libraries\MyLib\CSV.h" />
     <ClInclude Include="Libraries\MyLib\DebugCamera.h" />
     <ClInclude Include="Libraries\MyLib\DebugString.h" />
-    <ClInclude Include="Libraries\MyLib\Fade.h" />
     <ClInclude Include="Libraries\MyLib\GridFloor.h" />
-    <ClInclude Include="Libraries\MyLib\HitEffects.h" />
     <ClInclude Include="Libraries\MyLib\InputManager.h" />
-    <ClInclude Include="Libraries\MyLib\Json.h" />
-    <ClInclude Include="Libraries\MyLib\Judgement.h" />
-    <ClInclude Include="Libraries\MyLib\LoadJson.h" />
     <ClInclude Include="Libraries\MyLib\MemoryLeakDetector.h" />
-    <ClInclude Include="Libraries\MyLib\Model3D.h" />
-    <ClInclude Include="Libraries\MyLib\Mouse.h" />
-    <ClInclude Include="Libraries\MyLib\Particle.h" />
-    <ClInclude Include="Libraries\MyLib\Shadow.h" />
-    <ClInclude Include="Libraries\MyLib\Texture.h" />
-    <ClInclude Include="Libraries\MyLib\UserInterface.h" />
+    <ClInclude Include="Libraries\WataLib\Animation.h" />
+    <ClInclude Include="Libraries\WataLib\BinaryFile.h" />
+    <ClInclude Include="Libraries\WataLib\Bounding.h" />
+    <ClInclude Include="Libraries\WataLib\Camera\CameraManager.h" />
+    <ClInclude Include="Libraries\WataLib\Camera\GameEndCamera.h" />
+    <ClInclude Include="Libraries\WataLib\Camera\TitleCamera.h" />
+    <ClInclude Include="Libraries\WataLib\Camera\TPS_Camera.h" />
+    <ClInclude Include="Libraries\WataLib\CSV.h" />
+    <ClInclude Include="Libraries\WataLib\DetectionCollision.h" />
+    <ClInclude Include="Libraries\WataLib\DrawTexture.h" />
+    <ClInclude Include="Libraries\WataLib\Fade.h" />
+    <ClInclude Include="Libraries\WataLib\Json.h" />
+    <ClInclude Include="Libraries\WataLib\Model3D.h" />
+    <ClInclude Include="Libraries\WataLib\Mouse.h" />
+    <ClInclude Include="Libraries\WataLib\Shadow.h" />
+    <ClInclude Include="Libraries\WataLib\UserInterface.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="StepTimer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Base.cpp" />
     <ClCompile Include="DeviceResources.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="Game\BehaviorTree\ActionNode.cpp" />
-    <ClCompile Include="Game\BehaviorTree\BehaviorTree.cpp" />
-    <ClCompile Include="Game\BehaviorTree\Conditions.cpp" />
-    <ClCompile Include="Game\BehaviorTree\DecoratorNode.cpp" />
-    <ClCompile Include="Game\BehaviorTree\ExecutionNode.cpp" />
-    <ClCompile Include="Game\BehaviorTree\Root.cpp" />
-    <ClCompile Include="Game\BehaviorTree\SelectorNode.cpp" />
-    <ClCompile Include="Game\BehaviorTree\SequenceNode.cpp" />
+    <ClCompile Include="Game\CollisiionManager.cpp" />
     <ClCompile Include="Game\CommonResources.cpp" />
-    <ClCompile Include="Game\DetectionCollision\CollisionManager.cpp" />
-    <ClCompile Include="Game\LockOn.cpp" />
-    <ClCompile Include="Game\Object\BirdEnemy\BirdEnemy.cpp" />
-    <ClCompile Include="Game\Object\BirdEnemy\BirdEnemyBase.cpp" />
-    <ClCompile Include="Game\Object\BirdEnemy\BirdEnemyBody.cpp" />
-    <ClCompile Include="Game\Object\BirdEnemy\BirdEnemyLeftFeather.cpp" />
-    <ClCompile Include="Game\Object\BirdEnemy\BirdEnemyRightFeather.cpp" />
-    <ClCompile Include="Game\Object\BirdEnemy\State\BirdEnemyAttack.cpp" />
-    <ClCompile Include="Game\Object\BirdEnemy\State\BirdEnemyIdling.cpp" />
-    <ClCompile Include="Game\Object\BirdEnemy\State\BirdEnemyUsually.cpp" />
-    <ClCompile Include="Game\Object\Boomerang\Boomerang.cpp" />
-    <ClCompile Include="Game\Object\Boomerang\BoomerangOrbit.cpp" />
-    <ClCompile Include="Game\Object\Boomerang\State\BoomerangDrop.cpp" />
-    <ClCompile Include="Game\Object\Boomerang\State\BoomerangGetReady.cpp" />
-    <ClCompile Include="Game\Object\Boomerang\State\BoomerangIdling.cpp" />
-    <ClCompile Include="Game\Object\Boomerang\State\BoomerangRepelled.cpp" />
-    <ClCompile Include="Game\Object\Boomerang\State\BoomerangThrow.cpp" />
-    <ClCompile Include="Game\Object\Ceiling.cpp" />
-    <ClCompile Include="Game\Object\Enemy\Beam\Beam.cpp" />
-    <ClCompile Include="Game\Object\Enemy\Beam\BeamChargeEffect.cpp" />
-    <ClCompile Include="Game\Object\Enemy\Beam\BeamEnergyBall.cpp" />
-    <ClCompile Include="Game\Object\Enemy\Beam\BeamRays.cpp" />
-    <ClCompile Include="Game\Object\Enemy\Beam\BeamState\BeamAttack.cpp" />
-    <ClCompile Include="Game\Object\Enemy\Beam\BeamState\BeamAttackEnd.cpp" />
-    <ClCompile Include="Game\Object\Enemy\Beam\BeamState\BeamIdling.cpp" />
-    <ClCompile Include="Game\Object\Enemy\Beam\BeamState\BeamPreliminaryAction.cpp" />
-    <ClCompile Include="Game\Object\Enemy\BossEnemy\BossEnemyBase.cpp" />
-    <ClCompile Include="Game\Object\Enemy\BossEnemy\BossEnemyBottom.cpp" />
-    <ClCompile Include="Game\Object\Enemy\BossEnemy\BossEnemyHead.cpp" />
-    <ClCompile Include="Game\Object\Enemy\BossEnemy\BossEnemyLeftArm.cpp" />
-    <ClCompile Include="Game\Object\Enemy\BossEnemy\BossEnemyLeftArmJoint.cpp" />
-    <ClCompile Include="Game\Object\Enemy\BossEnemy\BossEnemyLeftLeg.cpp" />
-    <ClCompile Include="Game\Object\Enemy\BossEnemy\BossEnemyLeftShoulder.cpp" />
-    <ClCompile Include="Game\Object\Enemy\BossEnemy\BossEnemyLeftThigh.cpp" />
-    <ClCompile Include="Game\Object\Enemy\BossEnemy\BossEnemyPelvis .cpp" />
-    <ClCompile Include="Game\Object\Enemy\BossEnemy\BossEnemyRightArm.cpp" />
-    <ClCompile Include="Game\Object\Enemy\BossEnemy\BossEnemyRightArmJoint.cpp" />
-    <ClCompile Include="Game\Object\Enemy\BossEnemy\BossEnemyRightLeg.cpp" />
-    <ClCompile Include="Game\Object\Enemy\BossEnemy\BossEnemyRightShoulder.cpp" />
-    <ClCompile Include="Game\Object\Enemy\BossEnemy\BossEnemyRightThigh.cpp" />
-    <ClCompile Include="Game\Object\Enemy\BossEnemy\BossEnemyTorso.cpp" />
-    <ClCompile Include="Game\Object\Enemy\BossEnemy.cpp" />
-    <ClCompile Include="Game\Object\Enemy\EnemyManager.cpp" />
-    <ClCompile Include="Game\Object\Floor.cpp" />
-    <ClCompile Include="Game\Object\Gimmick\Artillery\Artillery.cpp" />
-    <ClCompile Include="Game\Object\Gimmick\Artillery\ArtilleryBase.cpp" />
-    <ClCompile Include="Game\Object\Gimmick\Artillery\ArtilleryBullet.cpp" />
-    <ClCompile Include="Game\Object\Gimmick\Artillery\ArtilleryTurret.cpp" />
-    <ClCompile Include="Game\Object\Pillar.cpp" />
-    <ClCompile Include="Game\Object\Player\Player.cpp" />
-    <ClCompile Include="Game\Object\Player\PlayerParts\PlayerBase.cpp" />
-    <ClCompile Include="Game\Object\Player\PlayerParts\PlayerBody.cpp" />
-    <ClCompile Include="Game\Object\Player\PlayerParts\PlayerHead.cpp" />
-    <ClCompile Include="Game\Object\Player\PlayerParts\PlayerLeftArm.cpp" />
-    <ClCompile Include="Game\Object\Player\PlayerParts\PlayerLeftFeet.cpp" />
-    <ClCompile Include="Game\Object\Player\PlayerParts\PlayerRightArm.cpp" />
-    <ClCompile Include="Game\Object\Player\PlayerParts\PlayerRightFeet.cpp" />
-    <ClCompile Include="Game\Object\Player\State\PlayerAttack.cpp" />
-    <ClCompile Include="Game\Object\Player\State\PlayerBlownAway.cpp" />
-    <ClCompile Include="Game\Object\Player\State\PlayerIdling.cpp" />
-    <ClCompile Include="Game\Object\Player\State\PlayerJump.cpp" />
-    <ClCompile Include="Game\Object\Player\State\PlayerUsually.cpp" />
-    <ClCompile Include="Game\Object\Rock.cpp" />
-    <ClCompile Include="Game\Object\Sky.cpp" />
-    <ClCompile Include="Game\Object\Wall.cpp" />
+    <ClCompile Include="Game\Effect\DamageVignette.cpp" />
+    <ClCompile Include="Game\Effect\EffectsManager.cpp" />
+    <ClCompile Include="Game\Effect\ExplosionEffects.cpp" />
+    <ClCompile Include="Game\Effect\HitEffect\CircleParticle.cpp" />
+    <ClCompile Include="Game\Effect\HitEffect\HitEffect.cpp" />
+    <ClCompile Include="Game\Effect\Particle\Particle.cpp" />
+    <ClCompile Include="Game\Effect\Particle\ParticleUtility.cpp" />
+    <ClCompile Include="Game\Enemys\BirdEnemy\Beam\BeamState\BirdEnemyBeamAttack.cpp" />
+    <ClCompile Include="Game\Enemys\BirdEnemy\Beam\BeamState\BirdEnemyBeamIdling.cpp" />
+    <ClCompile Include="Game\Enemys\BirdEnemy\Beam\BeamState\BirdEnemyBeamPreliminaryAction.cpp" />
+    <ClCompile Include="Game\Enemys\BirdEnemy\Beam\BeamState\BirdEnemyBeamStateMachine.cpp" />
+    <ClCompile Include="Game\Enemys\BirdEnemy\Beam\BirdEnemyBeam.cpp" />
+    <ClCompile Include="Game\Enemys\BirdEnemy\Beam\BirdEnemyBeamEnergyBall.cpp" />
+    <ClCompile Include="Game\Enemys\BirdEnemy\BirdEnemy.cpp" />
+    <ClCompile Include="Game\Enemys\BirdEnemy\BirdEnemyBody.cpp" />
+    <ClCompile Include="Game\Enemys\BirdEnemy\BirdEnemyFeather.cpp" />
+    <ClCompile Include="Game\Enemys\BirdEnemy\BirdEnemyPartsBase.cpp" />
+    <ClCompile Include="Game\Enemys\BirdEnemy\State\BirdEnemyAttack.cpp" />
+    <ClCompile Include="Game\Enemys\BirdEnemy\State\BirdEnemyIdling.cpp" />
+    <ClCompile Include="Game\Enemys\BirdEnemy\State\BirdEnemyMove.cpp" />
+    <ClCompile Include="Game\Enemys\BirdEnemy\State\BirdEnemyStateMachine.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\BarrierDefense\BarrierDefenseAction.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\BarrierDefense\BarrierDeployment.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\BarrierDefense\BarrierIdel.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\BarrierDefense\BarrierPreliminaryAction.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\BeamAttack\BossBeamAttackAction.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\BeamAttack\BossBeamAttackCharge.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\BeamAttack\BossBeamAttackEnd.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\BeamAttack\BossBeamAttackIdel.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\BeamAttack\BossBeamAttackPreliminaryAction.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\BeamAttack\BossBeamAttackShot.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\RisingPillar\RisingPillarIdel.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\RisingPillar\RisingPillarPreliminaryAction.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\RisingPillar\RisingPillarRise.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\RisingPillar\RisingPillarvAction.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\Barrier\Barrier.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\Barrier\State\BarrierGenerate.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\Barrier\State\BarrierShrink.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\Barrier\State\BarrierStateMachine.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\Beam\Beam.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\Beam\BeamChargeEffect.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\Beam\BeamEnergyBall.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\Beam\BeamRays.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\BehaviorTree\ActionNode.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\BehaviorTree\BehaviorTree.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\BehaviorTree\Conditions.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\BehaviorTree\DecoratorNode.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\BehaviorTree\ExecutionNode.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\BehaviorTree\Root.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\BehaviorTree\SelectorNode.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\BehaviorTree\SequenceNode.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\BossEnemy.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\BossEnemyPartsBase.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\PlayerParts\BossEnemyBottom.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\PlayerParts\BossEnemyHead.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\PlayerParts\BossEnemyLeftArm.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\PlayerParts\BossEnemyLeftArmJoint.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\PlayerParts\BossEnemyLeftLeg.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\PlayerParts\BossEnemyLeftShoulder.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\PlayerParts\BossEnemyLeftThigh.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\PlayerParts\BossEnemyPelvis.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\PlayerParts\BossEnemyRightArm.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\PlayerParts\BossEnemyRightArmJoint.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\PlayerParts\BossEnemyRightLeg.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\PlayerParts\BossEnemyRightShoulder.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\PlayerParts\BossEnemyRightThigh.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\PlayerParts\BossEnemyTorso.cpp" />
+    <ClCompile Include="Game\Enemys\EnemyManager.cpp" />
+    <ClCompile Include="Game\Entities\BaseEntity.cpp" />
+    <ClCompile Include="Game\Entities\CharacterEntity.cpp" />
+    <ClCompile Include="Game\Entities\CollisionEntity.cpp" />
+    <ClCompile Include="Game\Entities\CompositeEntity.cpp" />
+    <ClCompile Include="Game\Entities\EnemyEntity.cpp" />
+    <ClCompile Include="Game\Entities\INotMoveEntity.cpp" />
+    <ClCompile Include="Game\Entities\ItemEntity.cpp" />
+    <ClCompile Include="Game\Entities\MoveEntity.cpp" />
+    <ClCompile Include="Game\EntityManager.cpp" />
+    <ClCompile Include="Game\ItemAcquisition.cpp" />
     <ClCompile Include="Game\Observer\Messenger.cpp" />
+    <ClCompile Include="Game\Params.cpp" />
+    <ClCompile Include="Game\Player\Player.cpp" />
+    <ClCompile Include="Game\Player\PlayerPartsBase.cpp" />
+    <ClCompile Include="Game\Player\PlayerParts\PlayerBody.cpp" />
+    <ClCompile Include="Game\Player\PlayerParts\PlayerHead.cpp" />
+    <ClCompile Include="Game\Player\PlayerParts\PlayerLeftArm.cpp" />
+    <ClCompile Include="Game\Player\PlayerParts\PlayerLeftFeet.cpp" />
+    <ClCompile Include="Game\Player\PlayerParts\PlayerRightArm.cpp" />
+    <ClCompile Include="Game\Player\PlayerParts\PlayerRightFeet.cpp" />
+    <ClCompile Include="Game\Player\PlayerUsually.cpp" />
+    <ClCompile Include="Game\Player\State\PlayerAttack.cpp" />
+    <ClCompile Include="Game\Player\State\PlayerIdle.cpp" />
+    <ClCompile Include="Game\Player\State\PlayerStateMachine.cpp" />
     <ClCompile Include="Game\Scene\PlayScene.cpp" />
-    <ClCompile Include="Game\Scene\ResultScene.cpp" />
     <ClCompile Include="Game\Scene\SceneManager.cpp" />
     <ClCompile Include="Game\Scene\StageSelectScene.cpp" />
     <ClCompile Include="Game\Scene\TitleScene.cpp" />
-    <ClCompile Include="Game\Timer.cpp" />
-    <ClCompile Include="Game\UI\State\GameClearUI.cpp" />
-    <ClCompile Include="Game\UI\State\GameOverUI.cpp" />
-    <ClCompile Include="Game\UI\State\GmePlayUI.cpp" />
-    <ClCompile Include="Game\UI\UI.cpp" />
+    <ClCompile Include="Game\StageObject\Floor.cpp" />
+    <ClCompile Include="Game\StageObject\Pillar\Pillar.cpp" />
+    <ClCompile Include="Game\StageObject\Sky.cpp" />
+    <ClCompile Include="Game\StageObject\StageObjectManager.cpp" />
+    <ClCompile Include="Game\StageObject\Wall.cpp" />
+    <ClCompile Include="Game\TargetMarker.cpp" />
+    <ClCompile Include="Game\UI\State\GameEndUI.cpp" />
+    <ClCompile Include="Game\UI\State\GamePlayUI.cpp" />
+    <ClCompile Include="Game\UI\State\UIStateMachine.cpp" />
+    <ClCompile Include="Game\UI\UIManager.cpp" />
+    <ClCompile Include="Game\Weapon\Boomerang\Boomerang.cpp" />
+    <ClCompile Include="Game\Weapon\Boomerang\State\BoomerangDrop.cpp" />
+    <ClCompile Include="Game\Weapon\Boomerang\State\BoomerangGetReady.cpp" />
+    <ClCompile Include="Game\Weapon\Boomerang\State\BoomerangIdle.cpp" />
+    <ClCompile Include="Game\Weapon\Boomerang\State\BoomerangRepelled.cpp" />
+    <ClCompile Include="Game\Weapon\Boomerang\State\BoomerangStateMachine.cpp" />
+    <ClCompile Include="Game\Weapon\Boomerang\State\BoomerangThrow.cpp" />
     <ClCompile Include="Libraries\Microsoft\DebugDraw.cpp" />
-    <ClCompile Include="Libraries\MyLib\Animation.cpp" />
     <ClCompile Include="Libraries\MyLib\BinaryFile.cpp" />
-    <ClCompile Include="Libraries\MyLib\Bounding.cpp" />
-    <ClCompile Include="Libraries\MyLib\Camera\FPS_Camera.cpp" />
-    <ClCompile Include="Libraries\MyLib\Camera\GameCameraManager.cpp" />
-    <ClCompile Include="Libraries\MyLib\Camera\GameEndCamera.cpp" />
-    <ClCompile Include="Libraries\MyLib\Camera\GameStartCamera.cpp" />
-    <ClCompile Include="Libraries\MyLib\Camera\TitleCamera.cpp" />
-    <ClCompile Include="Libraries\MyLib\Camera\TPS_Camera.cpp" />
-    <ClCompile Include="Libraries\MyLib\CollisionMesh.cpp" />
-    <ClCompile Include="Libraries\MyLib\CSV.cpp" />
     <ClCompile Include="Libraries\MyLib\DebugCamera.cpp" />
     <ClCompile Include="Libraries\MyLib\DebugString.cpp" />
-    <ClCompile Include="Libraries\MyLib\Fade.cpp" />
     <ClCompile Include="Libraries\MyLib\GridFloor.cpp" />
-    <ClCompile Include="Libraries\MyLib\HitEffects.cpp" />
     <ClCompile Include="Libraries\MyLib\InputManager.cpp" />
-    <ClCompile Include="Libraries\MyLib\Json.cpp" />
-    <ClCompile Include="Libraries\MyLib\Judgement.cpp" />
-    <ClCompile Include="Libraries\MyLib\LoadJson.cpp" />
-    <ClCompile Include="Libraries\MyLib\Model3D.cpp" />
-    <ClCompile Include="Libraries\MyLib\Mouse.cpp" />
-    <ClCompile Include="Libraries\MyLib\Particle.cpp" />
-    <ClCompile Include="Libraries\MyLib\Shadow.cpp" />
-    <ClCompile Include="Libraries\MyLib\Texture.cpp" />
-    <ClCompile Include="Libraries\MyLib\UserInterface.cpp" />
+    <ClCompile Include="Libraries\WataLib\Animation.cpp" />
+    <ClCompile Include="Libraries\WataLib\BinaryFile.cpp" />
+    <ClCompile Include="Libraries\WataLib\Bounding.cpp" />
+    <ClCompile Include="Libraries\WataLib\Camera\CameraManager.cpp" />
+    <ClCompile Include="Libraries\WataLib\Camera\GameEndCamera.cpp" />
+    <ClCompile Include="Libraries\WataLib\Camera\TitleCamera.cpp" />
+    <ClCompile Include="Libraries\WataLib\Camera\TPS_Camera.cpp" />
+    <ClCompile Include="Libraries\WataLib\CSV.cpp" />
+    <ClCompile Include="Libraries\WataLib\DetectionCollision.cpp" />
+    <ClCompile Include="Libraries\WataLib\DrawTexture.cpp" />
+    <ClCompile Include="Libraries\WataLib\Fade.cpp" />
+    <ClCompile Include="Libraries\WataLib\Json.cpp" />
+    <ClCompile Include="Libraries\WataLib\Model3D.cpp" />
+    <ClCompile Include="Libraries\WataLib\Mouse.cpp" />
+    <ClCompile Include="Libraries\WataLib\Shadow.cpp" />
+    <ClCompile Include="Libraries\WataLib\UserInterface.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -448,103 +509,151 @@
     <Manifest Include="settings.manifest" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="Game\Shaders\Barrier\Barrier.hlsli" />
+    <None Include="Game\Shaders\BossBeam\BeamEnergyBall.hlsli" />
+    <None Include="Game\Shaders\BossBeam\BeamRays.hlsli" />
+    <None Include="Game\Shaders\DamageVignette\DamageVignette.hlsli" />
+    <None Include="Game\Shaders\Fade\Fade.hlsli" />
+    <None Include="Game\Shaders\HitEffect\CircleParticle.hlsli" />
+    <None Include="Game\Shaders\Particle\Particle.hlsli" />
+    <None Include="Game\Shaders\UI\UI.hlsli" />
     <None Include="packages.config" />
-    <None Include="Resources\Shaders\Fade\Fade.hlsli" />
-    <None Include="Resources\Shaders\HitEffects\HitEffects.hlsli" />
-    <None Include="Resources\Shaders\LockOn\LockOnUI.hlsli" />
-    <None Include="Resources\Shaders\Particle\Particle.hlsli" />
-    <None Include="Resources\Shaders\UI\UI.hlsli" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Resources\Shaders\Fade\FadeGS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\Fade\%(Filename).cso</ObjectFileOutput>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\Fade\%(Filename).cso</ObjectFileOutput>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
+    <FxCompile Include="Game\Shaders\Barrier\BarrierPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
     </FxCompile>
-    <FxCompile Include="Resources\Shaders\Fade\FadeVS.hlsl">
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\Fade\%(Filename).cso</ObjectFileOutput>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\Fade\%(Filename).cso</ObjectFileOutput>
+    <FxCompile Include="Game\Shaders\Barrier\BarrierVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
     </FxCompile>
-    <FxCompile Include="Resources\Shaders\Fade\NormalFadeInPS.hlsl">
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\Fade\%(Filename).cso</ObjectFileOutput>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\Fade\%(Filename).cso</ObjectFileOutput>
+    <FxCompile Include="Game\Shaders\BossBeam\BeamEnergyBallPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
     </FxCompile>
-    <FxCompile Include="Resources\Shaders\Fade\NormalFadeOutPS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\Fade\%(Filename).cso</ObjectFileOutput>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\Fade\%(Filename).cso</ObjectFileOutput>
-    </FxCompile>
-    <FxCompile Include="Resources\Shaders\HitEffects\HitEffectsPS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\HitEffects\%(Filename).cso</ObjectFileOutput>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\HitEffects\%(Filename).cso</ObjectFileOutput>
-    </FxCompile>
-    <FxCompile Include="Resources\Shaders\HitEffects\HitEffectsVS.hlsl">
+    <FxCompile Include="Game\Shaders\BossBeam\BeamEnergyBallVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\HitEffects\%(Filename).cso</ObjectFileOutput>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\HitEffects\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
     </FxCompile>
-    <FxCompile Include="Resources\Shaders\LockOn\LockOnUIGS.hlsl">
+    <FxCompile Include="Game\Shaders\BossBeam\BeamRaysPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Game\Shaders\BossBeam\BeamRaysVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Game\Shaders\DamageVignette\DamageVignetteGS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\LockOn\%(Filename).cso</ObjectFileOutput>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\LockOn\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
     </FxCompile>
-    <FxCompile Include="Resources\Shaders\LockOn\LockOnUIPS.hlsl">
+    <FxCompile Include="Game\Shaders\DamageVignette\DamageVignettePS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\LockOn\%(Filename).cso</ObjectFileOutput>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\LockOn\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
     </FxCompile>
-    <FxCompile Include="Resources\Shaders\LockOn\LockOnUIVS.hlsl">
+    <FxCompile Include="Game\Shaders\DamageVignette\DamageVignetteVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\LockOn\%(Filename).cso</ObjectFileOutput>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\LockOn\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
     </FxCompile>
-    <FxCompile Include="Resources\Shaders\Particle\ParticlePS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\Particle\%(Filename).cso</ObjectFileOutput>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\Particle\%(Filename).cso</ObjectFileOutput>
-    </FxCompile>
-    <FxCompile Include="Resources\Shaders\Particle\ParticleVS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\Particle\%(Filename).cso</ObjectFileOutput>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\Particle\%(Filename).cso</ObjectFileOutput>
-    </FxCompile>
-    <FxCompile Include="Resources\Shaders\UI\UIGS.hlsl">
+    <FxCompile Include="Game\Shaders\Fade\FadeGS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\UI\%(Filename).cso</ObjectFileOutput>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\UI\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="Resources\Shaders\UI\UIPS.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\UI\%(Filename).cso</ObjectFileOutput>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\UI\%(Filename).cso</ObjectFileOutput>
-    </FxCompile>
-    <FxCompile Include="Resources\Shaders\UI\UIVS.hlsl">
+    <FxCompile Include="Game\Shaders\Fade\FadeVS.hlsl">
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\UI\%(Filename).cso</ObjectFileOutput>
-      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\UI\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Game\Shaders\Fade\NormalFadeInPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Game\Shaders\Fade\NormalFadeOutPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Game\Shaders\HitEffect\CircleParticlePS.hlsl">
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Game\Shaders\HitEffect\CircleParticleVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Game\Shaders\Particle\ParticleGS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Game\Shaders\Particle\ParticlePS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Game\Shaders\Particle\ParticleVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Game\Shaders\UI\UIGS.hlsl">
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Game\Shaders\UI\UIPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Game\Shaders\UI\UIVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
     </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

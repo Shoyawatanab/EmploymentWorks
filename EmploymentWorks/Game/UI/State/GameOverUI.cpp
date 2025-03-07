@@ -1,155 +1,213 @@
-/*
-	@file	GameOverUI.cpp
-	@brief	TPSカメラクラス
-*/
 #include "pch.h"
-#include "Game/UI/State/GameOverUI.h"
-#include "Game/Screen.h"
-#include "Game/Object/Player/Player.h"
-#include "Libraries/MyLib/Mouse.h"
-#include "Game/CommonResources.h"
-#include "DeviceResources.h"
-#include "Game/Scene/PlayScene.h"
+#include "GameOverUI.h"
 #include "Game/CommonResources.h"
 #include "DeviceResources.h"
 #include "Libraries/MyLib/InputManager.h"
 
+#include "Libraries/WataLib/Camera/TPS_Camera.h"
+#include "Game/Player/Player.h"
+#include "Game/Player/State/PlayerStateMachine.h"
+#include "Game/Weapon/Boomerang/State/BoomerangStateMachine.h"
+#include "Libraries/WataLib/DrawTexture.h"
 
-const int MAXANGLEY = 100;
-const DirectX::SimpleMath::Vector3 TARGET = DirectX::SimpleMath::Vector3(0, 1, 0); //ステージの中心
+using namespace DirectX;
+using namespace DirectX::SimpleMath;
 
-const float MOVESPEED = 0.5f;
-
-
-
-
-//-------------------------------------------------------------------
-// コンストラクタ
-//-------------------------------------------------------------------
+/// <summary>
+/// コンストラクタ
+/// </summary>
 GameOverUI::GameOverUI()
-	
+	:
+	m_commonResources{}
+	,m_position{}
+	,m_scale{}
+	,m_rotation{}
+	,m_player{}
+	,m_playerHP{}
+	,m_boomerang{}
+	,m_windowSize{}
+	,m_playerHPCount{}
+	,m_boomerangCount{}
+	,m_enemyHP{}
+	,m_enemyHPBase{}
 {
+}
+
+/// <summary>
+/// デストラクタ
+/// </summary>
+GameOverUI::~GameOverUI()
+{
+}
+
+void GameOverUI::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
+{
+
+
+	for (int i = 0; i < m_playerHPCount; i ++)
+	{
+		m_playerHP[i]->Render();
+	}
+
+	for (int i = 0; i < m_boomerangCount; i++)
+	{
+		m_boomerang[i]->Render();
+	}
+
+	for (auto& enemyHP : m_enemyHPBase)
+	{
+		enemyHP->Render();
+
+	}
+
+	m_enemyHP->Render();
+
+}
+
+
+
+void GameOverUI::AddPointer(Player* player)
+{
+	m_player = player;
+}
+
+std::unique_ptr<UserInterface> GameOverUI::AddTexture(const wchar_t* path, DirectX::SimpleMath::Vector2 position, DirectX::SimpleMath::Vector2 scale, ANCHOR anchor, UserInterface::Kinds kind)
+{
+	//  メニューとしてアイテムを追加する
+	std::unique_ptr<UserInterface> userInterface = std::make_unique<UserInterface>();
+	//  指定された画像を表示するためのアイテムを作成する
+	userInterface->Create(m_commonResources->GetDeviceResources()
+		, path
+		, position
+		, scale
+		, anchor
+		, kind);
+
+	userInterface->SetWindowSize(m_windowSize.first, m_windowSize.second);
+
+
+	return userInterface;
+}
+
+void GameOverUI::CreateEnemyHP()
+{
+
+	m_enemyHPBase.push_back(AddTexture(L"Resources/Textures/BossHPBase.png"
+		, Vector2(640, 50)
+		, Vector2(0.9f, 0.5f)
+		, ANCHOR::MIDDLE_CENTER
+		, UserInterface::Kinds::UI));
+
+	m_enemyHP = AddTexture(L"Resources/Textures/EnemyHP.png"
+		, Vector2(640, 50)
+		, Vector2(0.91f, 0.39f)
+		, ANCHOR::MIDDLE_CENTER
+		, UserInterface::Kinds::UI);
+
+	m_enemyHPBase.push_back(AddTexture(L"Resources/Textures/EnemyName.png"
+		, Vector2(640, 25)
+		, Vector2(0.3f, 0.3f)
+		, ANCHOR::MIDDLE_CENTER
+		, UserInterface::Kinds::UI));
+
 
 
 }
 
+void GameOverUI::CreatePlayerHP()
+{
+
+	for (int i = 0; i < HP_COUNT; i++)
+	{
+		auto texture = std::make_unique<WataLib::DrawTexture>();
+		texture->Initialize(m_commonResources, L"Resources/Textures/HP.png"
+			, HP_POSITION + (HP_POSITION_OFFSET * i), HP_SCALE);
+
+		m_playerHP.push_back(std::move(texture));
+	}
+
+}
+
+void GameOverUI::CreateBoomerang()
+{
+
+	for (int i = 0; i < BOOMERANG_COUNT; i++)
+	{
+		auto texture = std::make_unique<WataLib::DrawTexture>();
+		texture->Initialize(m_commonResources, L"Resources/Textures/BoomerangUI.png"
+			, BOOMERANG_POSITION + (BOOMERANG_POSITION_OFFSET * i), BOOMERANG_SCALE);
+
+		m_boomerang.push_back(std::move(texture));
+	}
+
+
+}
+
+/// <summary>
+/// 初期化
+/// </summary>
+/// <param name="resources">共通リソース</param>
 void GameOverUI::Initialize(CommonResources* resources)
 {
-
 	m_commonResources = resources;
 
-	CreateGameOverTex();
+	//画面サイズの取得
+	m_windowSize.first = m_commonResources->GetDeviceResources()->GetOutputSize().right;
+	m_windowSize.second = m_commonResources->GetDeviceResources()->GetOutputSize().bottom;
 
+	m_playerHPCount = HP_COUNT;
 
-	//背景の透明度を０に設定
-	m_gameOverUI->SetAlphaValue(0.0f);
-	//リトライ画像の透明度を０に設定
-	m_gameOverReTryUI->SetAlphaValue(-0.3f);
-	//やめる画像の透明度を０に設定
-	m_gameOverEndUI->SetAlphaValue(-0.3f);
+	m_boomerangCount = BOOMERANG_COUNT;
 
-	m_nextState = NextState::ReTry;
+	CreatePlayerHP();
+	CreateBoomerang();
+	CreateEnemyHP();
+
+	EventManager::AddObserver(EventManager::EventTypeName::BoomerangThrow, this);
+	EventManager::AddObserver(EventManager::EventTypeName::GetBoomerang, this);
 
 
 }
 
-//-------------------------------------------------------------------
-// 更新する
-//-------------------------------------------------------------------
+
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="elapsedTime">経過時間</param>
 void GameOverUI::Update(const float& elapsedTime)
 {
-	UNREFERENCED_PARAMETER(elapsedTime);
-	using namespace DirectX;
-	using namespace DirectX::SimpleMath;
 
-	const auto& kbTracker = m_commonResources->GetInputManager()->GetKeyboardTracker();
+	
 
+}
 
-	//加算値を求める
-	float Additive = 0.5f * elapsedTime;
-
-
-
-	//背景の透明度の変更
-	float alpha;
-	alpha = m_gameOverUI->GetAlphaValue();
-	//透明度を加算
-	alpha += Additive;
-	//透明度をセット
-	m_gameOverUI->SetAlphaValue(alpha);
+/// <summary>
+/// 状態に入った時
+/// </summary>
+void GameOverUI::Enter()
+{
 
 
-	//リトライ画像の透明度の取得
-	alpha = m_gameOverReTryUI->GetAlphaValue();
-	//透明度を加算
-	alpha += Additive;
-	//透明度をセット
-	m_gameOverReTryUI->SetAlphaValue(alpha);
 
-	//やめる画像の透明度の取得
-	alpha = m_gameOverEndUI->GetAlphaValue();
-	//透明度を加算
-	alpha += Additive;
-	//透明度をセット
-	m_gameOverEndUI->SetAlphaValue(alpha);
+}
 
-	if (alpha < 1)
+/// <summary>
+/// 状態を抜けた時
+/// </summary>
+void GameOverUI::Exit()
+{
+}
+
+void GameOverUI::Notify(EventManager::EventTypeName type)
+{
+
+	switch (type)
 	{
-		return;
-	}
-
-	if (kbTracker->released.W)
-	{
-
-		m_nextState = NextState::ReTry;
-		//大きさを戻す
-		m_gameOverEndUI->SetScale(m_gameOverEndUI->GetBaseScale());
-
-	}
-	else if (kbTracker->released.S)
-	{
-
-		m_nextState = NextState::End;
-		m_gameOverReTryUI->SetScale(m_gameOverReTryUI->GetBaseScale());
-
-	}
-
-	if (kbTracker->released.Space)
-	{
-		switch (m_nextState)
-		{
-			case GameOverUI::NextState::ReTry:
-				m_playScene->SetNextSceneID(PlayScene::SceneID::PLAY);
-				break;
-			case GameOverUI::NextState::End:
-				
-				PostQuitMessage(0);
-
-				break;
-			default:
-				break;
-		}
-
-	}
-
-
-	DirectX::SimpleMath::Vector2 scale = DirectX::SimpleMath::Vector2::Zero;
-
-
-	switch (m_nextState)
-	{
-		case GameOverUI::NextState::ReTry:			
-			scale = m_gameOverReTryUI->GetBaseScale();
-			scale.x *= 1.4f;
-			scale.y *= 1.4f;
-			m_gameOverReTryUI->SetScale(scale);
+		case EventManager::EventTypeName::BoomerangThrow:
+			m_boomerangCount--;
 			break;
-		case GameOverUI::NextState::End:
-			scale = m_gameOverEndUI->GetBaseScale();
-			scale.x *= 1.4f;
-			scale.y *= 1.4f;
-			m_gameOverEndUI->SetScale(scale);
-
+		case EventManager::EventTypeName::GetBoomerang:
+			m_boomerangCount ++;
 			break;
 		default:
 			break;
@@ -157,117 +215,6 @@ void GameOverUI::Update(const float& elapsedTime)
 
 }
 
-void GameOverUI::Render()
-{
-
-	m_gameOverUI->Render();
-
-	m_gameOverReTryUI->Render();
-
-	m_gameOverEndUI->Render();
 
 
-
-
-}
-
-
-
-
-void GameOverUI::Enter()
-{
-}
-
-
-void GameOverUI::Exit()
-{
-
-}
-
-void GameOverUI::RegistrationInformation(PlayScene* playScene)
-{
-
-	m_playScene = playScene;
-
-}
-
-
-void GameOverUI::GameOverTexAdd(const wchar_t* path, DirectX::SimpleMath::Vector2 position, DirectX::SimpleMath::Vector2 scale, ANCHOR anchor, UserInterface::Kinds kind)
-{
-
-	m_gameOverUI = std::make_unique<UserInterface>();
-	//  指定された画像を表示するためのアイテムを作成する
-	m_gameOverUI->Create(m_commonResources->GetDeviceResources()
-		, path
-		, position
-		, scale
-		, anchor
-		, kind);
-
-	m_gameOverUI->SetWindowSize(m_windowWidth, m_windowHeight);
-
-
-}
-
-void GameOverUI::GameOverReTryTexAdd(const wchar_t* path, DirectX::SimpleMath::Vector2 position, DirectX::SimpleMath::Vector2 scale, ANCHOR anchor, UserInterface::Kinds kind)
-{
-
-	m_gameOverReTryUI = std::make_unique<UserInterface>();
-	//  指定された画像を表示するためのアイテムを作成する
-	m_gameOverReTryUI->Create(m_commonResources->GetDeviceResources()
-		, path
-		, position
-		, scale
-		, anchor
-		, kind);
-
-	m_gameOverReTryUI->SetWindowSize(m_windowWidth, m_windowHeight);
-
-
-}
-
-void GameOverUI::GameOverEndTexAdd(const wchar_t* path, DirectX::SimpleMath::Vector2 position, DirectX::SimpleMath::Vector2 scale, ANCHOR anchor, UserInterface::Kinds kind)
-{
-
-	m_gameOverEndUI = std::make_unique<UserInterface>();
-	//  指定された画像を表示するためのアイテムを作成する
-	m_gameOverEndUI->Create(m_commonResources->GetDeviceResources()
-		, path
-		, position
-		, scale
-		, anchor
-		, kind);
-
-	m_gameOverEndUI->SetWindowSize(m_windowWidth, m_windowHeight);
-
-
-}
-
-void GameOverUI::CreateGameOverTex()
-{
-
-	using namespace DirectX::SimpleMath;
-
-	GameOverTexAdd(L"Resources/Textures/GameOver.png"
-		, Vector2(640, 360)
-		, Vector2(1.0f, 1.0f)
-		, ANCHOR::MIDDLE_CENTER
-		, UserInterface::Kinds::UI);
-
-	GameOverReTryTexAdd(L"Resources/Textures/ReTry.png"
-		, Vector2(640, 420)
-		, Vector2(0.3f, 0.3f)
-		, ANCHOR::MIDDLE_CENTER
-		, UserInterface::Kinds::UI);
-
-	GameOverEndTexAdd(L"Resources/Textures/End.png"
-		, Vector2(640, 510)
-		, Vector2(0.3f, 0.3f)
-		, ANCHOR::MIDDLE_CENTER
-		, UserInterface::Kinds::UI);
-
-
-	//上　420　　　下 510
-
-}
 

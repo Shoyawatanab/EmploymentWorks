@@ -13,8 +13,7 @@
 #include "Game/Scene/SceneManager.h"
 #include "Libraries/MyLib/DebugString.h"
 #include "Libraries/MyLib/InputManager.h"
-#include "Libraries/MyLib/Fade.h"
-
+#include "Libraries/WataLib/Fade.h"
 
 // A basic game implementation that creates a D3D11 device and
 // provides a game loop.
@@ -90,6 +89,7 @@ private:
     //フェード処理
     std::unique_ptr<Fade>                  m_fade;
 
+
     // ★追記ココまで↑↑↑★
 
     // フルスクリーン関連
@@ -106,4 +106,5 @@ public:
         m_deviceResources->GetSwapChain()->SetFullscreenState(value, nullptr);
         if (value) m_deviceResources->CreateWindowSizeDependentResources();
     }
+
 };

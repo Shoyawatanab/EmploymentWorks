@@ -1,0 +1,83 @@
+/*
+	@file	ExplosionEffects.h
+	@brief	一般的なシーンクラス
+*/
+#pragma once
+#include "Game/Interface/IEffect.h"
+
+// 前方宣言
+class CommonResources;
+
+
+class ExplosionEffects : public IEffect
+{
+private:
+
+	static constexpr DirectX::SimpleMath::Vector2 SCALE {2, 2};
+
+	// アニメーションサイズ
+	static constexpr float ANIMATION_SIZE = 1.0f / 7.0f;	// 7枚
+	// アニメーションのインターバル：フレーム単位
+	static constexpr int ANIMATION_INTERVAL = 5;
+
+
+public:
+
+
+	bool GetIsActive() override { return m_isActive; };
+
+	void SetIsActive(bool isActive) override { m_isActive = isActive; };
+
+	EffectType GetEffectType()  override { return EffectType::Explosion; };
+
+
+	void SetPosition(DirectX::SimpleMath::Vector3 position) override { m_position = position; };
+
+	void SetScale(DirectX::SimpleMath::Vector3 scale) override { m_scale = scale; };
+
+
+
+
+//継承関係
+public:
+	ExplosionEffects(CommonResources* resources);
+
+	~ExplosionEffects() override;
+
+	void Initialize() override;
+	void Update(const float& elapsedTime) override;
+	void Render(const DirectX::SimpleMath::Matrix& view, const  DirectX::SimpleMath::Matrix& proj) override;
+
+
+	void Create(void* datas) override ;
+
+private:
+
+	// 共通リソース
+	CommonResources* m_commonResources;
+	bool m_isActive;
+	DirectX::SimpleMath::Vector3 m_position;
+	DirectX::SimpleMath::Vector3 m_scale;
+
+	// ポリゴン描画用
+	// ポリゴン
+	DirectX::VertexPositionTexture m_vertices[4];
+	// ベーシックエフェクト
+	std::unique_ptr<DirectX::BasicEffect> m_basicEffect;
+	// インプットレイアウト
+	Microsoft::WRL::ComPtr<ID3D11InputLayout> m_inputLayout;
+	// プリミティブバッチ
+	std::unique_ptr<DirectX::PrimitiveBatch<DirectX::VertexPositionTexture>> m_primitiveBatch;
+	// テクスチャ
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_texture;
+	// ビルボード行列
+	DirectX::SimpleMath::Matrix m_billboardMat;
+
+	// フレームカウンタ
+	int m_frameCounter;
+	// アニメーションキー
+	int m_animationKey;
+
+
+
+};

@@ -4,170 +4,98 @@
 */
 #pragma once
 #include "IScene.h"
-#include <unordered_map>
-#include "Game/Scene/SceneManager.h"
+#include "SceneManager.h"
+
 // 前方宣言
 class CommonResources;
+class StageObjectManager;
 class Player;
-class Enemy;
-class Floor;
-class LockOn;
-class CollisionManager;
-class Wall;
-class Rock;
-class Sky;
-class UI;
-class Ceiling;
-class Pillar;
-class Artillery;
-class Particle;
-class HitEffects;
 class EnemyManager;
-
+class CollisionManager;
+class UIManager;
+class TargetMarker;
+class EffectsManager;
+class Sky;
 
 namespace mylib
 {
 	class DebugCamera;
 	class GridFloor;
-	class GameCameraManager;
-	class Texture;
-
 }
 
+namespace WataLib
+{
+	class CameraManager;
+	class DrawTexture;
+}
 
 class PlayScene final :
-	public IScene
+    public IScene
 {
 public:
+	//コンストラクタ
+	PlayScene(SceneManager::StageID stageID);
+	//デストラクタ
+	~PlayScene() override;
 
-	enum class GameState
-	{
-		None,    //通常
-		Clear,
-		GameOver
+	//初期化
+	void Initialize(CommonResources* resources) override;
+	//更新
+	void Update(float elapsedTime)override;
+	//描画
+	void Render() override;
 
-	};
+	void Finalize() override;
 
-public:
+
+	//シーン切り替え
+	SceneID GetNextSceneID() const;
+	//ステージを作成
+	void CreateStageObject();
 
 	void SetNextSceneID(SceneID ID) { m_nextScene = ID; }
 
-	//スロー演出の進行割合を取得
-	float GetSlowMotionProgressRate() { return m_progressRate; }
-
 private:
-
-	SceneID m_nextScene;
-
 	// 共通リソース
 	CommonResources* m_commonResources;
 
-	// デバッグカメラ
-	//std::unique_ptr<mylib::DebugCamera> m_debugCamera;
-
-	std::unique_ptr<mylib::GameCameraManager> m_cameraManager;
-
-	// 格子床
-	std::unique_ptr<mylib::GridFloor> m_gridFloor;
-
-	// 射影行列
-	DirectX::SimpleMath::Matrix m_projection;
-
+	//プレイヤ
 	std::unique_ptr<Player> m_player;
-	std::unique_ptr<Enemy> m_enemy;
+	//ステージオブジェクトマネージャー
+	std::unique_ptr<StageObjectManager> m_stageObjectManager;
+	//
 	std::unique_ptr<EnemyManager> m_enemyManager;
-
-	//床
-	std::unique_ptr<Floor> m_floor;
-	std::unique_ptr<LockOn> m_lockOn;
-
-	//壁
-	std::vector<std::unique_ptr<Wall>> m_wall;
-	//天井
-	std::unique_ptr<Ceiling> m_ceiling;
-	//柱
-	std::vector<std::unique_ptr<Pillar>> m_pillar;
-	//砲台
-	std::vector<std::unique_ptr<Artillery>> m_artillery;
-
+	//カメラマネージャー
+	std::unique_ptr<WataLib::CameraManager> m_cameraManager;
+	//当たり判定マネージャー
 	std::unique_ptr<CollisionManager> m_collisionManager;
+	//UIマネージャー
+	std::unique_ptr<UIManager> m_uiManager;
+	//ターゲットマーカー
+	std::unique_ptr<TargetMarker> m_targetMarker;
+	//エフェクトマイクロソフト
+	std::unique_ptr<EffectsManager> m_effectsManager;
+	SceneManager::StageID m_stageID;
 
-	std::unique_ptr<UI> m_ui;
-
-
-	std::vector< std::unique_ptr<Rock>> m_rock;
-
+	//チュートリアル画像
+	std::unique_ptr<WataLib::DrawTexture> m_tutorialTex;
 
 	std::unique_ptr<Sky> m_sky;
-
-	GameState m_state;
-
-
-	//パーティクルクラス 爆発エフェクト
-	std::vector<std::unique_ptr<Particle>> m_particle;
 
 	// オーディオ関連
 	std::unique_ptr<DirectX::AudioEngine> m_audioEngine;
 	std::unique_ptr<DirectX::SoundEffect> m_soundEffectBGM;
 	std::unique_ptr<DirectX::SoundEffectInstance> m_soundEffectInstanceBGM;
 
+	// 射影行列
+	DirectX::SimpleMath::Matrix m_projection;
 
-	//初めのカウントダウン
-	float m_startCountDown;
+	// シーンチェンジフラグ
+	bool m_isChangeScene;
+	//次のシーン
+	SceneID m_nextScene;
 
+	bool m_isTutolialTex;
 
-	//イベントの更新関数の格納変数
-	std::unordered_map<std::string, std::function<void(float)>> m_eventUpdate;
-	//削除したいイベント名の登録変数
-	std::vector<std::string> m_deleteEventName;
-
-	//スロー演出時の速度
-	float m_slowMotionSpeed;
-	//スロー演出の時間
-	float m_slowMotionTime;
-	//スロー演出の最大時間
-	float m_slowMotionMaxTime;
-	//スロー演出の表示画像
-	std::unique_ptr<mylib::Texture> m_slowTexture;
-	//スロー演出中かどうか
-	bool m_isSlowMotion;
-	//スロー演出の進行割合
-	float m_progressRate;
-
-
-	//ヒットエフェクト
-	std::vector<std::unique_ptr<HitEffects>> m_hitEffects;
-	
-	SceneManager::StageID m_stageID;
-
-public:
-	PlayScene(SceneManager::StageID stageID);
-	~PlayScene() override;
-
-	void Initialize(CommonResources* resources) override;
-	void Update(float elapsedTime)override;
-	void Render() override;
-	void Finalize() override;
-
-	SceneID GetNextSceneID() const override;
-
-
-	void CreateStage();
-
-	void CreateObject();
-
-	//爆発エフェクトを生成
-	void CreateParticle(DirectX::SimpleMath::Vector3 Pos);
-
-	void CreateHitEffects(DirectX::SimpleMath::Vector3 Pos);
-
-
-	//ブーメランを投げるときのスロー演出時に呼ばれる関数
-	void BoomerangSlowMotion();
-	//ブーメランの投げ終わり
-	void BoomerangSlowMotionEnd();
-
-	//スロー演出のUpdate
-	void SlowMotion(float elapsdTime);
 
 };

@@ -19,17 +19,8 @@ public:
 	};
 
 public:
-
 	void  SetStageID(StageID stageID) { m_stageID = stageID; }
 
-
-private:
-	std::unique_ptr<IScene> m_currentScene;
-	CommonResources* m_commonResources;
-
-
-
-	StageID m_stageID;
 
 
 public:
@@ -46,4 +37,11 @@ private:
 	void ChangeScene(IScene::SceneID sceneID);
 	void CreateScene(IScene::SceneID sceneID);
 	void DeleteScene();
+
+private:
+	std::unique_ptr<IScene> m_currentScene;
+	CommonResources* m_commonResources;
+
+	StageID m_stageID;
+
 };
