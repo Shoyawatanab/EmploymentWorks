@@ -333,9 +333,6 @@
     <ClInclude Include="Libraries\WataLib\CSV.h">
       <Filter>Libraries\WataLib</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Weapon\Boomerang\State\BoomerangThrow.h">
-      <Filter>Game\Weapon\Boomerang\State</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Interface\IObserver.h">
       <Filter>Game\Interface</Filter>
     </ClInclude>
@@ -666,6 +663,15 @@
     <ClInclude Include="Game\Enemys\BossEnemy\Barrier\State\BarrierShrink.h">
       <Filter>Game\Enemys\BossEnemy\Barrier\State</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Weapon\Boomerang\State\BoomerangRightThrow.h">
+      <Filter>Game\Weapon\Boomerang\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Weapon\Boomerang\State\BoomerangLeftThrow.h">
+      <Filter>Game\Weapon\Boomerang\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Weapon\Boomerang\State\BoomerangFrontThrow.h">
+      <Filter>Game\Weapon\Boomerang\State</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -784,9 +790,6 @@
     </ClCompile>
     <ClCompile Include="Libraries\WataLib\CSV.cpp">
       <Filter>Libraries\WataLib</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Weapon\Boomerang\State\BoomerangThrow.cpp">
-      <Filter>Game\Weapon\Boomerang\State</Filter>
     </ClCompile>
     <ClCompile Include="Game\UI\UIManager.cpp">
       <Filter>Game\UI</Filter>
@@ -1087,6 +1090,15 @@
     </ClCompile>
     <ClCompile Include="Game\Enemys\BossEnemy\Barrier\State\BarrierShrink.cpp">
       <Filter>Game\Enemys\BossEnemy\Barrier\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Weapon\Boomerang\State\BoomerangRightThrow.cpp">
+      <Filter>Game\Weapon\Boomerang\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Weapon\Boomerang\State\BoomerangLeftThrow.cpp">
+      <Filter>Game\Weapon\Boomerang\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Weapon\Boomerang\State\BoomerangFrontThrow.cpp">
+      <Filter>Game\Weapon\Boomerang\State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

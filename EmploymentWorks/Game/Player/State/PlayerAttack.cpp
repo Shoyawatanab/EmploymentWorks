@@ -86,7 +86,9 @@ void PlayerAttack::Update(const float& elapsedTime)
 	//ƒu[ƒƒ‰ƒ“‚Ìó‘Ô‚Ì•ÏX
 		Boomerang* boomerang = m_player->GetBoomerang<BoomerangGetReady>();
 
-		boomerang->GetBoomerangStatemachine()->ChangeState(boomerang->GetBoomerangStatemachine()->GetBoomerangThrow());
+		//boomerang->GetBoomerangStatemachine()->ChangeState(boomerang->GetBoomerangStatemachine()->GetBoomerangRightThrow());
+		//boomerang->GetBoomerangStatemachine()->ChangeState(boomerang->GetBoomerangStatemachine()->GetBoomerangLeftThrow());
+		boomerang->GetBoomerangStatemachine()->ChangeState(boomerang->GetBoomerangStatemachine()->GetBoomerangFrontThrow());
 		Messenger::Notify(EventParams::EventType::BoomerangGetReadyEnd, nullptr);
 		Messenger::Notify(EventParams::EventType::BoomerangThrow, nullptr);
 

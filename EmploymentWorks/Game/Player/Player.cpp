@@ -19,6 +19,7 @@
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
 
+
 /// <summary>
 /// コンストラクタ
 /// </summary>
@@ -72,6 +73,7 @@ void Player::AddPointer(WataLib::TPS_Camera* tpsCamera, TargetMarker* targetMark
 	}
 
 }
+
 
 
 /// <summary>

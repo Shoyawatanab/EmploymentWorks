@@ -13,7 +13,7 @@ namespace WataLib
 	class TPS_Camera;
 }
 
-class BoomerangThrow : public IState
+class BoomerangLeftThrow : public IState
 {
 
 private:
@@ -31,9 +31,9 @@ public:
 
 public:
 	//コンストラクタ
-	BoomerangThrow() ;
+	BoomerangLeftThrow() ;
 	//デストラクタ
-	~BoomerangThrow() override;
+	~BoomerangLeftThrow() override;
 
 	//初期化
 	void Initialize(CommonResources* resources) override;

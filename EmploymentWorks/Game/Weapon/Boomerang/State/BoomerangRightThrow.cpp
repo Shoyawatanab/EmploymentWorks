@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "BoomerangThrow.h"
+#include "BoomerangRightThrow.h"
 #include "Game/CommonResources.h"
 #include "DeviceResources.h"
 #include "Libraries/MyLib/InputManager.h"
@@ -16,7 +16,7 @@ using namespace DirectX::SimpleMath;
 /// <summary>
 /// コンストラクタ
 /// </summary>
-BoomerangThrow::BoomerangThrow()
+BoomerangRightThrow::BoomerangRightThrow()
 	:
 	m_commonResources{}
 	,m_splineCurvePosition{}
@@ -34,7 +34,7 @@ BoomerangThrow::BoomerangThrow()
 /// <summary>
 /// デストラクタ
 /// </summary>
-BoomerangThrow::~BoomerangThrow()
+BoomerangRightThrow::~BoomerangRightThrow()
 {
 }
 
@@ -46,7 +46,7 @@ BoomerangThrow::~BoomerangThrow()
 /// <param name="player">プレイヤ</param>
 /// <param name="targetMarker">ターゲットマーカー</param>
 /// <param name="tpsCamera">TPSカメラ</param>
-void BoomerangThrow::AddPointer(Boomerang* boomerang, Player* player, TargetMarker* targetMarker,WataLib::TPS_Camera* tpsCamera)
+void BoomerangRightThrow::AddPointer(Boomerang* boomerang, Player* player, TargetMarker* targetMarker,WataLib::TPS_Camera* tpsCamera)
 {
 	m_boomerang = boomerang;
 	m_player = player;
@@ -57,7 +57,7 @@ void BoomerangThrow::AddPointer(Boomerang* boomerang, Player* player, TargetMark
 /// <summary>
 /// スプライン曲線の基準点の作成
 /// </summary>
-void BoomerangThrow::CreateSplineCurvePositon()
+void BoomerangRightThrow::CreateSplineCurvePositon()
 {
 
 	std::vector<DirectX::SimpleMath::Vector3> basePosition = m_boomerang->GetThrowBasePosition();
@@ -132,7 +132,7 @@ void BoomerangThrow::CreateSplineCurvePositon()
 
 }
 
-float BoomerangThrow::Lerp(float a, float b, float t)
+float BoomerangRightThrow::Lerp(float a, float b, float t)
 {
 	return a + t * (b - a);
 }
@@ -141,7 +141,7 @@ float BoomerangThrow::Lerp(float a, float b, float t)
 /// スプライン曲線
 /// </summary>
 /// <param name="elapsedTime">経過時間</param>
-void BoomerangThrow::SplineCurve(const float& elapsedTime)
+void BoomerangRightThrow::SplineCurve(const float& elapsedTime)
 {
 	//座標の距離を求める
 	float distance = (m_splineCurvePosition[(m_index + 1) % m_splineCurvePosition.size()]
@@ -192,7 +192,7 @@ void BoomerangThrow::SplineCurve(const float& elapsedTime)
 /// プレイヤを追いかける
 /// </summary>
 /// <param name="elapsedTime">経過時間</param>
-void BoomerangThrow::ChaseToPlayer(const float& elapsedTime)
+void BoomerangRightThrow::ChaseToPlayer(const float& elapsedTime)
 {
 	//ブーメランの座標を取得
 	DirectX::SimpleMath::Vector3 BoomerangPos = m_boomerang->GetPosition();
@@ -227,7 +227,7 @@ void BoomerangThrow::ChaseToPlayer(const float& elapsedTime)
 /// 回転
 /// </summary>
 /// <param name="elapsedTime">経過時間</param>
-void BoomerangThrow::Rotation(const float& elapsedTime)
+void BoomerangRightThrow::Rotation(const float& elapsedTime)
 {
 
 	//横回転
@@ -261,7 +261,7 @@ void BoomerangThrow::Rotation(const float& elapsedTime)
 /// </summary>
 /// <param name="firstVec">初期値</param>
 /// <param name="secondVec">終了値</param>
-void BoomerangThrow::ChangeRotationDatas(DirectX::SimpleMath::Quaternion firstVec, DirectX::SimpleMath::Quaternion secondVec)
+void BoomerangRightThrow::ChangeRotationDatas(DirectX::SimpleMath::Quaternion firstVec, DirectX::SimpleMath::Quaternion secondVec)
 {
 
 	m_rotationDatas.first = firstVec;
@@ -275,7 +275,7 @@ void BoomerangThrow::ChangeRotationDatas(DirectX::SimpleMath::Quaternion firstVe
 /// 初期化
 /// </summary>
 /// <param name="resources">共通リソース</param>
-void BoomerangThrow::Initialize(CommonResources* resources)
+void BoomerangRightThrow::Initialize(CommonResources* resources)
 {
 	m_commonResources = resources;
 
@@ -289,17 +289,17 @@ void BoomerangThrow::Initialize(CommonResources* resources)
 /// 更新処理
 /// </summary>
 /// <param name="elapsedTime">経過時間</param>
-void BoomerangThrow::Update(const float& elapsedTime)
+void BoomerangRightThrow::Update(const float& elapsedTime)
 {
 	//回転
 	Rotation(elapsedTime);
 
 	switch (m_state)
 	{
-		case BoomerangThrow::State::SplineCurve:
+		case BoomerangRightThrow::State::SplineCurve:
 			SplineCurve(elapsedTime);
 			break;
-		case BoomerangThrow::State::ChaseToPlayer:
+		case BoomerangRightThrow::State::ChaseToPlayer:
 			ChaseToPlayer(elapsedTime);
 			break;
 		default:
@@ -309,14 +309,14 @@ void BoomerangThrow::Update(const float& elapsedTime)
 
 }
 
-void BoomerangThrow::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
+void BoomerangRightThrow::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
 {
 }
 
 /// <summary>
 /// 状態に入った時
 /// </summary>
-void BoomerangThrow::Enter()
+void BoomerangRightThrow::Enter()
 {
 	//1ブーメランの行列から大きさ座標回転の抽出
 	Matrix matrix = m_boomerang->GetWorldMatrix();
@@ -349,7 +349,7 @@ void BoomerangThrow::Enter()
 /// <summary>
 /// 状態を抜けた時
 /// </summary>
-void BoomerangThrow::Exit()
+void BoomerangRightThrow::Exit()
 {
 }
 

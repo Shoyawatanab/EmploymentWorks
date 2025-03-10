@@ -80,7 +80,7 @@ const Quaternion       Params::BOOMERANG_ROTATION = Quaternion::Identity;
 //ブーメランの数
  const int Params::BOOMERANG_MAX_COUNT = 3;
 //ブーメランの移動スピード
- const float Params::BOOMERANG_MOVE_SPEED = 7.0f;
+ const float Params::BOOMERANG_MOVE_SPEED = 10.0f;
 //ブーメランの横回転スピード
  const float Params::BOOMERANG_HORIZONTAL_ROTATION_SPEED = 20.0f;
 //ブーメランの投げてる時の初めの回転
