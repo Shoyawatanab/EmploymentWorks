@@ -6,7 +6,10 @@
 #include "Game/Interface/IState.h"
 #include "Game/Weapon/Boomerang/State/BoomerangIdle.h"
 #include "Game/Weapon/Boomerang/State/BoomerangGetReady.h"
-#include "Game/Weapon/Boomerang/State/BoomerangThrow.h"
+#include "Game/Weapon/Boomerang/State/BoomerangRightThrow.h"
+#include "Game/Weapon/Boomerang/State/BoomerangLeftThrow.h"
+#include "Game/Weapon/Boomerang/State/BoomerangFrontThrow.h"
+
 #include "Game/Weapon/Boomerang/State/BoomerangRepelled.h"
 #include "Game/Weapon/Boomerang/State/BoomerangDrop.h"
 
@@ -23,7 +26,11 @@ public:
 	//\‚¦ó‘Ô‚Ìæ“¾
 	BoomerangGetReady* GetBoomerangGetReady() { return m_getReady.get(); }
 	//“Š‚°ó‘Ô‚Ìæ“¾
-	BoomerangThrow* GetBoomerangThrow() { return m_throw.get(); }
+	BoomerangRightThrow* GetBoomerangRightThrow() { return m_rigntThrow.get(); }
+
+	BoomerangLeftThrow* GetBoomerangLeftThrow() { return m_leftThrow.get(); }
+
+	BoomerangFrontThrow* GetBoomerangFrontThrow() { return m_frontThrow.get(); }
 
 	BoomerangRepelled* GetBoomerangRepelled() { return m_repelled.get(); }
 
@@ -57,7 +64,11 @@ private:
 	//\‚¦ó‘Ô
 	std::unique_ptr<BoomerangGetReady> m_getReady;
 	//“Š‚°ó‘Ô
-	std::unique_ptr<BoomerangThrow> m_throw;
+	std::unique_ptr<BoomerangRightThrow> m_rigntThrow;
+
+	std::unique_ptr<BoomerangLeftThrow> m_leftThrow;
+
+	std::unique_ptr<BoomerangFrontThrow> m_frontThrow;
 
 	std::unique_ptr<BoomerangRepelled> m_repelled;
 	

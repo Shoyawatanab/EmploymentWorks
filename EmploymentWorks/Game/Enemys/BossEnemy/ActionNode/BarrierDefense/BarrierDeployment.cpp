@@ -55,13 +55,11 @@ IBehaviorNode::State BarrierDeployment::Update(const float& elapsedTime)
 {
 	UNREFERENCED_PARAMETER(elapsedTime);
 
-
-
-
 	m_time += elapsedTime;
 
-	return IBehaviorNode::State::Runngin;
 
+
+	return IBehaviorNode::State::Runngin;
 
 }
 
@@ -87,6 +85,7 @@ void BarrierDeployment::Enter()
 /// </summary>
 void BarrierDeployment::Exit()
 {
+	m_barrier->SetIsEntityActive(false);
 
 }
 

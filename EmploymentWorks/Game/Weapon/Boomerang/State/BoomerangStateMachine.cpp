@@ -15,7 +15,9 @@ BoomerangStateMachine::BoomerangStateMachine()
 {
 	m_idle = std::make_unique<BoomerangIdle>();
 	m_getReady = std::make_unique<BoomerangGetReady>();
-	m_throw = std::make_unique<BoomerangThrow>();
+	m_rigntThrow = std::make_unique<BoomerangRightThrow>();
+	m_leftThrow = std::make_unique<BoomerangLeftThrow>();
+	m_frontThrow = std::make_unique<BoomerangFrontThrow>();
 	m_repelled = std::make_unique<BoomerangRepelled>();
 	m_drop = std::make_unique<BoomerangDrop>();
 }
@@ -39,7 +41,9 @@ void BoomerangStateMachine::AddPointer(Boomerang* boomerang, Player* player, Tar
 {
 	m_idle->AddPointer(player, boomerang);
 	m_getReady->AddPointer(boomerang);
-	m_throw->AddPointer(boomerang,player,targetMarker,tpsCamera);
+	m_rigntThrow->AddPointer(boomerang,player,targetMarker,tpsCamera);
+	m_leftThrow->AddPointer(boomerang,player,targetMarker,tpsCamera);
+	m_frontThrow->AddPointer(boomerang, player, targetMarker, tpsCamera);
 	m_repelled->AddPointer(boomerang);
 	m_drop->AddPointer(boomerang);
 }
@@ -54,7 +58,9 @@ void BoomerangStateMachine::Initialize(CommonResources* resources, IState* start
 	//‰Šú‰»
 	m_idle->Initialize(resources);
 	m_getReady->Initialize(resources);
-	m_throw->Initialize(resources);
+	m_rigntThrow->Initialize(resources);
+	m_leftThrow->Initialize(resources);
+	m_frontThrow->Initialize(resources);
 	m_repelled->Initialize(resources);
 	m_drop->Initialize(resources);
 
