@@ -16,7 +16,8 @@ CommonResources::CommonResources()
 	m_commonStates{ nullptr },
 	m_debugString{ nullptr },
 	m_inputManager{ nullptr },
-	m_fade{ nullptr }
+	m_fade{ nullptr },
+	m_score{nullptr}
 {
 }
 
@@ -29,7 +30,8 @@ void CommonResources::Initialize(
 	DirectX::CommonStates* commonStates,
 	mylib::DebugString* debugString,
 	mylib::InputManager* inputManager,
-	Fade* fade
+	Fade* fade,
+	Score* score
 )
 {
 	assert(timer);
@@ -44,4 +46,5 @@ void CommonResources::Initialize(
 	m_debugString = debugString;
 	m_inputManager = inputManager;
 	m_fade = fade;
+	m_score = score;
 }

@@ -28,6 +28,8 @@
 #include "Game/StageObject/Floor.h"
 #include "Game/StageObject/Wall.h"
 #include "Game/ItemAcquisition.h"
+#include "Game/Timer.h"
+#include "Game/Score.h"
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
@@ -51,6 +53,7 @@ PlayScene::PlayScene(SceneManager::StageID stageID)
 	,m_nextScene{SceneID::NONE}
 	,m_stageID{stageID}
 	,m_tutorialTex{}
+	,m_timer{}
 {
 }
 
@@ -109,6 +112,8 @@ void PlayScene::Initialize(CommonResources* resources)
 	m_targetMarker = std::make_unique<TargetMarker>();
 	m_effectsManager = std::make_unique<EffectsManager>();
 	m_sky = std::make_unique<Sky>(m_commonResources,Vector3::Zero,Vector3::Zero,Quaternion::Identity);
+	m_timer = std::make_unique<Timer>();
+
 
 	//ŠeƒNƒ‰ƒX‚É•K—v‚Èƒ|ƒCƒ“ƒ^‚ð“o˜^
 	m_cameraManager->AddPointer(m_player.get(),m_enemyManager.get());
@@ -130,6 +135,7 @@ void PlayScene::Initialize(CommonResources* resources)
 	m_targetMarker->Initialize(m_commonResources);
 	m_effectsManager->Initialize(m_commonResources);
 	m_sky->Initialize();
+	m_timer->Initialize(m_commonResources);
 	ItemAcquisition::GetInstance()->Initialize(m_commonResources);
 
 	//“–‚½‚è”»’è‚Ì“o˜^
@@ -174,7 +180,7 @@ void PlayScene::Initialize(CommonResources* resources)
 
 	m_isTutolialTex = false;
 
-
+	m_commonResources->GetScore()->AddScore(100.0f);
 }
 
 //---------------------------------------------------------
@@ -203,7 +209,7 @@ void PlayScene::Update(float elapsedTime)
 		return;
 	}
 
-
+	CheckMouseWheel();
 
 	//XV
 	m_player->Update(elapsedTime);
@@ -214,6 +220,7 @@ void PlayScene::Update(float elapsedTime)
 	m_uiManager->Update(elapsedTime);
 	m_targetMarker->Update(elapsedTime);
 	m_effectsManager->Update(elapsedTime);
+	m_timer->Update(elapsedTime);
 
 }
 
@@ -237,12 +244,15 @@ void PlayScene::Render()
 	m_uiManager->Render(view, m_projection);
 	m_targetMarker->Render();
 
+	m_timer->Render();
 
 	//if (m_stageID == SceneManager::Stage1)
 	//{
 	//	m_tutorialTex->Render();
 	//}
 
+
+	
 }
 
 //---------------------------------------------------------
@@ -336,4 +346,28 @@ void PlayScene::CreateStageObject()
 		}
 
 	}
+}
+
+void PlayScene::CheckMouseWheel()
+{
+
+	const auto& state = m_commonResources->GetInputManager()->GetMouseState();
+
+	int scrollWheelValue = state.scrollWheelValue;
+
+	//ã‚É‰ñ“]
+	if (scrollWheelValue > 0)
+	{
+		Messenger::Notify(EventParams::EventType::MouseWheelUp, nullptr);
+	}
+	//‰º‚É‰ñ“]
+	else if (scrollWheelValue < 0)
+	{
+
+		Messenger::Notify(EventParams::EventType::MouseWheelDown, nullptr);
+
+	}
+
+	Mouse::Get().ResetScrollWheelValue();
+
 }

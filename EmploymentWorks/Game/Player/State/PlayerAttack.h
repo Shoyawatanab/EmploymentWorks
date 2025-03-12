@@ -3,11 +3,22 @@
 */
 #pragma once
 #include "Game/Interface/IState.h"
+#include "Game/Interface/IObserver.h"
 
 class Player;
 
-class PlayerAttack : public IState
+class PlayerAttack : public IState , IObserver
 {
+public:
+
+	enum class ThrowState
+	{
+		Right = 0
+		,Front
+		, Left
+
+	};
+
 public:
 	//コンストラクタ
 	PlayerAttack() ;
@@ -24,6 +35,9 @@ public:
 	void Enter() override;
 	//状態を抜けた時
 	void Exit() override;
+
+	//通知時に呼び出される
+	void Notify(EventParams::EventType type, void* datas) override;
 
 
 	//必要なポインタの登録
@@ -42,4 +56,6 @@ private:
 	//回転
 	DirectX::SimpleMath::Quaternion m_rotation;
 	
+	ThrowState m_throwState;
+
 };

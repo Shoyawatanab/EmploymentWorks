@@ -19,7 +19,10 @@ public:
 		, CreateExplosion
 		, CreateParticle  
 		, CreateHitEffect
-		,BossBeamHit  
+		, BossBeamHit  
+		,ChangeBoomerangThrowState
+		,MouseWheelUp
+		,MouseWheelDown
 
 	};
 
@@ -41,6 +44,13 @@ public:
 	{
 		DirectX::SimpleMath::Vector3 Position;
 		DirectX::SimpleMath::Vector3 Scale;
+
+	};
+
+	struct  ChangeBoomerangThrowStateDatas
+	{
+
+		int State;
 
 	};
 

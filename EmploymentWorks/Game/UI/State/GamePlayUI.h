@@ -34,6 +34,8 @@ private :
 	static constexpr DirectX::SimpleMath::Vector2 BOOMERANG_POSITION_OFFSET { 70.0f, 1.0f};
 	static constexpr DirectX::SimpleMath::Vector2 BOOMERANG_SCALE { 0.1f, 0.1f};
 
+	static constexpr DirectX::SimpleMath::Vector2 MOVEPOSITION = { -50.0f,0.0f };
+
 public:
 	//コンストラクタ
 	GamePlayUI() ;
@@ -85,8 +87,11 @@ private:
 
 	std::unique_ptr<UserInterface> m_enemyHP;
 	std::vector<std::unique_ptr<UserInterface>> m_enemyHPBase;
-
+	//アイテムを回収するときのUI
 	std::unique_ptr<UserInterface> m_itemAcquisitionUI;
+
+	//投げ状態のUI
+	std::vector<std::unique_ptr<UserInterface>> m_throwUI;
 
 	EnemyManager* m_enemyManager;
 

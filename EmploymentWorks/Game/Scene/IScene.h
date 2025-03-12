@@ -16,7 +16,8 @@ public:
 		NONE,
 		TITLE,
 		PLAY,
-		STAGESELECT
+		STAGESELECT,
+		RESULT
 	};
 
 

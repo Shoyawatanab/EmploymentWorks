@@ -50,6 +50,55 @@ public:
 		DirectX::SimpleMath::Vector4	windowSize;
 		DirectX::SimpleMath::Vector4    diffuse;
 	};
+
+public:
+	void SetWindowSize(const int& width, const int& height);
+
+	void SetScale(DirectX::SimpleMath::Vector2 scale);
+	DirectX::SimpleMath::Vector2 GetScale() { return m_scale; }
+	void SetPosition(DirectX::SimpleMath::Vector2 position);
+	DirectX::SimpleMath::Vector2 GetPosition() { return m_position; }
+
+	DirectX::SimpleMath::Vector2 GetInitialPosition() { return m_initialPosition; }
+
+	void SetAnchor(ANCHOR anchor);
+	ANCHOR GetAnchor() { return m_anchor; }
+
+	void SetRenderRatio(float ratio);
+	float GetRenderRatio() { return m_renderRatio; }
+
+	void SetRenderRatioOffset(float offset) { m_renderRatioOffset = offset; };
+	float GetRenderRatioOffset() { return m_renderRatioOffset; }
+
+	void SetAlphaValue(float value) { m_alphaValue = value; }
+	float GetAlphaValue() { return m_alphaValue; }
+
+	//関数
+public:
+	static const std::vector<D3D11_INPUT_ELEMENT_DESC> INPUT_LAYOUT;
+
+	UserInterface();
+	~UserInterface();
+
+	void LoadTexture(const wchar_t* path);
+
+	void Create(DX::DeviceResources* pDR
+		, const wchar_t* path
+		, DirectX::SimpleMath::Vector2 position
+		, DirectX::SimpleMath::Vector2 scale
+		, ANCHOR anchor
+		, Kinds kind);
+
+	void Render();
+
+
+
+
+private:
+
+	void CreateLockOnShader();
+	void CreateUIShader();
+
 	//変数
 private:
 	DX::DeviceResources* m_pDR;
@@ -81,8 +130,10 @@ private:
 	int m_yoshiTextureWidth, m_yoshiTextureHeight;
 
 	DirectX::SimpleMath::Vector2 m_scale;
-	DirectX::SimpleMath::Vector2 m_baseScale;
 	DirectX::SimpleMath::Vector2 m_position;
+
+	DirectX::SimpleMath::Vector2 m_initialPosition;
+	DirectX::SimpleMath::Vector2 m_initialScale;
 
 	ANCHOR m_anchor;
 
@@ -95,65 +146,6 @@ private:
 	//作るシェーダーの種類
 	Kinds m_kinds;
 
-	//大きさ
-	DirectX::SimpleMath::Vector2 m_startScale;   //初期の大きさ
-	DirectX::SimpleMath::Vector2 m_endScale;    //自分で設定
 
-	//座標
-	DirectX::SimpleMath::Vector2 m_startPosition; //初期の座標
-	DirectX::SimpleMath::Vector2 m_endPosition;  //設定する
-
-	//関数
-public:
-	static const std::vector<D3D11_INPUT_ELEMENT_DESC> INPUT_LAYOUT;
-
-	UserInterface();
-	~UserInterface();
-
-	void LoadTexture(const wchar_t* path);
-
-	void Create(DX::DeviceResources* pDR
-		, const wchar_t* path
-		, DirectX::SimpleMath::Vector2 position
-		, DirectX::SimpleMath::Vector2 scale
-		, ANCHOR anchor
-		, Kinds kind);
-
-	void Render();
-
-	void SetWindowSize(const int& width, const int& height);
-
-	void SetScale(DirectX::SimpleMath::Vector2 scale);
-	DirectX::SimpleMath::Vector2 GetScale() { return m_scale; }
-	DirectX::SimpleMath::Vector2 GetBaseScale() { return m_baseScale; }
-	void SetPosition(DirectX::SimpleMath::Vector2 position);
-	DirectX::SimpleMath::Vector2 GetPosition() { return m_position; }
-	void SetAnchor(ANCHOR anchor);
-	ANCHOR GetAnchor() { return m_anchor; }
-
-	void SetRenderRatio(float ratio);
-	float GetRenderRatio() { return m_renderRatio; }
-
-	void SetRenderRatioOffset(float offset);
-	float GetRenderRatioOffset() { return m_renderRatioOffset; }
-
-	void SetAlphaValue(float value) { m_alphaValue = value; }
-	float GetAlphaValue() { return m_alphaValue; }
-
-
-	void SetEndScale(DirectX::SimpleMath::Vector2 MaxScale) { m_endScale = MaxScale; }
-	DirectX::SimpleMath::Vector2 GetEndScale() { return m_endScale; }
-
-	DirectX::SimpleMath::Vector2 GetStartScale() { return m_startScale; }
-
-	void SetEndPosition(DirectX::SimpleMath::Vector2 Position) { m_endPosition = Position; }
-	DirectX::SimpleMath::Vector2 GetEndPosition() { return m_endPosition; }
-
-	DirectX::SimpleMath::Vector2 GetStartPosition() { return m_startPosition; }
-
-private:
-
-	void CreateLockOnShader();
-	void CreateUIShader();
 
 };

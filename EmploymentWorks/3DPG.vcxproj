@@ -275,6 +275,7 @@
     <ClInclude Include="Game\Interface\ICompositeRoot.h" />
     <ClInclude Include="Game\Interface\IEffect.h" />
     <ClInclude Include="Game\Interface\IEnemy.h" />
+    <ClInclude Include="Game\Interface\IKeyBoardObserver.h" />
     <ClInclude Include="Game\Interface\ILeaf.h" />
     <ClInclude Include="Game\Interface\ILeafNode.h" />
     <ClInclude Include="Game\Interface\IMoveObject.h" />
@@ -303,9 +304,11 @@
     <ClInclude Include="Game\Player\State\PlayerStateMachine.h" />
     <ClInclude Include="Game\Scene\IScene.h" />
     <ClInclude Include="Game\Scene\PlayScene.h" />
+    <ClInclude Include="Game\Scene\ResultScene.h" />
     <ClInclude Include="Game\Scene\SceneManager.h" />
     <ClInclude Include="Game\Scene\StageSelectScene.h" />
     <ClInclude Include="Game\Scene\TitleScene.h" />
+    <ClInclude Include="Game\Score.h" />
     <ClInclude Include="Game\Screen.h" />
     <ClInclude Include="Game\StageObject\Floor.h" />
     <ClInclude Include="Game\StageObject\Pillar\Pillar.h" />
@@ -313,6 +316,7 @@
     <ClInclude Include="Game\StageObject\StageObjectManager.h" />
     <ClInclude Include="Game\StageObject\Wall.h" />
     <ClInclude Include="Game\TargetMarker.h" />
+    <ClInclude Include="Game\Timer.h" />
     <ClInclude Include="Game\UI\State\GameEndUI.h" />
     <ClInclude Include="Game\UI\State\GamePlayUI.h" />
     <ClInclude Include="Game\UI\State\UIStateMachine.h" />
@@ -451,15 +455,18 @@
     <ClCompile Include="Game\Player\State\PlayerIdle.cpp" />
     <ClCompile Include="Game\Player\State\PlayerStateMachine.cpp" />
     <ClCompile Include="Game\Scene\PlayScene.cpp" />
+    <ClCompile Include="Game\Scene\ResultScene.cpp" />
     <ClCompile Include="Game\Scene\SceneManager.cpp" />
     <ClCompile Include="Game\Scene\StageSelectScene.cpp" />
     <ClCompile Include="Game\Scene\TitleScene.cpp" />
+    <ClCompile Include="Game\Score.cpp" />
     <ClCompile Include="Game\StageObject\Floor.cpp" />
     <ClCompile Include="Game\StageObject\Pillar\Pillar.cpp" />
     <ClCompile Include="Game\StageObject\Sky.cpp" />
     <ClCompile Include="Game\StageObject\StageObjectManager.cpp" />
     <ClCompile Include="Game\StageObject\Wall.cpp" />
     <ClCompile Include="Game\TargetMarker.cpp" />
+    <ClCompile Include="Game\Timer.cpp" />
     <ClCompile Include="Game\UI\State\GameEndUI.cpp" />
     <ClCompile Include="Game\UI\State\GamePlayUI.cpp" />
     <ClCompile Include="Game\UI\State\UIStateMachine.cpp" />

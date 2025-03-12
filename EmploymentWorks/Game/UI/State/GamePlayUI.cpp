@@ -33,6 +33,7 @@ GamePlayUI::GamePlayUI()
 	,m_enemyHP{}
 	,m_enemyHPBase{}
 	, m_itemAcquisitionUI{}
+	,m_throwUI{}
 {
 }
 
@@ -72,6 +73,11 @@ void GamePlayUI::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::
 
 		m_enemyHP->Render();
 
+	}
+
+	for (auto& throwUI : m_throwUI)
+	{
+		throwUI->Render();
 	}
 
 	//m_itemAcquisitionUI->Render();
@@ -206,11 +212,30 @@ void GamePlayUI::Initialize(CommonResources* resources)
 		, ANCHOR::MIDDLE_CENTER
 		, UserInterface::Kinds::UI);
 
+	m_throwUI.push_back(AddTexture(L"Resources/Textures/RightThrow.png"
+		, Vector2(1220, 500)
+		, Vector2(0.2f, 0.2f)
+		, ANCHOR::MIDDLE_CENTER
+		, UserInterface::Kinds::UI));
 
+	m_throwUI.push_back(AddTexture(L"Resources/Textures/FrontThrow.png"
+		, Vector2(1220, 550)
+		, Vector2(0.2f, 0.2f)
+		, ANCHOR::MIDDLE_CENTER
+		, UserInterface::Kinds::UI));
+
+	m_throwUI.push_back(AddTexture(L"Resources/Textures/LeftThrow.png"
+		, Vector2(1220, 600)
+		, Vector2(0.2f, 0.2f)
+		, ANCHOR::MIDDLE_CENTER
+		, UserInterface::Kinds::UI));
+
+	m_throwUI[0]->SetPosition(m_throwUI[0]->GetInitialPosition() + MOVEPOSITION);
 
 	Messenger::Attach(EventParams::EventType::BoomerangThrow, this);
 	Messenger::Attach(EventParams::EventType::GetBoomerang, this);
 	Messenger::Attach(EventParams::EventType::PlayerDamage, this);
+	Messenger::Attach(EventParams::EventType::ChangeBoomerangThrowState, this);
 
 }
 
@@ -270,6 +295,35 @@ void GamePlayUI::Notify(EventParams::EventType type, void* datas)
 			break;
 		case EventParams::EventType::PlayerDamage:
 			m_playerHPCount--;
+			break;
+		case EventParams::EventType::ChangeBoomerangThrowState:
+			{
+				EventParams::ChangeBoomerangThrowStateDatas* data = static_cast<EventParams::ChangeBoomerangThrowStateDatas*>(datas);
+
+				switch (data->State)
+				{
+					case 0:
+
+						m_throwUI[0]->SetPosition(m_throwUI[0]->GetInitialPosition() + MOVEPOSITION);
+						m_throwUI[1]->SetPosition(m_throwUI[1]->GetInitialPosition());
+						m_throwUI[2]->SetPosition(m_throwUI[2]->GetInitialPosition());
+
+						break;
+					case 1:
+						m_throwUI[0]->SetPosition(m_throwUI[0]->GetInitialPosition());
+						m_throwUI[1]->SetPosition(m_throwUI[1]->GetInitialPosition() + MOVEPOSITION);
+						m_throwUI[2]->SetPosition(m_throwUI[2]->GetInitialPosition());
+						break;
+					case 2:
+						m_throwUI[0]->SetPosition(m_throwUI[0]->GetInitialPosition());
+						m_throwUI[1]->SetPosition(m_throwUI[1]->GetInitialPosition());
+						m_throwUI[2]->SetPosition(m_throwUI[2]->GetInitialPosition() + MOVEPOSITION);
+						break;
+					default:
+						break;
+				}
+
+			}
 			break;
 		default:
 			break;

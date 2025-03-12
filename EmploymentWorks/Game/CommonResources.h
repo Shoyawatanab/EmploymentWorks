@@ -5,6 +5,7 @@
 #pragma once
 
 class Fade;
+class Score;
 
 // ‘O•ûéŒ¾
 namespace DX
@@ -36,6 +37,8 @@ private:
 
 	Fade* m_fade;
 
+	Score* m_score;
+
 public:
 	CommonResources();
 	~CommonResources() = default;
@@ -46,8 +49,8 @@ public:
 		DirectX::CommonStates* commonStates,
 		mylib::DebugString* debugString,
 		mylib::InputManager* inputManager,
-		Fade* fade
-
+		Fade* fade,
+		Score* score
 	);
 
 	// getter
@@ -79,6 +82,11 @@ public:
 	Fade* GetFade() const
 	{
 		return m_fade;
+	}
+
+	Score* GetScore() const
+	{
+		return m_score;
 	}
 
 };

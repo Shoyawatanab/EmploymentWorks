@@ -672,6 +672,18 @@
     <ClInclude Include="Game\Weapon\Boomerang\State\BoomerangFrontThrow.h">
       <Filter>Game\Weapon\Boomerang\State</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Interface\IKeyBoardObserver.h">
+      <Filter>Game\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Timer.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Score.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Scene\ResultScene.h">
+      <Filter>Game\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -1099,6 +1111,15 @@
     </ClCompile>
     <ClCompile Include="Game\Weapon\Boomerang\State\BoomerangFrontThrow.cpp">
       <Filter>Game\Weapon\Boomerang\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Timer.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Score.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Scene\ResultScene.cpp">
+      <Filter>Game\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

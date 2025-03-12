@@ -50,7 +50,10 @@ void PlayerAttack::Initialize(CommonResources* resources)
 {
 	m_commonResources = resources;
 
+	Messenger::Attach(EventParams::EventType::MouseWheelUp, this);
+	Messenger::Attach(EventParams::EventType::MouseWheelDown, this);
 
+	m_throwState = ThrowState::Right;
 
 
 }
@@ -63,6 +66,8 @@ void PlayerAttack::Initialize(CommonResources* resources)
 void PlayerAttack::Update(const float& elapsedTime)
 {
 	const auto& tracker = m_commonResources->GetInputManager()->GetMouseTracker();
+
+	//投げ方の変更
 
 	//投げるのをやめる
 	if (tracker->rightButton == Mouse::ButtonStateTracker::ButtonState::PRESSED)
@@ -82,13 +87,27 @@ void PlayerAttack::Update(const float& elapsedTime)
 
 		m_player->GetPlayerStateMachine()->ChangeState(m_player->GetPlayerStateMachine()->GetPlayerIdle());
 
+
+
 		//ブーメランを投げる
 	//ブーメランの状態の変更
 		Boomerang* boomerang = m_player->GetBoomerang<BoomerangGetReady>();
 
-		//boomerang->GetBoomerangStatemachine()->ChangeState(boomerang->GetBoomerangStatemachine()->GetBoomerangRightThrow());
-		//boomerang->GetBoomerangStatemachine()->ChangeState(boomerang->GetBoomerangStatemachine()->GetBoomerangLeftThrow());
-		boomerang->GetBoomerangStatemachine()->ChangeState(boomerang->GetBoomerangStatemachine()->GetBoomerangFrontThrow());
+		switch (m_throwState)
+		{
+			case PlayerAttack::ThrowState::Right:
+				boomerang->GetBoomerangStatemachine()->ChangeState(boomerang->GetBoomerangStatemachine()->GetBoomerangRightThrow());
+				break;
+			case PlayerAttack::ThrowState::Left:
+				boomerang->GetBoomerangStatemachine()->ChangeState(boomerang->GetBoomerangStatemachine()->GetBoomerangLeftThrow());
+				break;
+			case PlayerAttack::ThrowState::Front:
+				boomerang->GetBoomerangStatemachine()->ChangeState(boomerang->GetBoomerangStatemachine()->GetBoomerangFrontThrow());
+				break;
+			default:
+				break;
+		}
+
 		Messenger::Notify(EventParams::EventType::BoomerangGetReadyEnd, nullptr);
 		Messenger::Notify(EventParams::EventType::BoomerangThrow, nullptr);
 
@@ -128,6 +147,7 @@ void PlayerAttack::Enter()
 
 	}
 
+
 }
 
 
@@ -137,6 +157,60 @@ void PlayerAttack::Enter()
 void PlayerAttack::Exit()
 {
 
+
+}
+
+void PlayerAttack::Notify(EventParams::EventType type, void* datas)
+{
+
+	switch (type)
+	{
+		case EventParams::EventType::MouseWheelUp:
+		{
+			switch (m_throwState)
+			{
+				case PlayerAttack::ThrowState::Right:
+					break;
+				case PlayerAttack::ThrowState::Front:
+					m_throwState = ThrowState::Right;
+					break;
+				case PlayerAttack::ThrowState::Left:
+					m_throwState = ThrowState::Front;
+					break;
+				default:
+					break;
+			}
+
+
+			EventParams::ChangeBoomerangThrowStateDatas data = { static_cast<int>(m_throwState) };
+
+			Messenger::Notify(EventParams::EventType::ChangeBoomerangThrowState, &data);
+		}
+			break;
+		case EventParams::EventType::MouseWheelDown:
+		{
+			switch (m_throwState)
+			{
+				case PlayerAttack::ThrowState::Right:
+					m_throwState = ThrowState::Front;
+					break;
+				case PlayerAttack::ThrowState::Front:
+					m_throwState = ThrowState::Left;
+					break;
+				case PlayerAttack::ThrowState::Left:
+					break;
+				default:
+					break;
+			}
+
+			EventParams::ChangeBoomerangThrowStateDatas data = { static_cast<int>(m_throwState) };
+
+			Messenger::Notify(EventParams::EventType::ChangeBoomerangThrowState, &data);
+		}
+			break;
+		default:
+			break;
+	}
 
 }
 

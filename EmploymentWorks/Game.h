@@ -14,6 +14,7 @@
 #include "Libraries/MyLib/DebugString.h"
 #include "Libraries/MyLib/InputManager.h"
 #include "Libraries/WataLib/Fade.h"
+#include "Game/Score.h"
 
 // A basic game implementation that creates a D3D11 device and
 // provides a game loop.
@@ -88,6 +89,8 @@ private:
 
     //フェード処理
     std::unique_ptr<Fade>                  m_fade;
+
+    std::unique_ptr<Score>                m_score;
 
 
     // ★追記ココまで↑↑↑★

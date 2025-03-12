@@ -179,6 +179,8 @@ void TitleScene::Update(float elapsedTime)
 
 	m_camera->Update(elapsedTime);
 
+
+
 }
 
 //---------------------------------------------------------
