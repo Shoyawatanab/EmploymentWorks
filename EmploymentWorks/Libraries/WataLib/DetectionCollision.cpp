@@ -2,6 +2,8 @@
 #include "DetectionCollision.h"
 #include "Libraries/WataLib/Bounding.h"
 
+using namespace DirectX::SimpleMath;
+
 
 std::unordered_map<int, std::function<void(CollisionEntity* object1, CollisionEntity* object2, bool& isHit)>> WataLib::DetectionCollision::m_detectionFunction = {
 	{(int)CollisionEntity::CollisionType::AABB    | (int)CollisionEntity::CollisionType::AABB,    DetectionCollision::AABB_AABB}
@@ -182,5 +184,28 @@ void WataLib::DetectionCollision::AABB_SPHERE(CollisionEntity* object1, Collisio
 
 	//当たってない
 	isHit = false;
+
+}
+
+bool WataLib::DetectionCollision::Circle_RectCheckHit(const DirectX::SimpleMath::Vector2& circleCenter, float circleRadius,
+	const DirectX::SimpleMath::Vector2& rectCenter, float rectWidth, float rectHeight)
+{
+
+	// 四角形の境界座標を計算
+	float rectLeft = rectCenter.x - rectWidth / 2;
+	float rectRight = rectCenter.x + rectWidth / 2;
+	float rectTop = rectCenter.y - rectHeight / 2;
+	float rectBottom = rectCenter.y + rectHeight / 2;
+
+	// 円の中心に最も近い四角形の点を求める
+	float closestX = std::max(rectLeft, std::min(circleCenter.x, rectRight));
+	float closestY = std::max(rectTop, std::min(circleCenter.y, rectBottom));
+
+	// 円の中心と最近接点の距離を計算
+	Vector2 diff = circleCenter - Vector2(closestX, closestY);
+	float distanceSquared = diff.LengthSquared();
+
+	// 当たり判定（距離の二乗が半径の二乗以下なら衝突）
+	return distanceSquared <= (circleRadius * circleRadius);
 
 }

@@ -15,6 +15,8 @@ namespace WataLib
 	{
 	public:
 
+		DirectX::SimpleMath::Vector2 GetPosition() { return m_position; }
+
 		void SetPosition(DirectX::SimpleMath::Vector2 Pos) { m_position = Pos; }
 
 		void SetScale(DirectX::SimpleMath::Vector2 scale) { m_scale = scale; }
@@ -27,6 +29,13 @@ namespace WataLib
 
 		void ResetExpansion() { m_expansion = 1.0f; }
 
+		float GetWidth() { return m_width; }
+
+		float GetHeight() { return m_height; }
+
+		DirectX::SimpleMath::Vector2 GetInialPosition() { return m_inialPosition; }
+
+		DirectX::SimpleMath::Vector2 GetInialScale() { return m_inialScale; }
 
 	public:
 		DrawTexture();
@@ -60,6 +69,12 @@ namespace WataLib
 		float m_rotate;
 		//Šg‘å—¦
 		float m_expansion;
+
+		float m_width;
+		float m_height;
+
+		DirectX::SimpleMath::Vector2 m_inialPosition;
+		DirectX::SimpleMath::Vector2 m_inialScale;
 
 
 	};

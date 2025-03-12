@@ -67,9 +67,7 @@ void Score::Initialize(CommonResources* resources)
 	Reset();
 
 	m_score = 999;
-
 	
-
 }
 
 

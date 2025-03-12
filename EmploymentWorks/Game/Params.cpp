@@ -3,6 +3,8 @@
 
 using namespace DirectX::SimpleMath;
 
+const float            Params::MOUSE_RADIUS = 1.0f;
+
 
 //èdóÕ
 const float            Params::GRAVITY = 0.5f;

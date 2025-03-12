@@ -17,6 +17,8 @@
 #include "Libraries/WataLib/Camera/TitleCamera.h"
 #include "Libraries/WataLib/Model3D.h"
 #include "Libraries/WataLib/DrawTexture.h"
+#include "Game/Params.h"
+#include "Libraries/WataLib/DetectionCollision.h"
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
@@ -32,9 +34,9 @@ TitleScene::TitleScene()
 	,m_object{}
 	,m_camera{}
 	,m_textures{}
-	,m_playUI{}
-	,m_exitUI{}
 	,m_state{State::PLAY}
+	,m_buttom{}
+	,m_selectButtomId{}
 {
 
 	m_camera = std::make_unique<WataLib::TitleCamera>();
@@ -125,8 +127,6 @@ void TitleScene::Initialize(CommonResources* resources)
 	// シーン変更フラグを初期化する
 	m_isChangeScene = false;
 
-	ShowCursor(FALSE);
-	m_playUI->SetEpansion(EXPANSION);
 
 	//フェードアウトの開始
 	m_commonResources->GetFade()->StartNormalFadeOut();
@@ -142,40 +142,58 @@ void TitleScene::Update(float elapsedTime)
 	// 宣言をしたが、実際は使用していない変数
 	UNREFERENCED_PARAMETER(elapsedTime);
 
-	// キーボードステートトラッカーを取得する
-	const auto& kbTracker = m_commonResources->GetInputManager()->GetKeyboardTracker();
 
+	const auto& state = m_commonResources->GetInputManager()->GetMouseState();
 
-	//PLAYを選ぶ
-	if (kbTracker->released.W)
-	{
-		m_state = State::PLAY;
-		m_exitUI->ResetExpansion();
-		m_playUI->SetEpansion(EXPANSION);
-	}
-	//EXITを選ぶ
-	if (kbTracker->released.S)
-	{
-		m_state = State::EXIT;
-		m_exitUI->SetEpansion(EXPANSION);
-		m_playUI->ResetExpansion();
-	}
+	const auto& tracker = m_commonResources->GetInputManager()->GetMouseTracker();
 
-	// スペースキーが押されたら
-	if (kbTracker->pressed.Space)
+	Vector2 mousePosition = Vector2(state.x, state.y);
+
+	//初期化
+	m_selectButtomId = BUTTOM_INIAL_ID;
+	
+	for (auto& buttom : m_buttom)
 	{
-		switch (m_state)
+		buttom.second->SetScale(buttom.second->GetInialScale());
+		if (WataLib::DetectionCollision::Circle_RectCheckHit(mousePosition, Params::MOUSE_RADIUS,
+			buttom.second->GetPosition(), buttom.second->GetWidth(), buttom.second->GetHeight()))
 		{
-			case TitleScene::State::PLAY:				
-				m_isChangeScene = true;
-				break;
-			case TitleScene::State::EXIT:
-				PostQuitMessage(0);
-				break;
-			default:
-				break;
+			buttom.second->SetScale(buttom.second->GetInialScale() * 1.4f);
+
+			m_selectButtomId = buttom.first;
+
+			break;
+
 		}
+
 	}
+
+
+
+	//
+	if (tracker->leftButton == Mouse::ButtonStateTracker::ButtonState::PRESSED)
+	{
+		if (m_selectButtomId != BUTTOM_INIAL_ID)
+		{
+
+			switch (m_selectButtomId)
+			{
+				case 0:
+					m_isChangeScene = true;
+					break;
+				case 1:
+					PostQuitMessage(0);
+					break;
+				default:
+					break;
+			}
+			
+
+		}
+
+
+	}
+
 
 	m_camera->Update(elapsedTime);
 
@@ -210,9 +228,12 @@ void TitleScene::Render()
 		texture->Render();
 	}
 
-	m_playUI->Render();
-	m_exitUI->Render();
-	m_arrow->Render();
+
+	for (auto& buttom : m_buttom)
+	{
+		buttom.second->Render();
+	}
+
 
 }
 
@@ -264,33 +285,15 @@ void TitleScene::CreateTextures()
 	);
 
 
-	texture = std::make_unique<WataLib::DrawTexture>();
-	texture->Initialize(
-		m_commonResources, L"Resources/Textures/ChangeUI.png", DirectX::SimpleMath::Vector2(200, 650), Vector2(0.4f, 0.4f)
-	);
+	auto buttom = std::make_unique<WataLib::DrawTexture>();
+	buttom->Initialize(m_commonResources, L"Resources/Textures/PLAY.png", DirectX::SimpleMath::Vector2(1000, 500), Vector2(1.1f, 1.1f));
 
-	m_textures.push_back(std::move(texture));
+	m_buttom[0] = std::move(buttom);
 
+	buttom = std::make_unique<WataLib::DrawTexture>();
+	buttom->Initialize(m_commonResources, L"Resources/Textures/EXIT.png", DirectX::SimpleMath::Vector2(1000, 630), Vector2(1.2f, 1.2f));
 
-	texture = std::make_unique<WataLib::DrawTexture>();
-	texture->Initialize(
-		m_commonResources, L"Resources/Textures/DecisionUI.png", DirectX::SimpleMath::Vector2(570, 650), Vector2(0.4f, 0.4f)
-	);
-
-	m_textures.push_back(std::move(texture));
-
-
-	m_playUI = std::make_unique<WataLib::DrawTexture>();
-	m_playUI->Initialize(m_commonResources, L"Resources/Textures/PLAY.png", DirectX::SimpleMath::Vector2(1000, 500), Vector2(1.1f, 1.1f));
-
-	m_exitUI = std::make_unique<WataLib::DrawTexture>();
-
-	m_exitUI->Initialize(m_commonResources, L"Resources/Textures/EXIT.png", DirectX::SimpleMath::Vector2(1000, 630), Vector2(1.2f, 1.2f));
-
-
-	m_arrow = std::make_unique<WataLib::DrawTexture>();
-
-	m_arrow->Initialize(m_commonResources, L"Resources/Textures/Arrow.png", DirectX::SimpleMath::Vector2(800, 500), Vector2(0.2f, 0.2f));
+	m_buttom[1] = std::move(buttom);
 
 
 }

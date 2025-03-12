@@ -9,6 +9,8 @@
 
 using namespace DirectX::SimpleMath;
 
+
+
 /// <summary>
 /// コンストラクタ
 /// </summary>
@@ -32,7 +34,12 @@ PlayerRightFeet::PlayerRightFeet(CommonResources* resources,
 /// </summary>
 PlayerRightFeet::~PlayerRightFeet()
 {
+
+
+
 }
+
+
 
 /// <summary>
 /// 初期化

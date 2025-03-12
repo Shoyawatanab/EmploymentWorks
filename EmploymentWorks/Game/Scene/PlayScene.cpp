@@ -54,6 +54,7 @@ PlayScene::PlayScene(SceneManager::StageID stageID)
 	,m_stageID{stageID}
 	,m_tutorialTex{}
 	,m_timer{}
+	,m_isTutolialTex{}
 {
 }
 

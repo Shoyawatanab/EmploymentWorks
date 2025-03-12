@@ -4,6 +4,9 @@ class Params
 {
 public:
 
+
+	static const float MOUSE_RADIUS;
+	 
 	//èdóÕ
 	static const float GRAVITY;
 

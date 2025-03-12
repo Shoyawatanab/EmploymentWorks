@@ -5,6 +5,7 @@
 #pragma once
 #include "IScene.h"
 #include "Game/Entities/BaseEntity.h"
+#include <unordered_map>
 
 // ‘O•ûéŒ¾
 class CommonResources;
@@ -29,6 +30,8 @@ private:
 
     //Šg‘å—¦
     static constexpr float EXPANSION{ 1.2f };
+
+    static constexpr int BUTTOM_INIAL_ID{ -1000 };
 
 public:
 
@@ -74,9 +77,8 @@ private:
     //
     std::vector < std::unique_ptr<WataLib::DrawTexture>> m_textures;
 
-    std::unique_ptr<WataLib::DrawTexture > m_playUI;
-    std::unique_ptr<WataLib::DrawTexture > m_exitUI;
+    std::unordered_map<int,std::unique_ptr<WataLib::DrawTexture>> m_buttom;
 
-    std::unique_ptr<WataLib::DrawTexture > m_arrow;
+    int m_selectButtomId;
 
 };

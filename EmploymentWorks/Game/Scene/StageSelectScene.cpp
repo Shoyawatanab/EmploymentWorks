@@ -13,6 +13,8 @@
 
 #include "Libraries/WataLib/Fade.h"
 #include "Libraries/WataLib/DrawTexture.h"
+#include "Game/Params.h"
+#include "Libraries/WataLib/DetectionCollision.h"
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
@@ -25,9 +27,9 @@ StageSelectScene::StageSelectScene(SceneManager* sceneManager)
 	m_commonResources{},
 	m_isChangeScene{}
 	,m_sceneManager{sceneManager}
-	,m_tutorialUI{}
-	,m_stage1UI{}
-	,m_backGround{}
+	, m_buttom{}
+	, m_selectButtomId{}
+
 {
 }
 
@@ -51,41 +53,20 @@ void StageSelectScene::Initialize(CommonResources* resources)
 	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
 
 
-	m_tutorialUI = std::make_unique<WataLib::DrawTexture>();
-	m_tutorialUI->Initialize(m_commonResources, L"Resources/Textures/Tutorial.png", DirectX::SimpleMath::Vector2(400, 360), Vector2(1.3f, 1.3f));
+	auto buttom = std::make_unique<WataLib::DrawTexture>();
+	buttom->Initialize(m_commonResources, L"Resources/Textures/Tutorial.png", DirectX::SimpleMath::Vector2(400, 360), Vector2(1.3f, 1.3f));
 
-	m_stage1UI = std::make_unique<WataLib::DrawTexture>();
+	m_buttom[0] = std::move(buttom);
 
-	m_stage1UI->Initialize(m_commonResources, L"Resources/Textures/Stage1.png", DirectX::SimpleMath::Vector2(880, 360), Vector2(1.3f, 1.3f));
+	buttom = std::make_unique<WataLib::DrawTexture>();
+	buttom->Initialize(m_commonResources, L"Resources/Textures/Stage1.png", DirectX::SimpleMath::Vector2(880, 360), Vector2(1.3f, 1.3f));
 
-	m_tutorialUI->SetEpansion(1.3f);
-
-	m_backGround = std::make_unique<WataLib::DrawTexture>();
-	m_backGround->Initialize(m_commonResources, L"Resources/Textures/BackGraund.png", Vector2(Screen::CENTER_X,Screen::CENTER_Y), Vector2(0.4f, 0.4f));
-
+	m_buttom[1] = std::move(buttom);
 
 	auto texture = std::make_unique<WataLib::DrawTexture>();
-	texture->Initialize(
-		m_commonResources, L"Resources/Textures/ChangeUI2.png", DirectX::SimpleMath::Vector2(200, 650), Vector2(0.4f, 0.4f)
-	);
+	texture->Initialize(m_commonResources, L"Resources/Textures/BackGraund.png", Vector2(Screen::CENTER_X,Screen::CENTER_Y), Vector2(0.4f, 0.4f));
 
 	m_textures.push_back(std::move(texture));
-
-
-	texture = std::make_unique<WataLib::DrawTexture>();
-	texture->Initialize(
-		m_commonResources, L"Resources/Textures/DecisionUI.png", DirectX::SimpleMath::Vector2(570, 650), Vector2(0.4f, 0.4f)
-	);
-
-	m_textures.push_back(std::move(texture));
-
-
-	m_arrow = std::make_unique<WataLib::DrawTexture>();
-
-	m_arrow->Initialize(m_commonResources, L"Resources/Textures/Arrow.png", DirectX::SimpleMath::Vector2(200, 350), Vector2(0.2f, 0.2f));
-
-
-
 
 	m_sceneManager->SetStageID(SceneManager::Stage1);
 
@@ -111,30 +92,56 @@ void StageSelectScene::Update(float elapsedTime)
 	// キーボードステートトラッカーを取得する
 	const auto& kbTracker = m_commonResources->GetInputManager()->GetKeyboardTracker();
 
+	const auto& state = m_commonResources->GetInputManager()->GetMouseState();
 
-	if (kbTracker->released.A)
+	const auto& tracker = m_commonResources->GetInputManager()->GetMouseTracker();
+
+	Vector2 mousePosition = Vector2(state.x, state.y);
+
+	//初期化
+	m_selectButtomId = BUTTOM_INIAL_ID;
+
+	for (auto& buttom : m_buttom)
 	{
+		buttom.second->SetScale(buttom.second->GetInialScale());
+		if (WataLib::DetectionCollision::Circle_RectCheckHit(mousePosition, Params::MOUSE_RADIUS,
+			buttom.second->GetPosition(), buttom.second->GetWidth(), buttom.second->GetHeight()))
+		{
+			buttom.second->SetScale(buttom.second->GetInialScale() * 1.4f);
 
-		m_sceneManager->SetStageID(SceneManager::Stage1);
-		m_tutorialUI->SetEpansion(1.3f);
-		m_stage1UI->ResetExpansion();
-		m_arrow->SetPosition(DirectX::SimpleMath::Vector2(200, 350));
+			m_selectButtomId = buttom.first;
+
+			break;
+
+		}
 
 	}
-	else if (kbTracker->released.D)
+
+
+
+	//
+	if (tracker->leftButton == Mouse::ButtonStateTracker::ButtonState::PRESSED)
 	{
-		m_sceneManager->SetStageID(SceneManager::Stage2);
-		m_tutorialUI->ResetExpansion();
-		m_stage1UI->SetEpansion(1.3f);
-		m_arrow->SetPosition(DirectX::SimpleMath::Vector2(690, 350));
+		if (m_selectButtomId != BUTTOM_INIAL_ID)
+		{
+			m_isChangeScene = true;
+
+			switch (m_selectButtomId)
+			{
+				case 0:
+					m_sceneManager->SetStageID(SceneManager::Stage1);
+					break;
+				case 1:
+					m_sceneManager->SetStageID(SceneManager::Stage2);
+					break;
+				default:
+					break;
+			}
+
+		}
 
 	}
 
-	// スペースキーが押されたら
-	if (kbTracker->pressed.Space)
-	{
-		m_isChangeScene = true;
-	}
 }
 
 //---------------------------------------------------------
@@ -144,18 +151,16 @@ void StageSelectScene::Render()
 {
 	auto states = m_commonResources->GetCommonStates();
 
-	m_backGround->Render();
-
-	m_tutorialUI->Render();
-
-	m_stage1UI->Render();
 
 	for (auto& texture : m_textures)
 	{
 		texture->Render();
 	}
 
-	m_arrow->Render();
+	for (auto& buttom : m_buttom)
+	{
+		buttom.second->Render();
+	}
 
 
 }
