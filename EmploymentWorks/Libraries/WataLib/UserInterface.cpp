@@ -51,11 +51,7 @@ UserInterface::UserInterface()
 	, m_renderRatio(1.0f)
 	, m_renderRatioOffset(0.0f),
 	m_kinds{}
-	, m_alphaValue{ 1.0f },
-	m_endScale{},
-	m_startScale{},
-	m_startPosition{},
-	m_endPosition{}
+	, m_alphaValue{ 1.0f }
 {
 
 }
@@ -109,10 +105,9 @@ void UserInterface::Create(DX::DeviceResources* pDR
 	m_pDR = pDR;
 	auto device = pDR->GetD3DDevice();
 	m_position = position;
-	m_startPosition = m_position;
+	m_initialPosition = position;
 	m_scale = scale;
-	m_baseScale = m_scale;
-	m_startScale = m_scale;
+	m_initialScale = scale;
 	m_anchor = anchor;
 	m_kinds = kind;
 
@@ -157,10 +152,7 @@ void UserInterface::SetRenderRatio(float ratio)
 {
 	m_renderRatio = ratio;
 }
-void UserInterface::SetRenderRatioOffset(float offset)
-{
-	m_renderRatioOffset = offset;
-}
+
 
 /// <summary>
 /// Shaderì¬•”•ª‚¾‚¯•ª—£‚µ‚½ŠÖ”

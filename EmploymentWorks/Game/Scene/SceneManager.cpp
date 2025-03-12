@@ -6,6 +6,7 @@
 #include "SceneManager.h"
 #include "TitleScene.h"
 #include "PlayScene.h"
+#include "ResultScene.h"
 #include "StageSelectScene.h"
 #include "Game/Screen.h"
 #include "Game/CommonResources.h"
@@ -45,7 +46,7 @@ void SceneManager::Initialize(CommonResources* resources)
 
 	m_stageID = Stage2;
 
-	ChangeScene(IScene::SceneID::PLAY);
+	ChangeScene(IScene::SceneID::RESULT);
 
 }
 
@@ -112,6 +113,9 @@ void SceneManager::CreateScene(IScene::SceneID sceneID)
 			break;
 		case IScene::SceneID::STAGESELECT:
 			m_currentScene = std::make_unique<StageSelectScene>(this);
+			break;
+		case IScene::SceneID::RESULT:
+			m_currentScene = std::make_unique<ResultScene>();
 			break;
 		default:
 			assert(!"SceneManager::CreateScene::ÉVÅ[ÉìñºÇ™ë∂ç›ÇµÇ‹ÇπÇÒÅI");

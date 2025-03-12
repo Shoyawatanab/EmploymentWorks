@@ -63,8 +63,12 @@ void Game::Initialize(HWND window, int width, int height)
     // コモンステートを作成する
     m_commonStates = std::make_unique<CommonStates>(device);
 
-    //フェードの作成
+    //フェードクラスの作成
     m_fade = std::make_unique<Fade>(device, context);
+
+    //スコアクラスの作成
+    m_score = std::make_unique<Score>();
+    
 
     // デバッグ文字列を作成する
     m_debugString = std::make_unique<mylib::DebugString>(
@@ -83,9 +87,11 @@ void Game::Initialize(HWND window, int width, int height)
         m_commonStates.get(),
         m_debugString.get(),
         m_inputManager.get(),
-        m_fade.get()
-
+        m_fade.get(),
+        m_score.get()
     );
+
+    m_score->Initialize(m_commonResources.get());
 
     // シーンマネージャを初期化する
     m_sceneManager = std::make_unique<SceneManager>();

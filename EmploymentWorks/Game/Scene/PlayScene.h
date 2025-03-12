@@ -16,6 +16,7 @@ class UIManager;
 class TargetMarker;
 class EffectsManager;
 class Sky;
+class Timer;
 
 namespace mylib
 {
@@ -50,10 +51,15 @@ public:
 
 	//シーン切り替え
 	SceneID GetNextSceneID() const;
-	//ステージを作成
-	void CreateStageObject();
 
 	void SetNextSceneID(SceneID ID) { m_nextScene = ID; }
+
+private:
+	//ステージを作成
+	void CreateStageObject();
+	//
+	void CheckMouseWheel();
+
 
 private:
 	// 共通リソース
@@ -81,6 +87,8 @@ private:
 	std::unique_ptr<WataLib::DrawTexture> m_tutorialTex;
 
 	std::unique_ptr<Sky> m_sky;
+
+	std::unique_ptr<Timer> m_timer;
 
 	// オーディオ関連
 	std::unique_ptr<DirectX::AudioEngine> m_audioEngine;
