@@ -41,7 +41,9 @@ public:
 		DirectX::SimpleMath::Vector4	time;
 	};
 
+
 public:
+
 	//フェード状態の登録
 	void SetFadeState(FadeState state) { m_fadeState = state; }
 	//フェード状態の取得
@@ -50,8 +52,6 @@ public:
 	void SetIsSceneChange(bool is) { m_isSceneChange = is; }
 	//シーン切り替えをするかどうかを取得
 	bool GetIsSceneChange() { return m_isSceneChange; }
-
-
 
 
 public:

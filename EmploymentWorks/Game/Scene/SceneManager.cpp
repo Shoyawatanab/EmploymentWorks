@@ -46,7 +46,7 @@ void SceneManager::Initialize(CommonResources* resources)
 
 	m_stageID = Stage2;
 
-	ChangeScene(IScene::SceneID::RESULT);
+	ChangeScene(IScene::SceneID::TITLE);
 
 }
 

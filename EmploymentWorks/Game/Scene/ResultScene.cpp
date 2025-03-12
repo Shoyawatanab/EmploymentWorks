@@ -69,6 +69,12 @@ void ResultScene::Update(float elapsedTime)
 	// 宣言をしたが、実際は使用していない変数
 	UNREFERENCED_PARAMETER(elapsedTime);
 
+	//フェードが終わるまで
+	if (m_commonResources->GetFade()->GetFadeState() != Fade::FadeState::None)
+	{
+		return;
+	}
+
 	// キーボードステートトラッカーを取得する
 	const auto& kbTracker = m_commonResources->GetInputManager()->GetKeyboardTracker();
 
@@ -105,7 +111,6 @@ IScene::SceneID ResultScene::GetNextSceneID() const
 		if (m_commonResources->GetFade()->GetFadeState() == Fade::FadeState::None)
 		{
 			m_commonResources->GetFade()->StartNormalFadeIn();
-
 		}
 
 		return IScene::SceneID::PLAY;

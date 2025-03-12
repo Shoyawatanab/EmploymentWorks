@@ -19,6 +19,9 @@ namespace WataLib
 class StageSelectScene final :
     public IScene
 {
+public:
+	static constexpr int BUTTOM_INIAL_ID{ -1000 };
+
 
 public:
     StageSelectScene(SceneManager* sceneManager);
@@ -37,16 +40,15 @@ private:
 
 	SceneManager* m_sceneManager;
 
-	std::unique_ptr<WataLib::DrawTexture > m_stage1UI;
-	std::unique_ptr<WataLib::DrawTexture > m_tutorialUI;
 
-	std::unique_ptr<WataLib::DrawTexture > m_backGround;
-
-	std::vector < std::unique_ptr<WataLib::DrawTexture>> m_textures;
-
-	std::unique_ptr<WataLib::DrawTexture > m_arrow;
+	std::vector <std::unique_ptr<WataLib::DrawTexture>> m_textures;
 
 	// シーンチェンジフラグ
 	bool m_isChangeScene;
+
+	std::unordered_map<int, std::unique_ptr<WataLib::DrawTexture>> m_buttom;
+
+	int m_selectButtomId;
+
 
 };

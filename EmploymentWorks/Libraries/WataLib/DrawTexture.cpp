@@ -30,6 +30,10 @@ WataLib::DrawTexture::DrawTexture()
 	m_scale{},
 	m_rotate{}
 	,m_expansion{}
+	,m_width{}
+	,m_height{}
+	,m_inialPosition{}
+	,m_inialScale{}
 {
 }
 
@@ -50,6 +54,8 @@ void WataLib::DrawTexture::Initialize(CommonResources* resources, const wchar_t*
 	m_commonResources = resources;
 	m_position = Pos;
 	m_scale = scale;
+	m_inialPosition = Pos;
+	m_inialScale = scale;
 
 	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
 	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
@@ -73,6 +79,7 @@ void WataLib::DrawTexture::Initialize(CommonResources* resources, const wchar_t*
 			m_texture.ReleaseAndGetAddressOf()
 		)
 	);
+
 
 
 	/*
@@ -100,6 +107,9 @@ void WataLib::DrawTexture::Initialize(CommonResources* resources, const wchar_t*
 
 	// テクスチャの中心位置を計算する
 	m_texCenter = texSize / 2.0f;
+
+	m_width = desc.Width;
+	m_height = desc.Height;
 
 	m_expansion = 1.0f;
 
