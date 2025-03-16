@@ -131,6 +131,7 @@ void TitleScene::Initialize(CommonResources* resources)
 	//フェードアウトの開始
 	m_commonResources->GetFade()->StartNormalFadeOut();
 
+	ShowCursor(FALSE);
 
 }
 
@@ -147,7 +148,7 @@ void TitleScene::Update(float elapsedTime)
 
 	const auto& tracker = m_commonResources->GetInputManager()->GetMouseTracker();
 
-	Vector2 mousePosition = Vector2(state.x, state.y);
+	Vector2 mousePosition = Vector2(state.x, state.y) ;
 
 	//初期化
 	m_selectButtomId = BUTTOM_INIAL_ID;

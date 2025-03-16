@@ -10,6 +10,7 @@
 #include "Game/Enemys/BossEnemy/ActionNode/BarrierDefense/BarrierIdel.h"
 #include "Game/Enemys/BossEnemy/ActionNode/BarrierDefense/BarrierPreliminaryAction.h"
 #include "Game/Enemys/BossEnemy/ActionNode/BarrierDefense/BarrierDeployment.h"
+#include "Game/Enemys/BossEnemy/ActionNode/BarrierDefense/BarrierClose.h"
 
 
 
@@ -37,6 +38,9 @@ public:
 	BarrierPreliminaryAction* GetBarrierPreliminaryAction() { return m_preliminaryAction.get(); }
 
 	BarrierDeployment* GetBarrierDeployment() { return m_deployment.get(); }
+
+	BarrierClose* GetBarrierClose() { return m_close.get(); }
+
 
 public:
 	BarrierDefenseAction(CommonResources* resources,
@@ -66,6 +70,8 @@ private:
 	std::unique_ptr<BarrierIdel> m_idel;
 	std::unique_ptr<BarrierPreliminaryAction> m_preliminaryAction;
 	std::unique_ptr<BarrierDeployment> m_deployment;
+
+	std::unique_ptr<BarrierClose> m_close;
 
 	Barrier* m_barrier;
 

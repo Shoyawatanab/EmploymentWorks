@@ -19,6 +19,7 @@ CollisionEntity::CollisionEntity(CommonResources* resources
 	, const DirectX::SimpleMath::Quaternion& rotation)
 	:
 	BaseEntity(resources, scale, position, rotation)
+	,m_isCollisionActive{true}
 {
 
 	m_bounding = std::make_unique<WataLib::Bounding>(resources);

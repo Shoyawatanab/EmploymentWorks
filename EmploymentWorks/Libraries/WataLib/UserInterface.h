@@ -73,6 +73,10 @@ public:
 	void SetAlphaValue(float value) { m_alphaValue = value; }
 	float GetAlphaValue() { return m_alphaValue; }
 
+	void SetIsActive(bool isActive) { m_isActive = isActive; }
+
+	bool GetIsActive() { return m_isActive; }
+
 	//関数
 public:
 	static const std::vector<D3D11_INPUT_ELEMENT_DESC> INPUT_LAYOUT;
@@ -146,6 +150,6 @@ private:
 	//作るシェーダーの種類
 	Kinds m_kinds;
 
-
+	bool m_isActive;
 
 };

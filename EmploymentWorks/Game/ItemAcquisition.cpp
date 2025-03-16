@@ -72,8 +72,11 @@ void ItemAcquisition::Update()
 				return item.State == State::Recoverable;  // State‚ªˆê’v‚·‚éê‡
 			});
 
+		if (it != m_items.end())
+		{
+			it->ItemEntity->OnAcquired();
 
-		it->ItemEntity->OnAcquired();
+		}
 		
 	}
 

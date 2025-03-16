@@ -23,6 +23,8 @@ public:
 		,ChangeBoomerangThrowState
 		,MouseWheelUp
 		,MouseWheelDown
+		,BoomerangRecoverable  //ブーメランを回収可能
+		,BoomerangNotRecoverable  //ブーメランを回収不可
 
 	};
 

@@ -48,20 +48,22 @@ void CollisionManager::Update()
 
 	for (int i = 0; i < m_collisionObjects.size() - 1; i++)
 	{
-		//アクティブ状態で牌場合
-		if (!m_collisionObjects[i]->GetIsEntityActive())
+		//アクティブ状態でない場合
+		if (!m_collisionObjects[i]->GetIsEntityActive() || !m_collisionObjects[i]->GetIsCollisionActive())
 		{
 			continue;
 		}
 
 		//当たり判定を行わないTagの取得
-		std::vector<CollisionEntity::CollisionTag> tags = m_collisionObjects[i]->GetNoHitDetectionTag();
+		std::vector<CollisionEntity::CollisionTag> notHitDetectionTags = m_collisionObjects[i]->GetNoHitDetectionTag();
+		//押し出しを行わないタグ
+		std::vector<CollisionEntity::CollisionTag> notExtrusionTags = m_collisionObjects[i]->GetNoExtrusionTag();
 
 		for (int j = i + 1; j < m_collisionObjects.size(); j++)
 		{
 
-			//アクティブ状態で牌場合
-			if (!m_collisionObjects[j]->GetIsEntityActive())
+			//アクティブ状態でない場合
+			if (!m_collisionObjects[j]->GetIsEntityActive() || !m_collisionObjects[j]->GetIsCollisionActive())
 			{
 				continue;
 			}
@@ -71,7 +73,7 @@ void CollisionManager::Update()
 			CollisionEntity::CollisionTag tag = m_collisionObjects[j]->GetCollisionTag();
 
 			//当たり判定を行わないかどうかの判定
-			if (std::find(tags.begin(), tags.end(),tag) != tags.end())
+			if (std::find(notHitDetectionTags.begin(), notHitDetectionTags.end(),tag) != notHitDetectionTags.end())
 			{
 				//行わない
 				continue;
@@ -85,8 +87,6 @@ void CollisionManager::Update()
 			//当たったら
 			if (isHit)
 			{
-				//押し出し
-				Extrusion(m_collisionObjects[i], m_collisionObjects[j]);
 
 				//当たったオブジェクトの取得
 				std::vector<CollisionEntity*> ob = m_collisionObjects[i]->GetHitObject();
@@ -107,6 +107,16 @@ void CollisionManager::Update()
 
 				}
 
+				//押し出しを行わないかどうかの判定
+				if (std::find(notExtrusionTags.begin(), notExtrusionTags.end(), tag) != notExtrusionTags.end())
+				{
+					//行わない
+					continue;
+				}
+
+				//押し出し
+				Extrusion(m_collisionObjects[i], m_collisionObjects[j]);
+
 
 			}
 			//当たっていないなら
@@ -118,6 +128,8 @@ void CollisionManager::Update()
 				if (isDelete)
 				{
 					//離れた時に呼ぶ関数
+					m_collisionObjects[i]->OnCollisionExit(m_collisionObjects[j], m_collisionObjects[j]->GetCollisionTag());
+					m_collisionObjects[j]->OnCollisionExit(m_collisionObjects[i], m_collisionObjects[i]->GetCollisionTag());
 
 				}
 

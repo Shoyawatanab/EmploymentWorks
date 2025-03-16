@@ -1,6 +1,6 @@
 
 #include "pch.h"
-#include "BarrierDeployment.h"
+#include "BarrierClose.h"
 
 #include "Game/CommonResources.h"
 #include "Libraries/MyLib/InputManager.h"
@@ -12,20 +12,22 @@
 
 #include "Game/Enemys/BossEnemy/ActionNode/BarrierDefense/BarrierDefenseAction.h"
 #include "Game/Enemys/BossEnemy/Barrier/Barrier.h"
-#include "Game/Enemys/BossEnemy/Barrier/State/BarrierStateMachine.h"
+#include "Game/Enemys/BossEnemy/BossEnemy.h"
 
 using namespace DirectX::SimpleMath;
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
-BarrierDeployment::BarrierDeployment(BarrierDefenseAction* barrierDefenseAction
-	,Barrier* barrier)
+BarrierClose::BarrierClose(BarrierDefenseAction* barrierDefenseAction
+	,Barrier* barrier
+	, BossEnemy* bossEnemy)
 	:
 	m_commonResources{}
 	,m_barrierDefenseAction{ barrierDefenseAction }
 	,m_barrier{barrier}
 	,m_time{}
+	,m_bossEnemy{bossEnemy}
 {
 
 
@@ -35,7 +37,7 @@ BarrierDeployment::BarrierDeployment(BarrierDefenseAction* barrierDefenseAction
 /// <summary>
 /// デストラクタ
 /// </summary>
-BarrierDeployment::~BarrierDeployment()
+BarrierClose::~BarrierClose()
 {
 
 }
@@ -44,7 +46,7 @@ BarrierDeployment::~BarrierDeployment()
 /// 初期化
 /// </summary>
 /// <param name="resources">共通リソース</param>
-void BarrierDeployment::Initialize(CommonResources* resources)
+void BarrierClose::Initialize(CommonResources* resources)
 {
 }
 
@@ -52,19 +54,17 @@ void BarrierDeployment::Initialize(CommonResources* resources)
 /// 更新
 /// </summary>
 /// <param name="elapsedTime">経過時間</param>
-IBehaviorNode::State BarrierDeployment::Update(const float& elapsedTime)
+IBehaviorNode::State BarrierClose::Update(const float& elapsedTime)
 {
 	UNREFERENCED_PARAMETER(elapsedTime);
 
 	
-	if (m_time >= 5.0f)
+	if (m_time >= 1.0f)
 	{
-		m_barrierDefenseAction->ChangeState(m_barrierDefenseAction->GetBarrierClose());
+		m_barrierDefenseAction->ChangeState(m_barrierDefenseAction->GetBarrierIdel());
+		return IBehaviorNode::State::Success;
 	}
-	else if (m_time >= 4.0f)
-	{
-		m_barrier->GetBarrierStateMachine()->ChangeState(m_barrier->GetBarrierStateMachine()->GetBarrierShrink());
-	}
+
 
 
 	m_time += elapsedTime;
@@ -80,12 +80,12 @@ IBehaviorNode::State BarrierDeployment::Update(const float& elapsedTime)
 /// <summary>
 /// 状態に入った時
 /// </summary>
-void BarrierDeployment::Enter()
+void BarrierClose::Enter()
 {
+
+	m_bossEnemy->ChangeAnimation("BarrierEnd");
+
 	m_time = 0;
-
-	m_barrier->SetIsEntityActive(true);
-
 
 }
 
@@ -94,8 +94,9 @@ void BarrierDeployment::Enter()
 /// <summary>
 /// 状態を抜けた時
 /// </summary>
-void BarrierDeployment::Exit()
+void BarrierClose::Exit()
 {
+	m_barrier->SetIsEntityActive(false);
 
 }
 

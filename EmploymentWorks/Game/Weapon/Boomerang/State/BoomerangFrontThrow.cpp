@@ -207,6 +207,7 @@ void BoomerangFrontThrow::Enter()
 	
 	m_targetPosistion = m_targetMarker->GetTargetPosition();
 
+	m_boomerang->SetIsCollisionActive(true);
 }
 
 /// <summary>
@@ -214,6 +215,8 @@ void BoomerangFrontThrow::Enter()
 /// </summary>
 void BoomerangFrontThrow::Exit()
 {
+	m_boomerang->SetIsCollisionActive(false);
+
 }
 
 

@@ -22,6 +22,7 @@ private:
 	{
 		SplineCurve      //“Š‚°‚é
 		, ChaseToPlayer   //•Ô‚Á‚Ä‚­‚é
+		, PassingThrough //’Ê‚è”²‚¯
 	};
 
 public:
@@ -58,6 +59,9 @@ public:
 	
 	void ChaseToPlayer(const float& elapsedTime);
 
+	void GoStraight(const float& elapsedTime);
+
+	void PassingThrough(const float& elapsedTime);
 	
 	//‰ñ“]
 	void Rotation(const float& elapsedTime);
@@ -92,4 +96,7 @@ private:
 	DirectX::SimpleMath::Quaternion m_horizontalRotation;
 
 	DirectX::SimpleMath::Quaternion m_initialRotation;
+
+	DirectX::SimpleMath::Vector3 m_moveDirection;
+
 };

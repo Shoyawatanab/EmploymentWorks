@@ -50,42 +50,145 @@ void BehaviorTree::Initialize(CommonResources* resources)
 	m_conditions = std::make_unique<Conditions>(m_commonResources, m_player, m_enemy);
 
 
-	//‰“‹——£UŒ‚‚©‚Ç‚¤‚©
-	auto longRangeDecoratior = std::make_unique<DecoratorNode>(std::bind(&Conditions::IsInLongRangeAttack, m_conditions.get()));
-	//‰“‹——£UŒ‚
-	longRangeDecoratior->AddNode(std::make_unique<ActionNode>(std::bind(&BossEnemy::BeamAttack, m_enemy, std::placeholders::_1)));
-	//longRangeDecoratior->AddNode(std::make_unique<ActionNode>(std::bind(&ExecutionNode::CloseRangeAttacks, m_executionNode.get(), std::placeholders::_1)));
-	
-	//‹ß‹——£UŒ‚”ÍˆÍ‚È‚©‚Ç‚¤‚©
-	auto closeRangeDecoratior = std::make_unique<DecoratorNode>(std::bind(&Conditions::IsInCloseRangeAttack, m_conditions.get()));
-	//‹ß‹——£UŒ‚‚Ì’Ç‰Á
-	closeRangeDecoratior->AddNode(std::make_unique<ActionNode>( std::bind(&ExecutionNode::CloseRangeAttacks, m_executionNode.get(), std::placeholders::_1)));
+	////‰“‹——£UŒ‚‚©‚Ç‚¤‚©
+	//auto longRangeDecoratior = std::make_unique<DecoratorNode>(std::bind(&Conditions::IsInLongRangeAttack, m_conditions.get()));
+	////‰“‹——£UŒ‚
+	//longRangeDecoratior->AddNode(std::make_unique<ActionNode>(std::bind(&BossEnemy::BeamAttack, m_enemy, std::placeholders::_1)));
+	////longRangeDecoratior->AddNode(std::make_unique<ActionNode>(std::bind(&ExecutionNode::CloseRangeAttacks, m_executionNode.get(), std::placeholders::_1)));
+	//
+	////‹ß‹——£UŒ‚”ÍˆÍ‚È‚©‚Ç‚¤‚©
+	//auto closeRangeDecoratior = std::make_unique<DecoratorNode>(std::bind(&Conditions::IsInCloseRangeAttack, m_conditions.get()));
+	////‹ß‹——£UŒ‚‚Ì’Ç‰Á
+	//closeRangeDecoratior->AddNode(std::make_unique<ActionNode>( std::bind(&ExecutionNode::CloseRangeAttacks, m_executionNode.get(), std::placeholders::_1)));
 
-	//‹–ìŠp‚©‚Ç‚¤‚©
-	auto isViewingAngle = std::make_unique<DecoratorNode>(std::bind(&Conditions::WithinViewingAngle, m_conditions.get()));
-	//ƒvƒŒƒCƒ„‚Ì‚Ù‚¤‚ğŒü‚­
-	isViewingAngle->AddNode(std::make_unique<ActionNode>(std::bind(&ExecutionNode::FacingThePlayer, m_executionNode.get(), std::placeholders::_1)));
+	////‹–ìŠp‚©‚Ç‚¤‚©
+	//auto isViewingAngle = std::make_unique<DecoratorNode>(std::bind(&Conditions::WithinViewingAngle, m_conditions.get()));
+	////ƒvƒŒƒCƒ„‚Ì‚Ù‚¤‚ğŒü‚­
+	//isViewingAngle->AddNode(std::make_unique<ActionNode>(std::bind(&ExecutionNode::FacingThePlayer, m_executionNode.get(), std::placeholders::_1)));
+	//
+	//auto selector = std::make_unique<SelectorNode>();
+	////‹–ìŠp‚È‚¢‚©‚Ç‚¤‚©
+	//selector->AddNode(std::move(isViewingAngle));
+	////‹ß‹——£UŒ‚”ÍˆÍ“à‚©‚Ç‚¤‚©
+	//selector->AddNode(std::move(closeRangeDecoratior));
+	////‰“‹——£UŒ‚”ÍˆÍ“à‚©‚Ç‚¤‚©
+	//selector->AddNode(std::move(longRangeDecoratior));
+	////ˆÚ“®
+	//selector->AddNode(std::make_unique<ActionNode>(std::bind(&ExecutionNode::ApproachingThePlayer, m_executionNode.get(), std::placeholders::_1)));
+
+	//auto rootSequence = std::make_unique<SequenceNode>();
+	////ƒvƒŒƒCƒ„‚Ì•ûŒü‚ÉŒü‚­
+	//rootSequence->AddNode(std::make_unique<ActionNode>(std::bind(&ExecutionNode::FacingThePlayer, m_executionNode.get(), std::placeholders::_1)));
+	////Selector‚Ì’Ç‰Á
+	//rootSequence->AddNode(std::move(selector));
+
+	////ƒ‹[ƒg‚Ìì¬
+	//m_root = std::make_unique<Root>();
+	////RootSequenceƒm[ƒh‚Ì’Ç‰Á
+	//m_root->AddNode(std::move(rootSequence));
+
+///////HP”¼•ªˆÈã
+
+	//UŒ‚‚·‚é‚©‚Ç‚¤‚©Decorator
+	auto isAttackDecorator = std::make_unique<DecoratorNode>(std::bind(&Conditions::IsAttack, m_conditions.get()));
+	//‰“‹——£UŒ‚
+	isAttackDecorator->AddNode(std::make_unique<ActionNode>(std::bind( & ExecutionNode::BeamAttack, m_executionNode.get(), std::placeholders::_1)));
+
+	//Selector
+	auto LongRangeAttackSelector = std::make_unique<SelectorNode>();
+	//UŒ‚‚·‚é‚©‚Ç‚¤‚©Decorator
+	LongRangeAttackSelector->AddNode(std::move(isAttackDecorator));
+	//ƒvƒŒƒCƒ„‚É‹ß‚Ã‚­
+	LongRangeAttackSelector->AddNode(std::make_unique<ActionNode>(std::bind(&ExecutionNode::ApproachingThePlayer, m_executionNode.get(), std::placeholders::_1)));
+
+
+	//‰“‹——£UŒ‚
+	auto longRangeDecorator = std::make_unique<DecoratorNode>(std::bind(&Conditions::IsInLongRangeAttack, m_conditions.get()));
+	//Selector‚Ì’Ç‰Á
+	longRangeDecorator->AddNode(std::move(LongRangeAttackSelector));
 	
+	//‹ß‹——£UŒ‚”ÍˆÍ’†
+	auto IsCloseRangAttack = std::make_unique<DecoratorNode>(std::bind(&Conditions::IsInCloseRangeAttack, m_conditions.get()));
+	//‹ß‹——£UŒ‚
+	IsCloseRangAttack->AddNode(std::make_unique<ActionNode>(std::bind( & ExecutionNode::CloseRangeAttacks, m_executionNode.get(), std::placeholders::_1)));
+
+	//–hŒäs“®‚Ì
+	auto barrirSequence = std::make_unique<SequenceNode>();
+	//UŒ‚•ûŒü‚ğ
+	barrirSequence->AddNode(std::make_unique<ActionNode>(std::bind(&ExecutionNode::FindAttackDirection, m_executionNode.get())));
+	//–hŒäs“®
+	barrirSequence->AddNode(std::make_unique<ActionNode>(std::bind(&ExecutionNode::BarrierAction, m_executionNode.get(), std::placeholders::_1)));
+	//UŒ‚‚³‚ê‚Ä‚¢‚é‚©
+	auto underAttack = std::make_unique<DecoratorNode>(std::bind(&Conditions::IsUnderAttack, m_conditions.get()));
+	//Sequene‚Ì’Ç‰Á
+	underAttack->AddNode(std::move(barrirSequence));
+
+
+
+	//Selector
+	auto halfHPSelector = std::make_unique<SelectorNode>();
+	//–hŒä
+	halfHPSelector->AddNode(std::move(underAttack));
+	//‹ß‹——£UŒ‚
+	halfHPSelector->AddNode(std::move(IsCloseRangAttack));
+	//Selector‚Ì’Ç‰Á
+	halfHPSelector->AddNode(std::move(longRangeDecorator));
+	//ƒvƒŒƒCƒ„‚É‹ß‚Ã‚­
+	halfHPSelector->AddNode(std::make_unique<ActionNode>(std::bind(&ExecutionNode::ApproachingThePlayer, m_executionNode.get(), std::placeholders::_1)));
+
+	//Sequence
+	auto halfHPSequence = std::make_unique<SequenceNode>();
+	//ƒvƒŒƒCƒ„‚Ì•ûŒü‚ğŒü‚­
+	halfHPSequence->AddNode(std::make_unique<ActionNode>(std::bind(&ExecutionNode::FacingThePlayer, m_executionNode.get(), std::placeholders::_1)));
+	//Selector‚Ì’Ç‰Á
+	halfHPSequence->AddNode(std::move(halfHPSelector));
+
+
+	//HP‚ª”¼•ªˆÈã‚©‚Ç‚¤‚©
+	auto halfHPDecoratior = std::make_unique<DecoratorNode>(std::bind(&Conditions::IsHPMoreThanHalf, m_conditions.get()));
+	//Sequnce‚Ì’Ç‰Á
+	halfHPDecoratior->AddNode(std::move(halfHPSequence));
+
+
+////////@HPMAX
+
+	//UŒ‚‚·‚é‚©
+	auto decorator = std::make_unique<DecoratorNode>(std::bind(&Conditions::IsInLongRangeAttack, m_conditions.get()));
+	//ƒr[ƒ€UŒ‚
+	decorator->AddNode(std::make_unique<ActionNode>(std::bind(&ExecutionNode::BeamAttack, m_executionNode.get(), std::placeholders::_1)));
+
+	//Selector
 	auto selector = std::make_unique<SelectorNode>();
-	//‹–ìŠp‚È‚¢‚©‚Ç‚¤‚©
-	selector->AddNode(std::move(isViewingAngle));
-	//‹ß‹——£UŒ‚”ÍˆÍ“à‚©‚Ç‚¤‚©
-	selector->AddNode(std::move(closeRangeDecoratior));
-	//‰“‹——£UŒ‚”ÍˆÍ“à‚©‚Ç‚¤‚©
-	selector->AddNode(std::move(longRangeDecoratior));
-	//ˆÚ“®
+	//UŒ‚Decorator‚Ì’Ç‰Á
+	selector->AddNode(std::move(decorator));
+	//ƒvƒŒƒCƒ„‚É‹ß‚Ã‚­
 	selector->AddNode(std::make_unique<ActionNode>(std::bind(&ExecutionNode::ApproachingThePlayer, m_executionNode.get(), std::placeholders::_1)));
 
-	auto rootSequence = std::make_unique<SequenceNode>();
-	//ƒvƒŒƒCƒ„‚Ì•ûŒü‚ÉŒü‚­
-	rootSequence->AddNode(std::make_unique<ActionNode>(std::bind(&ExecutionNode::FacingThePlayer, m_executionNode.get(), std::placeholders::_1)));
-	//Selector‚Ì’Ç‰Á
-	rootSequence->AddNode(std::move(selector));
+	//Å‘åHPSequence
+	auto maxHpSequence = std::make_unique<SequenceNode>();
+	//ƒvƒŒƒCƒ„‚Ì•ûŒü‚ğŒü‚­
+	maxHpSequence->AddNode(std::make_unique<ActionNode>(std::bind(&ExecutionNode::FacingThePlayer, m_executionNode.get(), std::placeholders::_1)));
+	//selector‚Ì’Ç‰Á
+	maxHpSequence->AddNode(std::move(selector));
+
+	//Å‘åHP‚©‚Ç‚¤‚©
+	auto maxHPDecoratior = std::make_unique<DecoratorNode>(std::bind(&Conditions::IsMaxHp, m_conditions.get()));
+	//Sequence‚Ì’Ç‰Á
+	maxHPDecoratior->AddNode(std::move(maxHpSequence));
+////////
+
+
+	auto rootSelector = std::make_unique<SelectorNode>();
+	//HP‚ªÅ‘å‚Ì’Ç‰Á
+	rootSelector->AddNode(std::move(maxHPDecoratior));
+	//HP‚ª”¼•ªˆÈã‚Ì’Ç‰Á
+	rootSelector->AddNode(std::move(halfHPDecoratior));
 
 	//ƒ‹[ƒg‚Ìì¬
 	m_root = std::make_unique<Root>();
 	//RootSequenceƒm[ƒh‚Ì’Ç‰Á
-	m_root->AddNode(std::move(rootSequence));
+	m_root->AddNode(std::move(rootSelector));
+
 
 
 	//ó‘Ô‚Ì‰Šú‰»

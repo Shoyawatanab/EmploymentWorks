@@ -684,6 +684,9 @@
     <ClInclude Include="Game\Scene\ResultScene.h">
       <Filter>Game\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\BarrierDefense\BarrierClose.h">
+      <Filter>Game\Enemys\BossEnemy\ActionNode\BarrierDefense</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -1120,6 +1123,9 @@
     </ClCompile>
     <ClCompile Include="Game\Scene\ResultScene.cpp">
       <Filter>Game\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\BarrierDefense\BarrierClose.cpp">
+      <Filter>Game\Enemys\BossEnemy\ActionNode\BarrierDefense</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

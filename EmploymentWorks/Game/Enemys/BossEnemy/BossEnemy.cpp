@@ -112,6 +112,7 @@ void BossEnemy::Initialize()
 	m_animationDatas["Move"] = json->LoadAnimationData(L"BossEnemy/Move");
 	m_animationDatas["Punch"] = json->LoadAnimationData(L"BossEnemy/Punch");
 	m_animationDatas["Barrier"] = json->LoadAnimationData(L"BossEnemy/Barrier");
+	m_animationDatas["BarrierEnd"] = json->LoadAnimationData(L"BossEnemy/BarrierEnd");
 	
 	////各パーツにアニメーションを登録
 	SetAnimationData("Idle", m_animationDatas,"", true);
@@ -121,6 +122,7 @@ void BossEnemy::Initialize()
 	SetAnimationData("Move", m_animationDatas);
 	SetAnimationData("Punch", m_animationDatas);
 	SetAnimationData("Barrier", m_animationDatas);
+	SetAnimationData("BarrierEnd", m_animationDatas);
 
 	m_behavior->AddPointer(m_player, this);
 
@@ -338,8 +340,10 @@ void BossEnemy::Notify(EventParams::EventType type, void* datas)
 /// <returns>実行結果</returns>
 IBehaviorNode::State BossEnemy::BeamAttack(const float& elapsedTime)
 {
+	//return m_action["BarrierDefense"]->Update(elapsedTime);
 
-	return m_action["BarrierDefense"]->Update(elapsedTime);
+	return Pounding(elapsedTime);
+
 	return m_action["Beam"]->Update(elapsedTime);
 
 }
@@ -447,6 +451,11 @@ IBehaviorNode::State BossEnemy::FacingThePlayer(float elapsdTime)
 
 	return IBehaviorNode::State::Success;
 
+}
+
+IBehaviorNode::State BossEnemy::BarrierDefense(float elapsdTime)
+{
+	return m_action["BarrierDefense"]->Update(elapsdTime);
 }
 
 

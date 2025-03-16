@@ -82,7 +82,7 @@ const Quaternion       Params::BOOMERANG_ROTATION = Quaternion::Identity;
 //ブーメランの数
  const int Params::BOOMERANG_MAX_COUNT = 3;
 //ブーメランの移動スピード
- const float Params::BOOMERANG_MOVE_SPEED = 10.0f;
+ const float Params::BOOMERANG_MOVE_SPEED = 8.0f;
 //ブーメランの横回転スピード
  const float Params::BOOMERANG_HORIZONTAL_ROTATION_SPEED = 20.0f;
 //ブーメランの投げてる時の初めの回転
@@ -369,7 +369,7 @@ const Quaternion       Params::BOOMERANG_ROTATION = Quaternion::Identity;
 
   //鳥の敵
 	//鳥の敵のHP
-  const int Params::BIRDENEMY_HP = 2;
+  const int Params::BIRDENEMY_HP = 4;
   //鳥の敵のボックスの当たり判定の大きさ
   const  Vector3 Params::BIRDENEMY_BOX_COLLIDER_SIZE = Vector3(0.7f,0.3f,0.7f);
   //鳥の敵のスフィアの当たり判定の大きさ

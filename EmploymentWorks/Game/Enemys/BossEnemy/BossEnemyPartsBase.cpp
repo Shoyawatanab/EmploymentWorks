@@ -99,8 +99,40 @@ void BossEnemyPartsBase::Render(const DirectX::SimpleMath::Matrix& view, const D
 	auto states = BaseEntity::GetCommonResources()->GetCommonStates();
 
 
+	// モデルのエフェクトを更新する
+	m_model->UpdateEffects([&](DirectX::IEffect* effect)
+		{
+			// ベイシックエフェクトを取得する
+			auto basicEffect = dynamic_cast<DirectX::BasicEffect*>(effect);
+			if (m_partsHP > 0)
+			{
+				//通常色
+
+				// ディフューズカラーを設定する
+				basicEffect->SetDiffuseColor(DirectX::Colors::LightSlateGray);
+				// スペキュラカラーを設定する
+				basicEffect->SetSpecularColor(DirectX::Colors::LightSlateGray);
+
+			}
+			else
+			{
+				//黒色
+
+				// ディフューズカラーを設定する
+				basicEffect->SetDiffuseColor(DirectX::Colors::Black);
+				// スペキュラカラーを設定する
+				basicEffect->SetSpecularColor(DirectX::Colors::Black);
+
+			}
+
+			// スペキュラパワーを設定する
+			basicEffect->SetSpecularPower(20.0f);
+		});
+
 
 	m_model->Draw(context, *states, BaseEntity::GetWorldMatrix(), view, projection);
+
+
 
 
 	CollisionEntity::GetBounding()->DrawBoundingSphere(BaseEntity::GetPosition(), view, projection);

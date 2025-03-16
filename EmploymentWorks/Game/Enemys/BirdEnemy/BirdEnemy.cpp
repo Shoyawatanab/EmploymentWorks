@@ -232,7 +232,8 @@ void BirdEnemy::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 			{
 				if (BaseEntity::GetIsEntityActive())
 				{
-					m_enemyManager->DeleteRemainingEnemy(this);
+
+					EnemyEntity::GetEnemyManager()->DeleteRemainingEnemy(this);
 					EventParams::CreateExplosionDatas aa = { object->GetPosition() ,BaseEntity::GetScale() };
 					Messenger::Notify(EventParams::EventType::CreateExplosion, &aa);
 					BaseEntity::SetIsEntityActive(false);

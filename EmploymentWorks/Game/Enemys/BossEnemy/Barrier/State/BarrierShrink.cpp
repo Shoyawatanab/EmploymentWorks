@@ -74,7 +74,7 @@ void BarrierShrink::Render(const DirectX::SimpleMath::Matrix& view, const Direct
 void BarrierShrink::Enter()
 {
 
-
+	m_time = 0;
 
 }
 

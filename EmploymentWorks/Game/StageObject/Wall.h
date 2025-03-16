@@ -49,6 +49,11 @@ public:
 		};
 	};
 
+	//押し出しを行わないタグ
+	const std::vector<CollisionTag> GetNoExtrusionTag() {
+		return  {
+		};
+	};
 
 
 	//INotMoveObject

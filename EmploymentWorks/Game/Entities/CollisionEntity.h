@@ -39,7 +39,11 @@ public:
 		, Barrier = 1 << 7
 	};
 
+public:
 
+	bool GetIsCollisionActive() { return m_isCollisionActive; }
+
+	void SetIsCollisionActive(bool isActive) { m_isCollisionActive = isActive; }
 
 public:
 
@@ -62,6 +66,8 @@ public:
 	virtual CollisionTag GetCollisionTag() = 0;
 	//当たった時に呼び出される
 	virtual void OnCollisionEnter(CollisionEntity* object, CollisionTag tag);
+	//衝突が終了したときに呼び出される
+	virtual void OnCollisionExit(CollisionEntity* object, CollisionTag tag) {};
 	//当たり判定クラスに登録
 	virtual void  AddCollision(CollisionManager* collsionManager);
 	//当たり判定の取得
@@ -89,6 +95,10 @@ public:
 		}
 	};
 
+	//押し出しを行わないタグ
+	virtual const std::vector<CollisionTag> GetNoExtrusionTag()  = 0;
+
+
 
 
 private:
@@ -96,7 +106,8 @@ private:
 	std::unique_ptr<WataLib::Bounding> m_bounding;
 	//当たったオブジェクトの格納変数
 	std::vector<CollisionEntity*> m_hitObject;
-
+	//当たり判定の有無
+	bool m_isCollisionActive;
 
 };
 

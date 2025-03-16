@@ -31,6 +31,7 @@ public:
 	Conditions(CommonResources* resources, Player* player, BossEnemy* enmey);
 	//デストラクタ
 	~Conditions();
+
 	//近距離攻撃範囲内かどうか
 	bool IsInCloseRangeAttack();
 	//遠距離攻撃範囲内かどうか
@@ -40,6 +41,17 @@ public:
 
 	//視界ないかどうか
 	bool IsEnemyInview(const DirectX::SimpleMath::Vector3& playerPos, const DirectX::SimpleMath::Vector3& playerForward, const DirectX::SimpleMath::Vector3& enemyPos);
+	//HPが最大かどうか
+	bool IsMaxHp();
+	//HPが半分以上か
+	bool IsHPMoreThanHalf();
+
+	//攻撃するかどうか
+	bool IsAttack();
+
+	//攻撃されているか
+	bool IsUnderAttack();
+
 private:
 	//共通リソース
 	CommonResources* m_commonResources;

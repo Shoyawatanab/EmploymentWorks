@@ -345,6 +345,9 @@ void BoomerangLeftThrow::Enter()
 	
 	//‰Šú‰ñ“]‚ðƒvƒŒƒCƒ„‚Ì‰ñ“]‚É
 	m_initialRotation = m_player->GetRotation();
+
+	m_boomerang->SetIsCollisionActive(true);
+
 }
 
 /// <summary>
@@ -352,6 +355,8 @@ void BoomerangLeftThrow::Enter()
 /// </summary>
 void BoomerangLeftThrow::Exit()
 {
+	m_boomerang->SetIsCollisionActive(false);
+
 }
 
 

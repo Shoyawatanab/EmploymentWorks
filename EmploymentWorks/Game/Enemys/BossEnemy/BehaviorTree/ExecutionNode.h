@@ -41,6 +41,16 @@ public:
 	//‰½‚à‚µ‚È‚¢
 	IBehaviorNode::State DoNothing();
 
+	//UŒ‚•ûŒü‚ğ‹‚ß‚é
+	IBehaviorNode::State FindAttackDirection();
+
+	//ƒoƒŠƒAUŒ‚
+	IBehaviorNode::State BarrierAction(float elapsdTime);
+
+
+
+
+
 private:
 	CommonResources* m_commonResources;
 

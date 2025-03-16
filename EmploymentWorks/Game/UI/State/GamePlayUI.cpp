@@ -80,7 +80,7 @@ void GamePlayUI::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::
 		throwUI->Render();
 	}
 
-	//m_itemAcquisitionUI->Render();
+	m_itemAcquisitionUI->Render();
 
 }
 
@@ -212,6 +212,8 @@ void GamePlayUI::Initialize(CommonResources* resources)
 		, ANCHOR::MIDDLE_CENTER
 		, UserInterface::Kinds::UI);
 
+	m_itemAcquisitionUI->SetIsActive(false);
+
 	m_throwUI.push_back(AddTexture(L"Resources/Textures/RightThrow.png"
 		, Vector2(1220, 500)
 		, Vector2(0.2f, 0.2f)
@@ -236,6 +238,8 @@ void GamePlayUI::Initialize(CommonResources* resources)
 	Messenger::Attach(EventParams::EventType::GetBoomerang, this);
 	Messenger::Attach(EventParams::EventType::PlayerDamage, this);
 	Messenger::Attach(EventParams::EventType::ChangeBoomerangThrowState, this);
+	Messenger::Attach(EventParams::EventType::BoomerangRecoverable, this);
+	Messenger::Attach(EventParams::EventType::BoomerangNotRecoverable, this);
 
 }
 
@@ -325,6 +329,13 @@ void GamePlayUI::Notify(EventParams::EventType type, void* datas)
 
 			}
 			break;
+		case EventParams::EventType::BoomerangRecoverable:
+			m_itemAcquisitionUI->SetIsActive(true);
+			break;
+		case EventParams::EventType::BoomerangNotRecoverable:
+			m_itemAcquisitionUI->SetIsActive(false);
+			break;
+
 		default:
 			break;
 	}

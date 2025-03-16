@@ -54,6 +54,12 @@ public:
 		};
 	};
 
+	//押し出しを行わないタグ
+	const std::vector<CollisionTag> GetNoExtrusionTag() {
+		return  {
+		};
+	};
+
 
 	//基本情報の設定
 	void SetDatas(DirectX::SimpleMath::Vector3 scale,
