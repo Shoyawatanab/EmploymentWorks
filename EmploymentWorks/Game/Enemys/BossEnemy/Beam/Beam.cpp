@@ -18,6 +18,7 @@
 #include "Game/Enemys/BossEnemy/Beam/BeamChargeEffect.h"
 #include "Game/CollisiionManager.h"
 #include "Game/Params.h"
+#include "Game/Player/Player.h"
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
@@ -100,6 +101,23 @@ void Beam::Update(const float& elapsedTime)
 {
 
 
+	//“G‚ÌŒ»Ý‚ÌÀ•W‚ÌŽæ“¾
+	Vector3 startPosition = BaseEntity::GetPosition();
+	//ƒvƒŒƒCƒ„‚ÌŒ»Ý‚ÌÀ•W‚ÌŽæ“¾
+	Vector3 endPosition = m_player->GetPosition() ;
+	//“G‚©‚çƒvƒŒƒCƒ„‚Ì•ûŒüƒxƒNƒgƒ‹‚ÌŒvŽZ
+	Vector3 toPlayer = endPosition - startPosition;
+	//yaw‚ÌŒvŽZ@i¶‰E‰ñ“]j
+	//xz•½–Ê‚Å“G‚©‚çƒvƒŒƒCƒ„‚Ì•ûŒü‚ð‹‚ß‚é
+	float yaw = atan2(toPlayer.x, toPlayer.z);
+	//pitch‚ÌŒvŽZiã‰º‰ñ“]j
+	//“G‚©‚çƒvƒŒƒCƒ„‚ÌƒEˆá’º•ûŒü‚ð‹‚ß‚é
+	float pitch = atan2(toPlayer.y, sqrt(toPlayer.x * toPlayer.x + toPlayer.z * toPlayer.z));
+
+	//yaw pitch‚©‚ç‰ñ“]‚ðŒvŽZ pitch‚Í”½“]‚³‚¹‚é
+	BaseEntity::SetRotation(Quaternion::CreateFromYawPitchRoll(yaw, -pitch, 0.0f));
+
+
 
 
 	for (auto& effect : m_deleteChargeEffect)
@@ -131,7 +149,7 @@ void Beam::AddPointer(BossEnemy* bossEnemy, Player* player)
 {
 	m_energyBall->AddPointer(this);
 	m_rays->AddPointer(this);
-
+	m_player = player;
 }
 
 /// <summary>

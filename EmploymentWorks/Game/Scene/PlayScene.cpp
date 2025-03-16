@@ -245,7 +245,7 @@ void PlayScene::Render()
 	m_uiManager->Render(view, m_projection);
 	m_targetMarker->Render();
 
-	m_timer->Render();
+	//m_timer->Render();
 
 	//if (m_stageID == SceneManager::Stage1)
 	//{

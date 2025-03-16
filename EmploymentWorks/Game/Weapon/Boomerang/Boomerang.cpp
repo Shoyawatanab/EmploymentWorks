@@ -2,6 +2,7 @@
 #include "Boomerang.h"
 #include "Game/CommonResources.h"
 #include "DeviceResources.h"
+#include "Libraries/MyLib/InputManager.h"
 
 #include "Libraries/WataLib/Bounding.h"
 #include "Libraries/WataLib/CSV.h"
@@ -9,6 +10,7 @@
 #include "Game/Weapon/Boomerang/State/BoomerangStateMachine.h"
 #include "Game/Player/Player.h"
 #include "Game/Params.h"
+#include "Game/Observer/Messenger.h"
 
 using namespace DirectX::SimpleMath;
 
@@ -34,6 +36,7 @@ Boomerang::Boomerang(CommonResources* resources
 	,m_throwbasePosition{}
 	,m_prevPosition{}
 	,ItemEntity(resources,scale,position,rotation)
+	,m_isCatch{}
 {
 
 	m_stateMachine = std::make_unique<BoomerangStateMachine>();
@@ -41,6 +44,7 @@ Boomerang::Boomerang(CommonResources* resources
 	m_shadow = std::make_unique<WataLib::Shadow>();
 
 	BaseEntity::SetParent(parent);
+	CollisionEntity::SetIsCollisionActive(false);
 }
 
 /// <summary>
@@ -122,6 +126,8 @@ void Boomerang::Initialize()
 
 	m_shadow->Initialize(device, context, states);
 
+
+
 }
 
 /// <summary>
@@ -131,6 +137,8 @@ void Boomerang::Initialize()
 /// <param name="projection">射影行列</param>
 void Boomerang::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
 {
+
+
 
 	auto context = BaseEntity::GetCommonResources()->GetDeviceResources()->GetD3DDeviceContext();
 	auto states = BaseEntity::GetCommonResources()->GetCommonStates();
@@ -156,7 +164,6 @@ void Boomerang::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::S
 
 	}
 
-	m_prevPosition = BaseEntity::GetPosition();
 
 }
 
@@ -176,6 +183,12 @@ void Boomerang::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 				m_stateMachine->ChangeState(m_stateMachine->GetBoomerangDrop());
 
 			}
+			else if (m_stateMachine->GetCurrentState() == m_stateMachine->GetBoomerangRightThrow()
+				||  m_stateMachine->GetCurrentState() == m_stateMachine->GetBoomerangLeftThrow()
+				 ||  m_stateMachine->GetCurrentState() == m_stateMachine->GetBoomerangFrontThrow())
+			{
+				m_stateMachine->ChangeState(m_stateMachine->GetBoomerangDrop());
+			}
 			break;
 		case CollisionEntity::CollisionTag::Enemy:
 			break;
@@ -184,10 +197,34 @@ void Boomerang::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 		case CollisionEntity::CollisionTag::Barrier:
 			m_stateMachine->ChangeState(m_stateMachine->GetBoomerangRepelled());
 			break;
+		case CollisionEntity::CollisionTag::Player:
+			if (m_stateMachine->GetCurrentState() == m_stateMachine->GetBoomerangRightThrow())
+			{
+				Messenger::Notify(EventParams::EventType::BoomerangRecoverable, nullptr);
+				m_isCatch = true;
+
+			}
+			break;
+
 		default:
 			break;
 	}
 
+
+}
+
+void Boomerang::OnCollisionExit(CollisionEntity* object, CollisionTag tag)
+{
+
+	switch (tag)
+	{
+		case CollisionEntity::CollisionTag::Player:			
+			Messenger::Notify(EventParams::EventType::BoomerangNotRecoverable, nullptr);
+			m_isCatch = false;
+			break;
+		default:
+			break;
+	}
 
 }
 
@@ -198,10 +235,29 @@ void Boomerang::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 /// <param name="elapsedTime">経過時間</param>
 void Boomerang::Update(const float& elapsedTime)
 {
+
+	m_prevPosition = BaseEntity::GetPosition();
+
+
 	ItemEntity::Update(elapsedTime);
 
 	m_stateMachine->Update(elapsedTime);
 
+	if (m_isCatch)
+	{
+		// キーボードステートトラッカーを取得する
+		const auto& kbTracker = BaseEntity::GetCommonResources()->GetInputManager()->GetKeyboardTracker();
+
+		if (kbTracker->released.F)
+		{
+			m_stateMachine->ChangeState(m_stateMachine->GetBoomerangIdel());
+			Messenger::Notify(EventParams::EventType::BoomerangNotRecoverable,nullptr);
+
+		}
+
+
+
+	}
 
 }
 

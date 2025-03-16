@@ -93,6 +93,13 @@ public:
 		};
 	}
 
+	//押し出しを行わないタグ
+	const std::vector<CollisionTag> GetNoExtrusionTag() {
+		return  {
+		};
+	};
+
+
 	//ICharacter
 		//アニメーションの登録
 	void SetAnimationData(std::string animationType
@@ -137,6 +144,8 @@ public:
 	IBehaviorNode::State Pounding(const float& elapsedTime);
 	//
 	IBehaviorNode::State FacingThePlayer(float elapsdTime);
+
+	IBehaviorNode::State BarrierDefense(float elapsdTime);
 
 private:
 	//アニメーションデータ

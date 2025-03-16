@@ -52,6 +52,9 @@ public:
 	CollisionTag GetCollisionTag() override { return CollisionEntity::CollisionTag::Boomerang; };
 	//当たった時に呼び出される
 	void OnCollisionEnter(CollisionEntity* object, CollisionTag tag) override;
+	//衝突が終了したときに呼び出される
+	void OnCollisionExit(CollisionEntity* object, CollisionTag tag);
+
 	//当たり判定の種類の取得
 	const CollisionType GetCollisionType() override { return CollisionType::AABB; };
 	//押し出しをするかどうか
@@ -59,13 +62,20 @@ public:
 	//当たり判定を行わないタグ
 	const std::vector<CollisionTag> GetNoHitDetectionTag() override {
 		return  {
-			{CollisionTag::Player}
-			,{CollisionTag::PlayerParts}
+			//{CollisionTag::Player},
+			{CollisionTag::PlayerParts}
 			,{CollisionTag::Boomerang}
 			,{CollisionTag::Enemy}
 
 		};
 	};
+
+	//押し出しを行わないタグ
+	const std::vector<CollisionTag> GetNoExtrusionTag() {
+		return  {
+		};
+	};
+
 
 	void OnAcquired() override ;
 
@@ -95,5 +105,7 @@ private:
 	std::unique_ptr<WataLib::Shadow> m_shadow;
 	//1フレ前の座標
 	DirectX::SimpleMath::Vector3 m_prevPosition;
+
+	bool m_isCatch;
 
 };

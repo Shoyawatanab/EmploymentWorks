@@ -75,6 +75,13 @@ public:
 			,{CollisionTag::Beam}
 		};
 	}
+	//押し出しを行わないタグ
+	const std::vector<CollisionTag> GetNoExtrusionTag() {
+		return  {
+		};
+	};
+
+
 
 	//ICharacter
 		//アニメーションの登録

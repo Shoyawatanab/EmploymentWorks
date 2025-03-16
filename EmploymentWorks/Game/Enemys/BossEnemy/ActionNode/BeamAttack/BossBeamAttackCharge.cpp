@@ -62,6 +62,13 @@ void BossBeamAttackCharge::Initialize(CommonResources* resources)
 IBehaviorNode::State BossBeamAttackCharge::Update(const float& elapsedTime)
 {
 
+	Vector3 beamPosition = Params::BOSSENEMY_BEAM_SHOT_POSITION;
+
+	beamPosition = Vector3::Transform(beamPosition, m_bossEnemy->GetRotation());
+
+	m_beam->SetPosition(beamPosition + m_bossEnemy->GetPosition());
+
+
 	m_beam->GetBeamEnergyBall()->Update(elapsedTime);
 
 	//isŠ„‡‚ğ‹‚ß‚é

@@ -54,7 +54,7 @@ public:
 
 	
 
-\
+
 public:
 	//コンストラクタ
 	Player(CommonResources* resources);
@@ -69,9 +69,6 @@ public:
 	void Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection) override;
 	//更新処理
 	void  Update(const float& elapsedTime) override;
-
-
-
 
 
 //ICollisionObject
@@ -90,9 +87,17 @@ public:
 	const std::vector<CollisionTag> GetNoHitDetectionTag() {
 		return  {
 			{CollisionTag::PlayerParts}
-			,{CollisionTag::Boomerang}
+			//,{CollisionTag::Boomerang}
 		};
 	}
+
+	//押し出しを行わないタグ
+	const std::vector<CollisionTag> GetNoExtrusionTag() {
+		return  {
+			{CollisionTag::Boomerang}
+		};
+	};
+
 
 //ICharacter
 	//アニメーションの登録

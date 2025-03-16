@@ -165,3 +165,17 @@ IBehaviorNode::State ExecutionNode::DoNothing()
 	return IBehaviorNode::State::Success;
 }
 
+/// <summary>
+/// ƒu[ƒƒ‰ƒ“‚ÌUŒ‚•ûŒü‚ğ‹‚ß‚é
+/// </summary>
+/// <returns></returns>
+IBehaviorNode::State ExecutionNode::FindAttackDirection()
+{
+	return IBehaviorNode::State::Success;
+}
+
+IBehaviorNode::State ExecutionNode::BarrierAction(float elapsdTime)
+{
+	return m_enemy->BarrierDefense(elapsdTime) ;
+}
+

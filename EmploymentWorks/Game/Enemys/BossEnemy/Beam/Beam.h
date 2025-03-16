@@ -85,6 +85,6 @@ private:
 	std::unique_ptr<BeamRays> m_rays;
 
 
-
+	Player* m_player;
 
 };

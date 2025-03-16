@@ -64,11 +64,6 @@ void BarrierGenerate::Update(const float& elapsedTime)
 
 	m_barrier->SetLocalScale(scale);
 
-	if (m_time >= 2.0f)
-	{
-		m_barrier->GetBarrierStateMachine()->ChangeState(m_barrier->GetBarrierStateMachine()->GetBarrierShrink());
-	}
-
 	m_time += elapsedTime;
 
 }
@@ -87,6 +82,8 @@ void BarrierGenerate::Enter()
 
 	m_barrier->SetLocalPosition(Vector3(3.5f, 0, 2));
 	m_barrier->SetLocalScale(Vector3::Zero);
+
+	m_time = 0;
 
 }
 

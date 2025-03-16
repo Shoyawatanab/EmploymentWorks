@@ -81,6 +81,12 @@ public:
 			,{CollisionTag::EnemyParts}
 		};
 	}
+	//押し出しを行わないタグ
+	const std::vector<CollisionTag> GetNoExtrusionTag() {
+		return  {
+		};
+	};
+
 
 
 	//クラスに必要な情報（ポインタ）の登録

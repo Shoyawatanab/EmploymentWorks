@@ -49,6 +49,12 @@ public:
 		return  {
 		};
 	};
+	//押し出しを行わないタグ
+	const std::vector<CollisionTag> GetNoExtrusionTag() {
+		return  {
+		};
+	};
+
 
 	//IMoveObject
 	//更新処理

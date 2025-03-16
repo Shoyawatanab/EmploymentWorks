@@ -44,7 +44,7 @@ BarrierDefenseAction::BarrierDefenseAction(CommonResources* resources
 	m_idel = std::make_unique<BarrierIdel>(this);
 	m_preliminaryAction = std::make_unique<BarrierPreliminaryAction>(this,bossEnemy);
 	m_deployment = std::make_unique<BarrierDeployment>(this,barrier);
-	
+	m_close = std::make_unique<BarrierClose>(this, barrier,bossEnemy);
 
 }
 

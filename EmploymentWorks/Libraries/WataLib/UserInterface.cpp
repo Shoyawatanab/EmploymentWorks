@@ -52,6 +52,7 @@ UserInterface::UserInterface()
 	, m_renderRatioOffset(0.0f),
 	m_kinds{}
 	, m_alphaValue{ 1.0f }
+	,m_isActive{true}
 {
 
 }
@@ -255,6 +256,12 @@ void UserInterface::CreateUIShader()
 /// </summary>
 void UserInterface::Render()
 {
+
+	if (!m_isActive)
+	{
+		return;
+	}
+
 	auto context = m_pDR->GetD3DDeviceContext();
 	// 頂点情報
 	// Position.xy	:拡縮用スケール

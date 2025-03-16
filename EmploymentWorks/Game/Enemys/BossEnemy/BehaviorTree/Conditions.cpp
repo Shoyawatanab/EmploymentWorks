@@ -4,6 +4,10 @@
 #include "Game/Player/Player.h"
 #include "Game/Enemys/BossEnemy/BossEnemy.h"
 #include "Game/CommonResources.h"
+#include "Game/Params.h"
+#include <random>
+#include "Game/Weapon/Boomerang/Boomerang.h"
+#include "Game/Weapon/Boomerang/State/BoomerangStateMachine.h"
 
 using namespace DirectX::SimpleMath;
 
@@ -142,3 +146,97 @@ bool Conditions::IsEnemyInview(const DirectX::SimpleMath::Vector3& playerPos, co
 	return dotProduct >= cosViewAngle;
 
 }
+
+/// <summary>
+/// HPが最大かどうか
+/// </summary>
+/// <returns>ture : 最大 false:最大じゃない</returns>
+bool Conditions::IsMaxHp()
+{
+
+	if (m_enemy->GetHP() == Params::BOSSENEMY_MAX_HP)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+/// <summary>
+/// HPが半分以上かどうか
+/// </summary>
+/// <returns>true : 半分以上 false :半分未満</returns>
+bool Conditions::IsHPMoreThanHalf()
+{
+	return true;
+
+	if (m_enemy->GetHP() >= Params::BOSSENEMY_MAX_HP / 2)
+	{
+		return true;
+	}
+
+	
+	return false;
+}
+
+/// <summary>
+/// 攻撃するかどうか
+/// </summary>
+/// <returns>ture : 攻撃　false : 攻撃しない</returns>
+bool Conditions::IsAttack()
+{
+
+	//	完全なランダムをハードウェア的に生成するためのクラスの変数
+	std::random_device seed;
+	//	上記の完全なランダムは動作が遅いため、seed値の決定のみに使用する
+	//	※「default_random_engine」はusingで「mt19937」となっている
+	std::default_random_engine engine(seed());
+	//	生成して欲しいランダムの範囲をDistributionに任せる。今回は0～2PI
+	std::uniform_real_distribution<> dist(0, 100);
+
+	float ratio = dist(engine);
+
+	if (ratio >= 30)
+	{
+		return true;
+	}
+
+
+
+	return false;
+}
+
+bool Conditions::IsUnderAttack()
+{
+
+	std::vector<std::unique_ptr<Boomerang>>* boomerangs = m_palyer->GetBoomerangs();
+
+	float length = 1000;
+	
+	for (auto& boo : *boomerangs)
+	{
+		if (boo->GetBoomerangStatemachine()->GetCurrentState() == boo->GetBoomerangStatemachine()->GetBoomerangFrontThrow()
+			 ||boo->GetBoomerangStatemachine()->GetCurrentState() == boo->GetBoomerangStatemachine()->GetBoomerangRightThrow()
+			 || boo->GetBoomerangStatemachine()->GetCurrentState() == boo->GetBoomerangStatemachine()->GetBoomerangLeftThrow())
+		{
+			float length2 = Vector3::Distance(boo->GetPosition(), m_enemy->GetPosition());
+
+			if (length > length2)
+			{
+				length = length2;
+			}
+
+		}
+
+	}
+
+	if (length <= 10.0f)
+	{
+		return true;
+	}
+
+
+	return false;
+}
+
+

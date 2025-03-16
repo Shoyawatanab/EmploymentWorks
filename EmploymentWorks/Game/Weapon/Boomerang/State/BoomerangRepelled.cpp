@@ -72,6 +72,7 @@ void BoomerangRepelled::Render(const DirectX::SimpleMath::Matrix& view, const Di
 
 void BoomerangRepelled::Enter()
 {
+	m_boomerang->SetIsCollisionActive(true);
 
 	m_position = m_boomerang->GetPosition();
 
@@ -90,6 +91,8 @@ void BoomerangRepelled::Enter()
 		//è„Ç©ÇÁÇ†ÇΩÇ¡ÇΩ
 		m_graivty = 0;
 	}
+
+
 
 	//m_direction.z *= -1;
 

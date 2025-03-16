@@ -26,6 +26,7 @@ BoomerangRightThrow::BoomerangRightThrow()
 	,m_rotationDatas{}
 	,m_horizontalRotation{}
 	,m_initialRotation{}
+	,m_moveDirection{}
 {
 
 
@@ -201,12 +202,12 @@ void BoomerangRightThrow::ChaseToPlayer(const float& elapsedTime)
 
 
 	//i‚Þ•ûŒü
-	DirectX::SimpleMath::Vector3 MoveDirection = PlayerPos - BoomerangPos;
-	MoveDirection.Normalize();
+	m_moveDirection = PlayerPos - BoomerangPos;
+	m_moveDirection.Normalize();
 	//‚Ç‚ê‚¾‚¯ˆÚ“®‚·‚é‚©‹‚ß‚é
-	MoveDirection *= Params::BOOMERANG_MOVE_SPEED * elapsedTime;
+	Vector3 moveDirection = m_moveDirection * Params::BOOMERANG_MOVE_SPEED * elapsedTime;
 	//ˆÚ“®’l‚Ì‰ÁŽZ
-	BoomerangPos += MoveDirection;
+	BoomerangPos += moveDirection;
 	//À•W‚Ì“o˜^
 	m_boomerang->SetPosition(BoomerangPos);
 
@@ -217,9 +218,38 @@ void BoomerangRightThrow::ChaseToPlayer(const float& elapsedTime)
 	if (distance <= 2.0f)
 	{
 		//ó‘Ô•Ï‰»
-		m_boomerang->GetBoomerangStatemachine()->ChangeState(m_boomerang->GetBoomerangStatemachine()->GetBoomerangIdel());
+		//m_boomerang->GetBoomerangStatemachine()->ChangeState(m_boomerang->GetBoomerangStatemachine()->GetBoomerangIdel());
+		m_state = State::PassingThrough;
 	}
 
+
+}
+
+void BoomerangRightThrow::GoStraight(const float& elapsedTime)
+{
+
+	//Vector3 direction = m_splineCurvePosition[0] - m_splineCurvePosition[5];
+	Vector3 direction = m_boomerang->GetPrevPosition() - m_boomerang->GetPosition();
+
+	direction.Normalize();
+
+	direction *= Params::BOOMERANG_MOVE_SPEED * elapsedTime;
+
+	Vector3 position = m_boomerang->GetPosition();
+
+	position += direction ;
+
+	m_boomerang->SetPosition(position);
+}
+
+void BoomerangRightThrow::PassingThrough(const float& elapsedTime)
+{
+
+	Vector3 position = m_boomerang->GetPosition();
+
+	position += m_moveDirection * Params::BOOMERANG_MOVE_SPEED * elapsedTime;
+
+	m_boomerang->SetPosition(position);
 
 }
 
@@ -301,6 +331,10 @@ void BoomerangRightThrow::Update(const float& elapsedTime)
 			break;
 		case BoomerangRightThrow::State::ChaseToPlayer:
 			ChaseToPlayer(elapsedTime);
+			//GoStraight(elapsedTime);
+			break;
+		case BoomerangRightThrow::State::PassingThrough:
+			PassingThrough(elapsedTime);
 			break;
 		default:
 			break;
@@ -344,6 +378,9 @@ void BoomerangRightThrow::Enter()
 	
 	//‰Šú‰ñ“]‚ðƒvƒŒƒCƒ„‚Ì‰ñ“]‚É
 	m_initialRotation = m_player->GetRotation();
+
+	m_boomerang->SetIsCollisionActive(true);
+
 }
 
 /// <summary>
@@ -351,6 +388,8 @@ void BoomerangRightThrow::Enter()
 /// </summary>
 void BoomerangRightThrow::Exit()
 {
+	m_boomerang->SetIsCollisionActive(false);
+
 }
 
 
