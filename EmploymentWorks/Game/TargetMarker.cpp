@@ -15,6 +15,7 @@
 #include "Libraries/WataLib/Camera/TPS_Camera.h"
 #include "Libraries/WataLib/DrawTexture.h"
 #include "Game/Observer/Messenger.h"
+#include "Libraries/WataLib/UserInterface.h"
 
 
 /// <summary>
@@ -56,8 +57,8 @@ void TargetMarker::Initialize(CommonResources* resources)
 
 	m_isTargetMarker = false;
 
-	m_marker = std::make_unique<WataLib::DrawTexture>();
-	m_marker->Initialize(m_commonResources, L"Resources/Textures/TargetMarker.png"
+	m_marker = std::make_unique<UserInterface>();
+	m_marker->Create(m_commonResources->GetDeviceResources(), L"Resources/Textures/TargetMarker.png"
 		,Vector2(200,200), Vector2(0.3f,0.3f));
 
 

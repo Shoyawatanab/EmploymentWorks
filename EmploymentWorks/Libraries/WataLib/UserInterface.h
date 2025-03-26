@@ -36,13 +36,7 @@ enum ANCHOR
 
 class UserInterface
 {
-public:
-	enum class Kinds
-	{
 
-		LockOn,
-		UI
-	};
 public:
 	//データ受け渡し用コンスタントバッファ(送信側)
 	struct ConstBuffer
@@ -52,17 +46,16 @@ public:
 	};
 
 public:
-	void SetWindowSize(const int& width, const int& height);
 
 	void SetScale(DirectX::SimpleMath::Vector2 scale);
 	DirectX::SimpleMath::Vector2 GetScale() { return m_scale; }
+
+	DirectX::SimpleMath::Vector2 GetInialScale() { return m_initialScale; }
+
 	void SetPosition(DirectX::SimpleMath::Vector2 position);
 	DirectX::SimpleMath::Vector2 GetPosition() { return m_position; }
 
 	DirectX::SimpleMath::Vector2 GetInitialPosition() { return m_initialPosition; }
-
-	void SetAnchor(ANCHOR anchor);
-	ANCHOR GetAnchor() { return m_anchor; }
 
 	void SetRenderRatio(float ratio);
 	float GetRenderRatio() { return m_renderRatio; }
@@ -77,6 +70,10 @@ public:
 
 	bool GetIsActive() { return m_isActive; }
 
+	float GetWidth() { return m_textureWidth; }
+	float GetHeight() { return m_textureHeight; }
+
+
 	//関数
 public:
 	static const std::vector<D3D11_INPUT_ELEMENT_DESC> INPUT_LAYOUT;
@@ -90,8 +87,7 @@ public:
 		, const wchar_t* path
 		, DirectX::SimpleMath::Vector2 position
 		, DirectX::SimpleMath::Vector2 scale
-		, ANCHOR anchor
-		, Kinds kind);
+		);
 
 	void Render();
 
@@ -100,7 +96,6 @@ public:
 
 private:
 
-	void CreateLockOnShader();
 	void CreateUIShader();
 
 	//変数
@@ -120,8 +115,6 @@ private:
 	// テクスチャハンドル
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_texture;
 	Microsoft::WRL::ComPtr<ID3D11Resource> m_res;
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_yoshiTexture;
-	Microsoft::WRL::ComPtr<ID3D11Resource> m_yoshiRes;
 	// 頂点シェーダ
 	Microsoft::WRL::ComPtr<ID3D11VertexShader> m_vertexShader;
 	// ピクセルシェーダ
@@ -129,9 +122,7 @@ private:
 	// ジオメトリシェーダ
 	Microsoft::WRL::ComPtr<ID3D11GeometryShader> m_geometryShader;
 
-	int m_windowWidth, m_windowHeight;
 	int m_textureWidth, m_textureHeight;
-	int m_yoshiTextureWidth, m_yoshiTextureHeight;
 
 	DirectX::SimpleMath::Vector2 m_scale;
 	DirectX::SimpleMath::Vector2 m_position;
@@ -139,16 +130,11 @@ private:
 	DirectX::SimpleMath::Vector2 m_initialPosition;
 	DirectX::SimpleMath::Vector2 m_initialScale;
 
-	ANCHOR m_anchor;
-
 	float m_renderRatio;
 	float m_renderRatioOffset;
 
 	//画像全体の透明度
 	float m_alphaValue;
-
-	//作るシェーダーの種類
-	Kinds m_kinds;
 
 	bool m_isActive;
 

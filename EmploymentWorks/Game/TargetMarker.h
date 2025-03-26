@@ -9,10 +9,11 @@
 #include "Game/Interface/IObserver.h"
 // 前方宣言
 class CommonResources;
+class UserInterface;
+
 namespace WataLib
 {
 	class TPS_Camera;
-	class DrawTexture;
 
 }
 
@@ -78,7 +79,7 @@ private:
 // 共通リソース
 	CommonResources* m_commonResources;
 
-	std::unique_ptr<WataLib::DrawTexture> m_marker;
+	std::unique_ptr<UserInterface> m_marker;
 
 
 	WataLib::TPS_Camera* m_tpsCamera;

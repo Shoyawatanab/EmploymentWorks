@@ -4,7 +4,7 @@
 */
 #include "pch.h"
 #include "Game/Screen.h"
-#include "Libraries/WataLib/Mouse.h"
+#include "Mouse.h"
 
 #include <cassert>
 

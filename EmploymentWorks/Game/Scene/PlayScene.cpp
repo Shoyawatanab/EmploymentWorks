@@ -30,6 +30,7 @@
 #include "Game/ItemAcquisition.h"
 #include "Game/Timer.h"
 #include "Game/Score.h"
+#include "Libraries/WataLib/UserInterface.h"
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
@@ -176,8 +177,8 @@ void PlayScene::Initialize(CommonResources* resources)
 	// BGM‚Ìƒ‹[ƒvÄ¶
 	//sm_soundEffectInstanceBGM->Play(true);
 
-	m_tutorialTex = std::make_unique<WataLib::DrawTexture>();
-	m_tutorialTex->Initialize(m_commonResources, L"Resources/Textures/Tex.png", Vector2(640, 360), Vector2::One);
+	m_tutorialTex = std::make_unique<UserInterface>();
+	m_tutorialTex->Create(m_commonResources->GetDeviceResources(), L"Resources/Textures/Tex.png", Vector2(640, 360), Vector2::One);
 
 	m_isTutolialTex = false;
 
@@ -223,6 +224,8 @@ void PlayScene::Update(float elapsedTime)
 	m_effectsManager->Update(elapsedTime);
 	m_timer->Update(elapsedTime);
 
+
+
 }
 
 //---------------------------------------------------------
@@ -252,8 +255,8 @@ void PlayScene::Render()
 	//	m_tutorialTex->Render();
 	//}
 
-
 	
+
 }
 
 //---------------------------------------------------------

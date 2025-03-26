@@ -17,6 +17,7 @@
 #include <WICTextureLoader.h>
 #include <CommonStates.h>
 #include <vector>
+#include "Game/Screen.h"
 
 using namespace DirectX;
 
@@ -35,22 +36,14 @@ const std::vector<D3D11_INPUT_ELEMENT_DESC> UserInterface::INPUT_LAYOUT =
 /// </summary>
 UserInterface::UserInterface()
 	:m_pDR(nullptr)
-	, m_windowHeight(0)
-	, m_windowWidth(0)
 	, m_textureHeight(0)
 	, m_textureWidth(0)
-	, m_yoshiTextureHeight(0)
-	, m_yoshiTextureWidth(0)
 	, m_texture(nullptr)
 	, m_res(nullptr)
-	, m_yoshiTexture(nullptr)
-	, m_yoshiRes(nullptr)
 	, m_scale(SimpleMath::Vector2::One)
 	, m_position(SimpleMath::Vector2::Zero)
-	, m_anchor(ANCHOR::TOP_LEFT)
 	, m_renderRatio(1.0f)
-	, m_renderRatioOffset(0.0f),
-	m_kinds{}
+	, m_renderRatioOffset(0.0f)
 	, m_alphaValue{ 1.0f }
 	,m_isActive{true}
 {
@@ -100,8 +93,7 @@ void UserInterface::Create(DX::DeviceResources* pDR
 	, const wchar_t* path
 	, DirectX::SimpleMath::Vector2 position
 	, DirectX::SimpleMath::Vector2 scale
-	, ANCHOR anchor
-	, Kinds kind)
+	)
 {
 	m_pDR = pDR;
 	auto device = pDR->GetD3DDevice();
@@ -109,21 +101,9 @@ void UserInterface::Create(DX::DeviceResources* pDR
 	m_initialPosition = position;
 	m_scale = scale;
 	m_initialScale = scale;
-	m_anchor = anchor;
-	m_kinds = kind;
 
-	//	シェーダーの作成
-	switch (m_kinds)
-	{
-		case UserInterface::Kinds::LockOn:
-			CreateLockOnShader();
-			break;
-		case UserInterface::Kinds::UI:
-			CreateUIShader();
-			break;
-		default:
-			break;
-	}
+	//シェーダーの作成
+	CreateUIShader();
 
 	//	画像の読み込み
 	LoadTexture(path);
@@ -132,6 +112,8 @@ void UserInterface::Create(DX::DeviceResources* pDR
 	m_batch = std::make_unique<PrimitiveBatch<VertexPositionColorTexture>>(pDR->GetD3DDeviceContext());
 
 	m_states = std::make_unique<CommonStates>(device);
+
+
 }
 
 void UserInterface::SetScale(DirectX::SimpleMath::Vector2 scale)
@@ -143,11 +125,7 @@ void UserInterface::SetPosition(DirectX::SimpleMath::Vector2 position)
 	m_position = position;
 }
 
-void UserInterface::SetAnchor(ANCHOR anchor)
-{
-	assert(anchor);
 
-}
 
 void UserInterface::SetRenderRatio(float ratio)
 {
@@ -155,53 +133,6 @@ void UserInterface::SetRenderRatio(float ratio)
 }
 
 
-/// <summary>
-/// Shader作成部分だけ分離した関数
-/// </summary>
-void UserInterface::CreateLockOnShader()
-{
-	auto device = m_pDR->GetD3DDevice();
-
-	//	コンパイルされたシェーダファイルを読み込み
-	BinaryFile VSData = BinaryFile::LoadFile(L"Resources/Shaders/LockOn/LockOnUIVS.cso");
-	BinaryFile GSData = BinaryFile::LoadFile(L"Resources/Shaders/LockOn/LockOnUIGS.cso");
-	BinaryFile PSData = BinaryFile::LoadFile(L"Resources/Shaders/LockOn/LockOnUIPS.cso");
-
-	//	インプットレイアウトの作成
-	device->CreateInputLayout(&INPUT_LAYOUT[0],
-		static_cast<UINT>(INPUT_LAYOUT.size()),
-		VSData.GetData(), VSData.GetSize(),
-		m_inputLayout.GetAddressOf());
-
-	//	頂点シェーダ作成
-	if (FAILED(device->CreateVertexShader(VSData.GetData(), VSData.GetSize(), NULL, m_vertexShader.ReleaseAndGetAddressOf())))
-	{//	エラー
-		MessageBox(0, L"CreateVertexShader Failed.", NULL, MB_OK);
-		return;
-	}
-
-	//	ジオメトリシェーダ作成
-	if (FAILED(device->CreateGeometryShader(GSData.GetData(), GSData.GetSize(), NULL, m_geometryShader.ReleaseAndGetAddressOf())))
-	{// エラー
-		MessageBox(0, L"CreateGeometryShader Failed.", NULL, MB_OK);
-		return;
-	}
-	//	ピクセルシェーダ作成
-	if (FAILED(device->CreatePixelShader(PSData.GetData(), PSData.GetSize(), NULL, m_pixelShader.ReleaseAndGetAddressOf())))
-	{// エラー
-		MessageBox(0, L"CreatePixelShader Failed.", NULL, MB_OK);
-		return;
-	}
-
-	//	シェーダーにデータを渡すためのコンスタントバッファ生成
-	D3D11_BUFFER_DESC bd;
-	ZeroMemory(&bd, sizeof(bd));
-	bd.Usage = D3D11_USAGE_DEFAULT;
-	bd.ByteWidth = sizeof(ConstBuffer);
-	bd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-	bd.CPUAccessFlags = 0;
-	device->CreateBuffer(&bd, nullptr, &m_CBuffer);
-}
 
 
 void UserInterface::CreateUIShader()
@@ -271,7 +202,7 @@ void UserInterface::Render()
 	// Tex.xy		:ウィンドウサイズ（バッファも同じ。こちらは未使用）
 	VertexPositionColorTexture vertex[1] = {
 		VertexPositionColorTexture(
-			 SimpleMath::Vector3(m_scale.x, m_scale.y, static_cast<float>(m_anchor))
+			 SimpleMath::Vector3(m_scale.x, m_scale.y, ANCHOR::MIDDLE_CENTER)
 			,SimpleMath::Vector4(m_position.x, m_position.y, static_cast<float>(m_textureWidth), static_cast<float>(m_textureHeight))
 			,SimpleMath::Vector2(m_renderRatio - m_renderRatioOffset,0))
 	};
@@ -281,7 +212,7 @@ void UserInterface::Render()
 
 	//	シェーダーに渡す追加のバッファを作成する。(ConstBuffer）
 	ConstBuffer cbuff;
-	cbuff.windowSize = SimpleMath::Vector4(static_cast<float>(m_windowWidth), static_cast<float>(m_windowHeight), 1, 1);
+	cbuff.windowSize = SimpleMath::Vector4(Screen::WIDTH, Screen::HEIGHT, 1, 1);
 	cbuff.diffuse = SimpleMath::Vector4(1, 1, 1, m_alphaValue);
 
 	//	受け渡し用バッファの内容更新(ConstBufferからID3D11Bufferへの変換）
@@ -319,7 +250,6 @@ void UserInterface::Render()
 
 	//	ピクセルシェーダにテクスチャを登録する。
 	context->PSSetShaderResources(0, 1, m_texture.GetAddressOf());
-	context->PSSetShaderResources(1, 1, m_yoshiTexture.GetAddressOf());
 
 
 	//	インプットレイアウトの登録
@@ -337,8 +267,4 @@ void UserInterface::Render()
 
 }
 
-void UserInterface::SetWindowSize(const int& width, const int& height)
-{
-	m_windowWidth = width;
-	m_windowHeight = height;
-}
+

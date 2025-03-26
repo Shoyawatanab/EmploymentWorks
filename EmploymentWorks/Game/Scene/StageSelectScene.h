@@ -5,14 +5,12 @@
 #pragma once
 #include "IScene.h"
 #include "Game/Scene/SceneManager.h"
+#include "Libraries/WataLib/UserInterface.h"
 
 // 前方宣言
 class CommonResources;
 
-namespace WataLib
-{
-	class DrawTexture;
-}
+
 
 
 
@@ -41,12 +39,12 @@ private:
 	SceneManager* m_sceneManager;
 
 
-	std::vector <std::unique_ptr<WataLib::DrawTexture>> m_textures;
+	std::vector <std::unique_ptr<UserInterface>> m_textures;
 
 	// シーンチェンジフラグ
 	bool m_isChangeScene;
 
-	std::unordered_map<int, std::unique_ptr<WataLib::DrawTexture>> m_buttom;
+	std::unordered_map<int, std::unique_ptr<UserInterface>> m_buttom;
 
 	int m_selectButtomId;
 

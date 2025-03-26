@@ -10,6 +10,7 @@
 #include "Game/Weapon/Boomerang/State/BoomerangStateMachine.h"
 #include "Libraries/WataLib/DrawTexture.h"
 #include "Game/Scene/PlayScene.h"
+#include "Libraries/WataLib/UserInterface.h"
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
@@ -36,10 +37,10 @@ GameEndUI::GameEndUI()
 	,m_playScene{}
 {
 
-	m_clearBackGraund = std::make_unique<WataLib::DrawTexture>();
-	m_overBackGraund = std::make_unique<WataLib::DrawTexture>();
-	m_titleUI = std::make_unique<WataLib::DrawTexture>();
-	m_reTryUI = std::make_unique<WataLib::DrawTexture>();
+	m_clearBackGraund = std::make_unique<UserInterface>();
+	m_overBackGraund = std::make_unique<UserInterface>();
+	m_titleUI = std::make_unique<UserInterface>();
+	m_reTryUI = std::make_unique<UserInterface>();
 
 }
 
@@ -94,21 +95,21 @@ void GameEndUI::AddPointer(Player* player, PlayScene* playScene)
 void GameEndUI::CreateTexture()
 {
 
-	m_clearBackGraund->Initialize(
-		m_commonResources, L"Resources/Textures/ClearBackGraund.png"
+	m_clearBackGraund->Create(
+		m_commonResources->GetDeviceResources(), L"Resources/Textures/ClearBackGraund.png"
 		, CENTERPOSITION, Vector2::Zero
 	);	
-	m_overBackGraund->Initialize(
-		m_commonResources, L"Resources/Textures/GameOver.png"
+	m_overBackGraund->Create(
+		m_commonResources->GetDeviceResources(), L"Resources/Textures/GameOver.png"
 		, CENTERPOSITION, Vector2::Zero
 	);
-	m_titleUI->Initialize(
-		m_commonResources, L"Resources/Textures/ClearTitleTex.png"
+	m_titleUI->Create(
+		m_commonResources->GetDeviceResources(), L"Resources/Textures/ClearTitleTex.png"
 		, CENTERPOSITION, Vector2::Zero
 	);
 
-	m_reTryUI->Initialize(
-		m_commonResources, L"Resources/Textures/ClearReTryTex.png"
+	m_reTryUI->Create(
+		m_commonResources->GetDeviceResources(), L"Resources/Textures/ClearReTryTex.png"
 		, CENTERPOSITION, Vector2::Zero
 	);
 
@@ -168,25 +169,25 @@ void GameEndUI::Initialize(CommonResources* resources)
 	m_backGraund = m_clearBackGraund.get();
 
 
-	auto texture = std::make_unique<WataLib::DrawTexture>();
-	texture->Initialize(
-		m_commonResources, L"Resources/Textures/ChangeUI.png", DirectX::SimpleMath::Vector2(200, 650), Vector2(0.4f, 0.4f)
+	auto texture = std::make_unique<UserInterface>();
+	texture->Create(
+		m_commonResources->GetDeviceResources(), L"Resources/Textures/ChangeUI.png", DirectX::SimpleMath::Vector2(200, 650), Vector2(0.4f, 0.4f)
 	);
 
 	m_textures.push_back(std::move(texture));
 
 
-	texture = std::make_unique<WataLib::DrawTexture>();
-	texture->Initialize(
-		m_commonResources, L"Resources/Textures/DecisionUI.png", DirectX::SimpleMath::Vector2(570, 650), Vector2(0.4f, 0.4f)
+	texture = std::make_unique<UserInterface>();
+	texture->Create(
+		m_commonResources->GetDeviceResources(), L"Resources/Textures/DecisionUI.png", DirectX::SimpleMath::Vector2(570, 650), Vector2(0.4f, 0.4f)
 	);
 
 	m_textures.push_back(std::move(texture));
 
 
-	m_arrow = std::make_unique<WataLib::DrawTexture>();
+	m_arrow = std::make_unique<UserInterface>();
 
-	m_arrow->Initialize(m_commonResources, L"Resources/Textures/Arrow.png", DirectX::SimpleMath::Vector2(450, 360), Vector2(0.2f, 0.2f));
+	m_arrow->Create(m_commonResources->GetDeviceResources(), L"Resources/Textures/Arrow.png", DirectX::SimpleMath::Vector2(450, 360), Vector2(0.2f, 0.2f));
 
 
 
@@ -231,13 +232,13 @@ void GameEndUI::Update(const float& elapsedTime)
 	switch (m_state)
 	{
 		case GameEndUI::State::Title:
-			m_reTryUI->ResetExpansion();
-			m_titleUI->SetEpansion(EXPANSION);
+			m_reTryUI->SetScale(m_reTryUI->GetInialScale());
+			m_titleUI->SetScale(m_titleUI->GetInialScale() * EXPANSION);
 
 			break;
 		case GameEndUI::State::ReTry:
-			m_titleUI->ResetExpansion();
-			m_reTryUI->SetEpansion(EXPANSION);
+			m_reTryUI->SetScale(m_reTryUI->GetInialScale() * EXPANSION);
+			m_titleUI->SetScale(m_titleUI->GetInialScale());
 
 			break;
 		default:

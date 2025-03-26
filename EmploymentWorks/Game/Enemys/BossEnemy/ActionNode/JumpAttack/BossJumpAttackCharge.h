@@ -1,5 +1,5 @@
 /*
-	@file	BossBeamAttackShot.h
+	@file	BossJumpAttackCharge.h
 	@brief	プレイシーンクラス
 */
 #pragma once
@@ -9,8 +9,8 @@
 class CommonResources;
 class BossEnemy;
 class Beam;
-class BossBeamAttackAction;
 class Player;
+class BossJumpAttackAction;
 
 namespace mylib
 {
@@ -19,32 +19,36 @@ namespace mylib
 }
 
 
-class BossBeamAttackShot : public IAction
+class BossJumpAttackCharge : public IAction
 {
-public:
-	BossBeamAttackShot(CommonResources* resources
-		, BossEnemy* bossEnemy
-		, Beam* beam
-		, BossBeamAttackAction* beamAttack
-		, Player* player);
 
-	//継承関係
+public:
+	BossJumpAttackCharge(CommonResources* resources,
+		BossJumpAttackAction* parent
+		,BossEnemy* bossEnemy
+		, Player* player);
 	//デストラクタ
-	~BossBeamAttackShot() override;
-	//初期化
+	~BossJumpAttackCharge() override ;
+
 	void Initialize() override;
-	// 更新する
-	IBehaviorNode::State Update(const float& elapsedTime);
+
+	IBehaviorNode::State Update(const float& elapsedTime)  override ;
 	//状態に入った時
-	void Enter();
+	void Enter() override ;
 	//状態を抜けた時
-	void Exit();
+	void Exit() override;
+
+
+
 private:
 	// 共通リソース
 	CommonResources* m_commonResources;
+
 	BossEnemy* m_bossEnemy;
-	Beam* m_beam;
-	BossBeamAttackAction* m_beamAttack;
 	Player* m_player;
+
+	float m_time;
+	BossJumpAttackAction* m_parent;
+
 
 };

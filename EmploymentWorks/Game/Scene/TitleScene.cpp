@@ -20,6 +20,9 @@
 #include "Game/Params.h"
 #include "Libraries/WataLib/DetectionCollision.h"
 
+
+#include "Libraries/MyLib/DebugString.h"
+
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
 
@@ -127,11 +130,11 @@ void TitleScene::Initialize(CommonResources* resources)
 	// シーン変更フラグを初期化する
 	m_isChangeScene = false;
 
-
 	//フェードアウトの開始
 	m_commonResources->GetFade()->StartNormalFadeOut();
 
-	ShowCursor(FALSE);
+	ShowCursor(true);
+
 
 }
 
@@ -148,7 +151,18 @@ void TitleScene::Update(float elapsedTime)
 
 	const auto& tracker = m_commonResources->GetInputManager()->GetMouseTracker();
 
-	Vector2 mousePosition = Vector2(state.x, state.y) ;
+	RECT rect{ m_commonResources->GetDeviceResources()->GetOutputSize() };
+
+	//画面サイズの取得
+	float widht = m_commonResources->GetDeviceResources()->GetOutputSize().right;
+	float height = m_commonResources->GetDeviceResources()->GetOutputSize().bottom;
+
+
+
+	Vector2 mousePosition = Vector2(state.x * Screen::WIDTH / widht, state.y * Screen::HEIGHT / height) ;
+
+
+
 
 	//初期化
 	m_selectButtomId = BUTTOM_INIAL_ID;
@@ -156,20 +170,17 @@ void TitleScene::Update(float elapsedTime)
 	for (auto& buttom : m_buttom)
 	{
 		buttom.second->SetScale(buttom.second->GetInialScale());
-		if (WataLib::DetectionCollision::Circle_RectCheckHit(mousePosition, Params::MOUSE_RADIUS,
+
+		if (WataLib::DetectionCollision::Circle_RectCheckHit(Vector2(mousePosition.x,mousePosition.y), Params::MOUSE_RADIUS,
 			buttom.second->GetPosition(), buttom.second->GetWidth(), buttom.second->GetHeight()))
 		{
 			buttom.second->SetScale(buttom.second->GetInialScale() * 1.4f);
 
 			m_selectButtomId = buttom.first;
-
 			break;
 
 		}
-
 	}
-
-
 
 	//
 	if (tracker->leftButton == Mouse::ButtonStateTracker::ButtonState::PRESSED)
@@ -188,18 +199,18 @@ void TitleScene::Update(float elapsedTime)
 				default:
 					break;
 			}
-			
-
 		}
-
-
 	}
 
 
 	m_camera->Update(elapsedTime);
 
-
-
+	//// デバッグ情報を表示する
+	//auto debugString = m_commonResources->GetDebugString();
+	//debugString->AddString("X %d", state.x);
+	//debugString->AddString("Y %d", state.y);
+	//debugString->AddString("X %f", widht);
+	//debugString->AddString("Y %f", height);
 }
 
 //---------------------------------------------------------
@@ -229,11 +240,20 @@ void TitleScene::Render()
 		texture->Render();
 	}
 
-
 	for (auto& buttom : m_buttom)
 	{
 		buttom.second->Render();
 	}
+
+
+
+
+	//// デバッグ情報を表示する
+	auto debugString = m_commonResources->GetDebugString();
+	////debugString->AddString("Pos %f" ,m_buttom[0]->GetPosition().x);
+	////debugString->AddString("Pos %f" ,m_buttom[0]->GetPosition().y);
+	debugString->AddString("X %d" , m_commonResources->GetDeviceResources()->GetOutputSize().right);
+	debugString->AddString("Y %d" , m_commonResources->GetDeviceResources()->GetOutputSize().bottom);
 
 
 }
@@ -273,26 +293,32 @@ IScene::SceneID TitleScene::GetNextSceneID() const
 void TitleScene::CreateTextures()
 {
 
-	auto texture = std::make_unique<WataLib::DrawTexture>();
-	texture->Initialize(
-		m_commonResources, L"Resources/Textures/Logo.png", DirectX::SimpleMath::Vector2(420, 120), Vector2(0.25f, 0.25f)
+	auto texture = std::make_unique<UserInterface>();
+	texture->Create(
+		m_commonResources->GetDeviceResources(), L"Resources/Textures/Logo.png", DirectX::SimpleMath::Vector2(420, 120), Vector2(0.25f, 0.25f)
 	);
 
 	m_textures.push_back(std::move(texture));
 
-	texture = std::make_unique<WataLib::DrawTexture>();
-	texture->Initialize(
-		m_commonResources, L"Resources/Textures/Boomerang.png", DirectX::SimpleMath::Vector2(100, 130), Vector2(0.4f, 0.4f)
+	texture = std::make_unique<UserInterface>();
+	texture->Create(
+		m_commonResources->GetDeviceResources(), L"Resources/Textures/Boomerang.png", DirectX::SimpleMath::Vector2(100, 130), Vector2(0.4f, 0.4f)
 	);
 
 
-	auto buttom = std::make_unique<WataLib::DrawTexture>();
-	buttom->Initialize(m_commonResources, L"Resources/Textures/PLAY.png", DirectX::SimpleMath::Vector2(1000, 500), Vector2(1.1f, 1.1f));
+	auto buttom = std::make_unique<UserInterface>();
+	//buttom->Initialize(m_commonResources, L"Resources/Textures/PLAY.png", DirectX::SimpleMath::Vector2(1000, 500), Vector2(1.1f, 1.1f));
 
+	buttom->Create(m_commonResources->GetDeviceResources(), L"Resources/Textures/PLAY.png", DirectX::SimpleMath::Vector2(1000, 500), Vector2(1.1f, 1.1f));
+
+
+		
 	m_buttom[0] = std::move(buttom);
 
-	buttom = std::make_unique<WataLib::DrawTexture>();
-	buttom->Initialize(m_commonResources, L"Resources/Textures/EXIT.png", DirectX::SimpleMath::Vector2(1000, 630), Vector2(1.2f, 1.2f));
+	buttom = std::make_unique<UserInterface>();
+	//buttom->Initialize(m_commonResources, L"Resources/Textures/EXIT.png", DirectX::SimpleMath::Vector2(1000, 630), Vector2(1.2f, 1.2f));
+
+	buttom->Create(m_commonResources->GetDeviceResources(), L"Resources/Textures/EXIT.png", DirectX::SimpleMath::Vector2(1000, 630), Vector2(1.2f, 1.2f));
 
 	m_buttom[1] = std::move(buttom);
 

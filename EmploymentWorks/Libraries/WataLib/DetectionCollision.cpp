@@ -190,6 +190,7 @@ void WataLib::DetectionCollision::AABB_SPHERE(CollisionEntity* object1, Collisio
 bool WataLib::DetectionCollision::Circle_RectCheckHit(const DirectX::SimpleMath::Vector2& circleCenter, float circleRadius,
 	const DirectX::SimpleMath::Vector2& rectCenter, float rectWidth, float rectHeight)
 {
+	
 
 	// lŠpŒ`‚Ì‹«ŠEÀ•W‚ğŒvZ
 	float rectLeft = rectCenter.x - rectWidth / 2;

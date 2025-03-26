@@ -23,6 +23,7 @@ Game::Game() noexcept(false)
     m_inputManager{},
     m_sceneManager{}
     ,m_fade{}
+    ,m_fullScreen{false}
 {
     m_deviceResources = std::make_unique<DX::DeviceResources>();
     // TODO: Provide parameters for swapchain format, depth/stencil format, and backbuffer count.

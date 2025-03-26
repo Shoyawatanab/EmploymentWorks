@@ -15,8 +15,10 @@ public:
 
 	virtual void Initialize() = 0;
 
-	virtual IBehaviorNode::State Update(float elapsdTime) = 0;
-
-
+	virtual IBehaviorNode::State Update(const float& elapsedTime) = 0;
+	//ó‘Ô‚É“ü‚Á‚½
+	virtual void Enter() = 0;
+	//ó‘Ô‚ğ”²‚¯‚½
+	virtual void Exit() = 0;
 
 };

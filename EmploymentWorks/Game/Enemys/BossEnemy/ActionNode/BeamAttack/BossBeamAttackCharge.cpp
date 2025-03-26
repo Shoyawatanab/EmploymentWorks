@@ -40,6 +40,8 @@ BossBeamAttackCharge::BossBeamAttackCharge(CommonResources* resources
 	,m_bossEnemy{bossenemy}
 	,m_beam{beam}
 	,m_beamAttack{beamAttack}
+	,m_particleCreateTime{}
+	,m_time{}
 {
 
 }
@@ -52,7 +54,7 @@ BossBeamAttackCharge::~BossBeamAttackCharge()
 	// do nothing.
 }
 
-void BossBeamAttackCharge::Initialize(CommonResources* resources)
+void BossBeamAttackCharge::Initialize()
 {
 
 

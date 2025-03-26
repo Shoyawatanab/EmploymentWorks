@@ -9,10 +9,7 @@
 // 前方宣言
 class CommonResources;
 
-namespace WataLib
-{
-	class DrawTexture;
-}
+
 
 
 
@@ -35,7 +32,6 @@ private:
 	// 共通リソース
 	CommonResources* m_commonResources;
 
-	std::vector < std::unique_ptr<WataLib::DrawTexture>> m_textures;
 
 	// シーンチェンジフラグ
 	bool m_isChangeScene;

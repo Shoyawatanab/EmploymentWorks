@@ -6,6 +6,7 @@
 #include "IScene.h"
 #include "Game/Entities/BaseEntity.h"
 #include <unordered_map>
+#include "Libraries/WataLib/UserInterface.h"
 
 // ‘O•ûéŒ¾
 class CommonResources;
@@ -14,7 +15,6 @@ namespace WataLib
 {
 	class TitleCamera;
     class Model3D;
-    class DrawTexture;
 }
 
 
@@ -75,9 +75,9 @@ private:
     //ƒJƒƒ‰
     std::unique_ptr<WataLib::TitleCamera> m_camera;
     //
-    std::vector < std::unique_ptr<WataLib::DrawTexture>> m_textures;
+    std::vector < std::unique_ptr<UserInterface>> m_textures;
 
-    std::unordered_map<int,std::unique_ptr<WataLib::DrawTexture>> m_buttom;
+    std::unordered_map<int,std::unique_ptr<UserInterface>> m_buttom;
 
     int m_selectButtomId;
 

@@ -11,10 +11,7 @@ class Player;
 class UserInterface;
 class PlayScene;
 
-namespace WataLib
-{
-	class DrawTexture;
-}
+
 
 class GameEndUI : public IState
 {
@@ -99,22 +96,22 @@ private:
 	//プレイアy
 	Player* m_player;
 	//背景
-	std::unique_ptr<WataLib::DrawTexture> m_clearBackGraund;
-	std::unique_ptr<WataLib::DrawTexture> m_overBackGraund;
-	//タイトルUI
-	std::unique_ptr<WataLib::DrawTexture> m_titleUI;
-	//リザルトUI
-	std::unique_ptr<WataLib::DrawTexture> m_reTryUI;
+	std::unique_ptr<UserInterface> m_clearBackGraund;
+	std::unique_ptr<UserInterface> m_overBackGraund;
+	//タイトルUI	
+	std::unique_ptr<UserInterface> m_titleUI;
+	//リザルトUI	
+	std::unique_ptr<UserInterface> m_reTryUI;
 	//状態
 	State m_state;
 	//使用背景
-	WataLib::DrawTexture* m_backGraund;
+	UserInterface* m_backGraund;
 
 	PlayScene* m_playScene;
 
-	std::vector < std::unique_ptr<WataLib::DrawTexture>> m_textures;
+	std::vector < std::unique_ptr<UserInterface>> m_textures;
 
-	std::unique_ptr<WataLib::DrawTexture > m_arrow;
+	std::unique_ptr<UserInterface> m_arrow;
 
 	std::pair<int, int> m_windowSize;
 

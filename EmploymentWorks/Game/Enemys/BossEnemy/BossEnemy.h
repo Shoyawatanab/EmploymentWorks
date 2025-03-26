@@ -53,6 +53,11 @@ public:
 
 	void SetTarget(BaseEntity* target) { m_target = target; }
 
+
+	DirectX::SimpleMath::Vector3 GetVelocity() { return m_velocity; }
+
+	void SetVelocity(DirectX::SimpleMath::Vector3  velocity) { m_velocity = velocity; }
+
 public:
 	//コンストラクタ
 	BossEnemy(CommonResources* resources,
@@ -146,6 +151,9 @@ public:
 	IBehaviorNode::State FacingThePlayer(float elapsdTime);
 
 	IBehaviorNode::State BarrierDefense(float elapsdTime);
+private:
+
+	void ChangeAction(IAction* nextAction,std::string typeName);
 
 private:
 	//アニメーションデータ
@@ -163,6 +171,8 @@ private:
 	//各動作
 	std::unordered_map<std::string, std::unique_ptr<IAction>> m_action;
 
+	std::pair<std::string, IAction*> m_currentAction;
+
 	std::unique_ptr<Barrier> m_barrier;
 
 	//ターゲット
@@ -178,6 +188,8 @@ private:
 	float m_punchTime;
 
 	bool m_isActives;
+
+	DirectX::SimpleMath::Vector3 m_velocity;
 
 };
 
