@@ -3,7 +3,7 @@
 	@brief	プレイシーンクラス
 */
 #pragma once
-#include "Game/Interface/IActionState.h"
+#include "Game/Interface/IActione.h"
 
 // 前方宣言
 class CommonResources;
@@ -18,7 +18,7 @@ namespace mylib
 }
 
 
-class BossBeamAttackEnd : public IActionState
+class BossBeamAttackEnd : public IAction
 {
 
 public:
@@ -31,7 +31,7 @@ public:
 	//デストラクタ
 	~BossBeamAttackEnd() override ;
 	//初期化
-	void Initialize(CommonResources* resources);
+	void Initialize() override ;
 	// 更新する
 	IBehaviorNode::State Update(const float& elapsedTime);
 	//状態に入った時

@@ -37,6 +37,9 @@ namespace WataLib
 
 		DirectX::SimpleMath::Vector2 GetInialScale() { return m_inialScale; }
 
+		DirectX::SimpleMath::Vector2 GetCenter() { return m_texCenter; }
+
+
 	public:
 		DrawTexture();
 		~DrawTexture();
@@ -52,6 +55,8 @@ namespace WataLib
 
 		// スプライトバッチ
 		std::unique_ptr<DirectX::SpriteBatch> m_spriteBatch;
+
+		//std::unique_ptr<DirectX::PrimitiveBatch> 
 
 		// スプライトフォント
 		std::unique_ptr<DirectX::SpriteFont> m_spriteFont;

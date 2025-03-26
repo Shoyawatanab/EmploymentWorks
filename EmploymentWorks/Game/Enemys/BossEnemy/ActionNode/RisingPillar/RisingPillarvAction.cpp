@@ -66,13 +66,21 @@ void RisingPillarvAction::Initialize()
 
 }
 
-IBehaviorNode::State RisingPillarvAction::Update(float elapsdTime)
+IBehaviorNode::State RisingPillarvAction::Update(const float& elapsedTime)
 {
 
 	
 
-	return m_currentState->Update(elapsdTime);
+	return m_currentState->Update(elapsedTime);
 
+}
+
+void RisingPillarvAction::Enter()
+{
+}
+
+void RisingPillarvAction::Exit()
+{
 }
 
 

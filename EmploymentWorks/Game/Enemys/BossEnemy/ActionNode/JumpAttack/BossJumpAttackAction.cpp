@@ -1,9 +1,9 @@
 /*
-	@file	BossBeamAttackAction.cpp
+	@file	BossJumpAttackAction.cpp
 	@brief	プレイシーンクラス
 */
 #include "pch.h"
-#include "BossBeamAttackAction.h"
+#include "BossJumpAttackAction.h"
 #include "Game/CommonResources.h"
 #include "DeviceResources.h"
 #include "Libraries/MyLib/DebugCamera.h"
@@ -18,6 +18,7 @@
 
 #include "Game/Enemys/BossEnemy/BossEnemy.h"
 #include "Game/Enemys/BossEnemy/Beam/Beam.h"
+#include "BossJumpAttackAction.h"
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
 
@@ -27,38 +28,31 @@ using namespace DirectX::SimpleMath;
 /// コンストラクタ
 /// </summary>
 /// <param name="resources">共通リソース</param>
-BossBeamAttackAction::BossBeamAttackAction(CommonResources* resources
+BossJumpAttackAction::BossJumpAttackAction(CommonResources* resources
 	,BossEnemy* bossenemy
-	,Beam* beam
 	, Player* player)
 	:
 	m_commonResources{resources}
 	,m_currentState{}
-	,m_preliminaryAction{}
-	,m_charge{}
-	,m_shot{}
-	,m_attackEnd{}
 {
-	m_preliminaryAction = std::make_unique<BossBeamAttackPreliminaryAction>(m_commonResources,bossenemy,beam,this);
-	m_charge = std::make_unique<BossBeamAttackCharge>(m_commonResources, bossenemy, beam,this);
-	m_shot = std::make_unique<BossBeamAttackShot>(m_commonResources, bossenemy, beam,this,player);
-	m_attackEnd = std::make_unique<BossBeamAttackEnd>(m_commonResources, bossenemy, beam,this);
-	m_idel = std::make_unique<BossBeamAttackIdel>(m_commonResources, bossenemy, beam,this);
+
+
+	m_charge = std::make_unique<BossJumpAttackCharge>(resources,this,bossenemy,player);
+	m_jump = std::make_unique<BossJumpAttackJump>(resources, this, bossenemy, player);
 
 }
 
 /// <summary>
 /// デストラクタ
 /// </summary>
-BossBeamAttackAction::~BossBeamAttackAction()
+BossJumpAttackAction::~BossJumpAttackAction()
 {
 	// do nothing.
 }
 
-void BossBeamAttackAction::Initialize()
+void BossJumpAttackAction::Initialize()
 {
-
-	m_currentState = m_idel.get();
+	m_currentState = m_charge.get();
 	m_currentState->Enter();
 
 	//イベントタイプの登録
@@ -66,7 +60,7 @@ void BossBeamAttackAction::Initialize()
 
 }
 
-IBehaviorNode::State BossBeamAttackAction::Update(const float& elapsedTime)
+IBehaviorNode::State BossJumpAttackAction::Update(const float& elapsedTime)
 {
 
 	
@@ -75,24 +69,12 @@ IBehaviorNode::State BossBeamAttackAction::Update(const float& elapsedTime)
 
 }
 
-void BossBeamAttackAction::Enter()
-{
-}
-
-void BossBeamAttackAction::Exit()
-{
-}
-
-void BossBeamAttackAction::Notify(EventParams::EventType type, void* datas)
+void BossJumpAttackAction::Notify(EventParams::EventType type, void* datas)
 {
 
 	switch (type)
 	{
 		case EventParams::EventType::BossBeamHit:
-			if (m_currentState != m_attackEnd.get())
-			{
-				ChangeState(m_attackEnd.get());
-			}
 			break;
 		default:
 			break;
@@ -106,7 +88,7 @@ void BossBeamAttackAction::Notify(EventParams::EventType type, void* datas)
 /// ステートの切り替え
 /// </summary>
 /// <param name="nextState">次のステート</param>
-void BossBeamAttackAction::ChangeState(IAction* nextState)
+void BossJumpAttackAction::ChangeState(IAction* nextState)
 {
 
 	m_currentState->Exit();
@@ -115,4 +97,14 @@ void BossBeamAttackAction::ChangeState(IAction* nextState)
 
 }
 
+void BossJumpAttackAction::Enter()
+{
 
+	ChangeState(m_charge.get());
+
+}
+
+void BossJumpAttackAction::Exit()
+{
+	ChangeState(m_charge.get());
+}

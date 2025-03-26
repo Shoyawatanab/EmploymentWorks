@@ -54,7 +54,7 @@ BossBeamAttackIdel::~BossBeamAttackIdel()
 	// do nothing.
 }
 
-void BossBeamAttackIdel::Initialize(CommonResources* resources)
+void BossBeamAttackIdel::Initialize()
 {
 }
 

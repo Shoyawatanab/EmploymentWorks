@@ -44,6 +44,7 @@ void ExecutionNode::Initialize(CommonResources* resources)
 	m_commonResources = resources;
 
 
+
 }
 
 
@@ -53,6 +54,9 @@ void ExecutionNode::Initialize(CommonResources* resources)
 /// <returns>true:ê¨å˜ , false:é∏îs</returns>
 IBehaviorNode::State ExecutionNode::FacingThePlayer(float elapsdTime)
 {
+	return IBehaviorNode::State::Success;
+
+
 	//å¸Ç´ÇΩÇ¢ï˚å¸
 	DirectX::SimpleMath::Vector3 direction = m_palyer->GetPosition() - m_enemy->GetPosition();
 	direction.Normalize();

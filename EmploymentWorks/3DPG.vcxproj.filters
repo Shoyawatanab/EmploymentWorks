@@ -167,6 +167,9 @@
     <Filter Include="Game\Enemys\BossEnemy\Barrier\State">
       <UniqueIdentifier>{6185aa96-21c2-4f0f-a67a-08afbd6108f4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Enemys\BossEnemy\ActionNode\JumpAttack">
+      <UniqueIdentifier>{1c93b868-7722-4f2f-8806-479b7a2b27ae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -344,9 +347,6 @@
     </ClInclude>
     <ClInclude Include="Game\UI\State\UIStateMachine.h">
       <Filter>Game\UI\State</Filter>
-    </ClInclude>
-    <ClInclude Include="Libraries\WataLib\DrawTexture.h">
-      <Filter>Libraries\WataLib</Filter>
     </ClInclude>
     <ClInclude Include="Libraries\WataLib\UserInterface.h">
       <Filter>Libraries\WataLib</Filter>
@@ -687,6 +687,15 @@
     <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\BarrierDefense\BarrierClose.h">
       <Filter>Game\Enemys\BossEnemy\ActionNode\BarrierDefense</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\JumpAttack\BossJumpAttackAction.h">
+      <Filter>Game\Enemys\BossEnemy\ActionNode\JumpAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\JumpAttack\BossJumpAttackCharge.h">
+      <Filter>Game\Enemys\BossEnemy\ActionNode\JumpAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\JumpAttack\BossJumpAttackJump.h">
+      <Filter>Game\Enemys\BossEnemy\ActionNode\JumpAttack</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -814,9 +823,6 @@
     </ClCompile>
     <ClCompile Include="Game\UI\State\UIStateMachine.cpp">
       <Filter>Game\UI\State</Filter>
-    </ClCompile>
-    <ClCompile Include="Libraries\WataLib\DrawTexture.cpp">
-      <Filter>Libraries\WataLib</Filter>
     </ClCompile>
     <ClCompile Include="Libraries\WataLib\UserInterface.cpp">
       <Filter>Libraries\WataLib</Filter>
@@ -1126,6 +1132,15 @@
     </ClCompile>
     <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\BarrierDefense\BarrierClose.cpp">
       <Filter>Game\Enemys\BossEnemy\ActionNode\BarrierDefense</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\JumpAttack\BossJumpAttackAction.cpp">
+      <Filter>Game\Enemys\BossEnemy\ActionNode\JumpAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\JumpAttack\BossJumpAttackCharge.cpp">
+      <Filter>Game\Enemys\BossEnemy\ActionNode\JumpAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\JumpAttack\BossJumpAttackJump.cpp">
+      <Filter>Game\Enemys\BossEnemy\ActionNode\JumpAttack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

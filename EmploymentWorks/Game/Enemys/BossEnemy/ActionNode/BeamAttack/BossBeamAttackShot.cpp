@@ -54,7 +54,7 @@ BossBeamAttackShot::~BossBeamAttackShot()
 	// do nothing.
 }
 
-void BossBeamAttackShot::Initialize(CommonResources* resources)
+void BossBeamAttackShot::Initialize()
 {
 }
 

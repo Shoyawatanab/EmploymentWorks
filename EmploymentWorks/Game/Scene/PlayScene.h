@@ -17,6 +17,7 @@ class TargetMarker;
 class EffectsManager;
 class Sky;
 class Timer;
+class UserInterface;
 
 namespace mylib
 {
@@ -27,7 +28,6 @@ namespace mylib
 namespace WataLib
 {
 	class CameraManager;
-	class DrawTexture;
 }
 
 class PlayScene final :
@@ -84,7 +84,7 @@ private:
 	SceneManager::StageID m_stageID;
 
 	//チュートリアル画像
-	std::unique_ptr<WataLib::DrawTexture> m_tutorialTex;
+	std::unique_ptr<UserInterface> m_tutorialTex;
 
 	std::unique_ptr<Sky> m_sky;
 

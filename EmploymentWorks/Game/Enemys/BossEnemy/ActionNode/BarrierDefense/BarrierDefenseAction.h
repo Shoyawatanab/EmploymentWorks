@@ -52,7 +52,12 @@ public:
 
 	void Initialize() override;
 
-	IBehaviorNode::State Update(float elapsdTime)  override ;
+	IBehaviorNode::State Update(const float& elapsedTime)  override ;
+	//ó‘Ô‚É“ü‚Á‚½
+	void Enter() override;
+	//ó‘Ô‚ğ”²‚¯‚½
+	void Exit() override;
+
 
 	//IObserver
 //’Ê’m‚ÉŒÄ‚Î‚ê‚éŠÖ”

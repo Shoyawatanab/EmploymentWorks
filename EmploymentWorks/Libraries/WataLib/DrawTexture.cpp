@@ -108,8 +108,11 @@ void WataLib::DrawTexture::Initialize(CommonResources* resources, const wchar_t*
 	// テクスチャの中心位置を計算する
 	m_texCenter = texSize / 2.0f;
 
-	m_width = desc.Width;
-	m_height = desc.Height;
+	//m_width = desc.Width;
+	//m_height = desc.Height;
+	
+	m_width = texSize.x;
+	m_height = texSize.y;
 
 	m_expansion = 1.0f;
 
@@ -134,7 +137,7 @@ void WataLib::DrawTexture::Render()
 	// スプライトバッチの開始：オプションでソートモード、ブレンドステートを指定する
 	m_spriteBatch->Begin(SpriteSortMode_Deferred, states->NonPremultiplied());
 
-	// Titleを描画する
+	//画像を描画する
 	m_spriteBatch->Draw(
 		m_texture.Get(),	// テクスチャ(SRV)
 		m_position,				// スクリーンの表示位置(originの描画位置)

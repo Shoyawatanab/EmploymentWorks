@@ -49,7 +49,7 @@ BossBeamAttackPreliminaryAction::~BossBeamAttackPreliminaryAction()
 	// do nothing.
 }
 
-void BossBeamAttackPreliminaryAction::Initialize(CommonResources* resources)
+void BossBeamAttackPreliminaryAction::Initialize()
 {
 }
 

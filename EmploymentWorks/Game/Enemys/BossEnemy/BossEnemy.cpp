@@ -17,6 +17,7 @@
 #include "Game/Enemys/BossEnemy/ActionNode/RisingPillar/RisingPillarvAction.h"
 #include "Game/Enemys/BossEnemy/ActionNode/BarrierDefense/BarrierDefenseAction.h"
 #include "Game/Enemys/BossEnemy/Barrier/Barrier.h"
+#include "Game/Enemys/BossEnemy/ActionNode/JumpAttack/BossJumpAttackAction.h"
 
 
 using namespace DirectX;
@@ -46,6 +47,8 @@ BossEnemy::BossEnemy(CommonResources* resources, DirectX::SimpleMath::Vector3 sc
 	,m_shadow{}
 	,m_action{}
 	,m_barrier{}
+	,m_velocity{}
+	,m_currentAction{}
 {
 	m_behavior = std::make_unique<BehaviorTree>();
 	m_beam = std::make_unique<Beam>(resources);
@@ -113,6 +116,7 @@ void BossEnemy::Initialize()
 	m_animationDatas["Punch"] = json->LoadAnimationData(L"BossEnemy/Punch");
 	m_animationDatas["Barrier"] = json->LoadAnimationData(L"BossEnemy/Barrier");
 	m_animationDatas["BarrierEnd"] = json->LoadAnimationData(L"BossEnemy/BarrierEnd");
+	m_animationDatas["JumpCharge"] = json->LoadAnimationData(L"BossEnemy/JumpCharge");
 	
 	////各パーツにアニメーションを登録
 	SetAnimationData("Idle", m_animationDatas,"", true);
@@ -123,6 +127,7 @@ void BossEnemy::Initialize()
 	SetAnimationData("Punch", m_animationDatas);
 	SetAnimationData("Barrier", m_animationDatas);
 	SetAnimationData("BarrierEnd", m_animationDatas);
+	SetAnimationData("JumpCharge", m_animationDatas);
 
 	m_behavior->AddPointer(m_player, this);
 
@@ -158,8 +163,12 @@ void BossEnemy::Initialize()
 	m_action["BarrierDefense"] = std::make_unique<BarrierDefenseAction>(BaseEntity::GetCommonResources(), this,m_barrier.get());
 	m_action["BarrierDefense"]->Initialize();
 
+	m_action["JumpAttack"] = std::make_unique<BossJumpAttackAction>(BaseEntity::GetCommonResources(), this, m_player);
+	m_action["JumpAttack"]->Initialize();
+
 	m_target = m_player;
 
+	
 
 }
 
@@ -236,6 +245,32 @@ void BossEnemy::AddCollision(CollisionManager* collsionManager)
 /// <param name="tag">相手のタグ</param>
 void BossEnemy::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 {
+
+	switch (tag)
+	{
+		case CollisionEntity::CollisionTag::None:
+			break;
+		case CollisionEntity::CollisionTag::Player:
+			break;
+		case CollisionEntity::CollisionTag::PlayerParts:
+			break;
+		case CollisionEntity::CollisionTag::Stage:
+			m_velocity.y = 0.0f;
+			break;
+		case CollisionEntity::CollisionTag::Enemy:
+			break;
+		case CollisionEntity::CollisionTag::EnemyParts:
+			break;
+		case CollisionEntity::CollisionTag::Boomerang:
+			break;
+		case CollisionEntity::CollisionTag::Beam:
+			break;
+		case CollisionEntity::CollisionTag::Barrier:
+			break;
+		default:
+			break;
+	}
+
 }
 
 
@@ -262,11 +297,16 @@ void BossEnemy::Update(const float& elapsedTime)
 		m_barrier->Update(elapsedTime);
 	}
 
+	m_velocity.y -= m_gravity * elapsedTime ;
+	
+
 	Vector3 pos = BaseEntity::GetPosition();
 	
-	pos.y -= m_gravity;
+	pos += m_velocity;
 
 	BaseEntity::SetPosition(pos);
+
+	
 
 	CollisionEntity::GetBounding()->Update(BaseEntity::GetPosition());
 
@@ -340,7 +380,7 @@ void BossEnemy::Notify(EventParams::EventType type, void* datas)
 /// <returns>実行結果</returns>
 IBehaviorNode::State BossEnemy::BeamAttack(const float& elapsedTime)
 {
-	//return m_action["BarrierDefense"]->Update(elapsedTime);
+	return m_action["JumpAttack"]->Update(elapsedTime);
 
 	return Pounding(elapsedTime);
 
@@ -456,6 +496,19 @@ IBehaviorNode::State BossEnemy::FacingThePlayer(float elapsdTime)
 IBehaviorNode::State BossEnemy::BarrierDefense(float elapsdTime)
 {
 	return m_action["BarrierDefense"]->Update(elapsdTime);
+}
+
+void BossEnemy::ChangeAction(IAction* nextAction, std::string typeName)
+{
+
+	m_currentAction.second->Exit();
+	m_currentAction.second = nextAction;
+	m_currentAction.second->Enter();
+
+	m_currentAction.first = typeName;
+
+
+
 }
 
 

@@ -41,6 +41,7 @@ BossBeamAttackEnd::BossBeamAttackEnd(CommonResources* resources
 	, m_bossEnemy{ bossenemy }
 	, m_beam{ beam }
 	,m_beamAttack{beamAttack}
+	,m_time{}
 {
 
 }
@@ -53,7 +54,7 @@ BossBeamAttackEnd::~BossBeamAttackEnd()
 	// do nothing.
 }
 
-void BossBeamAttackEnd::Initialize(CommonResources* resources)
+void BossBeamAttackEnd::Initialize()
 {
 }
 

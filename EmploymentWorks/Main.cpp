@@ -25,7 +25,7 @@ namespace
     std::unique_ptr<Game> g_game;
 }
 
-LPCWSTR g_szAppName = L"ブーメランシューティング";
+LPCWSTR g_szAppName = L"BoomerangShooting";
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 void ExitGame() noexcept;
@@ -215,10 +215,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         // フルスクリーン切り替え時にコメント化すると、画面サイズがリサイズされずに最大化できる
         // フルスクリーン時でも、見た目の1280x720サイズを保持する
-        //else if (!s_in_sizemove && game)
-        //{
-        //    game->OnWindowSizeChanged(LOWORD(lParam), HIWORD(lParam));
-        //}
+        else if (!s_in_sizemove && game)
+        {
+            game->OnWindowSizeChanged(LOWORD(lParam), HIWORD(lParam));
+        }
         break;
 
     case WM_ENTERSIZEMOVE:

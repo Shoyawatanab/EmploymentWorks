@@ -14,10 +14,7 @@ class UserInterface;
 
 class EnemyManager;
 
-namespace WataLib
-{
-	class DrawTexture;
-}
+
 
 class GamePlayUI : public IState ,  public IObserver
 {
@@ -59,8 +56,7 @@ public:
 	std::unique_ptr<UserInterface> AddTexture(const wchar_t* path
 		, DirectX::SimpleMath::Vector2 position
 		, DirectX::SimpleMath::Vector2 scale
-		, ANCHOR anchor
-		, UserInterface::Kinds kind);
+		);
 
 
 
@@ -81,9 +77,9 @@ private:
 	//プレイアy
 	Player* m_player;
 	//プレイヤHP
-	std::vector<std::unique_ptr<WataLib::DrawTexture>> m_playerHP;
-	//ブーメラン残機
-	std::vector<std::unique_ptr<WataLib::DrawTexture>> m_boomerang;
+	std::vector<std::unique_ptr<UserInterface>> m_playerHP;
+	//ブーメラン残機			 
+	std::vector<std::unique_ptr<UserInterface>> m_boomerang;
 
 	std::unique_ptr<UserInterface> m_enemyHP;
 	std::vector<std::unique_ptr<UserInterface>> m_enemyHPBase;

@@ -105,7 +105,7 @@ void GamePlayUI::AddPointer(Player* player, EnemyManager* enemyManager)
 /// <param name="anchor">アンカー</param>
 /// <param name="kind">種類</param>
 /// <returns>UIのポインタ</returns>
-std::unique_ptr<UserInterface> GamePlayUI::AddTexture(const wchar_t* path, DirectX::SimpleMath::Vector2 position, DirectX::SimpleMath::Vector2 scale, ANCHOR anchor, UserInterface::Kinds kind)
+std::unique_ptr<UserInterface> GamePlayUI::AddTexture(const wchar_t* path, DirectX::SimpleMath::Vector2 position, DirectX::SimpleMath::Vector2 scale)
 {
 	//  メニューとしてアイテムを追加する
 	std::unique_ptr<UserInterface> userInterface = std::make_unique<UserInterface>();
@@ -114,10 +114,7 @@ std::unique_ptr<UserInterface> GamePlayUI::AddTexture(const wchar_t* path, Direc
 		, path
 		, position
 		, scale
-		, anchor
-		, kind);
-
-	userInterface->SetWindowSize(m_windowSize.first, m_windowSize.second);
+		);
 
 
 	return userInterface;
@@ -132,20 +129,17 @@ void GamePlayUI::CreateEnemyHP()
 	m_enemyHPBase.push_back(AddTexture(L"Resources/Textures/BossHPBase.png"
 		, Vector2(640, 50)
 		, Vector2(0.9f, 0.5f)
-		, ANCHOR::MIDDLE_CENTER
-		, UserInterface::Kinds::UI));
+		));
 
 	m_enemyHP = AddTexture(L"Resources/Textures/EnemyHP.png"
 		, Vector2(640, 50)
 		, Vector2(0.91f, 0.39f)
-		, ANCHOR::MIDDLE_CENTER
-		, UserInterface::Kinds::UI);
+		);
 
 	m_enemyHPBase.push_back(AddTexture(L"Resources/Textures/EnemyName.png"
 		, Vector2(640, 25)
 		, Vector2(0.3f, 0.3f)
-		, ANCHOR::MIDDLE_CENTER
-		, UserInterface::Kinds::UI));
+		));
 
 
 
@@ -159,8 +153,8 @@ void GamePlayUI::CreatePlayerHP()
 
 	for (int i = 0; i < HP_COUNT; i++)
 	{
-		auto texture = std::make_unique<WataLib::DrawTexture>();
-		texture->Initialize(m_commonResources, L"Resources/Textures/HP.png"
+		auto texture = std::make_unique<UserInterface>();
+		texture->Create(m_commonResources->GetDeviceResources(), L"Resources/Textures/HP.png"
 			, HP_POSITION + (HP_POSITION_OFFSET * i), HP_SCALE);
 
 		m_playerHP.push_back(std::move(texture));
@@ -176,8 +170,8 @@ void GamePlayUI::CreateBoomerang()
 
 	for (int i = 0; i < BOOMERANG_COUNT; i++)
 	{
-		auto texture = std::make_unique<WataLib::DrawTexture>();
-		texture->Initialize(m_commonResources, L"Resources/Textures/BoomerangUI.png"
+		auto texture = std::make_unique<UserInterface>();
+		texture->Create(m_commonResources->GetDeviceResources(), L"Resources/Textures/BoomerangUI.png"
 			, BOOMERANG_POSITION + (BOOMERANG_POSITION_OFFSET * i), BOOMERANG_SCALE);
 
 		m_boomerang.push_back(std::move(texture));
@@ -209,28 +203,24 @@ void GamePlayUI::Initialize(CommonResources* resources)
 	m_itemAcquisitionUI = AddTexture(L"Resources/Textures/F.png"
 		, Vector2(750, 600)
 		, Vector2(0.15f, 0.15f)
-		, ANCHOR::MIDDLE_CENTER
-		, UserInterface::Kinds::UI);
+		);
 
 	m_itemAcquisitionUI->SetIsActive(false);
 
 	m_throwUI.push_back(AddTexture(L"Resources/Textures/RightThrow.png"
 		, Vector2(1220, 500)
 		, Vector2(0.2f, 0.2f)
-		, ANCHOR::MIDDLE_CENTER
-		, UserInterface::Kinds::UI));
+		));
 
 	m_throwUI.push_back(AddTexture(L"Resources/Textures/FrontThrow.png"
 		, Vector2(1220, 550)
 		, Vector2(0.2f, 0.2f)
-		, ANCHOR::MIDDLE_CENTER
-		, UserInterface::Kinds::UI));
+		));
 
 	m_throwUI.push_back(AddTexture(L"Resources/Textures/LeftThrow.png"
 		, Vector2(1220, 600)
 		, Vector2(0.2f, 0.2f)
-		, ANCHOR::MIDDLE_CENTER
-		, UserInterface::Kinds::UI));
+		));
 
 	m_throwUI[0]->SetPosition(m_throwUI[0]->GetInitialPosition() + MOVEPOSITION);
 
