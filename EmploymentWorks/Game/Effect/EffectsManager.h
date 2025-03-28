@@ -24,12 +24,16 @@ public:
 	void Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection) ;
 	void Finalize() ;
 
+private:
+
 	void CreateExploion(void* datas);
 
 	void CreatePlayerDamageEffect(void* datas);
 	void CreateParticle(void* datas);
 
 	void CreateHitEffect(void* datas);
+
+	void CreateChargeEffect(void* datas);
 
 	void Notify(EventParams::EventType type, void* datas)  override;
 

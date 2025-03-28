@@ -170,6 +170,15 @@
     <Filter Include="Game\Enemys\BossEnemy\ActionNode\JumpAttack">
       <UniqueIdentifier>{1c93b868-7722-4f2f-8806-479b7a2b27ae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Shaders\ChargeEffect">
+      <UniqueIdentifier>{40fa6420-6d52-4f53-877a-57c11e7258a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Effect\ChargeEffect">
+      <UniqueIdentifier>{2be85931-96bf-421b-88fa-8a414a675f1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Enemys\BossEnemy\ActionNode\RushAttack">
+      <UniqueIdentifier>{764f82f3-457f-4793-8a76-105c75cf32ec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -696,6 +705,18 @@
     <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\JumpAttack\BossJumpAttackJump.h">
       <Filter>Game\Enemys\BossEnemy\ActionNode\JumpAttack</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Effect\ChargeEffect\ChargeEffect.h">
+      <Filter>Game\Effect\ChargeEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\RushAttack\BossRushAttackAction.h">
+      <Filter>Game\Enemys\BossEnemy\ActionNode\RushAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\RushAttack\BossRushAttackCharge.h">
+      <Filter>Game\Enemys\BossEnemy\ActionNode\RushAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\RushAttack\BossRushAttackRush.h">
+      <Filter>Game\Enemys\BossEnemy\ActionNode\RushAttack</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -1142,6 +1163,18 @@
     <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\JumpAttack\BossJumpAttackJump.cpp">
       <Filter>Game\Enemys\BossEnemy\ActionNode\JumpAttack</Filter>
     </ClCompile>
+    <ClCompile Include="Game\Effect\ChargeEffect\ChargeEffect.cpp">
+      <Filter>Game\Effect\ChargeEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\RushAttack\BossRushAttackAction.cpp">
+      <Filter>Game\Enemys\BossEnemy\ActionNode\RushAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\RushAttack\BossRushAttackCharge.cpp">
+      <Filter>Game\Enemys\BossEnemy\ActionNode\RushAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\RushAttack\BossRushAttackRush.cpp">
+      <Filter>Game\Enemys\BossEnemy\ActionNode\RushAttack</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />
@@ -1182,6 +1215,9 @@
     </None>
     <None Include="Game\Shaders\Barrier\Barrier.hlsli">
       <Filter>Game\Shaders\Barrier</Filter>
+    </None>
+    <None Include="Game\Shaders\ChargeEffect\ChargeEffect.hlsli">
+      <Filter>Game\Shaders\ChargeEffect</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -1247,6 +1283,12 @@
     </FxCompile>
     <FxCompile Include="Game\Shaders\Barrier\BarrierVS.hlsl">
       <Filter>Game\Shaders\Barrier</Filter>
+    </FxCompile>
+    <FxCompile Include="Game\Shaders\ChargeEffect\ChargeEffectPS.hlsl">
+      <Filter>Game\Shaders\ChargeEffect</Filter>
+    </FxCompile>
+    <FxCompile Include="Game\Shaders\ChargeEffect\ChargeEffectVS.hlsl">
+      <Filter>Game\Shaders\ChargeEffect</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

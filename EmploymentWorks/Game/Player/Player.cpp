@@ -234,13 +234,18 @@ void Player::Update(const float& elapsedTime)
 		return;
 	}
 
-
 	m_stateMachine->Update(elapsedTime);
 
 	m_usually->Update(elapsedTime);
 
 	CompositeEntity::Update(elapsedTime);
 
+
+	Vector3 pos = BaseEntity::GetPosition();
+
+	pos += m_velocity;
+
+	BaseEntity::SetPosition(pos);
 
 	//パーツの更新
 	for (auto& part : CompositeEntity::GetParts())

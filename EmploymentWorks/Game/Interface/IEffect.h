@@ -17,7 +17,7 @@ public:
 		,PlayerDamage
 		,Particle
 		, HitEffect
-
+		,ChargeEffect
 	};
 
 public:

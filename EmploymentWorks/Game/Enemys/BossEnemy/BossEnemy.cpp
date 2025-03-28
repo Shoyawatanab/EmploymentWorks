@@ -18,6 +18,7 @@
 #include "Game/Enemys/BossEnemy/ActionNode/BarrierDefense/BarrierDefenseAction.h"
 #include "Game/Enemys/BossEnemy/Barrier/Barrier.h"
 #include "Game/Enemys/BossEnemy/ActionNode/JumpAttack/BossJumpAttackAction.h"
+#include "Game/Enemys/BossEnemy/ActionNode/RushAttack/BossRushAttackAction.h"
 
 
 using namespace DirectX;
@@ -49,6 +50,7 @@ BossEnemy::BossEnemy(CommonResources* resources, DirectX::SimpleMath::Vector3 sc
 	,m_barrier{}
 	,m_velocity{}
 	,m_currentAction{}
+	,m_isAction{}
 {
 	m_behavior = std::make_unique<BehaviorTree>();
 	m_beam = std::make_unique<Beam>(resources);
@@ -166,9 +168,11 @@ void BossEnemy::Initialize()
 	m_action["JumpAttack"] = std::make_unique<BossJumpAttackAction>(BaseEntity::GetCommonResources(), this, m_player);
 	m_action["JumpAttack"]->Initialize();
 
+	m_action["RushAttack"] = std::make_unique<BossRushAttackAction>(BaseEntity::GetCommonResources(), this, m_player);
+	m_action["RushAttack"]->Initialize();
+
 	m_target = m_player;
 
-	
 
 }
 
@@ -256,6 +260,14 @@ void BossEnemy::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 			break;
 		case CollisionEntity::CollisionTag::Stage:
 			m_velocity.y = 0.0f;
+
+			if (m_currentAction.first == "JumpAttack")
+			{
+				m_isAction = true;
+				{
+				}
+			}
+
 			break;
 		case CollisionEntity::CollisionTag::Enemy:
 			break;
@@ -380,8 +392,10 @@ void BossEnemy::Notify(EventParams::EventType type, void* datas)
 /// <returns>é¿çsåãâ </returns>
 IBehaviorNode::State BossEnemy::BeamAttack(const float& elapsedTime)
 {
-	return m_action["JumpAttack"]->Update(elapsedTime);
 
+	return JumpAttack(elapsedTime);
+
+ 
 	return Pounding(elapsedTime);
 
 	return m_action["Beam"]->Update(elapsedTime);
@@ -430,6 +444,7 @@ IBehaviorNode::State BossEnemy::Pounding(const float& elapsedTime)
 	{
 		ChangeAnimation("Punch");
 		m_punchTime = 0;
+
 		return IBehaviorNode::State::Runngin;
 	}
 
@@ -498,17 +513,50 @@ IBehaviorNode::State BossEnemy::BarrierDefense(float elapsdTime)
 	return m_action["BarrierDefense"]->Update(elapsdTime);
 }
 
-void BossEnemy::ChangeAction(IAction* nextAction, std::string typeName)
+IBehaviorNode::State BossEnemy::JumpAttack(float elapsdTime)
 {
 
-	m_currentAction.second->Exit();
-	m_currentAction.second = nextAction;
+	if (m_currentAction.first != "JumpAttack")
+	{
+		ChangeAction("JumpAttack");
+	}
+
+
+	if (m_isAction)
+	{
+
+		m_isAction = false;
+		m_velocity = Vector3::Zero;
+		InitalizeAction();
+		return IBehaviorNode::State::Success;
+
+	}
+
+
+	return m_action["JumpAttack"]->Update(elapsdTime);
+}
+
+void BossEnemy::ChangeAction(std::string typeName)
+{
+	if (m_currentAction.second != nullptr)
+	{
+		m_currentAction.second->Exit();
+
+	}
+
+	m_currentAction.second = m_action[typeName].get();
 	m_currentAction.second->Enter();
 
 	m_currentAction.first = typeName;
 
 
 
+}
+
+void BossEnemy::InitalizeAction()
+{
+	m_currentAction.first = "";
+	m_isAction = false;
 }
 
 
