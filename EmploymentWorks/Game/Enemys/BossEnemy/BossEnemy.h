@@ -151,9 +151,13 @@ public:
 	IBehaviorNode::State FacingThePlayer(float elapsdTime);
 
 	IBehaviorNode::State BarrierDefense(float elapsdTime);
+
+	IBehaviorNode::State JumpAttack(float elapsdTime);
 private:
 
-	void ChangeAction(IAction* nextAction,std::string typeName);
+	void ChangeAction(std::string typeName);
+
+	void InitalizeAction();
 
 private:
 	//アニメーションデータ
@@ -172,6 +176,8 @@ private:
 	std::unordered_map<std::string, std::unique_ptr<IAction>> m_action;
 
 	std::pair<std::string, IAction*> m_currentAction;
+	//鼓動を終了するかどうか
+	bool m_isAction;
 
 	std::unique_ptr<Barrier> m_barrier;
 

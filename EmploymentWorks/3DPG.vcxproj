@@ -187,6 +187,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Game\CollisiionManager.h" />
     <ClInclude Include="Game\CommonResources.h" />
+    <ClInclude Include="Game\Effect\ChargeEffect\ChargeEffect.h" />
     <ClInclude Include="Game\Effect\DamageVignette.h" />
     <ClInclude Include="Game\Effect\EffectsManager.h" />
     <ClInclude Include="Game\Effect\ExplosionEffects.h" />
@@ -226,6 +227,9 @@
     <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\RisingPillar\RisingPillarPreliminaryAction.h" />
     <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\RisingPillar\RisingPillarRise.h" />
     <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\RisingPillar\RisingPillarvAction.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\RushAttack\BossRushAttackAction.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\RushAttack\BossRushAttackCharge.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\RushAttack\BossRushAttackRush.h" />
     <ClInclude Include="Game\Enemys\BossEnemy\Barrier\Barrier.h" />
     <ClInclude Include="Game\Enemys\BossEnemy\Barrier\State\BarrierGenerate.h" />
     <ClInclude Include="Game\Enemys\BossEnemy\Barrier\State\BarrierShrink.h" />
@@ -365,6 +369,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Game\CollisiionManager.cpp" />
     <ClCompile Include="Game\CommonResources.cpp" />
+    <ClCompile Include="Game\Effect\ChargeEffect\ChargeEffect.cpp" />
     <ClCompile Include="Game\Effect\DamageVignette.cpp" />
     <ClCompile Include="Game\Effect\EffectsManager.cpp" />
     <ClCompile Include="Game\Effect\ExplosionEffects.cpp" />
@@ -404,6 +409,9 @@
     <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\RisingPillar\RisingPillarPreliminaryAction.cpp" />
     <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\RisingPillar\RisingPillarRise.cpp" />
     <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\RisingPillar\RisingPillarvAction.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\RushAttack\BossRushAttackAction.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\RushAttack\BossRushAttackCharge.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\RushAttack\BossRushAttackRush.cpp" />
     <ClCompile Include="Game\Enemys\BossEnemy\Barrier\Barrier.cpp" />
     <ClCompile Include="Game\Enemys\BossEnemy\Barrier\State\BarrierGenerate.cpp" />
     <ClCompile Include="Game\Enemys\BossEnemy\Barrier\State\BarrierShrink.cpp" />
@@ -530,6 +538,7 @@
     <None Include="Game\Shaders\Barrier\Barrier.hlsli" />
     <None Include="Game\Shaders\BossBeam\BeamEnergyBall.hlsli" />
     <None Include="Game\Shaders\BossBeam\BeamRays.hlsli" />
+    <None Include="Game\Shaders\ChargeEffect\ChargeEffect.hlsli" />
     <None Include="Game\Shaders\DamageVignette\DamageVignette.hlsli" />
     <None Include="Game\Shaders\Fade\Fade.hlsli" />
     <None Include="Game\Shaders\HitEffect\CircleParticle.hlsli" />
@@ -569,6 +578,20 @@
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="Game\Shaders\BossBeam\BeamRaysVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Game\Shaders\ChargeEffect\ChargeEffectPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Game\Shaders\ChargeEffect\ChargeEffectVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>

@@ -53,6 +53,9 @@ public:
 	};
 
 	
+	DirectX::SimpleMath::Vector3 GetVelocity() { return m_velocity; }
+
+	void SetVelocity(DirectX::SimpleMath::Vector3  velocity) { m_velocity = velocity; }
 
 
 public:
@@ -132,6 +135,7 @@ private:
 	// 影オブジェクト
 	std::unique_ptr<WataLib::Shadow> m_shadow;
 
+	DirectX::SimpleMath::Vector3 m_velocity;
 
 };
 

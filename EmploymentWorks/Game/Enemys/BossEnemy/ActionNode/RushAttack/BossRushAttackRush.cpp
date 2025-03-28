@@ -1,9 +1,9 @@
 /*
-	@file	BossJumpAttackJump.cpp
+	@file	BossRushAttackRush.cpp
 	@brief	プレイシーンクラス
 */
 #include "pch.h"
-#include "BossJumpAttackJump.h"
+#include "BossRushAttackRush.h"
 #include "Game/CommonResources.h"
 #include "DeviceResources.h"
 #include "Libraries/MyLib/DebugCamera.h"
@@ -26,8 +26,8 @@ using namespace DirectX::SimpleMath;
 /// コンストラクタ
 /// </summary>
 /// <param name="resources">共通リソース</param>
-BossJumpAttackJump::BossJumpAttackJump(CommonResources* resources
-	,BossJumpAttackAction* parent
+BossRushAttackRush::BossRushAttackRush(CommonResources* resources
+	, BossRushAttackAction* parent
 	,BossEnemy* bossenemy
 	, Player* player)
 	:
@@ -43,19 +43,19 @@ BossJumpAttackJump::BossJumpAttackJump(CommonResources* resources
 /// <summary>
 /// デストラクタ
 /// </summary>
-BossJumpAttackJump::~BossJumpAttackJump()
+BossRushAttackRush::~BossRushAttackRush()
 {
 	// do nothing.
 }
 
-void BossJumpAttackJump::Initialize()
+void BossRushAttackRush::Initialize()
 {
 
 
 
 }
 
-IBehaviorNode::State BossJumpAttackJump::Update(const float& elapsedTime)
+IBehaviorNode::State BossRushAttackRush::Update(const float& elapsedTime)
 {
 
 	float speed = 9.0f;
@@ -77,7 +77,7 @@ IBehaviorNode::State BossJumpAttackJump::Update(const float& elapsedTime)
 
 
 
-void BossJumpAttackJump::Enter()
+void BossRushAttackRush::Enter()
 {
 
 	Vector3 velocity = m_bossEnemy->GetVelocity();
@@ -101,7 +101,7 @@ void BossJumpAttackJump::Enter()
 
 }
 
-void BossJumpAttackJump::Exit()
+void BossRushAttackRush::Exit()
 {
 
 	m_bossEnemy->ChangeAnimation("Idel");

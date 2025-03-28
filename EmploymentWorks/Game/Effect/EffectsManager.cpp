@@ -13,6 +13,7 @@
 #include "Game/Observer/Messenger.h"
 #include "Game/Effect/Particle/Particle.h"
 #include "Game/Effect/HitEffect/HitEffect.h"
+#include "Game/Effect/ChargeEffect/ChargeEffect.h"
 
 /// <summary>
 /// コンストラクタ
@@ -80,12 +81,16 @@ void EffectsManager::Initialize(CommonResources* resources)
 
 	}
 
+	auto chargeEffect = std::make_unique<ChargeEffect>(m_commonResources);
+	chargeEffect->Initialize();
 
+	m_effects.push_back(std::move(chargeEffect));
 
 	Messenger::Attach(EventParams::EventType::PlayerDamage, this);
 	Messenger::Attach(EventParams::EventType::CreateExplosion, this);
 	Messenger::Attach(EventParams::EventType::CreateParticle, this);
 	Messenger::Attach(EventParams::EventType::CreateHitEffect, this);
+	Messenger::Attach(EventParams::EventType::CreateChageEffect, this);
 
 }
 
@@ -236,6 +241,31 @@ void EffectsManager::CreateHitEffect(void* datas)
 
 
 }
+void EffectsManager::CreateChargeEffect(void* datas)
+{
+
+	EventParams::CreateChargeEffectDatas* data = static_cast<EventParams::CreateChargeEffectDatas*>(datas);
+
+	//使えるエフェクトの取得
+	auto it = std::find_if(
+		m_effects.begin(), m_effects.end(),
+		[](const std::unique_ptr<IEffect>& effect)
+		{
+			return effect->GetEffectType() == IEffect::EffectType::ChargeEffect && !effect->GetIsActive();
+		});
+
+	//エフェクトがあれば
+	if (it != m_effects.end())
+	{
+
+		(*it)->SetIsActive(true);
+		(*it)->Create(datas);
+	}
+
+
+}
+
+
 /// <summary>
 /// 通知を受け取る関数
 /// </summary>
@@ -257,6 +287,9 @@ void EffectsManager::Notify(EventParams::EventType type, void* datas)
 			break;
 		case EventParams::EventType::CreateHitEffect:
 			CreateHitEffect(datas);
+			break;
+		case EventParams::EventType::CreateChageEffect:
+			CreateChargeEffect(datas);
 			break;
 		default:
 			break;

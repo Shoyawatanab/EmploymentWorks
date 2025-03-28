@@ -19,6 +19,7 @@ public:
 		, CreateExplosion
 		, CreateParticle  
 		, CreateHitEffect
+		,CreateChageEffect
 		, BossBeamHit  
 		,ChangeBoomerangThrowState
 		,MouseWheelUp
@@ -43,6 +44,13 @@ public:
 
 
 	struct CreateHitEffectDatas
+	{
+		DirectX::SimpleMath::Vector3 Position;
+		DirectX::SimpleMath::Vector3 Scale;
+
+	};
+
+	struct CreateChargeEffectDatas
 	{
 		DirectX::SimpleMath::Vector3 Position;
 		DirectX::SimpleMath::Vector3 Scale;

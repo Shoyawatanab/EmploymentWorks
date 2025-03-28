@@ -204,6 +204,13 @@ void PlayerUsually::Update(const float& elapsedTime)
 
 	m_palyer->SetPosition(position);
 
+	Vector3 velocity = m_palyer->GetVelocity();
+
+	velocity.y -= m_gravity * elapsedTime;
+
+
+
+
 	//アニメーションを管理
 	//動いている
 	if (moveDirection != Vector3::Zero)

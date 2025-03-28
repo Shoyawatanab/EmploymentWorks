@@ -1,9 +1,9 @@
 /*
-	@file	BossJumpAttackCharge.cpp
+	@file	BossRushAttackCharge.cpp
 	@brief	プレイシーンクラス
 */
 #include "pch.h"
-#include "BossJumpAttackCharge.h"
+#include "BossRushAttackCharge.h"
 #include "Game/CommonResources.h"
 #include "DeviceResources.h"
 #include "Libraries/MyLib/DebugCamera.h"
@@ -15,7 +15,7 @@
 
 #include "Game/Enemys/BossEnemy/BossEnemy.h"
 #include "Game/Player/Player.h"
-#include "Game/Enemys/BossEnemy/ActionNode/JumpAttack/BossJumpAttackAction.h"
+#include "Game/Enemys/BossEnemy/ActionNode/RushAttack/BossRushAttackAction.h"
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
@@ -26,8 +26,8 @@ using namespace DirectX::SimpleMath;
 /// コンストラクタ
 /// </summary>
 /// <param name="resources">共通リソース</param>
-BossJumpAttackCharge::BossJumpAttackCharge(CommonResources* resources
-	,BossJumpAttackAction* parent
+BossRushAttackCharge::BossRushAttackCharge(CommonResources* resources
+	, BossRushAttackAction* parent
 	,BossEnemy* bossenemy
 	, Player* player)
 	:
@@ -43,23 +43,22 @@ BossJumpAttackCharge::BossJumpAttackCharge(CommonResources* resources
 /// <summary>
 /// デストラクタ
 /// </summary>
-BossJumpAttackCharge::~BossJumpAttackCharge()
+BossRushAttackCharge::~BossRushAttackCharge()
 {
 	// do nothing.
 }
 
-void BossJumpAttackCharge::Initialize()
+void BossRushAttackCharge::Initialize()
 {
 
 
 }
 
-IBehaviorNode::State BossJumpAttackCharge::Update(const float& elapsedTime)
+IBehaviorNode::State BossRushAttackCharge::Update(const float& elapsedTime)
 {
 	//時間はアニメーションと合わせる
 	if (m_time >= 1.5f)
 	{
-		m_parent->ChangeState(m_parent->GetBossJumpAttackJump());
 	}
 
 	
@@ -74,7 +73,7 @@ IBehaviorNode::State BossJumpAttackCharge::Update(const float& elapsedTime)
 
 
 
-void BossJumpAttackCharge::Enter()
+void BossRushAttackCharge::Enter()
 {
 
 	m_bossEnemy->ChangeAnimation("JumpCharge");
@@ -91,6 +90,6 @@ void BossJumpAttackCharge::Enter()
 
 }
 
-void BossJumpAttackCharge::Exit()
+void BossRushAttackCharge::Exit()
 {
 }
