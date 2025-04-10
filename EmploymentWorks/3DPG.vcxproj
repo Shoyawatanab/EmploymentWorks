@@ -353,7 +353,9 @@
     <ClInclude Include="Libraries\WataLib\Camera\TitleCamera.h" />
     <ClInclude Include="Libraries\WataLib\Camera\TPS_Camera.h" />
     <ClInclude Include="Libraries\WataLib\CSV.h" />
+    <ClInclude Include="Libraries\WataLib\DamageCountUI.h" />
     <ClInclude Include="Libraries\WataLib\DetectionCollision.h" />
+    <ClInclude Include="Libraries\WataLib\DrawNumber.h" />
     <ClInclude Include="Libraries\WataLib\Fade.h" />
     <ClInclude Include="Libraries\WataLib\Json.h" />
     <ClInclude Include="Libraries\WataLib\Model3D.h" />
@@ -509,7 +511,9 @@
     <ClCompile Include="Libraries\WataLib\Camera\TitleCamera.cpp" />
     <ClCompile Include="Libraries\WataLib\Camera\TPS_Camera.cpp" />
     <ClCompile Include="Libraries\WataLib\CSV.cpp" />
+    <ClCompile Include="Libraries\WataLib\DamageCountUI.cpp" />
     <ClCompile Include="Libraries\WataLib\DetectionCollision.cpp" />
+    <ClCompile Include="Libraries\WataLib\DrawNumber.cpp" />
     <ClCompile Include="Libraries\WataLib\Fade.cpp" />
     <ClCompile Include="Libraries\WataLib\Json.cpp" />
     <ClCompile Include="Libraries\WataLib\Model3D.cpp" />
@@ -542,6 +546,7 @@
     <None Include="Game\Shaders\DamageVignette\DamageVignette.hlsli" />
     <None Include="Game\Shaders\Fade\Fade.hlsli" />
     <None Include="Game\Shaders\HitEffect\CircleParticle.hlsli" />
+    <None Include="Game\Shaders\Number\Number.hlsli" />
     <None Include="Game\Shaders\Particle\Particle.hlsli" />
     <None Include="Game\Shaders\UI\UI.hlsli" />
     <None Include="packages.config" />
@@ -650,6 +655,26 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
     <FxCompile Include="Game\Shaders\HitEffect\CircleParticleVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Game\Shaders\Number\NumberGS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Game\Shaders\Number\NumberPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="Game\Shaders\Number\NumberVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>

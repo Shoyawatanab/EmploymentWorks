@@ -13,7 +13,6 @@
 #include <cassert>
 #include "Game/Screen.h"
 #include "Libraries/WataLib/Camera/TPS_Camera.h"
-#include "Libraries/WataLib/DrawTexture.h"
 #include "Game/Observer/Messenger.h"
 #include "Libraries/WataLib/UserInterface.h"
 

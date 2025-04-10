@@ -53,7 +53,7 @@ BossJumpAttackAction::~BossJumpAttackAction()
 void BossJumpAttackAction::Initialize()
 {
 	m_currentState = m_charge.get();
-	m_currentState->Enter();
+	//m_currentState->Enter();
 
 	//イベントタイプの登録
 	Messenger::Attach(EventParams::EventType::BossBeamHit, this);

@@ -8,6 +8,7 @@
 #include "Game/Player/Player.h"
 #include "Libraries/WataLib/Mouse.h"
 #include "Game/Observer/Messenger.h"
+#include <cassert>
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
@@ -46,7 +47,7 @@ WataLib::TPS_Camera::~TPS_Camera()
 
 void WataLib::TPS_Camera::Initialize(CommonResources* resources)
 {
-
+	assert(resources);
 	m_mouse->Initialize();
 	m_angle = {0,0};
 	m_zoomState = ZoomState::None;
@@ -147,6 +148,8 @@ void WataLib::TPS_Camera::Update(const float& elapsedTime)
 
 void WataLib::TPS_Camera::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
 {
+	assert(&view);
+	assert(&projection);
 }
 
 //-------------------------------------------------------------------

@@ -47,7 +47,7 @@ public:
 	{
 		DirectX::SimpleMath::Vector3 Position;
 		DirectX::SimpleMath::Vector3 Scale;
-
+		int Damage;
 	};
 
 	struct CreateChargeEffectDatas

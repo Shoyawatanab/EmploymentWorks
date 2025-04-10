@@ -15,6 +15,8 @@ std::unordered_map<int, std::function<void(CollisionEntity* object1, CollisionEn
 };
 
 
+
+
 void WataLib::DetectionCollision::CheckHit(CollisionEntity* object1, CollisionEntity* object2, bool& isHit)
 {
 
@@ -35,7 +37,6 @@ void WataLib::DetectionCollision::CheckHit(CollisionEntity* object1, CollisionEn
 	{
 		//あれば登録された関数を呼ぶ
 		m_detectionFunction[type](localObject1, localObject2, isHit);
-
 	}
 
 }
@@ -45,16 +46,13 @@ void WataLib::DetectionCollision::AABB_AABB(CollisionEntity* object1, CollisionE
 	//スフィア同士の判定
 	SPHERE_SPHERE(object1, object2,isHit);
 
+
 	//当たっていない
 	if (!isHit)
 	{
-		//フラグを当たっていないに
-		isHit = false;
 		return;
 	}
 
-	//フラグを当たっていないに
-	isHit = false;
 
 	//データの取得
 	DirectX::BoundingBox* Box1 = object1->GetBounding()->GetBoundingBox();
@@ -81,12 +79,8 @@ void WataLib::DetectionCollision::OBB_OBB(CollisionEntity* object1, CollisionEnt
 	//当たっていない
 	if (!isHit)
 	{
-		//フラグを当たっていないに
-		isHit = false;
 		return;
 	}
-	//フラグを当たっていないに
-	isHit = false;
 
 	//データの取得
 	DirectX::BoundingOrientedBox* Box1 = object1->GetBounding()->GetOrientedBox();
@@ -110,6 +104,9 @@ void WataLib::DetectionCollision::SPHERE_SPHERE(CollisionEntity* object1, Collis
 	DirectX::BoundingSphere* Sphere1 = object1->GetBounding()->GetBoundingSphere();
 	DirectX::BoundingSphere* Sphere2 = object2->GetBounding()->GetBoundingSphere();
 
+	//当たってない
+	isHit = false;
+
 	//判定
 	if (Sphere1->Intersects(*Sphere2))
 	{
@@ -117,9 +114,6 @@ void WataLib::DetectionCollision::SPHERE_SPHERE(CollisionEntity* object1, Collis
 		isHit = true;
 		return;
 	}
-
-	//当たってない
-	isHit = false;
 
 }
 
@@ -131,12 +125,8 @@ void WataLib::DetectionCollision::AABB_OBB(CollisionEntity* object1, CollisionEn
 	//当たっていない
 	if (!isHit)
 	{
-		//フラグを当たっていないに
-		isHit = false;
 		return;
 	}
-	//フラグを当たっていないに
-	isHit = false;
 
 	//データの取得
 	DirectX::BoundingBox* Box1 = object1->GetBounding()->GetBoundingBox();
@@ -157,6 +147,7 @@ void WataLib::DetectionCollision::AABB_OBB(CollisionEntity* object1, CollisionEn
 
 void WataLib::DetectionCollision::AABB_SPHERE(CollisionEntity* object1, CollisionEntity* object2, bool& isHit)
 {
+
 	//スフィア同士の判定
 	SPHERE_SPHERE(object1, object2, isHit);
 
@@ -166,10 +157,8 @@ void WataLib::DetectionCollision::AABB_SPHERE(CollisionEntity* object1, Collisio
 		//フラグを当たっていないに
 		isHit = false;
 		return;
-	}
-	//フラグを当たっていないに
-	isHit = false;
 
+	}
 	//データの取得
 	DirectX::BoundingBox* Box = object1->GetBounding()->GetBoundingBox();
 	DirectX::BoundingSphere* Sphere = object2->GetBounding()->GetBoundingSphere();
@@ -191,7 +180,6 @@ bool WataLib::DetectionCollision::Circle_RectCheckHit(const DirectX::SimpleMath:
 	const DirectX::SimpleMath::Vector2& rectCenter, float rectWidth, float rectHeight)
 {
 	
-
 	// 四角形の境界座標を計算
 	float rectLeft = rectCenter.x - rectWidth / 2;
 	float rectRight = rectCenter.x + rectWidth / 2;

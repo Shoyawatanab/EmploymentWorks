@@ -23,7 +23,6 @@
 #include "Game/UI/UIManager.h"
 #include "Game//TargetMarker.h"
 #include "Game/Effect/EffectsManager.h"
-#include "Libraries/WataLib/DrawTexture.h"
 #include "Game/StageObject/Sky.h"
 #include "Game/StageObject/Floor.h"
 #include "Game/StageObject/Wall.h"
@@ -248,7 +247,7 @@ void PlayScene::Render()
 	m_uiManager->Render(view, m_projection);
 	m_targetMarker->Render();
 
-	//m_timer->Render();
+	m_timer->Render();
 
 	//if (m_stageID == SceneManager::Stage1)
 	//{

@@ -100,3 +100,4 @@ namespace DX
 #include <Model.h>
 #include <GeometricPrimitive.h>
 #include <Audio.h>
+#include <cassert>

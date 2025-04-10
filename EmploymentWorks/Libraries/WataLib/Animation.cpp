@@ -228,7 +228,7 @@ void WataLib::Animation::SetAnimationData(const std::string& animationType, cons
 		}
 
 
-		//値がるなら
+		//値があるなら
 		if (frameData.Rotation != std::nullopt)
 		{
 			//一時的な値保存変数

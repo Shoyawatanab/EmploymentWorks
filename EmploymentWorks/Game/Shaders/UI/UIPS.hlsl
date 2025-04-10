@@ -15,9 +15,9 @@ float4 main(PS_INPUT input) : SV_TARGET
     float4 smoothValue = input.color;
     output.a *= lerp(1.0f, 0.0f, smoothstep(smoothValue, smoothValue + 0.01f, input.tex.x)); //tex.yで上下に移動可能
 
-    //全体の透明度をかける    
+    //全体の透明度をかける
     output *= diffuse;
 
-    
     return output;
+    
 }

@@ -13,7 +13,10 @@ class Player;
 class UserInterface;
 
 class EnemyManager;
-
+namespace WataLib 
+{
+	class DamageCountUI;
+}
 
 
 class GamePlayUI : public IState ,  public IObserver
@@ -32,6 +35,8 @@ private :
 	static constexpr DirectX::SimpleMath::Vector2 BOOMERANG_SCALE { 0.1f, 0.1f};
 
 	static constexpr DirectX::SimpleMath::Vector2 MOVEPOSITION = { -50.0f,0.0f };
+
+	static constexpr int MAXDAMAGEUICOUNT = 10;
 
 public:
 	//コンストラクタ
@@ -66,10 +71,17 @@ public:
 
 	void CreateBoomerang();
 
+	void CreateDamageUI(void* datas);
 
 	//IObserver
 //通知時に呼ばれる関数
 	void Notify(EventParams::EventType type, void* datas)  override;
+
+
+private:
+
+	
+
 
 private:
 	// 共通リソース
@@ -103,6 +115,8 @@ private:
 	int m_playerHPCount;
 
 	int m_boomerangCount;
+
+	std::vector<std::unique_ptr<WataLib::DamageCountUI>> m_damageCountUI;
 	
 
 

@@ -12,7 +12,6 @@
 #include <cassert>
 
 #include "Libraries/WataLib/Fade.h"
-#include "Libraries/WataLib/DrawTexture.h"
 #include "Game/Params.h"
 #include "Libraries/WataLib/DetectionCollision.h"
 #include "Libraries/MyLib/DebugString.h"
