@@ -179,6 +179,9 @@
     <Filter Include="Game\Enemys\BossEnemy\ActionNode\RushAttack">
       <UniqueIdentifier>{764f82f3-457f-4793-8a76-105c75cf32ec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Shaders\Number">
+      <UniqueIdentifier>{e7850e9c-6d83-4f26-8030-67b67d458cd1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -717,6 +720,12 @@
     <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\RushAttack\BossRushAttackRush.h">
       <Filter>Game\Enemys\BossEnemy\ActionNode\RushAttack</Filter>
     </ClInclude>
+    <ClInclude Include="Libraries\WataLib\DamageCountUI.h">
+      <Filter>Libraries\WataLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Libraries\WataLib\DrawNumber.h">
+      <Filter>Libraries</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -1175,6 +1184,12 @@
     <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\RushAttack\BossRushAttackRush.cpp">
       <Filter>Game\Enemys\BossEnemy\ActionNode\RushAttack</Filter>
     </ClCompile>
+    <ClCompile Include="Libraries\WataLib\DamageCountUI.cpp">
+      <Filter>Libraries\WataLib</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\WataLib\DrawNumber.cpp">
+      <Filter>Libraries</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />
@@ -1218,6 +1233,9 @@
     </None>
     <None Include="Game\Shaders\ChargeEffect\ChargeEffect.hlsli">
       <Filter>Game\Shaders\ChargeEffect</Filter>
+    </None>
+    <None Include="Game\Shaders\Number\Number.hlsli">
+      <Filter>Game\Shaders\Number</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -1289,6 +1307,15 @@
     </FxCompile>
     <FxCompile Include="Game\Shaders\ChargeEffect\ChargeEffectVS.hlsl">
       <Filter>Game\Shaders\ChargeEffect</Filter>
+    </FxCompile>
+    <FxCompile Include="Game\Shaders\Number\NumberGS.hlsl">
+      <Filter>Game\Shaders\Number</Filter>
+    </FxCompile>
+    <FxCompile Include="Game\Shaders\Number\NumberPS.hlsl">
+      <Filter>Game\Shaders\Number</Filter>
+    </FxCompile>
+    <FxCompile Include="Game\Shaders\Number\NumberVS.hlsl">
+      <Filter>Game\Shaders\Number</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

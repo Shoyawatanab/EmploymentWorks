@@ -1,12 +1,12 @@
 //--------------------------------------------------------------------------------------
-// File: UserInterface.h
+// File: DrawNumber.h
 //
 // ユーザーインターフェースクラス
 //
 //-------------------------------------------------------------------------------------
 
 #include "pch.h"
-#include "UserInterface.h"
+#include "DrawNumber.h"
 
 #include "BinaryFile.h"
 #include "DeviceResources.h"
@@ -24,7 +24,7 @@ using namespace DirectX;
 /// <summary>
 /// インプットレイアウト
 /// </summary>
-const std::vector<D3D11_INPUT_ELEMENT_DESC> UserInterface::INPUT_LAYOUT =
+const std::vector<D3D11_INPUT_ELEMENT_DESC> DrawNumber::INPUT_LAYOUT =
 {
 	{ "POSITION",	0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 	{ "COLOR",	0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, sizeof(SimpleMath::Vector3), D3D11_INPUT_PER_VERTEX_DATA, 0 },
@@ -34,7 +34,7 @@ const std::vector<D3D11_INPUT_ELEMENT_DESC> UserInterface::INPUT_LAYOUT =
 /// <summary>
 /// コンストラクタ
 /// </summary>
-UserInterface::UserInterface()
+DrawNumber::DrawNumber()
 	:m_pDR(nullptr)
 	, m_textureHeight(0)
 	, m_textureWidth(0)
@@ -46,6 +46,7 @@ UserInterface::UserInterface()
 	, m_renderRatioOffset(0.0f)
 	, m_alphaValue{ 1.0f }
 	,m_isActive{true}
+	,m_offsetPosition{}
 {
 
 }
@@ -53,7 +54,7 @@ UserInterface::UserInterface()
 /// <summary>
 /// デストラクタ
 /// </summary>
-UserInterface::~UserInterface()
+DrawNumber::~DrawNumber()
 {
 }
 
@@ -61,7 +62,7 @@ UserInterface::~UserInterface()
 /// テクスチャリソース読み込み関数
 /// </summary>
 /// <param name="path">相対パス(Resources/Textures/・・・.pngなど）</param>
-void UserInterface::LoadTexture(const wchar_t* path)
+void DrawNumber::LoadTexture(const wchar_t* path)
 {
 	//	善子画像を読み込む
 	/*HRESULT result; = DirectX::CreateWICTextureFromFile(m_pDR->GetD3DDevice(), L"Resources/Textures/yoshiko.jpg", m_yoshiRes.ReleaseAndGetAddressOf(), m_yoshiTexture.ReleaseAndGetAddressOf());
@@ -89,7 +90,7 @@ void UserInterface::LoadTexture(const wchar_t* path)
 /// 生成関数
 /// </summary>
 /// <param name="pDR">ユーザーリソース等から持ってくる</param>
-void UserInterface::Create(DX::DeviceResources* pDR
+void DrawNumber::Create(DX::DeviceResources* pDR
 	, const wchar_t* path
 	, DirectX::SimpleMath::Vector2 position
 	, DirectX::SimpleMath::Vector2 scale
@@ -116,18 +117,18 @@ void UserInterface::Create(DX::DeviceResources* pDR
 
 }
 
-void UserInterface::SetScale(DirectX::SimpleMath::Vector2 scale)
+void DrawNumber::SetScale(DirectX::SimpleMath::Vector2 scale)
 {
 	m_scale = scale;
 }
-void UserInterface::SetPosition(DirectX::SimpleMath::Vector2 position)
+void DrawNumber::SetPosition(DirectX::SimpleMath::Vector2 position)
 {
 	m_position = position;
 }
 
 
 
-void UserInterface::SetRenderRatio(float ratio)
+void DrawNumber::SetRenderRatio(float ratio)
 {
 	m_renderRatio = ratio;
 }
@@ -135,14 +136,14 @@ void UserInterface::SetRenderRatio(float ratio)
 
 
 
-void UserInterface::CreateUIShader()
+void DrawNumber::CreateUIShader()
 {
 	auto device = m_pDR->GetD3DDevice();
 
 	//	コンパイルされたシェーダファイルを読み込み
-	BinaryFile VSData = BinaryFile::LoadFile(L"Resources/Shaders/UIVS.cso");
-	BinaryFile GSData = BinaryFile::LoadFile(L"Resources/Shaders/UIGS.cso");
-	BinaryFile PSData = BinaryFile::LoadFile(L"Resources/Shaders/UIPS.cso");
+	BinaryFile VSData = BinaryFile::LoadFile(L"Resources/Shaders/NumberVS.cso");
+	BinaryFile GSData = BinaryFile::LoadFile(L"Resources/Shaders/NumberGS.cso");
+	BinaryFile PSData = BinaryFile::LoadFile(L"Resources/Shaders/NumberPS.cso");
 
 	//	インプットレイアウトの作成
 	device->CreateInputLayout(&INPUT_LAYOUT[0],
@@ -182,10 +183,11 @@ void UserInterface::CreateUIShader()
 
 
 
+
 /// <summary>
 /// 描画関数
 /// </summary>
-void UserInterface::Render()
+void DrawNumber::Render(int number , DirectX::SimpleMath::Vector2 offsetPosition)
 {
 
 	if (!m_isActive)
@@ -193,31 +195,23 @@ void UserInterface::Render()
 		return;
 	}
 
+
 	auto context = m_pDR->GetD3DDeviceContext();
-	// 頂点情報
-	// Position.xy	:拡縮用スケール
-	// Position.z	:アンカータイプ(0～8)の整数で指定
-	// Color.xy　	:アンカー座標(ピクセル指定:1280 ×720)
-	// Color.zw		:画像サイズ
-	// Tex.xy		:ウィンドウサイズ（バッファも同じ。こちらは未使用）
-	VertexPositionColorTexture vertex[1] = {
+	VertexPositionColorTexture vertex[4] =
+	{
 		VertexPositionColorTexture(
-			 SimpleMath::Vector3(m_scale.x, m_scale.y, ANCHOR::MIDDLE_CENTER)
-			,SimpleMath::Vector4(m_position.x, m_position.y, static_cast<float>(m_textureWidth), static_cast<float>(m_textureHeight))
+			 SimpleMath::Vector3(m_scale.x, m_scale.y, 4)
+			,SimpleMath::Vector4(m_position.x + offsetPosition.x, m_position.y + offsetPosition.y, static_cast<float>(m_textureWidth/10), static_cast<float>(m_textureHeight))
 			,SimpleMath::Vector2(m_renderRatio - m_renderRatioOffset,0))
 	};
-
-	//	ただし上記の設定値には、WorldやViewなどの3D空間から変換するための計算を一切しないため、
-	//	スクリーン座標として描画される
 
 	//	シェーダーに渡す追加のバッファを作成する。(ConstBuffer）
 	ConstBuffer cbuff;
 	cbuff.windowSize = SimpleMath::Vector4(Screen::WIDTH, Screen::HEIGHT, 1, 1);
-	cbuff.diffuse = SimpleMath::Vector4(1, 1, 1, m_alphaValue);
+	cbuff.Diffuse = SimpleMath::Vector4(number, 1, 1, 1);
 
 	//	受け渡し用バッファの内容更新(ConstBufferからID3D11Bufferへの変換）
 	context->UpdateSubresource(m_CBuffer.Get(), 0, NULL, &cbuff, 0, 0);
-
 
 	//	シェーダーにバッファを渡す
 	ID3D11Buffer* cb[1] = { m_CBuffer.Get() };
@@ -253,6 +247,7 @@ void UserInterface::Render()
 
 	//	インプットレイアウトの登録
 	context->IASetInputLayout(m_inputLayout.Get());
+
 
 	//	板ポリゴンを描画
 	m_batch->Begin();

@@ -1,5 +1,5 @@
 //--------------------------------------------------------------------------------------
-// File: UserInterface.h
+// File: DrawNumber.h
 //
 // ユーザーインターフェースクラス
 //
@@ -17,24 +17,9 @@
 #include <CommonStates.h>
 #include <vector>
 
-	//UIのアンカーポイントの列挙数
-enum ANCHOR
-{
-	TOP_LEFT = 0,
-	TOP_CENTER,
-	TOP_RIGHT,
 
-	MIDDLE_LEFT,
-	MIDDLE_CENTER,
-	MIDDLE_RIGHT,
 
-	BOTTOM_LEFT,
-	BOTTOM_CENTER,
-	BOTTOM_RIGHT
-
-};
-
-class UserInterface
+class DrawNumber
 {
 
 public:
@@ -42,7 +27,7 @@ public:
 	struct ConstBuffer
 	{
 		DirectX::SimpleMath::Vector4	windowSize;
-		DirectX::SimpleMath::Vector4    diffuse;
+		DirectX::SimpleMath::Vector4	Diffuse;
 	};
 
 public:
@@ -74,12 +59,14 @@ public:
 	int GetHeight() { return m_textureHeight; }
 
 
+	void SetOffSetPosition(DirectX::SimpleMath::Vector2 offsetPostion) { m_offsetPosition = offsetPostion; }
+
 	//関数
 public:
 	static const std::vector<D3D11_INPUT_ELEMENT_DESC> INPUT_LAYOUT;
 
-	UserInterface();
-	~UserInterface();
+	DrawNumber();
+	~DrawNumber();
 
 	void LoadTexture(const wchar_t* path);
 
@@ -89,14 +76,14 @@ public:
 		, DirectX::SimpleMath::Vector2 scale
 		);
 
-	void Render();
-
-
+	void Render(int number , DirectX::SimpleMath::Vector2 offsetPosition);
 
 
 private:
 
 	void CreateUIShader();
+
+
 
 	//変数
 private:
@@ -137,5 +124,7 @@ private:
 	float m_alphaValue;
 
 	bool m_isActive;
+
+	DirectX::SimpleMath::Vector2 m_offsetPosition;
 
 };

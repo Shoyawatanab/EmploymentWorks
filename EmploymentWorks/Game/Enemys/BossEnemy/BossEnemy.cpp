@@ -210,6 +210,7 @@ void BossEnemy::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::S
 	}
 
 
+
 	DirectX::SimpleMath::Vector3 shadowPos = BaseEntity::GetPosition();
 	shadowPos.y = 0.1f;
 
@@ -317,9 +318,7 @@ void BossEnemy::Update(const float& elapsedTime)
 	pos += m_velocity;
 
 	BaseEntity::SetPosition(pos);
-
 	
-
 	CollisionEntity::GetBounding()->Update(BaseEntity::GetPosition());
 
 	//パーツの更新
@@ -348,6 +347,8 @@ void BossEnemy::SetAnimationData(std::string animationType, std::unordered_map<s
 	{
 		part->SetAnimationData(animationType, datas, partsName, isNormalAnimation);
 	}
+
+
 
 }
 
@@ -399,6 +400,8 @@ IBehaviorNode::State BossEnemy::BeamAttack(const float& elapsedTime)
 	return Pounding(elapsedTime);
 
 	return m_action["Beam"]->Update(elapsedTime);
+
+	//床と壁の色を変える　太陽を追加して影をつける
 
 }
 

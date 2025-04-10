@@ -16,7 +16,6 @@
 #include "Game/StageObject/Wall.h"
 #include "Libraries/WataLib/Camera/TitleCamera.h"
 #include "Libraries/WataLib/Model3D.h"
-#include "Libraries/WataLib/DrawTexture.h"
 #include "Game/Params.h"
 #include "Libraries/WataLib/DetectionCollision.h"
 

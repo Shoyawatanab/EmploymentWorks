@@ -5,6 +5,7 @@
 */
 #pragma once
 #include "pch.h"
+#include "Libraries/WataLib/UserInterface.h"
 
 // 前方宣言
 
@@ -24,23 +25,9 @@ public:
 private:
 
 	CommonResources* m_commonResources;
-	std::unique_ptr<DirectX::SpriteBatch> m_spriteBatch;
+	//std::unique_ptr<UserInterface> m_texture;
 
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_texture;
-
-	// テクスチャの半分の大きさ
-	DirectX::SimpleMath::Vector2 m_texCenter;
-	
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_tenTexture;
-
-	// テクスチャの半分の大きさ
-	DirectX::SimpleMath::Vector2 m_tenTexCenter;
-
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_timeTexture;
-
-	// テクスチャの半分の大きさ
-	DirectX::SimpleMath::Vector2 m_timeTexCenter;
-
 
 	float m_totalTime;
 
@@ -60,7 +47,7 @@ private:
 	//分数の2桁目
 	int m_minSecondDigit;
 
-
+	std::unique_ptr<UserInterface> m_numbeers[10];
 
 public:
 	Timer();
@@ -77,8 +64,6 @@ public:
 	void CreateTex(const wchar_t* szFileName, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& tex, DirectX::SimpleMath::Vector2& texCenter);
 
 	void TimeCalculation();
-
-	void TimeReset();
 
 private:
 

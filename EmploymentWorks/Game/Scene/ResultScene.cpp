@@ -12,7 +12,6 @@
 #include <cassert>
 
 #include "Libraries/WataLib/Fade.h"
-#include "Libraries/WataLib/DrawTexture.h"
 #include "Game/Score.h"
 
 using namespace DirectX;

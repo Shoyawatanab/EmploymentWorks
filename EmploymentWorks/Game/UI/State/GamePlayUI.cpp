@@ -8,9 +8,9 @@
 #include "Game/Player/Player.h"
 #include "Game/Player/State/PlayerStateMachine.h"
 #include "Game/Weapon/Boomerang/State/BoomerangStateMachine.h"
-#include "Libraries/WataLib/DrawTexture.h"
 #include "Game/Enemys/EnemyManager.h"
 #include "Game/Observer/Messenger.h"
+#include "Libraries/WataLib/DamageCountUI.h"
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
@@ -81,6 +81,11 @@ void GamePlayUI::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::
 	}
 
 	m_itemAcquisitionUI->Render();
+
+	for (auto& da : m_damageCountUI)
+	{
+		da->Render(view,projection);
+	}
 
 }
 
@@ -180,6 +185,33 @@ void GamePlayUI::CreateBoomerang()
 
 }
 
+void GamePlayUI::CreateDamageUI(void* datas)
+{
+
+	EventParams::CreateHitEffectDatas* data = static_cast<EventParams::CreateHitEffectDatas*>(datas);
+
+
+	for (auto& damageCount : m_damageCountUI)
+	{
+		if (!damageCount->GetIsActive())
+		{
+			damageCount->SetIsActive(true);
+
+			damageCount->SetPosition(data->Position);
+
+			damageCount->SetDamage(data->Damage);
+			damageCount->SetDamage(10);
+
+
+			break;
+		}
+	}
+
+
+
+
+}
+
 /// <summary>
 /// èâä˙âª
 /// </summary>
@@ -224,12 +256,24 @@ void GamePlayUI::Initialize(CommonResources* resources)
 
 	m_throwUI[0]->SetPosition(m_throwUI[0]->GetInitialPosition() + MOVEPOSITION);
 
+
+	for (int i = 0; i < MAXDAMAGEUICOUNT; i++)
+	{
+		auto dameUi = std::make_unique<WataLib::DamageCountUI>(m_commonResources);
+		dameUi->Initialize();
+
+		m_damageCountUI.push_back(std::move(dameUi));
+
+	}
+
 	Messenger::Attach(EventParams::EventType::BoomerangThrow, this);
 	Messenger::Attach(EventParams::EventType::GetBoomerang, this);
 	Messenger::Attach(EventParams::EventType::PlayerDamage, this);
 	Messenger::Attach(EventParams::EventType::ChangeBoomerangThrowState, this);
 	Messenger::Attach(EventParams::EventType::BoomerangRecoverable, this);
 	Messenger::Attach(EventParams::EventType::BoomerangNotRecoverable, this);
+
+	Messenger::Attach(EventParams::EventType::CreateHitEffect, this);
 
 }
 
@@ -245,6 +289,12 @@ void GamePlayUI::Update(const float& elapsedTime)
 	{
 		m_enemyHP->SetRenderRatio(m_enemyManager->GetBossHPRation());
 
+	}
+
+
+	for (auto& da : m_damageCountUI)
+	{
+		da->Update(elapsedTime);
 	}
 
 }
@@ -316,7 +366,6 @@ void GamePlayUI::Notify(EventParams::EventType type, void* datas)
 					default:
 						break;
 				}
-
 			}
 			break;
 		case EventParams::EventType::BoomerangRecoverable:
@@ -325,11 +374,17 @@ void GamePlayUI::Notify(EventParams::EventType type, void* datas)
 		case EventParams::EventType::BoomerangNotRecoverable:
 			m_itemAcquisitionUI->SetIsActive(false);
 			break;
-
+		case EventParams::EventType::CreateHitEffect:
+		
+			CreateDamageUI(datas);
+		
+			break;
 		default:
 			break;
 	}
 }
+
+
 
 
 

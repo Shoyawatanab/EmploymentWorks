@@ -117,6 +117,8 @@ void WataLib::TitleCamera::Exit()
 
 void WataLib::TitleCamera::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
 {
+	assert(&view);
+	assert(&projection);
 
 
 

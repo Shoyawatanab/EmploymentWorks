@@ -43,8 +43,6 @@ public:
 		None
 		,End
 		,Beam
-
-
 	};
 
 public:

@@ -30,6 +30,7 @@ Timer::Timer()
 	,m_minSecondDigit{}
 	,m_secFirstDigit{}
 	,m_secSecondDigit{}
+	,m_numbeers{}
 {
 }
 
@@ -54,14 +55,12 @@ void Timer::Initialize(CommonResources* resources)
 
 	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
 
-	// スプライトバッチを作成する
-	m_spriteBatch = std::make_unique<DirectX::SpriteBatch>(context);
 
 
 
-	CreateNumberTex(L"Resources/Textures/Number.png", m_texture, m_texCenter);
-	CreateTex(L"Resources/Textures/ten.png", m_tenTexture, m_tenTexCenter);
-	CreateTex(L"Resources/Textures/TimeTex.png", m_timeTexture, m_timeTexCenter);
+	//CreateNumberTex(L"Resources/Textures/Number.png", m_texture, m_texCenter);
+	//CreateTex(L"Resources/Textures/ten.png", m_tenTexture, m_tenTexCenter);
+	//CreateTex(L"Resources/Textures/TimeTex.png", m_timeTexture, m_timeTexCenter);
 
 
 	//いつの番号ごとの幅と高さが必要
@@ -83,7 +82,7 @@ void Timer::Update(float elapsedTime)
 
 	UNREFERENCED_PARAMETER(elapsedTime);
 
-	TimeCalculation();
+	//TimeCalculation();
 
 	m_totalTime += elapsedTime;
 
@@ -104,14 +103,6 @@ void Timer::Render()
 	float t = fmodf(gameTime, 2.0f);
 
 
-	TexRender(m_timeTexture, m_timeTexCenter, Vector2(m_position.x - a * 3.5, m_position.y), m_scale);
-	OneNumberRender(m_minFirstDigit, Vector2(m_position.x - a * 2, m_position.y),m_scale);
-	OneNumberRender(m_minSecondDigit, Vector2(m_position.x - a , m_position.y), m_scale);
-	if (t <= 1.0f)
-	{
-		TexRender(m_tenTexture, m_tenTexCenter, m_position, m_scale);
-	}
-	OneNumberRender(m_secFirstDigit, Vector2(m_position.x + a , m_position.y), m_scale);
 	OneNumberRender(m_secSecondDigit, Vector2(m_position.x + a * 2, m_position.y), m_scale);
 
 
@@ -135,46 +126,46 @@ void Timer::CreateNumberTex(const wchar_t* szFileName,Microsoft::WRL::ComPtr<ID3
 				tex.ReleaseAndGetAddressOf()
 			)
 		);
-		
 
-		// １つの番号の中心座標
-		texCenter = Vector2(m_width,m_height) ;
 
+	// １つの番号の中心座標
+	texCenter = Vector2(m_width,m_height);
 }
 
 void Timer::OneNumberRender(int number,DirectX::SimpleMath::Vector2 Pos, float Scale)
 {
 
-	using namespace DirectX;
-	using namespace DirectX::SimpleMath;
+	//using namespace DirectX;
+	//using namespace DirectX::SimpleMath;
 
-	auto states = m_commonResources->GetCommonStates();
+	//auto states = m_commonResources->GetCommonStates();
 
-	// スプライトバッチの開始：オプションでソートモード、ブレンドステートを指定する
-	m_spriteBatch->Begin(SpriteSortMode_Deferred, states->NonPremultiplied());
+	//// スプライトバッチの開始：オプションでソートモード、ブレンドステートを指定する
+	//m_spriteBatch->Begin(SpriteSortMode_Deferred, states->NonPremultiplied());
 
-	//いつの番号ごとの幅と高さが必要
-	float Width = 120;   //幅
-	float Hight = 142;   //高さ
+	////いつの番号ごとの幅と高さが必要
+	//float Width = 120;   //幅
+	//float Hight = 142;   //高さ
 
-	RECT NumberRECT{ 0 + number * static_cast<LONG>( Width), 1,
-			110 + number * static_cast<LONG>(Width), static_cast<LONG>(Hight) };
+	//RECT NumberRECT{ 0 + number * static_cast<LONG>( Width), 1,
+	//		110 + number * static_cast<LONG>(Width), static_cast<LONG>(Hight) };
 
-	//PushSpaceの描画
-	m_spriteBatch->Draw(
-		m_texture.Get(),	// テクスチャ(SRV)
-		Pos,				// スクリーンの表示位置(originの描画位置)
-		&NumberRECT,			// 矩形(RECT)
-		Colors::White,		// 背景色
-		0.0f,				// 回転角(ラジアン)
-		Vector2(Width / 2, Hight / 2),		// テクスチャの基準になる表示位置(描画中心)(origin)
-		Scale,				// スケール(scale)
-		SpriteEffects_None,	// エフェクト(effects)
-		0.0f				// レイヤ深度(画像のソートで必要)(layerDepth)
-	);
+	////PushSpaceの描画
+	//m_spriteBatch->Draw(
+	//	m_texture.Get(),	// テクスチャ(SRV)
+	//	Pos,				// スクリーンの表示位置(originの描画位置)
+	//	&NumberRECT,			// 矩形(RECT)
+	//	Colors::White,		// 背景色
+	//	0.0f,				// 回転角(ラジアン)
+	//	Vector2(Width / 2, Hight / 2),		// テクスチャの基準になる表示位置(描画中心)(origin)
+	//	Scale,				// スケール(scale)
+	//	SpriteEffects_None,	// エフェクト(effects)
+	//	0.0f				// レイヤ深度(画像のソートで必要)(layerDepth)
+	//);
 
-	// スプライトバッチの終わり
-	m_spriteBatch->End();
+	//// スプライトバッチの終わり
+	//m_spriteBatch->End();
+
 }
 
 void Timer::TexRender(Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& Tex, DirectX::SimpleMath::Vector2& Center, DirectX::SimpleMath::Vector2 Pos, float Scale)
@@ -184,27 +175,28 @@ void Timer::TexRender(Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& Tex, Dir
 	auto states = m_commonResources->GetCommonStates();
 
 
-	// スプライトバッチの開始：オプションでソートモード、ブレンドステートを指定する
-	m_spriteBatch->Begin(SpriteSortMode_Deferred, states->NonPremultiplied());
+	//// スプライトバッチの開始：オプションでソートモード、ブレンドステートを指定する
+	//m_spriteBatch->Begin(SpriteSortMode_Deferred, states->NonPremultiplied());
 
-	// Titleを描画する
-	m_spriteBatch->Draw(
-		Tex.Get(),	// テクスチャ(SRV)
-		Pos,				// スクリーンの表示位置(originの描画位置)
-		nullptr,			// 矩形(RECT)
-		Colors::White,		// 背景色
-		0.0f,				// 回転角(ラジアン)
-		Center,		// テクスチャの基準になる表示位置(描画中心)(origin)
-		Scale,				// スケール(scale)
-		SpriteEffects_None,	// エフェクト(effects)
-		0.0f				// レイヤ深度(画像のソートで必要)(layerDepth)
-	);
+	//// Titleを描画する
+	//m_spriteBatch->Draw(
+	//	Tex.Get(),	// テクスチャ(SRV)
+	//	Pos,				// スクリーンの表示位置(originの描画位置)
+	//	nullptr,			// 矩形(RECT)
+	//	Colors::White,		// 背景色
+	//	0.0f,				// 回転角(ラジアン)
+	//	Center,		// テクスチャの基準になる表示位置(描画中心)(origin)
+	//	Scale,				// スケール(scale)
+	//	SpriteEffects_None,	// エフェクト(effects)
+	//	0.0f				// レイヤ深度(画像のソートで必要)(layerDepth)
+	//);
+	//// スプライトバッチの終わり
+	//m_spriteBatch->End();
 
 
-	// スプライトバッチの終わり
-	m_spriteBatch->End();
 
 }
+
 
 
 void Timer::CreateTex(const wchar_t* szFileName, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& tex, DirectX::SimpleMath::Vector2& texCenter)
@@ -223,6 +215,8 @@ void Timer::CreateTex(const wchar_t* szFileName, Microsoft::WRL::ComPtr<ID3D11Sh
 			tex.ReleaseAndGetAddressOf()
 		)
 	);
+
+
 
 
 	/*
@@ -253,12 +247,9 @@ void Timer::CreateTex(const wchar_t* szFileName, Microsoft::WRL::ComPtr<ID3D11Sh
 
 }
 
-/// <summary>
-/// titalTimeから時間を求める
-/// </summary>
 void Timer::TimeCalculation()
 {
-	int time = static_cast<int>( m_totalTime);
+	int time = static_cast<int>(m_totalTime);
 	int min = (time % 3600) / 60;
 	int sec = time % 60;
 
@@ -268,9 +259,3 @@ void Timer::TimeCalculation()
 	m_secSecondDigit = sec % 10;
 }
 
-void Timer::TimeReset()
-{
-
-	m_totalTime = 0;
-
-}

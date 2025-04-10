@@ -188,11 +188,10 @@ void BehaviorTree::Initialize(CommonResources* resources)
 	m_root = std::make_unique<Root>();
 	//RootSequenceƒm[ƒh‚Ì’Ç‰Á
 	m_root->AddNode(std::move(rootSelector));
-
-
-
+	
 	//ó‘Ô‚Ì‰Šú‰»
 	m_currentState = IBehaviorNode::State::Failure;
+
 
 }
 

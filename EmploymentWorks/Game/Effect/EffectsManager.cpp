@@ -286,7 +286,7 @@ void EffectsManager::Notify(EventParams::EventType type, void* datas)
 			CreateParticle(datas);
 			break;
 		case EventParams::EventType::CreateHitEffect:
-			CreateHitEffect(datas);
+			//CreateHitEffect(datas);
 			break;
 		case EventParams::EventType::CreateChageEffect:
 			CreateChargeEffect(datas);

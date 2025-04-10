@@ -8,7 +8,6 @@
 #include "Game/Player/Player.h"
 #include "Game/Player/State/PlayerStateMachine.h"
 #include "Game/Weapon/Boomerang/State/BoomerangStateMachine.h"
-#include "Libraries/WataLib/DrawTexture.h"
 #include "Game/Scene/PlayScene.h"
 #include "Libraries/WataLib/UserInterface.h"
 
