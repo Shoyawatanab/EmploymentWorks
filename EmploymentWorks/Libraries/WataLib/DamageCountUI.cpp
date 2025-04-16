@@ -132,7 +132,7 @@ void WataLib::DamageCountUI::Initialize()
 	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
 
 	m_backGraund = std::make_unique<UserInterface>();
-	m_backGraund = LoadTexture(L"Resources/Textures/DamageBackGraund.png"
+	m_backGraund = LoadTexture("DamageBackGraund"
 		, Vector2(640, 50)
 		, Vector2(1.0f, 1.0f)
 	);
@@ -209,13 +209,13 @@ void WataLib::DamageCountUI::Finalize()
 
 }
 
-std::unique_ptr<UserInterface> WataLib::DamageCountUI::LoadTexture(const wchar_t* path, DirectX::SimpleMath::Vector2 position, DirectX::SimpleMath::Vector2 scale)
+std::unique_ptr<UserInterface> WataLib::DamageCountUI::LoadTexture(std::string key, DirectX::SimpleMath::Vector2 position, DirectX::SimpleMath::Vector2 scale)
 {
 	//  メニューとしてアイテムを追加する
 	std::unique_ptr<UserInterface> userInterface = std::make_unique<UserInterface>();
 	//  指定された画像を表示するためのアイテムを作成する
-	userInterface->Create(m_commonResources->GetDeviceResources()
-		, path
+	userInterface->Create(m_commonResources
+		, key
 		, position
 		, scale
 	);

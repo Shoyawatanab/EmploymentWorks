@@ -24,6 +24,7 @@ EnemyEntity::EnemyEntity(CommonResources* resources
 {
 
 
+
 }
 
 /// <summary>

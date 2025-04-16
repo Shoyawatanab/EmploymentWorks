@@ -46,18 +46,15 @@ void EnemyManager::Initialize(CommonResources* resources)
 	assert(resources);
 	m_commonResources = resources;
 
-
+	//“G‚Ì¶¬
 	CreateEnemy();
-
 
 	//c‚è‚Ì“G‚Ì•Ï”‚É‘ã“ü
 	for (auto& enemy : m_enemys)
 	{
 		m_remainingEnemys.push_back(enemy.get());
 	}
-
-
-
+	
 }
 
 /// <summary>

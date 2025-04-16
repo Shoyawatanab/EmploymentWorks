@@ -110,13 +110,13 @@ void GamePlayUI::AddPointer(Player* player, EnemyManager* enemyManager)
 /// <param name="anchor">アンカー</param>
 /// <param name="kind">種類</param>
 /// <returns>UIのポインタ</returns>
-std::unique_ptr<UserInterface> GamePlayUI::AddTexture(const wchar_t* path, DirectX::SimpleMath::Vector2 position, DirectX::SimpleMath::Vector2 scale)
+std::unique_ptr<UserInterface> GamePlayUI::AddTexture(std::string key, DirectX::SimpleMath::Vector2 position, DirectX::SimpleMath::Vector2 scale)
 {
 	//  メニューとしてアイテムを追加する
 	std::unique_ptr<UserInterface> userInterface = std::make_unique<UserInterface>();
 	//  指定された画像を表示するためのアイテムを作成する
-	userInterface->Create(m_commonResources->GetDeviceResources()
-		, path
+	userInterface->Create(m_commonResources
+		, key
 		, position
 		, scale
 		);
@@ -131,17 +131,17 @@ std::unique_ptr<UserInterface> GamePlayUI::AddTexture(const wchar_t* path, Direc
 void GamePlayUI::CreateEnemyHP()
 {
 
-	m_enemyHPBase.push_back(AddTexture(L"Resources/Textures/BossHPBase.png"
+	m_enemyHPBase.push_back(AddTexture("BossHPBase"
 		, Vector2(640, 50)
 		, Vector2(0.9f, 0.5f)
 		));
 
-	m_enemyHP = AddTexture(L"Resources/Textures/EnemyHP.png"
+	m_enemyHP = AddTexture("EnemyHP"
 		, Vector2(640, 50)
 		, Vector2(0.91f, 0.39f)
 		);
 
-	m_enemyHPBase.push_back(AddTexture(L"Resources/Textures/EnemyName.png"
+	m_enemyHPBase.push_back(AddTexture("EnemyName"
 		, Vector2(640, 25)
 		, Vector2(0.3f, 0.3f)
 		));
@@ -159,7 +159,7 @@ void GamePlayUI::CreatePlayerHP()
 	for (int i = 0; i < HP_COUNT; i++)
 	{
 		auto texture = std::make_unique<UserInterface>();
-		texture->Create(m_commonResources->GetDeviceResources(), L"Resources/Textures/HP.png"
+		texture->Create(m_commonResources, "HP"
 			, HP_POSITION + (HP_POSITION_OFFSET * i), HP_SCALE);
 
 		m_playerHP.push_back(std::move(texture));
@@ -176,7 +176,7 @@ void GamePlayUI::CreateBoomerang()
 	for (int i = 0; i < BOOMERANG_COUNT; i++)
 	{
 		auto texture = std::make_unique<UserInterface>();
-		texture->Create(m_commonResources->GetDeviceResources(), L"Resources/Textures/BoomerangUI.png"
+		texture->Create(m_commonResources, "BoomerangUI"
 			, BOOMERANG_POSITION + (BOOMERANG_POSITION_OFFSET * i), BOOMERANG_SCALE);
 
 		m_boomerang.push_back(std::move(texture));
@@ -232,24 +232,24 @@ void GamePlayUI::Initialize(CommonResources* resources)
 	CreateBoomerang();
 	CreateEnemyHP();
 
-	m_itemAcquisitionUI = AddTexture(L"Resources/Textures/F.png"
+	m_itemAcquisitionUI = AddTexture("F"
 		, Vector2(750, 600)
 		, Vector2(0.15f, 0.15f)
 		);
 
 	m_itemAcquisitionUI->SetIsActive(false);
 
-	m_throwUI.push_back(AddTexture(L"Resources/Textures/RightThrow.png"
+	m_throwUI.push_back(AddTexture("RightThrow"
 		, Vector2(1220, 500)
 		, Vector2(0.2f, 0.2f)
 		));
 
-	m_throwUI.push_back(AddTexture(L"Resources/Textures/FrontThrow.png"
+	m_throwUI.push_back(AddTexture("FrontThrow"
 		, Vector2(1220, 550)
 		, Vector2(0.2f, 0.2f)
 		));
 
-	m_throwUI.push_back(AddTexture(L"Resources/Textures/LeftThrow.png"
+	m_throwUI.push_back(AddTexture("LeftThrow"
 		, Vector2(1220, 600)
 		, Vector2(0.2f, 0.2f)
 		));
@@ -382,6 +382,31 @@ void GamePlayUI::Notify(EventParams::EventType type, void* datas)
 		default:
 			break;
 	}
+}
+
+/// <summary>
+/// 通知を受け取る
+/// </summary>
+/// <param name="objectID"></param>
+/// <param name="messegeId"></param>
+void GamePlayUI::Notify(Message::MessageID messegeId)
+{
+	//メッセージID
+	switch (messegeId)
+	{
+		//プレイヤのダメージ
+		case Message::PlayerDamage:
+			//関数の呼び出し
+			PlayerDamage();
+			break;
+		default:
+			break;
+	}
+}
+
+
+void GamePlayUI::PlayerDamage()
+{
 }
 
 

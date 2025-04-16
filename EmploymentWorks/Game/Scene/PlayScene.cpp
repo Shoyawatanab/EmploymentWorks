@@ -177,11 +177,14 @@ void PlayScene::Initialize(CommonResources* resources)
 	//sm_soundEffectInstanceBGM->Play(true);
 
 	m_tutorialTex = std::make_unique<UserInterface>();
-	m_tutorialTex->Create(m_commonResources->GetDeviceResources(), L"Resources/Textures/Tex.png", Vector2(640, 360), Vector2::One);
+	m_tutorialTex->Create(m_commonResources, "Tex", Vector2(640, 360), Vector2::One);
 
 	m_isTutolialTex = false;
 
 	m_commonResources->GetScore()->AddScore(100.0f);
+
+	ShowCursor(FALSE);
+
 }
 
 //---------------------------------------------------------

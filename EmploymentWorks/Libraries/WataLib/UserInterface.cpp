@@ -18,6 +18,8 @@
 #include <CommonStates.h>
 #include <vector>
 #include "Game/Screen.h"
+#include "Libraries/WataLib/GameResources.h"
+#include "Game/CommonResources.h"
 
 using namespace DirectX;
 
@@ -35,7 +37,8 @@ const std::vector<D3D11_INPUT_ELEMENT_DESC> UserInterface::INPUT_LAYOUT =
 /// コンストラクタ
 /// </summary>
 UserInterface::UserInterface()
-	:m_pDR(nullptr)
+	:
+	m_commonResources{}
 	, m_textureHeight(0)
 	, m_textureWidth(0)
 	, m_texture(nullptr)
@@ -57,46 +60,39 @@ UserInterface::~UserInterface()
 {
 }
 
-/// <summary>
-/// テクスチャリソース読み込み関数
-/// </summary>
-/// <param name="path">相対パス(Resources/Textures/・・・.pngなど）</param>
-void UserInterface::LoadTexture(const wchar_t* path)
+
+
+void UserInterface::LoadTexture(std::string key)
 {
-	//	善子画像を読み込む
-	/*HRESULT result; = DirectX::CreateWICTextureFromFile(m_pDR->GetD3DDevice(), L"Resources/Textures/yoshiko.jpg", m_yoshiRes.ReleaseAndGetAddressOf(), m_yoshiTexture.ReleaseAndGetAddressOf());
-	Microsoft::WRL::ComPtr<ID3D11Texture2D> yoshiTex;
-	DX::ThrowIfFailed(m_yoshiRes.As(&yoshiTex));*/
 
-	//	指定された画像を読み込む
-	DirectX::CreateWICTextureFromFile(m_pDR->GetD3DDevice(), path, m_res.ReleaseAndGetAddressOf(), m_texture.ReleaseAndGetAddressOf());
+	//画像の取得
+	m_texture = m_commonResources->GetGameResources()->GetTexture(key);
+
+	//シェーダーリソースビューから画像情報の取得
+	Microsoft::WRL::ComPtr<ID3D11Resource> resource;
+	m_texture->GetResource(&resource);
+
+	//リソースをTexture2Dにキャスト
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> tex;
-	DX::ThrowIfFailed(m_res.As(&tex));
+	DX::ThrowIfFailed(resource.As(&tex));
 
-	//	読み込んだ画像の情報を取得する
+	//画像情報を取得
 	D3D11_TEXTURE2D_DESC desc;
 	tex->GetDesc(&desc);
 
-	//	読み込んだ画像のサイズを取得する
+	//画像のサイズを取得
 	m_textureWidth = desc.Width;
 	m_textureHeight = desc.Height;
-
-
+	
 
 }
 
-/// <summary>
-/// 生成関数
-/// </summary>
-/// <param name="pDR">ユーザーリソース等から持ってくる</param>
-void UserInterface::Create(DX::DeviceResources* pDR
-	, const wchar_t* path
-	, DirectX::SimpleMath::Vector2 position
-	, DirectX::SimpleMath::Vector2 scale
-	)
+
+void UserInterface::Create(CommonResources* resources, std::string key, DirectX::SimpleMath::Vector2 position, DirectX::SimpleMath::Vector2 scale)
 {
-	m_pDR = pDR;
-	auto device = pDR->GetD3DDevice();
+	m_commonResources = resources;
+	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
+	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
 	m_position = position;
 	m_initialPosition = position;
 	m_scale = scale;
@@ -106,13 +102,12 @@ void UserInterface::Create(DX::DeviceResources* pDR
 	CreateUIShader();
 
 	//	画像の読み込み
-	LoadTexture(path);
+	LoadTexture(key);
 
 	//	プリミティブバッチの作成
-	m_batch = std::make_unique<PrimitiveBatch<VertexPositionColorTexture>>(pDR->GetD3DDeviceContext());
+	m_batch = std::make_unique<PrimitiveBatch<VertexPositionColorTexture>>(context);
 
 	m_states = std::make_unique<CommonStates>(device);
-
 
 }
 
@@ -137,7 +132,7 @@ void UserInterface::SetRenderRatio(float ratio)
 
 void UserInterface::CreateUIShader()
 {
-	auto device = m_pDR->GetD3DDevice();
+	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
 
 	//	コンパイルされたシェーダファイルを読み込み
 	BinaryFile VSData = BinaryFile::LoadFile(L"Resources/Shaders/UIVS.cso");
@@ -193,7 +188,7 @@ void UserInterface::Render()
 		return;
 	}
 
-	auto context = m_pDR->GetD3DDeviceContext();
+	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
 	// 頂点情報
 	// Position.xy	:拡縮用スケール
 	// Position.z	:アンカータイプ(0～8)の整数で指定

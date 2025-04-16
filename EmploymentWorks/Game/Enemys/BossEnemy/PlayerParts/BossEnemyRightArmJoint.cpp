@@ -3,6 +3,7 @@
 #include "Game/CommonResources.h"
 #include "DeviceResources.h"
 #include "Libraries/WataLib/Animation.h"
+#include "Libraries/WataLib/GameResources.h"
 
 #include "Game/CollisiionManager.h"
 #include "Libraries/WataLib/Bounding.h"
@@ -46,17 +47,10 @@ BossEnemyRightArmJoint::~BossEnemyRightArmJoint()
 void BossEnemyRightArmJoint::Initialize()
 {
 
-	auto device = BaseEntity::GetCommonResources()->GetDeviceResources()->GetD3DDevice();
-
-
-	//// ƒ‚ƒfƒ‹‚ğ“Ç‚İ‚Ş€”õ
-	std::unique_ptr<DirectX::EffectFactory> fx = std::make_unique<DirectX::EffectFactory>(device);
-	fx->SetDirectory(L"Resources/Models");
-
 	//// ƒ‚ƒfƒ‹‚ğ“Ç‚İ‚Ş
-	auto model = DirectX::Model::CreateFromCMO(device, L"Resources/Models/BossEnemyArmJoint.cmo", *fx);
+	auto model = BaseEntity::GetCommonResources()->GetGameResources()->GetModel("BossEnemyArmJoint");
 
-	BossEnemyPartsBase::SetModel(std::move(model));
+	BossEnemyPartsBase::SetModel(model);
 
 	BossEnemyPartsBase::Initialize();
 

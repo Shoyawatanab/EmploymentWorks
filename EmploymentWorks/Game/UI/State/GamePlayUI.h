@@ -19,6 +19,26 @@ namespace WataLib
 }
 
 
+class Message
+{
+public:
+	// メッセージID
+	enum MessageID : int
+	{
+		// ボール状態
+		TOUCH = 0,									// 「ボールに触れた」状態
+		KICK,												// 「キック」状態
+		STOPPING,									// 「停止」状態
+		MOVING,										// 「移動」状態
+		// プレイヤー状態
+		IDLING = 10,								// アイドリング状態
+		STRIKE_FORWARDING			// ストライクフォワーディング状態
+
+		, PlayerDamage
+	};
+};
+
+
 class GamePlayUI : public IState ,  public IObserver
 {
 
@@ -37,6 +57,8 @@ private :
 	static constexpr DirectX::SimpleMath::Vector2 MOVEPOSITION = { -50.0f,0.0f };
 
 	static constexpr int MAXDAMAGEUICOUNT = 10;
+
+
 
 public:
 	//コンストラクタ
@@ -58,7 +80,7 @@ public:
 	void AddPointer(Player* player, EnemyManager* enemyManager);
 
 	//画像の読み込み
-	std::unique_ptr<UserInterface> AddTexture(const wchar_t* path
+	std::unique_ptr<UserInterface> AddTexture(std::string key
 		, DirectX::SimpleMath::Vector2 position
 		, DirectX::SimpleMath::Vector2 scale
 		);
@@ -78,10 +100,13 @@ public:
 	void Notify(EventParams::EventType type, void* datas)  override;
 
 
+public:
+
+	void Notify(Message::MessageID);
+
 private:
 
-	
-
+	void PlayerDamage();
 
 private:
 	// 共通リソース

@@ -15,8 +15,8 @@ class BirdEnemyPartsBase : public CompositeEntity
 
 public:
 
-	DirectX::Model* GetModel() { return m_model.get(); }
-	void  SetModel(std::unique_ptr<DirectX::Model> model) { m_model = std::move(model); }
+	DirectX::Model* GetModel() { return m_model; }
+	void  SetModel(DirectX::Model* model) { m_model = model; }
 
 public:
 	BirdEnemyPartsBase(CommonResources* resources,
@@ -71,7 +71,7 @@ public:
 
 private:
 	//
-	std::unique_ptr<DirectX::Model> m_model;
+	DirectX::Model* m_model;
 	//ÉpÅ[Écñº
 	std::string m_partsName;
 

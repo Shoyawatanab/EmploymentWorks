@@ -146,9 +146,6 @@
     <Filter Include="Game\Enemys\BossEnemy\ActionNode\BeamAttack">
       <UniqueIdentifier>{35cd7c3f-f298-42fd-96e2-6ad2c667c216}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\StageObject\Pillar">
-      <UniqueIdentifier>{98128933-7313-4ac0-b1d3-9eff2d993e6a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\Enemys\BossEnemy\ActionNode\RisingPillar">
       <UniqueIdentifier>{54e41460-1a60-4712-8c17-81e0ae911ab7}</UniqueIdentifier>
     </Filter>
@@ -612,9 +609,6 @@
     <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\BeamAttack\BossBeamAttackAction.h">
       <Filter>Game\Enemys\BossEnemy\ActionNode\BeamAttack</Filter>
     </ClInclude>
-    <ClInclude Include="Game\StageObject\Pillar\Pillar.h">
-      <Filter>Game\StageObject\Pillar</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Player\State\PlayerAttack.h">
       <Filter>Game\Player\PlayerState</Filter>
     </ClInclude>
@@ -725,6 +719,9 @@
     </ClInclude>
     <ClInclude Include="Libraries\WataLib\DrawNumber.h">
       <Filter>Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="Libraries\WataLib\GameResources.h">
+      <Filter>Libraries\WataLib</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1079,9 +1076,6 @@
     <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\BeamAttack\BossBeamAttackAction.cpp">
       <Filter>Game\Enemys\BossEnemy\ActionNode\BeamAttack</Filter>
     </ClCompile>
-    <ClCompile Include="Game\StageObject\Pillar\Pillar.cpp">
-      <Filter>Game\StageObject\Pillar</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Player\State\PlayerAttack.cpp">
       <Filter>Game\Player\PlayerState</Filter>
     </ClCompile>
@@ -1189,6 +1183,9 @@
     </ClCompile>
     <ClCompile Include="Libraries\WataLib\DrawNumber.cpp">
       <Filter>Libraries</Filter>
+    </ClCompile>
+    <ClCompile Include="Libraries\WataLib\GameResources.cpp">
+      <Filter>Libraries\WataLib</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

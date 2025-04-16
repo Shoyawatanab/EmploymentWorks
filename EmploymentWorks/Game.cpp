@@ -24,6 +24,7 @@ Game::Game() noexcept(false)
     m_sceneManager{}
     ,m_fade{}
     ,m_fullScreen{false}
+    ,m_gameResources{}
 {
     m_deviceResources = std::make_unique<DX::DeviceResources>();
     // TODO: Provide parameters for swapchain format, depth/stencil format, and backbuffer count.
@@ -69,6 +70,9 @@ void Game::Initialize(HWND window, int width, int height)
 
     //スコアクラスの作成
     m_score = std::make_unique<Score>();
+
+    //ゲームリソースクラスの作成
+    m_gameResources = std::make_unique<WataLib::GameResources>(m_deviceResources->GetD3DDevice());
     
 
     // デバッグ文字列を作成する
@@ -90,6 +94,7 @@ void Game::Initialize(HWND window, int width, int height)
         m_inputManager.get(),
         m_fade.get(),
         m_score.get()
+        ,m_gameResources.get()
     );
 
     m_score->Initialize(m_commonResources.get());
@@ -99,6 +104,8 @@ void Game::Initialize(HWND window, int width, int height)
     m_sceneManager->Initialize(m_commonResources.get());
 
     m_timer.SetFixedTimeStep(true);
+
+
 
     // ★追記ココまで↑↑↑★
 

@@ -123,8 +123,6 @@ void BehaviorTree::Initialize(CommonResources* resources)
 	//Sequene‚Ì’Ç‰Á
 	underAttack->AddNode(std::move(barrirSequence));
 
-
-
 	//Selector
 	auto halfHPSelector = std::make_unique<SelectorNode>();
 	//–hŒä
@@ -176,7 +174,6 @@ void BehaviorTree::Initialize(CommonResources* resources)
 	//Sequence‚Ì’Ç‰Á
 	maxHPDecoratior->AddNode(std::move(maxHpSequence));
 ////////
-
 
 	auto rootSelector = std::make_unique<SelectorNode>();
 	//HP‚ªÅ‘å‚Ì’Ç‰Á

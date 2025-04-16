@@ -6,6 +6,8 @@
 #include "Wall.h"
 #include "Game/CommonResources.h"
 #include "DeviceResources.h"
+#include "Libraries/WataLib/GameResources.h"
+
 #include "Game/CollisiionManager.h"
 #include "Libraries/WataLib/Bounding.h"
 
@@ -40,12 +42,8 @@ void Wall::Initialize()
 
 	auto device = BaseEntity::GetCommonResources()->GetDeviceResources()->GetD3DDevice();
 
-	// ƒ‚ƒfƒ‹‚ğ“Ç‚İ‚Ş€”õ
-	std::unique_ptr<DirectX::EffectFactory> fx = std::make_unique<DirectX::EffectFactory>(device);
-	fx->SetDirectory(L"Resources/Models");
-
 	// ƒ‚ƒfƒ‹‚ğ“Ç‚İ‚Ş
-	m_model = DirectX::Model::CreateFromCMO(device, L"Resources/Models/Wall.cmo", *fx);
+	m_model = BaseEntity::GetCommonResources()->GetGameResources()->GetModel("Wall");
 
 	//“–‚½‚è”»’è‚Ìì¬
 	CollisionEntity::GetBounding()->CreateBoundingSphere(BaseEntity::GetPosition(), 50.0f);

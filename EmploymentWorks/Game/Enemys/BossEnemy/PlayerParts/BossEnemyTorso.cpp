@@ -3,6 +3,7 @@
 #include "Game/CommonResources.h"
 #include "DeviceResources.h"
 #include "Libraries/WataLib/Animation.h"
+#include "Libraries/WataLib/GameResources.h"
 
 #include "Game/CollisiionManager.h"
 #include "Libraries/WataLib/Bounding.h"
@@ -56,9 +57,9 @@ void BossEnemyTorso::Initialize()
 	fx->SetDirectory(L"Resources/Models");
 
 	//// ƒ‚ƒfƒ‹‚ð“Ç‚Ýž‚Þ
-	auto model = DirectX::Model::CreateFromCMO(device, L"Resources/Models/BossEnemyTorso.cmo", *fx);
+	auto model = BaseEntity::GetCommonResources()->GetGameResources()->GetModel("BossEnemyTorso");
 
-	BossEnemyPartsBase::SetModel(std::move(model));
+	BossEnemyPartsBase::SetModel(model);
 
 	BossEnemyPartsBase::Initialize();
 

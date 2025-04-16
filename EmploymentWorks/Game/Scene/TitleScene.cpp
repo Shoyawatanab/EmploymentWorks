@@ -247,12 +247,12 @@ void TitleScene::Render()
 
 
 
-	//// デバッグ情報を表示する
-	auto debugString = m_commonResources->GetDebugString();
-	////debugString->AddString("Pos %f" ,m_buttom[0]->GetPosition().x);
-	////debugString->AddString("Pos %f" ,m_buttom[0]->GetPosition().y);
-	debugString->AddString("X %d" , m_commonResources->GetDeviceResources()->GetOutputSize().right);
-	debugString->AddString("Y %d" , m_commonResources->GetDeviceResources()->GetOutputSize().bottom);
+	////// デバッグ情報を表示する
+	//auto debugString = m_commonResources->GetDebugString();
+	//////debugString->AddString("Pos %f" ,m_buttom[0]->GetPosition().x);
+	//////debugString->AddString("Pos %f" ,m_buttom[0]->GetPosition().y);
+	//debugString->AddString("X %d" , m_commonResources->GetDeviceResources()->GetOutputSize().right);
+	//debugString->AddString("Y %d" , m_commonResources->GetDeviceResources()->GetOutputSize().bottom);
 
 
 }
@@ -293,22 +293,20 @@ void TitleScene::CreateTextures()
 {
 
 	auto texture = std::make_unique<UserInterface>();
+	//texture->Create(
+	//	m_commonResources->GetDeviceResources(), L"Resources/Textures/Logo.png", DirectX::SimpleMath::Vector2(420, 120), Vector2(0.25f, 0.25f)
+	//);
 	texture->Create(
-		m_commonResources->GetDeviceResources(), L"Resources/Textures/Logo.png", DirectX::SimpleMath::Vector2(420, 120), Vector2(0.25f, 0.25f)
+		m_commonResources, "Logo", DirectX::SimpleMath::Vector2(420, 120), Vector2(0.25f, 0.25f)
 	);
 
 	m_textures.push_back(std::move(texture));
-
-	texture = std::make_unique<UserInterface>();
-	texture->Create(
-		m_commonResources->GetDeviceResources(), L"Resources/Textures/Boomerang.png", DirectX::SimpleMath::Vector2(100, 130), Vector2(0.4f, 0.4f)
-	);
 
 
 	auto buttom = std::make_unique<UserInterface>();
 	//buttom->Initialize(m_commonResources, L"Resources/Textures/PLAY.png", DirectX::SimpleMath::Vector2(1000, 500), Vector2(1.1f, 1.1f));
 
-	buttom->Create(m_commonResources->GetDeviceResources(), L"Resources/Textures/PLAY.png", DirectX::SimpleMath::Vector2(1000, 500), Vector2(1.1f, 1.1f));
+	buttom->Create(m_commonResources, "PLAY", DirectX::SimpleMath::Vector2(1000, 500), Vector2(1.1f, 1.1f));
 
 
 		
@@ -317,7 +315,7 @@ void TitleScene::CreateTextures()
 	buttom = std::make_unique<UserInterface>();
 	//buttom->Initialize(m_commonResources, L"Resources/Textures/EXIT.png", DirectX::SimpleMath::Vector2(1000, 630), Vector2(1.2f, 1.2f));
 
-	buttom->Create(m_commonResources->GetDeviceResources(), L"Resources/Textures/EXIT.png", DirectX::SimpleMath::Vector2(1000, 630), Vector2(1.2f, 1.2f));
+	buttom->Create(m_commonResources, "EXIT", DirectX::SimpleMath::Vector2(1000, 630), Vector2(1.2f, 1.2f));
 
 	m_buttom[1] = std::move(buttom);
 

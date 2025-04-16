@@ -87,7 +87,7 @@ private:
 	//親
 	BaseEntity* m_parent;
 	//モデル
-	std::unique_ptr<DirectX::Model> m_model;
+	DirectX::Model* m_model;
 
 	//ステートマシン
 	std::unique_ptr<BoomerangStateMachine> m_stateMachine;

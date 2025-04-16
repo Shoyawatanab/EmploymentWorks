@@ -59,7 +59,7 @@ namespace WataLib
 	private:
 
 		//‰æ‘œ‚Ì“Ç‚İ‚İ
-		std::unique_ptr<UserInterface> LoadTexture(const wchar_t* path
+		std::unique_ptr<UserInterface> LoadTexture(std::string key
 			, DirectX::SimpleMath::Vector2 position
 			, DirectX::SimpleMath::Vector2 scale
 		);

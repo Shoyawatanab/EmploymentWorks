@@ -55,19 +55,19 @@ void StageSelectScene::Initialize(CommonResources* resources)
 
 	auto buttom = std::make_unique<UserInterface>();
 
-	buttom->Create(m_commonResources->GetDeviceResources(), L"Resources/Textures/Tutorial.png", DirectX::SimpleMath::Vector2(400, 360), Vector2(1.3f, 1.3f));
+	buttom->Create(m_commonResources, "Tutorial", DirectX::SimpleMath::Vector2(400, 360), Vector2(1.3f, 1.3f));
 
 	m_buttom[0] = std::move(buttom);
 
 	buttom = std::make_unique<UserInterface>();
 
-	buttom->Create(m_commonResources->GetDeviceResources(), L"Resources/Textures/Stage1.png", DirectX::SimpleMath::Vector2(880, 360), Vector2(1.3f, 1.3f));
+	buttom->Create(m_commonResources, "Stage1", DirectX::SimpleMath::Vector2(880, 360), Vector2(1.3f, 1.3f));
 
 	m_buttom[1] = std::move(buttom);
 
 	auto texture = std::make_unique<UserInterface>();
 
-	texture->Create(m_commonResources->GetDeviceResources(), L"Resources/Textures/BackGraund.png", Vector2(Screen::CENTER_X, Screen::CENTER_Y), Vector2(0.4f, 0.4f));
+	texture->Create(m_commonResources, "BackGraund", Vector2(Screen::CENTER_X, Screen::CENTER_Y), Vector2(0.4f, 0.4f));
 
 	m_textures.push_back(std::move(texture));
 
@@ -129,6 +129,7 @@ void StageSelectScene::Update(float elapsedTime)
 		if (m_selectButtomId != BUTTOM_INIAL_ID)
 		{
 			m_isChangeScene = true;
+			ShowCursor(FALSE);
 
 			switch (m_selectButtomId)
 			{
@@ -166,12 +167,12 @@ void StageSelectScene::Render()
 		buttom.second->Render();
 	}
 
-	//// デバッグ情報を表示する
-	auto debugString = m_commonResources->GetDebugString();
-	////debugString->AddString("Pos %f" ,m_buttom[0]->GetPosition().x);
-	////debugString->AddString("Pos %f" ,m_buttom[0]->GetPosition().y);
-	debugString->AddString("X %d", m_commonResources->GetDeviceResources()->GetOutputSize().right);
-	debugString->AddString("Y %d", m_commonResources->GetDeviceResources()->GetOutputSize().bottom);
+	////// デバッグ情報を表示する
+	//auto debugString = m_commonResources->GetDebugString();
+	//////debugString->AddString("Pos %f" ,m_buttom[0]->GetPosition().x);
+	//////debugString->AddString("Pos %f" ,m_buttom[0]->GetPosition().y);
+	//debugString->AddString("X %d", m_commonResources->GetDeviceResources()->GetOutputSize().right);
+	//debugString->AddString("Y %d", m_commonResources->GetDeviceResources()->GetOutputSize().bottom);
 
 
 

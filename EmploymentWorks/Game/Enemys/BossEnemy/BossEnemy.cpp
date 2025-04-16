@@ -286,6 +286,20 @@ void BossEnemy::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 
 }
 
+void BossEnemy::OnCollisionStay(CollisionEntity* object, CollisionTag tag)
+{
+	switch (tag)
+	{
+		case CollisionEntity::CollisionTag::Stage:
+			m_velocity.y = 0.0f;
+			break;
+		default:
+			break;
+	}
+
+
+}
+
 
 
 /// <summary>
@@ -294,6 +308,7 @@ void BossEnemy::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 /// <param name="elapsedTime">経過時間</param>
 void BossEnemy::Update(const float& elapsedTime)
 {
+
 
 
 	//オブジェクトか更新が無効なら
@@ -309,6 +324,7 @@ void BossEnemy::Update(const float& elapsedTime)
 		m_beam->Update(elapsedTime);
 		m_barrier->Update(elapsedTime);
 	}
+
 
 	m_velocity.y -= m_gravity * elapsedTime ;
 	
@@ -393,6 +409,8 @@ void BossEnemy::Notify(EventParams::EventType type, void* datas)
 /// <returns>実行結果</returns>
 IBehaviorNode::State BossEnemy::BeamAttack(const float& elapsedTime)
 {
+
+	return m_action["Beam"]->Update(elapsedTime);
 
 	return JumpAttack(elapsedTime);
 
@@ -523,6 +541,7 @@ IBehaviorNode::State BossEnemy::JumpAttack(float elapsdTime)
 	{
 		ChangeAction("JumpAttack");
 	}
+
 
 
 	if (m_isAction)

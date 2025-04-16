@@ -39,7 +39,6 @@ void Messenger::Notify(EventParams::EventType type, void* datas)
 
 	}
 
-
 }
 
 

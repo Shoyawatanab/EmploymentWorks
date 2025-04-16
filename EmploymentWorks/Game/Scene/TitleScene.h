@@ -75,7 +75,7 @@ private:
     //ƒJƒƒ‰
     std::unique_ptr<WataLib::TitleCamera> m_camera;
     //
-    std::vector < std::unique_ptr<UserInterface>> m_textures;
+    std::vector<std::unique_ptr<UserInterface>> m_textures;
 
     std::unordered_map<int,std::unique_ptr<UserInterface>> m_buttom;
 
