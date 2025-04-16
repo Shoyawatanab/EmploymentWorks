@@ -35,6 +35,7 @@ public:
 		if (!m_parent) { m_localScale = scale; };
 
 	};
+
 	//‰ñ“]‚Ìæ“¾
 	const DirectX::SimpleMath::Quaternion& GetRotation() { return m_rotation; };
 	//‰ñ“]‚Ìİ’è

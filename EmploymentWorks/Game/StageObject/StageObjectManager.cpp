@@ -10,7 +10,6 @@
 
 #include "Game/StageObject/Floor.h"
 #include "Game/StageObject/Wall.h"
-#include "Game/StageObject/Pillar/Pillar.h"
 
 //---------------------------------------------------------
 // コンストラクタ
@@ -20,13 +19,6 @@ StageObjectManager::StageObjectManager(CommonResources* resources)
 	m_commonResources{resources}
 	,m_stageObjects{}
 {
-	for (int i = 0; i < 10; i++)
-	{
-		auto pillar = std::make_unique<Pillar>(m_commonResources);
-
-		AddObject("Pillar", std::move(pillar));
-
-	}
 
 
 

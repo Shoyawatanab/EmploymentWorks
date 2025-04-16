@@ -107,7 +107,7 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11Buffer>	m_CBuffer;
 
 	// ƒ‚ƒfƒ‹
-	std::unique_ptr<DirectX::Model> m_model;
+	DirectX::Model* m_model;
 
 	DirectX::SimpleMath::Vector3 m_iniialPosition;
 	DirectX::SimpleMath::Quaternion m_initialRotate;

@@ -19,6 +19,10 @@ namespace mylib
 	class InputManager;
 }
 
+namespace WataLib
+{
+	class GameResources;
+}
 
 // ã§í ÉäÉ\Å[ÉX
 class CommonResources
@@ -39,6 +43,8 @@ private:
 
 	Score* m_score;
 
+	WataLib::GameResources* m_gameResources;
+
 public:
 	CommonResources();
 	~CommonResources() = default;
@@ -50,7 +56,8 @@ public:
 		mylib::DebugString* debugString,
 		mylib::InputManager* inputManager,
 		Fade* fade,
-		Score* score
+		Score* score,
+		WataLib::GameResources* gameResources
 	);
 
 	// getter
@@ -87,6 +94,11 @@ public:
 	Score* GetScore() const
 	{
 		return m_score;
+	}
+
+	WataLib::GameResources* GetGameResources() const
+	{
+		return m_gameResources;
 	}
 
 };

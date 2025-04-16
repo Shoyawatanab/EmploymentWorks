@@ -2,6 +2,7 @@
 #include "BossEnemyBottom.h"
 #include "Game/CommonResources.h"
 #include "DeviceResources.h"
+#include "Libraries/WataLib/GameResources.h"
 #include "Libraries/WataLib/Animation.h"
 
 #include "Game/CollisiionManager.h"
@@ -50,18 +51,10 @@ BossEnemyBottom::~BossEnemyBottom()
 /// </summary>
 void BossEnemyBottom::Initialize()
 {
+	// ƒ‚ƒfƒ‹‚ğ“Ç‚İ‚Ş
+	auto model = BaseEntity::GetCommonResources()->GetGameResources()->GetModel("BossEnemyBottom");
 
-	auto device = BaseEntity::GetCommonResources()->GetDeviceResources()->GetD3DDevice();
-
-
-	//// ƒ‚ƒfƒ‹‚ğ“Ç‚İ‚Ş€”õ
-	std::unique_ptr<DirectX::EffectFactory> fx = std::make_unique<DirectX::EffectFactory>(device);
-	fx->SetDirectory(L"Resources/Models");
-
-	//// ƒ‚ƒfƒ‹‚ğ“Ç‚İ‚Ş
-	auto model = DirectX::Model::CreateFromCMO(device, L"Resources/Models/BossEnemyBottom.cmo", *fx);
-
-	BossEnemyPartsBase::SetModel(std::move(model));
+	BossEnemyPartsBase::SetModel(model);
 
 	BossEnemyPartsBase::Initialize();
 

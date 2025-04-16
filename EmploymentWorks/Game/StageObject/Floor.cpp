@@ -6,6 +6,9 @@
 #include "Floor.h"
 #include "Game/CommonResources.h"
 #include "DeviceResources.h"
+#include "Libraries/WataLib/GameResources.h"
+
+
 #include "Libraries/WataLib/Bounding.h"
 #include "Game/CollisiionManager.h"
 
@@ -43,12 +46,8 @@ void Floor::Initialize()
 
 	auto device = BaseEntity::GetCommonResources()->GetDeviceResources()->GetD3DDevice();
 
-	// ƒ‚ƒfƒ‹‚ğ“Ç‚İ‚Ş€”õ
-	std::unique_ptr<DirectX::EffectFactory> fx = std::make_unique<DirectX::EffectFactory>(device);
-	fx->SetDirectory(L"Resources/Models");
-
 	// ƒ‚ƒfƒ‹‚ğ“Ç‚İ‚Ş
-	m_model = DirectX::Model::CreateFromCMO(device, L"Resources/Models/Floor.cmo", *fx);
+	m_model = BaseEntity::GetCommonResources()->GetGameResources()->GetModel("Floor");
 
 	//“–‚½‚è”»’è‚Ìì¬
 	CollisionEntity::GetBounding()->CreateBoundingSphere(BaseEntity::GetPosition(), SPHERE_COLLIDER_SIZE);

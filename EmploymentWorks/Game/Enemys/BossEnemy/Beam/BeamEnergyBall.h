@@ -101,7 +101,7 @@ private:
 
 
 	// ƒ‚ƒfƒ‹
-	std::unique_ptr<DirectX::Model> m_model;
+	DirectX::Model* m_model;
 	
 
 	DirectX::SimpleMath::Quaternion m_initialRotate;

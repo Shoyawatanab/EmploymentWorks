@@ -15,6 +15,7 @@
 #include "Libraries/MyLib/InputManager.h"
 #include "Libraries/WataLib/Fade.h"
 #include "Game/Score.h"
+#include "Libraries/WataLib/GameResources.h"
 
 // A basic game implementation that creates a D3D11 device and
 // provides a game loop.
@@ -91,6 +92,8 @@ private:
     std::unique_ptr<Fade>                  m_fade;
 
     std::unique_ptr<Score>                m_score;
+
+    std::unique_ptr<WataLib::GameResources> m_gameResources;
 
 
     // š’Ç‹LƒRƒR‚Ü‚Åªªªš

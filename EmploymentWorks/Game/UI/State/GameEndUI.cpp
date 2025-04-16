@@ -95,20 +95,20 @@ void GameEndUI::CreateTexture()
 {
 
 	m_clearBackGraund->Create(
-		m_commonResources->GetDeviceResources(), L"Resources/Textures/ClearBackGraund.png"
+		m_commonResources, "ClearBackGraund"
 		, CENTERPOSITION, Vector2::Zero
 	);	
 	m_overBackGraund->Create(
-		m_commonResources->GetDeviceResources(), L"Resources/Textures/GameOver.png"
+		m_commonResources, "GameOver"
 		, CENTERPOSITION, Vector2::Zero
 	);
 	m_titleUI->Create(
-		m_commonResources->GetDeviceResources(), L"Resources/Textures/ClearTitleTex.png"
+		m_commonResources, "ClearTitleTex"
 		, CENTERPOSITION, Vector2::Zero
 	);
 
 	m_reTryUI->Create(
-		m_commonResources->GetDeviceResources(), L"Resources/Textures/ClearReTryTex.png"
+		m_commonResources, "ClearReTryTex"
 		, CENTERPOSITION, Vector2::Zero
 	);
 
@@ -170,7 +170,7 @@ void GameEndUI::Initialize(CommonResources* resources)
 
 	auto texture = std::make_unique<UserInterface>();
 	texture->Create(
-		m_commonResources->GetDeviceResources(), L"Resources/Textures/ChangeUI.png", DirectX::SimpleMath::Vector2(200, 650), Vector2(0.4f, 0.4f)
+		m_commonResources, "ChangeUI", DirectX::SimpleMath::Vector2(200, 650), Vector2(0.4f, 0.4f)
 	);
 
 	m_textures.push_back(std::move(texture));
@@ -178,7 +178,7 @@ void GameEndUI::Initialize(CommonResources* resources)
 
 	texture = std::make_unique<UserInterface>();
 	texture->Create(
-		m_commonResources->GetDeviceResources(), L"Resources/Textures/DecisionUI.png", DirectX::SimpleMath::Vector2(570, 650), Vector2(0.4f, 0.4f)
+		m_commonResources, "DecisionUI", DirectX::SimpleMath::Vector2(570, 650), Vector2(0.4f, 0.4f)
 	);
 
 	m_textures.push_back(std::move(texture));
@@ -186,7 +186,8 @@ void GameEndUI::Initialize(CommonResources* resources)
 
 	m_arrow = std::make_unique<UserInterface>();
 
-	m_arrow->Create(m_commonResources->GetDeviceResources(), L"Resources/Textures/Arrow.png", DirectX::SimpleMath::Vector2(450, 360), Vector2(0.2f, 0.2f));
+	m_arrow->Create(
+		m_commonResources, "Arrow", DirectX::SimpleMath::Vector2(450, 360), Vector2(0.2f, 0.2f));
 
 
 

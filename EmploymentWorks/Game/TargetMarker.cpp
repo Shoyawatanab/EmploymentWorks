@@ -29,6 +29,9 @@ TargetMarker::TargetMarker()
 	,m_targetObject{}
 	, m_isLockOn{false}
 {
+
+
+
 }
 
 /// <summary>
@@ -57,11 +60,9 @@ void TargetMarker::Initialize(CommonResources* resources)
 	m_isTargetMarker = false;
 
 	m_marker = std::make_unique<UserInterface>();
-	m_marker->Create(m_commonResources->GetDeviceResources(), L"Resources/Textures/TargetMarker.png"
+	m_marker->Create(m_commonResources, "TargetMarker"
 		,Vector2(200,200), Vector2(0.3f,0.3f));
-
-
-
+	
 
 	Messenger::Attach(EventParams::EventType::BoomerangGetReady, this);
 	Messenger::Attach(EventParams::EventType::BoomerangGetReadyEnd, this);

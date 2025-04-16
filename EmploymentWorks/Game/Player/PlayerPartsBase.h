@@ -14,8 +14,8 @@ class PlayerPartsBase : public CompositeEntity
 {
 public:
 
-	DirectX::Model* GetModel() { return m_model.get(); }
-	void  SetModel(std::unique_ptr<DirectX::Model> model) { m_model = std::move(model); }
+	DirectX::Model* GetModel() { return m_model; }
+	void  SetModel(DirectX::Model* model) { m_model = std::move(model); }
 
 
 public:
@@ -79,7 +79,7 @@ private:
 	bool m_isParentActive;
 
 
-	std::unique_ptr<DirectX::Model> m_model;
+	DirectX::Model* m_model;
 	//親クラス
 	CharacterEntity* m_parent;
 	//パーツ名

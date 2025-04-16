@@ -54,7 +54,6 @@ void ExecutionNode::Initialize(CommonResources* resources)
 /// <returns>true:¬Œ÷ , false:¸”s</returns>
 IBehaviorNode::State ExecutionNode::FacingThePlayer(float elapsdTime)
 {
-	return IBehaviorNode::State::Success;
 
 
 	//Œü‚«‚½‚¢•ûŒü

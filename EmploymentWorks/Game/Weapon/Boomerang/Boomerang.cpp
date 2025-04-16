@@ -3,6 +3,7 @@
 #include "Game/CommonResources.h"
 #include "DeviceResources.h"
 #include "Libraries/MyLib/InputManager.h"
+#include "Libraries/WataLib/GameResources.h"
 
 #include "Libraries/WataLib/Bounding.h"
 #include "Libraries/WataLib/CSV.h"
@@ -88,7 +89,7 @@ void Boomerang::Initialize()
 	fx->SetDirectory(L"Resources/Models");
 
 	//// ƒ‚ƒfƒ‹‚ğ“Ç‚İ‚Ş
-	m_model = DirectX::Model::CreateFromCMO(device, L"Resources/Models/Boomerang.cmo", *fx);
+	m_model = ItemEntity::GetCommonResources()->GetGameResources()->GetModel("Boomerang");
 
 	//CSV‚©‚çŠî€À•W‚Ìæ“¾
 	m_throwbasePosition = WataLib::CSV::LoadCSVBoomerang();
@@ -123,7 +124,6 @@ void Boomerang::Initialize()
 	auto context = BaseEntity::GetCommonResources()->GetDeviceResources()->GetD3DDeviceContext();
 	auto states = BaseEntity::GetCommonResources()->GetCommonStates();
 
-
 	m_shadow->Initialize(device, context, states);
 
 
@@ -137,8 +137,6 @@ void Boomerang::Initialize()
 /// <param name="projection">Ë‰es—ñ</param>
 void Boomerang::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
 {
-
-
 
 	auto context = BaseEntity::GetCommonResources()->GetDeviceResources()->GetD3DDeviceContext();
 	auto states = BaseEntity::GetCommonResources()->GetCommonStates();

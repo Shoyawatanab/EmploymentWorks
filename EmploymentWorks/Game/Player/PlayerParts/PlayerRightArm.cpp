@@ -2,6 +2,8 @@
 #include "PlayerRightArm.h"
 #include "Game/CommonResources.h"
 #include "DeviceResources.h"
+#include "Libraries/WataLib/GameResources.h"
+
 #include "Libraries/WataLib/Animation.h"
 #include "Game/CollisiionManager.h"
 
@@ -40,17 +42,12 @@ PlayerRightArm::~PlayerRightArm()
 void PlayerRightArm::Initialize()
 {
 
-	auto device = BaseEntity::GetCommonResources()->GetDeviceResources()->GetD3DDevice();
 
-
-	//// ƒ‚ƒfƒ‹‚ğ“Ç‚İ‚Ş€”õ
-	std::unique_ptr<DirectX::EffectFactory> fx = std::make_unique<DirectX::EffectFactory>(device);
-	fx->SetDirectory(L"Resources/Models");
 
 	//// ƒ‚ƒfƒ‹‚ğ“Ç‚İ‚Ş
-	auto model = DirectX::Model::CreateFromCMO(device, L"Resources/Models/PlayerArm.cmo", *fx);
+	auto model = PlayerPartsBase::GetCommonResources()->GetGameResources()->GetModel("PlayerArm");
 
-	PlayerPartsBase::SetModel(std::move(model));
+	PlayerPartsBase::SetModel(model);
 
 	PlayerPartsBase::Initialize();
 

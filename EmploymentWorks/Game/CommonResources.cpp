@@ -18,6 +18,7 @@ CommonResources::CommonResources()
 	m_inputManager{ nullptr },
 	m_fade{ nullptr },
 	m_score{nullptr}
+	,m_gameResources{nullptr}
 {
 }
 
@@ -31,7 +32,8 @@ void CommonResources::Initialize(
 	mylib::DebugString* debugString,
 	mylib::InputManager* inputManager,
 	Fade* fade,
-	Score* score
+	Score* score,
+	WataLib::GameResources* gameResources
 )
 {
 	assert(timer);
@@ -47,4 +49,5 @@ void CommonResources::Initialize(
 	m_inputManager = inputManager;
 	m_fade = fade;
 	m_score = score;
+	m_gameResources = gameResources;
 }

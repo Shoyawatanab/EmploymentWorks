@@ -11,6 +11,7 @@
 #include "Libraries/MyLib/GridFloor.h"
 #include "Libraries/MyLib/InputManager.h"
 #include "Libraries/MyLib/MemoryLeakDetector.h"
+#include "Libraries/WataLib/GameResources.h"
 #include <cassert>
 
 using namespace DirectX;
@@ -43,15 +44,10 @@ void Sky::Initialize()
 
 	BaseEntity::Initialize();
 
-
 	auto device = BaseEntity::GetCommonResources()->GetDeviceResources()->GetD3DDevice();
 
-	// ƒ‚ƒfƒ‹‚ğ“Ç‚İ‚Ş€”õ
-	std::unique_ptr<DirectX::EffectFactory> fx = std::make_unique<DirectX::EffectFactory>(device);
-	fx->SetDirectory(L"Resources/Models");
-
 	// ƒ‚ƒfƒ‹‚ğ“Ç‚İ‚Ş
-	m_model = DirectX::Model::CreateFromCMO(device, L"Resources/Models/Sky.cmo", *fx);
+	m_model = BaseEntity::GetCommonResources()->GetGameResources()->GetModel("Sky");
 
 }
 

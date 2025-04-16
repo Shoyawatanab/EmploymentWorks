@@ -2,14 +2,13 @@
 #include "PlayerRightFeet.h"
 #include "Game/CommonResources.h"
 #include "DeviceResources.h"
+#include "Libraries/WataLib/GameResources.h"
+
 #include "Libraries/WataLib/Animation.h"
 #include "Game/CollisiionManager.h"
 
 
-
 using namespace DirectX::SimpleMath;
-
-
 
 /// <summary>
 /// コンストラクタ
@@ -24,7 +23,6 @@ PlayerRightFeet::PlayerRightFeet(CommonResources* resources,
 	DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Quaternion rotation)
 	:
 	PlayerPartsBase(resources, parent, PARTSNAME, scale, position, rotation)
-
 {
 
 }
@@ -35,11 +33,7 @@ PlayerRightFeet::PlayerRightFeet(CommonResources* resources,
 PlayerRightFeet::~PlayerRightFeet()
 {
 
-
-
 }
-
-
 
 /// <summary>
 /// 初期化
@@ -47,17 +41,12 @@ PlayerRightFeet::~PlayerRightFeet()
 void PlayerRightFeet::Initialize()
 {
 
-	auto device = BaseEntity::GetCommonResources()->GetDeviceResources()->GetD3DDevice();
-
-
-	//// モデルを読み込む準備
-	std::unique_ptr<DirectX::EffectFactory> fx = std::make_unique<DirectX::EffectFactory>(device);
-	fx->SetDirectory(L"Resources/Models");
-
 	//// モデルを読み込む
-	auto model = DirectX::Model::CreateFromCMO(device, L"Resources/Models/PlayerFeet.cmo", *fx);
+	auto model = PlayerPartsBase::GetCommonResources()->GetGameResources()->GetModel("PlayerFeet");
 
-	PlayerPartsBase::SetModel(std::move(model));
+	PlayerPartsBase::SetModel(model);
+
+	PlayerPartsBase::SetModel(model);
 
 	PlayerPartsBase::Initialize();
 

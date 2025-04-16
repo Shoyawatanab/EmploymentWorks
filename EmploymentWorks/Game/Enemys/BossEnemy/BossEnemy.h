@@ -81,6 +81,9 @@ public:
 
 	//“–‚½‚Á‚½‚ÉŒÄ‚Ño‚³‚ê‚é
 	void OnCollisionEnter(CollisionEntity* object, CollisionTag tag) override;
+	//“–‚½‚è‘±‚¯‚Ä‚¢‚é‚Æ‚«‚ÌŒÄ‚Ño‚³‚ê‚é
+	void OnCollisionStay(CollisionEntity* object, CollisionTag tag) override;
+
 	//“–‚½‚è”»’è‚Ìí—Ş‚Ìæ“¾
 	const CollisionType GetCollisionType() override { return CollisionType::AABB; }
 	//‰Ÿ‚µo‚µ‚ğ‚·‚é‚©‚Ç‚¤‚©

@@ -319,7 +319,6 @@
     <ClInclude Include="Game\Score.h" />
     <ClInclude Include="Game\Screen.h" />
     <ClInclude Include="Game\StageObject\Floor.h" />
-    <ClInclude Include="Game\StageObject\Pillar\Pillar.h" />
     <ClInclude Include="Game\StageObject\Sky.h" />
     <ClInclude Include="Game\StageObject\StageObjectManager.h" />
     <ClInclude Include="Game\StageObject\Wall.h" />
@@ -357,6 +356,7 @@
     <ClInclude Include="Libraries\WataLib\DetectionCollision.h" />
     <ClInclude Include="Libraries\WataLib\DrawNumber.h" />
     <ClInclude Include="Libraries\WataLib\Fade.h" />
+    <ClInclude Include="Libraries\WataLib\GameResources.h" />
     <ClInclude Include="Libraries\WataLib\Json.h" />
     <ClInclude Include="Libraries\WataLib\Model3D.h" />
     <ClInclude Include="Libraries\WataLib\Mouse.h" />
@@ -478,7 +478,6 @@
     <ClCompile Include="Game\Scene\TitleScene.cpp" />
     <ClCompile Include="Game\Score.cpp" />
     <ClCompile Include="Game\StageObject\Floor.cpp" />
-    <ClCompile Include="Game\StageObject\Pillar\Pillar.cpp" />
     <ClCompile Include="Game\StageObject\Sky.cpp" />
     <ClCompile Include="Game\StageObject\StageObjectManager.cpp" />
     <ClCompile Include="Game\StageObject\Wall.cpp" />
@@ -515,6 +514,7 @@
     <ClCompile Include="Libraries\WataLib\DetectionCollision.cpp" />
     <ClCompile Include="Libraries\WataLib\DrawNumber.cpp" />
     <ClCompile Include="Libraries\WataLib\Fade.cpp" />
+    <ClCompile Include="Libraries\WataLib\GameResources.cpp" />
     <ClCompile Include="Libraries\WataLib\Json.cpp" />
     <ClCompile Include="Libraries\WataLib\Model3D.cpp" />
     <ClCompile Include="Libraries\WataLib\Mouse.cpp" />

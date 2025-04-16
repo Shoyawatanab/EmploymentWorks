@@ -17,6 +17,9 @@
 #include <CommonStates.h>
 #include <vector>
 
+class CommonResources;
+
+
 	//UIのアンカーポイントの列挙数
 enum ANCHOR
 {
@@ -81,13 +84,13 @@ public:
 	UserInterface();
 	~UserInterface();
 
-	void LoadTexture(const wchar_t* path);
+	void LoadTexture(std::string key);
 
-	void Create(DX::DeviceResources* pDR
-		, const wchar_t* path
+	void Create(CommonResources* resources
+		, std::string key
 		, DirectX::SimpleMath::Vector2 position
 		, DirectX::SimpleMath::Vector2 scale
-		);
+	);
 
 	void Render();
 
@@ -100,7 +103,6 @@ private:
 
 	//変数
 private:
-	DX::DeviceResources* m_pDR;
 
 	Microsoft::WRL::ComPtr<ID3D11Buffer>	m_CBuffer;
 
@@ -137,5 +139,8 @@ private:
 	float m_alphaValue;
 
 	bool m_isActive;
+
+	CommonResources* m_commonResources;
+
 
 };

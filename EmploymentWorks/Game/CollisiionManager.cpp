@@ -19,6 +19,9 @@ std::unordered_map<int, std::function<void(CollisionEntity* object1, CollisionEn
 /// コンストラクタ
 /// </summary>
 CollisionManager::CollisionManager()
+	:
+	m_commonResources{}
+	,m_collisionObjects{}
 {
 }
 
@@ -87,15 +90,15 @@ void CollisionManager::Update()
 			//当たったら
 			if (isHit)
 			{
-
 				//当たったオブジェクトの取得
 				std::vector<CollisionEntity*> ob = m_collisionObjects[i]->GetHitObject();
 
 				//すでに当たっているかどうか
 				if (std::find(ob.begin(), ob.end(), m_collisionObjects[j]) != ob.end())
 				{
-					//当たり続けているときの呼ぶ関数
-
+					//当たっている間呼び出される関数
+					m_collisionObjects[i]->OnCollisionStay(m_collisionObjects[j], m_collisionObjects[j]->GetCollisionTag());
+					m_collisionObjects[j]->OnCollisionStay(m_collisionObjects[i], m_collisionObjects[i]->GetCollisionTag());
 				}
 				else
 				{
@@ -117,7 +120,6 @@ void CollisionManager::Update()
 				//押し出し
 				Extrusion(m_collisionObjects[i], m_collisionObjects[j]);
 
-
 			}
 			//当たっていないなら
 			else
@@ -134,8 +136,6 @@ void CollisionManager::Update()
 				}
 
 			}
-
-
 
 		}
 
@@ -175,10 +175,6 @@ void CollisionManager::Extrusion(CollisionEntity* object1, CollisionEntity* obje
 
 	}
 
-
-
-
-
 }
 
 /// <summary>
@@ -192,12 +188,10 @@ void CollisionManager::AABB_AABB_Extrusion(CollisionEntity* object1, CollisionEn
 	DirectX::BoundingBox* Box1 = object1->GetBounding()->GetBoundingBox();
 	DirectX::BoundingBox* Box2 = object2->GetBounding()->GetBoundingBox();
 
-
 	Vector3 Min1 = Box1->Center - Box1->Extents;
 	Vector3 Max1 = Box1->Center + Box1->Extents;
 	Vector3 Min2 = Box2->Center - Box2->Extents;
 	Vector3 Max2 = Box2->Center + Box2->Extents;
-
 
 	//各軸の差分の計算
 	float dx1 = Max2.x - Min1.x;
