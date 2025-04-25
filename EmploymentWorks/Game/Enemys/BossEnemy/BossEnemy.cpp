@@ -68,6 +68,9 @@ BossEnemy::BossEnemy(CommonResources* resources, DirectX::SimpleMath::Vector3 sc
 /// </summary>
 BossEnemy::~BossEnemy()
 {
+
+
+
 }
 
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "Game/Entities/ItemEntity.h"
+#include "Libraries/WataLib/Singleton.h"
 
 // 前方宣言
 class CommonResources;
@@ -7,7 +8,7 @@ class Player;
 
 
 
-class ItemAcquisition
+class ItemAcquisition : public Singleton<ItemAcquisition>
 {
 
 public:
@@ -27,7 +28,9 @@ public:
 
 public:
 
-	static ItemAcquisition* GetInstance();
+	//コンストラクタ
+	ItemAcquisition() {};
+	~ItemAcquisition() {}
 
 	//初期化
 	void Initialize(CommonResources* resources);
@@ -53,11 +56,6 @@ private:
 
 private:
 
-	//コンストラクタ
-	ItemAcquisition() {};
-
-	ItemAcquisition(const ItemAcquisition&) = delete;
-	ItemAcquisition& operator=(const ItemAcquisition&) = delete;
 
 
 };
