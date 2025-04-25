@@ -5,10 +5,12 @@
 #include <functional>
 #include "Game/Observer/EventParams.h"
 #include "Game/Interface/IObserver.h"
+#include "Libraries/WataLib/Singleton.h"
 
 // Subjectクラスを定義する
-class Messenger 
+class Messenger : public Singleton<Messenger>
 {
+	
 
 public:
 
@@ -17,9 +19,6 @@ public:
 
 public:
 
-	static Messenger* GetInstance();
-
-	static void DestroyInstance();
 
 	// 観察者をアタッチ
 	void Attach(MessageType type, IObserver* observer);
@@ -27,21 +26,16 @@ public:
 	void Notify(MessageType type, void* datas);
 
 
-private:
+public:
 
-	// コピー・ムーブ禁止
-	Messenger(const Messenger&) = delete;
-	Messenger& operator=(const Messenger&) = delete;
-	Messenger(Messenger&&) = delete;
-	Messenger& operator=(Messenger&&) = delete;
+
 	// コンストラクタ
 	Messenger();
+	~Messenger();
 
 
 public:
 
-	//
-	static std::unique_ptr<Messenger> s_messenger;
 
 	
 };

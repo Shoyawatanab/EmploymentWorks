@@ -1,6 +1,7 @@
 #pragma once
 #include <unordered_map>
 
+#include "Libraries/WataLib/Singleton.h"
 
 namespace FMOD
 {
@@ -13,7 +14,7 @@ namespace FMOD
 namespace WataLib
 {
 
-	class GameResources
+	class GameResources : public Singleton<GameResources>
 	{
 		// ------------------------
 		// ファイルパス
@@ -65,8 +66,6 @@ namespace WataLib
 		// ------------------------
 	private:
 
-		// リソース
-		static std::unique_ptr<WataLib::GameResources> m_resources;
 
 		// モデルリスト
 		std::unordered_map<std::string, std::unique_ptr<DirectX::Model>> m_modelList;

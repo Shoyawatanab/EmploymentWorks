@@ -67,7 +67,7 @@ PlayScene::~PlayScene()
 
 
 
-	Messenger::DestroyInstance();
+	//Messenger::DestroyInstance();
 
 	
 

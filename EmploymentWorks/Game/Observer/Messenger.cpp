@@ -3,28 +3,15 @@
 #include "Game/Observer/Telegram.h"
 
 
-//初期化
-std::unique_ptr<Messenger> Messenger::s_messenger = nullptr;
 
 Messenger::Messenger()
 {
 }
 
-Messenger* Messenger::GetInstance()
+Messenger::~Messenger()
 {
-	if (s_messenger == nullptr)
-	{
-		s_messenger = std::unique_ptr<Messenger>(new Messenger());
-	}
-
-
-	return s_messenger.get();
 }
 
-void Messenger::DestroyInstance()
-{
-	s_messenger.reset();
-}
 
 /// <summary>
 /// イベントのオブザーバーの追加

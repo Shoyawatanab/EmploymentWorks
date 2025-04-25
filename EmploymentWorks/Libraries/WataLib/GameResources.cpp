@@ -7,8 +7,6 @@
 #include "Libraries/FMOD/inc/fmod.hpp"
 
 
-// ユニークポインタ
-std::unique_ptr<WataLib::GameResources> WataLib::GameResources::m_resources = nullptr;
 
 // モデルのJsonファイル
 const wchar_t* WataLib::GameResources::MODEL_JSON = L"Resources/Dates/ModelData.json";

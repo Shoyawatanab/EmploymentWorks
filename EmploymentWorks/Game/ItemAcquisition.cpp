@@ -11,12 +11,7 @@
 using namespace DirectX::SimpleMath;
 
 
-ItemAcquisition* ItemAcquisition::GetInstance()
-{
-	static ItemAcquisition instance;
 
-	return &instance;
-}
 
 /// <summary>
 /// ‰Šú‰»
