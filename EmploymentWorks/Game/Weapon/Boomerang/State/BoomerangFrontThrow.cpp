@@ -119,6 +119,8 @@ void BoomerangFrontThrow::ChangeRotationDatas(DirectX::SimpleMath::Quaternion fi
 {
 
 
+	UNREFERENCED_PARAMETER(firstVec);
+	UNREFERENCED_PARAMETER(secondVec);
 
 
 }
@@ -179,6 +181,9 @@ void BoomerangFrontThrow::Update(const float& elapsedTime)
 
 void BoomerangFrontThrow::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
 {
+	UNREFERENCED_PARAMETER(view);
+	UNREFERENCED_PARAMETER(projection);
+
 }
 
 /// <summary>

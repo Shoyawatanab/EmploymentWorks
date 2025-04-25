@@ -16,6 +16,7 @@
 #include "Libraries/WataLib/Fade.h"
 #include "Game/Score.h"
 #include "Libraries/WataLib/GameResources.h"
+#include "Game/Sound/SoundManager.h"
 
 // A basic game implementation that creates a D3D11 device and
 // provides a game loop.
@@ -95,6 +96,7 @@ private:
 
     std::unique_ptr<WataLib::GameResources> m_gameResources;
 
+    SoundManager* m_soundManager;
 
     // š’Ç‹LƒRƒR‚Ü‚Åªªªš
 

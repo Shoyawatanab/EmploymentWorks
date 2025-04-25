@@ -65,6 +65,7 @@ bool WataLib::Animation::Update(const float& elapsedTime)
 
 void WataLib::Animation::PositionUpdate(const float& elapsedTime)
 {
+	UNREFERENCED_PARAMETER(elapsedTime);
 
 	float startTime = m_fromToPosition.first.keyFrame.Time;
 
@@ -89,6 +90,8 @@ void WataLib::Animation::PositionUpdate(const float& elapsedTime)
 
 void WataLib::Animation::RotationUpdate(const float& elapsedTime)
 {
+	UNREFERENCED_PARAMETER(elapsedTime);
+
 
 	float startTime = m_fromToRotation.first.keyFrame.Time;
 

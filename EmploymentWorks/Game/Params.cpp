@@ -9,6 +9,9 @@ const float            Params::MOUSE_RADIUS = 1.0f;
 //重力
 const float            Params::GRAVITY = 0.5f;
 
+const float            Params::SHADOW_POSITION_Y = 0.1f;
+
+
 //プレイヤの大きさ
 const Vector3          Params::PLAYER_SCALE = Vector3(0.2f, 0.2f, 0.2f);
 //プレイヤの座標
@@ -17,6 +20,10 @@ const Vector3          Params::PLAYER_POSITION = Vector3(0.0f,0.55f,5.0f);
 const Quaternion       Params::PLAYER_ROTATION = Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0)
 																			 ,DirectX::XMConvertToRadians(0)
 																			 ,DirectX::XMConvertToRadians(0));
+//プレイヤの影の大きさ
+const float            Params::PLAYER_SHADOW_RADIUS = 0.5f;
+
+
 //プレイヤのボックスの当たり判定の大きさ
 const Vector3          Params::PLAYER_BOX_COLLIDER_SIZE = Vector3(0.35f,0.55f,0.35f);
 //プレイヤのスフィアの当たり判定の大きさ
@@ -106,6 +113,10 @@ const Quaternion       Params::BOOMERANG_ROTATION = Quaternion::Identity;
  const float Params::BOOMERANG_SPHERE_COLLIDER_SIZE = 0.4f;
 //　ブーメランの攻撃力
  const int Params::BOOMERANG_DAMAGE = 2;
+
+ //ブーメランの影の大きさ
+ const float Params::BOOMERANG_SHADOW_RADIUS = 0.5f ;
+
 //ブーメランのIDLE状態の座標
  const  Vector3 Params::BOOMERANG_IDLE_POSITION = Vector3(0.0f,0.5f,1.0f);
 //ブーメランのIDLE状態の回転
@@ -135,6 +146,9 @@ const Quaternion       Params::BOOMERANG_ROTATION = Quaternion::Identity;
  const float Params::BOSSENEMY_MOVE_SPEED = 2.0f;
  //ボス敵の回転スピード
  const float Params::BOSSENEMY_ROTATION_SPEED = 1.0f;
+
+ //ボスの影の大きさ
+ const float Params::BOSSENEMY_SHADOW_RADIUS = 3.5f;
 
 
  //ボス敵のボックスの当たり判定の大きさ
@@ -374,6 +388,9 @@ const Quaternion       Params::BOOMERANG_ROTATION = Quaternion::Identity;
   const  Vector3 Params::BIRDENEMY_BOX_COLLIDER_SIZE = Vector3(0.7f,0.3f,0.7f);
   //鳥の敵のスフィアの当たり判定の大きさ
   const float Params::BIRDENEMY_SPHERE_COLLIDER_SIZE = 1.0f;
+  //鳥の敵の影の大きさ
+  const float Params::BIRDENEMY_SHADOW_RADIUS = 0.5f;
+
   //鳥の敵のビームの発射座標
   const  Vector3 Params::BIRDENEMY_BEAM_SHOT_POSITION = Vector3(0.0f,0.0f,1.8f);
 

@@ -53,7 +53,6 @@ void BirdEnemyBody::Initialize()
 {
 
 
-	auto device = BaseEntity::GetCommonResources()->GetDeviceResources()->GetD3DDevice();
 
 	BaseEntity::SetPosition(Vector3(3, 3, -5));
 

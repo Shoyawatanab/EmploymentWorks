@@ -80,9 +80,12 @@ void BossRushAttackCharge::Enter()
 
 	pos.y = 0.1f;
 
-	EventParams::CreateHitEffectDatas aa = {  pos, Vector3(5,5,5)};
+	Vector3 scale = Vector3(5, 5, 5);
 
-	Messenger::Notify(EventParams::EventType::CreateChageEffect, &aa);
+
+	UnknownDataThree aa = { static_cast<void*>(&pos), static_cast<void*>(&scale) };
+
+	Messenger::GetInstance()->Notify(MessageType::CreateChageEffect, &aa);
 
 
 }

@@ -168,7 +168,6 @@ bool Conditions::IsMaxHp()
 /// <returns>true : ”¼•ªˆÈã false :”¼•ª–¢–</returns>
 bool Conditions::IsHPMoreThanHalf()
 {
-	return true;
 
 	if (m_enemy->GetHP() >= Params::BOSSENEMY_MAX_HP / 2)
 	{
@@ -194,7 +193,7 @@ bool Conditions::IsAttack()
 	//	¶¬‚µ‚Ä—~‚µ‚¢ƒ‰ƒ“ƒ_ƒ€‚Ì”ÍˆÍ‚ğDistribution‚É”C‚¹‚éB¡‰ñ‚Í0`2PI
 	std::uniform_real_distribution<> dist(0, 100);
 
-	float ratio = dist(engine);
+	float ratio = static_cast<float>(dist(engine));
 
 	if (ratio >= 30)
 	{

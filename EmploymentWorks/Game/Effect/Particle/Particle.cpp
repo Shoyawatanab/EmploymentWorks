@@ -23,6 +23,8 @@
 
 #include "Game/Effect/Particle/ParticleUtility.h"
 #include "Game/Observer/EventParams.h"
+#include "Libraries/WataLib/GameResources.h"
+
 using namespace DirectX;
 
 /// <summary>
@@ -88,11 +90,12 @@ void Particle::Initialize()
 	//	画像の読み込み（２枚ともデフォルトは読み込み失敗でnullptr)
 	LoadTexture(L"Resources/Textures/da.png");
 
+	//m_texture.push_back();
+
 	//	プリミティブバッチの作成
 	m_batch = std::make_unique<PrimitiveBatch<VertexPositionColorTexture>>(context);
 
 	m_states = std::make_unique<CommonStates>(device);
-
 
 
 }
@@ -244,9 +247,9 @@ void Particle::SetIsActive(bool isActive)
 void Particle::Create(void* datas)
 {
 
-	EventParams::CreateParticleDatas* data = static_cast<EventParams::CreateParticleDatas*>(datas);
 
-	DirectX::SimpleMath::Vector3 pos = data->Position;
+	DirectX::SimpleMath::Vector3* pos = static_cast<DirectX::SimpleMath::Vector3*>(datas);
+
 
 	for (int i = 0; i < 20; i++)
 	{
@@ -285,7 +288,7 @@ void Particle::Create(void* datas)
 
 		DirectX::SimpleMath::Vector3 velocity = -adjustedVelocity;
 
-		DirectX::SimpleMath::Vector3 dustPos = pos + DirectX::SimpleMath::Vector3(
+		DirectX::SimpleMath::Vector3 dustPos = *pos + DirectX::SimpleMath::Vector3(
 			radi * cosf(angle),
 			0.0f,
 			radi * sinf(angle)

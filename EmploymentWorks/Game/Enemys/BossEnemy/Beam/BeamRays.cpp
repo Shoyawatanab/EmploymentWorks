@@ -68,8 +68,6 @@ void BeamRays::Initialize()
 	BaseEntity::Initialize();
 
 	auto device = BaseEntity::GetCommonResources()->GetDeviceResources()->GetD3DDevice();
-	auto context = BaseEntity::GetCommonResources()->GetDeviceResources()->GetD3DDeviceContext();
-	auto states = BaseEntity::GetCommonResources()->GetCommonStates();
 
 
 	BinaryFile VS = BinaryFile::LoadFile(L"Resources/Shaders/BeamRaysVS.cso");

@@ -63,12 +63,14 @@
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="FMOD.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="FMOD.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -297,6 +299,7 @@
     <ClInclude Include="Game\MathUtil.h" />
     <ClInclude Include="Game\Observer\EventParams.h" />
     <ClInclude Include="Game\Observer\Messenger.h" />
+    <ClInclude Include="Game\Observer\Telegram.h" />
     <ClInclude Include="Game\Params.h" />
     <ClInclude Include="Game\Player\Player.h" />
     <ClInclude Include="Game\Player\PlayerPartsBase.h" />
@@ -318,12 +321,12 @@
     <ClInclude Include="Game\Scene\TitleScene.h" />
     <ClInclude Include="Game\Score.h" />
     <ClInclude Include="Game\Screen.h" />
+    <ClInclude Include="Game\Sound\SoundManager.h" />
     <ClInclude Include="Game\StageObject\Floor.h" />
     <ClInclude Include="Game\StageObject\Sky.h" />
     <ClInclude Include="Game\StageObject\StageObjectManager.h" />
     <ClInclude Include="Game\StageObject\Wall.h" />
     <ClInclude Include="Game\TargetMarker.h" />
-    <ClInclude Include="Game\Timer.h" />
     <ClInclude Include="Game\UI\State\GameEndUI.h" />
     <ClInclude Include="Game\UI\State\GamePlayUI.h" />
     <ClInclude Include="Game\UI\State\UIStateMachine.h" />
@@ -361,6 +364,7 @@
     <ClInclude Include="Libraries\WataLib\Model3D.h" />
     <ClInclude Include="Libraries\WataLib\Mouse.h" />
     <ClInclude Include="Libraries\WataLib\Shadow.h" />
+    <ClInclude Include="Libraries\WataLib\Singleton.h" />
     <ClInclude Include="Libraries\WataLib\UserInterface.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="StepTimer.h" />
@@ -477,12 +481,12 @@
     <ClCompile Include="Game\Scene\StageSelectScene.cpp" />
     <ClCompile Include="Game\Scene\TitleScene.cpp" />
     <ClCompile Include="Game\Score.cpp" />
+    <ClCompile Include="Game\Sound\SoundManager.cpp" />
     <ClCompile Include="Game\StageObject\Floor.cpp" />
     <ClCompile Include="Game\StageObject\Sky.cpp" />
     <ClCompile Include="Game\StageObject\StageObjectManager.cpp" />
     <ClCompile Include="Game\StageObject\Wall.cpp" />
     <ClCompile Include="Game\TargetMarker.cpp" />
-    <ClCompile Include="Game\Timer.cpp" />
     <ClCompile Include="Game\UI\State\GameEndUI.cpp" />
     <ClCompile Include="Game\UI\State\GamePlayUI.cpp" />
     <ClCompile Include="Game\UI\State\UIStateMachine.cpp" />

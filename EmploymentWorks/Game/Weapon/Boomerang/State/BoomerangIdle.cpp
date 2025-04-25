@@ -62,12 +62,16 @@ void BoomerangIdle::Initialize(CommonResources* resources)
 void BoomerangIdle::Update(const float& elapsedTime)
 {
 
+	UNREFERENCED_PARAMETER(elapsedTime);
 
 
 }
 
 void BoomerangIdle::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
 {
+	UNREFERENCED_PARAMETER(view);
+	UNREFERENCED_PARAMETER(projection);
+
 }
 
 /// <summary>
@@ -84,7 +88,7 @@ void BoomerangIdle::Enter()
 	//ローカルサイズの設定
 	m_boomerang->SetLocalScale(Vector3(10,10,10));
 	//通知をする
-	Messenger::Notify(EventParams::EventType::GetBoomerang, nullptr);
+	Messenger::GetInstance()->Notify(MessageType::GetBoomerang, nullptr);
 
 	
 }

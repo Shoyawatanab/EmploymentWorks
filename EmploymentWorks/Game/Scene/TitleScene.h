@@ -7,6 +7,7 @@
 #include "Game/Entities/BaseEntity.h"
 #include <unordered_map>
 #include "Libraries/WataLib/UserInterface.h"
+#include "Game/Player/Player.h"
 
 // ëOï˚êÈåæ
 class CommonResources;
@@ -27,6 +28,7 @@ private:
 
     static constexpr DirectX::SimpleMath::Vector3 PLAYERPOSITION {0.0f,0.8f,0.0f};
     static constexpr DirectX::SimpleMath::Vector3 PLAYERSCALE {0.3f,0.3f,0.3f};
+    static constexpr DirectX::SimpleMath::Vector3 PLAYERROTATION {0.0f,180.0f,0.0f};
 
     //ägëÂó¶
     static constexpr float EXPANSION{ 1.2f };
@@ -80,5 +82,7 @@ private:
     std::unordered_map<int,std::unique_ptr<UserInterface>> m_buttom;
 
     int m_selectButtomId;
+
+    std::unique_ptr<Player> m_player;
 
 };

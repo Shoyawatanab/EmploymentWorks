@@ -37,7 +37,7 @@ public:
 	void Exit() override;
 
 	//通知時に呼び出される
-	void Notify(EventParams::EventType type, void* datas) override;
+	void Notify(const Telegram& telegram) override;
 
 
 	//必要なポインタの登録

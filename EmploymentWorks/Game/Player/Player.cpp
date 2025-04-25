@@ -117,6 +117,8 @@ void Player::Initialize()
 		boomerang->Initialize();
 	}
 
+
+
 	//“–‚½‚è”»’è‚Ìì¬
 	CollisionEntity::GetBounding()->CreateBoundingSphere(BaseEntity::GetPosition(), Params::PLAYER_SPHERE_COLLIDER_SIZE);
 	CollisionEntity::GetBounding()->CreateBoundingBox(BaseEntity::GetPosition(), Params::PLAYER_BOX_COLLIDER_SIZE);
@@ -164,7 +166,7 @@ void Player::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::Simp
 
 
 	DirectX::SimpleMath::Vector3 shadowPos = BaseEntity::GetPosition();
-	shadowPos.y = 0.1f;
+	shadowPos.y = Params::SHADOW_POSITION_Y;
 
 	auto context = BaseEntity::GetCommonResources()->GetDeviceResources()->GetD3DDeviceContext();
 	auto states = BaseEntity::GetCommonResources()->GetCommonStates();
@@ -172,7 +174,7 @@ void Player::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::Simp
 
 
 	// Ž©‹@‚Ì‰e‚ð•`‰æ‚·‚é
-	m_shadow->Render(context, states, view, projection, shadowPos, 0.5f);
+	m_shadow->Render(context, states, view, projection, shadowPos, Params::PLAYER_SHADOW_RADIUS);
 
 
 }
@@ -200,6 +202,7 @@ void Player::AddCollision(CollisionManager* collsionManager)
 /// <param name="tag">‘ŠŽè‚Ìƒ^ƒO</param>
 void Player::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 {
+	UNREFERENCED_PARAMETER(object);
 
 	switch (tag)
 	{
@@ -207,11 +210,11 @@ void Player::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 		case CollisionEntity::CollisionTag::EnemyParts:
 			m_hp--;
 			//Subject::Notify(EventManager::EventTypeName::PlayerDamage);
-			Messenger::Notify(EventParams::EventType::PlayerDamage,nullptr);
+			Messenger::GetInstance()->Notify(::MessageType::PlayerDamage,nullptr);
 			if (m_hp <= 0)
 			{
 				//Subject::Notify(EventManager::EventTypeName::GameOver);
-				Messenger::Notify(EventParams::EventType::GameOver, nullptr);
+				Messenger::GetInstance()->Notify(::MessageType::GameOver, nullptr);
 			}
 			break;
 		default:

@@ -179,6 +179,9 @@
     <Filter Include="Game\Shaders\Number">
       <UniqueIdentifier>{e7850e9c-6d83-4f26-8030-67b67d458cd1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Sound">
+      <UniqueIdentifier>{98aefd83-9cf0-4aa6-8399-09c361b1e799}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -681,9 +684,6 @@
     <ClInclude Include="Game\Interface\IKeyBoardObserver.h">
       <Filter>Game\Interface</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Timer.h">
-      <Filter>Game</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Score.h">
       <Filter>Game</Filter>
     </ClInclude>
@@ -721,6 +721,15 @@
       <Filter>Libraries</Filter>
     </ClInclude>
     <ClInclude Include="Libraries\WataLib\GameResources.h">
+      <Filter>Libraries\WataLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Observer\Telegram.h">
+      <Filter>Game\Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Sound\SoundManager.h">
+      <Filter>Game\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Libraries\WataLib\Singleton.h">
       <Filter>Libraries\WataLib</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1145,9 +1154,6 @@
     <ClCompile Include="Game\Weapon\Boomerang\State\BoomerangFrontThrow.cpp">
       <Filter>Game\Weapon\Boomerang\State</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Timer.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Score.cpp">
       <Filter>Game</Filter>
     </ClCompile>
@@ -1186,6 +1192,9 @@
     </ClCompile>
     <ClCompile Include="Libraries\WataLib\GameResources.cpp">
       <Filter>Libraries\WataLib</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Sound\SoundManager.cpp">
+      <Filter>Game\Sound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

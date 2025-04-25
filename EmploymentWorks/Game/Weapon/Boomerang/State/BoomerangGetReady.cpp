@@ -54,6 +54,7 @@ void BoomerangGetReady::Initialize(CommonResources* resources)
 /// <param name="elapsedTime">Œo‰ßŽžŠÔ</param>
 void BoomerangGetReady::Update(const float& elapsedTime)
 {
+	UNREFERENCED_PARAMETER(elapsedTime);
 
 
 
@@ -61,6 +62,9 @@ void BoomerangGetReady::Update(const float& elapsedTime)
 
 void BoomerangGetReady::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
 {
+	UNREFERENCED_PARAMETER(view);
+	UNREFERENCED_PARAMETER(projection);
+
 }
 
 /// <summary>

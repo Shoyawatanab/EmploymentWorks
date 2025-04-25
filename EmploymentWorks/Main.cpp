@@ -17,7 +17,6 @@ using namespace DirectX;
 
 #pragma warning(disable : 4061)
 
-// ★追記★
 #define WS_MY_WINDOW    (WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX)
 
 namespace
@@ -59,7 +58,6 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
     // フルスクリーンフラグ
     static bool s_fullscreen = false;
 
-    // ★追記
 // 画面モードの選択
     if (MessageBox(NULL, L"フルスクリーンにしますか？", L"画面モード設定", MB_YESNO) == IDYES)
     {
@@ -145,7 +143,6 @@ int WINAPI wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, 
         }
     }
 
-    // ★追記
     if (s_fullscreen) g_game->SetFullscreenState(FALSE);
 
     g_game.reset();
@@ -258,7 +255,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
         }
 
-        // ★追記★
         Keyboard::ProcessMessage(message, wParam, lParam);
         Mouse::ProcessMessage(message, wParam, lParam);
 
@@ -288,7 +284,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         PostQuitMessage(0);
         break;
 
-    // ★追記ココから★
     case WM_ACTIVATE:
     case WM_INPUT:
     case WM_MOUSEMOVE:
@@ -310,7 +305,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_SYSKEYUP:
         Keyboard::ProcessMessage(message, wParam, lParam);
         break;
-    // ★追記ココまで★
 
     case WM_SYSKEYDOWN:
         if (wParam == VK_RETURN && (lParam & 0x60000000) == 0x20000000)

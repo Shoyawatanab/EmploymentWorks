@@ -1,112 +1,71 @@
 #pragma once
-struct EventParams
+//イベントの種類
+enum class MessageType
 {
-
-public:
-
-	//イベントの種類
-	enum class EventType
-	{
-		BoomerangGetReady    //ブーメランを構える
-		, BoomerangGetReadyEnd  //ブーメランの構えを終わる
-		, BoomerangThrow      //ブーメランを投げる
-		, GetBoomerang        //ブーメランの取得
-		, GameClear
-		, GameOver
-		, DefeatedAllEnemies  // 全ての敵を倒したら
-		, PlayerDamage
-		, BossBeamAttackEnd
-		, CreateExplosion
-		, CreateParticle  
-		, CreateHitEffect
-		,CreateChageEffect
-		, BossBeamHit  
-		,ChangeBoomerangThrowState
-		,MouseWheelUp
-		,MouseWheelDown
-		,BoomerangRecoverable  //ブーメランを回収可能
-		,BoomerangNotRecoverable  //ブーメランを回収不可
-
-	};
-
-	//引数がある場合は対応した構造体を作る
-	struct CreateExplosionDatas
-	{
-		DirectX::SimpleMath::Vector3 Position;
-		DirectX::SimpleMath::Vector3 Scale;
-
-	};
-
-	struct CreateParticleDatas
-	{
-		DirectX::SimpleMath::Vector3 Position;
-	};
-
-
-	struct CreateHitEffectDatas
-	{
-		DirectX::SimpleMath::Vector3 Position;
-		DirectX::SimpleMath::Vector3 Scale;
-		int Damage;
-	};
-
-	struct CreateChargeEffectDatas
-	{
-		DirectX::SimpleMath::Vector3 Position;
-		DirectX::SimpleMath::Vector3 Scale;
-
-	};
-
-	struct  ChangeBoomerangThrowStateDatas
-	{
-
-		int State;
-
-	};
+	None = -1
+	, BoomerangGetReady    //ブーメランを構える
+	, BoomerangGetReadyEnd  //ブーメランの構えを終わる
+	, BoomerangThrow      //ブーメランを投げる
+	, GetBoomerang        //ブーメランの取得
+	, GameClear
+	, GameOver
+	, DefeatedAllEnemies  // 全ての敵を倒したら
+	, PlayerDamage
+	, BossBeamAttackEnd
+	, CreateExplosion
+	, CreateParticle  
+	, CreateHitEffect
+	,CreateChageEffect
+	, BossBeamHit  
+	,ChangeBoomerangThrowState
+	,MouseWheelUp
+	,MouseWheelDown
+	,BoomerangRecoverable  //ブーメランを回収可能
+	,BoomerangNotRecoverable  //ブーメランを回収不可
 
 };
 
 
-/*
-		BoomerangGetReady
-		{
-			Sbu  PlayerAttack
-			Ob PlayerUsually , TargetMarker
-		}
-		BoomerangGetReadyEnd 
-		{
-			
-		}
-		BoomerangThrow      
-		{
-			
-		}
-		GetBoomerang        
-		{
-			
-		}
-		GameClear
-		{
-			
-		}
-		GameOver
-		{
-			
-		}
-		DefeatedAllEnemies  
-		{
-			
-		}
-		PlayerDamage
-		{
-			
-		}
-		BossBeamAttackEnd
-		{
-			
-		}
-		CreateExplosion
-		{
+struct CreateHitEffectDatas
+{
+	DirectX::SimpleMath::Vector3 Position;
+	DirectX::SimpleMath::Vector3 Scale;
+	int Damage;
+};
 
-		}
+struct CreateChargeEffectDatas
+{
+	DirectX::SimpleMath::Vector3 Position;
+	DirectX::SimpleMath::Vector3 Scale;
+
+};
+
+
+struct  UnknownDataTwo
+{
+	void* data1;
+	void* data2;
+};
+
+struct  UnknownDataThree
+{
+	void* data1;
+	void* data2;
+	void* data3;
+};
+
+
+
+
+/*
+	CreateHitEffectDatas
+		data1が座標
+	　　data2が大きさ
+		data3がダメージ
+
+
 */
+
+
+
+

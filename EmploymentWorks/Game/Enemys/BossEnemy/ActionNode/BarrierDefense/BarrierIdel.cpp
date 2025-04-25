@@ -38,6 +38,8 @@ BarrierIdel::~BarrierIdel()
 /// <param name="resources">ã§í ÉäÉ\Å[ÉX</param>
 void BarrierIdel::Initialize(CommonResources* resources)
 {
+	UNREFERENCED_PARAMETER(resources);
+
 }
 
 /// <summary>

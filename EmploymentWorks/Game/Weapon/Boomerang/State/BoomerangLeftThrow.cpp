@@ -312,6 +312,9 @@ void BoomerangLeftThrow::Update(const float& elapsedTime)
 
 void BoomerangLeftThrow::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
 {
+	UNREFERENCED_PARAMETER(view);
+	UNREFERENCED_PARAMETER(projection);
+
 }
 
 /// <summary>

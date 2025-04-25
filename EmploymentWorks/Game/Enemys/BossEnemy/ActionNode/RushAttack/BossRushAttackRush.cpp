@@ -110,11 +110,7 @@ void BossRushAttackRush::Exit()
 
 	pos.y = 0.1f;
 
-	EventParams::CreateParticleDatas aaa = { pos };
-
-
-
-	Messenger::Notify(EventParams::EventType::CreateParticle, &aaa);
+	Messenger::GetInstance()->Notify(MessageType::CreateParticle, &pos);
 
 
 

@@ -117,7 +117,7 @@ public:
 
 
 //通知時に呼ばれる関数
-	void Notify(EventParams::EventType type, void* datas)  override;
+	void Notify(const Telegram& telegram)  override;
 
 
 	//必要なポインタの登録
@@ -136,7 +136,7 @@ public:
 			//倒れるアニメーションに切り替える
 			ChangeAnimation("FallDown");
 			EnemyEntity::GetEnemyManager()->DeleteRemainingEnemy(this);
-			Messenger::Notify(EventParams::EventType::GameClear, nullptr);
+			Messenger::GetInstance()->Notify(::MessageType::GameClear, nullptr);
 		}
 
 	}

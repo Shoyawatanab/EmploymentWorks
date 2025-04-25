@@ -77,8 +77,6 @@ void Barrier::Initialize()
 	MoveEntity::Initialize();
 
 	auto device = BaseEntity::GetCommonResources()->GetDeviceResources()->GetD3DDevice();
-	auto context = BaseEntity::GetCommonResources()->GetDeviceResources()->GetD3DDeviceContext();
-	auto states = BaseEntity::GetCommonResources()->GetCommonStates();
 
 
 	BinaryFile VS = BinaryFile::LoadFile(L"Resources/Shaders/BarrierVS.cso");
@@ -229,6 +227,7 @@ void Barrier::AddCollision(CollisionManager* collsionManager)
 /// <param name="tag">‘ŠŽè‚Ìƒ^ƒO</param>
 void Barrier::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 {
+	UNREFERENCED_PARAMETER(object);
 
 	switch (tag)
 	{

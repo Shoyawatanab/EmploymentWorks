@@ -58,8 +58,8 @@ void PlayerUsually::Initialize(CommonResources* resources)
 	m_gravity = Params::GRAVITY;
 
 	//イベントにObserverとして登録
-	Messenger::Attach(EventParams::EventType::BoomerangGetReady, this);
-	Messenger::Attach(EventParams::EventType::BoomerangGetReadyEnd, this);
+	Messenger::GetInstance()->Attach(::MessageType::BoomerangGetReady, this);
+	Messenger::GetInstance()->Attach(::MessageType::BoomerangGetReadyEnd, this);
 }
 
 
@@ -134,17 +134,17 @@ void PlayerUsually::Rotation(const float& elapsedTime, DirectX::SimpleMath::Vect
 /// </summary>
 /// <param name="type">種類</param>
 /// <param name="datas">データ</param>
-void PlayerUsually::Notify(EventParams::EventType type, void* datas)
+void PlayerUsually::Notify(const Telegram& telegram)
 {
-
+	
 	//イベントの種類
-	switch (type)
+	switch (telegram.messageType)
 	{
-		case EventParams::EventType::BoomerangGetReady:
+		case ::MessageType::BoomerangGetReady:
 			//構えている
 			m_isGetReady = true;
 			break;
-		case EventParams::EventType::BoomerangGetReadyEnd:
+		case ::MessageType::BoomerangGetReadyEnd:
 			//構えていない
 			m_isGetReady = false;
 			break;

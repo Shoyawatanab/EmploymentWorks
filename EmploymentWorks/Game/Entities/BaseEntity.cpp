@@ -87,6 +87,7 @@ void BaseEntity::Initialize()
 /// <param name="elapsedTime">åoâﬂéûä‘</param>
 void BaseEntity::Update(const float& elapsedTime)
 {
+	UNREFERENCED_PARAMETER(elapsedTime);
 
 }
 
@@ -97,6 +98,8 @@ void BaseEntity::Update(const float& elapsedTime)
 /// <param name="projection">éÀâeçsóÒ</param>
 void BaseEntity::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
 {
+	UNREFERENCED_PARAMETER(view);
+	UNREFERENCED_PARAMETER(projection);
 
 	//êeÇ†ÇË
 	if (m_parent)

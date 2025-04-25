@@ -80,7 +80,6 @@ void BirdEnemyBeamEnergyBall::Initialize()
 
 	CollisionEntity::Initialize();
 
-	auto device = BaseEntity::GetCommonResources()->GetDeviceResources()->GetD3DDevice();
 
 	// モデルを読み込む
 	m_model = BaseEntity::GetCommonResources()->GetGameResources()->GetModel("BeamEnergyBall");
@@ -171,6 +170,7 @@ void BirdEnemyBeamEnergyBall::AddCollision(CollisionManager* collsionManager)
 /// <param name="tag">相手のタグ</param>
 void BirdEnemyBeamEnergyBall::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 {
+	UNREFERENCED_PARAMETER(object);
 
 	switch (tag)
 	{
@@ -181,8 +181,9 @@ void BirdEnemyBeamEnergyBall::OnCollisionEnter(CollisionEntity* object, Collisio
 
 			//座標を決める
 			Vector3 position = m_wordlPosition;
-			EventParams::CreateExplosionDatas aa = { position ,Vector3(1,1,1) };
-			Messenger::Notify(EventParams::EventType::CreateExplosion, &aa);
+			Vector3 scale = Vector3::One;
+			UnknownDataTwo aa = { &position , &scale };
+			Messenger::GetInstance()->Notify(MessageType::CreateExplosion, &aa);
 
 		}
 		break;

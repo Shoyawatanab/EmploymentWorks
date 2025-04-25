@@ -50,7 +50,6 @@ void ExplosionEffects::Initialize()
 
 	auto device  = m_commonResources->GetDeviceResources()->GetD3DDevice();
 	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
-	auto states  = m_commonResources->GetCommonStates();
 
 	// ポリゴンを設定する
 	// 「m_vertices[i].position」はコンストラクタでゼロ初期化済み
@@ -96,6 +95,7 @@ void ExplosionEffects::Initialize()
 /// <param name="elapsedTime">経過時間</param>
 void ExplosionEffects::Update(const float& elapsedTime)
 {
+	UNREFERENCED_PARAMETER(elapsedTime);
 
 	if (!m_isActive)
 	{
@@ -204,8 +204,11 @@ void ExplosionEffects::Render(const DirectX::SimpleMath::Matrix& view, const  Di
 }
 
 void ExplosionEffects::Create(void* datas)
-{
+{	
+	UNREFERENCED_PARAMETER(datas);
+
 }
+
 
 
 

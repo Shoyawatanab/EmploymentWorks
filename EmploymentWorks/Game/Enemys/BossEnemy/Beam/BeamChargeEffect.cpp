@@ -69,9 +69,6 @@ void BeamChargeEffect::Initialize(CommonResources* resoure,DirectX::SimpleMath::
 {
 	m_commonResources = resoure;
 
-	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
-	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
-	auto states = m_commonResources->GetCommonStates();
 
 	// ƒ‚ƒfƒ‹‚ð“Ç‚Ýž‚Þ
 	m_model = m_commonResources->GetGameResources()->GetModel("BeamChargeEffect");

@@ -17,6 +17,7 @@
 #include <cassert>
 
 
+
 //---------------------------------------------------------
 // コンストラクタ
 //---------------------------------------------------------
@@ -46,9 +47,11 @@ void SceneManager::Initialize(CommonResources* resources)
 
 	m_stageID = Stage2;
 
-	ChangeScene(IScene::SceneID::TITLE);
+	ChangeScene(IScene::SceneID::PLAY);
+
 
 }
+
 
 //---------------------------------------------------------
 // 更新する

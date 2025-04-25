@@ -57,6 +57,8 @@ GameEndUI::~GameEndUI()
 /// <param name="projection">Ë‰es—ñ</param>
 void GameEndUI::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
 {
+	UNREFERENCED_PARAMETER(view);
+	UNREFERENCED_PARAMETER(projection);
 
 
 	m_backGraund->Render();

@@ -37,6 +37,7 @@ void WataLib::GameEndCamera::AddPointer(EnemyManager* enemyManger)
 
 void WataLib::GameEndCamera::Initialize(CommonResources* resources)
 {
+	UNREFERENCED_PARAMETER(resources);
 	m_angle = 0;
 
 	CalculateEyePosition();
@@ -128,5 +129,9 @@ void WataLib::GameEndCamera::Exit()
 
 void WataLib::GameEndCamera::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
 {
+	UNREFERENCED_PARAMETER(view);
+	UNREFERENCED_PARAMETER(projection);
+
+
 }
 

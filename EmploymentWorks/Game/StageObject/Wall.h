@@ -56,11 +56,6 @@ public:
 	};
 
 
-	//INotMoveObject
-	//Šî–{î•ñ‚Ìİ’è
-	void SetDatas(DirectX::SimpleMath::Vector3 scale,
-		DirectX::SimpleMath::Vector3 position,
-		DirectX::SimpleMath::Quaternion rotation);
 
 private:
 	// ƒ‚ƒfƒ‹

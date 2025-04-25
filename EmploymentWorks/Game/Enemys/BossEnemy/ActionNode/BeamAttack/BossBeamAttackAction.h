@@ -64,7 +64,7 @@ public:
 
 	//IObserver
 //’Ê’m‚ÉŒÄ‚Î‚ê‚éŠÖ”
-	void Notify(EventParams::EventType type, void* datas)  override;
+	void Notify(const Telegram& telegram)  override;
 
 	//ó‘Ô‚Ì•ÏX
 	void ChangeState(IAction* nextState);

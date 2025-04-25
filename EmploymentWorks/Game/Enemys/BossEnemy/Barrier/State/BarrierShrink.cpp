@@ -36,6 +36,8 @@ BarrierShrink::BarrierShrink(CommonResources* resources
 	m_time{}
 	,m_barrier{barrier}
 {
+	UNREFERENCED_PARAMETER(resources);
+
 }
 
 
@@ -50,6 +52,8 @@ BarrierShrink::~BarrierShrink()
 
 void BarrierShrink::Initialize(CommonResources* resources)
 {
+	UNREFERENCED_PARAMETER(resources);
+
 }
 
 void BarrierShrink::Update(const float& elapsedTime)
@@ -69,6 +73,9 @@ void BarrierShrink::Update(const float& elapsedTime)
 
 void BarrierShrink::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
 {
+	UNREFERENCED_PARAMETER(view);
+	UNREFERENCED_PARAMETER(projection);
+
 }
 
 void BarrierShrink::Enter()

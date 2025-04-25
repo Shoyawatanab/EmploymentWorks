@@ -86,11 +86,11 @@ void EffectsManager::Initialize(CommonResources* resources)
 
 	m_effects.push_back(std::move(chargeEffect));
 
-	Messenger::Attach(EventParams::EventType::PlayerDamage, this);
-	Messenger::Attach(EventParams::EventType::CreateExplosion, this);
-	Messenger::Attach(EventParams::EventType::CreateParticle, this);
-	Messenger::Attach(EventParams::EventType::CreateHitEffect, this);
-	Messenger::Attach(EventParams::EventType::CreateChageEffect, this);
+	Messenger::GetInstance()->Attach(MessageType::PlayerDamage, this);
+	Messenger::GetInstance()->Attach(MessageType::CreateExplosion, this);
+	Messenger::GetInstance()->Attach(MessageType::CreateParticle, this);
+	Messenger::GetInstance()->Attach(MessageType::CreateHitEffect, this);
+	Messenger::GetInstance()->Attach(MessageType::CreateChageEffect, this);
 
 }
 
@@ -142,7 +142,7 @@ void EffectsManager::Finalize()
 void EffectsManager::CreateExploion(void* datas)
 {
 
-	EventParams::CreateExplosionDatas* data = static_cast<EventParams::CreateExplosionDatas*>(datas);
+	UnknownDataTwo* data = static_cast<UnknownDataTwo*>(datas);
 
 	//使えるエフェクトの取得
 	auto it = std::find_if(
@@ -156,8 +156,8 @@ void EffectsManager::CreateExploion(void* datas)
 	if (it != m_effects.end())
 	{
 		(*it)->SetIsActive(true);
-		(*it)->SetPosition(data->Position);
-		(*it)->SetScale(data->Scale);
+		(*it)->SetPosition(*static_cast<DirectX::SimpleMath::Vector3*>(data->data1));
+		(*it)->SetScale(*static_cast<DirectX::SimpleMath::Vector3*>(data->data2));
 	}
 
 }
@@ -168,8 +168,7 @@ void EffectsManager::CreateExploion(void* datas)
 /// <param name="datas">データ</param>
 void EffectsManager::CreatePlayerDamageEffect(void* datas)
 {
-
-	EventParams::CreateExplosionDatas* data = static_cast<EventParams::CreateExplosionDatas*>(datas);
+	UNREFERENCED_PARAMETER(datas);
 
 	//使えるエフェクトの取得
 	auto it = std::find_if(
@@ -183,7 +182,6 @@ void EffectsManager::CreatePlayerDamageEffect(void* datas)
 	if (it != m_effects.end())
 	{
 		(*it)->SetIsActive(true);
-
 	}
 }
 
@@ -193,8 +191,9 @@ void EffectsManager::CreatePlayerDamageEffect(void* datas)
 /// <param name="datas">データ</param>
 void EffectsManager::CreateParticle(void* datas)
 {
+	UNREFERENCED_PARAMETER(datas);
 
-	EventParams::CreateExplosionDatas* data = static_cast<EventParams::CreateExplosionDatas*>(datas);
+	//CreateExplosionDatas* data = static_cast<CreateExplosionDatas*>(datas);
 
 	//使えるエフェクトの取得
 	auto it = std::find_if(
@@ -220,8 +219,9 @@ void EffectsManager::CreateParticle(void* datas)
 /// <param name="datas">データ</param>
 void EffectsManager::CreateHitEffect(void* datas)
 {
+	UNREFERENCED_PARAMETER(datas);
 
-	EventParams::CreateHitEffectDatas* data = static_cast<EventParams::CreateHitEffectDatas*>(datas);
+	//CreateHitEffectDatas* data = static_cast<CreateHitEffectDatas*>(datas);
 
 	//使えるエフェクトの取得
 	auto it = std::find_if(
@@ -243,8 +243,9 @@ void EffectsManager::CreateHitEffect(void* datas)
 }
 void EffectsManager::CreateChargeEffect(void* datas)
 {
+	UNREFERENCED_PARAMETER(datas);
 
-	EventParams::CreateChargeEffectDatas* data = static_cast<EventParams::CreateChargeEffectDatas*>(datas);
+	//CreateChargeEffectDatas* data = static_cast<CreateChargeEffectDatas*>(datas);
 
 	//使えるエフェクトの取得
 	auto it = std::find_if(
@@ -271,25 +272,25 @@ void EffectsManager::CreateChargeEffect(void* datas)
 /// </summary>
 /// <param name="type">イベントの種類</param>
 /// <param name="datas">イベントのデータ</param>
-void EffectsManager::Notify(EventParams::EventType type, void* datas)
+void EffectsManager::Notify(const Telegram& telegram)
 {
 
-	switch (type)
+	switch (telegram.messageType)
 	{
-		case EventParams::EventType::CreateExplosion:
-			CreateExploion(datas);
+		case MessageType::CreateExplosion:
+			CreateExploion(telegram.extraInfo);
 			break;
-		case EventParams::EventType::PlayerDamage:
-			CreatePlayerDamageEffect(datas);
+		case MessageType::PlayerDamage:
+			CreatePlayerDamageEffect(telegram.extraInfo);
 			break;
-		case EventParams::EventType::CreateParticle:
-			CreateParticle(datas);
+		case MessageType::CreateParticle:
+			CreateParticle(telegram.extraInfo);
 			break;
-		case EventParams::EventType::CreateHitEffect:
+		case MessageType::CreateHitEffect:
 			//CreateHitEffect(datas);
 			break;
-		case EventParams::EventType::CreateChageEffect:
-			CreateChargeEffect(datas);
+		case MessageType::CreateChageEffect:
+			CreateChargeEffect(telegram.extraInfo);
 			break;
 		default:
 			break;

@@ -69,7 +69,8 @@ void BirdEnemy::AddPointer(Player* player)
 /// <param name="elapsedTime">Œo‰ßŽžŠÔ</param>
 void BirdEnemy::Rotate(float elapsedTime)
 {
-	
+	UNREFERENCED_PARAMETER(elapsedTime);
+
 
 	//“G‚ÌŒ»Ý‚ÌÀ•W‚ÌŽæ“¾
 	Vector3 enemyPosition = BaseEntity::GetPosition();
@@ -185,13 +186,13 @@ void BirdEnemy::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::S
 
 
 	DirectX::SimpleMath::Vector3 shadowPos = BaseEntity::GetPosition();
-	shadowPos.y = 0.1f;
+	shadowPos.y = Params::SHADOW_POSITION_Y;
 
 
 
 
 	// Ž©‹@‚Ì‰e‚ð•`‰æ‚·‚é
-	m_shadow->Render(context, states, view, projection, shadowPos, 0.5f);
+	m_shadow->Render(context, states, view, projection, shadowPos, Params::BIRDENEMY_SHADOW_RADIUS);
 
 
 }
@@ -234,17 +235,23 @@ void BirdEnemy::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 				{
 
 					EnemyEntity::GetEnemyManager()->DeleteRemainingEnemy(this);
-					EventParams::CreateExplosionDatas aa = { object->GetPosition() ,BaseEntity::GetScale() };
-					Messenger::Notify(EventParams::EventType::CreateExplosion, &aa);
+					Vector3 scale = BaseEntity::GetScale();
+					Vector3 position = object->GetPosition();
+					UnknownDataTwo aa = { static_cast<void*>(&position) ,static_cast<void*>(&scale)};
+					Messenger::GetInstance()->Notify(MessageType::CreateExplosion, &aa);
 					BaseEntity::SetIsEntityActive(false);
 
 				}
 			}
 			else
 			{
-				EventParams::CreateHitEffectDatas aa = { object->GetPosition() ,BaseEntity::GetScale()};
 
-				Messenger::Notify(EventParams::EventType::CreateHitEffect, &aa);
+				Vector3 pos = object->GetPosition();
+				Vector3 scale = BaseEntity::GetScale();
+
+				UnknownDataThree aa = { static_cast<void*>(&pos) ,static_cast<void*>(&scale)};
+
+				Messenger::GetInstance()->Notify(MessageType::CreateHitEffect, &aa);
 
 			}
 

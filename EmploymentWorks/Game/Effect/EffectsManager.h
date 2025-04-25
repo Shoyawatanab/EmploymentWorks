@@ -35,7 +35,7 @@ private:
 
 	void CreateChargeEffect(void* datas);
 
-	void Notify(EventParams::EventType type, void* datas)  override;
+	void Notify(const Telegram& telegram)  override;
 
 
 private:

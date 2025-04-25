@@ -50,8 +50,8 @@ void PlayerAttack::Initialize(CommonResources* resources)
 {
 	m_commonResources = resources;
 
-	Messenger::Attach(EventParams::EventType::MouseWheelUp, this);
-	Messenger::Attach(EventParams::EventType::MouseWheelDown, this);
+	Messenger::GetInstance()->Attach(MessageType::MouseWheelUp, this);
+	Messenger::GetInstance()->Attach(MessageType::MouseWheelDown, this);
 
 	m_throwState = ThrowState::Right;
 
@@ -65,6 +65,8 @@ void PlayerAttack::Initialize(CommonResources* resources)
 /// <param name="elapsedTime">経過時間</param>
 void PlayerAttack::Update(const float& elapsedTime)
 {
+	UNREFERENCED_PARAMETER(elapsedTime);
+
 	const auto& tracker = m_commonResources->GetInputManager()->GetMouseTracker();
 
 	//投げ方の変更
@@ -79,7 +81,7 @@ void PlayerAttack::Update(const float& elapsedTime)
 		Boomerang* boomerang = m_player->GetBoomerang<BoomerangGetReady>();
 
 		boomerang->GetBoomerangStatemachine()->ChangeState(boomerang->GetBoomerangStatemachine()->GetBoomerangIdel());
-		Messenger::Notify(EventParams::EventType::BoomerangGetReadyEnd, nullptr);
+		Messenger::GetInstance()->Notify(::MessageType::BoomerangGetReadyEnd, nullptr);
 	}
 	//投げる
 	else if (tracker->leftButton == Mouse::ButtonStateTracker::ButtonState::PRESSED)
@@ -108,8 +110,8 @@ void PlayerAttack::Update(const float& elapsedTime)
 				break;
 		}
 
-		Messenger::Notify(EventParams::EventType::BoomerangGetReadyEnd, nullptr);
-		Messenger::Notify(EventParams::EventType::BoomerangThrow, nullptr);
+		Messenger::GetInstance()->Notify(::MessageType::BoomerangGetReadyEnd, nullptr);
+		Messenger::GetInstance()->Notify(::MessageType::BoomerangThrow, nullptr);
 
 
 	}
@@ -119,6 +121,9 @@ void PlayerAttack::Update(const float& elapsedTime)
 
 void PlayerAttack::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
 {
+	UNREFERENCED_PARAMETER(view);
+	UNREFERENCED_PARAMETER(projection);
+
 }
 
 /// <summary>
@@ -135,7 +140,7 @@ void PlayerAttack::Enter()
 	{
 		boomerang->GetBoomerangStatemachine()->ChangeState(boomerang->GetBoomerangStatemachine()->GetBoomerangGetReady());
 
-		Messenger::Notify(EventParams::EventType::BoomerangGetReady, nullptr);
+		Messenger::GetInstance()->Notify(::MessageType::BoomerangGetReady, nullptr);
 		//プレイヤのアニメーションの変更
 		m_player->ChangeAnimation("GetReady");
 
@@ -160,12 +165,13 @@ void PlayerAttack::Exit()
 
 }
 
-void PlayerAttack::Notify(EventParams::EventType type, void* datas)
+void PlayerAttack::Notify(const Telegram& telegram)
 {
+	
 
-	switch (type)
+	switch (telegram.messageType)
 	{
-		case EventParams::EventType::MouseWheelUp:
+		case ::MessageType::MouseWheelUp:
 		{
 			switch (m_throwState)
 			{
@@ -181,13 +187,10 @@ void PlayerAttack::Notify(EventParams::EventType type, void* datas)
 					break;
 			}
 
-
-			EventParams::ChangeBoomerangThrowStateDatas data = { static_cast<int>(m_throwState) };
-
-			Messenger::Notify(EventParams::EventType::ChangeBoomerangThrowState, &data);
+			Messenger::GetInstance()->Notify(::MessageType::ChangeBoomerangThrowState, &m_throwState);
 		}
 			break;
-		case EventParams::EventType::MouseWheelDown:
+		case ::MessageType::MouseWheelDown:
 		{
 			switch (m_throwState)
 			{
@@ -203,9 +206,7 @@ void PlayerAttack::Notify(EventParams::EventType type, void* datas)
 					break;
 			}
 
-			EventParams::ChangeBoomerangThrowStateDatas data = { static_cast<int>(m_throwState) };
-
-			Messenger::Notify(EventParams::EventType::ChangeBoomerangThrowState, &data);
+			Messenger::GetInstance()->Notify(::MessageType::ChangeBoomerangThrowState, &m_throwState);
 		}
 			break;
 		default:

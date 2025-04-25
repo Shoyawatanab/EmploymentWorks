@@ -16,8 +16,8 @@ class UIManager;
 class TargetMarker;
 class EffectsManager;
 class Sky;
-class Timer;
 class UserInterface;
+class SoundManager;
 
 namespace mylib
 {
@@ -47,8 +47,7 @@ public:
 	void Render() override;
 
 	void Finalize() override;
-
-
+	
 	//シーン切り替え
 	SceneID GetNextSceneID() const;
 
@@ -88,13 +87,7 @@ private:
 
 	std::unique_ptr<Sky> m_sky;
 
-	std::unique_ptr<Timer> m_timer;
-
-	// オーディオ関連
-	std::unique_ptr<DirectX::AudioEngine> m_audioEngine;
-	std::unique_ptr<DirectX::SoundEffect> m_soundEffectBGM;
-	std::unique_ptr<DirectX::SoundEffectInstance> m_soundEffectInstanceBGM;
-
+	
 	// 射影行列
 	DirectX::SimpleMath::Matrix m_projection;
 
@@ -105,5 +98,6 @@ private:
 
 	bool m_isTutolialTex;
 
+	SoundManager* m_soundManager;
 
 };

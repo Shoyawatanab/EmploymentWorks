@@ -12,6 +12,7 @@
 #include "Libraries/MyLib/BinaryFile.h"
 #include "Game/Observer/EventParams.h"
 #include "Game/Effect/Particle/ParticleUtility.h"
+#include "Libraries/WataLib/GameResources.h"
 
 #include <algorithm>
 #include <random>
@@ -46,7 +47,6 @@ ChargeEffect::ChargeEffect(CommonResources* resources)
 	, m_batch{}
 	, m_states{}
 	, m_texture{}
-	, m_texture2{}
 	, m_vertexShader{}
 	, m_pixelShader{}
 	, m_geometryShader{}
@@ -84,7 +84,9 @@ void ChargeEffect::Initialize()
 	CreateShader();
 
 	//	画像の読み込み（２枚ともデフォルトは読み込み失敗でnullptr)
-	LoadTexture(L"Resources/Textures/da.png");
+	//LoadTexture(L"Resources/Textures/da.png");
+
+	m_texture.push_back(m_commonResources->GetGameResources()->GetTexture("da"));
 
 	//	プリミティブバッチの作成
 	m_batch = std::make_unique<PrimitiveBatch<VertexPositionColorTexture>>(context);
@@ -258,7 +260,7 @@ void ChargeEffect::SetIsActive(bool isActive)
 void ChargeEffect::Create(void* datas)
 {
 
-	EventParams::CreateChargeEffectDatas* data = static_cast<EventParams::CreateChargeEffectDatas*>(datas);
+	CreateChargeEffectDatas* data = static_cast<CreateChargeEffectDatas*>(datas);
 
 	m_position = data->Position;
 

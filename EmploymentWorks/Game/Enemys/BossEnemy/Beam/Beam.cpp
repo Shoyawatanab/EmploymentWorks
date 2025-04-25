@@ -99,6 +99,7 @@ void Beam::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::Simple
 /// <param name="elapsedTime">経過時間</param>
 void Beam::Update(const float& elapsedTime)
 {
+	UNREFERENCED_PARAMETER(elapsedTime);
 
 
 	//敵の現在の座標の取得
@@ -147,6 +148,8 @@ void Beam::Update(const float& elapsedTime)
 void Beam::AddPointer(BossEnemy* bossEnemy, Player* player)
 
 {
+	UNREFERENCED_PARAMETER(bossEnemy);
+
 	m_energyBall->AddPointer(this);
 	m_rays->AddPointer(this);
 	m_player = player;
@@ -176,7 +179,7 @@ void Beam::CreateParticle()
 	for (int angle = 0; angle < 360; angle += 45)
 	{
 		// 角度をラジアンに変換   スタートを上から始めるために９０度プラスする　９０足さないと右から始まる
-		float radian = DirectX::XMConvertToRadians(angle) + DirectX::XMConvertToRadians(90);
+		float radian = DirectX::XMConvertToRadians(static_cast<float>(angle)) + DirectX::XMConvertToRadians(90);
 
 		// 座標を計算（上から反時計回りにする）
 		float x = radius * cos(radian); // X座標
@@ -186,7 +189,7 @@ void Beam::CreateParticle()
 		position.push_back(Vector3(x, y, 0.0f));
 
 		// 回転を追加（座標と同じ基準で回転を作成）
-		rotate.push_back(Quaternion::CreateFromAxisAngle(Vector3::UnitZ, DirectX::XMConvertToRadians(angle)));
+		rotate.push_back(Quaternion::CreateFromAxisAngle(Vector3::UnitZ, DirectX::XMConvertToRadians(static_cast<float>(angle))));
 
 	}
 

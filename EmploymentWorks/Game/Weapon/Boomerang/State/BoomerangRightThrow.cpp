@@ -69,8 +69,10 @@ void BoomerangRightThrow::CreateSplineCurvePositon()
 	//ロックオンしていたら
 	if (m_targetMarker->GetIsLockOn())
 	{
+
 		//ロックオンしている敵の座標に
 		target = m_targetMarker->GetTargetPosition();
+
 	}
 	else
 	{
@@ -106,6 +108,16 @@ void BoomerangRightThrow::CreateSplineCurvePositon()
 		//高さをブーメランの位置に合わせる
 		basePosition[i].y = m_boomerang->GetPosition().y;
 
+	}
+
+
+	Vector3 aa = basePosition[3] - basePosition[0];
+
+	aa /= 2;
+
+	for (int i = 0; i < basePosition.size(); i++)
+	{
+		basePosition[i] += aa;
 	}
 
 	for (int i = 0; i < basePosition.size(); i++)
@@ -345,6 +357,9 @@ void BoomerangRightThrow::Update(const float& elapsedTime)
 
 void BoomerangRightThrow::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
 {
+	UNREFERENCED_PARAMETER(view);
+	UNREFERENCED_PARAMETER(projection);
+
 }
 
 /// <summary>

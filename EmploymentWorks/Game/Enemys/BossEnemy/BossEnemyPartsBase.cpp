@@ -190,15 +190,19 @@ void BossEnemyPartsBase::OnCollisionEnter(CollisionEntity* object, CollisionTag 
 				//行列から求める
 				Matrix matrix = BaseEntity::GetWorldMatrix();
 				matrix.Decompose(scale, rotation, position);
-				EventParams::CreateExplosionDatas aa = { position ,Vector3(1,1,1) };
-				Messenger::Notify(EventParams::EventType::CreateExplosion, &aa);
+
+				UnknownDataTwo aa = { static_cast<void*>(&position) ,static_cast<void*>(&scale)};
+				Messenger::GetInstance()->Notify(MessageType::CreateExplosion, &aa);
 			}
 			else
 			{
 				{
-					EventParams::CreateHitEffectDatas aa = { object->GetPosition() ,BaseEntity::GetScale()};
+					Vector3 pos = object->GetPosition();
+					Vector3 scale = BaseEntity::GetScale();
 
-					Messenger::Notify(EventParams::EventType::CreateHitEffect, &aa);
+					UnknownDataThree aa = { static_cast<void*>(&pos) ,static_cast<void*>(&scale) };
+
+					Messenger::GetInstance()->Notify(MessageType::CreateHitEffect, &aa);
 				}
 
 			}
@@ -254,6 +258,7 @@ void BossEnemyPartsBase::Update(const float& elapsedTime)
 /// <param name="isNormalAnimation">初期アニメーションかどうか</param>
 void BossEnemyPartsBase::SetAnimationData(std::string animationType, std::unordered_map<std::string, std::unordered_map<std::string, WataLib::Json::AnimationData>> datas, const std::string& partsName, bool isNormalAnimation)
 {
+		UNREFERENCED_PARAMETER(partsName);
 
 
 	//アニメーションの登録

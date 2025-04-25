@@ -30,6 +30,8 @@ BarrierStateMachine::~BarrierStateMachine()
 /// <param name="player">プレイヤ</param>
 void BarrierStateMachine::AddPointer(Player* player)
 {
+	UNREFERENCED_PARAMETER(player);
+
 }
 
 /// <summary>
@@ -39,6 +41,8 @@ void BarrierStateMachine::AddPointer(Player* player)
 /// <param name="startState">初期ステート</param>
 void BarrierStateMachine::Initialize(CommonResources* resources, IState* startState)
 {
+	UNREFERENCED_PARAMETER(resources);
+	
 
 
 	m_currentState = startState;

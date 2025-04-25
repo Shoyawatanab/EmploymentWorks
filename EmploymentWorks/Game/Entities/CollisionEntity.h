@@ -65,11 +65,11 @@ public:
 	//タグの取得
 	virtual CollisionTag GetCollisionTag() = 0;
 	//当たった時に呼び出される
-	virtual void OnCollisionEnter(CollisionEntity* object, CollisionTag tag);
+	virtual void OnCollisionEnter(CollisionEntity* object, CollisionTag tag) { UNREFERENCED_PARAMETER(object); UNREFERENCED_PARAMETER(tag); };
 	//当たり続けているときの呼び出される
-	virtual void OnCollisionStay(CollisionEntity* object, CollisionTag tag) {};
+	virtual void OnCollisionStay(CollisionEntity* object, CollisionTag tag) { UNREFERENCED_PARAMETER(object); UNREFERENCED_PARAMETER(tag); };
 	//衝突が終了したときに呼び出される
-	virtual void OnCollisionExit(CollisionEntity* object, CollisionTag tag) {};
+	virtual void OnCollisionExit(CollisionEntity* object, CollisionTag tag) { UNREFERENCED_PARAMETER(object); UNREFERENCED_PARAMETER(tag); };
 	//当たり判定クラスに登録
 	virtual void  AddCollision(CollisionManager* collsionManager);
 	//当たり判定の取得

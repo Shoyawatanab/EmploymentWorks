@@ -33,6 +33,7 @@ public:
 	void Finalize();
 
 
+
 private:
 	void ChangeScene(IScene::SceneID sceneID);
 	void CreateScene(IScene::SceneID sceneID);

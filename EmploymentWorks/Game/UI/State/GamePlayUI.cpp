@@ -160,7 +160,7 @@ void GamePlayUI::CreatePlayerHP()
 	{
 		auto texture = std::make_unique<UserInterface>();
 		texture->Create(m_commonResources, "HP"
-			, HP_POSITION + (HP_POSITION_OFFSET * i), HP_SCALE);
+			, HP_POSITION + (HP_POSITION_OFFSET * static_cast<float>(i)), HP_SCALE);
 
 		m_playerHP.push_back(std::move(texture));
 	}
@@ -177,7 +177,7 @@ void GamePlayUI::CreateBoomerang()
 	{
 		auto texture = std::make_unique<UserInterface>();
 		texture->Create(m_commonResources, "BoomerangUI"
-			, BOOMERANG_POSITION + (BOOMERANG_POSITION_OFFSET * i), BOOMERANG_SCALE);
+			, BOOMERANG_POSITION + (BOOMERANG_POSITION_OFFSET * static_cast<float>(i)), BOOMERANG_SCALE);
 
 		m_boomerang.push_back(std::move(texture));
 	}
@@ -188,7 +188,7 @@ void GamePlayUI::CreateBoomerang()
 void GamePlayUI::CreateDamageUI(void* datas)
 {
 
-	EventParams::CreateHitEffectDatas* data = static_cast<EventParams::CreateHitEffectDatas*>(datas);
+	UnknownDataThree* data = static_cast<UnknownDataThree*>(datas);
 
 
 	for (auto& damageCount : m_damageCountUI)
@@ -197,9 +197,9 @@ void GamePlayUI::CreateDamageUI(void* datas)
 		{
 			damageCount->SetIsActive(true);
 
-			damageCount->SetPosition(data->Position);
+			damageCount->SetPosition(*static_cast<DirectX::SimpleMath::Vector3*>(data->data1));
 
-			damageCount->SetDamage(data->Damage);
+			//damageCount->SetDamage(*static_cast<int*>(data->data3));
 			damageCount->SetDamage(10);
 
 
@@ -266,14 +266,14 @@ void GamePlayUI::Initialize(CommonResources* resources)
 
 	}
 
-	Messenger::Attach(EventParams::EventType::BoomerangThrow, this);
-	Messenger::Attach(EventParams::EventType::GetBoomerang, this);
-	Messenger::Attach(EventParams::EventType::PlayerDamage, this);
-	Messenger::Attach(EventParams::EventType::ChangeBoomerangThrowState, this);
-	Messenger::Attach(EventParams::EventType::BoomerangRecoverable, this);
-	Messenger::Attach(EventParams::EventType::BoomerangNotRecoverable, this);
+	Messenger::GetInstance()->Attach(MessageType::BoomerangThrow, this);
+	Messenger::GetInstance()->Attach(MessageType::GetBoomerang, this);
+	Messenger::GetInstance()->Attach(MessageType::PlayerDamage, this);
+	Messenger::GetInstance()->Attach(MessageType::ChangeBoomerangThrowState, this);
+	Messenger::GetInstance()->Attach(MessageType::BoomerangRecoverable, this);
+	Messenger::GetInstance()->Attach(MessageType::BoomerangNotRecoverable, this);
 
-	Messenger::Attach(EventParams::EventType::CreateHitEffect, this);
+	Messenger::GetInstance()->Attach(MessageType::CreateHitEffect, this);
 
 }
 
@@ -321,30 +321,29 @@ void GamePlayUI::Exit()
 /// </summary>
 /// <param name="type">イベントの種類</param>
 /// <param name="datas">イベントのデータ</param>
-void GamePlayUI::Notify(EventParams::EventType type, void* datas)
+void GamePlayUI::Notify(const Telegram& telegram)
 {
 
-	switch (type)
+	switch (telegram.messageType)
 	{
-		case EventParams::EventType::BoomerangThrow:
+		case MessageType::BoomerangThrow:
 			m_boomerangCount--;
 
 			m_boomerangCount = std::max(m_boomerangCount, 0);
 
 			break;
-		case EventParams::EventType::GetBoomerang:
+		case MessageType::GetBoomerang:
 			m_boomerangCount++;
 			m_boomerangCount = std::min(m_boomerangCount, 3);
 
 			break;
-		case EventParams::EventType::PlayerDamage:
+		case MessageType::PlayerDamage:
 			m_playerHPCount--;
 			break;
-		case EventParams::EventType::ChangeBoomerangThrowState:
+		case MessageType::ChangeBoomerangThrowState:
 			{
-				EventParams::ChangeBoomerangThrowStateDatas* data = static_cast<EventParams::ChangeBoomerangThrowStateDatas*>(datas);
-
-				switch (data->State)
+				
+				switch (*static_cast<int*>(telegram.extraInfo))
 				{
 					case 0:
 
@@ -368,15 +367,15 @@ void GamePlayUI::Notify(EventParams::EventType type, void* datas)
 				}
 			}
 			break;
-		case EventParams::EventType::BoomerangRecoverable:
+		case MessageType::BoomerangRecoverable:
 			m_itemAcquisitionUI->SetIsActive(true);
 			break;
-		case EventParams::EventType::BoomerangNotRecoverable:
+		case MessageType::BoomerangNotRecoverable:
 			m_itemAcquisitionUI->SetIsActive(false);
 			break;
-		case EventParams::EventType::CreateHitEffect:
+		case MessageType::CreateHitEffect:
 		
-			CreateDamageUI(datas);
+			CreateDamageUI(telegram.extraInfo);
 		
 			break;
 		default:

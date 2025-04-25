@@ -38,6 +38,7 @@ RisingPillarvAction::RisingPillarvAction(CommonResources* resources
 	,m_preliminaryAction{}
 	,m_pillars{}
 {
+	UNREFERENCED_PARAMETER(player);
 
 	m_idle = std::make_unique<RisingPillarIdel>(this);
 	m_rise = std::make_unique<RisingPillarRise>(this,stageObjectManger);

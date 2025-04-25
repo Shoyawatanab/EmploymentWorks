@@ -1,6 +1,15 @@
 #pragma once
 #include <unordered_map>
 
+
+namespace FMOD
+{
+	class Sound;
+	class System;
+}
+
+
+
 namespace WataLib
 {
 
@@ -12,11 +21,12 @@ namespace WataLib
 	public:
 		// モデルのJsonファイル
 		static const wchar_t* MODEL_JSON;
+		static const wchar_t* MODEL_BASE_PATH;
+
 		// テクスチャのJsonファイル
 		static const wchar_t* TEXTURE_JSON;
-
-		static const wchar_t* MODEL_BASE_PATH;
 		static const wchar_t* TEXTURE_BASE_PATH;
+
 
 		// ------------------------
 		// アクセサ
@@ -27,6 +37,8 @@ namespace WataLib
 		DirectX::Model* GetModel(std::string key) const;
 		// テクスチャを取得する
 		ID3D11ShaderResourceView* GetTexture(std::string key) const;
+
+		FMOD::Sound* GetSound(std::string key) const;
 
 		// ------------------------
 		// 公開関数
@@ -47,6 +59,7 @@ namespace WataLib
 		// テクスチャを読み込む
 		void LoadTexture(ID3D11Device1* device);
 
+
 		// ------------------------
 		// 内部変数
 		// ------------------------
@@ -60,5 +73,10 @@ namespace WataLib
 
 		// テクスチャリスト
 		std::unordered_map<std::string, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> m_textureList;
+
+		std::unordered_map<std::string, FMOD::Sound*> m_soundList;
+
+
+
 	};
 }

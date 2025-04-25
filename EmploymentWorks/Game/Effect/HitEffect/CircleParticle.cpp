@@ -139,7 +139,6 @@ bool CircleParticle::Update(float elapsedTime)
 /// <param name="proj">Ë‰es—ñ</param>
 void CircleParticle::Render(DirectX::SimpleMath::Matrix view, DirectX::SimpleMath::Matrix proj)
 {
-	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
 	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
 	auto states = m_commonResources->GetCommonStates();
 

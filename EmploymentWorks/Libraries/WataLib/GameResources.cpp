@@ -4,19 +4,23 @@
 #include "nlohmann/json.hpp"
 #include "Game/CommonResources.h"
 #include "DeviceResources.h"
+#include "Libraries/FMOD/inc/fmod.hpp"
+
 
 // ユニークポインタ
 std::unique_ptr<WataLib::GameResources> WataLib::GameResources::m_resources = nullptr;
 
 // モデルのJsonファイル
 const wchar_t* WataLib::GameResources::MODEL_JSON = L"Resources/Dates/ModelData.json";
-// テクスチャのJsonファイル
-const wchar_t* WataLib::GameResources::TEXTURE_JSON = L"Resources/Dates/TextureData.json";
-
-// モデルのベースパス
-const wchar_t* WataLib::GameResources::MODEL_BASE_PATH = L"Resources/Models/";
 // テクスチャのベースパス
 const wchar_t* WataLib::GameResources::TEXTURE_BASE_PATH = L"Resources/Textures/";
+
+// テクスチャのJsonファイル
+const wchar_t* WataLib::GameResources::TEXTURE_JSON = L"Resources/Dates/TextureData.json";
+// モデルのベースパス
+const wchar_t* WataLib::GameResources::MODEL_BASE_PATH = L"Resources/Models/";
+
+
 
 //---------------------------------------------------------
 // コンストラクタ
@@ -27,6 +31,7 @@ WataLib::GameResources::GameResources(ID3D11Device1* device)
 	LoadModelFromJson(device);
 	// テクスチャを読み込む
 	LoadTexture(device);
+
 
 }
 
@@ -67,6 +72,7 @@ void WataLib::GameResources::LoadModelFromJson(ID3D11Device1* device)
 		// モデルをリストに追加
 		m_modelList[key] = std::move(model);
 	}
+
 }
 
 // --------------------------------------------------------
@@ -115,6 +121,7 @@ void WataLib::GameResources::LoadTexture(ID3D11Device1* device)
 	}
 }
 
+
 DirectX::Model* WataLib::GameResources::GetModel(std::string key) const
 {
 	// キーを検索
@@ -150,4 +157,30 @@ ID3D11ShaderResourceView* WataLib::GameResources::GetTexture(std::string key) co
 		MessageBoxA(nullptr, "テクスチャが見つかりません", "エラー", MB_OK);
 		return nullptr;
 	}
+
+}
+
+
+
+FMOD::Sound* WataLib::GameResources::GetSound(std::string key) const
+{
+
+
+
+	auto it = m_soundList.find(key);
+
+	if (it != m_soundList.end())
+	{
+
+		return it->second;
+
+	}
+	else
+	{
+		// エラーメッセージを表示
+		MessageBoxA(nullptr, "音楽が見つかりません", "エラー", MB_OK);
+		return nullptr;
+
+	}
+
 }

@@ -87,6 +87,9 @@ void BirdEnemyPartsBase::Render(const DirectX::SimpleMath::Matrix& view, const D
 /// <param name="tag">相手のタグ</param>
 void BirdEnemyPartsBase::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 {
+	UNREFERENCED_PARAMETER(object);
+	UNREFERENCED_PARAMETER(tag);
+
 }
 
 
@@ -126,6 +129,8 @@ void BirdEnemyPartsBase::Update(const float& elapsedTime)
 /// <param name="isNormalAnimation">初期アニメーションかどうか</param>
 void BirdEnemyPartsBase::SetAnimationData(std::string animationType, std::unordered_map<std::string, std::unordered_map<std::string, WataLib::Json::AnimationData>> datas, const std::string& partsName, bool isNormalAnimation)
 {
+		UNREFERENCED_PARAMETER(partsName);
+
 	//アニメーションの登録
 	CharacterEntity::GetAnimation()->SetAnimationData(animationType, datas[animationType][m_partsName], isNormalAnimation);
 

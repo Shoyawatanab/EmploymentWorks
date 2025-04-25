@@ -15,7 +15,7 @@
 
 #include "Game/Enemys/BossEnemy/BossEnemy.h"
 #include "Game/Player/Player.h"
-
+#include "BossJumpAttackAction.h"
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
@@ -58,14 +58,12 @@ void BossJumpAttackJump::Initialize()
 IBehaviorNode::State BossJumpAttackJump::Update(const float& elapsedTime)
 {
 
-	float speed = 9.0f;
-
 
 	Vector3 velocity = m_bossEnemy->GetVelocity();
 
-	velocity.x = m_jumpDirection.x * elapsedTime * speed;
+	velocity.x = m_jumpDirection.x * elapsedTime * BossJumpAttackAction::MOVESPEED;
 
-	velocity.z = m_jumpDirection.z * elapsedTime * speed;
+	velocity.z = m_jumpDirection.z * elapsedTime * BossJumpAttackAction::MOVESPEED;
 
 	m_bossEnemy->SetVelocity(velocity);
 
@@ -82,7 +80,7 @@ void BossJumpAttackJump::Enter()
 
 	Vector3 velocity = m_bossEnemy->GetVelocity();
 
-	velocity.y += 1.0f;
+	velocity.y += BossJumpAttackAction::JUMPPOWER;
 
 	m_bossEnemy->SetVelocity(velocity);
 
@@ -90,7 +88,6 @@ void BossJumpAttackJump::Enter()
 	Vector3 bossPos = m_bossEnemy->GetPosition();
 
 	Vector3 playerPos = m_player->GetPosition();
-
 
 
 	//•ûŒü‚ð‹‚ß‚é
@@ -110,11 +107,7 @@ void BossJumpAttackJump::Exit()
 
 	pos.y = 0.1f;
 
-	EventParams::CreateParticleDatas aaa = { pos };
-
-
-
-	Messenger::Notify(EventParams::EventType::CreateParticle, &aaa);
+	Messenger::GetInstance()->Notify(MessageType::CreateParticle, &pos);
 
 
 

@@ -27,6 +27,12 @@ class BossJumpAttackAction : public IAction , IObserver
 
 public:
 
+	static  constexpr float JUMPPOWER = 0.3f;
+
+	static  constexpr float MOVESPEED = 9.0f;
+
+public:
+
 
 	IAction* GetCurrentState() { return m_currentState; }
 
@@ -52,7 +58,7 @@ public:
 
 	//IObserver
 //’Ê’m‚ÉŒÄ‚Î‚ê‚éŠÖ”
-	void Notify(EventParams::EventType type, void* datas)  override;
+	void Notify(const Telegram& telegram)  override;
 
 	//ó‘Ô‚Ì•ÏX
 	void ChangeState(IAction* nextState);

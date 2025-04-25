@@ -87,6 +87,9 @@ void BirdEnemyBeamAttack::Update(const float& elapsedTime)
 /// <param name="projection">éÀâeçsóÒ</param>
 void BirdEnemyBeamAttack::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
 {
+	UNREFERENCED_PARAMETER(view);
+	UNREFERENCED_PARAMETER(projection);
+
 }
 
 

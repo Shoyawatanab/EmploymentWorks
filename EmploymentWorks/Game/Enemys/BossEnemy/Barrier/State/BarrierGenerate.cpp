@@ -39,6 +39,8 @@ BarrierGenerate::BarrierGenerate(CommonResources* resources
 	m_time{}
 	,m_barrier{barrier}
 {
+	UNREFERENCED_PARAMETER(resources);
+
 }
 
 /// <summary>
@@ -51,6 +53,8 @@ BarrierGenerate::~BarrierGenerate()
 
 void BarrierGenerate::Initialize(CommonResources* resources)
 {
+	UNREFERENCED_PARAMETER(resources);
+
 }
 
 void BarrierGenerate::Update(const float& elapsedTime)
@@ -70,6 +74,9 @@ void BarrierGenerate::Update(const float& elapsedTime)
 
 void BarrierGenerate::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
 {
+	UNREFERENCED_PARAMETER(view);
+	UNREFERENCED_PARAMETER(projection);
+
 }
 
 void BarrierGenerate::Enter()

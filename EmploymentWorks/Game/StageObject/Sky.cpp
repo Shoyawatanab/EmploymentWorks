@@ -44,7 +44,6 @@ void Sky::Initialize()
 
 	BaseEntity::Initialize();
 
-	auto device = BaseEntity::GetCommonResources()->GetDeviceResources()->GetD3DDevice();
 
 	// ƒ‚ƒfƒ‹‚ð“Ç‚Ýž‚Þ
 	m_model = BaseEntity::GetCommonResources()->GetGameResources()->GetModel("Sky");

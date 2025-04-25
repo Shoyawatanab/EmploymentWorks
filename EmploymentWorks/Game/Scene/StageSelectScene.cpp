@@ -49,9 +49,6 @@ void StageSelectScene::Initialize(CommonResources* resources)
 	assert(resources);
 	m_commonResources = resources;
 
-	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
-	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
-
 
 	auto buttom = std::make_unique<UserInterface>();
 
@@ -96,8 +93,8 @@ void StageSelectScene::Update(float elapsedTime)
 	const auto& tracker = m_commonResources->GetInputManager()->GetMouseTracker();
 
 	//‰æ–ÊƒTƒCƒY‚ÌŽæ“¾
-	float widht = m_commonResources->GetDeviceResources()->GetOutputSize().right;
-	float height = m_commonResources->GetDeviceResources()->GetOutputSize().bottom;
+	float widht = static_cast<float>( m_commonResources->GetDeviceResources()->GetOutputSize().right);
+	float height = static_cast<float>(m_commonResources->GetDeviceResources()->GetOutputSize().bottom);
 
 
 
@@ -111,7 +108,7 @@ void StageSelectScene::Update(float elapsedTime)
 	{
 		buttom.second->SetScale(buttom.second->GetInialScale());
 		if (WataLib::DetectionCollision::Circle_RectCheckHit(mousePosition, Params::MOUSE_RADIUS,
-			buttom.second->GetPosition(), buttom.second->GetWidth(), buttom.second->GetHeight()))
+			buttom.second->GetPosition(), static_cast<float>(buttom.second->GetWidth()), static_cast<float>(buttom.second->GetHeight())))
 		{
 			buttom.second->SetScale(buttom.second->GetInialScale() * 1.4f);
 
@@ -154,8 +151,6 @@ void StageSelectScene::Update(float elapsedTime)
 //---------------------------------------------------------
 void StageSelectScene::Render()
 {
-	auto states = m_commonResources->GetCommonStates();
-
 
 	for (auto& texture : m_textures)
 	{

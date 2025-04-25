@@ -27,9 +27,9 @@
 #include "Game/StageObject/Floor.h"
 #include "Game/StageObject/Wall.h"
 #include "Game/ItemAcquisition.h"
-#include "Game/Timer.h"
 #include "Game/Score.h"
 #include "Libraries/WataLib/UserInterface.h"
+#include "Game/Sound/SoundManager.h"
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
@@ -53,7 +53,6 @@ PlayScene::PlayScene(SceneManager::StageID stageID)
 	,m_nextScene{SceneID::NONE}
 	,m_stageID{stageID}
 	,m_tutorialTex{}
-	,m_timer{}
 	,m_isTutolialTex{}
 {
 }
@@ -67,14 +66,10 @@ PlayScene::~PlayScene()
 	//イベントの削除
 
 
-	// オーディオエンジンの後始末
-	m_soundEffectInstanceBGM->Stop(true);
-	if (m_audioEngine)
-	{
-		m_audioEngine->Suspend();
-	}
 
-	Messenger::m_eventList.clear();
+	Messenger::DestroyInstance();
+
+	
 
 }
 
@@ -85,10 +80,6 @@ void PlayScene::Initialize(CommonResources* resources)
 {
 	assert(resources);
 	m_commonResources = resources;
-
-	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
-	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
-	auto states = m_commonResources->GetCommonStates();
 
 	// デバッグカメラを作成する
 	RECT rect{ m_commonResources->GetDeviceResources()->GetOutputSize() };
@@ -113,7 +104,6 @@ void PlayScene::Initialize(CommonResources* resources)
 	m_targetMarker = std::make_unique<TargetMarker>();
 	m_effectsManager = std::make_unique<EffectsManager>();
 	m_sky = std::make_unique<Sky>(m_commonResources,Vector3::Zero,Vector3::Zero,Quaternion::Identity);
-	m_timer = std::make_unique<Timer>();
 
 
 	//各クラスに必要なポインタを登録
@@ -136,7 +126,6 @@ void PlayScene::Initialize(CommonResources* resources)
 	m_targetMarker->Initialize(m_commonResources);
 	m_effectsManager->Initialize(m_commonResources);
 	m_sky->Initialize();
-	m_timer->Initialize(m_commonResources);
 	ItemAcquisition::GetInstance()->Initialize(m_commonResources);
 
 	//当たり判定の登録
@@ -164,17 +153,6 @@ void PlayScene::Initialize(CommonResources* resources)
 	eflags |= AudioEngine_Debug;
 #endif
 
-	// オーディオエンジンを作成する
-	m_audioEngine = std::make_unique<AudioEngine>(eflags);
-
-	// サウンドエフェクトBGMをロードする
-	m_soundEffectBGM = std::make_unique<SoundEffect>(
-		m_audioEngine.get(), L"Resources/Sounds/maou_game_dangeon08.wav");
-
-	// サウンドエフェクトBGMをインスタンス化する
-	m_soundEffectInstanceBGM = m_soundEffectBGM->CreateInstance();
-	// BGMのループ再生
-	//sm_soundEffectInstanceBGM->Play(true);
 
 	m_tutorialTex = std::make_unique<UserInterface>();
 	m_tutorialTex->Create(m_commonResources, "Tex", Vector2(640, 360), Vector2::One);
@@ -184,6 +162,12 @@ void PlayScene::Initialize(CommonResources* resources)
 	m_commonResources->GetScore()->AddScore(100.0f);
 
 	ShowCursor(FALSE);
+
+
+	m_soundManager = SoundManager::GetInstance();
+
+	m_soundManager->PlaySoundBGM("Play");
+	m_soundManager->PlaySoundSE("BoomerangHit");
 
 }
 
@@ -224,7 +208,6 @@ void PlayScene::Update(float elapsedTime)
 	m_uiManager->Update(elapsedTime);
 	m_targetMarker->Update(elapsedTime);
 	m_effectsManager->Update(elapsedTime);
-	m_timer->Update(elapsedTime);
 
 
 
@@ -235,9 +218,6 @@ void PlayScene::Update(float elapsedTime)
 //---------------------------------------------------------
 void PlayScene::Render()
 {
-	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
-	auto states = m_commonResources->GetCommonStates();
-
 	// ビュー行列を取得する
 	const Matrix& view = m_cameraManager->GetViewMatrix();
 
@@ -249,8 +229,6 @@ void PlayScene::Render()
 	m_effectsManager->Render(view, m_projection);
 	m_uiManager->Render(view, m_projection);
 	m_targetMarker->Render();
-
-	m_timer->Render();
 
 	//if (m_stageID == SceneManager::Stage1)
 	//{
@@ -364,13 +342,13 @@ void PlayScene::CheckMouseWheel()
 	//上に回転
 	if (scrollWheelValue > 0)
 	{
-		Messenger::Notify(EventParams::EventType::MouseWheelUp, nullptr);
+		Messenger::GetInstance()->Notify(::MessageType::MouseWheelUp, nullptr);
 	}
 	//下に回転
 	else if (scrollWheelValue < 0)
 	{
 
-		Messenger::Notify(EventParams::EventType::MouseWheelDown, nullptr);
+		Messenger::GetInstance()->Notify(::MessageType::MouseWheelDown, nullptr);
 
 	}
 

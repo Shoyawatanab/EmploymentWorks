@@ -25,11 +25,9 @@ Game::Game() noexcept(false)
     ,m_fade{}
     ,m_fullScreen{false}
     ,m_gameResources{}
+    ,m_soundManager{}
 {
     m_deviceResources = std::make_unique<DX::DeviceResources>();
-    // TODO: Provide parameters for swapchain format, depth/stencil format, and backbuffer count.
-    //   Add DX::DeviceResources::c_AllowTearing to opt-in to variable rate displays.
-    //   Add DX::DeviceResources::c_EnableHDR for HDR10 display.
     m_deviceResources->RegisterDeviceNotify(this);
 }
 
@@ -45,15 +43,7 @@ void Game::Initialize(HWND window, int width, int height)
     m_deviceResources->CreateWindowSizeDependentResources();
     CreateWindowSizeDependentResources();
 
-    // TODO: Change the timer settings if you want something other than the default variable timestep mode.
-    // e.g. for 60 FPS fixed timestep update logic, call:
-    /*
-    m_timer.SetFixedTimeStep(true);
-    m_timer.SetTargetElapsedSeconds(1.0 / 60);
-    */
 
-
-    // ★追記ココから↓↓↓★
 
     // デバイスとコンテキストを取得する
     auto device  = m_deviceResources->GetD3DDevice();
@@ -105,9 +95,9 @@ void Game::Initialize(HWND window, int width, int height)
 
     m_timer.SetFixedTimeStep(true);
 
+    m_soundManager = SoundManager::GetInstance();
+    m_soundManager->Initialize();
 
-
-    // ★追記ココまで↑↑↑★
 
 }
 
@@ -131,8 +121,6 @@ void Game::Update(DX::StepTimer const& timer)
     // TODO: Add your game logic here.
 
 
-    // ★追記ココから↓↓↓★
-
     // 入力マネージャを更新する
     m_inputManager->Update();
 
@@ -145,13 +133,14 @@ void Game::Update(DX::StepTimer const& timer)
         ExitGame();
     }
 
+    m_soundManager->Update();
+
     // シーンマネージャを更新する
     m_sceneManager->Update(elapsedTime);
 
     m_fade->Update(elapsedTime);
 
 
-    // ★追記ココまで↑↑↑★
 }
 #pragma endregion
 
@@ -172,9 +161,6 @@ void Game::Render()
 
     // TODO: Add your rendering code here.
 
-
-    // ★追記ココから↓↓↓★
-
     UNREFERENCED_PARAMETER(context);
 
     // デバッグ文字列を作成する：FPS
@@ -187,9 +173,6 @@ void Game::Render()
 
     // デバッグ文字列を描画する
     m_debugString->Render(m_commonStates.get());
-
-    // ★追記ココまで↑↑↑★
-
 
     m_deviceResources->PIXEndEvent();
 

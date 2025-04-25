@@ -33,6 +33,7 @@ WataLib::TitleCamera::TitleCamera()
 
 void WataLib::TitleCamera::Initialize(CommonResources* resources)
 {
+	UNREFERENCED_PARAMETER(resources);
 
 
 	CalculateEyePosition();
