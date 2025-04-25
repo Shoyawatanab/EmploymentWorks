@@ -53,9 +53,6 @@ void Timer::Initialize(CommonResources* resources)
 
 	m_commonResources = resources;
 
-	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
-
-
 
 
 	//CreateNumberTex(L"Resources/Textures/Number.png", m_texture, m_texCenter);
@@ -172,7 +169,6 @@ void Timer::TexRender(Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& Tex, Dir
 {
 	using namespace DirectX;
 	using namespace DirectX::SimpleMath;
-	auto states = m_commonResources->GetCommonStates();
 
 
 	//// スプライトバッチの開始：オプションでソートモード、ブレンドステートを指定する

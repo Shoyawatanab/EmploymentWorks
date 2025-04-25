@@ -22,7 +22,8 @@ BoomerangDrop::~BoomerangDrop()
 
 void BoomerangDrop::Initialize(CommonResources* resources)
 {
-	
+	UNREFERENCED_PARAMETER(resources);
+
 }
 
 
@@ -42,6 +43,9 @@ void BoomerangDrop::Update(const float& elapsedTime)
 
 void BoomerangDrop::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
 {
+	UNREFERENCED_PARAMETER(view);
+	UNREFERENCED_PARAMETER(projection);
+
 }
 
 

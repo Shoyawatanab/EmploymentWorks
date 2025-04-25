@@ -64,8 +64,8 @@ void TargetMarker::Initialize(CommonResources* resources)
 		,Vector2(200,200), Vector2(0.3f,0.3f));
 	
 
-	Messenger::Attach(EventParams::EventType::BoomerangGetReady, this);
-	Messenger::Attach(EventParams::EventType::BoomerangGetReadyEnd, this);
+	Messenger::GetInstance()->Attach(::MessageType::BoomerangGetReady, this);
+	Messenger::GetInstance()->Attach(::MessageType::BoomerangGetReadyEnd, this);
 
 }
 
@@ -85,7 +85,7 @@ DirectX::SimpleMath::Vector2 TargetMarker::FilterWithinRange(const std::vector<D
 	DirectX::SimpleMath::Vector2 result;
 
 	//画面の横のサイズを初期値とする
-	float minLength = m_windowSize.first;
+	float minLength = static_cast<float>(m_windowSize.first);
 
 	m_isLockOn = false;
 
@@ -204,14 +204,15 @@ void TargetMarker::AddPointer(WataLib::TPS_Camera* tpsCamera)
 /// </summary>
 /// <param name="type">イベントの種類</param>
 /// <param name="datas">イベントのデータ</param>
-void TargetMarker::Notify(EventParams::EventType type, void* datas)
+void TargetMarker::Notify(const Telegram& telegram)
 {
-	switch (type)
+
+	switch (telegram.messageType)
 	{
-		case EventParams::EventType::BoomerangGetReady:
+		case ::MessageType::BoomerangGetReady:
 			m_isTargetMarker = true;
 			break;
-		case EventParams::EventType::BoomerangGetReadyEnd:
+		case ::MessageType::BoomerangGetReadyEnd:
 			m_isTargetMarker = false;
 			m_isLockOn = false;
 

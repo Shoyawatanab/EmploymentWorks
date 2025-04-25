@@ -43,8 +43,6 @@ void ResultScene::Initialize(CommonResources* resources)
 	assert(resources);
 	m_commonResources = resources;
 
-	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
-	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
 
 
 
@@ -74,8 +72,6 @@ void ResultScene::Update(float elapsedTime)
 		return;
 	}
 
-	// キーボードステートトラッカーを取得する
-	const auto& kbTracker = m_commonResources->GetInputManager()->GetKeyboardTracker();
 
 	m_commonResources->GetScore()->Update(elapsedTime);
 

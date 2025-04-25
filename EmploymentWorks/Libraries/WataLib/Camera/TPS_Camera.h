@@ -109,7 +109,7 @@ namespace WataLib
 		// カメラ座標を計算する
 		void CalculateEyePosition();
 		//通知時に呼ばれる関数
-		void Notify(EventParams::EventType type, void* datas)  override;
+		void Notify(const Telegram& telegram)  override;
 
 
 

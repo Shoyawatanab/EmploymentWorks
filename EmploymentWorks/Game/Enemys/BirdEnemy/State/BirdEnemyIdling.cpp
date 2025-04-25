@@ -74,7 +74,7 @@ void BirdEnemyldling::Update(const float& elapsedTime)
 		//	¶¬‚µ‚Ä—~‚µ‚¢ƒ‰ƒ“ƒ_ƒ€‚Ì”ÍˆÍ‚ğDistribution‚É”C‚¹‚éB¡‰ñ‚Í0`2PI
 		std::uniform_real_distribution<> dist(0, 100);
 
-		float ratio = dist(engine);
+		float ratio = static_cast<float>(dist(engine));
 
 
 		if (ratio < Params::BIRDENEMY_ATTACK_RATIO)
@@ -104,6 +104,9 @@ void BirdEnemyldling::Update(const float& elapsedTime)
 /// <param name="projection">Ë‰es—ñ</param>
 void BirdEnemyldling::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
 {
+	UNREFERENCED_PARAMETER(view);
+	UNREFERENCED_PARAMETER(projection);
+
 }
 
 

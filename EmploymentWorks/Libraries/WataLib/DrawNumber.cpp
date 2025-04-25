@@ -208,7 +208,7 @@ void DrawNumber::Render(int number , DirectX::SimpleMath::Vector2 offsetPosition
 	//	シェーダーに渡す追加のバッファを作成する。(ConstBuffer）
 	ConstBuffer cbuff;
 	cbuff.windowSize = SimpleMath::Vector4(Screen::WIDTH, Screen::HEIGHT, 1, 1);
-	cbuff.Diffuse = SimpleMath::Vector4(number, 1, 1, 1);
+	cbuff.Diffuse = SimpleMath::Vector4(static_cast<float>(number), 1, 1, 1);
 
 	//	受け渡し用バッファの内容更新(ConstBufferからID3D11Bufferへの変換）
 	context->UpdateSubresource(m_CBuffer.Get(), 0, NULL, &cbuff, 0, 0);

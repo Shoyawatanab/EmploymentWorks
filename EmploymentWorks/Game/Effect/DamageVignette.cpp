@@ -66,9 +66,6 @@ void DamageVignette::Initialize()
 
 	auto device  = m_commonResources->GetDeviceResources()->GetD3DDevice();
 	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
-	auto states  = m_commonResources->GetCommonStates();
-
-
 
 	//	コンパイルされたシェーダファイルを読み込み
 	BinaryFile VSData = BinaryFile::LoadFile(L"Resources/Shaders/DamageVignetteVS.cso");
@@ -151,6 +148,8 @@ void DamageVignette::Update(const float& elapsedTime)
 /// <param name="proj">射影行列</param>
 void DamageVignette::Render(const DirectX::SimpleMath::Matrix& view, const  DirectX::SimpleMath::Matrix& proj)
 {
+	UNREFERENCED_PARAMETER(view);
+	UNREFERENCED_PARAMETER(proj);
 
 	if (!m_isActive)
 	{
@@ -236,6 +235,8 @@ void DamageVignette::SetIsActive(bool isActive)
 
 void DamageVignette::Create(void* datas)
 {
+	UNREFERENCED_PARAMETER(datas);
+
 }
 
 //---------------------------------------------------------

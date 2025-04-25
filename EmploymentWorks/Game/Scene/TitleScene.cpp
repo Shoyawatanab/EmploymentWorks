@@ -39,6 +39,7 @@ TitleScene::TitleScene()
 	,m_state{State::PLAY}
 	,m_buttom{}
 	,m_selectButtomId{}
+	,m_player{}
 {
 
 	m_camera = std::make_unique<WataLib::TitleCamera>();
@@ -117,12 +118,23 @@ void TitleScene::Initialize(CommonResources* resources)
 
 	}
 
-	auto model = std::make_unique<WataLib::Model3D>();
-	model->Initialize(m_commonResources, L"Resources/Models/Player.cmo",
-		PLAYERPOSITION, PLAYERSCALE);
+	//auto model = std::make_unique<WataLib::Model3D>();
+	//model->Initialize(m_commonResources, L"Resources/Models/Player.cmo",
+	//	PLAYERPOSITION, PLAYERSCALE);
 
-	m_objects.push_back(std::move(model));
+	//m_objects.push_back(std::move(model));
 
+	m_player = std::make_unique<Player>(m_commonResources);
+	m_player->AddPointer(nullptr,nullptr);
+
+	m_player->Initialize();
+
+	m_player->SetPosition(PLAYERPOSITION);
+	m_player->SetScale(PLAYERSCALE);
+	m_player->SetRotation(DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(
+		DirectX::XMConvertToRadians(PLAYERROTATION.y),
+		DirectX::XMConvertToRadians(PLAYERROTATION.x),
+		DirectX::XMConvertToRadians(PLAYERROTATION.z)));
 
 	CreateTextures();
 
@@ -133,6 +145,7 @@ void TitleScene::Initialize(CommonResources* resources)
 	m_commonResources->GetFade()->StartNormalFadeOut();
 
 	ShowCursor(true);
+
 
 
 }
@@ -153,16 +166,12 @@ void TitleScene::Update(float elapsedTime)
 	RECT rect{ m_commonResources->GetDeviceResources()->GetOutputSize() };
 
 	//画面サイズの取得
-	float widht = m_commonResources->GetDeviceResources()->GetOutputSize().right;
-	float height = m_commonResources->GetDeviceResources()->GetOutputSize().bottom;
-
-
+	float widht = static_cast<float>(m_commonResources->GetDeviceResources()->GetOutputSize().right);
+	float height = static_cast<float>(m_commonResources->GetDeviceResources()->GetOutputSize().bottom);
 
 	Vector2 mousePosition = Vector2(state.x * Screen::WIDTH / widht, state.y * Screen::HEIGHT / height) ;
-
-
-
-
+	//Vector2 mousePosition = Vector2(state.x , state.y) ;
+	
 	//初期化
 	m_selectButtomId = BUTTOM_INIAL_ID;
 	
@@ -171,7 +180,7 @@ void TitleScene::Update(float elapsedTime)
 		buttom.second->SetScale(buttom.second->GetInialScale());
 
 		if (WataLib::DetectionCollision::Circle_RectCheckHit(Vector2(mousePosition.x,mousePosition.y), Params::MOUSE_RADIUS,
-			buttom.second->GetPosition(), buttom.second->GetWidth(), buttom.second->GetHeight()))
+			buttom.second->GetPosition(), static_cast<float>(buttom.second->GetWidth()), static_cast<float>(buttom.second->GetHeight())))
 		{
 			buttom.second->SetScale(buttom.second->GetInialScale() * 1.4f);
 
@@ -205,11 +214,13 @@ void TitleScene::Update(float elapsedTime)
 	m_camera->Update(elapsedTime);
 
 	//// デバッグ情報を表示する
-	//auto debugString = m_commonResources->GetDebugString();
-	//debugString->AddString("X %d", state.x);
-	//debugString->AddString("Y %d", state.y);
-	//debugString->AddString("X %f", widht);
-	//debugString->AddString("Y %f", height);
+	auto debugString = m_commonResources->GetDebugString();
+	debugString->AddString("mousePositionX %f", mousePosition.x);
+	debugString->AddString("mousePositionY %f", mousePosition.y);
+	debugString->AddString("StateX %f", state.x);
+	debugString->AddString("StateY %f", state.y);
+	debugString->AddString("StateX %f", widht);
+	debugString->AddString("StateY %f", height);
 }
 
 //---------------------------------------------------------
@@ -217,8 +228,6 @@ void TitleScene::Update(float elapsedTime)
 //---------------------------------------------------------
 void TitleScene::Render()
 {
-	auto states = m_commonResources->GetCommonStates();
-
 
 	// ビュー行列を取得する
 	const Matrix& view = m_camera->GetViewMatrix();
@@ -234,6 +243,9 @@ void TitleScene::Render()
 		object->Render(view, m_projection);
 	}
 
+	m_player->Render(view, m_projection);
+
+
 	for (auto& texture : m_textures)
 	{
 		texture->Render();
@@ -243,7 +255,6 @@ void TitleScene::Render()
 	{
 		buttom.second->Render();
 	}
-
 
 
 

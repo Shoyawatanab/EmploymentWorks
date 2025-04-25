@@ -36,7 +36,7 @@ public:
 
 	//IObserver
 //通知時に呼ばれる関数
-	void Notify(EventParams::EventType type, void* datas)  override;
+	void Notify(const Telegram& telegram)  override;
 
 private:
 	// 共通リソース

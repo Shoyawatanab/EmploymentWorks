@@ -40,7 +40,6 @@ void Wall::Initialize()
 
 	INotMoveEntity::Initialize();
 
-	auto device = BaseEntity::GetCommonResources()->GetDeviceResources()->GetD3DDevice();
 
 	// ƒ‚ƒfƒ‹‚ð“Ç‚Ýž‚Þ
 	m_model = BaseEntity::GetCommonResources()->GetGameResources()->GetModel("Wall");
@@ -94,18 +93,13 @@ void Wall::Update(const float& elapsedTime)
 
 void Wall::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 {
-}
-
-
-
-void Wall::SetDatas(DirectX::SimpleMath::Vector3 scale, 
-	DirectX::SimpleMath::Vector3 position, 
-	DirectX::SimpleMath::Quaternion rotation)
-{
-
-
+	UNREFERENCED_PARAMETER(object);
+	UNREFERENCED_PARAMETER(tag);
 
 }
+
+
+
 
 
 //---------------------------------------------------------

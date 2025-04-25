@@ -128,8 +128,6 @@ WataLib::DamageCountUI::~DamageCountUI()
 void WataLib::DamageCountUI::Initialize()
 {
 
-	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
-	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
 
 	m_backGraund = std::make_unique<UserInterface>();
 	m_backGraund = LoadTexture("DamageBackGraund"

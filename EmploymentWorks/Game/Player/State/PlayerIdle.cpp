@@ -64,6 +64,8 @@ void PlayerIdle::Initialize(CommonResources* resources)
 /// <param name="elapsedTime">Œo‰ßŽžŠÔ</param>
 void PlayerIdle::Update(const float& elapsedTime)
 {
+	UNREFERENCED_PARAMETER(elapsedTime);
+
 
 	const auto& tracker = m_commonResources->GetInputManager()->GetMouseTracker();
 
@@ -78,6 +80,9 @@ void PlayerIdle::Update(const float& elapsedTime)
 
 void PlayerIdle::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
 {
+	UNREFERENCED_PARAMETER(view);
+	UNREFERENCED_PARAMETER(projection);
+
 }
 
 /// <summary>

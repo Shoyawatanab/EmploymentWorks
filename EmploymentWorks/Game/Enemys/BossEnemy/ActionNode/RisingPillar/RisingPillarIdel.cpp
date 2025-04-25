@@ -38,6 +38,8 @@ RisingPillarIdel::~RisingPillarIdel()
 /// <param name="resources">ã§í ÉäÉ\Å[ÉX</param>
 void RisingPillarIdel::Initialize(CommonResources* resources)
 {
+	UNREFERENCED_PARAMETER(resources);
+
 }
 
 /// <summary>

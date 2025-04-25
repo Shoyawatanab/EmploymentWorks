@@ -12,19 +12,36 @@ class Messenger
 
 public:
 
-	static std::unordered_map<EventParams::EventType, std::vector<IObserver*>> m_eventList;
+	std::unordered_map<MessageType, std::vector<IObserver*>> m_eventList;
+
 
 public:
+
+	static Messenger* GetInstance();
+
+	static void DestroyInstance();
 
 	// 観察者をアタッチ
-	static void Attach(EventParams::EventType type, IObserver* observer);
-	
+	void Attach(MessageType type, IObserver* observer);
 	// 通知する
-	static void Notify(EventParams::EventType type,void* datas);
+	void Notify(MessageType type, void* datas);
+
+
+private:
+
+	// コピー・ムーブ禁止
+	Messenger(const Messenger&) = delete;
+	Messenger& operator=(const Messenger&) = delete;
+	Messenger(Messenger&&) = delete;
+	Messenger& operator=(Messenger&&) = delete;
+	// コンストラクタ
+	Messenger();
+
 
 public:
 
-	//イベント名の変数
+	//
+	static std::unique_ptr<Messenger> s_messenger;
 
 	
 };

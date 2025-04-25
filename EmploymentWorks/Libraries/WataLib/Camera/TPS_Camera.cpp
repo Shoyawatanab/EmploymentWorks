@@ -61,8 +61,8 @@ void WataLib::TPS_Camera::Initialize(CommonResources* resources)
 
 	//ƒCƒxƒ“ƒg‚ÉObserver‚Æ‚µ‚Ä“o˜^
 
-	Messenger::Attach(EventParams::EventType::BoomerangGetReady, this);
-	Messenger::Attach(EventParams::EventType::BoomerangGetReadyEnd, this);
+	Messenger::GetInstance()->Attach(MessageType::BoomerangGetReady, this);
+	Messenger::GetInstance()->Attach(MessageType::BoomerangGetReadyEnd, this);
 
 }
 
@@ -243,15 +243,16 @@ void WataLib::TPS_Camera::Exit()
 
 }
 
-void WataLib::TPS_Camera::Notify(EventParams::EventType type, void* datas)
+void WataLib::TPS_Camera::Notify(const Telegram& telegram)
 {
+	
 
-	switch (type)
+	switch (telegram.messageType)
 	{
-		case EventParams::EventType::BoomerangGetReady:
+		case MessageType::BoomerangGetReady:
 			m_zoomState = ZoomState::ZoomIn;
 			break;
-		case EventParams::EventType::BoomerangGetReadyEnd:
+		case MessageType::BoomerangGetReadyEnd:
 			m_zoomState = ZoomState::ZoomOut;
 			break;
 		default:

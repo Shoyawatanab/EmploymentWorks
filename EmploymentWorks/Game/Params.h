@@ -9,6 +9,8 @@ public:
 	 
 	//重力
 	static const float GRAVITY;
+	//影のY座標
+	static const float SHADOW_POSITION_Y;
 
 //プレイヤ
    	//プレイヤの大きさ
@@ -27,6 +29,9 @@ public:
 	static const float PLAYER_MOVE_SPEED;
 	//プレイヤの回転スピード
 	static const float PLAYER_ROTATION_SPEED;
+
+	//プレイヤの影の大きさ
+	static const float PLAYER_SHADOW_RADIUS;
 
 	//プレイヤのBODYの大きさ
 	static const DirectX::SimpleMath::Vector3 PLAYER_BODY_SCALE;
@@ -100,6 +105,12 @@ public:
 	static const float BOOMERANG_SPHERE_COLLIDER_SIZE;
 	//　ブーメランの攻撃力
 	static const int BOOMERANG_DAMAGE;
+
+
+	//ブーメランの影の大きさ
+	static const float BOOMERANG_SHADOW_RADIUS;
+
+
 	//ブーメランのIDLE状態の座標
 	static const DirectX::SimpleMath::Vector3 BOOMERANG_IDLE_POSITION;
 	//ブーメランのIDLE状態の回転
@@ -123,6 +134,10 @@ public:
 	static const float BOSSENEMY_MOVE_SPEED;
 	//ボス敵の回転スピード
 	static const float BOSSENEMY_ROTATION_SPEED;
+
+
+	//ボスの影の大きさ
+	static const float BOSSENEMY_SHADOW_RADIUS;
 
 
 	//ボス敵のボックスの当たり判定の大きさ
@@ -360,6 +375,9 @@ public:
 	static const DirectX::SimpleMath::Vector3 BIRDENEMY_BOX_COLLIDER_SIZE;
 	//鳥の敵のスフィアの当たり判定の大きさ
 	static const float BIRDENEMY_SPHERE_COLLIDER_SIZE;
+	//鳥の敵の影の大きさ
+	static const float BIRDENEMY_SHADOW_RADIUS;
+
 	//鳥の敵のビームの発射座標
 	static const DirectX::SimpleMath::Vector3 BIRDENEMY_BEAM_SHOT_POSITION;
 	//鳥の敵の動くのにかかる時間

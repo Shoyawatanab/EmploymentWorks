@@ -48,6 +48,8 @@ BarrierClose::~BarrierClose()
 /// <param name="resources">ã§í ÉäÉ\Å[ÉX</param>
 void BarrierClose::Initialize(CommonResources* resources)
 {
+	UNREFERENCED_PARAMETER(resources);
+
 }
 
 /// <summary>

@@ -82,7 +82,7 @@ void PlayerPartsBase::Render(const DirectX::SimpleMath::Matrix& view, const Dire
 		part->Render(view,projection);
 	}
 
-	auto debug = BaseEntity::GetCommonResources()->GetDebugString();
+	//auto debug = BaseEntity::GetCommonResources()->GetDebugString();
 
 	//debug->AddString("Pos : %f, %f", BaseEntity::GetRotation().x, BaseEntity::GetRotation().y);
 
@@ -96,6 +96,8 @@ void PlayerPartsBase::Render(const DirectX::SimpleMath::Matrix& view, const Dire
 void PlayerPartsBase::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 {
 
+	UNREFERENCED_PARAMETER(object);
+	UNREFERENCED_PARAMETER(tag);
 
 
 }
@@ -141,6 +143,8 @@ void PlayerPartsBase::SetAnimationData(std::string animationType
 	, const std::string& partsName
 	, bool isNormalAnimation)
 {
+	UNREFERENCED_PARAMETER(partsName);
+
 	//ƒAƒjƒ[ƒVƒ‡ƒ“‚Ì“o˜^
 	CharacterEntity::GetAnimation()->SetAnimationData(animationType, datas[animationType][m_partsName], isNormalAnimation);
 

@@ -44,7 +44,6 @@ void Floor::Initialize()
 
 	INotMoveEntity::Initialize();
 
-	auto device = BaseEntity::GetCommonResources()->GetDeviceResources()->GetD3DDevice();
 
 	// モデルを読み込む
 	m_model = BaseEntity::GetCommonResources()->GetGameResources()->GetModel("Floor");
@@ -81,6 +80,8 @@ void Floor::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::Simpl
 
 void Floor::Update(const float& elapsedTime)
 {
+	UNREFERENCED_PARAMETER(elapsedTime);
+
 	//オブジェクトか更新が無効なら
 	if (!BaseEntity::GetIsEntityActive() || !BaseEntity::GetIsUpdateActive())
 	{
@@ -101,6 +102,9 @@ void Floor::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 void Floor::SetDatas(DirectX::SimpleMath::Vector3 scale, DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Quaternion rotation)
 {
 
+	UNREFERENCED_PARAMETER(rotation);
+	UNREFERENCED_PARAMETER(position);
+	UNREFERENCED_PARAMETER(scale);
 
 
 }

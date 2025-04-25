@@ -67,15 +67,6 @@ void CollisionEntity::Render(const DirectX::SimpleMath::Matrix& view, const Dire
 
 }
 
-/// <summary>
-/// 当たった時に呼び出される関数
-/// </summary>
-/// <param name="object">相手のオブジェクト</param>
-/// <param name="tag">相手のタグ</param>
-void CollisionEntity::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
-{
-
-}
 
 /// <summary>
 /// 当たり判定クラスに追加

@@ -52,9 +52,6 @@ void BirdEnemyFeather::Initialize()
 {
 
 
-	auto device = BaseEntity::GetCommonResources()->GetDeviceResources()->GetD3DDevice();
-	auto context = BaseEntity::GetCommonResources()->GetDeviceResources()->GetD3DDeviceContext();
-	auto states = BaseEntity::GetCommonResources()->GetCommonStates();
 
 	// ƒ‚ƒfƒ‹‚ð“Ç‚Ýž‚Þ
 	auto model = BaseEntity::GetCommonResources()->GetGameResources()->GetModel("BirdEnemyFeather");

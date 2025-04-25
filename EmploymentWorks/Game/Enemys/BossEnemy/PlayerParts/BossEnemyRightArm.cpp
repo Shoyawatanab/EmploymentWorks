@@ -76,11 +76,9 @@ void BossEnemyRightArm::OnCollisionEnter(CollisionEntity* object, CollisionTag t
 
 			pos = Vector3::Transform(pos, BossEnemyPartsBase::GetRoot()->GetRotation());
 
+			pos += BossEnemyPartsBase::GetRoot()->GetPosition();
 
-			EventParams::CreateParticleDatas aaa = { pos + BossEnemyPartsBase::GetRoot()->GetPosition()};
-
-
-			Messenger::Notify(EventParams::EventType::CreateParticle, &aaa);
+			Messenger::GetInstance()->Notify(MessageType::CreateParticle, &pos);
 		}
 		break;
 		default:

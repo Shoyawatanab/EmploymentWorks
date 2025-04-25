@@ -20,6 +20,9 @@ CommonResources::CommonResources()
 	m_score{nullptr}
 	,m_gameResources{nullptr}
 {
+
+
+
 }
 
 //---------------------------------------------------------

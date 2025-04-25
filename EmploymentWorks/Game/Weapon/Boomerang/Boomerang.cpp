@@ -84,9 +84,6 @@ void Boomerang::Initialize()
 
 	ItemEntity::Initialize();
 
-	//// モデルを読み込む準備
-	std::unique_ptr<DirectX::EffectFactory> fx = std::make_unique<DirectX::EffectFactory>(device);
-	fx->SetDirectory(L"Resources/Models");
 
 	//// モデルを読み込む
 	m_model = ItemEntity::GetCommonResources()->GetGameResources()->GetModel("Boomerang");
@@ -152,13 +149,13 @@ void Boomerang::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::S
 
 
 	DirectX::SimpleMath::Vector3 shadowPos = BaseEntity::GetPosition();
-	shadowPos.y = 0.1f;
+	shadowPos.y = Params::SHADOW_POSITION_Y;
 
 
 	if (m_stateMachine->GetCurrentState() != m_stateMachine->GetBoomerangIdel())
 	{
 		// 自機の影を描画する
-		m_shadow->Render(context, states, view, projection, shadowPos, 0.5f);
+		m_shadow->Render(context, states, view, projection, shadowPos, Params::BOOMERANG_SHADOW_RADIUS);
 
 	}
 
@@ -172,6 +169,7 @@ void Boomerang::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::S
 /// <param name="tag">相手のタグ</param>
 void Boomerang::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 {
+	UNREFERENCED_PARAMETER(object);
 
 	switch (tag)
 	{
@@ -198,7 +196,7 @@ void Boomerang::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 		case CollisionEntity::CollisionTag::Player:
 			if (m_stateMachine->GetCurrentState() == m_stateMachine->GetBoomerangRightThrow())
 			{
-				Messenger::Notify(EventParams::EventType::BoomerangRecoverable, nullptr);
+				Messenger::GetInstance()->Notify(MessageType::BoomerangRecoverable, nullptr);
 				m_isCatch = true;
 
 			}
@@ -213,11 +211,12 @@ void Boomerang::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 
 void Boomerang::OnCollisionExit(CollisionEntity* object, CollisionTag tag)
 {
+	UNREFERENCED_PARAMETER(object);
 
 	switch (tag)
 	{
 		case CollisionEntity::CollisionTag::Player:			
-			Messenger::Notify(EventParams::EventType::BoomerangNotRecoverable, nullptr);
+			Messenger::GetInstance()->Notify(MessageType::BoomerangNotRecoverable, nullptr);
 			m_isCatch = false;
 			break;
 		default:
@@ -249,7 +248,7 @@ void Boomerang::Update(const float& elapsedTime)
 		if (kbTracker->released.F)
 		{
 			m_stateMachine->ChangeState(m_stateMachine->GetBoomerangIdel());
-			Messenger::Notify(EventParams::EventType::BoomerangNotRecoverable,nullptr);
+			Messenger::GetInstance()->Notify(MessageType::BoomerangNotRecoverable,nullptr);
 
 		}
 

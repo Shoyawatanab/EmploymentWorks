@@ -83,7 +83,7 @@ void Score::Update(float elapsedTime)
 
 	ratio = std::min(ratio, 1.0f);
 
-	int score = m_score * ratio;
+	int score = static_cast<int>(m_score * ratio);
 
 	SplitDigits(score);	
 

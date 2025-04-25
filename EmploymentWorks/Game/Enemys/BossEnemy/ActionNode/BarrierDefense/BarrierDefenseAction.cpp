@@ -62,7 +62,7 @@ void BarrierDefenseAction::Initialize()
 	m_currentState->Enter();
 
 	//イベントタイプの登録
-	Messenger::Attach(EventParams::EventType::BossBeamHit, this);
+	Messenger::GetInstance()->Attach(MessageType::BossBeamHit, this);
 
 }
 
@@ -83,10 +83,10 @@ void BarrierDefenseAction::Exit()
 {
 }
 
-void BarrierDefenseAction::Notify(EventParams::EventType type, void* datas)
+void BarrierDefenseAction::Notify(const Telegram& telegram)
 {
-
-
+	UNREFERENCED_PARAMETER(telegram);
+	
 
 }
 

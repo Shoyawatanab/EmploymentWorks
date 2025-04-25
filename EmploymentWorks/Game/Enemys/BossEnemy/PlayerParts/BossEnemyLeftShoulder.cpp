@@ -48,7 +48,6 @@ BossEnemyLeftShoulder::~BossEnemyLeftShoulder()
 void BossEnemyLeftShoulder::Initialize()
 {
 	
-	auto device = BaseEntity::GetCommonResources()->GetDeviceResources()->GetD3DDevice();
 
 	//// ƒ‚ƒfƒ‹‚ð“Ç‚Ýž‚Þ
 	auto model = BaseEntity::GetCommonResources()->GetGameResources()->GetModel("BossEnemyShoulder");

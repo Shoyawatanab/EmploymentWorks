@@ -46,6 +46,8 @@ BarrierDeployment::~BarrierDeployment()
 /// <param name="resources">ã§í ÉäÉ\Å[ÉX</param>
 void BarrierDeployment::Initialize(CommonResources* resources)
 {
+	UNREFERENCED_PARAMETER(resources);
+
 }
 
 /// <summary>

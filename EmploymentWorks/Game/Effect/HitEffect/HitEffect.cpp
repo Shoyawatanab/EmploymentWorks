@@ -41,11 +41,6 @@ void HitEffect::Initialize()
 {
 
 
-	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
-	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
-
-
-
 	m_time = 0;
 	//外の円
 	m_circleHitEffect = std::make_unique<CircleParticle>(m_commonResources);
@@ -110,14 +105,15 @@ void HitEffect::Create(void* datas)
 {
 
 	//データをキャスト
-	EventParams::CreateHitEffectDatas* data = static_cast<EventParams::CreateHitEffectDatas*>(datas);
+	UnknownDataThree* data = static_cast<UnknownDataThree*>(datas);
 
 	//データから座標を取得して登録
-	SetPosition(data->Position);
+	SetPosition(*static_cast<DirectX::SimpleMath::Vector3*>(data->data1));
 	//データから大きさを取得して登録
-	SetScale(data->Scale);
+	SetScale(*static_cast<DirectX::SimpleMath::Vector3*>(data->data2));
 	//時間をリセット
 	m_circleHitEffect->SetTime(0.0f);
+
 }
 
 // 終了処理

@@ -62,7 +62,7 @@ void BossBeamAttackAction::Initialize()
 	m_currentState->Enter();
 
 	//イベントタイプの登録
-	Messenger::Attach(EventParams::EventType::BossBeamHit, this);
+	Messenger::GetInstance()->Attach(MessageType::BossBeamHit, this);
 
 }
 
@@ -83,12 +83,12 @@ void BossBeamAttackAction::Exit()
 {
 }
 
-void BossBeamAttackAction::Notify(EventParams::EventType type, void* datas)
+void BossBeamAttackAction::Notify(const Telegram& telegram)
 {
-
-	switch (type)
+	
+	switch (telegram.messageType)
 	{
-		case EventParams::EventType::BossBeamHit:
+		case MessageType::BossBeamHit:
 			if (m_currentState != m_attackEnd.get())
 			{
 				ChangeState(m_attackEnd.get());

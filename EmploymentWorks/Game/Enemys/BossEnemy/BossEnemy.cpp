@@ -20,6 +20,8 @@
 #include "Game/Enemys/BossEnemy/ActionNode/JumpAttack/BossJumpAttackAction.h"
 #include "Game/Enemys/BossEnemy/ActionNode/RushAttack/BossRushAttackAction.h"
 
+#include "Libraries/MyLib/DebugString.h"
+
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
@@ -150,8 +152,8 @@ void BossEnemy::Initialize()
 
 	m_hp = Params::BOSSENEMY_MAX_HP;
 
-	Messenger::Attach(EventParams::EventType::BoomerangGetReadyEnd, this);
-	Messenger::Attach(EventParams::EventType::BossBeamAttackEnd, this);
+	Messenger::GetInstance()->Attach(MessageType::BoomerangGetReadyEnd, this);
+	Messenger::GetInstance()->Attach(MessageType::BossBeamAttackEnd, this);
 
 	m_attackState = AttackState::None;
 
@@ -172,6 +174,7 @@ void BossEnemy::Initialize()
 	m_action["RushAttack"]->Initialize();
 
 	m_target = m_player;
+
 
 
 }
@@ -212,7 +215,7 @@ void BossEnemy::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::S
 
 
 	DirectX::SimpleMath::Vector3 shadowPos = BaseEntity::GetPosition();
-	shadowPos.y = 0.1f;
+	shadowPos.y = Params::SHADOW_POSITION_Y;
 
 	auto context = BaseEntity::GetCommonResources()->GetDeviceResources()->GetD3DDeviceContext();
 	auto states = BaseEntity::GetCommonResources()->GetCommonStates();
@@ -220,7 +223,16 @@ void BossEnemy::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::S
 
 
 	// 自機の影を描画する
-	m_shadow->Render(context, states, view, projection, shadowPos, 3.5f);
+	m_shadow->Render(context, states, view, projection, shadowPos, Params::BOSSENEMY_SHADOW_RADIUS);
+
+
+	////// デバッグ情報を表示する
+	auto debugString = BaseEntity::GetCommonResources()->GetDebugString();
+	////debugString->AddString("Pos %f" ,m_buttom[0]->GetPosition().x);
+	////debugString->AddString("Pos %f" ,m_buttom[0]->GetPosition().y);
+	debugString->AddString("X %d" , m_velocity.x);
+	debugString->AddString("Y %d" , m_velocity.y);
+
 
 }
 
@@ -250,6 +262,9 @@ void BossEnemy::AddCollision(CollisionManager* collsionManager)
 /// <param name="tag">相手のタグ</param>
 void BossEnemy::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 {
+
+	UNREFERENCED_PARAMETER(tag);
+	UNREFERENCED_PARAMETER(object);
 
 	switch (tag)
 	{
@@ -288,6 +303,8 @@ void BossEnemy::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 
 void BossEnemy::OnCollisionStay(CollisionEntity* object, CollisionTag tag)
 {
+	UNREFERENCED_PARAMETER(object);
+
 	switch (tag)
 	{
 		case CollisionEntity::CollisionTag::Stage:
@@ -390,11 +407,12 @@ void BossEnemy::ChangeAnimation(std::string animationType)
 /// </summary>
 /// <param name="type">種類</param>
 /// <param name="datas">データ</param>
-void BossEnemy::Notify(EventParams::EventType type, void* datas)
+void BossEnemy::Notify(const Telegram& telegram)
 {
-	switch (type)
+	
+	switch (telegram.messageType)
 	{
-		case EventParams::EventType::BossBeamAttackEnd:
+		case MessageType::BossBeamAttackEnd:
 			m_attackState = AttackState::End;
 			break;
 		default:
@@ -410,12 +428,10 @@ void BossEnemy::Notify(EventParams::EventType type, void* datas)
 IBehaviorNode::State BossEnemy::BeamAttack(const float& elapsedTime)
 {
 
-	return m_action["Beam"]->Update(elapsedTime);
-
 	return JumpAttack(elapsedTime);
 
- 
-	return Pounding(elapsedTime);
+ //
+	//return Pounding(elapsedTime);
 
 	return m_action["Beam"]->Update(elapsedTime);
 

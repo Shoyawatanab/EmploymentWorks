@@ -63,7 +63,7 @@ public:
 
 	//IObserver
 //通知時に呼ばれる関数
-	void Notify(EventParams::EventType type, void* datas)  override;
+	void Notify(const Telegram& telegram)  override;
 
 
 	//ワールド座標をスクリーン座標に変換する

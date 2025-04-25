@@ -56,7 +56,7 @@ void BossRushAttackAction::Initialize()
 	//m_currentState->Enter();
 
 	//イベントタイプの登録
-	Messenger::Attach(EventParams::EventType::BossBeamHit, this);
+	Messenger::GetInstance()->Attach(MessageType::BossBeamHit, this);
 
 }
 
@@ -69,12 +69,12 @@ IBehaviorNode::State BossRushAttackAction::Update(const float& elapsedTime)
 
 }
 
-void BossRushAttackAction::Notify(EventParams::EventType type, void* datas)
+void BossRushAttackAction::Notify(const Telegram& telegram)
 {
-
-	switch (type)
+	
+	switch (telegram.messageType)
 	{
-		case EventParams::EventType::BossBeamHit:
+		case MessageType::BossBeamHit:
 			break;
 		default:
 			break;
