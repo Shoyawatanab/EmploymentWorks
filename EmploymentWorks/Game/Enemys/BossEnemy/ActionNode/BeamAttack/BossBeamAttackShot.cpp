@@ -58,7 +58,7 @@ void BossBeamAttackShot::Initialize()
 {
 }
 
-IBehaviorNode::State BossBeamAttackShot::Update(const float& elapsedTime)
+BossBeamAttackShot::ActionState BossBeamAttackShot::Update(const float& elapsedTime)
 {
 
 	Vector3 position = m_beam->GetBeamEnergyBall()->GetLocalPosition();
@@ -84,7 +84,7 @@ IBehaviorNode::State BossBeamAttackShot::Update(const float& elapsedTime)
 	//ƒr[ƒ€Œõü‚Ì‘å‚«‚³‚ð
 	m_beam->GetBeamRays()->SetLocalScale(scale);
 
-	return IBehaviorNode::State::Runngin;
+	return ActionState::Running;
 
 }
 

@@ -19,11 +19,12 @@ using namespace DirectX::SimpleMath;
 /// <summary>
 /// コンストラクタ
 /// </summary>
-BarrierClose::BarrierClose(BarrierDefenseAction* barrierDefenseAction
+BarrierClose::BarrierClose(CommonResources* resources,
+	BarrierDefenseAction* barrierDefenseAction
 	,Barrier* barrier
 	, BossEnemy* bossEnemy)
 	:
-	m_commonResources{}
+	m_commonResources{resources}
 	,m_barrierDefenseAction{ barrierDefenseAction }
 	,m_barrier{barrier}
 	,m_time{}
@@ -46,9 +47,10 @@ BarrierClose::~BarrierClose()
 /// 初期化
 /// </summary>
 /// <param name="resources">共通リソース</param>
-void BarrierClose::Initialize(CommonResources* resources)
+void BarrierClose::Initialize()
 {
-	UNREFERENCED_PARAMETER(resources);
+	
+
 
 }
 
@@ -56,7 +58,7 @@ void BarrierClose::Initialize(CommonResources* resources)
 /// 更新
 /// </summary>
 /// <param name="elapsedTime">経過時間</param>
-IBehaviorNode::State BarrierClose::Update(const float& elapsedTime)
+BarrierClose::ActionState BarrierClose::Update(const float& elapsedTime)
 {
 	UNREFERENCED_PARAMETER(elapsedTime);
 
@@ -64,7 +66,7 @@ IBehaviorNode::State BarrierClose::Update(const float& elapsedTime)
 	if (m_time >= 1.0f)
 	{
 		m_barrierDefenseAction->ChangeState(m_barrierDefenseAction->GetBarrierIdel());
-		return IBehaviorNode::State::Success;
+		return ActionState::End;
 	}
 
 
@@ -72,7 +74,7 @@ IBehaviorNode::State BarrierClose::Update(const float& elapsedTime)
 	m_time += elapsedTime;
 
 
-	return IBehaviorNode::State::Runngin;
+	return ActionState::Running;
 
 }
 

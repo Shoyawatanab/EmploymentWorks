@@ -1,22 +1,22 @@
 #pragma once
 #include <pch.h>
-#include "Game/Interface/IActionState.h"
+#include "Game/Interface/IActione.h"
 class CommonResources;
 class BarrierDefenseAction;
 class Barrier;
 
 // BarrierDeploymentクラスを定義する
-class BarrierDeployment : public IActionState
+class BarrierDeployment : public IAction
 {
 public:
 	// コンストラクタ
-	BarrierDeployment(BarrierDefenseAction* barrierDefenseAction, Barrier* barrier);
+	BarrierDeployment(CommonResources* resources,BarrierDefenseAction* barrierDefenseAction, Barrier* barrier);
 	// デストラクタ
 	~BarrierDeployment();
 	//初期化
-	void Initialize(CommonResources* resources) override;
+	void Initialize() override;
 	// 更新する
-	IBehaviorNode::State Update(const float& elapsedTime);
+	ActionState Update(const float& elapsedTime);
 	//状態に入った時
 	void Enter() override;
 	//状態を抜けた時

@@ -8,7 +8,5 @@ public:
 
 	virtual void AddNode(std::unique_ptr<IBehaviorNode> node) = 0;
 
-
-
 };
 

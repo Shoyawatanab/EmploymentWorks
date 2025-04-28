@@ -41,10 +41,17 @@ BarrierDefenseAction::BarrierDefenseAction(CommonResources* resources
 	,m_barrier{barrier}
 {
 	
-	m_idel = std::make_unique<BarrierIdel>(this);
-	m_preliminaryAction = std::make_unique<BarrierPreliminaryAction>(this,bossEnemy);
-	m_deployment = std::make_unique<BarrierDeployment>(this,barrier);
-	m_close = std::make_unique<BarrierClose>(this, barrier,bossEnemy);
+	m_idel = std::make_unique<BarrierIdel>(resources, this);
+	m_preliminaryAction = std::make_unique<BarrierPreliminaryAction>(resources, this,bossEnemy);
+	m_deployment = std::make_unique<BarrierDeployment>(resources, this,barrier);
+	m_close = std::make_unique<BarrierClose>(resources, this, barrier,bossEnemy);
+
+
+	m_currentState = m_idel.get();
+	m_currentState->Enter();
+
+	//イベントタイプの登録
+	Messenger::GetInstance()->Attach(MessageType::BossBeamHit, this);
 
 }
 
@@ -58,25 +65,21 @@ BarrierDefenseAction::~BarrierDefenseAction()
 
 void BarrierDefenseAction::Initialize()
 {
-	m_currentState = m_idel.get();
-	m_currentState->Enter();
-
-	//イベントタイプの登録
-	Messenger::GetInstance()->Attach(MessageType::BossBeamHit, this);
 
 }
 
-IBehaviorNode::State BarrierDefenseAction::Update(const float& elapsedTime)
+BarrierDefenseAction::ActionState BarrierDefenseAction::Update(const float& elapsedTime)
 {
 
 	
 
-	return m_currentState->Update(elapsedTime);
+	return	m_currentState->Update(elapsedTime);
 
 }
 
 void BarrierDefenseAction::Enter()
 {
+	ChangeState(m_idel.get());
 }
 
 void BarrierDefenseAction::Exit()
@@ -96,7 +99,7 @@ void BarrierDefenseAction::Notify(const Telegram& telegram)
 /// ステートの切り替え
 /// </summary>
 /// <param name="nextState">次のステート</param>
-void BarrierDefenseAction::ChangeState(IActionState* nextState)
+void BarrierDefenseAction::ChangeState(IAction* nextState)
 {
 
 	m_currentState->Exit();

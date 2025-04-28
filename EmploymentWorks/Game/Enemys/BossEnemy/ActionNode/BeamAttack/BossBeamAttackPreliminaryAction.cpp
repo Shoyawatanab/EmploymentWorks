@@ -53,7 +53,7 @@ void BossBeamAttackPreliminaryAction::Initialize()
 {
 }
 
-IBehaviorNode::State BossBeamAttackPreliminaryAction::Update(const float& elapsedTime)
+BossBeamAttackPreliminaryAction::ActionState BossBeamAttackPreliminaryAction::Update(const float& elapsedTime)
 {
 
 	if (m_time >= Params::BOSSENEMY_BEAM_BALL_PRELIMINARY_ACTION_TIME)
@@ -65,7 +65,8 @@ IBehaviorNode::State BossBeamAttackPreliminaryAction::Update(const float& elapse
 
 
 	m_time += elapsedTime;
-	return IBehaviorNode::State::Runngin;
+
+	return ActionState::Running;
 
 }
 

@@ -8,14 +8,24 @@
 #include "Game/Interface/IBehaviorNode.h"
 
 
+
 class IAction
 {
+public:
+
+	enum class ActionState
+	{
+		None,
+		Running,
+		End
+	};
+
 public:
 	virtual ~IAction() = default;
 
 	virtual void Initialize() = 0;
 
-	virtual IBehaviorNode::State Update(const float& elapsedTime) = 0;
+	virtual ActionState Update(const float& elapsedTime) = 0;
 	//ó‘Ô‚É“ü‚Á‚½
 	virtual void Enter() = 0;
 	//ó‘Ô‚ğ”²‚¯‚½

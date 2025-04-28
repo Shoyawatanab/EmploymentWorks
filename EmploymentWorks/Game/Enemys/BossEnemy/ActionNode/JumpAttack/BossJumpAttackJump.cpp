@@ -55,7 +55,7 @@ void BossJumpAttackJump::Initialize()
 
 }
 
-IBehaviorNode::State BossJumpAttackJump::Update(const float& elapsedTime)
+BossJumpAttackJump::ActionState BossJumpAttackJump::Update(const float& elapsedTime)
 {
 
 
@@ -67,8 +67,12 @@ IBehaviorNode::State BossJumpAttackJump::Update(const float& elapsedTime)
 
 	m_bossEnemy->SetVelocity(velocity);
 
-	return IBehaviorNode::State::Runngin;
+	if (m_bossEnemy->GetIsGrounded())
+	{
+		return ActionState::End;
+	}
 
+	return ActionState::Running;
 }
 
 
@@ -109,6 +113,6 @@ void BossJumpAttackJump::Exit()
 
 	Messenger::GetInstance()->Notify(MessageType::CreateParticle, &pos);
 
-
+	m_bossEnemy->SetVelocity(Vector3::Zero);
 
 }

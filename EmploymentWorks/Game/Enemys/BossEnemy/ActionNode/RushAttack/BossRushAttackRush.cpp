@@ -55,7 +55,7 @@ void BossRushAttackRush::Initialize()
 
 }
 
-IBehaviorNode::State BossRushAttackRush::Update(const float& elapsedTime)
+BossRushAttackRush::ActionState BossRushAttackRush::Update(const float& elapsedTime)
 {
 
 	float speed = 9.0f;
@@ -69,8 +69,7 @@ IBehaviorNode::State BossRushAttackRush::Update(const float& elapsedTime)
 
 	m_bossEnemy->SetVelocity(velocity);
 
-	return IBehaviorNode::State::Runngin;
-
+	return ActionState::Running;
 }
 
 

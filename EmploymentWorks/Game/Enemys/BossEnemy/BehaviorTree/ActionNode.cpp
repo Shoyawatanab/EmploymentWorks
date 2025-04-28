@@ -11,10 +11,11 @@ ActionNode::ActionNode(std::function<IBehaviorNode::State(float)> fun)
 	m_executionNode{}
 {
 
+	assert(fun);
+
 	//ä÷êîÇÃìoò^
 	m_executionNode = fun;
 
-	assert(m_executionNode);
 
 }
 

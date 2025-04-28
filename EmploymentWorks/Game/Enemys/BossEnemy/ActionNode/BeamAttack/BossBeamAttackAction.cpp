@@ -45,6 +45,13 @@ BossBeamAttackAction::BossBeamAttackAction(CommonResources* resources
 	m_attackEnd = std::make_unique<BossBeamAttackEnd>(m_commonResources, bossenemy, beam,this);
 	m_idel = std::make_unique<BossBeamAttackIdel>(m_commonResources, bossenemy, beam,this);
 
+	m_currentState = m_idel.get();
+	m_currentState->Enter();
+
+	//イベントタイプの登録
+	Messenger::GetInstance()->Attach(MessageType::BossBeamHit, this);
+
+
 }
 
 /// <summary>
@@ -58,15 +65,10 @@ BossBeamAttackAction::~BossBeamAttackAction()
 void BossBeamAttackAction::Initialize()
 {
 
-	m_currentState = m_idel.get();
-	m_currentState->Enter();
-
-	//イベントタイプの登録
-	Messenger::GetInstance()->Attach(MessageType::BossBeamHit, this);
 
 }
 
-IBehaviorNode::State BossBeamAttackAction::Update(const float& elapsedTime)
+BossBeamAttackAction::ActionState BossBeamAttackAction::Update(const float& elapsedTime)
 {
 
 	
@@ -77,6 +79,7 @@ IBehaviorNode::State BossBeamAttackAction::Update(const float& elapsedTime)
 
 void BossBeamAttackAction::Enter()
 {
+	ChangeState(m_idel.get());
 }
 
 void BossBeamAttackAction::Exit()

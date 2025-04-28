@@ -58,14 +58,14 @@ void BossBeamAttackIdel::Initialize()
 {
 }
 
-IBehaviorNode::State BossBeamAttackIdel::Update(const float& elapsedTime)
+BossBeamAttackIdel::ActionState BossBeamAttackIdel::Update(const float& elapsedTime)
 {
 
 	m_beam->Update(elapsedTime);
 
 	m_beamAttack->ChangeState(m_beamAttack->GetBossBeamAttackPreliminaryAction());
 
-	return IBehaviorNode::State::Runngin;
+	return ActionState::Running;
 
 }
 

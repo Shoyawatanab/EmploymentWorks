@@ -61,7 +61,7 @@ void BossBeamAttackCharge::Initialize()
 
 }
 
-IBehaviorNode::State BossBeamAttackCharge::Update(const float& elapsedTime)
+BossBeamAttackCharge::ActionState BossBeamAttackCharge::Update(const float& elapsedTime)
 {
 
 	Vector3 beamPosition = Params::BOSSENEMY_BEAM_SHOT_POSITION;
@@ -108,7 +108,8 @@ IBehaviorNode::State BossBeamAttackCharge::Update(const float& elapsedTime)
 	m_time += elapsedTime;
 	m_particleCreateTime += elapsedTime;
 
-	return IBehaviorNode::State::Runngin;
+	return ActionState::Running;
+
 }
 
 

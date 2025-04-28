@@ -40,6 +40,14 @@ BossJumpAttackAction::BossJumpAttackAction(CommonResources* resources
 	m_charge = std::make_unique<BossJumpAttackCharge>(resources,this,bossenemy,player);
 	m_jump = std::make_unique<BossJumpAttackJump>(resources, this, bossenemy, player);
 
+
+	m_currentState = m_charge.get();
+	//m_currentState->Enter();
+
+	//イベントタイプの登録
+	Messenger::GetInstance()->Attach(MessageType::BossBeamHit, this);
+
+
 }
 
 /// <summary>
@@ -52,20 +60,17 @@ BossJumpAttackAction::~BossJumpAttackAction()
 
 void BossJumpAttackAction::Initialize()
 {
-	m_currentState = m_charge.get();
-	//m_currentState->Enter();
-
-	//イベントタイプの登録
-	Messenger::GetInstance()->Attach(MessageType::BossBeamHit, this);
 
 }
 
-IBehaviorNode::State BossJumpAttackAction::Update(const float& elapsedTime)
+BossJumpAttackAction:: ActionState BossJumpAttackAction::Update(const float& elapsedTime)
 {
 
 	
 
 	return m_currentState->Update(elapsedTime);
+
+
 
 }
 

@@ -14,7 +14,6 @@
 #include "Game/Observer/Messenger.h"
 #include "Game/Params.h"
 #include "Game/Enemys/BossEnemy/ActionNode/BeamAttack/BossBeamAttackAction.h"
-#include "Game/Enemys/BossEnemy/ActionNode/RisingPillar/RisingPillarvAction.h"
 #include "Game/Enemys/BossEnemy/ActionNode/BarrierDefense/BarrierDefenseAction.h"
 #include "Game/Enemys/BossEnemy/Barrier/Barrier.h"
 #include "Game/Enemys/BossEnemy/ActionNode/JumpAttack/BossJumpAttackAction.h"
@@ -48,12 +47,13 @@ BossEnemy::BossEnemy(CommonResources* resources, DirectX::SimpleMath::Vector3 sc
 	,m_isActives{true}
 	,m_beam{}
 	,m_shadow{}
-	,m_action{}
 	,m_barrier{}
 	,m_velocity{}
-	,m_currentAction{}
 	,m_isAction{}
+	,m_action{}
+	,m_isGrounded{false}
 {
+
 	m_behavior = std::make_unique<BehaviorTree>();
 	m_beam = std::make_unique<Beam>(resources);
 
@@ -87,6 +87,30 @@ void BossEnemy::AddPointer(Player* player, StageObjectManager* stageObjectManage
 	m_stageObjectmanger = stageObjectManager;
 
 	m_beam->AddPointer(this,player);
+}
+
+void BossEnemy::ChangeAction(std::string actionName)
+{
+
+	auto it = m_actionList.find(actionName);
+
+	if (it != m_actionList.end())
+	{
+
+		if (m_action.second != nullptr)
+		{
+			m_action.second->Exit();
+		}
+
+		m_action.first = actionName;
+		m_action.second = it->second.get();
+
+		m_action.second->Enter();
+
+	}
+
+
+
 }
 
 
@@ -136,6 +160,16 @@ void BossEnemy::Initialize()
 	SetAnimationData("BarrierEnd", m_animationDatas);
 	SetAnimationData("JumpCharge", m_animationDatas);
 
+
+	//各アクションの作成
+	m_actionList["JumpAttack"] = std::make_unique<BossJumpAttackAction>(BaseEntity::GetCommonResources(),this,m_player);
+	m_actionList["RushAttack"] = std::make_unique<BossRushAttackAction>(BaseEntity::GetCommonResources(),this,m_player);
+	m_actionList["BarrierDefense"] = std::make_unique<BarrierDefenseAction>(BaseEntity::GetCommonResources(), this,m_barrier.get());
+	m_actionList["BeamAttack"] = std::make_unique<BossBeamAttackAction>(BaseEntity::GetCommonResources(), this, m_beam.get(),m_player);
+
+
+	ChangeAction("RushAttack");
+
 	m_behavior->AddPointer(m_player, this);
 
 	//初期化
@@ -159,22 +193,6 @@ void BossEnemy::Initialize()
 	Messenger::GetInstance()->Attach(MessageType::BossBeamAttackEnd, this);
 
 	m_attackState = AttackState::None;
-
-	m_action["Beam"] = std::make_unique<BossBeamAttackAction>(BaseEntity::GetCommonResources(),this,m_beam.get(),m_player);
-	m_action["Beam"]->Initialize();
-
-	m_action["RisingPillar"] = std::make_unique<RisingPillarvAction>(BaseEntity::GetCommonResources(), this,  m_player,m_stageObjectmanger);
-	m_action["RisingPillar"]->Initialize();
-
-
-	m_action["BarrierDefense"] = std::make_unique<BarrierDefenseAction>(BaseEntity::GetCommonResources(), this,m_barrier.get());
-	m_action["BarrierDefense"]->Initialize();
-
-	m_action["JumpAttack"] = std::make_unique<BossJumpAttackAction>(BaseEntity::GetCommonResources(), this, m_player);
-	m_action["JumpAttack"]->Initialize();
-
-	m_action["RushAttack"] = std::make_unique<BossRushAttackAction>(BaseEntity::GetCommonResources(), this, m_player);
-	m_action["RushAttack"]->Initialize();
 
 	m_target = m_player;
 
@@ -223,18 +241,15 @@ void BossEnemy::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::S
 	auto context = BaseEntity::GetCommonResources()->GetDeviceResources()->GetD3DDeviceContext();
 	auto states = BaseEntity::GetCommonResources()->GetCommonStates();
 
-
-
 	// 自機の影を描画する
 	m_shadow->Render(context, states, view, projection, shadowPos, Params::BOSSENEMY_SHADOW_RADIUS);
 
-
-	////// デバッグ情報を表示する
-	auto debugString = BaseEntity::GetCommonResources()->GetDebugString();
-	////debugString->AddString("Pos %f" ,m_buttom[0]->GetPosition().x);
-	////debugString->AddString("Pos %f" ,m_buttom[0]->GetPosition().y);
-	debugString->AddString("X %d" , m_velocity.x);
-	debugString->AddString("Y %d" , m_velocity.y);
+	//////// デバッグ情報を表示する
+	//auto debugString = BaseEntity::GetCommonResources()->GetDebugString();
+	//////debugString->AddString("Pos %f" ,m_buttom[0]->GetPosition().x);
+	//////debugString->AddString("Pos %f" ,m_buttom[0]->GetPosition().y);
+	//debugString->AddString("X %d" , m_velocity.x);
+	//debugString->AddString("Y %d" , m_velocity.y);
 
 
 }
@@ -279,14 +294,7 @@ void BossEnemy::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 			break;
 		case CollisionEntity::CollisionTag::Stage:
 			m_velocity.y = 0.0f;
-
-			if (m_currentAction.first == "JumpAttack")
-			{
-				m_isAction = true;
-				{
-				}
-			}
-
+			m_isGrounded = true;
 			break;
 		case CollisionEntity::CollisionTag::Enemy:
 			break;
@@ -318,6 +326,21 @@ void BossEnemy::OnCollisionStay(CollisionEntity* object, CollisionTag tag)
 	}
 
 
+
+}
+
+void BossEnemy::OnCollisionExit(CollisionEntity* object, CollisionTag tag)
+{
+
+	switch (tag)
+	{
+		case CollisionEntity::CollisionTag::Stage:
+			m_isGrounded = false;
+			break;
+		default:
+			break;
+	}
+
 }
 
 
@@ -329,8 +352,6 @@ void BossEnemy::OnCollisionStay(CollisionEntity* object, CollisionTag tag)
 void BossEnemy::Update(const float& elapsedTime)
 {
 
-
-
 	//オブジェクトか更新が無効なら
 	if (!BaseEntity::GetIsEntityActive() || !BaseEntity::GetIsUpdateActive())
 	{
@@ -339,12 +360,17 @@ void BossEnemy::Update(const float& elapsedTime)
 
 	if (m_hp > 0)
 	{
-		//ビヘイビアツリーの更新
-		m_behavior->Update(elapsedTime);
 		m_beam->Update(elapsedTime);
 		m_barrier->Update(elapsedTime);
 	}
 
+
+	if (m_action.second->Update(elapsedTime) == IAction::ActionState::End)
+	{
+		//ビヘイビアツリーの更新
+		m_behavior->Update(elapsedTime);
+
+	 }
 
 	m_velocity.y -= m_gravity * elapsedTime ;
 	
@@ -423,181 +449,6 @@ void BossEnemy::Notify(const Telegram& telegram)
 	}
 }
 
-/// <summary>
-/// ビーム攻撃
-/// </summary>
-/// <param name="elapsedTime">経過時間</param>
-/// <returns>実行結果</returns>
-IBehaviorNode::State BossEnemy::BeamAttack(const float& elapsedTime)
-{
 
-	return JumpAttack(elapsedTime);
-
- //
-	//return Pounding(elapsedTime);
-
-	return m_action["Beam"]->Update(elapsedTime);
-
-	//床と壁の色を変える　太陽を追加して影をつける
-
-}
-
-/// <summary>
-/// 歩き
-/// </summary>
-/// <param name="elapsedTime">経過時間</param>
-/// <returns>実行結果</returns>
-IBehaviorNode::State BossEnemy::Walk(const float& elapsedTime)
-{
-
-	if (CharacterEntity::GetCurrentAnimationType() != "Move")
-	{
-		ChangeAnimation("Move");
-		return IBehaviorNode::State::Runngin;
-	}
-
-	//プレイヤの座標の取得
-	Vector3 playerPosition = m_player->GetPosition();
-
-	//方向を求める
-	Vector3 direction = playerPosition - BaseEntity::GetPosition();
-	//正規化
-	direction.Normalize();
-
-	direction *= Params::BOSSENEMY_MOVE_SPEED * elapsedTime;
-
-	BaseEntity::SetPosition( BaseEntity::GetPosition() + direction);
-
-
-	return IBehaviorNode::State::Success;
-}
-
-/// <summary>
-/// パンチ攻撃
-/// </summary>
-/// <param name="elapsedTime">経過時間</param>
-/// <returns>実行結果</returns>
-IBehaviorNode::State BossEnemy::Pounding(const float& elapsedTime)
-{
-
-	if (CharacterEntity::GetCurrentAnimationType() != "Punch")
-	{
-		ChangeAnimation("Punch");
-		m_punchTime = 0;
-
-		return IBehaviorNode::State::Runngin;
-	}
-
-
-
-	if (m_punchTime >= PUNCHTIME)
-	{
-		ChangeAnimation("Idel");
-
-		return IBehaviorNode::State::Success;
-	}
-
-	m_punchTime += elapsedTime;
-	return IBehaviorNode::State::Runngin;
-}
-
-/// <summary>
-/// プレイヤの方向を向く
-/// </summary>
-/// <param name="elapsdTime"></param>
-/// <returns></returns>
-IBehaviorNode::State BossEnemy::FacingThePlayer(float elapsdTime)
-{
-
-	//向きたい方向
-	DirectX::SimpleMath::Vector3 direction = m_player->GetPosition() - BaseEntity::GetPosition();
-	direction.Normalize();
-	//今の敵の前方向
-	DirectX::SimpleMath::Vector3 forward = Vector3::Transform(Vector3::Backward, BaseEntity::GetRotation());
-	//forward.Normalize();
-	//回転軸の作成
-	DirectX::SimpleMath::Vector3 moveAxis = forward.Cross(direction);
-
-	if (moveAxis.y >= 0.0f)
-	{
-		//正なら上方向
-		moveAxis = DirectX::SimpleMath::Vector3::Up;
-	}
-	else
-	{
-		//負なら下方向
-		moveAxis = DirectX::SimpleMath::Vector3::Down;
-	}
-
-	//角度を求める
-	float moveAngle = forward.Dot(direction);
-
-	//ラジアン値に変換
-	moveAngle = acosf(moveAngle);
-
-	//角度と速度の比較で小さいほうを取得
-	moveAngle = std::min(moveAngle, Params::BOSSENEMY_ROTATION_SPEED * elapsdTime);
-
-	//敵の回転の取得
-	DirectX::SimpleMath::Quaternion Rotate = BaseEntity::GetRotation();
-	//Y軸に対して回転をかける
-	Rotate *= DirectX::SimpleMath::Quaternion::CreateFromAxisAngle(moveAxis, moveAngle);
-	BaseEntity::SetRotation(Rotate);
-
-	return IBehaviorNode::State::Success;
-
-}
-
-IBehaviorNode::State BossEnemy::BarrierDefense(float elapsdTime)
-{
-	return m_action["BarrierDefense"]->Update(elapsdTime);
-}
-
-IBehaviorNode::State BossEnemy::JumpAttack(float elapsdTime)
-{
-
-	if (m_currentAction.first != "JumpAttack")
-	{
-		ChangeAction("JumpAttack");
-	}
-
-
-
-	if (m_isAction)
-	{
-
-		m_isAction = false;
-		m_velocity = Vector3::Zero;
-		InitalizeAction();
-		return IBehaviorNode::State::Success;
-
-	}
-
-
-	return m_action["JumpAttack"]->Update(elapsdTime);
-}
-
-void BossEnemy::ChangeAction(std::string typeName)
-{
-	if (m_currentAction.second != nullptr)
-	{
-		m_currentAction.second->Exit();
-
-	}
-
-	m_currentAction.second = m_action[typeName].get();
-	m_currentAction.second->Enter();
-
-	m_currentAction.first = typeName;
-
-
-
-}
-
-void BossEnemy::InitalizeAction()
-{
-	m_currentAction.first = "";
-	m_isAction = false;
-}
 
 
