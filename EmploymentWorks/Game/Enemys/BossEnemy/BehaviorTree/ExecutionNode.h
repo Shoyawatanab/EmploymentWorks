@@ -23,33 +23,8 @@ public:
 	~ExecutionNode();
 	//初期化
 	void Initialize(CommonResources* resources);
-
-
-	//プレイヤのほうに向く
-	IBehaviorNode::State FacingThePlayer(float elapsdTime);
-	//ビーム攻撃
-	IBehaviorNode::State BeamAttack(float elapsdTime);
 	
-	//プレイヤに近づく
-	IBehaviorNode::State ApproachingThePlayer(float elapsdTime);
-
-	//近距離攻撃
-	IBehaviorNode::State CloseRangeAttacks(float elapsdTime);
-	//遠距離攻撃
-	IBehaviorNode::State RangedAttack(float elapsdTime);
-
-	//何もしない
-	IBehaviorNode::State DoNothing();
-
-	//攻撃方向を求める
-	IBehaviorNode::State FindAttackDirection();
-
-	//バリア攻撃
-	IBehaviorNode::State BarrierAction(float elapsdTime);
-
-
-
-
+	IBehaviorNode::State Action();
 
 private:
 	CommonResources* m_commonResources;

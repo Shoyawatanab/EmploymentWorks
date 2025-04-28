@@ -49,9 +49,9 @@ BossRushAttackCharge::~BossRushAttackCharge()
 
 void BossRushAttackCharge::Initialize()
 {
-	}
+}
 
-IBehaviorNode::State BossRushAttackCharge::Update(const float& elapsedTime)
+BossRushAttackCharge::ActionState BossRushAttackCharge::Update(const float& elapsedTime)
 {
 	//時間はアニメーションと合わせる
 	if (m_time >= 1.5f)
@@ -64,8 +64,7 @@ IBehaviorNode::State BossRushAttackCharge::Update(const float& elapsedTime)
 	
 	m_time += elapsedTime;
 
-	return IBehaviorNode::State::Runngin;
-
+	return ActionState::Running;
 }
 
 

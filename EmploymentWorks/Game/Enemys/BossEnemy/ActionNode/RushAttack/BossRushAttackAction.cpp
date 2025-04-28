@@ -40,6 +40,13 @@ BossRushAttackAction::BossRushAttackAction(CommonResources* resources
 	m_charge = std::make_unique<BossRushAttackCharge>(resources,this,bossenemy,player);
 	m_rush = std::make_unique<BossRushAttackRush>(resources, this, bossenemy, player);
 
+	m_currentState = m_charge.get();
+	//m_currentState->Enter();
+
+	//イベントタイプの登録
+	Messenger::GetInstance()->Attach(MessageType::BossBeamHit, this);
+
+
 }
 
 /// <summary>
@@ -52,20 +59,16 @@ BossRushAttackAction::~BossRushAttackAction()
 
 void BossRushAttackAction::Initialize()
 {
-	m_currentState = m_charge.get();
-	//m_currentState->Enter();
-
-	//イベントタイプの登録
-	Messenger::GetInstance()->Attach(MessageType::BossBeamHit, this);
-
 }
 
-IBehaviorNode::State BossRushAttackAction::Update(const float& elapsedTime)
+BossRushAttackAction::ActionState BossRushAttackAction::Update(const float& elapsedTime)
 {
 
 	
 
-	return m_currentState->Update(elapsedTime);
+	m_currentState->Update(elapsedTime);
+
+	return ActionState::Running;
 
 }
 

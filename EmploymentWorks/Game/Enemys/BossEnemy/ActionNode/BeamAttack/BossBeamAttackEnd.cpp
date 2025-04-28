@@ -58,7 +58,7 @@ void BossBeamAttackEnd::Initialize()
 {
 }
 
-IBehaviorNode::State BossBeamAttackEnd::Update(const float& elapsedTime)
+BossBeamAttackEnd::ActionState BossBeamAttackEnd::Update(const float& elapsedTime)
 {
 
 	float t = m_time / Params::BOSSENEMY_BEAM_SHRINK_TIME;
@@ -90,12 +90,13 @@ IBehaviorNode::State BossBeamAttackEnd::Update(const float& elapsedTime)
 	if (m_time == Params::BOSSENEMY_BEAM_SHRINK_TIME)
 	{
 		m_beamAttack->ChangeState(m_beamAttack->GetBossBeamAttackIdel());
-		return IBehaviorNode::State::Success;
+		return ActionState::End;
 	}
 
 
 	m_time += elapsedTime;
-	return IBehaviorNode::State::Runngin;
+
+	return ActionState::Running;
 
 }
 

@@ -4,7 +4,6 @@
 */
 #pragma once
 #include "Game/Interface/IActione.h"
-#include"Game/Interface/IActionState.h"
 #include "Game/Interface/IObserver.h"
 #include "Game/Enemys/BossEnemy/ActionNode/RushAttack/BossRushAttackCharge.h"
 #include "Game/Enemys/BossEnemy/ActionNode/RushAttack/BossRushAttackRush.h"
@@ -43,7 +42,7 @@ public:
 
 	void Initialize() override;
 
-	IBehaviorNode::State Update(const float& elapsedTime)  override ;
+	ActionState Update(const float& elapsedTime)  override ;
 	//ó‘Ô‚É“ü‚Á‚½
 	void Enter() override ;
 	//ó‘Ô‚ğ”²‚¯‚½

@@ -33,7 +33,7 @@ public:
 	//‰Šú‰»
 	void Initialize() override;
 	// XV‚·‚é
-	IBehaviorNode::State Update(const float& elapsedTime) override;
+	ActionState Update(const float& elapsedTime) override;
 
 	//ó‘Ô‚É“ü‚Á‚½
 	void Enter() override;

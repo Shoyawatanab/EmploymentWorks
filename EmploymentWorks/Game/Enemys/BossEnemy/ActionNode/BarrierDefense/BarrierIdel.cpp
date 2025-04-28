@@ -14,9 +14,9 @@
 /// <summary>
 /// コンストラクタ
 /// </summary>
-BarrierIdel::BarrierIdel(BarrierDefenseAction* barrierDefenseAction)
+BarrierIdel::BarrierIdel(CommonResources* resources,BarrierDefenseAction* barrierDefenseAction)
 	:
-	m_commonResources{}
+	m_commonResources{resources}
 	, m_barrierDefenseAction{ barrierDefenseAction }
 {
 
@@ -36,9 +36,8 @@ BarrierIdel::~BarrierIdel()
 /// 初期化
 /// </summary>
 /// <param name="resources">共通リソース</param>
-void BarrierIdel::Initialize(CommonResources* resources)
+void BarrierIdel::Initialize()
 {
-	UNREFERENCED_PARAMETER(resources);
 
 }
 
@@ -46,7 +45,7 @@ void BarrierIdel::Initialize(CommonResources* resources)
 /// 更新
 /// </summary>
 /// <param name="elapsedTime">経過時間</param>
-IBehaviorNode::State BarrierIdel::Update(const float& elapsedTime)
+BarrierIdel::ActionState BarrierIdel::Update(const float& elapsedTime)
 {
 	UNREFERENCED_PARAMETER(elapsedTime);
 	using namespace DirectX;
@@ -54,7 +53,7 @@ IBehaviorNode::State BarrierIdel::Update(const float& elapsedTime)
 
 	m_barrierDefenseAction->ChangeState(m_barrierDefenseAction->GetBarrierPreliminaryAction());
 
-	return IBehaviorNode::State::Runngin;
+	return ActionState::Running;
 
 
 }

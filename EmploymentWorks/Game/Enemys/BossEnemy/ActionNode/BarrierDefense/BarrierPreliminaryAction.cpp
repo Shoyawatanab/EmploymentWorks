@@ -30,11 +30,12 @@ using namespace DirectX::SimpleMath;
 /// コンストラクタ
 /// </summary>
 /// <param name="resources">共通リソース</param>
-BarrierPreliminaryAction::BarrierPreliminaryAction(
+BarrierPreliminaryAction::BarrierPreliminaryAction(CommonResources* resources,
 	BarrierDefenseAction* barrierDefenseAction,
 	BossEnemy* bossEnemy
 	)
 	:
+	m_commonResources{ resources },
 	m_time{}
 	, m_bossEnemy{ bossEnemy }
 	, m_barrierDefenseAction{ barrierDefenseAction }
@@ -51,12 +52,12 @@ BarrierPreliminaryAction::~BarrierPreliminaryAction()
 	// do nothing.
 }
 
-void BarrierPreliminaryAction::Initialize(CommonResources* resources)
+void BarrierPreliminaryAction::Initialize()
 {
-	m_commonResources = resources;
+	
 }
 
-IBehaviorNode::State BarrierPreliminaryAction::Update(const float& elapsedTime)
+BarrierPreliminaryAction::ActionState BarrierPreliminaryAction::Update(const float& elapsedTime)
 {
 	
 	if (m_time >= 2.0f)
@@ -67,7 +68,7 @@ IBehaviorNode::State BarrierPreliminaryAction::Update(const float& elapsedTime)
 
 
 	m_time += elapsedTime;
-	return IBehaviorNode::State::Runngin;
+	return ActionState::Running;
 
 }
 

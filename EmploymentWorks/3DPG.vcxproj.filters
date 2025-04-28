@@ -146,9 +146,6 @@
     <Filter Include="Game\Enemys\BossEnemy\ActionNode\BeamAttack">
       <UniqueIdentifier>{35cd7c3f-f298-42fd-96e2-6ad2c667c216}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Enemys\BossEnemy\ActionNode\RisingPillar">
-      <UniqueIdentifier>{54e41460-1a60-4712-8c17-81e0ae911ab7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\Player\PlayerState">
       <UniqueIdentifier>{5be01b9c-e7f3-411a-8039-5c28aa4cb3ec}</UniqueIdentifier>
     </Filter>
@@ -362,9 +359,6 @@
     </ClInclude>
     <ClInclude Include="Libraries\WataLib\UserInterface.h">
       <Filter>Libraries\WataLib</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Enemys\BossEnemy\BossEnemy.h">
-      <Filter>Game\Enemys\BossEnemy</Filter>
     </ClInclude>
     <ClInclude Include="Game\Enemys\BossEnemy\PlayerParts\BossEnemyBottom.h">
       <Filter>Game\Enemys\BossEnemy\Parts</Filter>
@@ -603,9 +597,6 @@
     <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\BeamAttack\BossBeamAttackIdel.h">
       <Filter>Game\Enemys\BossEnemy\ActionNode\BeamAttack</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Interface\IActionState.h">
-      <Filter>Game\Interface</Filter>
-    </ClInclude>
     <ClInclude Include="Game\MathUtil.h">
       <Filter>Game</Filter>
     </ClInclude>
@@ -620,18 +611,6 @@
     </ClInclude>
     <ClInclude Include="Game\Player\State\PlayerStateMachine.h">
       <Filter>Game\Player\PlayerState</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\RisingPillar\RisingPillarvAction.h">
-      <Filter>Game\Enemys\BossEnemy\ActionNode\RisingPillar</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\RisingPillar\RisingPillarIdel.h">
-      <Filter>Game\Enemys\BossEnemy\ActionNode\RisingPillar</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\RisingPillar\RisingPillarRise.h">
-      <Filter>Game\Enemys\BossEnemy\ActionNode\RisingPillar</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\RisingPillar\RisingPillarPreliminaryAction.h">
-      <Filter>Game\Enemys\BossEnemy\ActionNode\RisingPillar</Filter>
     </ClInclude>
     <ClInclude Include="Game\EntityManager.h">
       <Filter>Game</Filter>
@@ -731,6 +710,9 @@
     </ClInclude>
     <ClInclude Include="Libraries\WataLib\Singleton.h">
       <Filter>Libraries\WataLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Enemys\BossEnemy\BossEnemy.h">
+      <Filter>Game\Enemys\BossEnemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1093,18 +1075,6 @@
     </ClCompile>
     <ClCompile Include="Game\Player\State\PlayerStateMachine.cpp">
       <Filter>Game\Player\PlayerState</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\RisingPillar\RisingPillarvAction.cpp">
-      <Filter>Game\Enemys\BossEnemy\ActionNode\RisingPillar</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\RisingPillar\RisingPillarIdel.cpp">
-      <Filter>Game\Enemys\BossEnemy\ActionNode\RisingPillar</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\RisingPillar\RisingPillarRise.cpp">
-      <Filter>Game\Enemys\BossEnemy\ActionNode\RisingPillar</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\RisingPillar\RisingPillarPreliminaryAction.cpp">
-      <Filter>Game\Enemys\BossEnemy\ActionNode\RisingPillar</Filter>
     </ClCompile>
     <ClCompile Include="Game\EntityManager.cpp">
       <Filter>Game</Filter>

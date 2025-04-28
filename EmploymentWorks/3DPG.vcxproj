@@ -225,10 +225,6 @@
     <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\JumpAttack\BossJumpAttackAction.h" />
     <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\JumpAttack\BossJumpAttackCharge.h" />
     <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\JumpAttack\BossJumpAttackJump.h" />
-    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\RisingPillar\RisingPillarIdel.h" />
-    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\RisingPillar\RisingPillarPreliminaryAction.h" />
-    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\RisingPillar\RisingPillarRise.h" />
-    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\RisingPillar\RisingPillarvAction.h" />
     <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\RushAttack\BossRushAttackAction.h" />
     <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\RushAttack\BossRushAttackCharge.h" />
     <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\RushAttack\BossRushAttackRush.h" />
@@ -275,7 +271,6 @@
     <ClInclude Include="Game\Entities\MoveEntity.h" />
     <ClInclude Include="Game\EntityManager.h" />
     <ClInclude Include="Game\Interface\IActione.h" />
-    <ClInclude Include="Game\Interface\IActionState.h" />
     <ClInclude Include="Game\Interface\IBehaviorNode.h" />
     <ClInclude Include="Game\Interface\ICamera.h" />
     <ClInclude Include="Game\Interface\ICharacter.h" />
@@ -411,10 +406,6 @@
     <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\JumpAttack\BossJumpAttackAction.cpp" />
     <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\JumpAttack\BossJumpAttackCharge.cpp" />
     <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\JumpAttack\BossJumpAttackJump.cpp" />
-    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\RisingPillar\RisingPillarIdel.cpp" />
-    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\RisingPillar\RisingPillarPreliminaryAction.cpp" />
-    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\RisingPillar\RisingPillarRise.cpp" />
-    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\RisingPillar\RisingPillarvAction.cpp" />
     <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\RushAttack\BossRushAttackAction.cpp" />
     <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\RushAttack\BossRushAttackCharge.cpp" />
     <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\RushAttack\BossRushAttackRush.cpp" />

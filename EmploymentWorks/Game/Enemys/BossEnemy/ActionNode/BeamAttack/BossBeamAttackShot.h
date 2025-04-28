@@ -34,7 +34,7 @@ public:
 	//‰Šú‰»
 	void Initialize() override;
 	// XV‚·‚é
-	IBehaviorNode::State Update(const float& elapsedTime);
+	ActionState Update(const float& elapsedTime);
 	//ó‘Ô‚É“ü‚Á‚½
 	void Enter();
 	//ó‘Ô‚ğ”²‚¯‚½

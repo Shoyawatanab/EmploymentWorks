@@ -51,10 +51,13 @@ public:
 
 	void SetTarget(BaseEntity* target) { m_target = target; }
 
-
 	DirectX::SimpleMath::Vector3 GetVelocity() { return m_velocity; }
 
 	void SetVelocity(DirectX::SimpleMath::Vector3  velocity) { m_velocity = velocity; }
+
+	bool GetIsGrounded() { return m_isGrounded; }
+
+	void SetIsGrounded(bool isGrounded) { m_isGrounded = isGrounded; }
 
 public:
 	//コンストラクタ
@@ -83,6 +86,8 @@ public:
 	void OnCollisionEnter(CollisionEntity* object, CollisionTag tag) override;
 	//当たり続けているときの呼び出される
 	void OnCollisionStay(CollisionEntity* object, CollisionTag tag) override;
+
+	void OnCollisionExit(CollisionEntity* object, CollisionTag tag) override;
 
 	//当たり判定の種類の取得
 	const CollisionType GetCollisionType() override { return CollisionType::AABB; }
@@ -142,23 +147,11 @@ public:
 	}
 
 	//ビヘイビアツリーで使用
-	//ビーム攻撃
-	IBehaviorNode::State BeamAttack(const float& elapsedTime);
-	//歩く
-	IBehaviorNode::State Walk(const float& elapsedTime);
-	//たたきつけ
-	IBehaviorNode::State Pounding(const float& elapsedTime);
-	//
-	IBehaviorNode::State FacingThePlayer(float elapsdTime);
 
-	IBehaviorNode::State BarrierDefense(float elapsdTime);
 
-	IBehaviorNode::State JumpAttack(float elapsdTime);
-private:
-
-	void ChangeAction(std::string typeName);
-
-	void InitalizeAction();
+	//行動の変更
+	void ChangeAction(std::string actionName);
+	
 
 private:
 	//アニメーションデータ
@@ -174,9 +167,8 @@ private:
 	//影
 	std::unique_ptr<WataLib::Shadow> m_shadow;
 	//各動作
-	std::unordered_map<std::string, std::unique_ptr<IAction>> m_action;
 
-	std::pair<std::string, IAction*> m_currentAction;
+
 	//鼓動を終了するかどうか
 	bool m_isAction;
 
@@ -197,6 +189,15 @@ private:
 	bool m_isActives;
 
 	DirectX::SimpleMath::Vector3 m_velocity;
+
+
+
+	std::pair<std::string,IAction*> m_action;
+
+	std::unordered_map<std::string, std::unique_ptr<IAction>> m_actionList;
+
+	//着地しているかどうか
+	bool m_isGrounded;
 
 };
 
