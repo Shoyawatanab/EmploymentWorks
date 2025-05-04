@@ -62,7 +62,8 @@ BarrierPreliminaryAction::ActionState BarrierPreliminaryAction::Update(const flo
 	
 	if (m_time >= 2.0f)
 	{
-		m_barrierDefenseAction->ChangeState(m_barrierDefenseAction->GetBarrierDeployment());
+		return ActionState::End;
+
 	}
 
 

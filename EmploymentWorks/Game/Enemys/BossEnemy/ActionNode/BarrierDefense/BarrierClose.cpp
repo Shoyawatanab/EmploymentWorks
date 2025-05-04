@@ -65,7 +65,6 @@ BarrierClose::ActionState BarrierClose::Update(const float& elapsedTime)
 	
 	if (m_time >= 1.0f)
 	{
-		m_barrierDefenseAction->ChangeState(m_barrierDefenseAction->GetBarrierIdel());
 		return ActionState::End;
 	}
 

@@ -18,9 +18,12 @@
 
 #include "Game/Enemys/BossEnemy/BossEnemy.h"
 #include "Game/Enemys/BossEnemy/Beam/Beam.h"
+#include "Game/Enemys/BossEnemy/ActionNode/BeamAttack/BossBeamAttackPreliminaryAction.h"
+#include "Game/Enemys/BossEnemy/ActionNode/BeamAttack/BossBeamAttackCharge.h"
+#include "Game/Enemys/BossEnemy/ActionNode/BeamAttack/BossBeamAttackShot.h"
+#include "Game/Enemys/BossEnemy/ActionNode/BeamAttack/BossBeamAttackEnd.h"
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
-
 
 
 /// <summary>
@@ -33,24 +36,29 @@ BossBeamAttackAction::BossBeamAttackAction(CommonResources* resources
 	, Player* player)
 	:
 	m_commonResources{resources}
-	,m_currentState{}
 	,m_preliminaryAction{}
 	,m_charge{}
 	,m_shot{}
 	,m_attackEnd{}
 {
+
 	m_preliminaryAction = std::make_unique<BossBeamAttackPreliminaryAction>(m_commonResources,bossenemy,beam,this);
 	m_charge = std::make_unique<BossBeamAttackCharge>(m_commonResources, bossenemy, beam,this);
 	m_shot = std::make_unique<BossBeamAttackShot>(m_commonResources, bossenemy, beam,this,player);
 	m_attackEnd = std::make_unique<BossBeamAttackEnd>(m_commonResources, bossenemy, beam,this);
-	m_idel = std::make_unique<BossBeamAttackIdel>(m_commonResources, bossenemy, beam,this);
 
-	m_currentState = m_idel.get();
-	m_currentState->Enter();
 
 	//イベントタイプの登録
 	Messenger::GetInstance()->Attach(MessageType::BossBeamHit, this);
 
+
+	ActionStateController::Initialize({
+		m_preliminaryAction.get()
+		,m_charge.get()
+		,m_shot.get()
+		,m_attackEnd.get()
+		}
+	);
 
 }
 
@@ -60,31 +68,9 @@ BossBeamAttackAction::BossBeamAttackAction(CommonResources* resources
 BossBeamAttackAction::~BossBeamAttackAction()
 {
 	// do nothing.
+	ActionStateController::~ActionStateController();
 }
 
-void BossBeamAttackAction::Initialize()
-{
-
-
-}
-
-BossBeamAttackAction::ActionState BossBeamAttackAction::Update(const float& elapsedTime)
-{
-
-	
-
-	return m_currentState->Update(elapsedTime);
-
-}
-
-void BossBeamAttackAction::Enter()
-{
-	ChangeState(m_idel.get());
-}
-
-void BossBeamAttackAction::Exit()
-{
-}
 
 void BossBeamAttackAction::Notify(const Telegram& telegram)
 {
@@ -92,10 +78,8 @@ void BossBeamAttackAction::Notify(const Telegram& telegram)
 	switch (telegram.messageType)
 	{
 		case MessageType::BossBeamHit:
-			if (m_currentState != m_attackEnd.get())
-			{
-				ChangeState(m_attackEnd.get());
-			}
+
+			ActionStateController::ChangeState();
 			break;
 		default:
 			break;
@@ -103,19 +87,5 @@ void BossBeamAttackAction::Notify(const Telegram& telegram)
 
 }
 
-
-
-/// <summary>
-/// ステートの切り替え
-/// </summary>
-/// <param name="nextState">次のステート</param>
-void BossBeamAttackAction::ChangeState(IAction* nextState)
-{
-
-	m_currentState->Exit();
-	m_currentState = nextState;
-	m_currentState->Enter();
-
-}
 
 

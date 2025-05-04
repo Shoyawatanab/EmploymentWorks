@@ -18,6 +18,7 @@
 #include "Game/Enemys/BossEnemy/Barrier/Barrier.h"
 #include "Game/Enemys/BossEnemy/ActionNode/JumpAttack/BossJumpAttackAction.h"
 #include "Game/Enemys/BossEnemy/ActionNode/RushAttack/BossRushAttackAction.h"
+#include "Game/Enemys/BossEnemy/ActionNode/Walking/WalkingActionComtroller.h"
 
 #include "Libraries/MyLib/DebugString.h"
 
@@ -52,6 +53,7 @@ BossEnemy::BossEnemy(CommonResources* resources, DirectX::SimpleMath::Vector3 sc
 	,m_isAction{}
 	,m_action{}
 	,m_isGrounded{false}
+	,m_actionList{}
 {
 
 	m_behavior = std::make_unique<BehaviorTree>();
@@ -70,7 +72,7 @@ BossEnemy::~BossEnemy()
 {
 
 
-
+	m_actionList.clear();
 }
 
 
@@ -89,7 +91,7 @@ void BossEnemy::AddPointer(Player* player, StageObjectManager* stageObjectManage
 	m_beam->AddPointer(this,player);
 }
 
-void BossEnemy::ChangeAction(std::string actionName)
+void BossEnemy::ChangeAction(const std::string actionName)
 {
 
 	auto it = m_actionList.find(actionName);
@@ -103,11 +105,16 @@ void BossEnemy::ChangeAction(std::string actionName)
 		}
 
 		m_action.first = actionName;
+
 		m_action.second = it->second.get();
 
 		m_action.second->Enter();
 
+		
+
 	}
+
+
 
 
 
@@ -167,6 +174,11 @@ void BossEnemy::Initialize()
 	m_actionList["BarrierDefense"] = std::make_unique<BarrierDefenseAction>(BaseEntity::GetCommonResources(), this,m_barrier.get());
 	m_actionList["BeamAttack"] = std::make_unique<BossBeamAttackAction>(BaseEntity::GetCommonResources(), this, m_beam.get(),m_player);
 
+	m_actionList["RushAttack"] = std::make_unique<BossRushAttackAction>(BaseEntity::GetCommonResources(), this,m_player);
+
+	m_actionList["Walking"] = std::make_unique<WalkingActionComtroller>(BaseEntity::GetCommonResources(), this,m_player);
+
+
 
 	ChangeAction("RushAttack");
 
@@ -179,7 +191,7 @@ void BossEnemy::Initialize()
 
 	m_barrier->Initialize();
 
-	m_shadow->Initialize(device, context, states);;
+	m_shadow->Initialize(device, context, states);
 
 	//“–‚½‚è”»’è‚Ìì¬
 	CollisionEntity::GetBounding()->CreateBoundingSphere(BaseEntity::GetPosition(), Params::BOSSENEMY_SPHERE_COLLIDER_SIZE);
@@ -213,6 +225,7 @@ void BossEnemy::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::S
 	{
 		return;
 	}
+
 
 
 	EnemyEntity::Render(view, projection);

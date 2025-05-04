@@ -8,7 +8,7 @@
 #include "pch.h"
 #include "UserInterface.h"
 
-#include "BinaryFile.h"
+#include "Libraries/MyLib/BinaryFile.h"
 #include "DeviceResources.h"
 #include <SimpleMath.h>
 #include <Effects.h>

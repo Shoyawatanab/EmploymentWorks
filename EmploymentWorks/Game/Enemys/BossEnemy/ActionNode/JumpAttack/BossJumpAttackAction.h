@@ -3,10 +3,12 @@
 	@brief	プレイシーンクラス
 */
 #pragma once
-#include "Game/Interface/IActione.h"
+#include "Game/Entities/ActionStateController.h"
 #include "Game/Interface/IObserver.h"
 #include "Game/Enemys/BossEnemy/ActionNode/JumpAttack/BossJumpAttackCharge.h"
 #include "Game/Enemys/BossEnemy/ActionNode/JumpAttack/BossJumpAttackJump.h"
+#include "Game/Enemys/BossEnemy/ActionNode/Orientation/OrientationAction.h"
+
 
 // 前方宣言
 class CommonResources;
@@ -21,7 +23,7 @@ namespace mylib
 }
 
 
-class BossJumpAttackAction : public IAction , IObserver
+class BossJumpAttackAction : public ActionStateController , IObserver
 {
 
 public:
@@ -33,44 +35,35 @@ public:
 public:
 
 
-	IAction* GetCurrentState() { return m_currentState; }
 
 	BossJumpAttackCharge* GetBossJumpAttackCharge() { return m_charge.get(); }
 
 	BossJumpAttackJump* GetBossJumpAttackJump() { return m_jump.get(); }
+
+	OrientationAction* GetOrientationAction() { return m_orientationAction.get(); }
 
 public:
 	BossJumpAttackAction(CommonResources* resources,
 		BossEnemy* bossEnemy
 		, Player* player);
 	//デストラクタ
-	~BossJumpAttackAction() override ;
-
-	void Initialize() override;
-
-	ActionState Update(const float& elapsedTime)  override ;
-	//状態に入った時
-	void Enter() override ;
-	//状態を抜けた時
-	void Exit() override;
+	~BossJumpAttackAction();
 
 
 	//IObserver
 //通知時に呼ばれる関数
 	void Notify(const Telegram& telegram)  override;
 
-	//状態の変更
-	void ChangeState(IAction* nextState);
-
 
 private:
 	// 共通リソース
 	CommonResources* m_commonResources;
 
-	IAction* m_currentState;
 
 	std::unique_ptr<BossJumpAttackCharge> m_charge;
 
 	std::unique_ptr<BossJumpAttackJump> m_jump;
+
+	std::unique_ptr<OrientationAction> m_orientationAction;
 
 };

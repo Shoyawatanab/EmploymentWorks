@@ -89,7 +89,6 @@ BossBeamAttackEnd::ActionState BossBeamAttackEnd::Update(const float& elapsedTim
 
 	if (m_time == Params::BOSSENEMY_BEAM_SHRINK_TIME)
 	{
-		m_beamAttack->ChangeState(m_beamAttack->GetBossBeamAttackIdel());
 		return ActionState::End;
 	}
 

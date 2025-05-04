@@ -61,7 +61,7 @@ BarrierDeployment::ActionState BarrierDeployment::Update(const float& elapsedTim
 	
 	if (m_time >= 5.0f)
 	{
-		m_barrierDefenseAction->ChangeState(m_barrierDefenseAction->GetBarrierClose());
+		return ActionState::End;
 	}
 	else if (m_time >= 4.0f)
 	{

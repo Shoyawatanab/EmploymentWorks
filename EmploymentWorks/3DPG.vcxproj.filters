@@ -179,6 +179,12 @@
     <Filter Include="Game\Sound">
       <UniqueIdentifier>{98aefd83-9cf0-4aa6-8399-09c361b1e799}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Enemys\BossEnemy\ActionNode\Orientation">
+      <UniqueIdentifier>{0a9163ee-51d3-4523-af0f-f53494652f76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Enemys\BossEnemy\ActionNode\Walking">
+      <UniqueIdentifier>{38a6fa73-654c-4cc0-88cd-3ed308baaff3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -283,9 +289,6 @@
       <Filter>Game\Enemys</Filter>
     </ClInclude>
     <ClInclude Include="Libraries\WataLib\Fade.h">
-      <Filter>Libraries\WataLib</Filter>
-    </ClInclude>
-    <ClInclude Include="Libraries\WataLib\BinaryFile.h">
       <Filter>Libraries\WataLib</Filter>
     </ClInclude>
     <ClInclude Include="Libraries\WataLib\Animation.h">
@@ -594,9 +597,6 @@
     <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\BeamAttack\BossBeamAttackCharge.h">
       <Filter>Game\Enemys\BossEnemy\ActionNode\BeamAttack</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\BeamAttack\BossBeamAttackIdel.h">
-      <Filter>Game\Enemys\BossEnemy\ActionNode\BeamAttack</Filter>
-    </ClInclude>
     <ClInclude Include="Game\MathUtil.h">
       <Filter>Game</Filter>
     </ClInclude>
@@ -616,9 +616,6 @@
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\BarrierDefense\BarrierDeployment.h">
-      <Filter>Game\Enemys\BossEnemy\ActionNode\BarrierDefense</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\BarrierDefense\BarrierIdel.h">
       <Filter>Game\Enemys\BossEnemy\ActionNode\BarrierDefense</Filter>
     </ClInclude>
     <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\BarrierDefense\BarrierPreliminaryAction.h">
@@ -714,6 +711,18 @@
     <ClInclude Include="Game\Enemys\BossEnemy\BossEnemy.h">
       <Filter>Game\Enemys\BossEnemy</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\Orientation\OrientationAction.h">
+      <Filter>Game\Enemys\BossEnemy\ActionNode\Orientation</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Entities\ActionStateController.h">
+      <Filter>Game\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\Walking\WalkingAction.h">
+      <Filter>Game\Enemys\BossEnemy\ActionNode\Walking</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\Walking\WalkingActionComtroller.h">
+      <Filter>Game\Enemys\BossEnemy\ActionNode\Walking</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -789,9 +798,6 @@
       <Filter>Game\Enemys</Filter>
     </ClCompile>
     <ClCompile Include="Libraries\WataLib\Fade.cpp">
-      <Filter>Libraries\WataLib</Filter>
-    </ClCompile>
-    <ClCompile Include="Libraries\WataLib\BinaryFile.cpp">
       <Filter>Libraries\WataLib</Filter>
     </ClCompile>
     <ClCompile Include="Libraries\WataLib\Animation.cpp">
@@ -1061,9 +1067,6 @@
     <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\BeamAttack\BossBeamAttackCharge.cpp">
       <Filter>Game\Enemys\BossEnemy\ActionNode\BeamAttack</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\BeamAttack\BossBeamAttackIdel.cpp">
-      <Filter>Game\Enemys\BossEnemy\ActionNode\BeamAttack</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\BeamAttack\BossBeamAttackAction.cpp">
       <Filter>Game\Enemys\BossEnemy\ActionNode\BeamAttack</Filter>
     </ClCompile>
@@ -1080,9 +1083,6 @@
       <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\BarrierDefense\BarrierDeployment.cpp">
-      <Filter>Game\Enemys\BossEnemy\ActionNode\BarrierDefense</Filter>
-    </ClCompile>
-    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\BarrierDefense\BarrierIdel.cpp">
       <Filter>Game\Enemys\BossEnemy\ActionNode\BarrierDefense</Filter>
     </ClCompile>
     <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\BarrierDefense\BarrierPreliminaryAction.cpp">
@@ -1165,6 +1165,18 @@
     </ClCompile>
     <ClCompile Include="Game\Sound\SoundManager.cpp">
       <Filter>Game\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\Orientation\OrientationAction.cpp">
+      <Filter>Game\Enemys\BossEnemy\ActionNode\Orientation</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Entities\ActionStateController.cpp">
+      <Filter>Game\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\Walking\WalkingAction.cpp">
+      <Filter>Game\Enemys\BossEnemy\ActionNode\Walking</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\Walking\WalkingActionComtroller.cpp">
+      <Filter>Game\Enemys\BossEnemy\ActionNode\Walking</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

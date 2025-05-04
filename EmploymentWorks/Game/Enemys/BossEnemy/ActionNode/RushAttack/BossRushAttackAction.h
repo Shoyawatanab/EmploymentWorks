@@ -3,7 +3,7 @@
 	@brief	プレイシーンクラス
 */
 #pragma once
-#include "Game/Interface/IActione.h"
+#include "Game/Entities/ActionStateController.h"
 #include "Game/Interface/IObserver.h"
 #include "Game/Enemys/BossEnemy/ActionNode/RushAttack/BossRushAttackCharge.h"
 #include "Game/Enemys/BossEnemy/ActionNode/RushAttack/BossRushAttackRush.h"
@@ -21,47 +21,30 @@ namespace mylib
 }
 
 
-class BossRushAttackAction : public IAction , IObserver
+class BossRushAttackAction : public ActionStateController, IObserver
 {
 
 public:
 
 
-	IAction* GetCurrentState() { return m_currentState; }
-
-	BossRushAttackCharge* GetBossRushAttackCharge() { return m_charge.get(); }
-
-	BossRushAttackRush* GetBossRushAttackRush() { return m_rush.get(); }
 
 public:
 	BossRushAttackAction(CommonResources* resources,
 		BossEnemy* bossEnemy
 		, Player* player);
 	//デストラクタ
-	~BossRushAttackAction() override ;
-
-	void Initialize() override;
-
-	ActionState Update(const float& elapsedTime)  override ;
-	//状態に入った時
-	void Enter() override ;
-	//状態を抜けた時
-	void Exit() override;
+	~BossRushAttackAction() ;
 
 
 	//IObserver
 //通知時に呼ばれる関数
 	void Notify(const Telegram& telegram)  override;
 
-	//状態の変更
-	void ChangeState(IAction* nextState);
 
 
 private:
 	// 共通リソース
 	CommonResources* m_commonResources;
-
-	IAction* m_currentState;
 
 	std::unique_ptr<BossRushAttackCharge> m_charge;
 
