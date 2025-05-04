@@ -59,7 +59,7 @@ BossJumpAttackCharge::ActionState BossJumpAttackCharge::Update(const float& elap
 	//時間はアニメーションと合わせる
 	if (m_time >= 1.5f)
 	{
-		m_parent->ChangeState(m_parent->GetBossJumpAttackJump());
+		return ActionState::End;
 	}
 
 	

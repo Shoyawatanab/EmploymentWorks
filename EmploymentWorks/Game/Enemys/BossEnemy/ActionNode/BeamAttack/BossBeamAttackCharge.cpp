@@ -100,8 +100,7 @@ BossBeamAttackCharge::ActionState BossBeamAttackCharge::Update(const float& elap
 
 	if (m_time > Params::BOSSENEMY_BEAM_BALL_ACCUMULATIONTIME)
 	{
-		m_beamAttack->ChangeState(m_beamAttack->GetBossBeamAttackShot());
-
+		return ActionState::End;
 
 	}
 

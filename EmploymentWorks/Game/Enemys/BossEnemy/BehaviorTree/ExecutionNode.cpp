@@ -49,7 +49,7 @@ void ExecutionNode::Initialize(CommonResources* resources)
 IBehaviorNode::State ExecutionNode::Action()
 {
 	
-	m_enemy->ChangeAction("JumpAttack");
+	m_enemy->ChangeAction("Walking");
 
 	return IBehaviorNode::State::Success;
 

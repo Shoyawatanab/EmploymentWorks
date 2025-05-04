@@ -3,10 +3,9 @@
 	@brief	プレイシーンクラス
 */
 #pragma once
-#include "Game/Interface/IActione.h"
+#include "Game/Entities/ActionStateController.h"
 #include "Game/Interface/IObserver.h"
 
-#include "Game/Enemys/BossEnemy/ActionNode/BarrierDefense/BarrierIdel.h"
 #include "Game/Enemys/BossEnemy/ActionNode/BarrierDefense/BarrierPreliminaryAction.h"
 #include "Game/Enemys/BossEnemy/ActionNode/BarrierDefense/BarrierDeployment.h"
 #include "Game/Enemys/BossEnemy/ActionNode/BarrierDefense/BarrierClose.h"
@@ -25,14 +24,12 @@ namespace mylib
 }
 
 
-class BarrierDefenseAction : public IAction , IObserver
+class BarrierDefenseAction : public ActionStateController , IObserver
 {
 
 public:
 
-	IAction* GetCurrentState() { return m_currentState; }
 
-	BarrierIdel* GetBarrierIdel() { return m_idel.get(); }
 
 	BarrierPreliminaryAction* GetBarrierPreliminaryAction() { return m_preliminaryAction.get(); }
 
@@ -47,31 +44,21 @@ public:
 		,Barrier* barrier
 );
 	//デストラクタ
-	~BarrierDefenseAction() override ;
+	~BarrierDefenseAction() ;
 
-	void Initialize() override;
 
-	ActionState Update(const float& elapsedTime)  override ;
-	//状態に入った時
-	void Enter() override;
-	//状態を抜けた時
-	void Exit() override;
 
 
 	//IObserver
 //通知時に呼ばれる関数
 	void Notify(const Telegram& telegram)  override;
 
-	//状態の変更
-	void ChangeState(IAction* nextState);
 
 
 private:
 	// 共通リソース
 	CommonResources* m_commonResources;
 
-	IAction* m_currentState;
-	std::unique_ptr<BarrierIdel> m_idel;
 	std::unique_ptr<BarrierPreliminaryAction> m_preliminaryAction;
 	std::unique_ptr<BarrierDeployment> m_deployment;
 

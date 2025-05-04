@@ -44,6 +44,8 @@ Beam::Beam(CommonResources* resources)
 	m_energyBall = std::make_unique<BeamEnergyBall>(resources,this);
 	m_rays = std::make_unique<BeamRays>(resources,this);
 
+	BaseEntity::SetIsEntityActive(false);
+
 }
 
 /// <summary>

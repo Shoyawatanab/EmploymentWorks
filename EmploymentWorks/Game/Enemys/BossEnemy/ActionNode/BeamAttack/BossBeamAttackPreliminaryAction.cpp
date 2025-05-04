@@ -58,7 +58,7 @@ BossBeamAttackPreliminaryAction::ActionState BossBeamAttackPreliminaryAction::Up
 
 	if (m_time >= Params::BOSSENEMY_BEAM_BALL_PRELIMINARY_ACTION_TIME)
 	{
-		m_beamAttack->ChangeState(m_beamAttack->GetBossBeamAttackCharge());
+		//m_beamAttack->ChangeState(m_beamAttack->GetBossBeamAttackCharge());
 
 	}
 

@@ -34,24 +34,25 @@ BarrierDefenseAction::BarrierDefenseAction(CommonResources* resources
 	)
 	:
 	m_commonResources{resources}
-	,m_currentState{}
-	,m_idel{}
 	,m_preliminaryAction{}
 	,m_deployment{}
 	,m_barrier{barrier}
 {
 	
-	m_idel = std::make_unique<BarrierIdel>(resources, this);
 	m_preliminaryAction = std::make_unique<BarrierPreliminaryAction>(resources, this,bossEnemy);
 	m_deployment = std::make_unique<BarrierDeployment>(resources, this,barrier);
 	m_close = std::make_unique<BarrierClose>(resources, this, barrier,bossEnemy);
 
 
-	m_currentState = m_idel.get();
-	m_currentState->Enter();
 
 	//イベントタイプの登録
 	Messenger::GetInstance()->Attach(MessageType::BossBeamHit, this);
+
+	ActionStateController::Initialize({
+		m_preliminaryAction.get()
+		,m_deployment.get()
+		,m_close.get()
+		});
 
 }
 
@@ -63,28 +64,6 @@ BarrierDefenseAction::~BarrierDefenseAction()
 	// do nothing.
 }
 
-void BarrierDefenseAction::Initialize()
-{
-
-}
-
-BarrierDefenseAction::ActionState BarrierDefenseAction::Update(const float& elapsedTime)
-{
-
-	
-
-	return	m_currentState->Update(elapsedTime);
-
-}
-
-void BarrierDefenseAction::Enter()
-{
-	ChangeState(m_idel.get());
-}
-
-void BarrierDefenseAction::Exit()
-{
-}
 
 void BarrierDefenseAction::Notify(const Telegram& telegram)
 {
@@ -95,17 +74,6 @@ void BarrierDefenseAction::Notify(const Telegram& telegram)
 
 
 
-/// <summary>
-/// ステートの切り替え
-/// </summary>
-/// <param name="nextState">次のステート</param>
-void BarrierDefenseAction::ChangeState(IAction* nextState)
-{
 
-	m_currentState->Exit();
-	m_currentState = nextState;
-	m_currentState->Enter();
-
-}
 
 

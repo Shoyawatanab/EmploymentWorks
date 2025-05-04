@@ -32,20 +32,26 @@ BossJumpAttackAction::BossJumpAttackAction(CommonResources* resources
 	,BossEnemy* bossenemy
 	, Player* player)
 	:
+	ActionStateController{},
 	m_commonResources{resources}
-	,m_currentState{}
 {
+
 
 
 	m_charge = std::make_unique<BossJumpAttackCharge>(resources,this,bossenemy,player);
 	m_jump = std::make_unique<BossJumpAttackJump>(resources, this, bossenemy, player);
 
 
-	m_currentState = m_charge.get();
 	//m_currentState->Enter();
 
 	//イベントタイプの登録
 	Messenger::GetInstance()->Attach(MessageType::BossBeamHit, this);
+
+	
+	ActionStateController::Initialize({
+		m_charge.get(),
+		m_jump.get()
+		});
 
 
 }
@@ -58,21 +64,6 @@ BossJumpAttackAction::~BossJumpAttackAction()
 	// do nothing.
 }
 
-void BossJumpAttackAction::Initialize()
-{
-
-}
-
-BossJumpAttackAction:: ActionState BossJumpAttackAction::Update(const float& elapsedTime)
-{
-
-	
-
-	return m_currentState->Update(elapsedTime);
-
-
-
-}
 
 void BossJumpAttackAction::Notify(const Telegram& telegram)
 {
@@ -89,27 +80,4 @@ void BossJumpAttackAction::Notify(const Telegram& telegram)
 
 
 
-/// <summary>
-/// ステートの切り替え
-/// </summary>
-/// <param name="nextState">次のステート</param>
-void BossJumpAttackAction::ChangeState(IAction* nextState)
-{
 
-	m_currentState->Exit();
-	m_currentState = nextState;
-	m_currentState->Enter();
-
-}
-
-void BossJumpAttackAction::Enter()
-{
-
-	ChangeState(m_charge.get());
-
-}
-
-void BossJumpAttackAction::Exit()
-{
-	ChangeState(m_charge.get());
-}

@@ -57,7 +57,7 @@ BossRushAttackCharge::ActionState BossRushAttackCharge::Update(const float& elap
 	if (m_time >= 1.5f)
 	{
 
-		
+		return ActionState::End;
 
 	}
 

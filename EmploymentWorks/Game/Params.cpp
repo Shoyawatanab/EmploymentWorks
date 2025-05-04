@@ -138,6 +138,9 @@ const Quaternion       Params::BOOMERANG_ROTATION = Quaternion::Identity;
  const  Quaternion Params::BOOMERANG_THROW_ROTATION;
 
 
+ //“G‚Ì‰ñ“]‚Ì‹–—e”ÍˆÍ
+ const float Params::ENEMY_PERMISSIBLE_ANGLE = 15.0f;
+
 
  //ƒ{ƒX“G
 	 //ƒ{ƒX“G‚ÌHP

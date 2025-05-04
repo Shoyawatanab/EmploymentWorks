@@ -127,6 +127,9 @@ public:
 	//ブーメランのTHROW状態の回転
 	static const DirectX::SimpleMath::Quaternion BOOMERANG_THROW_ROTATION;
 
+	//敵の回転の許容範囲
+	static const float ENEMY_PERMISSIBLE_ANGLE;
+
 //ボス敵
 	//ボス敵のHP
 	static const int BOSSENEMY_MAX_HP;

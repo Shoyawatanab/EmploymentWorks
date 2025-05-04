@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+
+# Visual Studio 関連を無視
+.vs/
+x64/

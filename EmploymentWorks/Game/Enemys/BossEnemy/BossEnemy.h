@@ -14,7 +14,7 @@
 #include "Game/Observer/Messenger.h"
 #include "Libraries/WataLib/Shadow.h"
 #include "Game/Enemys/EnemyManager.h"
-#include "Game/Interface/IActione.h"
+#include"Game/Entities/ActionStateController.h"
 
 // 前方宣言
 class CommonResources;
@@ -150,7 +150,7 @@ public:
 
 
 	//行動の変更
-	void ChangeAction(std::string actionName);
+	void ChangeAction(const std::string actionName);
 	
 
 private:
@@ -192,9 +192,9 @@ private:
 
 
 
-	std::pair<std::string,IAction*> m_action;
+	std::pair<std::string,ActionStateController*> m_action;
 
-	std::unordered_map<std::string, std::unique_ptr<IAction>> m_actionList;
+	std::unordered_map<std::string, std::shared_ptr<ActionStateController>> m_actionList;
 
 	//着地しているかどうか
 	bool m_isGrounded;
