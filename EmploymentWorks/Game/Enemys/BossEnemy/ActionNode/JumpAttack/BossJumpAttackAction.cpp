@@ -45,7 +45,7 @@ BossJumpAttackAction::BossJumpAttackAction(CommonResources* resources
 	//m_currentState->Enter();
 
 	//イベントタイプの登録
-	Messenger::GetInstance()->Attach(MessageType::BossBeamHit, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::BossBeamHit, this);
 
 	
 	ActionStateController::Initialize({
@@ -65,12 +65,12 @@ BossJumpAttackAction::~BossJumpAttackAction()
 }
 
 
-void BossJumpAttackAction::Notify(const Telegram& telegram)
+void BossJumpAttackAction::Notify(const Telegram<GameMessageType>& telegram)
 {
 	
 	switch (telegram.messageType)
 	{
-		case MessageType::BossBeamHit:
+		case GameMessageType::BossBeamHit:
 			break;
 		default:
 			break;

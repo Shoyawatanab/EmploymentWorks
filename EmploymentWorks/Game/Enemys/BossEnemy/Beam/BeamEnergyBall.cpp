@@ -287,7 +287,7 @@ void BeamEnergyBall::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 		case CollisionEntity::CollisionTag::Stage:
 
 
-			Messenger::GetInstance()->Notify(MessageType::BossBeamHit, nullptr);
+			Messenger::GetInstance()->Notify(GameMessageType::BossBeamHit, nullptr);
 
 
 			break;

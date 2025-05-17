@@ -238,7 +238,7 @@ void BirdEnemy::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 					Vector3 scale = BaseEntity::GetScale();
 					Vector3 position = object->GetPosition();
 					UnknownDataTwo aa = { static_cast<void*>(&position) ,static_cast<void*>(&scale)};
-					Messenger::GetInstance()->Notify(MessageType::CreateExplosion, &aa);
+					Messenger::GetInstance()->Notify(GameMessageType::CreateExplosion, &aa);
 					BaseEntity::SetIsEntityActive(false);
 
 				}
@@ -251,7 +251,7 @@ void BirdEnemy::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 
 				UnknownDataThree aa = { static_cast<void*>(&pos) ,static_cast<void*>(&scale)};
 
-				Messenger::GetInstance()->Notify(MessageType::CreateHitEffect, &aa);
+				Messenger::GetInstance()->Notify(GameMessageType::CreateHitEffect, &aa);
 
 			}
 

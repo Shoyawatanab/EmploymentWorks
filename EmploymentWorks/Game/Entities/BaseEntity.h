@@ -68,11 +68,20 @@ public:
 	//ローカル回転の設定
 	void SetLocalRotation(const DirectX::SimpleMath::Quaternion& rotation) { m_parent  ? m_localRotation = rotation :m_rotation = rotation ; };
 	
+
+	const DirectX::SimpleMath::Vector3& GetVelocity() { return m_velocity; }
+
+	void SetVelocity(const DirectX::SimpleMath::Vector3& velocity) { m_velocity = velocity; }
+
+	void SetIsGravity(bool isGravity) { m_isGravity = isGravity; }
+
 	//親の取得
 	BaseEntity* GetParent() { return m_parent; }
-
 	//親の登録
 	void SetParent(BaseEntity* parent);
+
+	bool GetIsParent() { return m_isParent; }
+
 
 	//オブジェクトが有効かどうかの登録
 	void SetIsEntityActive(const bool& isActive) { m_isEntityActive = isActive;  if(m_isEntityActive)OnEnable(); else OnDisable(); }
@@ -135,6 +144,9 @@ private:
 
 	//親クラス
 	BaseEntity* m_parent;
+	//親があるかどうか
+	bool m_isParent;
+
 	//ローカル座標
 	DirectX::SimpleMath::Vector3 m_localPosition;
 	//ローカル大きさ
@@ -143,6 +155,13 @@ private:
 	DirectX::SimpleMath::Quaternion m_localRotation;
 	//ローカル行列
 	DirectX::SimpleMath::Matrix m_localMatrix;
+
+
+	bool m_isGravity;
+
+	DirectX::SimpleMath::Vector3 m_velocity;
+
+	float m_gravity;
 
 };
 

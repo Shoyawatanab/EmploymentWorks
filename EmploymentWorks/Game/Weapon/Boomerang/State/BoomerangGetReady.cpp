@@ -8,6 +8,10 @@
 #include "Game/Weapon/Boomerang/Boomerang.h"
 #include "Game/Params.h"
 
+
+#include "Libraries/Microsoft/DebugDraw.h"
+
+
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
 
@@ -45,6 +49,8 @@ void BoomerangGetReady::Initialize(CommonResources* resources)
 {
 	m_commonResources = resources;
 
+
+
 }
 
 
@@ -64,6 +70,10 @@ void BoomerangGetReady::Render(const DirectX::SimpleMath::Matrix& view, const Di
 {
 	UNREFERENCED_PARAMETER(view);
 	UNREFERENCED_PARAMETER(projection);
+
+
+
+
 
 }
 

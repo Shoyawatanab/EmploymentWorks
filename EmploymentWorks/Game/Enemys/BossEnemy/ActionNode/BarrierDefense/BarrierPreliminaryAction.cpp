@@ -32,7 +32,7 @@ using namespace DirectX::SimpleMath;
 /// <param name="resources">ã§í ÉäÉ\Å[ÉX</param>
 BarrierPreliminaryAction::BarrierPreliminaryAction(CommonResources* resources,
 	BarrierDefenseAction* barrierDefenseAction,
-	BossEnemy* bossEnemy
+	CharacterEntity* bossEnemy
 	)
 	:
 	m_commonResources{ resources },

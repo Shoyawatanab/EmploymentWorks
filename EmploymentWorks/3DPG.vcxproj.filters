@@ -185,6 +185,12 @@
     <Filter Include="Game\Enemys\BossEnemy\ActionNode\Walking">
       <UniqueIdentifier>{38a6fa73-654c-4cc0-88cd-3ed308baaff3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Observer\Enemy">
+      <UniqueIdentifier>{53ea08f1-ba8d-4905-aa27-6e977390f391}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Enemys\BossEnemy\ActionNode\SwingDownAttack">
+      <UniqueIdentifier>{e5ef2522-319a-4e67-b6c9-02021fb92a7b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -723,6 +729,18 @@
     <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\Walking\WalkingActionComtroller.h">
       <Filter>Game\Enemys\BossEnemy\ActionNode\Walking</Filter>
     </ClInclude>
+    <ClInclude Include="Game\Observer\Enemy\EnemyMessenger.h">
+      <Filter>Game\Observer\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\SwingDownAttack\SwingDownAttackAction.h">
+      <Filter>Game\Enemys\BossEnemy\ActionNode\SwingDownAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\SwingDownAttack\SwingDownAttackRaisePhase.h">
+      <Filter>Game\Enemys\BossEnemy\ActionNode\SwingDownAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\SwingDownAttack\SwingDownAttackSwingPhase.h">
+      <Filter>Game\Enemys\BossEnemy\ActionNode\SwingDownAttack</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -1177,6 +1195,18 @@
     </ClCompile>
     <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\Walking\WalkingActionComtroller.cpp">
       <Filter>Game\Enemys\BossEnemy\ActionNode\Walking</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Observer\Enemy\EnemyMessenger.cpp">
+      <Filter>Game\Observer\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\SwingDownAttack\SwingDownAttackAction.cpp">
+      <Filter>Game\Enemys\BossEnemy\ActionNode\SwingDownAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\SwingDownAttack\SwingDownAttackRaisePhase.cpp">
+      <Filter>Game\Enemys\BossEnemy\ActionNode\SwingDownAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\SwingDownAttack\SwingDownAttackSwingPhase.cpp">
+      <Filter>Game\Enemys\BossEnemy\ActionNode\SwingDownAttack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

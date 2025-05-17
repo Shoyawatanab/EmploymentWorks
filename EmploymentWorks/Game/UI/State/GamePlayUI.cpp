@@ -266,14 +266,14 @@ void GamePlayUI::Initialize(CommonResources* resources)
 
 	}
 
-	Messenger::GetInstance()->Attach(MessageType::BoomerangThrow, this);
-	Messenger::GetInstance()->Attach(MessageType::GetBoomerang, this);
-	Messenger::GetInstance()->Attach(MessageType::PlayerDamage, this);
-	Messenger::GetInstance()->Attach(MessageType::ChangeBoomerangThrowState, this);
-	Messenger::GetInstance()->Attach(MessageType::BoomerangRecoverable, this);
-	Messenger::GetInstance()->Attach(MessageType::BoomerangNotRecoverable, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::BoomerangThrow, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::GetBoomerang, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::PlayerDamage, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::ChangeBoomerangThrowState, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::BoomerangRecoverable, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::BoomerangNotRecoverable, this);
 
-	Messenger::GetInstance()->Attach(MessageType::CreateHitEffect, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::CreateHitEffect, this);
 
 }
 
@@ -321,26 +321,26 @@ void GamePlayUI::Exit()
 /// </summary>
 /// <param name="type">イベントの種類</param>
 /// <param name="datas">イベントのデータ</param>
-void GamePlayUI::Notify(const Telegram& telegram)
+void GamePlayUI::Notify(const Telegram<GameMessageType>& telegram)
 {
 
 	switch (telegram.messageType)
 	{
-		case MessageType::BoomerangThrow:
+		case GameMessageType::BoomerangThrow:
 			m_boomerangCount--;
 
 			m_boomerangCount = std::max(m_boomerangCount, 0);
 
 			break;
-		case MessageType::GetBoomerang:
+		case GameMessageType::GetBoomerang:
 			m_boomerangCount++;
 			m_boomerangCount = std::min(m_boomerangCount, 3);
 
 			break;
-		case MessageType::PlayerDamage:
+		case GameMessageType::PlayerDamage:
 			m_playerHPCount--;
 			break;
-		case MessageType::ChangeBoomerangThrowState:
+		case GameMessageType::ChangeBoomerangThrowState:
 			{
 				
 				switch (*static_cast<int*>(telegram.extraInfo))
@@ -367,16 +367,14 @@ void GamePlayUI::Notify(const Telegram& telegram)
 				}
 			}
 			break;
-		case MessageType::BoomerangRecoverable:
+		case GameMessageType::BoomerangRecoverable:
 			m_itemAcquisitionUI->SetIsActive(true);
 			break;
-		case MessageType::BoomerangNotRecoverable:
+		case GameMessageType::BoomerangNotRecoverable:
 			m_itemAcquisitionUI->SetIsActive(false);
 			break;
-		case MessageType::CreateHitEffect:
-		
+		case GameMessageType::CreateHitEffect:
 			CreateDamageUI(telegram.extraInfo);
-		
 			break;
 		default:
 			break;

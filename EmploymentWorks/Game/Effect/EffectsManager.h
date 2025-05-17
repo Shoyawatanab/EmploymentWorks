@@ -11,7 +11,7 @@
 // ‘O•ûéŒ¾
 class CommonResources;
 
-class EffectsManager : public IObserver
+class EffectsManager : public IObserver<GameMessageType>
 
 {
 public:
@@ -35,7 +35,7 @@ private:
 
 	void CreateChargeEffect(void* datas);
 
-	void Notify(const Telegram& telegram)  override;
+	void Notify(const Telegram<GameMessageType>& telegram)  override;
 
 
 private:

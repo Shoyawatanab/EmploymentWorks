@@ -109,7 +109,7 @@ void BossRushAttackRush::Exit()
 
 	pos.y = 0.1f;
 
-	Messenger::GetInstance()->Notify(MessageType::CreateParticle, &pos);
+	Messenger::GetInstance()->Notify(GameMessageType::CreateParticle, &pos);
 
 
 

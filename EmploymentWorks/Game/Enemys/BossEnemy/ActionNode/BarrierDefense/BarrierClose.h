@@ -4,14 +4,14 @@
 class CommonResources;
 class BarrierDefenseAction;
 class Barrier;
-class BossEnemy;
+class CharacterEntity;
 
 // BarrierCloseクラスを定義する
 class BarrierClose : public IAction
 {
 public:
 	// コンストラクタ
-	BarrierClose(CommonResources* resources,BarrierDefenseAction* barrierDefenseAction, Barrier* barrier, BossEnemy* bossEnemy);
+	BarrierClose(CommonResources* resources,BarrierDefenseAction* barrierDefenseAction, Barrier* barrier, CharacterEntity* bossEnemy);
 	// デストラクタ
 	~BarrierClose();
 	//初期化
@@ -35,7 +35,7 @@ private:
 
 	float m_time;
 
-	BossEnemy* m_bossEnemy;
+	CharacterEntity* m_bossEnemy;
 
 };
 

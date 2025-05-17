@@ -30,7 +30,7 @@ BossEnemyRightShoulder::BossEnemyRightShoulder(CommonResources* resources,
 	DirectX::SimpleMath::Vector3 position,	DirectX::SimpleMath::Quaternion rotation)
 	:
 	BossEnemyPartsBase(resources, root, parent, scale, position, rotation, PARTSNAME, Params::BOSSENEMY_RIGHTSHOULDER_HP,
-		Params::BOSSENEMY_RIGHTSHOULDER_BOX_COLLIDER_SIZE, Params::BOSSENEMY_RIGHTSHOULDER_SPHERE_COLLIDER_SIZE)
+		Params::BOSSENEMY_RIGHTSHOULDER_BOX_COLLIDER_SIZE * root->GetScale(), Params::BOSSENEMY_RIGHTSHOULDER_SPHERE_COLLIDER_SIZE * root->GetScale().x)
 {
 }
 

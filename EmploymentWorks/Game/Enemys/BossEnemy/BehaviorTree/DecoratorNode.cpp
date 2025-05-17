@@ -66,6 +66,9 @@ IBehaviorNode::State DecoratorNode::RunningUpdate(float elapsedTime)
 
 void DecoratorNode::Finalize()
 {
+
+
+
 }
 
 /// <summary>

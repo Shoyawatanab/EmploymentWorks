@@ -32,10 +32,10 @@ using namespace DirectX::SimpleMath;
 /// </summary>
 /// <param name="resources">ã§í ÉäÉ\Å[ÉX</param>
 BossBeamAttackShot::BossBeamAttackShot(CommonResources* resources
-	, BossEnemy* bossEnemy
+	, CharacterEntity* bossEnemy
 	, Beam* beam
 	, BossBeamAttackAction* beamAttack
-	, Player* player)
+	, CharacterEntity* player)
 	:
 	m_commonResources{resources}
 	, m_bossEnemy{ bossEnemy }

@@ -4,12 +4,19 @@
 
 #include "Game/Observer/Telegram.h"
 
+//int m_observerId = 0;
+
 // IObserverインターフェースを定義する
+template<typename T>
 class IObserver
 {
 public:
 	//通知時に呼び出される
-	virtual void Notify(const Telegram &telegram) = 0;
+	virtual void Notify(const Telegram<T> &telegram) = 0;
+
+private:
+
+	//static int m_observerId;
 
 };
 

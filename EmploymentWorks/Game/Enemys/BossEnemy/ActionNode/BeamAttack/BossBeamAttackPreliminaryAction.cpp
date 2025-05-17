@@ -29,7 +29,7 @@ using namespace DirectX::SimpleMath;
 /// </summary>
 /// <param name="resources">ã§í ÉäÉ\Å[ÉX</param>
 BossBeamAttackPreliminaryAction::BossBeamAttackPreliminaryAction(CommonResources* resources
-	, BossEnemy* bossEnemy
+	, CharacterEntity* bossEnemy
 	, Beam* beam
 	, BossBeamAttackAction* beamAttack)
 	:

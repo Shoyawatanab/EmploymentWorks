@@ -50,8 +50,8 @@ void PlayerAttack::Initialize(CommonResources* resources)
 {
 	m_commonResources = resources;
 
-	Messenger::GetInstance()->Attach(MessageType::MouseWheelUp, this);
-	Messenger::GetInstance()->Attach(MessageType::MouseWheelDown, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::MouseWheelUp, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::MouseWheelDown, this);
 
 	m_throwState = ThrowState::Right;
 
@@ -81,7 +81,7 @@ void PlayerAttack::Update(const float& elapsedTime)
 		Boomerang* boomerang = m_player->GetBoomerang<BoomerangGetReady>();
 
 		boomerang->GetBoomerangStatemachine()->ChangeState(boomerang->GetBoomerangStatemachine()->GetBoomerangIdel());
-		Messenger::GetInstance()->Notify(::MessageType::BoomerangGetReadyEnd, nullptr);
+		Messenger::GetInstance()->Notify(::GameMessageType::BoomerangGetReadyEnd, nullptr);
 	}
 	//投げる
 	else if (tracker->leftButton == Mouse::ButtonStateTracker::ButtonState::PRESSED)
@@ -110,8 +110,8 @@ void PlayerAttack::Update(const float& elapsedTime)
 				break;
 		}
 
-		Messenger::GetInstance()->Notify(::MessageType::BoomerangGetReadyEnd, nullptr);
-		Messenger::GetInstance()->Notify(::MessageType::BoomerangThrow, nullptr);
+		Messenger::GetInstance()->Notify(::GameMessageType::BoomerangGetReadyEnd, nullptr);
+		Messenger::GetInstance()->Notify(::GameMessageType::BoomerangThrow, nullptr);
 
 
 	}
@@ -140,7 +140,7 @@ void PlayerAttack::Enter()
 	{
 		boomerang->GetBoomerangStatemachine()->ChangeState(boomerang->GetBoomerangStatemachine()->GetBoomerangGetReady());
 
-		Messenger::GetInstance()->Notify(::MessageType::BoomerangGetReady, nullptr);
+		Messenger::GetInstance()->Notify(::GameMessageType::BoomerangGetReady, nullptr);
 		//プレイヤのアニメーションの変更
 		m_player->ChangeAnimation("GetReady");
 
@@ -165,13 +165,13 @@ void PlayerAttack::Exit()
 
 }
 
-void PlayerAttack::Notify(const Telegram& telegram)
+void PlayerAttack::Notify(const Telegram<GameMessageType>& telegram)
 {
 	
 
 	switch (telegram.messageType)
 	{
-		case ::MessageType::MouseWheelUp:
+		case ::GameMessageType::MouseWheelUp:
 		{
 			switch (m_throwState)
 			{
@@ -187,10 +187,10 @@ void PlayerAttack::Notify(const Telegram& telegram)
 					break;
 			}
 
-			Messenger::GetInstance()->Notify(::MessageType::ChangeBoomerangThrowState, &m_throwState);
+			Messenger::GetInstance()->Notify(::GameMessageType::ChangeBoomerangThrowState, &m_throwState);
 		}
 			break;
-		case ::MessageType::MouseWheelDown:
+		case ::GameMessageType::MouseWheelDown:
 		{
 			switch (m_throwState)
 			{
@@ -206,7 +206,7 @@ void PlayerAttack::Notify(const Telegram& telegram)
 					break;
 			}
 
-			Messenger::GetInstance()->Notify(::MessageType::ChangeBoomerangThrowState, &m_throwState);
+			Messenger::GetInstance()->Notify(::GameMessageType::ChangeBoomerangThrowState, &m_throwState);
 		}
 			break;
 		default:

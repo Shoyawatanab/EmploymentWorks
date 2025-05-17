@@ -29,7 +29,7 @@ private:
 	CommonResources* m_commonResources;
 	//当たり判定クラスの配列
 	std::vector<CollisionEntity*> m_collisionObjects;
-
+	//押し出しの
 	static std::unordered_map<int, std::function<void(CollisionEntity* object1, CollisionEntity* object2)>> m_extrusionFunction;
 
 };

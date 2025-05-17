@@ -5,6 +5,8 @@
 #include "Game/Enemys/BossEnemy/BossEnemy.h"
 #include "Game/CommonResources.h"
 
+#include "Game/Observer/Enemy/EnemyMessenger.h"
+
 using namespace DirectX::SimpleMath;
 using namespace DirectX;
 
@@ -49,10 +51,54 @@ void ExecutionNode::Initialize(CommonResources* resources)
 IBehaviorNode::State ExecutionNode::Action()
 {
 	
-	m_enemy->ChangeAction("Walking");
+	return IBehaviorNode::State::Success;
+
+}
+
+IBehaviorNode::State ExecutionNode::BossEnemyBeamAction()
+{
+
+	EnemyMessenger::GetInstance()->Notify(m_enemy->GetID(), EnemyMessageType::BeamAttack, nullptr);
+
 
 	return IBehaviorNode::State::Success;
 
+}
+
+IBehaviorNode::State ExecutionNode::BossEnemyBarrierDefenseAction()
+{
+
+	EnemyMessenger::GetInstance()->Notify(m_enemy->GetID(), EnemyMessageType::BarrierDefense, nullptr);
+
+	return IBehaviorNode::State::Success;
+
+}
+
+IBehaviorNode::State ExecutionNode::BossEnemyJumpAttackAction()
+{
+
+	EnemyMessenger::GetInstance()->Notify(m_enemy->GetID(), EnemyMessageType::JumpAttack, nullptr);
+
+
+	return IBehaviorNode::State::Success;
+
+}
+
+IBehaviorNode::State ExecutionNode::BossEnemyWalking()
+{
+	EnemyMessenger::GetInstance()->Notify(m_enemy->GetID(), EnemyMessageType::Walking, nullptr);
+
+	return IBehaviorNode::State::Success;
+
+}
+
+IBehaviorNode::State ExecutionNode::BossEnemySwingDown()
+{
+
+	EnemyMessenger::GetInstance()->Notify(m_enemy->GetID(), EnemyMessageType::SwingDown, nullptr);
+
+
+	return IBehaviorNode::State::Success;
 }
 
 

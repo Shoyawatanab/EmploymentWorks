@@ -32,7 +32,7 @@ using namespace DirectX::SimpleMath;
 /// </summary>
 /// <param name="resources">‹¤’ÊƒŠƒ\[ƒX</param>
 BossBeamAttackCharge::BossBeamAttackCharge(CommonResources* resources
-	, BossEnemy* bossenemy
+	, CharacterEntity* bossenemy
 	, Beam* beam
 	, BossBeamAttackAction* beamAttack)
 	:
@@ -128,13 +128,11 @@ void BossBeamAttackCharge::Enter()
 
 	m_beam->CreateParticle();
 
-
-
 	m_beam->GetBeamEnergyBall()->SetLocalPosition(Vector3::Zero);
+
 	m_beam->GetBeamRays()->SetLocalPosition(Vector3::Zero);
 
 	m_beam->GetBeamEnergyBall()->SetIsEntityActive(true);
-
 
 
 }

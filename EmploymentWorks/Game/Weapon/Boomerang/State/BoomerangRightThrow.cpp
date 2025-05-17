@@ -30,6 +30,7 @@ BoomerangRightThrow::BoomerangRightThrow()
 {
 
 
+
 }
 
 /// <summary>
@@ -85,50 +86,62 @@ void BoomerangRightThrow::CreateSplineCurvePositon()
 
 		target += m_tpsCamera->GetTargetPosition();
 
-	}
-	
+	}	
+
+	target = m_tpsCamera->GetCameraForward();
+
+	target.Normalize();
+
+	target *= TARGET_LENGTH;
+
+	target += m_tpsCamera->GetTargetPosition();
+
+
 	//ブーメランからターゲットまでの距離
 	Vector3 boomerangToTargetDistance = target - m_boomerang->GetPosition();
+	
+
+	float boomerangToTargetLenght = boomerangToTargetDistance.Length();
+
+	boomerangToTargetDistance = Vector3(0, 0, -1) * boomerangToTargetLenght;
+
+	//値を正に
+	boomerangToTargetDistance.x =std::abs(boomerangToTargetDistance.x);
+	//boomerangToTargetDistance.y =std::abs(boomerangToTargetDistance.y);
+	boomerangToTargetDistance.z =std::abs(boomerangToTargetDistance.z);
+
 	//高さをゼロに
 	boomerangToTargetDistance.y = 0.0f;
 	//float型に変換　長さを半分に
-	float boomerangToTargetLenght = boomerangToTargetDistance.Length();
+	float boomerangToTargetHalfLenght = boomerangToTargetDistance.Length() /2;
 
 	//基準点を変更
-	for (int i = 0; i < basePosition.size(); i++)
+	for(int i = 0; i < basePosition.size(); i++)
 	{
-		////基準点から中心までの距離を求める
-		//Vector3 distance = basePosition[i] - Vector3::Zero;
+
 		//基準点から中心までの長さを求める
 		float lenght = basePosition[i].Length();
 		//割合を求める
-		float ratio = (lenght == 0.0f) ? 0.0f : boomerangToTargetLenght / lenght;		
+		float ratio = (lenght == 0.0f) ? 0.0f : boomerangToTargetHalfLenght / lenght;
 		//割合をもとに基準点を変更
 		basePosition[i] *= ratio;
-		//高さをブーメランの位置に合わせる
-		basePosition[i].y = m_boomerang->GetPosition().y;
 
-	}
+		basePosition[i] -= boomerangToTargetDistance / 2;
 
-
-	Vector3 aa = basePosition[3] - basePosition[0];
-
-	aa /= 2;
-
-	for (int i = 0; i < basePosition.size(); i++)
-	{
-		basePosition[i] += aa;
 	}
 
 	for (int i = 0; i < basePosition.size(); i++)
 	{
+
 		//一番遠い基準点との割合を求める
 		float ratio = basePosition[i].z / basePosition[basePosition.size() / 2].z;
 		//高さの調整
 		basePosition[i].y = Lerp(m_boomerang->GetPosition().y, target.y, ratio);
-	
+
+		
 	}
- 
+
+	
 	Quaternion rotation = m_player->GetRotation();
 
 	for (int i = 0; i < basePosition.size(); i++)
@@ -142,6 +155,8 @@ void BoomerangRightThrow::CreateSplineCurvePositon()
 
 
 	m_splineCurvePosition = basePosition;
+
+
 
 }
 

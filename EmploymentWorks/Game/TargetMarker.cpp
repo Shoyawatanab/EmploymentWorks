@@ -64,8 +64,8 @@ void TargetMarker::Initialize(CommonResources* resources)
 		,Vector2(200,200), Vector2(0.3f,0.3f));
 	
 
-	Messenger::GetInstance()->Attach(::MessageType::BoomerangGetReady, this);
-	Messenger::GetInstance()->Attach(::MessageType::BoomerangGetReadyEnd, this);
+	Messenger::GetInstance()->Rigister(::GameMessageType::BoomerangGetReady, this);
+	Messenger::GetInstance()->Rigister(::GameMessageType::BoomerangGetReadyEnd, this);
 
 }
 
@@ -204,15 +204,15 @@ void TargetMarker::AddPointer(WataLib::TPS_Camera* tpsCamera)
 /// </summary>
 /// <param name="type">イベントの種類</param>
 /// <param name="datas">イベントのデータ</param>
-void TargetMarker::Notify(const Telegram& telegram)
+void TargetMarker::Notify(const Telegram<GameMessageType>& telegram)
 {
 
 	switch (telegram.messageType)
 	{
-		case ::MessageType::BoomerangGetReady:
+		case ::GameMessageType::BoomerangGetReady:
 			m_isTargetMarker = true;
 			break;
-		case ::MessageType::BoomerangGetReadyEnd:
+		case ::GameMessageType::BoomerangGetReadyEnd:
 			m_isTargetMarker = false;
 			m_isLockOn = false;
 

@@ -9,9 +9,8 @@
 
 // 前方宣言
 class CommonResources;
-class BossEnemy;
+class CharacterEntity;
 class Beam;
-class Player;
 class BossBeamAttackPreliminaryAction;
 class BossBeamAttackCharge;
 class BossBeamAttackShot;
@@ -24,22 +23,22 @@ namespace mylib
 }
 
 
-class BossBeamAttackAction : public ActionStateController, IObserver
+class BossBeamAttackAction : public ActionStateController, IObserver<GameMessageType>
 {
 
 public:
 
 public:
 	BossBeamAttackAction(CommonResources* resources,
-		BossEnemy* bossEnemy
+		CharacterEntity* bossEnemy
 		, Beam* beam
-		, Player* player);
+		, CharacterEntity* player);
 	//デストラクタ
 	~BossBeamAttackAction() ;
 
 	//IObserver
 //通知時に呼ばれる関数
-	void Notify(const Telegram& telegram)  override;
+	void Notify(const Telegram<GameMessageType>& telegram)  override;
 
 
 

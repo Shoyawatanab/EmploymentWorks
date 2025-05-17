@@ -118,7 +118,7 @@ void ChargeEffect::Update(const float& elapsedTime)
 		}
 	}
 
-
+	//0.5秒ごとにエフェクトの作成
 	if (fmod(m_time, 0.5f) < elapsedTime)
 	{
 		CreateUtikity();

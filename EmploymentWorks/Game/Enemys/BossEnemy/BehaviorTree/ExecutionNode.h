@@ -26,6 +26,17 @@ public:
 	
 	IBehaviorNode::State Action();
 
+	IBehaviorNode::State BossEnemyBeamAction();
+
+	IBehaviorNode::State BossEnemyBarrierDefenseAction();
+
+	IBehaviorNode::State BossEnemyJumpAttackAction();
+
+	IBehaviorNode::State BossEnemyWalking();
+
+	IBehaviorNode::State BossEnemySwingDown();
+
+
 private:
 	CommonResources* m_commonResources;
 

@@ -46,6 +46,7 @@ bool WataLib::Animation::Update(const float& elapsedTime)
 		{
 			//ÉãÅ[Év
 			m_time = 0;
+
 		}
 		else
 		{
@@ -85,6 +86,8 @@ void WataLib::Animation::PositionUpdate(const float& elapsedTime)
 		ChangePositionKeyFrame();
 		
 	}
+
+
 
 }
 

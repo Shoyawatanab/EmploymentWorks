@@ -42,8 +42,8 @@ void UIManager::Initialize(CommonResources* resources)
 
 	m_stateMahine->Initialize(m_commonResources, m_stateMahine->GetGamePlayUI());
 
-	Messenger::GetInstance()->Attach(MessageType::GameClear, this);
-	Messenger::GetInstance()->Attach(MessageType::GameOver, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::GameClear, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::GameOver, this);
 
 }
 
@@ -96,17 +96,17 @@ void UIManager::AddPointer(Player* player, PlayScene* playScene, EnemyManager* e
 /// </summary>
 /// <param name="type">イベントの種類</param>
 /// <param name="datas">イベントのデータ</param>
-void UIManager::Notify(const Telegram& telegram)
+void UIManager::Notify(const Telegram<GameMessageType>& telegram)
 {
 	
 
 	switch (telegram.messageType)
 	{
-		case MessageType::GameClear:
+		case GameMessageType::GameClear:
 			m_stateMahine->ChangeState(m_stateMahine->GetGameEndUI());
 			m_stateMahine->GetGameEndUI()->SetBackGraund(true);
 			break;
-		case MessageType::GameOver:
+		case GameMessageType::GameOver:
 			m_stateMahine->ChangeState(m_stateMahine->GetGameEndUI());
 			m_stateMahine->GetGameEndUI()->SetBackGraund(false);
 

@@ -14,7 +14,7 @@
 
 // 前方宣言
 class CommonResources;
-class BossEnemy;
+class CharacterEntity;
 class Barrier;
 
 namespace mylib
@@ -24,7 +24,8 @@ namespace mylib
 }
 
 
-class BarrierDefenseAction : public ActionStateController , IObserver
+
+class BarrierDefenseAction : public ActionStateController , IObserver<GameMessageType>
 {
 
 public:
@@ -40,9 +41,10 @@ public:
 
 public:
 	BarrierDefenseAction(CommonResources* resources,
-		BossEnemy* bossEnemy
+		CharacterEntity* bossEnemy
 		,Barrier* barrier
-);
+	);
+
 	//デストラクタ
 	~BarrierDefenseAction() ;
 
@@ -51,7 +53,7 @@ public:
 
 	//IObserver
 //通知時に呼ばれる関数
-	void Notify(const Telegram& telegram)  override;
+	void Notify(const Telegram<GameMessageType>& telegram)  override;
 
 
 

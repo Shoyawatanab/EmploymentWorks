@@ -18,8 +18,6 @@ public:
 	//デストラクタ
 	~BoomerangGetReady() override;
 
-
-
 	//初期化
 	void Initialize(CommonResources* resources) override;
 	// 更新する
@@ -38,6 +36,9 @@ public:
 	CommonResources* m_commonResources;
 	//ブーメラン
 	Boomerang* m_boomerang;
+
+
+
 
 private :
 	

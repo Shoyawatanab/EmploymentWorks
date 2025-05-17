@@ -17,7 +17,7 @@ namespace WataLib
 
 namespace WataLib
 {
-	class TPS_Camera :public ICamera ,public IObserver
+	class TPS_Camera :public ICamera ,public IObserver<GameMessageType>
 	{
 	private:
 		//マウス感度の構造体
@@ -49,6 +49,10 @@ namespace WataLib
 
 		// 遠い投影面
 		const float FAR_PLANE = 100.0f;
+
+		static constexpr float SHAKETIME = 2.0f;
+
+		
 
 		//Getter Setter
 	public:
@@ -109,9 +113,12 @@ namespace WataLib
 		// カメラ座標を計算する
 		void CalculateEyePosition();
 		//通知時に呼ばれる関数
-		void Notify(const Telegram& telegram)  override;
+		void Notify(const Telegram<GameMessageType>& telegram)  override;
+		
 
-
+	private:
+		//揺れ
+		void Shake(const float& elapsedTime);
 
 	private:
 		//宣言
@@ -149,6 +156,16 @@ namespace WataLib
 		ZoomState m_zoomState;
 
 		DirectX::SimpleMath::Vector3 m_forward;
+
+		//カメラを揺らすかどうか
+		bool m_isShake;
+		//揺れの時間
+		float m_shaleTime;
+		//揺れの強さ
+		float m_shakePower;
+		//揺れの座標
+		DirectX::SimpleMath::Vector3 m_shakePosition;
+
 
 
 	};

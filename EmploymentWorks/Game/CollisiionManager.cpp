@@ -51,6 +51,8 @@ void CollisionManager::Update()
 
 	for (int i = 0; i < m_collisionObjects.size() - 1; i++)
 	{
+
+
 		//アクティブ状態でない場合
 		if (!m_collisionObjects[i]->GetIsEntityActive() || !m_collisionObjects[i]->GetIsCollisionActive())
 		{

@@ -55,6 +55,7 @@ PlayScene::PlayScene(SceneManager::StageID stageID)
 	,m_tutorialTex{}
 	,m_isTutolialTex{}
 {
+	Messenger::GetInstance()->Clear();
 }
 
 //---------------------------------------------------------
@@ -62,14 +63,10 @@ PlayScene::PlayScene(SceneManager::StageID stageID)
 //---------------------------------------------------------
 PlayScene::~PlayScene()
 {
+
 	// do nothing.
-	//ƒCƒxƒ“ƒg‚Ìíœ
 
 
-
-	//Messenger::DestroyInstance();
-
-	
 
 }
 
@@ -342,13 +339,13 @@ void PlayScene::CheckMouseWheel()
 	//ã‚É‰ñ“]
 	if (scrollWheelValue > 0)
 	{
-		Messenger::GetInstance()->Notify(::MessageType::MouseWheelUp, nullptr);
+		Messenger::GetInstance()->Notify(::GameMessageType::MouseWheelUp, nullptr);
 	}
 	//‰º‚É‰ñ“]
 	else if (scrollWheelValue < 0)
 	{
 
-		Messenger::GetInstance()->Notify(::MessageType::MouseWheelDown, nullptr);
+		Messenger::GetInstance()->Notify(::GameMessageType::MouseWheelDown, nullptr);
 
 	}
 

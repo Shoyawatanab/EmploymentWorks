@@ -88,7 +88,7 @@ void BossJumpAttackCharge::Enter()
 
 	UnknownDataThree aa = {  static_cast<void*>(& pos), static_cast<void*>(&scale)};
 
-	Messenger::GetInstance()->Notify(MessageType::CreateChageEffect, &aa);
+	Messenger::GetInstance()->Notify(GameMessageType::CreateChageEffect, &aa);
 
 
 }

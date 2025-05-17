@@ -68,10 +68,14 @@ IAction::ActionState ActionStateController::Update(const float& elapsedTime)
 void ActionStateController::Enter()
 {
 
+	m_currentIndex = 0;
+
+
 	if (!m_actionState.empty())
 	{
 		m_actionState[m_currentIndex]->Enter();
 	}
+
 
 }
 

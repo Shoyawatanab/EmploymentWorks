@@ -38,6 +38,8 @@ BossJumpAttackJump::BossJumpAttackJump(CommonResources* resources
 	,m_jumpDirection{}
 {
 
+
+
 }
 
 /// <summary>
@@ -67,6 +69,7 @@ BossJumpAttackJump::ActionState BossJumpAttackJump::Update(const float& elapsedT
 
 	m_bossEnemy->SetVelocity(velocity);
 
+
 	if (m_bossEnemy->GetIsGrounded())
 	{
 		return ActionState::End;
@@ -77,15 +80,13 @@ BossJumpAttackJump::ActionState BossJumpAttackJump::Update(const float& elapsedT
 }
 
 
-
-
-
 void BossJumpAttackJump::Enter()
 {
 
 	Vector3 velocity = m_bossEnemy->GetVelocity();
 
 	velocity.y += BossJumpAttackAction::JUMPPOWER;
+	//velocity.y += 5.0f;
 
 	m_bossEnemy->SetVelocity(velocity);
 
@@ -112,7 +113,7 @@ void BossJumpAttackJump::Exit()
 
 	pos.y = 0.1f;
 
-	Messenger::GetInstance()->Notify(MessageType::CreateParticle, &pos);
+	Messenger::GetInstance()->Notify(GameMessageType::CreateParticle, &pos);
 
 	m_bossEnemy->SetVelocity(Vector3::Zero);
 

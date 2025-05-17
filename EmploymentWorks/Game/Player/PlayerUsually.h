@@ -13,7 +13,7 @@ namespace WataLib
 	class TPS_Camera;
 }
 
-class PlayerUsually  : public IObserver
+class PlayerUsually  : public IObserver<GameMessageType>
 {
 public:
 	//コンストラクタ
@@ -34,7 +34,7 @@ public:
 
 	//IObserver
 	//通知時に呼ばれる関数
-	void Notify(const Telegram& telegram)  override;
+	void Notify(const Telegram<GameMessageType>& telegram)  override;
 
 
 private:
@@ -46,8 +46,6 @@ private:
 	// 共通リソース
 	CommonResources* m_commonResources;
 
-	//重力
-	float m_gravity;
 	//構えているかどうか
 	bool m_isGetReady;
 

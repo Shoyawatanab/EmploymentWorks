@@ -227,6 +227,9 @@
     <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\RushAttack\BossRushAttackAction.h" />
     <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\RushAttack\BossRushAttackCharge.h" />
     <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\RushAttack\BossRushAttackRush.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\SwingDownAttack\SwingDownAttackAction.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\SwingDownAttack\SwingDownAttackRaisePhase.h" />
+    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\SwingDownAttack\SwingDownAttackSwingPhase.h" />
     <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\Walking\WalkingAction.h" />
     <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\Walking\WalkingActionComtroller.h" />
     <ClInclude Include="Game\Enemys\BossEnemy\Barrier\Barrier.h" />
@@ -294,6 +297,7 @@
     <ClInclude Include="Game\Interface\IWeapon.h" />
     <ClInclude Include="Game\ItemAcquisition.h" />
     <ClInclude Include="Game\MathUtil.h" />
+    <ClInclude Include="Game\Observer\Enemy\EnemyMessenger.h" />
     <ClInclude Include="Game\Observer\EventParams.h" />
     <ClInclude Include="Game\Observer\Messenger.h" />
     <ClInclude Include="Game\Observer\Telegram.h" />
@@ -409,6 +413,9 @@
     <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\RushAttack\BossRushAttackAction.cpp" />
     <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\RushAttack\BossRushAttackCharge.cpp" />
     <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\RushAttack\BossRushAttackRush.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\SwingDownAttack\SwingDownAttackAction.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\SwingDownAttack\SwingDownAttackRaisePhase.cpp" />
+    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\SwingDownAttack\SwingDownAttackSwingPhase.cpp" />
     <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\Walking\WalkingAction.cpp" />
     <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\Walking\WalkingActionComtroller.cpp" />
     <ClCompile Include="Game\Enemys\BossEnemy\Barrier\Barrier.cpp" />
@@ -455,6 +462,7 @@
     <ClCompile Include="Game\Entities\MoveEntity.cpp" />
     <ClCompile Include="Game\EntityManager.cpp" />
     <ClCompile Include="Game\ItemAcquisition.cpp" />
+    <ClCompile Include="Game\Observer\Enemy\EnemyMessenger.cpp" />
     <ClCompile Include="Game\Observer\Messenger.cpp" />
     <ClCompile Include="Game\Params.cpp" />
     <ClCompile Include="Game\Player\Player.cpp" />

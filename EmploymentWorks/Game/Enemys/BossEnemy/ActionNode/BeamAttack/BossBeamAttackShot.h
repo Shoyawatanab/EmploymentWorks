@@ -7,10 +7,9 @@
 
 // 前方宣言
 class CommonResources;
-class BossEnemy;
+class CharacterEntity;
 class Beam;
 class BossBeamAttackAction;
-class Player;
 
 namespace mylib
 {
@@ -23,10 +22,10 @@ class BossBeamAttackShot : public IAction
 {
 public:
 	BossBeamAttackShot(CommonResources* resources
-		, BossEnemy* bossEnemy
+		, CharacterEntity* bossEnemy
 		, Beam* beam
 		, BossBeamAttackAction* beamAttack
-		, Player* player);
+		, CharacterEntity* player);
 
 	//継承関係
 	//デストラクタ
@@ -42,9 +41,9 @@ public:
 private:
 	// 共通リソース
 	CommonResources* m_commonResources;
-	BossEnemy* m_bossEnemy;
+	CharacterEntity* m_bossEnemy;
 	Beam* m_beam;
 	BossBeamAttackAction* m_beamAttack;
-	Player* m_player;
+	CharacterEntity* m_player;
 
 };

@@ -39,6 +39,8 @@ public:
 	//‰Šú‰»
 	void Initialize() override;
 
+	//XVˆ—
+	void  Update(const float& elapsedTime) override;
 
 };
 

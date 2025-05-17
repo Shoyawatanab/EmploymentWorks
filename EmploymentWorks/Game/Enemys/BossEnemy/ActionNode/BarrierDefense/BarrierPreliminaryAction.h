@@ -7,7 +7,7 @@
 
 // ‘O•ûéŒ¾
 class CommonResources;
-class BossEnemy;
+class CharacterEntity;
 class BarrierDefenseAction;
 
 
@@ -24,7 +24,7 @@ class BarrierPreliminaryAction : public IAction
 public:
 	BarrierPreliminaryAction(CommonResources* resources,
 		BarrierDefenseAction* barrierDefenseAction,
-		BossEnemy* bossEnemy
+		CharacterEntity* bossEnemy
 		);
 
 
@@ -45,7 +45,7 @@ private:
 	//Œo‰ßŠÔ
 	float m_time;
 
-	BossEnemy* m_bossEnemy;
+	CharacterEntity* m_bossEnemy;
 	BarrierDefenseAction* m_barrierDefenseAction;
 
 

@@ -80,6 +80,11 @@ void Beam::Initialize()
 void Beam::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
 {
 
+	if (!BaseEntity::GetIsEntityActive())
+	{
+		return;
+	}
+
 	BaseEntity::Render(view, projection);
 
 

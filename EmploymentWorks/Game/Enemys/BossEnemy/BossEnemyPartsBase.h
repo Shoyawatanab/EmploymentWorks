@@ -21,6 +21,8 @@ public:
 
 	BossEnemy* GetRoot() { return m_root; }
 
+	const int& GetPartsHP() { return m_partsHP; }
+
 public:
 	// コンストラクタ
 	BossEnemyPartsBase(CommonResources* resources
@@ -81,6 +83,8 @@ public:
 		, bool isNormalAnimation = false) override;
 	//アニメーションの変更
 	void ChangeAnimation(std::string animationType) override;
+
+
 private:
 	//
 	DirectX::Model* m_model;

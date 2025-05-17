@@ -183,7 +183,7 @@ void BirdEnemyBeamEnergyBall::OnCollisionEnter(CollisionEntity* object, Collisio
 			Vector3 position = m_wordlPosition;
 			Vector3 scale = Vector3::One;
 			UnknownDataTwo aa = { &position , &scale };
-			Messenger::GetInstance()->Notify(MessageType::CreateExplosion, &aa);
+			Messenger::GetInstance()->Notify(GameMessageType::CreateExplosion, &aa);
 
 		}
 		break;

@@ -13,6 +13,8 @@
 #include "Game/Weapon/Boomerang/Boomerang.h"
 
 #include "Game/Params.h"
+#include "Game/Enemys/BossEnemy/BossEnemy.h"
+
 
 using namespace DirectX::SimpleMath;
 
@@ -29,7 +31,7 @@ BossEnemyLeftArmJoint::BossEnemyLeftArmJoint(CommonResources* resources,BossEnem
 	DirectX::SimpleMath::Vector3 position,	DirectX::SimpleMath::Quaternion rotation)
 	:
 	BossEnemyPartsBase(resources, root, parent, scale, position, rotation, PARTSNAME, Params::BOSSENEMY_LEFTARMJOINT_HP,
-		Params::BOSSENEMY_LEFTARMJOINT_BOX_COLLIDER_SIZE, Params::BOSSENEMY_LEFTARMJOINT_SPHERE_COLLIDER_SIZE)
+		Params::BOSSENEMY_LEFTARMJOINT_BOX_COLLIDER_SIZE * root->GetScale(), Params::BOSSENEMY_LEFTARMJOINT_SPHERE_COLLIDER_SIZE * root->GetScale().x)
 {
 
 }

@@ -12,6 +12,8 @@
 #include "Game/Observer/Messenger.h"
 #include "Game/Weapon/Boomerang/Boomerang.h"
 #include "Game/Params.h"
+#include "Game/Enemys/BossEnemy/BossEnemy.h"
+
 
 using namespace DirectX::SimpleMath;
 
@@ -29,7 +31,7 @@ BossEnemyRightThigh::BossEnemyRightThigh(CommonResources* resources,
 	DirectX::SimpleMath::Vector3 position,	DirectX::SimpleMath::Quaternion rotation)
 	:
 	BossEnemyPartsBase(resources, root, parent, scale, position, rotation, PARTSNAME, Params::BOSSENEMY_RIGHTTHIGH_HP,
-		Params::BOSSENEMY_RIGHTTHIGH_BOX_COLLIDER_SIZE, Params::BOSSENEMY_RIGHTTHIGH_SPHERE_COLLIDER_SIZE)
+		Params::BOSSENEMY_RIGHTTHIGH_BOX_COLLIDER_SIZE * root->GetScale(), Params::BOSSENEMY_RIGHTTHIGH_SPHERE_COLLIDER_SIZE * root->GetScale().x)
 {
 
 }

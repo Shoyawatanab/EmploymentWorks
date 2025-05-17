@@ -19,7 +19,7 @@ namespace WataLib
 
 
 
-class TargetMarker : public IObserver
+class TargetMarker : public IObserver<GameMessageType>
 
 {
 public:
@@ -63,7 +63,7 @@ public:
 
 	//IObserver
 //通知時に呼ばれる関数
-	void Notify(const Telegram& telegram)  override;
+	void Notify(const Telegram<GameMessageType>& telegram)  override;
 
 
 	//ワールド座標をスクリーン座標に変換する

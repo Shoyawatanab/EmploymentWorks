@@ -18,7 +18,7 @@ Messenger::~Messenger()
 /// </summary>
 /// <param name="type">イベントの種類</param>
 /// <param name="observer">オブザーバー</param>
-void Messenger::Attach(MessageType type, IObserver* observer)
+void Messenger::Rigister(GameMessageType type, IObserver<GameMessageType>* observer)
 {
 
 	m_eventList[type].push_back(observer);
@@ -30,7 +30,7 @@ void Messenger::Attach(MessageType type, IObserver* observer)
 /// </summary>
 /// <param name="type">イベントの種類</param>
 /// <param name="datas">必要なデータ</param>
-void Messenger::Notify(::MessageType type, void* datas)
+void Messenger::Notify(::GameMessageType type, void* datas)
 {
 
 	auto it = m_eventList.find(type);
@@ -47,6 +47,13 @@ void Messenger::Notify(::MessageType type, void* datas)
 		}
 
 	}
+
+}
+
+void Messenger::Clear()
+{
+
+	m_eventList.clear();
 
 }
 

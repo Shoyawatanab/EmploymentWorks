@@ -18,7 +18,7 @@ namespace WataLib
 
 namespace WataLib
 {
-	class CameraManager : public IObserver
+	class CameraManager : public IObserver<GameMessageType>
 	{
 	public:
 
@@ -52,7 +52,7 @@ namespace WataLib
 
 		//IObserver
 //’Ê’m‚ÉŒÄ‚Î‚ê‚éŠÖ”
-		void Notify(const Telegram& telegram)  override;
+		void Notify(const Telegram<GameMessageType>& telegram)  override;
 
 	private:
 

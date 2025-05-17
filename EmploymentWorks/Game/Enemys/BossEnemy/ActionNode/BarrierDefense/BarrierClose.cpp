@@ -22,7 +22,7 @@ using namespace DirectX::SimpleMath;
 BarrierClose::BarrierClose(CommonResources* resources,
 	BarrierDefenseAction* barrierDefenseAction
 	,Barrier* barrier
-	, BossEnemy* bossEnemy)
+	, CharacterEntity* bossEnemy)
 	:
 	m_commonResources{resources}
 	,m_barrierDefenseAction{ barrierDefenseAction }

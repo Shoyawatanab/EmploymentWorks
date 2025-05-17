@@ -12,6 +12,11 @@
 #include "Game/Observer/Messenger.h"
 #include "Game/Weapon/Boomerang/Boomerang.h"
 #include "Game/Params.h"
+#include "Game/Enemys/BossEnemy/BossEnemy.h"
+
+
+#include "Libraries/MyLib/DebugString.h"
+
 
 using namespace DirectX::SimpleMath;
 
@@ -29,9 +34,8 @@ BossEnemyLeftShoulder::BossEnemyLeftShoulder(CommonResources* resources,
 	DirectX::SimpleMath::Vector3 position,	DirectX::SimpleMath::Quaternion rotation)
 	:
 	BossEnemyPartsBase(resources, root, parent, scale, position, rotation, PARTSNAME, Params::BOSSENEMY_LEFTSHOULDER_HP,
-		Params::BOSSENEMY_LEFTSHOULDER_BOX_COLLIDER_SIZE, Params::BOSSENEMY_LEFTSHOULDER_SPHERE_COLLIDER_SIZE)
+		Params::BOSSENEMY_LEFTSHOULDER_BOX_COLLIDER_SIZE * root->GetScale(), Params::BOSSENEMY_LEFTSHOULDER_SPHERE_COLLIDER_SIZE * root	->GetScale().x)
 {
-
 }
 
 /// <summary>
@@ -66,6 +70,16 @@ void BossEnemyLeftShoulder::Initialize()
 
 
 }
+
+void BossEnemyLeftShoulder::Update(const float& elapsedTime)
+{
+
+	BossEnemyPartsBase::Update(elapsedTime);
+}
+
+
+
+
 
 
 

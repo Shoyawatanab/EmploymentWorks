@@ -32,7 +32,7 @@ namespace WataLib
 	class Bounding;
 }
 
-class BossEnemy : public EnemyEntity  , public IObserver
+class BossEnemy : public EnemyEntity  , public IObserver<GameMessageType> , public IObserver<EnemyMessageType>
 {
 public:
 
@@ -51,13 +51,11 @@ public:
 
 	void SetTarget(BaseEntity* target) { m_target = target; }
 
-	DirectX::SimpleMath::Vector3 GetVelocity() { return m_velocity; }
-
-	void SetVelocity(DirectX::SimpleMath::Vector3  velocity) { m_velocity = velocity; }
 
 	bool GetIsGrounded() { return m_isGrounded; }
 
 	void SetIsGrounded(bool isGrounded) { m_isGrounded = isGrounded; }
+
 
 public:
 	//コンストラクタ
@@ -122,7 +120,9 @@ public:
 
 
 //通知時に呼ばれる関数
-	void Notify(const Telegram& telegram)  override;
+	void Notify(const Telegram<GameMessageType>& telegram)  override;
+
+	void Notify(const Telegram<EnemyMessageType>& telegram)  override;
 
 
 	//必要なポインタの登録
@@ -141,7 +141,7 @@ public:
 			//倒れるアニメーションに切り替える
 			ChangeAnimation("FallDown");
 			EnemyEntity::GetEnemyManager()->DeleteRemainingEnemy(this);
-			Messenger::GetInstance()->Notify(::MessageType::GameClear, nullptr);
+			Messenger::GetInstance()->Notify(::GameMessageType::GameClear, nullptr);
 		}
 
 	}
@@ -162,8 +162,6 @@ private:
 	Player* m_player;
 	//ビーム
 	std::unique_ptr<Beam> m_beam;
-	//攻撃状態
-	AttackState m_attackState;
 	//影
 	std::unique_ptr<WataLib::Shadow> m_shadow;
 	//各動作
@@ -188,7 +186,6 @@ private:
 
 	bool m_isActives;
 
-	DirectX::SimpleMath::Vector3 m_velocity;
 
 
 

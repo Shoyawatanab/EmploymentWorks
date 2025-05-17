@@ -59,7 +59,6 @@ void BossEnemyPartsBase::Initialize()
 	//座標の計算
 	BaseEntity::SetPosition(m_initialPosition + CharacterEntity::GetAnimation()->GetPosition());
 
-
 	//当たり判定の作成
 	CollisionEntity::GetBounding()->CreateBoundingSphere(BaseEntity::GetPosition(), m_sphereColliderSize * BaseEntity::GetScale().x);
 	CollisionEntity::GetBounding()->CreateBoundingOrientedBox(BaseEntity::GetPosition(), BaseEntity::GetRotation(), m_boxColliderSize * BaseEntity::GetScale());
@@ -92,38 +91,24 @@ void BossEnemyPartsBase::Render(const DirectX::SimpleMath::Matrix& view, const D
 		return;
 	}
 
-
 	CompositeEntity::Render(view, projection);
 
 	auto context = BaseEntity::GetCommonResources()->GetDeviceResources()->GetD3DDeviceContext();
 	auto states = BaseEntity::GetCommonResources()->GetCommonStates();
-
 
 	// モデルのエフェクトを更新する
 	m_model->UpdateEffects([&](DirectX::IEffect* effect)
 		{
 			// ベイシックエフェクトを取得する
 			auto basicEffect = dynamic_cast<DirectX::BasicEffect*>(effect);
-			if (m_partsHP > 0)
-			{
-				//通常色
 
-				// ディフューズカラーを設定する
-				basicEffect->SetDiffuseColor(DirectX::Colors::LightSlateGray);
-				// スペキュラカラーを設定する
-				basicEffect->SetSpecularColor(DirectX::Colors::LightSlateGray);
 
-			}
-			else
-			{
-				//黒色
+			// ディフューズカラーを設定する
+			basicEffect->SetDiffuseColor(DirectX::Colors::LightSlateGray);
+			// スペキュラカラーを設定する
+			basicEffect->SetSpecularColor(DirectX::Colors::LightSlateGray);
 
-				// ディフューズカラーを設定する
-				basicEffect->SetDiffuseColor(DirectX::Colors::Black);
-				// スペキュラカラーを設定する
-				basicEffect->SetSpecularColor(DirectX::Colors::Black);
-
-			}
+			
 
 			// スペキュラパワーを設定する
 			basicEffect->SetSpecularPower(20.0f);
@@ -138,13 +123,13 @@ void BossEnemyPartsBase::Render(const DirectX::SimpleMath::Matrix& view, const D
 	CollisionEntity::GetBounding()->DrawBoundingSphere(BaseEntity::GetPosition(), view, projection);
 	CollisionEntity::GetBounding()->DrawBoundingOrientedBox(BaseEntity::GetPosition(), BaseEntity::GetRotation(), view, projection);
 
-
-
 	//パーツの描画
 	for (auto& part : CompositeEntity::GetParts())
 	{
 		part->Render(view, projection);
 	}
+
+	
 
 }
 
@@ -178,23 +163,26 @@ void BossEnemyPartsBase::OnCollisionEnter(CollisionEntity* object, CollisionTag 
 			m_partsHP = std::max(m_partsHP, 0);
 			m_root->Damage(Params::BOOMERANG_DAMAGE);
 
-			if (m_partsHP <= 0)
-			{
-				//座標を決める
-				m_root->Damage(Params::BOOMERANG_DAMAGE * 2);
+			////部位破壊
+			//if (m_partsHP <= 0)
+			//{
+			//	//座標を決める
+			//	m_root->Damage(Params::BOOMERANG_DAMAGE * 2);
 
-				//取り出しよう変数
-				Vector3 position;
-				Vector3 scale;
-				Quaternion rotation;
-				//行列から求める
-				Matrix matrix = BaseEntity::GetWorldMatrix();
-				matrix.Decompose(scale, rotation, position);
+			//	//取り出しよう変数
+			//	Vector3 position;
+			//	Vector3 scale;
+			//	Quaternion rotation;
+			//	//行列から求める
+			//	Matrix matrix = BaseEntity::GetWorldMatrix();
+			//	matrix.Decompose(scale, rotation, position);
 
-				UnknownDataTwo aa = { static_cast<void*>(&position) ,static_cast<void*>(&scale)};
-				Messenger::GetInstance()->Notify(MessageType::CreateExplosion, &aa);
-			}
-			else
+			//	UnknownDataTwo aa = { static_cast<void*>(&position) ,static_cast<void*>(&scale)};
+			//	Messe
+			// nger::GetInstance()->Notify(GameMessageType::CreateExplosion, &aa);
+			//}
+			
+
 			{
 				{
 					Vector3 pos = object->GetPosition();
@@ -202,7 +190,7 @@ void BossEnemyPartsBase::OnCollisionEnter(CollisionEntity* object, CollisionTag 
 
 					UnknownDataThree aa = { static_cast<void*>(&pos) ,static_cast<void*>(&scale) };
 
-					Messenger::GetInstance()->Notify(MessageType::CreateHitEffect, &aa);
+					Messenger::GetInstance()->Notify(GameMessageType::CreateHitEffect, &aa);
 				}
 
 			}
@@ -211,6 +199,9 @@ void BossEnemyPartsBase::OnCollisionEnter(CollisionEntity* object, CollisionTag 
 			break;
 		case CollisionEntity::CollisionTag::Beam:
 			break;
+
+		break;
+
 		default:
 			break;
 	}
@@ -235,10 +226,17 @@ void BossEnemyPartsBase::Update(const float& elapsedTime)
 
 	CompositeEntity::Update(elapsedTime);
 
-	//親の回転を取得
-	BaseEntity::SetLocalRotation(m_initialRotation * CharacterEntity::GetAnimation()->GetRotation());
-	//座標の計算
-	BaseEntity::SetLocalPosition(m_initialPosition + CharacterEntity::GetAnimation()->GetPosition());
+
+	if (BaseEntity::GetIsParent())
+	{
+		//親の回転を取得
+		BaseEntity::SetLocalRotation(m_initialRotation * CharacterEntity::GetAnimation()->GetRotation());
+		//座標の計算
+		BaseEntity::SetLocalPosition(m_initialPosition + CharacterEntity::GetAnimation()->GetPosition());
+
+	}
+
+
 
 
 	for (auto& parts : CompositeEntity::GetParts())

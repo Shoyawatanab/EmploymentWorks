@@ -144,6 +144,7 @@ ID3D11ShaderResourceView* WataLib::GameResources::GetTexture(std::string key) co
 {
 	// キーを検索
 	auto it = m_textureList.find(key);
+
 	if (it != m_textureList.end())
 	{
 		// テクスチャを返す

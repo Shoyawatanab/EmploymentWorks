@@ -69,10 +69,18 @@ void BehaviorTree::Initialize(CommonResources* resources)
 	//ルートの作成
 	m_root = std::make_unique<Root>();
 	//RootSequenceノードの追加
-	m_root->AddNode(std::make_unique<ActionNode>(std::bind(&ExecutionNode::Action, m_executionNode.get())));
+	m_root->AddNode(std::make_unique<ActionNode>(std::bind(&ExecutionNode::BossEnemySwingDown, m_executionNode.get())));
 	
 	//状態の初期化
 	m_currentState = IBehaviorNode::State::Failure;
+
+
+
+	//敵の武器 　　　石を投げたり
+	//切れる演出
+	//エフェクト
+
+
 
 
 }

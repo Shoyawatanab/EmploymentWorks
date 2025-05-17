@@ -7,7 +7,7 @@
 
 // ‘O•ûéŒ¾
 class CommonResources;
-class BossEnemy;
+class CharacterEntity;
 class Beam;
 class BossBeamAttackAction;
 
@@ -23,7 +23,7 @@ class BossBeamAttackPreliminaryAction : public IAction
 {
 public:
 	BossBeamAttackPreliminaryAction(CommonResources* resources
-		,BossEnemy* bossEnemy
+		, CharacterEntity* bossEnemy
 		,Beam* beam
 		, BossBeamAttackAction* beamAttack);
 
@@ -45,7 +45,7 @@ private:
 	//Œo‰ßŠÔ
 	float m_time;
 
-	BossEnemy* m_bossEnemy;
+	CharacterEntity* m_bossEnemy;
 	Beam* m_beam;
 	BossBeamAttackAction* m_beamAttack;
 

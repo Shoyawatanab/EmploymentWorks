@@ -213,14 +213,6 @@ void TitleScene::Update(float elapsedTime)
 
 	m_camera->Update(elapsedTime);
 
-	//// デバッグ情報を表示する
-	auto debugString = m_commonResources->GetDebugString();
-	debugString->AddString("mousePositionX %f", mousePosition.x);
-	debugString->AddString("mousePositionY %f", mousePosition.y);
-	debugString->AddString("StateX %f", state.x);
-	debugString->AddString("StateY %f", state.y);
-	debugString->AddString("StateX %f", widht);
-	debugString->AddString("StateY %f", height);
 }
 
 //---------------------------------------------------------

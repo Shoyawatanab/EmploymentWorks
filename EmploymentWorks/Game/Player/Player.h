@@ -52,11 +52,6 @@ public:
 		return (it != m_boomerangs.end()) ? it->get() : nullptr;
 	};
 
-	
-	DirectX::SimpleMath::Vector3 GetVelocity() { return m_velocity; }
-
-	void SetVelocity(DirectX::SimpleMath::Vector3  velocity) { m_velocity = velocity; }
-
 
 public:
 	//コンストラクタ
@@ -82,6 +77,9 @@ public:
 
 	//当たった時に呼び出される
 	void OnCollisionEnter(CollisionEntity* object, CollisionTag tag) override;
+	//当たり続けているときの呼び出される
+	void OnCollisionStay(CollisionEntity* object, CollisionTag tag) override;
+
 	//当たり判定の種類の取得
 	const CollisionType GetCollisionType() override { return CollisionType::AABB; }
 	//押し出しをするかどうか
@@ -134,8 +132,6 @@ private:
 	int m_hp;
 	// 影オブジェクト
 	std::unique_ptr<WataLib::Shadow> m_shadow;
-
-	DirectX::SimpleMath::Vector3 m_velocity;
 
 };
 

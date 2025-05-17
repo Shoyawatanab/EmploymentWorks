@@ -39,7 +39,7 @@ public:
 };
 
 
-class GamePlayUI : public IState ,  public IObserver
+class GamePlayUI : public IState ,  public IObserver<GameMessageType>
 {
 
 private :
@@ -97,7 +97,7 @@ public:
 
 	//IObserver
 //’Ê’m‚ÉŒÄ‚Î‚ê‚éŠÖ”
-	void Notify(const Telegram& telegram)  override;
+	void Notify(const Telegram<GameMessageType>& telegram)  override;
 
 
 public:

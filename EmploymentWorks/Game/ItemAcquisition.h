@@ -26,6 +26,8 @@ public:
 		ItemEntity* ItemEntity;
 	};
 
+
+
 public:
 
 	//コンストラクタ
@@ -45,6 +47,7 @@ public:
 	void AddPlayer(Player* player);
 
 
+
 private:
 	// 共通リソース
 	CommonResources* m_commonResources;
@@ -52,6 +55,8 @@ private:
 	Player* m_player;
 
 	std::vector<ItemDatas> m_items;
+
+
 
 
 private:

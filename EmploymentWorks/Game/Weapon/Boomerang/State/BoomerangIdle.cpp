@@ -88,7 +88,7 @@ void BoomerangIdle::Enter()
 	//ローカルサイズの設定
 	m_boomerang->SetLocalScale(Vector3(10,10,10));
 	//通知をする
-	Messenger::GetInstance()->Notify(MessageType::GetBoomerang, nullptr);
+	Messenger::GetInstance()->Notify(GameMessageType::GetBoomerang, nullptr);
 
 	
 }

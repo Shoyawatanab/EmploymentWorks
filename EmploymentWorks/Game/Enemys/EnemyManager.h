@@ -50,8 +50,8 @@ public:
 	{
 
 		if (m_remainingEnemys.size() <= 1) {
-			Messenger::GetInstance()->Notify(MessageType::GameClear, nullptr);
-			Messenger::GetInstance()->Notify(MessageType::DefeatedAllEnemies, nullptr);
+			Messenger::GetInstance()->Notify(GameMessageType::GameClear, nullptr);
+			Messenger::GetInstance()->Notify(GameMessageType::DefeatedAllEnemies, nullptr);
 			return;
 		}
 

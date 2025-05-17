@@ -1,6 +1,6 @@
 #pragma once
 //イベントの種類
-enum class MessageType
+enum class GameMessageType
 {
 	None = -1
 	, BoomerangGetReady    //ブーメランを構える
@@ -22,9 +22,20 @@ enum class MessageType
 	,MouseWheelDown
 	,BoomerangRecoverable  //ブーメランを回収可能
 	,BoomerangNotRecoverable  //ブーメランを回収不可
+	,CameraShake  //カメラを揺らす
 
 };
 
+
+enum class EnemyMessageType
+{
+	None
+	,Walking
+	,JumpAttack
+	, BarrierDefense
+	,BeamAttack
+	, SwingDown
+};
 
 struct CreateHitEffectDatas
 {

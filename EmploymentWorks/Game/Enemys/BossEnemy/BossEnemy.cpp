@@ -19,7 +19,9 @@
 #include "Game/Enemys/BossEnemy/ActionNode/JumpAttack/BossJumpAttackAction.h"
 #include "Game/Enemys/BossEnemy/ActionNode/RushAttack/BossRushAttackAction.h"
 #include "Game/Enemys/BossEnemy/ActionNode/Walking/WalkingActionComtroller.h"
+#include "Game/Enemys/BossEnemy/ActionNode/SwingDownAttack/SwingDownAttackAction.h"
 
+#include "Game/Observer/Enemy/EnemyMessenger.h"
 #include "Libraries/MyLib/DebugString.h"
 
 
@@ -43,13 +45,11 @@ BossEnemy::BossEnemy(CommonResources* resources, DirectX::SimpleMath::Vector3 sc
 	, m_hp{}
 	,m_behavior{}
 	,m_player{}
-	,m_attackState{}
 	,m_punchTime{}
 	,m_isActives{true}
 	,m_beam{}
 	,m_shadow{}
 	,m_barrier{}
-	,m_velocity{}
 	,m_isAction{}
 	,m_action{}
 	,m_isGrounded{false}
@@ -109,13 +109,9 @@ void BossEnemy::ChangeAction(const std::string actionName)
 		m_action.second = it->second.get();
 
 		m_action.second->Enter();
-
 		
 
 	}
-
-
-
 
 
 }
@@ -151,7 +147,7 @@ void BossEnemy::Initialize()
 	m_animationDatas["BeamAttack"] = json->LoadAnimationData(L"BossEnemy/BeamAttack");
 	m_animationDatas["BeamAttackEnd"] = json->LoadAnimationData(L"BossEnemy/BeamAttackEnd");
 	m_animationDatas["Move"] = json->LoadAnimationData(L"BossEnemy/Move");
-	m_animationDatas["Punch"] = json->LoadAnimationData(L"BossEnemy/Punch");
+	m_animationDatas["SwingDown"] = json->LoadAnimationData(L"BossEnemy/SwingDown");
 	m_animationDatas["Barrier"] = json->LoadAnimationData(L"BossEnemy/Barrier");
 	m_animationDatas["BarrierEnd"] = json->LoadAnimationData(L"BossEnemy/BarrierEnd");
 	m_animationDatas["JumpCharge"] = json->LoadAnimationData(L"BossEnemy/JumpCharge");
@@ -162,7 +158,7 @@ void BossEnemy::Initialize()
 	SetAnimationData("BeamAttack", m_animationDatas);
 	SetAnimationData("BeamAttackEnd", m_animationDatas);
 	SetAnimationData("Move", m_animationDatas);
-	SetAnimationData("Punch", m_animationDatas);
+	SetAnimationData("SwingDown", m_animationDatas);
 	SetAnimationData("Barrier", m_animationDatas);
 	SetAnimationData("BarrierEnd", m_animationDatas);
 	SetAnimationData("JumpCharge", m_animationDatas);
@@ -174,13 +170,12 @@ void BossEnemy::Initialize()
 	m_actionList["BarrierDefense"] = std::make_unique<BarrierDefenseAction>(BaseEntity::GetCommonResources(), this,m_barrier.get());
 	m_actionList["BeamAttack"] = std::make_unique<BossBeamAttackAction>(BaseEntity::GetCommonResources(), this, m_beam.get(),m_player);
 
-	m_actionList["RushAttack"] = std::make_unique<BossRushAttackAction>(BaseEntity::GetCommonResources(), this,m_player);
-
 	m_actionList["Walking"] = std::make_unique<WalkingActionComtroller>(BaseEntity::GetCommonResources(), this,m_player);
 
+	m_actionList["SwingDown"] = std::make_unique<SwingDownAttackAction>(BaseEntity::GetCommonResources(), this);
 
 
-	ChangeAction("RushAttack");
+	ChangeAction("JumpAttack");
 
 	m_behavior->AddPointer(m_player, this);
 
@@ -194,20 +189,23 @@ void BossEnemy::Initialize()
 	m_shadow->Initialize(device, context, states);
 
 	//当たり判定の作成
-	CollisionEntity::GetBounding()->CreateBoundingSphere(BaseEntity::GetPosition(), Params::BOSSENEMY_SPHERE_COLLIDER_SIZE);
-	CollisionEntity::GetBounding()->CreateBoundingBox(BaseEntity::GetPosition(), Params::BOSSENEMY_BOX_COLLIDER_SIZE);
+	CollisionEntity::GetBounding()->CreateBoundingSphere(BaseEntity::GetPosition(), Params::BOSSENEMY_SPHERE_COLLIDER_SIZE * BaseEntity::GetScale().x);
+	CollisionEntity::GetBounding()->CreateBoundingBox(BaseEntity::GetPosition(), Params::BOSSENEMY_BOX_COLLIDER_SIZE * BaseEntity::GetScale());
 
 	m_gravity = Params::GRAVITY;
 
 	m_hp = Params::BOSSENEMY_MAX_HP;
 
-	Messenger::GetInstance()->Attach(MessageType::BoomerangGetReadyEnd, this);
-	Messenger::GetInstance()->Attach(MessageType::BossBeamAttackEnd, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::BossBeamAttackEnd, this);
 
-	m_attackState = AttackState::None;
+	//
+	EnemyMessenger::GetInstance()->Rigister(GetID(), this);
+
 
 	m_target = m_player;
 
+	BaseEntity::GetID();
+	
 
 
 }
@@ -225,7 +223,6 @@ void BossEnemy::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::S
 	{
 		return;
 	}
-
 
 
 	EnemyEntity::Render(view, projection);
@@ -255,12 +252,12 @@ void BossEnemy::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::S
 	auto states = BaseEntity::GetCommonResources()->GetCommonStates();
 
 	// 自機の影を描画する
-	m_shadow->Render(context, states, view, projection, shadowPos, Params::BOSSENEMY_SHADOW_RADIUS);
+	m_shadow->Render(context, states, view, projection, shadowPos, Params::BOSSENEMY_SHADOW_RADIUS * BaseEntity::GetScale().x);
 
 	//////// デバッグ情報を表示する
 	//auto debugString = BaseEntity::GetCommonResources()->GetDebugString();
-	//////debugString->AddString("Pos %f" ,m_buttom[0]->GetPosition().x);
-	//////debugString->AddString("Pos %f" ,m_buttom[0]->GetPosition().y);
+	//debugString->AddString("Pos %f" ,BaseEntity::GetPosition().x);
+	//debugString->AddString("Pos %f" , BaseEntity::GetPosition().y);
 	//debugString->AddString("X %d" , m_velocity.x);
 	//debugString->AddString("Y %d" , m_velocity.y);
 
@@ -306,7 +303,6 @@ void BossEnemy::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 		case CollisionEntity::CollisionTag::PlayerParts:
 			break;
 		case CollisionEntity::CollisionTag::Stage:
-			m_velocity.y = 0.0f;
 			m_isGrounded = true;
 			break;
 		case CollisionEntity::CollisionTag::Enemy:
@@ -332,8 +328,14 @@ void BossEnemy::OnCollisionStay(CollisionEntity* object, CollisionTag tag)
 	switch (tag)
 	{
 		case CollisionEntity::CollisionTag::Stage:
-			m_velocity.y = 0.0f;
-			break;
+		{
+			Vector3 velocity = BaseEntity::GetVelocity();
+
+			velocity.y = 0.0f;
+
+			BaseEntity::SetVelocity(velocity);
+		}
+		break;
 		default:
 			break;
 	}
@@ -378,21 +380,16 @@ void BossEnemy::Update(const float& elapsedTime)
 	}
 
 
+
+
 	if (m_action.second->Update(elapsedTime) == IAction::ActionState::End)
 	{
 		//ビヘイビアツリーの更新
 		m_behavior->Update(elapsedTime);
 
-	 }
+	 }	
 
-	m_velocity.y -= m_gravity * elapsedTime ;
-	
-
-	Vector3 pos = BaseEntity::GetPosition();
-	
-	pos += m_velocity;
-
-	BaseEntity::SetPosition(pos);
+	CollisionEntity::Update(elapsedTime);
 	
 	CollisionEntity::GetBounding()->Update(BaseEntity::GetPosition());
 
@@ -449,19 +446,50 @@ void BossEnemy::ChangeAnimation(std::string animationType)
 /// </summary>
 /// <param name="type">種類</param>
 /// <param name="datas">データ</param>
-void BossEnemy::Notify(const Telegram& telegram)
+void BossEnemy::Notify(const Telegram<GameMessageType>& telegram)
 {
 	
 	switch (telegram.messageType)
 	{
-		case MessageType::BossBeamAttackEnd:
-			m_attackState = AttackState::End;
+		case GameMessageType::BossBeamAttackEnd:
 			break;
 		default:
 			break;
 	}
+
 }
 
+
+void BossEnemy::Notify(const Telegram<EnemyMessageType>& telegram)
+{
+
+
+	switch (telegram.messageType)
+	{
+		case EnemyMessageType::BarrierDefense:
+			ChangeAction("BarrierDefense");
+			break;
+		case EnemyMessageType::BeamAttack:
+			ChangeAction("BeamAttack");
+			break;
+		case EnemyMessageType::JumpAttack:
+			ChangeAction("JumpAttack");
+
+			break;
+		case EnemyMessageType::SwingDown:
+			ChangeAction("SwingDown");
+			break;
+		case EnemyMessageType::Walking:
+			ChangeAction("Walking");
+			break;
+		default:
+			break;
+	}
+
+
+
+
+}
 
 
 

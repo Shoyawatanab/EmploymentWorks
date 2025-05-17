@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "BaseEntity.h"
+#include "Game/Params.h"
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
@@ -16,12 +17,14 @@ void BaseEntity::SetParent(BaseEntity* parent)
 	m_parent = parent;
 
 	//親子関係を結んぶ
-	if (parent)
+	if(parent)
 	{
 		
 		m_localScale = m_scale;
 		m_localPosition = m_position;
 		m_localRotation = m_rotation;
+
+		m_isParent = true;
 
 	}
 	//親子関係を解除する
@@ -30,6 +33,7 @@ void BaseEntity::SetParent(BaseEntity* parent)
 
 		m_worldMatrix.Decompose(m_scale, m_rotation, m_position);
 
+		m_isParent = false;
 	}
 
 }
@@ -59,6 +63,11 @@ BaseEntity::BaseEntity(CommonResources* resources
 	,m_isEntityActive{true}
 	,m_isUpdateActive{true}
 	,m_isRenderActive{true}
+	,m_isParent{false}
+	,m_velocity{}
+	,m_gravity{Params::GRAVITY}
+	,m_isGravity{true}
+
 {
 
 	m_id = m_nextId;
@@ -87,7 +96,15 @@ void BaseEntity::Initialize()
 /// <param name="elapsedTime">経過時間</param>
 void BaseEntity::Update(const float& elapsedTime)
 {
+
 	UNREFERENCED_PARAMETER(elapsedTime);
+
+	if(m_isGravity)
+	{
+		m_velocity.y -= m_gravity * elapsedTime;
+	}
+
+	m_position += m_velocity;
 
 }
 
@@ -102,7 +119,7 @@ void BaseEntity::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::
 	UNREFERENCED_PARAMETER(projection);
 
 	//親あり
-	if (m_parent)
+	if(m_parent)
 	{
 
 		//ローカル行列の計算
@@ -115,7 +132,6 @@ void BaseEntity::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::
 
 		//ワールド行列から大きさ　回転　座標の取得
 		m_worldMatrix.Decompose(m_scale, m_rotation, m_position);
-
 
 	}
 	//親なし

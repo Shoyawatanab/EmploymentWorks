@@ -9,9 +9,7 @@
 #include "Libraries/WataLib/Mouse.h"
 #include "Game/Observer/Messenger.h"
 #include <cassert>
-
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
+#include <random>
 
 
 const POINT MOUSESENSITIVITY = { static_cast<LONG> (0.001f),static_cast<LONG> (0.001f) };      // マウスの感度
@@ -35,6 +33,9 @@ WataLib::TPS_Camera::TPS_Camera()
 	m_lerpTime{},
 	m_moveEye{},
 	m_zoomState{}
+	,m_shakePosition{}
+	,m_shaleTime{}
+	,m_shakePower{}
 {
 	m_mouse = std::make_unique<WataLib::Mouse>();
 
@@ -42,6 +43,8 @@ WataLib::TPS_Camera::TPS_Camera()
 
 WataLib::TPS_Camera::~TPS_Camera()
 {
+
+
 }
 
 
@@ -61,8 +64,9 @@ void WataLib::TPS_Camera::Initialize(CommonResources* resources)
 
 	//イベントにObserverとして登録
 
-	Messenger::GetInstance()->Attach(MessageType::BoomerangGetReady, this);
-	Messenger::GetInstance()->Attach(MessageType::BoomerangGetReadyEnd, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::BoomerangGetReady, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::BoomerangGetReadyEnd, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::CameraShake, this);
 
 }
 
@@ -135,6 +139,8 @@ void WataLib::TPS_Camera::Update(const float& elapsedTime)
 	}
 
 
+	Shake(elapsedTime);
+
 	// カメラ座標を計算する
 	CalculateEyePosition();
 	// ビュー行列を更新する
@@ -157,7 +163,10 @@ void WataLib::TPS_Camera::Render(const DirectX::SimpleMath::Matrix& view, const 
 //-------------------------------------------------------------------
 void WataLib::TPS_Camera::CalculateViewMatrix()
 {
-	m_view = DirectX::SimpleMath::Matrix::CreateLookAt(m_eye, m_target, m_up);
+	using namespace DirectX::SimpleMath;
+
+
+	m_view = Matrix::CreateLookAt(m_eye + m_shakePosition, m_target + m_shakePosition, m_up);
 }
 
 //-------------------------------------------------------------------
@@ -165,6 +174,9 @@ void WataLib::TPS_Camera::CalculateViewMatrix()
 //-------------------------------------------------------------------
 void WataLib::TPS_Camera::CalculateProjectionMatrix()
 {
+	using namespace DirectX::SimpleMath;
+
+
 	// ウィンドウサイズ
 	const float width = static_cast<float>(Screen::WIDTH);
 	const float height = static_cast<float>(Screen::HEIGHT);
@@ -172,7 +184,7 @@ void WataLib::TPS_Camera::CalculateProjectionMatrix()
 	// 画面縦横比
 	const float aspectRatio = width / height;
 
-	m_projection = DirectX::SimpleMath::Matrix::CreatePerspectiveFieldOfView(
+	m_projection = Matrix::CreatePerspectiveFieldOfView(
 		FOV, aspectRatio, NEAR_PLANE, FAR_PLANE);
 }
 
@@ -181,20 +193,24 @@ void WataLib::TPS_Camera::CalculateProjectionMatrix()
 //-------------------------------------------------------------------
 void WataLib::TPS_Camera::CalculateEyePosition()
 {
+
+	using namespace DirectX::SimpleMath;
+
+
 	//プレイヤの回転に使用
-	DirectX::SimpleMath::Vector3 angleX = DirectX::SimpleMath::Vector3(0, m_angle.x * m_mouseSensitivity.x, 0);
-	m_rotationX = DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(angleX);
+	Vector3 angleX = Vector3(0, m_angle.x * m_mouseSensitivity.x, 0);
+	m_rotationX = Quaternion::CreateFromYawPitchRoll(angleX);
 
 	//マウスの差分から角度の作成
-	DirectX::SimpleMath::Vector3 angle = DirectX::SimpleMath::Vector3(m_angle.y * m_mouseSensitivity.y, m_angle.x * m_mouseSensitivity.x, 0);
+	Vector3 angle =  Vector3(m_angle.y * m_mouseSensitivity.y, m_angle.x * m_mouseSensitivity.x, 0);
 
-	DirectX::SimpleMath::Vector3 angle2 = DirectX::SimpleMath::Vector3(m_angle.y * m_mouseSensitivity.y, 0, 0);
+	Vector3 angle2 = Vector3(m_angle.y * m_mouseSensitivity.y, 0, 0);
 
 	//カウスの移動量から回転を生成
-	DirectX::SimpleMath::Quaternion Rotation = DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(angle);
+	Quaternion Rotation = Quaternion::CreateFromYawPitchRoll(angle);
 	//float a = Rotation.x;
 	// 既定の進行方向ベクトル
-	DirectX::SimpleMath::Vector3 forward = DirectX::SimpleMath::Vector3::Forward;
+	Vector3 forward = Vector3::Forward;
 
 	// カメラがターゲットからどれくらい離れているか
 	forward.y = CAMERA_HIGHT;
@@ -204,8 +220,8 @@ void WataLib::TPS_Camera::CalculateEyePosition()
 
 
 	// ターゲットの向いている方向に追従する
-	forward = DirectX::SimpleMath::Vector3::Transform(forward, Rotation);
-	m_moveEye = DirectX::SimpleMath::Vector3::Transform(m_moveEye, Rotation);
+	forward =   Vector3::Transform(forward, Rotation);
+	m_moveEye = Vector3::Transform(m_moveEye, Rotation);
 
 	m_moveEye += forward;
 
@@ -243,21 +259,73 @@ void WataLib::TPS_Camera::Exit()
 
 }
 
-void WataLib::TPS_Camera::Notify(const Telegram& telegram)
+void WataLib::TPS_Camera::Notify(const Telegram<GameMessageType>& telegram)
 {
 	
 
 	switch (telegram.messageType)
 	{
-		case MessageType::BoomerangGetReady:
+		case GameMessageType::BoomerangGetReady:
 			m_zoomState = ZoomState::ZoomIn;
 			break;
-		case MessageType::BoomerangGetReadyEnd:
+		case GameMessageType::BoomerangGetReadyEnd:
 			m_zoomState = ZoomState::ZoomOut;
 			break;
+		case GameMessageType::CameraShake:
+			
+			m_shaleTime = SHAKETIME;
+			m_isShake = true;
+
+			m_shakePower = *static_cast<float*>(telegram.extraInfo);
+
+			break;
+
 		default:
 			break;
 	}
+
+}
+
+/// <summary>
+/// 画面の揺れ
+/// </summary>
+/// <param name="elapsedTime">経過時間</param>
+void WataLib::TPS_Camera::Shake(const float& elapsedTime)
+{
+
+	if (!m_isShake)
+	{
+		return;
+	}
+
+
+	m_shaleTime -= elapsedTime;
+
+
+	if (m_shaleTime <= 0.0f)
+	{
+		m_isShake = false;
+		m_shakePosition = Vector3::Zero;
+		return;
+	}
+
+	float power = (m_shaleTime / SHAKETIME) * m_shakePower;
+
+	//	完全なランダムをハードウェア的に生成するためのクラスの変数
+	std::random_device seed;
+	//	上記の完全なランダムは動作が遅いため、seed値の決定のみに使用する
+	//	※「default_random_engine」はusingで「mt19937」となっている
+	std::default_random_engine engine(seed());
+	//	生成して欲しいランダムの範囲をDistributionに任せる。今回は0～2PI
+	std::uniform_real_distribution<> dist(-power, power);
+
+	float x = dist(engine);
+	float y = dist(engine);
+	float z = dist(engine);
+	
+	m_shakePosition = Vector3(x, y, z);
+
+
 
 }
 

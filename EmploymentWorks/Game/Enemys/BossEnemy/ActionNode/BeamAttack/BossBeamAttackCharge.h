@@ -7,7 +7,7 @@
 
 // 前方宣言
 class CommonResources;
-class BossEnemy;
+class CharacterEntity;
 class Beam;
 class BossBeamAttackAction;
 
@@ -23,7 +23,7 @@ class BossBeamAttackCharge : public IAction
 {
 public:
 	BossBeamAttackCharge(CommonResources* resources
-		, BossEnemy* bossEnemy
+		, CharacterEntity* bossEnemy
 		, Beam* beam
 		, BossBeamAttackAction* beamAttack);
 
@@ -43,7 +43,7 @@ private:
 	// 共通リソース
 	CommonResources* m_commonResources;
 
-	BossEnemy* m_bossEnemy;
+	CharacterEntity* m_bossEnemy;
 	Beam* m_beam;
 	BossBeamAttackAction* m_beamAttack;
 

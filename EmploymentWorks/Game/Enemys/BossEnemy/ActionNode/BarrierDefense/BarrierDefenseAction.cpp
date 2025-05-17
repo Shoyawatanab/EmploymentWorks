@@ -29,7 +29,7 @@ using namespace DirectX::SimpleMath;
 /// </summary>
 /// <param name="resources">共通リソース</param>
 BarrierDefenseAction::BarrierDefenseAction(CommonResources* resources
-	,BossEnemy* bossEnemy
+	, CharacterEntity* bossEnemy
 	, Barrier* barrier
 	)
 	:
@@ -46,7 +46,7 @@ BarrierDefenseAction::BarrierDefenseAction(CommonResources* resources
 
 
 	//イベントタイプの登録
-	Messenger::GetInstance()->Attach(MessageType::BossBeamHit, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::BossBeamHit, this);
 
 	ActionStateController::Initialize({
 		m_preliminaryAction.get()
@@ -65,7 +65,7 @@ BarrierDefenseAction::~BarrierDefenseAction()
 }
 
 
-void BarrierDefenseAction::Notify(const Telegram& telegram)
+void BarrierDefenseAction::Notify(const Telegram<GameMessageType>& telegram)
 {
 	UNREFERENCED_PARAMETER(telegram);
 	

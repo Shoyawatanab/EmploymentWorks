@@ -15,6 +15,8 @@
 #include "Game/Weapon/Boomerang/Boomerang.h"
 #include "Game/Enemys/BossEnemy/BossEnemy.h"
 #include "Game/Params.h"
+#include "Game/Enemys/BossEnemy/BossEnemy.h"
+
 
 using namespace DirectX::SimpleMath;
 
@@ -31,7 +33,7 @@ BossEnemyRightArm::BossEnemyRightArm(CommonResources* resources,BossEnemy* root,
 	DirectX::SimpleMath::Vector3 position,	DirectX::SimpleMath::Quaternion rotation)
 	:
 	BossEnemyPartsBase(resources, root, parent, scale, position, rotation, PARTSNAME, Params::BOSSENEMY_RIGHTARM_HP,
-		Params::BOSSENEMY_RIGHTARM_BOX_COLLIDER_SIZE, Params::BOSSENEMY_RIGHTARM_SPHERE_COLLIDER_SIZE)
+		Params::BOSSENEMY_RIGHTARM_BOX_COLLIDER_SIZE * root->GetScale(), Params::BOSSENEMY_RIGHTARM_SPHERE_COLLIDER_SIZE * root->GetScale().x)
 {
 }
 
@@ -72,13 +74,11 @@ void BossEnemyRightArm::OnCollisionEnter(CollisionEntity* object, CollisionTag t
 		{
 
 
-			DirectX::SimpleMath::Vector3 pos = Vector3(-2.5f, -3, 2);
+			Vector3 pos = BaseEntity::GetPosition();
 
-			pos = Vector3::Transform(pos, BossEnemyPartsBase::GetRoot()->GetRotation());
+			pos.y = 0;
 
-			pos += BossEnemyPartsBase::GetRoot()->GetPosition();
-
-			Messenger::GetInstance()->Notify(MessageType::CreateParticle, &pos);
+			Messenger::GetInstance()->Notify(GameMessageType::CreateParticle, &pos);
 		}
 		break;
 		default:

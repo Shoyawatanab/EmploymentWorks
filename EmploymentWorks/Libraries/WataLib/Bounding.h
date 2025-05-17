@@ -19,6 +19,7 @@ namespace WataLib
 		void SetIsSphereHit(bool isHit) { m_isSphereHit = isHit; }
 
 
+
 	public:
 		Bounding(CommonResources* resources);
 		~Bounding();

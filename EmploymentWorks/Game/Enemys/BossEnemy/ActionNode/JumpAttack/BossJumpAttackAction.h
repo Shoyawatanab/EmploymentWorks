@@ -23,7 +23,7 @@ namespace mylib
 }
 
 
-class BossJumpAttackAction : public ActionStateController , IObserver
+class BossJumpAttackAction : public ActionStateController , IObserver<GameMessageType>
 {
 
 public:
@@ -52,7 +52,7 @@ public:
 
 	//IObserver
 //í íméûÇ…åƒÇŒÇÍÇÈä÷êî
-	void Notify(const Telegram& telegram)  override;
+	void Notify(const Telegram<GameMessageType>& telegram)  override;
 
 
 private:
@@ -65,5 +65,7 @@ private:
 	std::unique_ptr<BossJumpAttackJump> m_jump;
 
 	std::unique_ptr<OrientationAction> m_orientationAction;
+
+
 
 };

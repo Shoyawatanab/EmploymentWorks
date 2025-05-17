@@ -31,9 +31,9 @@ using namespace DirectX::SimpleMath;
 /// </summary>
 /// <param name="resources">共通リソース</param>
 BossBeamAttackAction::BossBeamAttackAction(CommonResources* resources
-	,BossEnemy* bossenemy
+	, CharacterEntity* bossenemy
 	,Beam* beam
-	, Player* player)
+	, CharacterEntity* player)
 	:
 	m_commonResources{resources}
 	,m_preliminaryAction{}
@@ -49,7 +49,7 @@ BossBeamAttackAction::BossBeamAttackAction(CommonResources* resources
 
 
 	//イベントタイプの登録
-	Messenger::GetInstance()->Attach(MessageType::BossBeamHit, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::BossBeamHit, this);
 
 
 	ActionStateController::Initialize({
@@ -72,12 +72,12 @@ BossBeamAttackAction::~BossBeamAttackAction()
 }
 
 
-void BossBeamAttackAction::Notify(const Telegram& telegram)
+void BossBeamAttackAction::Notify(const Telegram<GameMessageType>& telegram)
 {
 	
 	switch (telegram.messageType)
 	{
-		case MessageType::BossBeamHit:
+		case GameMessageType::BossBeamHit:
 
 			ActionStateController::ChangeState();
 			break;

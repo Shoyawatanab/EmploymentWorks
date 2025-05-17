@@ -12,19 +12,20 @@ class Messenger : public Singleton<Messenger>
 {
 	
 
-public:
+private:
 
-	std::unordered_map<MessageType, std::vector<IObserver*>> m_eventList;
+	std::unordered_map<GameMessageType, std::vector<IObserver<GameMessageType>*>> m_eventList;
 
 
 public:
 
 
 	// 観察者をアタッチ
-	void Attach(MessageType type, IObserver* observer);
+	void Rigister(GameMessageType type, IObserver<GameMessageType>* observer);
 	// 通知する
-	void Notify(MessageType type, void* datas);
+	void Notify(GameMessageType type, void* datas = nullptr);
 
+	void Clear();
 
 public:
 

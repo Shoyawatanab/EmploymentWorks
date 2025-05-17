@@ -7,7 +7,7 @@
 
 class Player;
 
-class PlayerAttack : public IState , IObserver
+class PlayerAttack : public IState , IObserver<GameMessageType>
 {
 public:
 
@@ -37,7 +37,7 @@ public:
 	void Exit() override;
 
 	//通知時に呼び出される
-	void Notify(const Telegram& telegram) override;
+	void Notify(const Telegram<GameMessageType>& telegram) override;
 
 
 	//必要なポインタの登録

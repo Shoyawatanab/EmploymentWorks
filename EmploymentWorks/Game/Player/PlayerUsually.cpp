@@ -21,7 +21,6 @@ PlayerUsually::PlayerUsually()
 	m_commonResources{}
 	,m_palyer{}
 	,m_tpsCamera{}
-	,m_gravity{}
 	,m_isGetReady{false}
 {
 }
@@ -55,11 +54,9 @@ void PlayerUsually::Initialize(CommonResources* resources)
 	m_commonResources = resources;
 
 
-	m_gravity = Params::GRAVITY;
-
 	//イベントにObserverとして登録
-	Messenger::GetInstance()->Attach(::MessageType::BoomerangGetReady, this);
-	Messenger::GetInstance()->Attach(::MessageType::BoomerangGetReadyEnd, this);
+	Messenger::GetInstance()->Rigister(::GameMessageType::BoomerangGetReady, this);
+	Messenger::GetInstance()->Rigister(::GameMessageType::BoomerangGetReadyEnd, this);
 }
 
 
@@ -134,17 +131,17 @@ void PlayerUsually::Rotation(const float& elapsedTime, DirectX::SimpleMath::Vect
 /// </summary>
 /// <param name="type">種類</param>
 /// <param name="datas">データ</param>
-void PlayerUsually::Notify(const Telegram& telegram)
+void PlayerUsually::Notify(const Telegram<GameMessageType>& telegram)
 {
 	
 	//イベントの種類
 	switch (telegram.messageType)
 	{
-		case ::MessageType::BoomerangGetReady:
+		case ::GameMessageType::BoomerangGetReady:
 			//構えている
 			m_isGetReady = true;
 			break;
-		case ::MessageType::BoomerangGetReadyEnd:
+		case ::GameMessageType::BoomerangGetReadyEnd:
 			//構えていない
 			m_isGetReady = false;
 			break;
@@ -196,20 +193,6 @@ void PlayerUsually::Update(const float& elapsedTime)
 	Move(elapsedTime,moveDirection);
 
 	Rotation(elapsedTime, moveDirection);
-
-	//重力
-	Vector3 position = m_palyer->GetPosition();
-
-	position.y -= m_gravity * elapsedTime;
-
-	m_palyer->SetPosition(position);
-
-	Vector3 velocity = m_palyer->GetVelocity();
-
-	velocity.y -= m_gravity * elapsedTime;
-
-
-
 
 	//アニメーションを管理
 	//動いている

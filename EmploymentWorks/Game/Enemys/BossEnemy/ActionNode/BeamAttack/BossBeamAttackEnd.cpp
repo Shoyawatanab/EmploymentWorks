@@ -33,7 +33,7 @@ using namespace DirectX::SimpleMath;
 /// </summary>
 /// <param name="resources">ã§í ÉäÉ\Å[ÉX</param>
 BossBeamAttackEnd::BossBeamAttackEnd(CommonResources* resources
-	, BossEnemy* bossenemy
+	, CharacterEntity* bossenemy
 	, Beam* beam
 	, BossBeamAttackAction* beamAttack)
 	:

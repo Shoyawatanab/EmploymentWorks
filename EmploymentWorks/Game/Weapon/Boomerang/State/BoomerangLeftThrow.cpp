@@ -152,6 +152,7 @@ void BoomerangLeftThrow::SplineCurve(const float& elapsedTime)
 	//割合を求める
 	float ratio = m_totalTime * Params::BOOMERANG_MOVE_SPEED / distance;
 
+
 	//スプライン曲線を使用して座標を求める
 	Vector3 position = Vector3::CatmullRom(
 		m_splineCurvePosition[(m_index - 1) % m_splineCurvePosition.size()],

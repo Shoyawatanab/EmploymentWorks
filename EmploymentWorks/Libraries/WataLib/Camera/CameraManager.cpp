@@ -43,7 +43,7 @@ void WataLib::CameraManager::Initialize(CommonResources* resources)
 
 
 
-	Messenger::GetInstance()->Attach(MessageType::DefeatedAllEnemies, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::DefeatedAllEnemies, this);
 }
 
 //-------------------------------------------------------------------
@@ -82,12 +82,12 @@ void WataLib::CameraManager::AddPointer(Player* Player, EnemyManager* enemyMange
 	m_endCamera->AddPointer(enemyManger);
 }
 
-void WataLib::CameraManager::Notify(const Telegram& telegram)
+void WataLib::CameraManager::Notify(const Telegram<GameMessageType>& telegram)
 {
 	
 	switch (telegram.messageType)
 	{
-		case MessageType::DefeatedAllEnemies:
+		case GameMessageType::DefeatedAllEnemies:
 			ChangeState(m_endCamera.get());
 			break;
 		default:

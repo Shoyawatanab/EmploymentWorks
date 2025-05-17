@@ -86,11 +86,16 @@ void EffectsManager::Initialize(CommonResources* resources)
 
 	m_effects.push_back(std::move(chargeEffect));
 
-	Messenger::GetInstance()->Attach(MessageType::PlayerDamage, this);
-	Messenger::GetInstance()->Attach(MessageType::CreateExplosion, this);
-	Messenger::GetInstance()->Attach(MessageType::CreateParticle, this);
-	Messenger::GetInstance()->Attach(MessageType::CreateHitEffect, this);
-	Messenger::GetInstance()->Attach(MessageType::CreateChageEffect, this);
+
+	//通知の種類と自身を登録
+	Messenger::GetInstance()->Rigister(GameMessageType::PlayerDamage, this);
+
+
+
+	Messenger::GetInstance()->Rigister(GameMessageType::CreateExplosion, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::CreateParticle, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::CreateHitEffect, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::CreateChageEffect, this);
 
 }
 
@@ -272,24 +277,24 @@ void EffectsManager::CreateChargeEffect(void* datas)
 /// </summary>
 /// <param name="type">イベントの種類</param>
 /// <param name="datas">イベントのデータ</param>
-void EffectsManager::Notify(const Telegram& telegram)
+void EffectsManager::Notify(const Telegram<GameMessageType>& telegram)
 {
 
 	switch (telegram.messageType)
 	{
-		case MessageType::CreateExplosion:
+		case GameMessageType::CreateExplosion:
 			CreateExploion(telegram.extraInfo);
 			break;
-		case MessageType::PlayerDamage:
+		case GameMessageType::PlayerDamage:
 			CreatePlayerDamageEffect(telegram.extraInfo);
 			break;
-		case MessageType::CreateParticle:
+		case GameMessageType::CreateParticle:
 			CreateParticle(telegram.extraInfo);
 			break;
-		case MessageType::CreateHitEffect:
+		case GameMessageType::CreateHitEffect:
 			//CreateHitEffect(datas);
 			break;
-		case MessageType::CreateChageEffect:
+		case GameMessageType::CreateChageEffect:
 			CreateChargeEffect(telegram.extraInfo);
 			break;
 		default:

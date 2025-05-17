@@ -46,6 +46,7 @@ Boomerang::Boomerang(CommonResources* resources
 
 	BaseEntity::SetParent(parent);
 	CollisionEntity::SetIsCollisionActive(false);
+	BaseEntity::SetIsGravity(false);
 }
 
 /// <summary>
@@ -196,7 +197,7 @@ void Boomerang::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 		case CollisionEntity::CollisionTag::Player:
 			if (m_stateMachine->GetCurrentState() == m_stateMachine->GetBoomerangRightThrow())
 			{
-				Messenger::GetInstance()->Notify(MessageType::BoomerangRecoverable, nullptr);
+				Messenger::GetInstance()->Notify(GameMessageType::BoomerangRecoverable, nullptr);
 				m_isCatch = true;
 
 			}
@@ -216,7 +217,7 @@ void Boomerang::OnCollisionExit(CollisionEntity* object, CollisionTag tag)
 	switch (tag)
 	{
 		case CollisionEntity::CollisionTag::Player:			
-			Messenger::GetInstance()->Notify(MessageType::BoomerangNotRecoverable, nullptr);
+			Messenger::GetInstance()->Notify(GameMessageType::BoomerangNotRecoverable, nullptr);
 			m_isCatch = false;
 			break;
 		default:
@@ -248,7 +249,7 @@ void Boomerang::Update(const float& elapsedTime)
 		if (kbTracker->released.F)
 		{
 			m_stateMachine->ChangeState(m_stateMachine->GetBoomerangIdel());
-			Messenger::GetInstance()->Notify(MessageType::BoomerangNotRecoverable,nullptr);
+			Messenger::GetInstance()->Notify(GameMessageType::BoomerangNotRecoverable,nullptr);
 
 		}
 

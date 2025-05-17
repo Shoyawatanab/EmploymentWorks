@@ -12,6 +12,7 @@
 #include "Game/Observer/Messenger.h"
 #include "Game/Weapon/Boomerang/Boomerang.h"
 #include "Game/Params.h"
+#include "Game/Enemys/BossEnemy/BossEnemy.h"
 
 using namespace DirectX::SimpleMath;
 
@@ -29,7 +30,7 @@ BossEnemyPelvis::BossEnemyPelvis(CommonResources* resources
 	DirectX::SimpleMath::Vector3 position,	DirectX::SimpleMath::Quaternion rotation)
 	:
 	BossEnemyPartsBase(resources, root, parent, scale, position, rotation, PARTSNAME, Params::BOSSENEMY_PELVIS_HP,
-		Params::BOSSENEMY_PELVIS_BOX_COLLIDER_SIZE, Params::BOSSENEMY_PELVIS_SPHERE_COLLIDER_SIZE)
+		Params::BOSSENEMY_PELVIS_BOX_COLLIDER_SIZE * root->GetScale(), Params::BOSSENEMY_PELVIS_SPHERE_COLLIDER_SIZE * root->GetScale().x)
 {
 }
 

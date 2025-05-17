@@ -210,19 +210,49 @@ void Player::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 		case CollisionEntity::CollisionTag::EnemyParts:
 			m_hp--;
 			//Subject::Notify(EventManager::EventTypeName::PlayerDamage);
-			Messenger::GetInstance()->Notify(::MessageType::PlayerDamage,nullptr);
+
+
+			//プレイヤのダメージの通知
+			Messenger::GetInstance()->Notify(::GameMessageType::PlayerDamage);
+			
+
 			if (m_hp <= 0)
 			{
 				//Subject::Notify(EventManager::EventTypeName::GameOver);
-				Messenger::GetInstance()->Notify(::MessageType::GameOver, nullptr);
+				Messenger::GetInstance()->Notify(::GameMessageType::GameOver);
 			}
 			break;
 		default:
 			break;
 	}
 
+
+
 }
 
+
+void Player::OnCollisionStay(CollisionEntity* object, CollisionTag tag)
+{
+	UNREFERENCED_PARAMETER(object);
+
+	switch (tag)
+	{
+		case CollisionEntity::CollisionTag::Stage:
+		{
+			Vector3 velocity = BaseEntity::GetVelocity();
+
+			velocity.y = 0.0f;
+
+			BaseEntity::SetVelocity(velocity);
+		}
+		break;
+		default:
+			break;
+	}
+
+
+
+}
 
 /// <summary>
 /// 更新処理
@@ -243,12 +273,6 @@ void Player::Update(const float& elapsedTime)
 
 	CompositeEntity::Update(elapsedTime);
 
-
-	Vector3 pos = BaseEntity::GetPosition();
-
-	pos += m_velocity;
-
-	BaseEntity::SetPosition(pos);
 
 	//パーツの更新
 	for (auto& part : CompositeEntity::GetParts())
