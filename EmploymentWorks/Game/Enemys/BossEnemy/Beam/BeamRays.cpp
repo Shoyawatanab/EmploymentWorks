@@ -124,7 +124,6 @@ void BeamRays::Initialize()
 
 	m_isHit = false;
 
-	m_maxLength = 0.3f;
 
 
 

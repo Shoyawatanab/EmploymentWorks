@@ -27,21 +27,10 @@ namespace mylib
 
 class BarrierDefenseAction : public ActionStateController , IObserver<GameMessageType>
 {
-
 public:
-
-
-
-	BarrierPreliminaryAction* GetBarrierPreliminaryAction() { return m_preliminaryAction.get(); }
-
-	BarrierDeployment* GetBarrierDeployment() { return m_deployment.get(); }
-
-	BarrierClose* GetBarrierClose() { return m_close.get(); }
-
-
-public:
+	//コンストラクタ
 	BarrierDefenseAction(CommonResources* resources,
-		CharacterEntity* bossEnemy
+		CharacterEntity* owner
 		,Barrier* barrier
 	);
 
@@ -51,8 +40,8 @@ public:
 
 
 
-	//IObserver
-//通知時に呼ばれる関数
+
+	//通知時に呼ばれる関数
 	void Notify(const Telegram<GameMessageType>& telegram)  override;
 
 
@@ -60,12 +49,13 @@ public:
 private:
 	// 共通リソース
 	CommonResources* m_commonResources;
-
+	//予備動作
 	std::unique_ptr<BarrierPreliminaryAction> m_preliminaryAction;
+	//バリア展開
 	std::unique_ptr<BarrierDeployment> m_deployment;
-
+	//バリはをしまう
 	std::unique_ptr<BarrierClose> m_close;
-
+	//バリア
 	Barrier* m_barrier;
 
 };

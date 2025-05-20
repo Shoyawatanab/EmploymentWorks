@@ -15,9 +15,9 @@ const float MOVESPEED = 0.5f;
 
 
 
-//-------------------------------------------------------------------
-// コンストラクタ
-//-------------------------------------------------------------------
+/// <summary>
+/// コンストラクタ
+/// </summary>
 WataLib::TitleCamera::TitleCamera()
 	:
 	m_view{},
@@ -31,19 +31,24 @@ WataLib::TitleCamera::TitleCamera()
 
 }
 
+/// <summary>
+/// 初期化
+/// </summary>
+/// <param name="resources">共通リソース</param>
 void WataLib::TitleCamera::Initialize(CommonResources* resources)
 {
 	UNREFERENCED_PARAMETER(resources);
 
 
-	CalculateEyePosition();
+	CalculateEyePosition(0);
 	CalculateViewMatrix();
 	CalculateProjectionMatrix();
 }
 
-//-------------------------------------------------------------------
-// 更新する
-//-------------------------------------------------------------------
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="elapsedTime">経過時間</param>
 void WataLib::TitleCamera::Update(const float& elapsedTime)
 {
 	UNREFERENCED_PARAMETER(elapsedTime);
@@ -54,7 +59,7 @@ void WataLib::TitleCamera::Update(const float& elapsedTime)
 
 
 	// カメラ座標を計算する
-	CalculateEyePosition();
+	CalculateEyePosition(elapsedTime);
 	// ビュー行列を更新する
 	CalculateViewMatrix();
 
@@ -63,17 +68,17 @@ void WataLib::TitleCamera::Update(const float& elapsedTime)
 
 }
 
-//-------------------------------------------------------------------
-// ビュー行列を計算する
-//-------------------------------------------------------------------
+/// <summary>
+// ビュー行列の計算
+/// </summary>
 void WataLib::TitleCamera::CalculateViewMatrix()
 {
 	m_view = DirectX::SimpleMath::Matrix::CreateLookAt(m_eye, m_target, m_up);
 }
 
-//-------------------------------------------------------------------
-// プロジェクション行列を計算する
-//-------------------------------------------------------------------
+/// <summary>
+/// プロジェクション行列の計算
+/// </summary>
 void WataLib::TitleCamera::CalculateProjectionMatrix()
 {
 	// ウィンドウサイズ
@@ -88,29 +93,31 @@ void WataLib::TitleCamera::CalculateProjectionMatrix()
 
 }
 
-//-------------------------------------------------------------------
-// カメラ座標を計算する
-//-------------------------------------------------------------------
-void WataLib::TitleCamera::CalculateEyePosition()
+/// <summary>
+/// カメラ座標の計算
+/// </summary>
+void WataLib::TitleCamera::CalculateEyePosition(const float& elapsedTime)
 {
 
-	m_angle += 0.005f;
-	float x = 6.0f * cosf(m_angle);
-	float z = 6.0f * sinf(m_angle);
+	m_angle += ROTATION_SPEED * elapsedTime;
+	float x = DISTANCE_TO_TARGET.x * cosf(m_angle);
+	float z = DISTANCE_TO_TARGET.z * sinf(m_angle);
 
-	m_eye = DirectX::SimpleMath::Vector3(x, 4.0f, z);
-
-
+	m_eye = DirectX::SimpleMath::Vector3(x, DISTANCE_TO_TARGET.y, z);
 
 }
 
 
-
+/// <summary>
+/// 状態に入った時
+/// </summary>
 void WataLib::TitleCamera::Enter()
 {
 }
 
-
+/// <summary>
+/// 状態を抜けた時
+/// </summary>
 void WataLib::TitleCamera::Exit()
 {
 

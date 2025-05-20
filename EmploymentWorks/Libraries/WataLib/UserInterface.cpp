@@ -61,7 +61,10 @@ UserInterface::~UserInterface()
 }
 
 
-
+/// <summary>
+/// 画像の読み込み
+/// </summary>
+/// <param name="key">キー</param>
 void UserInterface::LoadTexture(std::string key)
 {
 
@@ -87,7 +90,13 @@ void UserInterface::LoadTexture(std::string key)
 
 }
 
-
+/// <summary>
+/// 生成
+/// </summary>
+/// <param name="resources">共通リソース</param>
+/// <param name="key">キー</param>
+/// <param name="position">座標</param>
+/// <param name="scale">大きさ</param>
 void UserInterface::Create(CommonResources* resources, std::string key, DirectX::SimpleMath::Vector2 position, DirectX::SimpleMath::Vector2 scale)
 {
 	m_commonResources = resources;
@@ -129,7 +138,9 @@ void UserInterface::SetRenderRatio(float ratio)
 
 
 
-
+/// <summary>
+/// シェーダーの作成
+/// </summary>
 void UserInterface::CreateUIShader()
 {
 	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
@@ -182,7 +193,7 @@ void UserInterface::CreateUIShader()
 /// </summary>
 void UserInterface::Render()
 {
-
+	//有効かどうか
 	if (!m_isActive)
 	{
 		return;

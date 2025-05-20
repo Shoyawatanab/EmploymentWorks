@@ -14,11 +14,13 @@
 #include "Game/Enemys/BossEnemy/Barrier/Barrier.h"
 #include "Game/Enemys/BossEnemy/Barrier/State/BarrierStateMachine.h"
 
-using namespace DirectX::SimpleMath;
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
+/// <param name="resources">共通リソース</param>
+/// <param name="barrierDefenseAction">コントローラー</param>
+/// <param name="barrier">バリア</param>
 BarrierDeployment::BarrierDeployment(CommonResources* resources,
 	BarrierDefenseAction* barrierDefenseAction
 	,Barrier* barrier)
@@ -51,9 +53,10 @@ void BarrierDeployment::Initialize()
 }
 
 /// <summary>
-/// 更新
+/// 更新処理
 /// </summary>
 /// <param name="elapsedTime">経過時間</param>
+/// <returns>継続か終了か</returns>
 BarrierDeployment::ActionState BarrierDeployment::Update(const float& elapsedTime)
 {
 	UNREFERENCED_PARAMETER(elapsedTime);
@@ -61,7 +64,7 @@ BarrierDeployment::ActionState BarrierDeployment::Update(const float& elapsedTim
 	
 	if (m_time >= 5.0f)
 	{
-		return ActionState::End;
+		return ActionState::END;
 	}
 	else if (m_time >= 4.0f)
 	{
@@ -72,7 +75,7 @@ BarrierDeployment::ActionState BarrierDeployment::Update(const float& elapsedTim
 	m_time += elapsedTime;
 
 
-	return ActionState::Running;
+	return ActionState::RUNNING;
 
 }
 
@@ -85,7 +88,7 @@ BarrierDeployment::ActionState BarrierDeployment::Update(const float& elapsedTim
 void BarrierDeployment::Enter()
 {
 	m_time = 0;
-
+	//バリアを有効に
 	m_barrier->SetIsEntityActive(true);
 
 

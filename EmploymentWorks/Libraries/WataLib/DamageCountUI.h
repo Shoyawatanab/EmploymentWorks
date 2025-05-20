@@ -44,14 +44,16 @@ namespace WataLib
 		bool GetIsActive() { return m_isActive; }
 		
 	public:
+		//コンストラクタ
 		DamageCountUI(CommonResources* resources);
+		//デストラクタ
 		~DamageCountUI();
-
+		//初期化
 		void Initialize();
 
 		// 更新する
 		void Update(const float& elapsedTime);
-
+		//描画
 		void Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection);
 
 		void Finalize();
@@ -64,6 +66,7 @@ namespace WataLib
 			, DirectX::SimpleMath::Vector2 scale
 		);
 
+		//ワールド座標をスクリーン座標に変換
 		DirectX::SimpleMath::Vector2 WorldToScreen(const DirectX::SimpleMath::Vector3& worldPos,
 			const DirectX::SimpleMath::Matrix& worldMatrix,
 			const DirectX::SimpleMath::Matrix& viewMatrix,
@@ -86,13 +89,13 @@ namespace WataLib
 		float m_rotate;
 		//背景
 		std::unique_ptr<UserInterface> m_backGraund;
-		//
+		//番号
 		std::unique_ptr<DrawNumber> m_numberUI;
 		//ダメージ
 		int m_damage;
 		//スクリーン座標
 		DirectX::SimpleMath::Vector2 m_screenPosition;
-		//
+		//有効かどうか
 		bool m_isActive;
 
 		//1桁目

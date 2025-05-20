@@ -3,8 +3,6 @@
 #include "Libraries/WataLib/Bounding.h"
 #include "Game/CollisiionManager.h"
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
 
 
 /// <summary>

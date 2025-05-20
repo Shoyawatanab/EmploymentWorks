@@ -8,6 +8,9 @@
 
 using json = nlohmann::json;
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
 WataLib::Json::Json()
 	:
 	m_stageParamter{}
@@ -15,15 +18,19 @@ WataLib::Json::Json()
 
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 WataLib::Json::~Json()
 {
 }
 
-//Jsonの読み込み
-void WataLib::Json::LoadJson()
-{
-}
 
+/// <summary>
+/// ステージデータの読み込み
+/// </summary>
+/// <param name="fileName">ファイル名</param>
+/// <returns>ステージデータ</returns>
 std::vector<WataLib::Json::StageData> WataLib::Json::LoadStageDatas(const std::wstring& fileName)
 {
 
@@ -122,6 +129,11 @@ std::vector<WataLib::Json::StageData> WataLib::Json::LoadStageDatas(const std::w
 
 }
 
+/// <summary>
+/// アニメーションデータの読み込み
+/// </summary>
+/// <param name="fileName">ファイル名</param>
+/// <returns>アニメーションデータ</returns>
 std::unordered_map<std::string, WataLib::Json::AnimationData> WataLib::Json::LoadAnimationData(const std::wstring& fileName)
 {
 	std::ifstream file(L"Resources/Dates/Animation/" + fileName + L".json");

@@ -1,12 +1,13 @@
 #include "pch.h"
 #include "BirdEnemyBeamStateMachine.h"
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
+/// <param name="player">プレイヤ</param>
+/// <param name="enemy">鳥の敵</param>
+/// <param name="beam">ビーム</param>
 BirdEnemyBeamStateMachine::BirdEnemyBeamStateMachine(Player* player, BirdEnemy* enemy, BirdEnemyBeam* beam)
 	:
 	m_currentState{}

@@ -20,27 +20,12 @@
 class ParticleUtility
 {
 public:
-	//	変数
-
-		//	getter
+	//	座標の取得
 	const DirectX::SimpleMath::Vector3 GetPosition() { return m_position; }
-
-	const DirectX::SimpleMath::Vector3 GetVelocity() { return m_velocity; }
-
-	const DirectX::SimpleMath::Vector3 GetAccele() { return m_accele; }
-
+	//スケールの取得
 	const DirectX::SimpleMath::Vector3 GetNowScale() { return m_nowScale; }
-	const DirectX::SimpleMath::Vector3 GetStartScale() { return m_startScale; }
-	const DirectX::SimpleMath::Vector3 GetEndScale() { return m_endScale; }
-
-	const float GetLife() { return m_life; }
-	const float GetStartLife() { return m_startLife; }
+	//色の取得
 	const DirectX::SimpleMath::Color GetNowColor() { return m_nowColor; }
-	const DirectX::SimpleMath::Color GetStartColor() { return m_startColor; }
-	const DirectX::SimpleMath::Color GetEndColor() { return m_endColor; }
-
-
-
 
 public:
 	//	関数

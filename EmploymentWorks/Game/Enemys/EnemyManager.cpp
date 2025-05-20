@@ -15,6 +15,8 @@
 /// <summary>
 /// コンストラクタ
 /// </summary>
+/// <param name="player">プレイヤ</param>
+/// <param name="stageObjectmanger">ステージオブジェクトマネージャー</param>
 EnemyManager::EnemyManager(Player* player, StageObjectManager* stageObjectmanger)
 	:
 	m_commonResources{}
@@ -63,7 +65,7 @@ void EnemyManager::Initialize(CommonResources* resources)
 /// <param name="elapsedTime">経過時間</param>
 void EnemyManager::Update(const float& elapsedTime)
 {
-
+	//敵の更新
 	for (auto& enemy : m_enemys)
 	{
 		enemy->Update(elapsedTime);
@@ -81,6 +83,7 @@ void EnemyManager::Render(const DirectX::SimpleMath::Matrix& view, const DirectX
 {
 	using namespace DirectX::SimpleMath;
 
+	//敵の描画
 	for (auto& enemy : m_enemys)
 	{
 		enemy->Render(view, projection);
@@ -102,8 +105,8 @@ void EnemyManager::CreateEnemy()
 {
 	for (auto& enemyData : m_enemyDatas)
 	{
+		//敵の種類
 		std::string kind = enemyData.ModelName;
-
 
 
 		if (kind == "BossEnemy")
@@ -176,7 +179,7 @@ void EnemyManager::AddCollision(CollisionManager* collsionManager)
 /// <returns>割合</returns>
 float EnemyManager::GetBossHPRation()
 {
-
+	//割合を求める
 	float ration = m_bossEnemy->GetHP() / static_cast<float>(Params::BOSSENEMY_MAX_HP);
 	return ration;
 }

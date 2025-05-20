@@ -42,8 +42,9 @@ void UIManager::Initialize(CommonResources* resources)
 
 	m_stateMahine->Initialize(m_commonResources, m_stateMahine->GetGamePlayUI());
 
-	Messenger::GetInstance()->Rigister(GameMessageType::GameClear, this);
-	Messenger::GetInstance()->Rigister(GameMessageType::GameOver, this);
+	//メッセージクラスに登録
+	Messenger::GetInstance()->Rigister(GameMessageType::GAME_CLEAR, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::GAME_OVER, this);
 
 }
 
@@ -102,11 +103,11 @@ void UIManager::Notify(const Telegram<GameMessageType>& telegram)
 
 	switch (telegram.messageType)
 	{
-		case GameMessageType::GameClear:
+		case GameMessageType::GAME_CLEAR:
 			m_stateMahine->ChangeState(m_stateMahine->GetGameEndUI());
 			m_stateMahine->GetGameEndUI()->SetBackGraund(true);
 			break;
-		case GameMessageType::GameOver:
+		case GameMessageType::GAME_OVER:
 			m_stateMahine->ChangeState(m_stateMahine->GetGameEndUI());
 			m_stateMahine->GetGameEndUI()->SetBackGraund(false);
 

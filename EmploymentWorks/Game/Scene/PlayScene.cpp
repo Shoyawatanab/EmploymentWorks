@@ -164,7 +164,6 @@ void PlayScene::Initialize(CommonResources* resources)
 	m_soundManager = SoundManager::GetInstance();
 
 	m_soundManager->PlaySoundBGM("Play");
-	m_soundManager->PlaySoundSE("BoomerangHit");
 
 }
 
@@ -175,7 +174,7 @@ void PlayScene::Update(float elapsedTime)
 {
 	UNREFERENCED_PARAMETER(elapsedTime);
 	//フェードが終わるまで
-	if (m_commonResources->GetFade()->GetFadeState() != Fade::FadeState::None)
+	if (m_commonResources->GetFade()->GetFadeState() != Fade::FadeState::NONE)
 	{
 		return;
 	}
@@ -256,7 +255,7 @@ IScene::SceneID PlayScene::GetNextSceneID() const
 	}
 
 	//フェード中でないなら
-	if (m_commonResources->GetFade()->GetFadeState() == Fade::FadeState::None)
+	if (m_commonResources->GetFade()->GetFadeState() == Fade::FadeState::NONE)
 	{
 		//フェードインを開始
 		m_commonResources->GetFade()->StartNormalFadeIn();
@@ -276,11 +275,11 @@ void PlayScene::CreateStageObject()
 
 	switch (m_stageID)
 	{
-		case SceneManager::Stage1:
+		case SceneManager::STAGE1:
 			stageParameters = json->LoadStageDatas(L"Stage2");
 			m_isTutolialTex = true;
 			break;
-		case SceneManager::Stage2:
+		case SceneManager::STAGE2:
 			stageParameters = json->LoadStageDatas(L"Stage");
 			m_isTutolialTex = false;
 			break;
@@ -329,6 +328,9 @@ void PlayScene::CreateStageObject()
 	}
 }
 
+/// <summary>
+/// マウスホイールのチェック
+/// </summary>
 void PlayScene::CheckMouseWheel()
 {
 
@@ -339,13 +341,13 @@ void PlayScene::CheckMouseWheel()
 	//上に回転
 	if (scrollWheelValue > 0)
 	{
-		Messenger::GetInstance()->Notify(::GameMessageType::MouseWheelUp, nullptr);
+		Messenger::GetInstance()->Notify(::GameMessageType::MOUSE_WHEEL_UP, nullptr);
 	}
 	//下に回転
 	else if (scrollWheelValue < 0)
 	{
 
-		Messenger::GetInstance()->Notify(::GameMessageType::MouseWheelDown, nullptr);
+		Messenger::GetInstance()->Notify(::GameMessageType::MOUSE_WHEEL_DOWN, nullptr);
 
 	}
 

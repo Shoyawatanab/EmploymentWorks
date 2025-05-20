@@ -87,11 +87,7 @@ ParticleUtility::ParticleUtility(
 ParticleUtility::~ParticleUtility()
 {
 }
-/// <summary>
-/// 更新関数
-/// </summary>
-/// <param name="timer">Game等からStepTimerを受け取る</param>
-/// <returns>生存時間(life)がある間はtrue</returns>
+
 
 /// <summary>
 /// 更新

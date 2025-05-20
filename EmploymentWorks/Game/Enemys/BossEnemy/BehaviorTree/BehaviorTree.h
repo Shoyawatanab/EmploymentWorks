@@ -12,6 +12,8 @@ class Player;
 class BossEnemy;
 class ExecutionNode;
 class Conditions;
+class ActionNode;
+class DecoratorNode;
 
 class BehaviorTree
 {
@@ -26,6 +28,28 @@ public:
 	void Update(float elapsedTime);
 	//クラスに必要な情報（ポインタ）の登録
 	void AddPointer(Player* player, BossEnemy* enemy);
+
+private:
+	//振り下ろし攻撃の作成
+	std::unique_ptr<ActionNode> CreateSwingDownActionNode();
+	//ビーム攻撃の作成
+	std::unique_ptr<ActionNode> CreateBeamAttackActionNode();
+	//歩きの作成
+	std::unique_ptr<ActionNode> CreateWalkingActionNode();
+	//ジャンプ攻撃の作成
+	std::unique_ptr<ActionNode> CreateJumpAttackActionNode();
+
+
+
+
+
+	//近距離攻撃の範囲内かどうかのDecoratorの作成
+	std::unique_ptr<DecoratorNode> CreateCloseRangeAttackDecorator();
+	//遠距離攻撃の範囲内かどうかのDecoratorの作成
+	std::unique_ptr<DecoratorNode> CreateLongRangeAttackDecorator();
+	//ジャンプ攻撃の範囲内かどうかのDecoratorの作成
+	std::unique_ptr<DecoratorNode> CreateJumpAttackDecorator();
+
 
 private:
 	//共通リソース

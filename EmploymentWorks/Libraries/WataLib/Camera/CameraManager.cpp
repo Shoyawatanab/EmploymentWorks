@@ -15,9 +15,9 @@ const int MAXANGLEY = 100;
 
 const float EXPANSIOOSPEED = 0.7f;   //拡大時のスピード
 
-//-------------------------------------------------------------------
-// コンストラクタ
-//-------------------------------------------------------------------
+/// <summary>
+/// コンストラクタ
+/// </summary>
 WataLib::CameraManager::CameraManager()
 	:
 	m_currentState{},
@@ -29,10 +29,18 @@ WataLib::CameraManager::CameraManager()
 }
 
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 WataLib::CameraManager::~CameraManager()
 {
 }
 
+
+/// <summary>
+/// 初期化
+/// </summary>
+/// <param name="resources">経過時間</param>
 void WataLib::CameraManager::Initialize(CommonResources* resources)
 {
 
@@ -42,17 +50,16 @@ void WataLib::CameraManager::Initialize(CommonResources* resources)
 	m_currentState = m_tpsCamera.get();
 
 
-
-	Messenger::GetInstance()->Rigister(GameMessageType::DefeatedAllEnemies, this);
+	//メッセージクラスに登録
+	Messenger::GetInstance()->Rigister(GameMessageType::DEFEATED_All_ENEMIES, this);
 }
 
-//-------------------------------------------------------------------
-// 更新する
-//-------------------------------------------------------------------
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="elapsedTime">経過時間</param>
 void WataLib::CameraManager::Update(float elapsedTime)
 {
-	using namespace DirectX;
-	using namespace DirectX::SimpleMath;
 
 	DirectX::Keyboard::State key = DirectX::Keyboard::Get().GetState();
 
@@ -62,7 +69,10 @@ void WataLib::CameraManager::Update(float elapsedTime)
 
 }
 
-
+/// <summary>
+/// ステートの切り替え
+/// </summary>
+/// <param name="nextState"></param>
 void WataLib::CameraManager::ChangeState(ICamera* nextState)
 {
 
@@ -82,12 +92,16 @@ void WataLib::CameraManager::AddPointer(Player* Player, EnemyManager* enemyMange
 	m_endCamera->AddPointer(enemyManger);
 }
 
+/// <summary>
+/// 通知を受け取る関数
+/// </summary>
+/// <param name="telegram">データ</param>
 void WataLib::CameraManager::Notify(const Telegram<GameMessageType>& telegram)
 {
 	
 	switch (telegram.messageType)
 	{
-		case GameMessageType::DefeatedAllEnemies:
+		case GameMessageType::DEFEATED_All_ENEMIES:
 			ChangeState(m_endCamera.get());
 			break;
 		default:

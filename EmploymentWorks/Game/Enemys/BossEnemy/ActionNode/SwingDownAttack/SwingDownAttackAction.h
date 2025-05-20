@@ -22,7 +22,7 @@ namespace mylib
 }
 
 
-class SwingDownAttackAction : public ActionStateController , IObserver<GameMessageType>
+class SwingDownAttackAction : public ActionStateController 
 {
 
 public:
@@ -31,23 +31,16 @@ public:
 
 	static  constexpr float MOVESPEED = 9.0f;
 
-public:
-
-
 
 
 public:
+	//コンストラクタ
 	SwingDownAttackAction(CommonResources* resources,
 		CharacterEntity* owner
 		);
 
 	//デストラクタ
 	~SwingDownAttackAction();
-
-
-	//IObserver
-//通知時に呼ばれる関数
-	void Notify(const Telegram<GameMessageType>& telegram)  override;
 
 
 private:

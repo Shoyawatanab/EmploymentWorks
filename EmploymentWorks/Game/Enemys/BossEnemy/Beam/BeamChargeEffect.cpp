@@ -17,8 +17,7 @@
 #include "Game/Enemys/BossEnemy/Beam/Beam.h"
 #include "Game/Params.h"
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
+
 
 
 
@@ -34,19 +33,19 @@ const std::vector<D3D11_INPUT_ELEMENT_DESC> BeamChargeEffect::INPUT_LAYOUT =
 /// <summary>
 /// コンストラクタ
 /// </summary>
-BeamChargeEffect::BeamChargeEffect()
+/// <param name="resoure">共通リソース</param>
+/// <param name="scale">大きさ</param>
+/// <param name="position">座標</param>
+/// <param name="rotate">回転</param>
+BeamChargeEffect::BeamChargeEffect(CommonResources* resoure, DirectX::SimpleMath::Vector3 scale,DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Quaternion rotate)
 	:
-	m_commonResources{},
-	m_model{}
+	BaseEntity(resoure, scale,position,rotate)
+	,m_model{}
 	,m_vertexShader{}
 	,m_pixelShader{}
 	,m_inputLayout{}
 	,m_CBuffer{}
-	,m_position{}
-	,m_scale{}
 	,m_initialPosition{}
-	,m_initialScale{}
-	,m_initialRotate{}
 	,m_beam{}
 {
 }
@@ -62,27 +61,13 @@ BeamChargeEffect::~BeamChargeEffect()
 /// <summary>
 /// 初期化
 /// </summary>
-/// <param name="resoure">共通リソース</param>
-/// <param name="position">座標</param>
-/// <param name="rotate">回転</param>
-void BeamChargeEffect::Initialize(CommonResources* resoure,DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Quaternion rotate)
+void BeamChargeEffect::Initialize()
 {
-	m_commonResources = resoure;
-
 
 	// モデルを読み込む
-	m_model = m_commonResources->GetGameResources()->GetModel("BeamChargeEffect");
+	m_model = BaseEntity::GetCommonResources()->GetGameResources()->GetModel("BeamChargeEffect");
 
-	m_position = position;
 
-	//ビームの太さ
-	float a = 0.1f;
-
-	m_initialScale = Vector3(a, a, a);
-
-	m_scale = m_initialScale;
-
-	m_initialRotate = rotate;
 
 }
 
@@ -90,21 +75,33 @@ void BeamChargeEffect::Initialize(CommonResources* resoure,DirectX::SimpleMath::
 /// 更新
 /// </summary>
 /// <param name="elapsedTime">経過時間</param>
-void BeamChargeEffect::Update(float elapsedTime)
+void BeamChargeEffect::Update(const float& elapsedTime)
 {
-	UNREFERENCED_PARAMETER(elapsedTime);
+
+	using namespace DirectX::SimpleMath;
+
+	//オブジェクトか更新が無効なら
+	if (!BaseEntity::GetIsEntityActive() || !BaseEntity::GetIsUpdateActive())
+	{
+		return;
+	}
+
 
 	Vector3 beamPosition = m_beam->GetPosition();
 
+	Vector3 position =  BaseEntity::GetLocalPosition();
+
 	//中心に向かって移動させる
-	Vector3 direction = Vector3::Zero - m_position;
+	Vector3 direction = Vector3::Zero - position;
 	direction.Normalize();
 
 	direction *= elapsedTime * Params::BOSSENEMY_BEAM_CHARGE_EFFECT_MOVE_TIME;
 
-	m_position += direction;
+	position += direction;
 
-	float distance = Vector3::Distance(beamPosition, m_position);
+	BaseEntity::SetLocalPosition(position);
+
+	float distance = Vector3::Distance(beamPosition, BaseEntity::GetPosition());
 
 
 	if (distance < 0.1f)
@@ -121,21 +118,25 @@ void BeamChargeEffect::Update(float elapsedTime)
 /// <param name="projection">射影行列</param>
 void BeamChargeEffect::Render(DirectX::SimpleMath::Matrix view, DirectX::SimpleMath::Matrix projection)
 {
-	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
-	auto states = m_commonResources->GetCommonStates();
+	using namespace DirectX::SimpleMath;
+	
+	//オブジェクトか描画が無効なら
+	if (!BaseEntity::GetIsEntityActive() || !BaseEntity::GetIsRenderActive())
+	{
+		return;
+	}
+
+
+	auto context = BaseEntity::GetCommonResources()->GetDeviceResources()->GetD3DDeviceContext();
+	auto states = BaseEntity::GetCommonResources()->GetCommonStates();
 
 
 
 	// ワールド行列を更新する
-	Matrix world = Matrix::Identity;
-	world *= Matrix::CreateScale(m_scale);
-	world *= Matrix::CreateFromQuaternion(m_initialRotate);
-	world *= Matrix::CreateTranslation(m_position);
-	world *= Matrix::CreateFromQuaternion(m_beam->GetRotation());
-	world *= Matrix::CreateTranslation(m_beam->GetPosition());
+	BaseEntity::Render(view,projection);
 
 	//モデルを描画する
-	m_model->Draw(context, *states, world, view, projection, false, [&]()
+	m_model->Draw(context, *states, BaseEntity::GetWorldMatrix(), view, projection, false, [&]()
 		{
 		});
 
@@ -159,6 +160,15 @@ void BeamChargeEffect::Finalize()
 void BeamChargeEffect::AddPointer(Beam* beam)
 {
 	m_beam = beam;
+
+}
+
+/// <summary>
+/// 無効になったら
+/// </summary>
+void BeamChargeEffect::OnDisable()
+{
+	m_beam->RegistrationDeleteParticle(this);
 
 }
 

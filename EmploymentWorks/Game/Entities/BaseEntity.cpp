@@ -2,8 +2,6 @@
 #include "BaseEntity.h"
 #include "Game/Params.h"
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
 
 
 int BaseEntity::m_nextId = 0;
@@ -117,6 +115,8 @@ void BaseEntity::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::
 {
 	UNREFERENCED_PARAMETER(view);
 	UNREFERENCED_PARAMETER(projection);
+
+	using namespace DirectX::SimpleMath;
 
 	//êeÇ†ÇË
 	if(m_parent)

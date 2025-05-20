@@ -18,17 +18,18 @@
 #include <CommonStates.h>
 #include <vector>
 #include <list>
-
 #include "Game/Interface/IEffect.h"
 
+//前方宣言
 class CommonResources;
 class ParticleUtility;
+
 
 
 class Particle : public IEffect
 {
 public:
-	//	データ受け渡し用コンスタントバッファ(送信側)
+	//コンスタントバッファ
 	struct ConstBuffer
 	{
 		DirectX::SimpleMath::Matrix		matWorld;
@@ -40,37 +41,43 @@ public:
 	//	関数
 	static const std::vector<D3D11_INPUT_ELEMENT_DESC> INPUT_LAYOUT;
 
+	//ユーティリティの数
+	static constexpr int UTILITY_COUNT = 20;
+	//生成半径
+	static constexpr float GENERATE_RADIUS = 3.0f;
+
 public:
+	//エフェクトが有効かどうか
+	bool GetIsActive() override { return m_isActive; };
+	//エフェクトが有効かどうかの登録
+	void SetIsActive(bool isActive) override;
+	//座標の登録
+	void SetPosition(DirectX::SimpleMath::Vector3 position) override { m_position = position; };
+	//大きさの登録
+	void SetScale(DirectX::SimpleMath::Vector3 scale) override { m_scale = scale; };
+	//エフェクトの種類のタグ
+	EffectType GetEffectType()  override { return EffectType::PARTICLE; };
 
+public:
+	//コンストラクタ
 	Particle(CommonResources* resources);
-
+	//デストラクタ
 	~Particle() override;
-
+	//初期化
 	void Initialize() override;
+	//更新処理
 	void Update(const float& elapsedTime) override;
+	//描画処理
 	void Render(const DirectX::SimpleMath::Matrix& view, const  DirectX::SimpleMath::Matrix& proj) override;
 
+private:
 
-	bool GetIsActive() override { return m_isActive; };
-
-	void SetIsActive(bool isActive) override ;
-
-	EffectType GetEffectType()  override { return EffectType::Particle; };
-
-
-	void SetPosition(DirectX::SimpleMath::Vector3 position) override { m_position = position; };
-
-	void SetScale(DirectX::SimpleMath::Vector3 scale) override { m_scale = scale; };
-
+	//エフェクトの作成
 	void Create(void* datas) override;
-
-	void LoadTexture(const wchar_t* path);
-
-
-
+	//シェーダーの作成
 	void CreateShader();
 
-
+	//ビルボードの作成
 	void CreateBillboard(
 		DirectX::SimpleMath::Vector3 target,
 		DirectX::SimpleMath::Vector3 eye,
@@ -79,10 +86,13 @@ public:
 private:
 	// 共通リソース
 	CommonResources* m_commonResources;
+	//オブジェクトが有効か
 	bool m_isActive;
+	//座標
 	DirectX::SimpleMath::Vector3 m_position;
+	//大きさ
 	DirectX::SimpleMath::Vector3 m_scale;
-	float m_timer;
+	//
 	Microsoft::WRL::ComPtr<ID3D11Buffer>	m_CBuffer;
 
 
@@ -102,17 +112,11 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11PixelShader> m_pixelShader;
 	//	ジオメトリシェーダ
 	Microsoft::WRL::ComPtr<ID3D11GeometryShader> m_geometryShader;
-	DirectX::SimpleMath::Matrix m_world;
-	DirectX::SimpleMath::Matrix m_view;
-	DirectX::SimpleMath::Matrix m_proj;
+	//ビルボード行列
 	DirectX::SimpleMath::Matrix m_billboard;
+	//頂点情報
 	std::vector<DirectX::VertexPositionColorTexture> m_vertices;
-
-
-	DirectX::SimpleMath::Vector3 m_cameraPosition;
-	DirectX::SimpleMath::Vector3 m_cameraTarget;
-
-
+	//ユーティリティクラス
 	std::vector<ParticleUtility> m_particleUtility;
 
 

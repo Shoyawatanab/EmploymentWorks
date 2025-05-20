@@ -22,7 +22,8 @@
 /// </summary>
 TargetMarker::TargetMarker()
 	:
-	m_tpsCamera{ }
+	m_commonResources{}
+	,m_tpsCamera{ }
 	, m_isTargetMarker{ false }
 	,m_windowSize{}
 	,m_marker{}
@@ -64,8 +65,8 @@ void TargetMarker::Initialize(CommonResources* resources)
 		,Vector2(200,200), Vector2(0.3f,0.3f));
 	
 
-	Messenger::GetInstance()->Rigister(::GameMessageType::BoomerangGetReady, this);
-	Messenger::GetInstance()->Rigister(::GameMessageType::BoomerangGetReadyEnd, this);
+	Messenger::GetInstance()->Rigister(::GameMessageType::BOOMERANG_GET_READY, this);
+	Messenger::GetInstance()->Rigister(::GameMessageType::BOOMERANG_GET_READY_END, this);
 
 }
 
@@ -209,10 +210,10 @@ void TargetMarker::Notify(const Telegram<GameMessageType>& telegram)
 
 	switch (telegram.messageType)
 	{
-		case ::GameMessageType::BoomerangGetReady:
+		case ::GameMessageType::BOOMERANG_GET_READY:
 			m_isTargetMarker = true;
 			break;
-		case ::GameMessageType::BoomerangGetReadyEnd:
+		case ::GameMessageType::BOOMERANG_GET_READY_END:
 			m_isTargetMarker = false;
 			m_isLockOn = false;
 

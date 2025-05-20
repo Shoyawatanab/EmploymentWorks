@@ -18,13 +18,12 @@
 #include "Game/Enemys/BossEnemy/Beam/Beam.h"
 
 #include "Game/Enemys/BossEnemy/ActionNode/BeamAttack/BossBeamAttackAction.h"
+
+
+
 #include "Game/Enemys/BossEnemy/Beam/BeamEnergyBall.h"
 #include "Game/Enemys/BossEnemy/Beam/BeamChargeEffect.h"
 #include "Game/Enemys/BossEnemy/Beam/BeamRays.h"
-
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
-
 
 
 /// <summary>
@@ -39,7 +38,6 @@ BossBeamAttackCharge::BossBeamAttackCharge(CommonResources* resources
 	m_commonResources{resources}
 	,m_bossEnemy{bossenemy}
 	,m_beam{beam}
-	,m_beamAttack{beamAttack}
 	,m_particleCreateTime{}
 	,m_time{}
 {
@@ -54,6 +52,9 @@ BossBeamAttackCharge::~BossBeamAttackCharge()
 	// do nothing.
 }
 
+/// <summary>
+/// 初期化
+/// </summary>
 void BossBeamAttackCharge::Initialize()
 {
 
@@ -61,6 +62,11 @@ void BossBeamAttackCharge::Initialize()
 
 }
 
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="elapsedTime">経過時間</param>
+/// <returns>継続か終了か</returns>
 BossBeamAttackCharge::ActionState BossBeamAttackCharge::Update(const float& elapsedTime)
 {
 
@@ -71,7 +77,6 @@ BossBeamAttackCharge::ActionState BossBeamAttackCharge::Update(const float& elap
 	m_beam->SetPosition(beamPosition + m_bossEnemy->GetPosition());
 
 
-	m_beam->GetBeamEnergyBall()->Update(elapsedTime);
 
 	//進行割合を求める
 	float t = m_time / Params::BOSSENEMY_BEAM_BALL_ACCUMULATIONTIME;
@@ -82,6 +87,9 @@ BossBeamAttackCharge::ActionState BossBeamAttackCharge::Update(const float& elap
 	Vector3 scale = Vector3::Lerp(Vector3::Zero, Params::BOSSENEMY_BEAM_BALL_MAX_SCALE, t);
 
 	m_beam->GetBeamEnergyBall()->SetLocalScale(scale);
+
+	m_beam->GetBeamEnergyBall()->Update(elapsedTime);
+
 
 	std::vector<std::unique_ptr<BeamChargeEffect>>& effect = m_beam->GetBeamChargeEffect();
 
@@ -100,14 +108,14 @@ BossBeamAttackCharge::ActionState BossBeamAttackCharge::Update(const float& elap
 
 	if (m_time > Params::BOSSENEMY_BEAM_BALL_ACCUMULATIONTIME)
 	{
-		return ActionState::End;
+		return ActionState::END;
 
 	}
 
 	m_time += elapsedTime;
 	m_particleCreateTime += elapsedTime;
 
-	return ActionState::Running;
+	return ActionState::RUNNING;
 
 }
 
@@ -132,12 +140,30 @@ void BossBeamAttackCharge::Enter()
 
 	m_beam->GetBeamRays()->SetLocalPosition(Vector3::Zero);
 
+	m_beam->SetIsEntityActive(true);
 	m_beam->GetBeamEnergyBall()->SetIsEntityActive(true);
+
+	//エフェクトの取得
+	auto& effects = m_beam->GetBeamChargeEffect();
+	//全て有効に
+	for (auto& effect : effects)
+	{
+		effect->SetIsEntityActive(true);
+	}
 
 
 }
 
+
 void BossBeamAttackCharge::Exit()
 {
+	//エフェクトの取得
+	auto& effects = m_beam->GetBeamChargeEffect();
+	//全て無効に
+	for (auto& effect : effects)
+	{
+		effect->SetIsEntityActive(false);
+	}
+
 }
 

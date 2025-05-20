@@ -22,17 +22,18 @@ namespace mylib
 class BossBeamAttackPreliminaryAction : public IAction
 {
 public:
+	//コンストラクタ
 	BossBeamAttackPreliminaryAction(CommonResources* resources
 		, CharacterEntity* bossEnemy
 		,Beam* beam
 		, BossBeamAttackAction* beamAttack);
 
-	//継承関係
-		//デストラクタ
+	
+	//デストラクタ
 	~BossBeamAttackPreliminaryAction() override;
 	//初期化
 	void Initialize() override;
-	// 更新する
+	// 更新処理
 	ActionState Update(const float& elapsedTime) override;
 	//状態に入った時
 	void Enter() override;
@@ -44,9 +45,11 @@ private:
 
 	//経過時間
 	float m_time;
-
+	//所有者
 	CharacterEntity* m_bossEnemy;
+	//ビーム
 	Beam* m_beam;
+	//ビーム攻撃
 	BossBeamAttackAction* m_beamAttack;
 
 

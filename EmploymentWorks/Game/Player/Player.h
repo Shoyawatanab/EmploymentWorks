@@ -7,7 +7,6 @@
 #include "Libraries/WataLib/Json.h"
 #include "Game/Weapon/Boomerang/Boomerang.h"
 #include "Game/Weapon/Boomerang/State/BoomerangStateMachine.h"
-#include "Game/Interface/IWeapon.h"
 #include "Game/TargetMarker.h"
 #include "Libraries/WataLib/Shadow.h"
 
@@ -26,8 +25,6 @@ namespace WataLib
 
 class Player : public CompositeEntity 
 {
-private:
-
 
 public:
 
@@ -71,7 +68,7 @@ public:
 
 //ICollisionObject
 	//タグの取得
-	CollisionTag GetCollisionTag() override { return CollisionEntity::CollisionTag::Player; };
+	CollisionTag GetCollisionTag() override { return CollisionEntity::CollisionTag::PLAYER; };
 	//当たり判定クラスに登録
 	void  AddCollision(CollisionManager* collsionManager) override ;
 
@@ -87,7 +84,7 @@ public:
 	//当たり判定を行わないタグ
 	const std::vector<CollisionTag> GetNoHitDetectionTag() {
 		return  {
-			{CollisionTag::PlayerParts}
+			{CollisionTag::PLAYERPARTS}
 			//,{CollisionTag::Boomerang}
 		};
 	}
@@ -95,7 +92,7 @@ public:
 	//押し出しを行わないタグ
 	const std::vector<CollisionTag> GetNoExtrusionTag() {
 		return  {
-			{CollisionTag::Boomerang}
+			{CollisionTag::BOOMERANG}
 		};
 	};
 

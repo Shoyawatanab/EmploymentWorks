@@ -10,13 +10,12 @@
 class MoveEntity : public CollisionEntity
 {
 public:
-
-
+	//コンストラク
 	MoveEntity(CommonResources* resources
 		, const DirectX::SimpleMath::Vector3& scale
 		, const DirectX::SimpleMath::Vector3& position
 		, const DirectX::SimpleMath::Quaternion& rotation);
-
+	//デストラクタ
 	~MoveEntity() override;
 
 	//初期化

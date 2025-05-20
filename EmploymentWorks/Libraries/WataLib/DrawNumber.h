@@ -21,6 +21,10 @@
 
 class DrawNumber
 {
+public:
+
+	static const std::vector<D3D11_INPUT_ELEMENT_DESC> INPUT_LAYOUT;
+
 
 public:
 	//データ受け渡し用コンスタントバッファ(送信側)
@@ -63,24 +67,24 @@ public:
 
 	//関数
 public:
-	static const std::vector<D3D11_INPUT_ELEMENT_DESC> INPUT_LAYOUT;
-
+	//コンストラク
 	DrawNumber();
+	//デストラクタ
 	~DrawNumber();
-
+	//画像の読み込み
 	void LoadTexture(const wchar_t* path);
-
+	//生成
 	void Create(DX::DeviceResources* pDR
 		, const wchar_t* path
 		, DirectX::SimpleMath::Vector2 position
 		, DirectX::SimpleMath::Vector2 scale
 		);
-
+	//描画
 	void Render(int number , DirectX::SimpleMath::Vector2 offsetPosition);
 
 
 private:
-
+	//シェーダーの作成
 	void CreateUIShader();
 
 
@@ -88,13 +92,10 @@ private:
 	//変数
 private:
 	DX::DeviceResources* m_pDR;
-
+	//定数バッファ
 	Microsoft::WRL::ComPtr<ID3D11Buffer>	m_CBuffer;
-
-	DX::StepTimer                           m_timer;
 	// 入力レイアウト
 	Microsoft::WRL::ComPtr<ID3D11InputLayout> m_inputLayout;
-
 	// プリミティブバッチ
 	std::unique_ptr<DirectX::PrimitiveBatch<DirectX::VertexPositionColorTexture>> m_batch;
 	//コモンステート
@@ -108,16 +109,19 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11PixelShader> m_pixelShader;
 	// ジオメトリシェーダ
 	Microsoft::WRL::ComPtr<ID3D11GeometryShader> m_geometryShader;
-
+	//画像サイズ
 	int m_textureWidth, m_textureHeight;
-
+	//大きさ
 	DirectX::SimpleMath::Vector2 m_scale;
+	//座標
 	DirectX::SimpleMath::Vector2 m_position;
-
+	//初期座標
 	DirectX::SimpleMath::Vector2 m_initialPosition;
+	//初期の大きさ
 	DirectX::SimpleMath::Vector2 m_initialScale;
 
 	float m_renderRatio;
+	//
 	float m_renderRatioOffset;
 
 	//画像全体の透明度

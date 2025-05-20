@@ -8,7 +8,6 @@
 #include "Game/CollisiionManager.h"
 
 
-using namespace DirectX::SimpleMath;
 
 /// <summary>
 /// コンストラクタ

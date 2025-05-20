@@ -14,9 +14,6 @@
 #include <cassert>
 #include "BirdEnemyFeather.h"
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
-
 
 
 /// <summary>
@@ -34,6 +31,7 @@ BirdEnemyFeather::BirdEnemyFeather(CommonResources* resources,
 	DirectX::SimpleMath::Quaternion rotation)
 	: 
 	BirdEnemyPartsBase(resources, parent, PARTSNAME, scale, position, rotation)
+	,m_state{}
 {
 }
 
@@ -52,12 +50,11 @@ void BirdEnemyFeather::Initialize()
 {
 
 
-
 	// ƒ‚ƒfƒ‹‚ğ“Ç‚İ‚Ş
 	auto model = BaseEntity::GetCommonResources()->GetGameResources()->GetModel("BirdEnemyFeather");
 
 	BirdEnemyPartsBase::SetModel(model);
-
+	//‰Šú‰»
 	BirdEnemyPartsBase::Initialize();
 
 

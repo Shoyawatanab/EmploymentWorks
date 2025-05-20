@@ -39,8 +39,9 @@ namespace WataLib
 		const DirectX::SimpleMath::Quaternion& GetRotation() { return m_rotation; }
 
 	public:
-
+		//コンストラクタ
 		Animation();
+		//デストラクタ
 		~Animation();
 		//更新処理
 		bool Update(const float& elapsedTime);
@@ -57,26 +58,26 @@ namespace WataLib
 		void InitializAnimationData(const std::string& animationType);
 		//座標のキーフレームの切り替え
 		void ChangePositionKeyFrame();
-
+		//回転のキーフレームの切り替え
 		void ChangeRotationKeyFrame();
 
 
 	private:
-
+		//アニメーションデータ
 		std::unordered_map<std::string, AnimationData> m_animationData;
-
+		//実行中のアニメーションデータ
 		AnimationData m_currentAnimationData;
-	
+		//座標
 		DirectX::SimpleMath::Vector3 m_position;
-
+		//回転
 		DirectX::SimpleMath::Quaternion m_rotation;
-
+		//ペア座標
 		std::pair<FromTo, FromTo> m_fromToPosition;
-
+		//ペア回転
 		std::pair<FromTo, FromTo> m_fromToRotation;
-
+		//時間
 		float m_time;
-
+		//通常アニメーション
 		std::string m_normalAnimationType;
 
 	};

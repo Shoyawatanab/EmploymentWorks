@@ -25,9 +25,11 @@ using namespace DirectX::SimpleMath;
 
 
 /// <summary>
-/// コンストラクタ
+/// コンストラク
 /// </summary>
 /// <param name="resources">共通リソース</param>
+/// <param name="own">所有者</param>
+/// <param name="target">ターゲット</param>
 WalkingActionComtroller::WalkingActionComtroller(CommonResources* resources
 	, CharacterEntity* own
 	, CharacterEntity* target)
@@ -36,11 +38,11 @@ WalkingActionComtroller::WalkingActionComtroller(CommonResources* resources
 	,m_own{own}
 	,m_target{target}
 {
-
+	//各状態の作成
 	m_walkingAction = std::make_unique<WalkingAction>(m_commonResources,m_own,m_target);
-
 	m_orientation = std::make_unique<OrientationAction>(m_commonResources, m_own, m_target);
 
+	//動作順に追加
 	ActionStateController::Initialize({ 
 		m_walkingAction.get() 
 		});

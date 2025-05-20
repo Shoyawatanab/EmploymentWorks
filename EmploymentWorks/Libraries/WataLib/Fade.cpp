@@ -31,9 +31,11 @@ const std::vector<D3D11_INPUT_ELEMENT_DESC> Fade::INPUT_LAYOUT =
 	{ "TEXCOORD",	0, DXGI_FORMAT_R32G32_FLOAT, 0, sizeof(DirectX::SimpleMath::Vector3)+ sizeof(DirectX::SimpleMath::Vector4), D3D11_INPUT_PER_VERTEX_DATA, 0 },
 };
 
-///	<summary>
-///	コンストラクタ
-///	</summary>
+/// <summary>
+/// コンストラクタ
+/// </summary>
+/// <param name="device">デバイス</param>
+/// <param name="contect">コンテキスト</param>
 Fade::Fade(ID3D11Device1* device, ID3D11DeviceContext* contect)
 	:
 	m_time{}
@@ -53,6 +55,9 @@ Fade::~Fade()
 {
 }
 
+/// <summary>
+/// 初期化
+/// </summary>
 void Fade::Initialize()
 {
 
@@ -66,36 +71,38 @@ void Fade::Initialize()
 
 	m_currentPS = m_normalFadeInPS.Get();
 
-	m_fadeState = FadeState::None;
+	///初期化
+	m_fadeState = FadeState::NONE;
 	m_time = 0;
-
 	m_maxFadeTime = MAXFADETIME;
-
 	m_isSceneChange = false;
 
 
 }
 
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="elapsdTime">経過時間</param>
 void Fade::Update(float elapsdTime)
 {
 	//フェード中じゃなければ
-	if (m_fadeState == FadeState::None)
+	if (m_fadeState == FadeState::NONE)
 	{
 		return;
 	}
 
+	
 	if (m_time >= MAXFADETIME)
 	{
 
 		switch (m_fadeState)
 		{
-			case Fade::None:
-				break;
-			case Fade::FadeIn:
+			case Fade::FADE_IN:
 				m_isSceneChange = true;
 
 				break;
-			case Fade::FadeOut:
+			case Fade::FADE_OUT:
 				m_isSceneChange = false;
 
 				break;
@@ -104,7 +111,7 @@ void Fade::Update(float elapsdTime)
 		}
 
 
-		m_fadeState = FadeState::None;
+		m_fadeState = FadeState::NONE;
 
 		return;
 	}
@@ -119,7 +126,7 @@ void Fade::Update(float elapsdTime)
 void Fade::StartNormalFadeIn()
 {
 
-	m_fadeState = FadeState::FadeIn;
+	m_fadeState = FadeState::FADE_IN;
 
 	m_time = 0;
 
@@ -128,10 +135,12 @@ void Fade::StartNormalFadeIn()
 }
 
 
-
+/// <summary>
+/// 普通のフェードをはじめ
+/// </summary>
 void Fade::StartNormalFadeOut()
 {
-	m_fadeState = FadeState::FadeOut;
+	m_fadeState = FadeState::FADE_OUT;
 	m_time = 0;
 
 	m_currentPS = m_normalFadeOutPS.Get();

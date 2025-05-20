@@ -17,8 +17,6 @@
 #include "Libraries/WataLib/DrawNumber.h"
 
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
 
 void WataLib::DamageCountUI::SetPosition(DirectX::SimpleMath::Vector3 Pos)
 {
@@ -89,8 +87,11 @@ void WataLib::DamageCountUI::SetScreenPosition(DirectX::SimpleMath::Vector2 posi
 
 }
 
-// コンストラクタ
-//---------------------------------------------------------
+
+/// <summary>
+/// コンストラクタ
+/// </summary>
+/// <param name="resources"></param>
 WataLib::DamageCountUI::DamageCountUI(CommonResources* resources)
 	:
 	m_commonResources{resources},
@@ -112,9 +113,9 @@ WataLib::DamageCountUI::DamageCountUI(CommonResources* resources)
 
 }
 
-//---------------------------------------------------------
-// デストラクタ
-//---------------------------------------------------------
+/// <summary>
+/// デストラクタ
+/// </summary>
 WataLib::DamageCountUI::~DamageCountUI()
 {
 	// do nothing.
@@ -122,12 +123,13 @@ WataLib::DamageCountUI::~DamageCountUI()
 
 }
 
-//---------------------------------------------------------
-// 初期化する
-//---------------------------------------------------------
+/// <summary>
+/// 初期化
+/// </summary>
 void WataLib::DamageCountUI::Initialize()
 {
 
+	using namespace DirectX::SimpleMath;
 
 	m_backGraund = std::make_unique<UserInterface>();
 	m_backGraund = LoadTexture("DamageBackGraund"
@@ -148,7 +150,10 @@ void WataLib::DamageCountUI::Initialize()
 
 }
 
-
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="elapsedTime">経過時間</param>
 void WataLib::DamageCountUI::Update(const float& elapsedTime)
 {
 
@@ -170,11 +175,14 @@ void WataLib::DamageCountUI::Update(const float& elapsedTime)
 
 }
 
-//---------------------------------------------------------
-// 描画する
-//---------------------------------------------------------
+/// <summary>
+/// 描画処理
+/// </summary>
+/// <param name="view">ビュー行列</param>
+/// <param name="projection">射影行列</param>
 void WataLib::DamageCountUI::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
 {
+	using namespace DirectX::SimpleMath;
 
 	if (!m_isActive)
 	{
@@ -198,15 +206,19 @@ void WataLib::DamageCountUI::Render(const DirectX::SimpleMath::Matrix& view, con
 
 }
 
-//---------------------------------------------------------
-// 後始末する
-//---------------------------------------------------------
 void WataLib::DamageCountUI::Finalize()
 {
 	// do nothing.
 
 }
 
+/// <summary>
+/// 画像の読み込み
+/// </summary>
+/// <param name="key"></param>
+/// <param name="position"></param>
+/// <param name="scale"></param>
+/// <returns></returns>
 std::unique_ptr<UserInterface> WataLib::DamageCountUI::LoadTexture(std::string key, DirectX::SimpleMath::Vector2 position, DirectX::SimpleMath::Vector2 scale)
 {
 	//  メニューとしてアイテムを追加する
@@ -221,6 +233,16 @@ std::unique_ptr<UserInterface> WataLib::DamageCountUI::LoadTexture(std::string k
 	return userInterface;
 }
 
+/// <summary>
+/// ワールド座標をスクリーン座標に変換
+/// </summary>
+/// <param name="worldPos">ワールド座標</param>
+/// <param name="worldMatrix">ワールド行列</param>
+/// <param name="viewMatrix">ビュー行列</param>
+/// <param name="projectionMatrix">射影行列</param>
+/// <param name="screenWidth">画面の横の長さ</param>
+/// <param name="screenHeight">画面の縦の長さ</param>
+/// <returns>スクリーン座標</returns>
 DirectX::SimpleMath::Vector2 WataLib::DamageCountUI::WorldToScreen(const DirectX::SimpleMath::Vector3& worldPos, const DirectX::SimpleMath::Matrix& worldMatrix, const DirectX::SimpleMath::Matrix& viewMatrix, const DirectX::SimpleMath::Matrix& projectionMatrix, int screenWidth, int screenHeight)
 {
 	using namespace DirectX::SimpleMath;

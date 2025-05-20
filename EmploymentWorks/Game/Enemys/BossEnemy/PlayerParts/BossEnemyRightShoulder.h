@@ -21,9 +21,7 @@ class BossEnemyRightShoulder : public BossEnemyPartsBase
 {
 
 private:
-	//static constexpr コンパイル時に決定する　クラス外での変更をする必要がないため
-	//static cons      クラス外で変更する可能性がある場合
-
+	//パーティクルの生成のメッセージを送る
 	static constexpr const char PARTSNAME[] = "RightShoulder";
 
 

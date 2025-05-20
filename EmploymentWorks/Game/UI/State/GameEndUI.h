@@ -5,8 +5,7 @@
 #include <unordered_map>
 #include "Game/Interface/IState.h"
 
-
-
+//前方宣言
 class Player;
 class UserInterface;
 class PlayScene;
@@ -34,12 +33,24 @@ private :
 	//拡大率
 	static constexpr float EXPANSION{ 1.5f };
 
+	static constexpr DirectX::SimpleMath::Vector2 CHANGEUI_POSITION {200, 650};
+	static constexpr DirectX::SimpleMath::Vector2 CHANGEUI_SCALE{0.4f, 0.4f};
+
+	static constexpr DirectX::SimpleMath::Vector2 DECISIONUI_POSITION{570, 650};
+	static constexpr DirectX::SimpleMath::Vector2 DECISIONUI_SCALE {0.4f, 0.4f};
+	
+	static constexpr DirectX::SimpleMath::Vector2 ARROW_UP_POSITION{450, 360};
+	static constexpr DirectX::SimpleMath::Vector2 ARROW_DOWN_POSITION2{450, 500};
+	static constexpr DirectX::SimpleMath::Vector2 ARROW_SCALE{0.2f, 0.2f};
+
+
 public:
 
+	//状態
 	enum  class State
 	{
-		Title
-		,ReTry
+		TITLE
+		,RETRY
 
 	};
 
@@ -48,10 +59,8 @@ public:
 	GameEndUI() ;
 	//デストラクタ
 	~GameEndUI() override;
-
+	//描画
 	void Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection) override;
-
-
 	//初期化
 	void Initialize(CommonResources* resources) override;
 	// 更新する
@@ -65,16 +74,11 @@ public:
 	void AddPointer(Player* player, PlayScene* playScene);
 
 
-	void CreateTexture();
-
-	//アニメーション
-	void Animation(const float& elapsedTime);
-	
 	/// <summary>
 	/// 背景の設定
 	/// </summary>
 	/// <param name="isClear"> ture :クリア  false: ゲームオーバー </param>
-	void SetBackGraund(bool isClear) { 
+	void SetBackGraund(bool isClear) {
 
 		if (isClear)
 		{
@@ -87,6 +91,14 @@ public:
 		}
 
 	}
+
+private:
+	//画像の作成
+	void CreateTexture();
+
+	//アニメーション
+	void Animation(const float& elapsedTime);
+
 
 
 
@@ -106,15 +118,14 @@ private:
 	State m_state;
 	//使用背景
 	UserInterface* m_backGraund;
-
+	//プレイシーン
 	PlayScene* m_playScene;
-
+	//画像
 	std::vector < std::unique_ptr<UserInterface>> m_textures;
-
+	
 	std::unique_ptr<UserInterface> m_arrow;
-
+	//画面サイズ
 	std::pair<int, int> m_windowSize;
-
 	//座標
 	DirectX::SimpleMath::Vector3 m_position;
 	//大きさ

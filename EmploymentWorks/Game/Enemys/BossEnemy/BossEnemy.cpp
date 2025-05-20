@@ -20,13 +20,12 @@
 #include "Game/Enemys/BossEnemy/ActionNode/RushAttack/BossRushAttackAction.h"
 #include "Game/Enemys/BossEnemy/ActionNode/Walking/WalkingActionComtroller.h"
 #include "Game/Enemys/BossEnemy/ActionNode/SwingDownAttack/SwingDownAttackAction.h"
+#include "Game/Enemys/BossEnemy/ActionNode/Idleing/IdleingActionComtroller.h"
 
 #include "Game/Observer/Enemy/EnemyMessenger.h"
 #include "Libraries/MyLib/DebugString.h"
 
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
 
 /// <summary>
 /// コンストラクタ
@@ -46,7 +45,6 @@ BossEnemy::BossEnemy(CommonResources* resources, DirectX::SimpleMath::Vector3 sc
 	,m_behavior{}
 	,m_player{}
 	,m_punchTime{}
-	,m_isActives{true}
 	,m_beam{}
 	,m_shadow{}
 	,m_barrier{}
@@ -91,23 +89,29 @@ void BossEnemy::AddPointer(Player* player, StageObjectManager* stageObjectManage
 	m_beam->AddPointer(this,player);
 }
 
+/// <summary>
+/// 行動の切り替え
+/// </summary>
+/// <param name="actionName">行動の名前</param>
 void BossEnemy::ChangeAction(const std::string actionName)
 {
-
+	//リストから佐賀図
 	auto it = m_actionList.find(actionName);
 
+	//あれば
 	if (it != m_actionList.end())
 	{
-
+		//切り替え前の行動があるかどうか
 		if (m_action.second != nullptr)
 		{
+			//状態を抜けるときの処理
 			m_action.second->Exit();
 		}
-
+		//実行行動の名前の切り替え
 		m_action.first = actionName;
-
+		//実行行動の切り替え
 		m_action.second = it->second.get();
-
+		//状態に入った時の処理
 		m_action.second->Enter();
 		
 
@@ -165,27 +169,23 @@ void BossEnemy::Initialize()
 
 
 	//各アクションの作成
+	m_actionList["Idle"] = std::make_unique<IdleingActionComtroller>(BaseEntity::GetCommonResources(), this);
 	m_actionList["JumpAttack"] = std::make_unique<BossJumpAttackAction>(BaseEntity::GetCommonResources(),this,m_player);
 	m_actionList["RushAttack"] = std::make_unique<BossRushAttackAction>(BaseEntity::GetCommonResources(),this,m_player);
 	m_actionList["BarrierDefense"] = std::make_unique<BarrierDefenseAction>(BaseEntity::GetCommonResources(), this,m_barrier.get());
 	m_actionList["BeamAttack"] = std::make_unique<BossBeamAttackAction>(BaseEntity::GetCommonResources(), this, m_beam.get(),m_player);
-
 	m_actionList["Walking"] = std::make_unique<WalkingActionComtroller>(BaseEntity::GetCommonResources(), this,m_player);
-
 	m_actionList["SwingDown"] = std::make_unique<SwingDownAttackAction>(BaseEntity::GetCommonResources(), this);
 
-
-	ChangeAction("JumpAttack");
+	//初期状態
+	ChangeAction("Idle");
 
 	m_behavior->AddPointer(m_player, this);
 
 	//初期化
 	m_behavior->Initialize(BaseEntity::GetCommonResources());
-	
 	m_beam->Initialize();
-
 	m_barrier->Initialize();
-
 	m_shadow->Initialize(device, context, states);
 
 	//当たり判定の作成
@@ -196,7 +196,7 @@ void BossEnemy::Initialize()
 
 	m_hp = Params::BOSSENEMY_MAX_HP;
 
-	Messenger::GetInstance()->Rigister(GameMessageType::BossBeamAttackEnd, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::BOSS_BEAM_ATTACK_END, this);
 
 	//
 	EnemyMessenger::GetInstance()->Rigister(GetID(), this);
@@ -204,7 +204,6 @@ void BossEnemy::Initialize()
 
 	m_target = m_player;
 
-	BaseEntity::GetID();
 	
 
 
@@ -227,6 +226,7 @@ void BossEnemy::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::S
 
 	EnemyEntity::Render(view, projection);
 
+	//当たり判定の描画
 	CollisionEntity::GetBounding()->DrawBoundingSphere(BaseEntity::GetPosition(), view, projection);
 	CollisionEntity::GetBounding()->DrawBoundingBox(BaseEntity::GetPosition(), view, projection);
 
@@ -253,14 +253,7 @@ void BossEnemy::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::S
 
 	// 自機の影を描画する
 	m_shadow->Render(context, states, view, projection, shadowPos, Params::BOSSENEMY_SHADOW_RADIUS * BaseEntity::GetScale().x);
-
-	//////// デバッグ情報を表示する
-	//auto debugString = BaseEntity::GetCommonResources()->GetDebugString();
-	//debugString->AddString("Pos %f" ,BaseEntity::GetPosition().x);
-	//debugString->AddString("Pos %f" , BaseEntity::GetPosition().y);
-	//debugString->AddString("X %d" , m_velocity.x);
-	//debugString->AddString("Y %d" , m_velocity.y);
-
+	
 
 }
 
@@ -296,24 +289,8 @@ void BossEnemy::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 
 	switch (tag)
 	{
-		case CollisionEntity::CollisionTag::None:
-			break;
-		case CollisionEntity::CollisionTag::Player:
-			break;
-		case CollisionEntity::CollisionTag::PlayerParts:
-			break;
-		case CollisionEntity::CollisionTag::Stage:
+		case CollisionEntity::CollisionTag::STAGE:
 			m_isGrounded = true;
-			break;
-		case CollisionEntity::CollisionTag::Enemy:
-			break;
-		case CollisionEntity::CollisionTag::EnemyParts:
-			break;
-		case CollisionEntity::CollisionTag::Boomerang:
-			break;
-		case CollisionEntity::CollisionTag::Beam:
-			break;
-		case CollisionEntity::CollisionTag::Barrier:
 			break;
 		default:
 			break;
@@ -321,13 +298,18 @@ void BossEnemy::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 
 }
 
+/// <summary>
+/// 当たり続けているときに呼ばれる関数
+/// </summary>
+/// <param name="object"></param>
+/// <param name="tag"></param>
 void BossEnemy::OnCollisionStay(CollisionEntity* object, CollisionTag tag)
 {
 	UNREFERENCED_PARAMETER(object);
 
 	switch (tag)
 	{
-		case CollisionEntity::CollisionTag::Stage:
+		case CollisionEntity::CollisionTag::STAGE:
 		{
 			Vector3 velocity = BaseEntity::GetVelocity();
 
@@ -344,12 +326,19 @@ void BossEnemy::OnCollisionStay(CollisionEntity* object, CollisionTag tag)
 
 }
 
+/// <summary>
+/// 離れた時に呼ばれる関数
+/// </summary>
+/// <param name="object"></param>
+/// <param name="tag"></param>
 void BossEnemy::OnCollisionExit(CollisionEntity* object, CollisionTag tag)
 {
 
+	UNREFERENCED_PARAMETER(object);
+
 	switch (tag)
 	{
-		case CollisionEntity::CollisionTag::Stage:
+		case CollisionEntity::CollisionTag::STAGE:
 			m_isGrounded = false;
 			break;
 		default:
@@ -381,8 +370,8 @@ void BossEnemy::Update(const float& elapsedTime)
 
 
 
-
-	if (m_action.second->Update(elapsedTime) == IAction::ActionState::End)
+	//行動の更新
+	if (m_action.second->Update(elapsedTime) == IAction::ActionState::END)
 	{
 		//ビヘイビアツリーの更新
 		m_behavior->Update(elapsedTime);
@@ -442,7 +431,7 @@ void BossEnemy::ChangeAnimation(std::string animationType)
 
 
 /// <summary>
-/// 通知を受け取る関数
+/// 通知を受け取る関数（Game）
 /// </summary>
 /// <param name="type">種類</param>
 /// <param name="datas">データ</param>
@@ -451,7 +440,7 @@ void BossEnemy::Notify(const Telegram<GameMessageType>& telegram)
 	
 	switch (telegram.messageType)
 	{
-		case GameMessageType::BossBeamAttackEnd:
+		case GameMessageType::BOSS_BEAM_ATTACK_END:
 			break;
 		default:
 			break;
@@ -459,27 +448,30 @@ void BossEnemy::Notify(const Telegram<GameMessageType>& telegram)
 
 }
 
-
+/// <summary>
+/// 通知を受け取る関数（Enemy）
+/// </summary>
+/// <param name="telegram"></param>
 void BossEnemy::Notify(const Telegram<EnemyMessageType>& telegram)
 {
 
 
 	switch (telegram.messageType)
 	{
-		case EnemyMessageType::BarrierDefense:
+		case EnemyMessageType::BARRIER_DEFENSE:
 			ChangeAction("BarrierDefense");
 			break;
-		case EnemyMessageType::BeamAttack:
+		case EnemyMessageType::BEAM_ATTACK:
 			ChangeAction("BeamAttack");
 			break;
-		case EnemyMessageType::JumpAttack:
+		case EnemyMessageType::JUMP_ATTACK:
 			ChangeAction("JumpAttack");
 
 			break;
-		case EnemyMessageType::SwingDown:
+		case EnemyMessageType::SWING_DOWN:
 			ChangeAction("SwingDown");
 			break;
-		case EnemyMessageType::Walking:
+		case EnemyMessageType::WALKING:
 			ChangeAction("Walking");
 			break;
 		default:

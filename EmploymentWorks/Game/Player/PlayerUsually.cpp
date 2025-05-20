@@ -10,8 +10,7 @@
 #include "Game/Observer/Messenger.h"
 #include "Game/Params.h"
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
+
 
 /// <summary>
 /// コンストラクタ
@@ -55,8 +54,8 @@ void PlayerUsually::Initialize(CommonResources* resources)
 
 
 	//イベントにObserverとして登録
-	Messenger::GetInstance()->Rigister(::GameMessageType::BoomerangGetReady, this);
-	Messenger::GetInstance()->Rigister(::GameMessageType::BoomerangGetReadyEnd, this);
+	Messenger::GetInstance()->Rigister(::GameMessageType::BOOMERANG_GET_READY, this);
+	Messenger::GetInstance()->Rigister(::GameMessageType::BOOMERANG_GET_READY_END, this);
 }
 
 
@@ -137,11 +136,11 @@ void PlayerUsually::Notify(const Telegram<GameMessageType>& telegram)
 	//イベントの種類
 	switch (telegram.messageType)
 	{
-		case ::GameMessageType::BoomerangGetReady:
+		case ::GameMessageType::BOOMERANG_GET_READY:
 			//構えている
 			m_isGetReady = true;
 			break;
-		case ::GameMessageType::BoomerangGetReadyEnd:
+		case ::GameMessageType::BOOMERANG_GET_READY_END:
 			//構えていない
 			m_isGetReady = false;
 			break;
@@ -151,16 +150,14 @@ void PlayerUsually::Notify(const Telegram<GameMessageType>& telegram)
 }
 
 
-
-
-
-
 /// <summary>
 /// 更新処理
 /// </summary>
 /// <param name="elapsedTime">経過時間</param>
 void PlayerUsually::Update(const float& elapsedTime)
 {
+	using namespace DirectX;
+
 	// キーボードステートを取得する
 	DirectX::Keyboard::State key = DirectX::Keyboard::Get().GetState();
 
@@ -189,9 +186,9 @@ void PlayerUsually::Update(const float& elapsedTime)
 	moveDirection = Vector3::Transform(moveDirection, m_tpsCamera->GetRotationX());
 	moveDirection.Normalize();
 
-
+	//動き
 	Move(elapsedTime,moveDirection);
-
+	//回転
 	Rotation(elapsedTime, moveDirection);
 
 	//アニメーションを管理

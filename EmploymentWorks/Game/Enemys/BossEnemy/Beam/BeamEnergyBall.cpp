@@ -19,11 +19,9 @@
 #include "Game/Params.h"
 #include "Game/Observer/Messenger.h"
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
 
 
-
+//インプットレイアウト
 const std::vector<D3D11_INPUT_ELEMENT_DESC> BeamEnergyBall::INPUT_LAYOUT =
 {
 	{ "POSITION",    0, DXGI_FORMAT_R32G32B32_FLOAT,    0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
@@ -40,7 +38,7 @@ const std::vector<D3D11_INPUT_ELEMENT_DESC> BeamEnergyBall::INPUT_LAYOUT =
 /// <param name="parent">親</param>
 BeamEnergyBall::BeamEnergyBall(CommonResources* resources, BaseEntity* parent)
 	:
-	MoveEntity(resources,Vector3::Zero,INITALPOSITION,Quaternion::Identity)
+	MoveEntity(resources,DirectX::SimpleMath::Vector3::Zero,INITALPOSITION,DirectX::SimpleMath::Quaternion::Identity)
 	,m_model{}
 	,m_vertexShader{}
 	,m_pixelShader{}
@@ -54,6 +52,7 @@ BeamEnergyBall::BeamEnergyBall(CommonResources* resources, BaseEntity* parent)
 	,m_time{}
 {
 	BaseEntity::SetParent(parent);
+	CollisionEntity::SetIsCollisionActive(false);
 }
 
 /// <summary>
@@ -69,6 +68,8 @@ BeamEnergyBall::~BeamEnergyBall()
 /// </summary>
 void BeamEnergyBall::Initialize()
 {
+
+	using namespace DirectX::SimpleMath;
 
 	MoveEntity::Initialize();
 
@@ -118,7 +119,7 @@ void BeamEnergyBall::Initialize()
 
 
 
-
+	//初期化
 	m_initialScale  = Vector3::Zero ;
 
 	BaseEntity::SetScale( m_initialScale);
@@ -150,6 +151,7 @@ void BeamEnergyBall::Initialize()
 /// <param name="projection">射影行列</param>
 void BeamEnergyBall::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
 {
+	using namespace DirectX::SimpleMath;
 
 	//オブジェクトか描画が無効なら
 	if (!BaseEntity::GetIsEntityActive() || !BaseEntity::GetIsRenderActive())
@@ -252,7 +254,7 @@ void BeamEnergyBall::Render(const DirectX::SimpleMath::Matrix& view, const Direc
 		});
 
 
-
+	//当たり判定の描画
 	CollisionEntity::GetBounding()->DrawBoundingSphere(BaseEntity::GetPosition(), view, projection);
 	CollisionEntity::GetBounding()->DrawBoundingBox(BaseEntity::GetPosition(), view, projection);
 
@@ -283,13 +285,9 @@ void BeamEnergyBall::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 
 	switch (tag)
 	{
-		case CollisionEntity::CollisionTag::Player:
-		case CollisionEntity::CollisionTag::Stage:
-
-
-			Messenger::GetInstance()->Notify(GameMessageType::BossBeamHit, nullptr);
-
-
+		case CollisionEntity::CollisionTag::PLAYER:
+		case CollisionEntity::CollisionTag::STAGE:
+			Messenger::GetInstance()->Notify(GameMessageType::BOSS_BEAM_HIT, nullptr);
 			break;
 		default:
 			break;
@@ -326,6 +324,9 @@ void BeamEnergyBall::AddPointer(Beam* beam)
 
 }
 
+/// <summary>
+/// リセット
+/// </summary>
 void BeamEnergyBall::ReSet()
 {
 	m_time = 0;

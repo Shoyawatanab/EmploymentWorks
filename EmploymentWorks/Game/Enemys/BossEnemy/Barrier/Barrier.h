@@ -26,7 +26,7 @@ class Barrier : public MoveEntity
 {
 public:
 
-
+	//コンスタントバッファ
 	struct ConstBuffer
 	{
 		DirectX::SimpleMath::Matrix		matWorld;
@@ -43,15 +43,14 @@ public:
 	BarrierStateMachine* GetBarrierStateMachine() { return m_stateMachine.get(); }
 
 public:
+	//コンストラク
 	Barrier(CommonResources* resources,BaseEntity* parent);
-	
 	//デストラクタ
 	~Barrier() override;
 
-	//IObject
-		//初期化
+	//初期化
 	void Initialize() override;
-	//描画
+	//描画処理
 	void Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection) override;
 	//更新処理
 	void  Update(const float& elapsedTime) override;
@@ -63,7 +62,7 @@ public:
 
 	//ICollisionObject
 		//タグの取得
-	CollisionTag GetCollisionTag() override { return CollisionEntity::CollisionTag::Barrier; };
+	CollisionTag GetCollisionTag() override { return CollisionEntity::CollisionTag::BARRIER; };
 	//当たり判定クラスに登録
 	void  AddCollision(CollisionManager* collsionManager) override;
 
@@ -76,9 +75,9 @@ public:
 	//当たり判定を行わないタグ
 	const std::vector<CollisionTag> GetNoHitDetectionTag() {
 		return  {
-			{CollisionTag::PlayerParts}
-			,{CollisionTag::Enemy}
-			,{CollisionTag::EnemyParts}
+			{CollisionTag::PLAYERPARTS}
+			,{CollisionTag::ENEMY}
+			,{CollisionTag::ENEYPARTS}
 		};
 	}
 	//押し出しを行わないタグ
@@ -91,7 +90,7 @@ public:
 
 	//クラスに必要な情報（ポインタ）の登録
 	void AddPointer(Beam* beam);
-
+	//リセット
 	void ReSet();
 
 private:
@@ -102,30 +101,26 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11VertexShader> m_vertexShader;
 	//	ピクセルシェーダ
 	Microsoft::WRL::ComPtr<ID3D11PixelShader> m_pixelShader;
-
+	//インプットレイアウト
 	Microsoft::WRL::ComPtr<ID3D11InputLayout> m_inputLayout;
+	//定数バッファ
 	Microsoft::WRL::ComPtr<ID3D11Buffer>	m_CBuffer;
-
-
 
 	// モデル
 	DirectX::Model* m_model;
-	
+	//ステートマシーン
 	std::unique_ptr<BarrierStateMachine> m_stateMachine;
-
+	//初期回転
 	DirectX::SimpleMath::Quaternion m_initialRotate;
-
-
-	DirectX::SimpleMath::Vector3 m_target;
-
+	//初期の大きさ
 	DirectX::SimpleMath::Vector3 m_initialScale;
-
+	//最大の大きさ
 	DirectX::SimpleMath::Vector3 m_maxScale;
-
+	//ビーム
 	Beam* m_beam;
-
+	//最大サイズになる時間
 	float m_maxSizeTime;
-
+	//時間
 	float m_time;
 
 

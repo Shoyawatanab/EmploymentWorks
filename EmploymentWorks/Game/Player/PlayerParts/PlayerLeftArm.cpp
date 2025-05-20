@@ -9,8 +9,6 @@
 
 
 
-using namespace DirectX::SimpleMath;
-
 /// <summary>
 /// コンストラクタ
 /// </summary>
@@ -40,8 +38,6 @@ PlayerLeftArm::~PlayerLeftArm()
 /// </summary>
 void PlayerLeftArm::Initialize()
 {
-
-
 
 
 	//// モデルを読み込む

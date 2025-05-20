@@ -13,6 +13,8 @@ namespace WataLib
 class PlayerRightArm : public PlayerPartsBase
 {
 private :
+
+	//ÉpÅ[Écñº
 	static constexpr const char PARTSNAME[] = "RightArm";
 
 public:

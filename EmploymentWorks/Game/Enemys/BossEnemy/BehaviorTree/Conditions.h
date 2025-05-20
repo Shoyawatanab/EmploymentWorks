@@ -17,9 +17,11 @@ class Conditions
 public:
 
 	//‹ß‹——£UŒ‚‚Ì”ÍˆÍ
-	static constexpr float CLOSERANGEDISTANCE{ 7.0f };
+	static constexpr float CLOSERANGE_ATTACK_DISTANCE{ 7.0f };
 	//‰“‹——£UŒ‚‚Ì”ÍˆÍ
-	static constexpr float LONGRANGEDISTANCE{ 18.0f };
+	static constexpr float LONGRANGE_ATTACK_DISTANCE{ 18.0f };
+	//ƒWƒƒƒ“ƒv—£UŒ‚‚Ì”ÍˆÍ
+	static constexpr float JUMP_ATTACK_DISTANCE{ 15.0f };
 
 	//“G‚Ì‹–ìŠp
 	static constexpr float ANGLE{ 60.0f };
@@ -36,8 +38,8 @@ public:
 	bool IsInCloseRangeAttack();
 	//‰“‹——£UŒ‚”ÍˆÍ“à‚©‚Ç‚¤‚©
 	bool IsInLongRangeAttack();
-	//‹–ìŠp“à‚©‚Ç‚¤‚©
-	bool WithinViewingAngle();
+	//ƒWƒƒƒ“ƒvUŒ‚”ÍˆÍ“à‚©‚Ç‚¤‚©
+	bool IsJumpAttackRange();
 
 	//‹ŠE‚È‚¢‚©‚Ç‚¤‚©
 	bool IsEnemyInview(const DirectX::SimpleMath::Vector3& playerPos, const DirectX::SimpleMath::Vector3& playerForward, const DirectX::SimpleMath::Vector3& enemyPos);

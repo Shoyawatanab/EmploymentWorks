@@ -17,8 +17,7 @@
 #include"Game/Enemys/BirdEnemy/BirdEnemyFeather.h"
 #include "Game/Params.h"
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
+
 
 
 /// <summary>
@@ -52,23 +51,23 @@ BirdEnemyBody::~BirdEnemyBody()
 void BirdEnemyBody::Initialize()
 {
 
+	using namespace DirectX::SimpleMath;
 
-
-	BaseEntity::SetPosition(Vector3(3, 3, -5));
 
 	// ÉÇÉfÉãÇì«Ç›çûÇﬁ
 	auto model = BaseEntity::GetCommonResources()->GetGameResources()->GetModel("BirdEnemyBody");
 
 	BirdEnemyPartsBase::SetModel(model);
-
+	//èâä˙âª
 	BirdEnemyPartsBase::Initialize();
 
+	//ç∂âHÇÃí«â¡
 	AddChild(std::make_unique<BirdEnemyFeather>(BaseEntity::GetCommonResources(),
 		this,
 		Params::BIRDENEMY_LEFTFEATHER_SCALE,
 		Params::BIRDENEMY_LEFTFEATHER_POSITION,
 		Params::BIRDENEMY_LEFTFEATHER_ROTATION));
-
+	//âEâHÇÃí«â¡
 	AddChild(std::make_unique<BirdEnemyFeather>(BaseEntity::GetCommonResources(),
 		this,
 		Params::BIRDENEMY_RIGHTFEATHER_SCALE,

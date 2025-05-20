@@ -8,12 +8,14 @@
 #include "Game/Enemys/BirdEnemy/Beam/BirdEnemyBeam.h"
 #include "Game/Enemys/BirdEnemy/Beam/BirdEnemyBeamEnergyBall.h"
 
-using namespace DirectX::SimpleMath;
 
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
+/// <param name="player">プレイヤ</param>
+/// <param name="birdEnemy">鳥の敵</param>
+/// <param name="beam">ビーム</param>
 BirdEnemyBeamPreliminaryAction::BirdEnemyBeamPreliminaryAction(Player* player, BirdEnemy* birdEnemy, BirdEnemyBeam* beam)
 	:
 	m_commonResources{},

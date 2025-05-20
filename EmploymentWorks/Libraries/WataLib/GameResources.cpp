@@ -20,9 +20,10 @@ const wchar_t* WataLib::GameResources::MODEL_BASE_PATH = L"Resources/Models/";
 
 
 
-//---------------------------------------------------------
-// コンストラクタ
-//---------------------------------------------------------
+/// <summary>
+/// コンテキスト
+/// </summary>
+/// <param name="device">デバイス</param>
 WataLib::GameResources::GameResources(ID3D11Device1* device)
 {
 	// Jsonファイルを読み込んでモデルを生成する
@@ -34,9 +35,10 @@ WataLib::GameResources::GameResources(ID3D11Device1* device)
 }
 
 
-// --------------------------------------------------------
-// Jsonファイルを読み込んでモデルを生成する
-// --------------------------------------------------------
+/// <summary>
+/// モデルの読み込み
+/// </summary>
+/// <param name="device">デバイス</param>
 void WataLib::GameResources::LoadModelFromJson(ID3D11Device1* device)
 {
 	// Jsonファイルを開く
@@ -73,9 +75,10 @@ void WataLib::GameResources::LoadModelFromJson(ID3D11Device1* device)
 
 }
 
-// --------------------------------------------------------
-// Jsonファイルを読み込んでテクスチャを生成する
-// --------------------------------------------------------
+/// <summary>
+/// 画像を読み込む
+/// </summary>
+/// <param name="device">デバイス</param>
 void WataLib::GameResources::LoadTexture(ID3D11Device1* device)
 {
 	// Jsonファイルを開く
@@ -119,7 +122,11 @@ void WataLib::GameResources::LoadTexture(ID3D11Device1* device)
 	}
 }
 
-
+/// <summary>
+/// モデルの取得
+/// </summary>
+/// <param name="key">キー</param>
+/// <returns>モデル情報</returns>
 DirectX::Model* WataLib::GameResources::GetModel(std::string key) const
 {
 	// キーを検索
@@ -137,9 +144,11 @@ DirectX::Model* WataLib::GameResources::GetModel(std::string key) const
 	}
 }
 
-//---------------------------------------------------------
-// テクスチャを取得する
-//---------------------------------------------------------
+/// <summary>
+/// 画像の取得
+/// </summary>
+/// <param name="key">キー</param>
+/// <returns>画像情報</returns>
 ID3D11ShaderResourceView* WataLib::GameResources::GetTexture(std::string key) const
 {
 	// キーを検索
@@ -161,25 +170,3 @@ ID3D11ShaderResourceView* WataLib::GameResources::GetTexture(std::string key) co
 
 
 
-FMOD::Sound* WataLib::GameResources::GetSound(std::string key) const
-{
-
-
-
-	auto it = m_soundList.find(key);
-
-	if (it != m_soundList.end())
-	{
-
-		return it->second;
-
-	}
-	else
-	{
-		// エラーメッセージを表示
-		MessageBoxA(nullptr, "音楽が見つかりません", "エラー", MB_OK);
-		return nullptr;
-
-	}
-
-}

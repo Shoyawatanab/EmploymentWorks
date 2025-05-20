@@ -65,6 +65,10 @@ void BossEnemyRightShoulder::Initialize()
 
 }
 
+/// <summary>
+/// XVˆ—
+/// </summary>
+/// <param name="elapsedTime">Œo‰ßŠÔ</param>
 void BossEnemyRightShoulder::Update(const float& elapsedTime)
 {
 

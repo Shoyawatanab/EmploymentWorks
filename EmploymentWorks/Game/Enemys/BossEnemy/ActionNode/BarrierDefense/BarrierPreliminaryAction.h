@@ -22,11 +22,15 @@ namespace mylib
 class BarrierPreliminaryAction : public IAction
 {
 public:
+	//動作時間
+	static constexpr float  PRELOMINARY_TIME = 2.0f;
+
+public:
+	//コンストラクタ
 	BarrierPreliminaryAction(CommonResources* resources,
 		BarrierDefenseAction* barrierDefenseAction,
-		CharacterEntity* bossEnemy
+		CharacterEntity* owner
 		);
-
 
 	//デストラクタ
 	~BarrierPreliminaryAction() override;
@@ -44,8 +48,9 @@ private:
 
 	//経過時間
 	float m_time;
-
-	CharacterEntity* m_bossEnemy;
+	//所有者
+	CharacterEntity* m_owner;
+	//コントローラー
 	BarrierDefenseAction* m_barrierDefenseAction;
 
 

@@ -25,8 +25,7 @@ public:
 	//デストラクタ
 	~Wall() override;
 
-	//IObject
-		//初期化
+	//初期化
 	void Initialize() override;
 	//描画
 	void Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection) override;
@@ -35,9 +34,7 @@ public:
 
 	//ICollisionObject
 	//タグの取得
-	CollisionTag GetCollisionTag() override { return CollisionEntity::CollisionTag::Stage; };
-	//当たった時に呼び出される
-	void OnCollisionEnter(CollisionEntity* object, CollisionTag tag) override;
+	CollisionTag GetCollisionTag() override { return CollisionEntity::CollisionTag::STAGE; };
 	//当たり判定の種類の取得
 	const CollisionType GetCollisionType() override { return CollisionType::AABB; };
 	//押し出しをするかどうか
@@ -45,7 +42,7 @@ public:
 	//当たり判定を行わないタグ
 	const std::vector<CollisionTag> GetNoHitDetectionTag() {
 		return  {
-			{CollisionTag::Stage }
+			{CollisionTag::STAGE }
 		};
 	};
 

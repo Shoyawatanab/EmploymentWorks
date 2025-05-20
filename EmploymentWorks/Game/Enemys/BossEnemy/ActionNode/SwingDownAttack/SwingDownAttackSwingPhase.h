@@ -19,18 +19,22 @@ namespace mylib
 
 class SwingDownAttackSwingPhase : public IAction
 {
+public:
+	//振り下ろし時間
+	static constexpr float SWING_TIME = 3.0f;
 
 
 public:
+	//コンストラクタ
 	SwingDownAttackSwingPhase(CommonResources* resources,
 		ActionStateController* controller
 		, CharacterEntity* owner
 		);
 	//デストラクタ
 	~SwingDownAttackSwingPhase() override ;
-
+	//初期化
 	void Initialize() override;
-
+	//更新処理
 	ActionState Update(const float& elapsedTime)  override ;
 	//状態に入った時
 	void Enter() override ;
@@ -40,7 +44,9 @@ public:
 private:
 	// 共通リソース
 	CommonResources* m_commonResources;
+	//所有者
 	CharacterEntity* m_owner;
+	//コントローラー
 	ActionStateController* m_controller;
 
 

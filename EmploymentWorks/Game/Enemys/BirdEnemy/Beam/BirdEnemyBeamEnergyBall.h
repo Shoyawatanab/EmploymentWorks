@@ -25,10 +25,10 @@ class BirdEnemyBeamEnergyBall : public CollisionEntity
 
 
 public:
-
+	//インプットレイアウト
 	static const std::vector<D3D11_INPUT_ELEMENT_DESC> INPUT_LAYOUT;
 
-
+	//コンスタントバッファ
 	struct ConstBuffer
 	{
 		DirectX::SimpleMath::Matrix		matWorld;
@@ -36,42 +36,43 @@ public:
 		DirectX::SimpleMath::Matrix		matProj;
 	};
 
+	static constexpr float SPHERE_COLLIDER_SIZE = 1.0f;
+	static constexpr DirectX::SimpleMath::Vector3  BOX_COLLIDER_SIZE {0.5f,0.5f,0.5f};
+	
+	
 
 public:
 
 
-
+	//ターゲットの取得
 	DirectX::SimpleMath::Vector3 GetTarget() { return m_target; }
- 
+	//ターゲットの登録
 	void SetTarget(DirectX::SimpleMath::Vector3 target) { m_target = target; }
-
-
-
-
+	//初期の大きさの取得
 	DirectX::SimpleMath::Vector3 GetInitialScale() { return m_initialScale; }
-	
+	//最大サイズの取得
 	DirectX::SimpleMath::Vector3 GetMaxScale() { return m_maxScale; }
-
+	//最大サイズの時間の取得
 	float GetMaxSizeTime() { return m_maxSizeTime; }
 
 
 public :
+	//コンストラクタ
 	BirdEnemyBeamEnergyBall(CommonResources* resources, BaseEntity* parent, BirdEnemyBeam* beam);
 
 	//デストラクタ
 	~BirdEnemyBeamEnergyBall() override;
 
-	//IObject
-		//初期化
+	
+	//初期化
 	void Initialize() override;
-	//描画
+	//描画処理
 	void Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection) override;
 	//更新処理
 	void  Update(const float& elapsedTime) override;
 
-	//ICollisionObject
-		//タグの取得
-	CollisionTag GetCollisionTag() override { return CollisionEntity::CollisionTag::Beam; };
+	//タグの取得
+	CollisionTag GetCollisionTag() override { return CollisionEntity::CollisionTag::BEAM; };
 	//当たり判定クラスに登録
 	void  AddCollision(CollisionManager* collsionManager) override;
 
@@ -84,7 +85,7 @@ public :
 	//当たり判定を行わないタグ
 	const std::vector<CollisionTag> GetNoHitDetectionTag() {
 		return  {
-			{CollisionTag::Enemy}
+			{CollisionTag::ENEMY}
 		};
 	}
 
@@ -102,23 +103,30 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11VertexShader> m_vertexShader;
 	//	ピクセルシェーダ
 	Microsoft::WRL::ComPtr<ID3D11PixelShader> m_pixelShader;
-
+	//インプットレイアウト
 	Microsoft::WRL::ComPtr<ID3D11InputLayout> m_inputLayout;
+	//定数バッファ
 	Microsoft::WRL::ComPtr<ID3D11Buffer>	m_CBuffer;
 
 	// モデル
 	DirectX::Model* m_model;
-
+	//
 	DirectX::SimpleMath::Vector3 m_iniialPosition;
+	//
 	DirectX::SimpleMath::Quaternion m_initialRotate;
+	//
 	DirectX::SimpleMath::Vector3 m_target;
+	//
 	DirectX::SimpleMath::Vector3 m_initialScale;
+	//
 	DirectX::SimpleMath::Vector3 m_maxScale;
+	//
 	DirectX::SimpleMath::Vector3 m_wordlPosition;
-
+	//
 	BirdEnemyBeam* m_beam;
-
+	//
 	float m_maxSizeTime;
+	//
 	float m_time;
 
 

@@ -5,21 +5,13 @@
 #include "Libraries/MyLib/BinaryFile.h"
 
 
-
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
-
 //インプットレイアウト
 const std::vector<D3D11_INPUT_ELEMENT_DESC> CircleParticle::INPUT_LAYOUT =
 {
 	{ "POSITION",	0, DXGI_FORMAT_R32G32B32_FLOAT, 0,							 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	{ "TEXCOORD",	0, DXGI_FORMAT_R32G32_FLOAT,	0, sizeof(SimpleMath::Vector3), D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "TEXCOORD",	0, DXGI_FORMAT_R32G32_FLOAT,	0, sizeof(DirectX::SimpleMath::Vector3), D3D11_INPUT_PER_VERTEX_DATA, 0 },
 };
 
-float Lerp(const float& start, const float& end, const float& t)
-{
-	return (1.0f - t) * start + t * end;
-}
 
 
 /// <summary>
@@ -57,9 +49,11 @@ CircleParticle::~CircleParticle()
 /// </summary>
 void CircleParticle::Initialize()
 {
+	using namespace DirectX;
 
-
+	//デバイスの取得
 	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
+	//コンテキストの取得
 	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
 
 	//シェーダーファイルの読み込み
@@ -123,7 +117,7 @@ bool CircleParticle::Update(float elapsedTime)
 	m_time += elapsedTime;
 
 	//終了したら
-	if (m_time >= 2)
+	if (m_time >= OPERATION_TIME)
 	{
 		return true;
 	}
@@ -139,15 +133,20 @@ bool CircleParticle::Update(float elapsedTime)
 /// <param name="proj">射影行列</param>
 void CircleParticle::Render(DirectX::SimpleMath::Matrix view, DirectX::SimpleMath::Matrix proj)
 {
+	using namespace DirectX;
+	using namespace DirectX::SimpleMath;
+
+	//コンテキストの取得
 	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
+	//コモンステートの取得
 	auto states = m_commonResources->GetCommonStates();
 
 	//頂点データ
 	VertexPositionTexture circleVertex[4] = {
-		VertexPositionTexture(SimpleMath::Vector3(-0.5f,-0.5f ,0.0f), SimpleMath::Vector2(0.0f, 0.0f)),
-		VertexPositionTexture(SimpleMath::Vector3(0.5f ,-0.5f ,0.0f), SimpleMath::Vector2(1.0f, 0.0f)),
-		VertexPositionTexture(SimpleMath::Vector3(0.5f,0.5f  ,0.0f ), SimpleMath::Vector2(1.0f, 1.0f)),
-		VertexPositionTexture(SimpleMath::Vector3(-0.5f,0.5f ,0.0f ), SimpleMath::Vector2(0.0f, 1.0f)),
+		VertexPositionTexture(Vector3(-0.5f,-0.5f ,0.0f),Vector2(0.0f, 0.0f)),
+		VertexPositionTexture(Vector3(0.5f ,-0.5f ,0.0f),Vector2(1.0f, 0.0f)),
+		VertexPositionTexture(Vector3(0.5f,0.5f  ,0.0f ),Vector2(1.0f, 1.0f)),
+		VertexPositionTexture(Vector3(-0.5f,0.5f ,0.0f ),Vector2(0.0f, 1.0f)),
 	};
 
 	//ワールドの計算

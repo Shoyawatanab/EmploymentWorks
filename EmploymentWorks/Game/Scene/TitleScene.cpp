@@ -277,7 +277,7 @@ IScene::SceneID TitleScene::GetNextSceneID() const
 	if (m_isChangeScene)
 	{
 		//フェード中でないなら
-		if (m_commonResources->GetFade()->GetFadeState() == Fade::FadeState::None)
+		if (m_commonResources->GetFade()->GetFadeState() == Fade::FadeState::NONE)
 		{
 			//フェードインを開始
 			m_commonResources->GetFade()->StartNormalFadeIn();

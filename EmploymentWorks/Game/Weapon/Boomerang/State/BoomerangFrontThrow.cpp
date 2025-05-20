@@ -21,6 +21,10 @@ BoomerangFrontThrow::BoomerangFrontThrow()
 	m_commonResources{}
 	,m_totalTime{}
 	,m_state{}
+	,m_boomerang{}
+	,m_player{}
+	,m_targetMarker{}
+	,m_tpsCamera{}
 {
 
 
@@ -48,13 +52,6 @@ void BoomerangFrontThrow::AddPointer(Boomerang* boomerang, Player* player, Targe
 	m_targetMarker = targetMarker;
 	m_tpsCamera = tpsCamera;
 }
-
-
-float BoomerangFrontThrow::Lerp(float a, float b, float t)
-{
-	return a + t * (b - a);
-}
-
 
 
 
@@ -147,19 +144,19 @@ void BoomerangFrontThrow::Update(const float& elapsedTime)
 
 	switch (m_state)
 	{
-		case BoomerangFrontThrow::State::SplineCurve:
+		case BoomerangFrontThrow::State::SPINECURVE:
 			{
 			
 				if (ChaseToTarget(elapsedTime))
 				{
 					m_targetPosistion = m_player->GetPosition();
-					m_state = State::ChaseToPlayer;
+					m_state = State::CHASE_TO_PLAYER;
 
 				}
 
 			}
 			break;
-		case BoomerangFrontThrow::State::ChaseToPlayer:
+		case BoomerangFrontThrow::State::CHASE_TO_PLAYER:
 			
 			m_targetPosistion = m_player->GetPosition();
 
@@ -204,7 +201,7 @@ void BoomerangFrontThrow::Enter()
 	m_boomerang->SetRotation(Quaternion::Identity);
 	m_boomerang->SetPosition(position);
 
-	m_state = State::SplineCurve;
+	m_state = State::SPINECURVE;
 
 
 	//‰ñ“]‚Ìî•ñ‚ğØ‚è‘Ö‚¦‚é ¶‰ñ‚è‚È‚Ì‚ÅEnd‰ñ“]‚©‚ç‹‚ß‚Ä‚¢‚é@

@@ -18,8 +18,12 @@ using namespace DirectX;
 using namespace DirectX::SimpleMath;
 
 /// <summary>
-/// コンストラク
+/// コンストラクタ
 /// </summary>
+/// <param name="resources">共通リソース</param>
+/// <param name="scale">大きさ</param>
+/// <param name="position">座標</param>
+/// <param name="rotation">回転</param>
 BirdEnemy::BirdEnemy(CommonResources* resources
 	, DirectX::SimpleMath::Vector3 scale,
 	DirectX::SimpleMath::Vector3 position,
@@ -40,6 +44,8 @@ BirdEnemy::BirdEnemy(CommonResources* resources
 	m_stateMachine = std::make_unique<BirdEnemyStateMachine>();
 
 	m_shadow = std::make_unique<WataLib::Shadow>();
+
+	BaseEntity::SetIsGravity(false);
 }
 
 
@@ -104,23 +110,24 @@ void BirdEnemy::Rotate(float elapsedTime)
 void BirdEnemy::Initialize()
 {
 
-	EnemyEntity::Initialize();
 
+	//各リソースの取得
 	auto device = BaseEntity::GetCommonResources()->GetDeviceResources()->GetD3DDevice();
 	auto context = BaseEntity::GetCommonResources()->GetDeviceResources()->GetD3DDeviceContext();
 	auto states = BaseEntity::GetCommonResources()->GetCommonStates();
 
-
-
-
-
+	//初期化
+	EnemyEntity::Initialize();
 	m_stateMachine->Initialize(BaseEntity::GetCommonResources(), m_stateMachine->GetBirdEnemyldling());
+	m_hp = Params::BIRDENEMY_HP;
+	m_shadow->Initialize(device, context, states);
+
 
 	//当たり判定の作成
 	CollisionEntity::GetBounding()->CreateBoundingSphere(BaseEntity::GetPosition(), Params::BIRDENEMY_SPHERE_COLLIDER_SIZE);
 	CollisionEntity::GetBounding()->CreateBoundingBox(BaseEntity::GetPosition(), Params::BIRDENEMY_BOX_COLLIDER_SIZE);
 
-	//10作っておく
+	//ビームを10作っておく
 	for (int i = 0; i < 10; i++)
 	{
 		auto beam = std::make_unique<BirdEnemyBeam>(BaseEntity::GetCommonResources(),m_player,this);
@@ -129,15 +136,13 @@ void BirdEnemy::Initialize()
 		m_beam.push_back(std::move(beam));
 	}
 
-	m_hp = Params::BIRDENEMY_HP;
-
+	//体の生成
 	AddChild(std::make_unique<BirdEnemyBody>(BaseEntity::GetCommonResources(),
 		this,
 		Params::BIRDENEMY_BODY_SCALE,
 		Params::BIRDENEMY_BODY_POSITION,
 		Params::BIRDENEMY_BODY_ROTATION));
 
-	m_shadow->Initialize(device, context, states);
 }
 
 /// <summary>
@@ -164,15 +169,13 @@ void BirdEnemy::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::S
 		return;
 	}
 
-
-
-
+	//パーツの描画
 	for (auto& parts : CompositeEntity::GetParts())
 	{
 		parts->Render(view, projection);
 	}
 
-
+	//ビームの描画
 	for (auto& beam : m_beam)
 	{
 		//idling状態じゃないものを描画する
@@ -187,9 +190,6 @@ void BirdEnemy::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::S
 
 	DirectX::SimpleMath::Vector3 shadowPos = BaseEntity::GetPosition();
 	shadowPos.y = Params::SHADOW_POSITION_Y;
-
-
-
 
 	// 自機の影を描画する
 	m_shadow->Render(context, states, view, projection, shadowPos, Params::BIRDENEMY_SHADOW_RADIUS);
@@ -224,7 +224,7 @@ void BirdEnemy::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 {
 	switch (tag)
 	{
-		case CollisionEntity::CollisionTag::Boomerang:
+		case CollisionEntity::CollisionTag::BOOMERANG:
 
 			m_hp -= Params::BOOMERANG_DAMAGE;
 
@@ -238,7 +238,7 @@ void BirdEnemy::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 					Vector3 scale = BaseEntity::GetScale();
 					Vector3 position = object->GetPosition();
 					UnknownDataTwo aa = { static_cast<void*>(&position) ,static_cast<void*>(&scale)};
-					Messenger::GetInstance()->Notify(GameMessageType::CreateExplosion, &aa);
+					Messenger::GetInstance()->Notify(GameMessageType::CREATE_EXPLOSION, &aa);
 					BaseEntity::SetIsEntityActive(false);
 
 				}
@@ -251,7 +251,7 @@ void BirdEnemy::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 
 				UnknownDataThree aa = { static_cast<void*>(&pos) ,static_cast<void*>(&scale)};
 
-				Messenger::GetInstance()->Notify(GameMessageType::CreateHitEffect, &aa);
+				Messenger::GetInstance()->Notify(GameMessageType::CREATE_HIT_EFFECT, &aa);
 
 			}
 
@@ -277,15 +277,15 @@ void BirdEnemy::Update(const float& elapsedTime)
 		return;
 	}
 
+	//更新
 	m_stateMachine->Update(elapsedTime);
+	CollisionEntity::Update(elapsedTime);
 
-	CollisionEntity::GetBounding()->Update(BaseEntity::GetPosition());
-
+	//パーツの更新
    	for (auto& parts : CompositeEntity::GetParts())
 	{
 		parts->Update(elapsedTime);
 	}
-
 
 	//ビームの更新
 	for (auto& beam : m_beam)

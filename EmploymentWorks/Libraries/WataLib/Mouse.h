@@ -15,10 +15,13 @@ namespace WataLib
         float GetDiffY() { return m_diffY; }
 
     public:
+        //コンストラクタ
         Mouse();
+        //デストラクタ
         ~Mouse();
-
+        //初期化
         void Initialize();
+        //更新処理
         void Update();
 
     private:

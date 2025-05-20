@@ -9,15 +9,15 @@ class CommonResources;
 class IEffect
 {
 public:
-
+	//エフェクトの種類
 	enum  class EffectType
 	{
 
-		Explosion
-		,PlayerDamage
-		,Particle
-		, HitEffect
-		,ChargeEffect
+		EXPLOSION
+		,PLAYER_DAMAGE
+		,PARTICLE
+		, HIT_EFFECT
+		,CHARGE_EFFECT
 	};
 
 public:
@@ -29,16 +29,16 @@ public:
 	virtual void Update(const float& elapsedTime) = 0;
 	//描画
 	virtual void Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection) = 0;
-
+	//有効かどうかの取得
 	virtual bool GetIsActive() = 0;
-
+	//有効かどうかの登録
 	virtual void SetIsActive(bool isActive) = 0;
-
+	//エフェクトの種類の取得
 	virtual EffectType GetEffectType() = 0;
-
+	//座標の登録
 	virtual void SetPosition(DirectX::SimpleMath::Vector3 position) = 0;
-
+	//大きさの登録
 	virtual void SetScale(DirectX::SimpleMath::Vector3 scale) = 0;
-
+	//作成
 	virtual void Create(void* datas) = 0;
 };

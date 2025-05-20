@@ -28,6 +28,8 @@ using namespace DirectX::SimpleMath;
 /// コンストラクタ
 /// </summary>
 /// <param name="resources">共通リソース</param>
+/// <param name="own">所有者</param>
+/// <param name="target">ターゲット</param>
 OrientationAction::OrientationAction(CommonResources* resources
 	, BaseEntity* own
 	, BaseEntity* target)
@@ -49,11 +51,20 @@ OrientationAction::~OrientationAction()
 	// do nothing.
 }
 
+/// <summary>
+/// 初期化
+/// </summary>
 void OrientationAction::Initialize()
 {
 
 }
 
+
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="elapsedTime">経過時間</param>
+/// <returns>継続か終了か</returns>
 OrientationAction:: ActionState OrientationAction::Update(const float& elapsedTime)
 {
 
@@ -106,24 +117,29 @@ OrientationAction:: ActionState OrientationAction::Update(const float& elapsedTi
 
 	if (alignment >= threshold)
 	{
-		return ActionState::End;
+		return ActionState::END;
 	}
 
 
 
-	return ActionState::Running;
+	return ActionState::RUNNING;
 
 
 }
 
 
-
+/// <summary>
+/// 状態に入った時
+/// </summary>
 void OrientationAction::Enter()
 {
 
 
 }
 
+/// <summary>
+/// 状態を抜けた時
+/// </summary>
 void OrientationAction::Exit()
 {
 }

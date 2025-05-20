@@ -21,45 +21,53 @@ namespace WataLib
 
 
 	public:
+		//コンストラクタ
 		Bounding(CommonResources* resources);
+		//デストラクタ
 		~Bounding();
 
 		//初期化
 		void Initialize();
-
+		//更新処理
 		void Update(DirectX::SimpleMath::Vector3 CenterPos);
-
+		//更新処理
 		void Update(DirectX::SimpleMath::Vector3 CenterPos, DirectX::SimpleMath::Quaternion rotation);
-
-
-
+		//スフィアの作成
 		void CreateBoundingSphere(DirectX::SimpleMath::Vector3 CenterPos, float radius);
+		//AABBの作成
 		void CreateBoundingBox(DirectX::SimpleMath::Vector3 CenterPos, DirectX::SimpleMath::Vector3 Extents);
+		//OBBの作成
 		void CreateBoundingOrientedBox(DirectX::SimpleMath::Vector3 CenterPos,DirectX::SimpleMath::Quaternion rotation,
 			DirectX::SimpleMath::Vector3 Extents);
-
+		//描画
 		void Draw(const DirectX::SimpleMath::Vector3 CenterPos, DirectX::SimpleMath::Quaternion rotation,
 			DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection);
-
+		//スフィアの描画
 		void DrawBoundingSphere(const DirectX::SimpleMath::Vector3 CenterPos, DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection);
+		//AABBの描画
 		void DrawBoundingBox(const DirectX::SimpleMath::Vector3 CenterPos, DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection);
+		//OBBの描画
 		void DrawBoundingOrientedBox(const DirectX::SimpleMath::Vector3 CenterPos, DirectX::SimpleMath::Quaternion rotation, 
 			DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection);
 
 	private:
-
+		//スフィア
 		std::unique_ptr < DirectX::BoundingSphere> m_boundingSphere;
+		//OBB
 		std::unique_ptr<DirectX::BoundingOrientedBox> m_orientexBox;
+		//AABB
 		std::unique_ptr<DirectX::BoundingBox> m_boundingBox;
-
+		//共通リソース
 		CommonResources* m_commonResources;
-
-
+		//プリミティブバッチ
 		std::unique_ptr<DirectX::PrimitiveBatch<DirectX::VertexPositionColor>> m_batch;
+		//ベーシックエフェクト
 		std::unique_ptr<DirectX::BasicEffect> m_effect;
+		//インプットレイアウト
 		Microsoft::WRL::ComPtr<ID3D11InputLayout> m_layout;
-
+		//ボックスが当たっているか
 		bool m_isBoxHit;
+		//スフィアが当たっているか
 		bool m_isSphereHit;
 
 

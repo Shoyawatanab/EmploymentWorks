@@ -19,6 +19,8 @@ using namespace DirectX::SimpleMath;
 BoomerangIdle::BoomerangIdle()
 	:
 	m_commonResources{}
+	,m_boomerang{}
+	,m_player{}
 {
 }
 
@@ -88,7 +90,7 @@ void BoomerangIdle::Enter()
 	//ローカルサイズの設定
 	m_boomerang->SetLocalScale(Vector3(10,10,10));
 	//通知をする
-	Messenger::GetInstance()->Notify(GameMessageType::GetBoomerang, nullptr);
+	Messenger::GetInstance()->Notify(GameMessageType::GET_BOOMERANG, nullptr);
 
 	
 }

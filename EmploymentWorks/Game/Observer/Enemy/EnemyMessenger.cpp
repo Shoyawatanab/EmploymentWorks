@@ -3,11 +3,16 @@
 #include "Game/Observer/Telegram.h"
 
 
-
+/// <summary>
+/// コンストラク
+/// </summary>
 EnemyMessenger::EnemyMessenger()
 {
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 EnemyMessenger::~EnemyMessenger()
 {
 }
@@ -20,7 +25,7 @@ EnemyMessenger::~EnemyMessenger()
 /// <param name="observer">オブザーバー</param>
 void EnemyMessenger::Rigister(int enemyId, IObserver<EnemyMessageType>* observer)
 {
-
+	//追加
 	m_eventList[enemyId] = observer;
 
 }
@@ -32,7 +37,7 @@ void EnemyMessenger::Rigister(int enemyId, IObserver<EnemyMessageType>* observer
 /// <param name="datas">必要なデータ</param>
 void EnemyMessenger::Notify(int enemyId, EnemyMessageType type, void* datas)
 {
-
+	//送り先があるか
 	auto it = m_eventList.find(enemyId);
 
 	//あれば

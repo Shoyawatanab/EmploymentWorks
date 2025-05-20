@@ -2,18 +2,15 @@
 	ヒットエフェクトの円のパーティクル
 */
 #pragma once
-
+//前方宣言
 class CommonResources;
-
 
 
 class CircleParticle 
 {
 public:
 
-	/// <summary>
 	/// コンストバッファ
-	/// </summary>
 	struct ConstBuffer
 	{
 		DirectX::SimpleMath::Matrix		matWorld;
@@ -24,6 +21,9 @@ public:
 		
 
 	};
+
+	//動作時間
+	static constexpr float OPERATION_TIME = 2.0f;
 
 public:
 	//座標の登録
@@ -42,9 +42,9 @@ public:
 	~CircleParticle();
 	// 初期化
 	void Initialize();
-	// 更新
+	// 更新処理
 	bool Update(float elapsedTime);
-	// 描画
+	// 描画処理
 	void Render(DirectX::SimpleMath::Matrix view, DirectX::SimpleMath::Matrix proj);
 	// 終了処理
 	void Finalize();
@@ -82,7 +82,6 @@ private:
 
 	//経過時間
 	float m_time;
-
 
 };
 

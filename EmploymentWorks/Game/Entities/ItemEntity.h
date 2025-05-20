@@ -16,13 +16,12 @@ namespace WataLib
 class ItemEntity : public MoveEntity
 {
 public:
-
-
+	//コンストラク
 	ItemEntity(CommonResources* resources
 		,const DirectX::SimpleMath::Vector3& scale
 		, const DirectX::SimpleMath::Vector3& position
 		, const DirectX::SimpleMath::Quaternion& rotation);
-
+	//デストラクタ
 	~ItemEntity() override;
 
 //BaseEntity

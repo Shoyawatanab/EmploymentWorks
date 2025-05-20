@@ -5,7 +5,6 @@
 */
 #pragma once
 #include "pch.h"
-#include "Game/Interface/ICharacter.h"
 #include "Game/Interface/IObserver.h"
 
 // 前方宣言
@@ -41,7 +40,7 @@ public:
 private:
 	// 共通リソース
 	CommonResources* m_commonResources;
-	//
+	//ステートマシーン
 	std::unique_ptr<UIStateMachine> m_stateMahine;
 
 };

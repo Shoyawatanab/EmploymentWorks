@@ -191,6 +191,9 @@
     <Filter Include="Game\Enemys\BossEnemy\ActionNode\SwingDownAttack">
       <UniqueIdentifier>{e5ef2522-319a-4e67-b6c9-02021fb92a7b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Enemys\BossEnemy\ActionNode\Idleing">
+      <UniqueIdentifier>{a53cb1a5-62d9-448e-b358-4a6f327621a0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -237,27 +240,6 @@
     <ClInclude Include="Game\Scene\SceneManager.h">
       <Filter>Game\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Interface\IObject.h">
-      <Filter>Game\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Interface\ICollisionObject.h">
-      <Filter>Game\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Interface\IMoveObject.h">
-      <Filter>Game\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Interface\INotMoveObject.h">
-      <Filter>Game\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Interface\ICharacter.h">
-      <Filter>Game\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Interface\IComposite.h">
-      <Filter>Game\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Interface\ILeaf.h">
-      <Filter>Game\Interface</Filter>
-    </ClInclude>
     <ClInclude Include="Base.h">
       <Filter>Game</Filter>
     </ClInclude>
@@ -300,9 +282,6 @@
     <ClInclude Include="Libraries\WataLib\Animation.h">
       <Filter>Libraries\WataLib</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Interface\ICompositeRoot.h">
-      <Filter>Game\Interface</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Interface\IState.h">
       <Filter>Game\Interface</Filter>
     </ClInclude>
@@ -335,9 +314,6 @@
     </ClInclude>
     <ClInclude Include="Game\Weapon\Boomerang\Boomerang.h">
       <Filter>Game\Weapon\Boomerang</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Interface\IWeapon.h">
-      <Filter>Game\Interface</Filter>
     </ClInclude>
     <ClInclude Include="Game\Weapon\Boomerang\State\BoomerangIdle.h">
       <Filter>Game\Weapon\Boomerang\State</Filter>
@@ -428,9 +404,6 @@
     </ClInclude>
     <ClInclude Include="Libraries\WataLib\Camera\GameEndCamera.h">
       <Filter>Libraries\WataLib\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\Interface\IEnemy.h">
-      <Filter>Game\Interface</Filter>
     </ClInclude>
     <ClInclude Include="Libraries\WataLib\Camera\TitleCamera.h">
       <Filter>Libraries\WataLib\Camera</Filter>
@@ -618,9 +591,6 @@
     <ClInclude Include="Game\Player\State\PlayerStateMachine.h">
       <Filter>Game\Player\PlayerState</Filter>
     </ClInclude>
-    <ClInclude Include="Game\EntityManager.h">
-      <Filter>Game</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\BarrierDefense\BarrierDeployment.h">
       <Filter>Game\Enemys\BossEnemy\ActionNode\BarrierDefense</Filter>
     </ClInclude>
@@ -740,6 +710,12 @@
     </ClInclude>
     <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\SwingDownAttack\SwingDownAttackSwingPhase.h">
       <Filter>Game\Enemys\BossEnemy\ActionNode\SwingDownAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\Idleing\IdleingAction.h">
+      <Filter>Game\Enemys\BossEnemy\ActionNode\Idleing</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\Idleing\IdleingActionComtroller.h">
+      <Filter>Game\Enemys\BossEnemy\ActionNode\Idleing</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1097,9 +1073,6 @@
     <ClCompile Include="Game\Player\State\PlayerStateMachine.cpp">
       <Filter>Game\Player\PlayerState</Filter>
     </ClCompile>
-    <ClCompile Include="Game\EntityManager.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\BarrierDefense\BarrierDeployment.cpp">
       <Filter>Game\Enemys\BossEnemy\ActionNode\BarrierDefense</Filter>
     </ClCompile>
@@ -1207,6 +1180,12 @@
     </ClCompile>
     <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\SwingDownAttack\SwingDownAttackSwingPhase.cpp">
       <Filter>Game\Enemys\BossEnemy\ActionNode\SwingDownAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\Idleing\IdleingAction.cpp">
+      <Filter>Game\Enemys\BossEnemy\ActionNode\Idleing</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\Idleing\IdleingActionComtroller.cpp">
+      <Filter>Game\Enemys\BossEnemy\ActionNode\Idleing</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

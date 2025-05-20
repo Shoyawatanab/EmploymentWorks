@@ -30,14 +30,16 @@ using namespace DirectX::SimpleMath;
 /// コンストラクタ
 /// </summary>
 /// <param name="resources">共通リソース</param>
+/// <param name="barrierDefenseAction">コントローラー</param>
+/// <param name="owner">所有者</param>
 BarrierPreliminaryAction::BarrierPreliminaryAction(CommonResources* resources,
 	BarrierDefenseAction* barrierDefenseAction,
-	CharacterEntity* bossEnemy
+	CharacterEntity* owner
 	)
 	:
 	m_commonResources{ resources },
 	m_time{}
-	, m_bossEnemy{ bossEnemy }
+	, m_owner{ owner }
 	, m_barrierDefenseAction{ barrierDefenseAction }
 {
 }
@@ -52,37 +54,50 @@ BarrierPreliminaryAction::~BarrierPreliminaryAction()
 	// do nothing.
 }
 
+/// <summary>
+/// 初期化
+/// </summary>
 void BarrierPreliminaryAction::Initialize()
 {
 	
 }
 
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="elapsedTime">経過時間</param>
+/// <returns>終了か継続か</returns>
 BarrierPreliminaryAction::ActionState BarrierPreliminaryAction::Update(const float& elapsedTime)
 {
 	
-	if (m_time >= 2.0f)
+	if (m_time >= PRELOMINARY_TIME)
 	{
-		return ActionState::End;
+		return ActionState::END;
 
 	}
 
 
 
 	m_time += elapsedTime;
-	return ActionState::Running;
+	return ActionState::RUNNING;
 
 }
 
-
+/// <summary>
+/// 状態に入った時
+/// </summary>
 void BarrierPreliminaryAction::Enter()
 {
 
 	m_time = 0.0f;
 
-	m_bossEnemy->ChangeAnimation("Barrier");
+	m_owner->ChangeAnimation("Barrier");
 
 }
 
+/// <summary>
+/// 状態を抜けた時
+/// </summary>
 void BarrierPreliminaryAction::Exit()
 {
 

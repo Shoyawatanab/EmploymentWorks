@@ -19,9 +19,8 @@ class BossEnemyHead : public BossEnemyPartsBase
 {
 
 private:
-	//static constexpr コンパイル時に決定する　クラス外での変更をする必要がないため
-	//static cons      クラス外で変更する可能性がある場合
 
+	//パーツ名
 	static constexpr const char PARTSNAME[] = "Head";
 
 

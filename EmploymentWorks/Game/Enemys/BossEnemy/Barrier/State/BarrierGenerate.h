@@ -24,12 +24,9 @@ namespace WataLib
 
 class BarrierGenerate : public IState
 {
-public:
-
-
-
 
 public:
+	//コンストラク
 	BarrierGenerate(CommonResources* resources
 	, Barrier* barrier);
 	
@@ -38,9 +35,9 @@ public:
 
 	//初期化
 	void Initialize(CommonResources* resources) ;
-	// 更新する
+	// 更新処理
 	void Update(const float& elapsedTime);
-	//描画
+	//描画処理
 	void Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection);
 	//状態に入った時
 	void Enter();
@@ -48,9 +45,9 @@ public:
 	void Exit() ;
 
 private:
-
+	//バリア
 	Barrier* m_barrier;
-
+	//時間
 	float m_time;
 
 

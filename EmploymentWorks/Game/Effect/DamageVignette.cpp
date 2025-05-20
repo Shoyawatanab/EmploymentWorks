@@ -12,8 +12,7 @@
 #include "Libraries/MyLib/BinaryFile.h"
 
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
+
 
 ///	<summary>
 ///	インプットレイアウト
@@ -43,9 +42,6 @@ DamageVignette::DamageVignette(CommonResources* resources)
 	,m_vs{}
 	,m_ps{}
 	,m_gs{}
-	,m_world{}
-	,m_view{}
-	,m_proj{}
 {
 }
 
@@ -63,8 +59,9 @@ DamageVignette::~DamageVignette()
 /// </summary>
 void DamageVignette::Initialize()
 {
-
+	//デバイスの取得
 	auto device  = m_commonResources->GetDeviceResources()->GetD3DDevice();
+	//コンテキストの取得
 	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
 
 	//	コンパイルされたシェーダファイルを読み込み
@@ -126,14 +123,16 @@ void DamageVignette::Initialize()
 /// <param name="elapsedTime">経過時間</param>
 void DamageVignette::Update(const float& elapsedTime)
 {
+	//オブジェクトが有効か
 	if (!m_isActive)
 	{
 		return;
 	}
 
+	//透明度の更新
 	m_alpha -= elapsedTime * 1.0f;
 
-
+	//透明になったら
 	if (m_alpha <= 0)
 	{
 		m_isActive = false;
@@ -151,28 +150,32 @@ void DamageVignette::Render(const DirectX::SimpleMath::Matrix& view, const  Dire
 	UNREFERENCED_PARAMETER(view);
 	UNREFERENCED_PARAMETER(proj);
 
+	using namespace DirectX;
+	using namespace DirectX::SimpleMath;
+
 	if (!m_isActive)
 	{
 		return;
 	}
-
+	//コンテキストの取得
 	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
+	//デバイスの取得
 	auto states = m_commonResources->GetCommonStates();
 
 
 	//	頂点情報(板ポリゴンの４頂点の座標情報）
 	VertexPositionColorTexture vertex[4] =
 	{
-		VertexPositionColorTexture(SimpleMath::Vector3(0.0f,  0.0f, 0.0f),SimpleMath::Vector4::One,SimpleMath::Vector2(0.0f, 0.0f)),
+		VertexPositionColorTexture(Vector3(0.0f,  0.0f, 0.0f),Vector4::One,Vector2(0.0f, 0.0f)),
 	};
 
 	//	シェーダーに渡す追加のバッファを作成する。(ConstBuffer）
 	ConstBuffer cbuff;
-	cbuff.matView = SimpleMath::Matrix::Identity;
-	cbuff.matProj = SimpleMath::Matrix::Identity;
-	cbuff.matWorld = SimpleMath::Matrix::Identity;
-	cbuff.Diffuse = SimpleMath::Vector4(1, 1, 1, 1);
-	cbuff.Time = SimpleMath::Vector4(m_alpha, 0.0f, 0.0f, 0.0f);
+	cbuff.matView =  Matrix::Identity;
+	cbuff.matProj =  Matrix::Identity;
+	cbuff.matWorld = Matrix::Identity;
+	cbuff.Diffuse =  Vector4(1, 1, 1, 1);
+	cbuff.Time =     Vector4(m_alpha, 0.0f, 0.0f, 0.0f);
 
 	//	受け渡し用バッファの内容更新(ConstBufferからID3D11Bufferへの変換）
 	context->UpdateSubresource(m_CBuffer.Get(), 0, NULL, &cbuff, 0, 0);
@@ -229,10 +232,14 @@ void DamageVignette::Render(const DirectX::SimpleMath::Matrix& view, const  Dire
 void DamageVignette::SetIsActive(bool isActive)
 {
 	 m_isActive = isActive; 
-
+	 //透明度の初期化
 	 m_alpha = 1;
 }
 
+/// <summary>
+/// エフェクトの作成
+/// </summary>
+/// <param name="datas">データ</param>
 void DamageVignette::Create(void* datas)
 {
 	UNREFERENCED_PARAMETER(datas);

@@ -6,27 +6,40 @@
 
 const DirectX::SimpleMath::Vector3 GENERATEDISTANCE(0.5f, 0.8f, 0.0f);
 
-// コンストラクタ
+
+/// <summary>
+/// コンストラクタ
+/// </summary>
 BoomerangRepelled::BoomerangRepelled()
 	:
 	m_worldMatrix{},
 	m_boomerang{ }
+	,m_pwoer{}
 {
 }
 
-// デストラクタ
+/// <summary>
+/// デストラクタ
+/// </summary>
 BoomerangRepelled::~BoomerangRepelled()
 {
 
 }
 
+/// <summary>
+/// 初期化
+/// </summary>
+/// <param name="resources">共通リソース</param>
 void BoomerangRepelled::Initialize(CommonResources* resources)
 {
 	UNREFERENCED_PARAMETER(resources);
 }
 
 
-// 更新する
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="elapsedTime">経過時間</param>
 void BoomerangRepelled::Update(const float& elapsedTime)
 {
 	UNREFERENCED_PARAMETER(elapsedTime);
@@ -44,25 +57,7 @@ void BoomerangRepelled::Update(const float& elapsedTime)
 	m_worldMatrix = Matrix::CreateScale(m_boomerang->GetScale());
 	m_worldMatrix *= Matrix::CreateTranslation(m_boomerang->GetPosition());
 
-
-
 	m_graivty += 5.5f * elapsedTime;
-
-
-
-	//m_position = m_boomerang->GetPos();
-	//m_position += m_direction;
-
-	//m_position.y -= m_graivty;
-
-	//m_boomerang->SetPos(m_position);
-
-	//m_worldMatrix = Matrix::CreateScale(m_boomerang->GetScale());
-	//m_worldMatrix *= Matrix::CreateTranslation(m_boomerang->GetPos());
-
-
-	//m_graivty += 0.005f;
-
 
 }
 
@@ -73,7 +68,9 @@ void BoomerangRepelled::Render(const DirectX::SimpleMath::Matrix& view, const Di
 
 }
 
-
+/// <summary>
+/// 状態に入った時
+/// </summary>
 void BoomerangRepelled::Enter()
 {
 	m_boomerang->SetIsCollisionActive(true);
@@ -104,6 +101,9 @@ void BoomerangRepelled::Enter()
 	m_position += m_direction;
 }
 
+/// <summary>
+/// 状態を抜けた時
+/// </summary>
 void BoomerangRepelled::Exit()
 {
 

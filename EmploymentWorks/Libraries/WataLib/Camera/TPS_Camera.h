@@ -27,11 +27,12 @@ namespace WataLib
 			float y;
 		};
 
+		//ズーム状態
 		enum class ZoomState
 		{
-			None,
-			ZoomIn,
-			ZoomOut
+			NONE,
+			ZOOM_IN,
+			ZOOM_OUT
 		};
 
 		//デバック用
@@ -49,10 +50,16 @@ namespace WataLib
 
 		// 遠い投影面
 		const float FAR_PLANE = 100.0f;
-
+		//揺れの時間
 		static constexpr float SHAKETIME = 2.0f;
-
-		
+		//ズーム方向
+		static constexpr DirectX::SimpleMath::Vector3 ZOOM_DIRECTION{0.2f, 0.0f, -1.0f};
+		//ターゲット時のオフセット
+		static constexpr DirectX::SimpleMath::Vector3 TARGET_OFFSET{0.0f, 1.0f, 0.0f};
+		//カメラ角度の上限
+		static constexpr float ANGELE_UPPER_LIMIT = 2100;
+		//カメラ角度の下限
+		static constexpr float ANGELE_LOWER_LIMIT = -950 ;
 
 		//Getter Setter
 	public:
@@ -95,9 +102,9 @@ namespace WataLib
 		void Update(const float& elapsedTime) override;
 		//描画
 		void Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection) override;
-
+		//状態に入った時
 		void Enter() override;
-
+		//状態を抜けた時
 		void Exit() override;
 
 
@@ -152,7 +159,7 @@ namespace WataLib
 
 		//構えた時のカメラの動く距離
 		DirectX::SimpleMath::Vector3 m_moveEye;
-
+		//ズーム状態
 		ZoomState m_zoomState;
 
 		DirectX::SimpleMath::Vector3 m_forward;

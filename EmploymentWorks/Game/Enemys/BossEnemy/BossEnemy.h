@@ -6,7 +6,6 @@
 #include "Game/Entities/EnemyEntity.h"
 #include "Libraries/WataLib/Json.h"
 #include "Game/Weapon/Boomerang/Boomerang.h"
-#include "Game/Interface/IWeapon.h"
 #include "Game/Enemys/EnemyManager.h"
 #include "Game/Enemys/BossEnemy/BehaviorTree/BehaviorTree.h"
 #include "Game/Interface/IObserver.h"
@@ -38,22 +37,16 @@ public:
 
 	static constexpr float PUNCHTIME{ 5.0f };
 
-	enum class AttackState
-	{
-		None
-		,End
-		,Beam
-	};
 
 public:
 
+	//ターゲットの取得
 	BaseEntity* GetTarget() { return m_target; }
-
+	//ターゲットの登録
 	void SetTarget(BaseEntity* target) { m_target = target; }
-
-
+	//着地しているかどうか
 	bool GetIsGrounded() { return m_isGrounded; }
-
+	//茶駆使しているかどうかの登録
 	void SetIsGrounded(bool isGrounded) { m_isGrounded = isGrounded; }
 
 
@@ -66,17 +59,16 @@ public:
 	//デストラクタ
 	~BossEnemy() override;
 
-	//IObject
+
 	//初期化
 	void Initialize() override;
-	//描画
+	//描画処理
 	void Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection) override;
 	//更新処理
 	void  Update(const float& elapsedTime) override;
 
-	//ICollisionObject
-		//タグの取得
-	CollisionTag GetCollisionTag() override { return CollisionEntity::CollisionTag::Enemy; };
+	//タグの取得
+	CollisionTag GetCollisionTag() override { return CollisionEntity::CollisionTag::ENEMY; };
 	//当たり判定クラスに登録
 	void  AddCollision(CollisionManager* collsionManager) override;
 
@@ -94,11 +86,11 @@ public:
 	//当たり判定を行わないタグ
 	const std::vector<CollisionTag> GetNoHitDetectionTag() {
 		return  {
-			{CollisionTag::PlayerParts}
-			,{CollisionTag::EnemyParts}
-			,{CollisionTag::Boomerang}
-			,{CollisionTag::Beam}
-			,{CollisionTag::Barrier}
+			{CollisionTag::PLAYERPARTS}
+			,{CollisionTag::ENEYPARTS}
+			,{CollisionTag::BOOMERANG}
+			,{CollisionTag::BEAM}
+			,{CollisionTag::BARRIER}
 		};
 	}
 
@@ -109,8 +101,7 @@ public:
 	};
 
 
-	//ICharacter
-		//アニメーションの登録
+	//アニメーションの登録
 	void SetAnimationData(std::string animationType
 		, std::unordered_map<std::string, std::unordered_map<std::string, WataLib::Json::AnimationData>> datas
 		, const std::string& partsName = ""
@@ -141,7 +132,7 @@ public:
 			//倒れるアニメーションに切り替える
 			ChangeAnimation("FallDown");
 			EnemyEntity::GetEnemyManager()->DeleteRemainingEnemy(this);
-			Messenger::GetInstance()->Notify(::GameMessageType::GameClear, nullptr);
+			Messenger::GetInstance()->Notify(::GameMessageType::GAME_CLEAR, nullptr);
 		}
 
 	}
@@ -169,12 +160,12 @@ private:
 
 	//鼓動を終了するかどうか
 	bool m_isAction;
-
+	//バリア
 	std::unique_ptr<Barrier> m_barrier;
 
 	//ターゲット
 	BaseEntity* m_target;
-
+	//ステージオブジェクトマネージャー
 	StageObjectManager* m_stageObjectmanger;
 
 	float m_gravity;
@@ -184,13 +175,9 @@ private:
 	//パンチ攻撃の時間
 	float m_punchTime;
 
-	bool m_isActives;
-
-
-
-
+	//実行アクション
 	std::pair<std::string,ActionStateController*> m_action;
-
+	//アクションの保存変数
 	std::unordered_map<std::string, std::shared_ptr<ActionStateController>> m_actionList;
 
 	//着地しているかどうか

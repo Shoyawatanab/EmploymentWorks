@@ -18,12 +18,11 @@ class Sky : public BaseEntity
 
 
 public:
+	//コンストラク
 	Sky(CommonResources* resources
 		, DirectX::SimpleMath::Vector3 scale,
 		DirectX::SimpleMath::Vector3 position,
 		DirectX::SimpleMath::Quaternion rotation);
-
-
 	//デストラクタ
 	~Sky() override;
 

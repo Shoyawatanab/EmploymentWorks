@@ -14,7 +14,8 @@ namespace WataLib
 class PlayerLeftArm : public PlayerPartsBase
 {
 private:
-		static constexpr const char PARTSNAME[] = "LeftArm";
+	//パーツ名
+	static constexpr const char PARTSNAME[] = "LeftArm";
 
 public:
 	//コンストラクタ

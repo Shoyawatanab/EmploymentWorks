@@ -132,18 +132,18 @@ void GamePlayUI::CreateEnemyHP()
 {
 
 	m_enemyHPBase.push_back(AddTexture("BossHPBase"
-		, Vector2(640, 50)
-		, Vector2(0.9f, 0.5f)
+		, ENEMY_HP_BASE_POSITION
+		, ENEMY_HP_BASE_SCALE
 		));
 
 	m_enemyHP = AddTexture("EnemyHP"
-		, Vector2(640, 50)
-		, Vector2(0.91f, 0.39f)
+		, ENEMY_HP_POSITION
+		, ENEMY_HP_SCALE
 		);
 
 	m_enemyHPBase.push_back(AddTexture("EnemyName"
-		, Vector2(640, 25)
-		, Vector2(0.3f, 0.3f)
+		, ENEMY_NAME_POSITION
+		, ENEMY_NAME_SCALE
 		));
 
 
@@ -240,18 +240,18 @@ void GamePlayUI::Initialize(CommonResources* resources)
 	m_itemAcquisitionUI->SetIsActive(false);
 
 	m_throwUI.push_back(AddTexture("RightThrow"
-		, Vector2(1220, 500)
-		, Vector2(0.2f, 0.2f)
+		, RIGHT_THROW_POSITION
+		, RIGHT_THROW_SCALE
 		));
 
 	m_throwUI.push_back(AddTexture("FrontThrow"
-		, Vector2(1220, 550)
-		, Vector2(0.2f, 0.2f)
+		, FRONT_THROW_POSITION
+		, FRONT_THROW_SCALE
 		));
 
 	m_throwUI.push_back(AddTexture("LeftThrow"
-		, Vector2(1220, 600)
-		, Vector2(0.2f, 0.2f)
+		, LEFT_THROW_POSITION
+		, LEFT_THROW_SCALE
 		));
 
 	m_throwUI[0]->SetPosition(m_throwUI[0]->GetInitialPosition() + MOVEPOSITION);
@@ -266,14 +266,14 @@ void GamePlayUI::Initialize(CommonResources* resources)
 
 	}
 
-	Messenger::GetInstance()->Rigister(GameMessageType::BoomerangThrow, this);
-	Messenger::GetInstance()->Rigister(GameMessageType::GetBoomerang, this);
-	Messenger::GetInstance()->Rigister(GameMessageType::PlayerDamage, this);
-	Messenger::GetInstance()->Rigister(GameMessageType::ChangeBoomerangThrowState, this);
-	Messenger::GetInstance()->Rigister(GameMessageType::BoomerangRecoverable, this);
-	Messenger::GetInstance()->Rigister(GameMessageType::BoomerangNotRecoverable, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::BOOMERANG_THTROW, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::GET_BOOMERANG, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::PLAYER_DAMAGE, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::CHARGE_BOOMERANG_THROW_STATE, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::BOOMERANG_RECOVERBLE, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::BOOMERANG_NOT_RECOVERBLE, this);
 
-	Messenger::GetInstance()->Rigister(GameMessageType::CreateHitEffect, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::CREATE_HIT_EFFECT, this);
 
 }
 
@@ -326,21 +326,21 @@ void GamePlayUI::Notify(const Telegram<GameMessageType>& telegram)
 
 	switch (telegram.messageType)
 	{
-		case GameMessageType::BoomerangThrow:
+		case GameMessageType::BOOMERANG_THTROW:
 			m_boomerangCount--;
 
 			m_boomerangCount = std::max(m_boomerangCount, 0);
 
 			break;
-		case GameMessageType::GetBoomerang:
+		case GameMessageType::GET_BOOMERANG:
 			m_boomerangCount++;
-			m_boomerangCount = std::min(m_boomerangCount, 3);
+			m_boomerangCount = std::min(m_boomerangCount, BOOMERANG_COUNT);
 
 			break;
-		case GameMessageType::PlayerDamage:
+		case GameMessageType::PLAYER_DAMAGE:
 			m_playerHPCount--;
 			break;
-		case GameMessageType::ChangeBoomerangThrowState:
+		case GameMessageType::CHARGE_BOOMERANG_THROW_STATE:
 			{
 				
 				switch (*static_cast<int*>(telegram.extraInfo))
@@ -367,13 +367,13 @@ void GamePlayUI::Notify(const Telegram<GameMessageType>& telegram)
 				}
 			}
 			break;
-		case GameMessageType::BoomerangRecoverable:
+		case GameMessageType::BOOMERANG_RECOVERBLE:
 			m_itemAcquisitionUI->SetIsActive(true);
 			break;
-		case GameMessageType::BoomerangNotRecoverable:
+		case GameMessageType::BOOMERANG_NOT_RECOVERBLE:
 			m_itemAcquisitionUI->SetIsActive(false);
 			break;
-		case GameMessageType::CreateHitEffect:
+		case GameMessageType::CREATE_HIT_EFFECT:
 			CreateDamageUI(telegram.extraInfo);
 			break;
 		default:
@@ -381,25 +381,7 @@ void GamePlayUI::Notify(const Telegram<GameMessageType>& telegram)
 	}
 }
 
-/// <summary>
-/// 通知を受け取る
-/// </summary>
-/// <param name="objectID"></param>
-/// <param name="messegeId"></param>
-void GamePlayUI::Notify(Message::MessageID messegeId)
-{
-	//メッセージID
-	switch (messegeId)
-	{
-		//プレイヤのダメージ
-		case Message::PlayerDamage:
-			//関数の呼び出し
-			PlayerDamage();
-			break;
-		default:
-			break;
-	}
-}
+
 
 
 void GamePlayUI::PlayerDamage()

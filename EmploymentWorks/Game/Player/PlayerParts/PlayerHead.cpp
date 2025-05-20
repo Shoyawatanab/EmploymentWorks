@@ -7,7 +7,6 @@
 #include "Libraries/WataLib/Animation.h"
 #include "Game/CollisiionManager.h"
 
-using namespace DirectX::SimpleMath;
 
 /// <summary>
 /// コンストラクタ

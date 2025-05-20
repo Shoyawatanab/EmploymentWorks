@@ -23,40 +23,46 @@ private:
 
 public:
 
-
+	//オブジェクトが有効か
 	bool GetIsActive() override { return m_isActive; };
-
+	//オブジェクトが有効かの登録
 	void SetIsActive(bool isActive) override { m_isActive = isActive; };
-
-	EffectType GetEffectType()  override { return EffectType::Explosion; };
-
-
+	//座標の登録
 	void SetPosition(DirectX::SimpleMath::Vector3 position) override { m_position = position; };
-
+	//大きさの登録
 	void SetScale(DirectX::SimpleMath::Vector3 scale) override { m_scale = scale; };
+	//エフェクトの種類のタグ
+	EffectType GetEffectType()  override { return EffectType::EXPLOSION; };
 
 
 
 
 //継承関係
 public:
+	//コンストラクタ
 	ExplosionEffects(CommonResources* resources);
-
+	//デストラクタ
 	~ExplosionEffects() override;
-
+	//初期化
 	void Initialize() override;
+	//更新処理
 	void Update(const float& elapsedTime) override;
+	//描画処理
 	void Render(const DirectX::SimpleMath::Matrix& view, const  DirectX::SimpleMath::Matrix& proj) override;
 
-
+private:
+	//エフェクトの生成
 	void Create(void* datas) override ;
 
 private:
 
 	// 共通リソース
 	CommonResources* m_commonResources;
+	//オブジェクトが有効か
 	bool m_isActive;
+	//座標
 	DirectX::SimpleMath::Vector3 m_position;
+	//大きさ
 	DirectX::SimpleMath::Vector3 m_scale;
 
 	// ポリゴン描画用

@@ -56,6 +56,9 @@ Boomerang::~Boomerang()
 {
 }
 
+/// <summary>
+/// ‰ñŽû‚µ‚½‚Æ‚«
+/// </summary>
 void Boomerang::OnAcquired()
 {
 
@@ -174,7 +177,7 @@ void Boomerang::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 
 	switch (tag)
 	{
-		case CollisionEntity::CollisionTag::Stage:
+		case CollisionEntity::CollisionTag::STAGE:
 			if (m_stateMachine->GetCurrentState() == m_stateMachine->GetBoomerangRepelled())
 			{
 				m_stateMachine->ChangeState(m_stateMachine->GetBoomerangDrop());
@@ -187,17 +190,13 @@ void Boomerang::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 				m_stateMachine->ChangeState(m_stateMachine->GetBoomerangDrop());
 			}
 			break;
-		case CollisionEntity::CollisionTag::Enemy:
-			break;
-		case CollisionEntity::CollisionTag::EnemyParts:
-			break;
-		case CollisionEntity::CollisionTag::Barrier:
+		case CollisionEntity::CollisionTag::BARRIER:
 			m_stateMachine->ChangeState(m_stateMachine->GetBoomerangRepelled());
 			break;
-		case CollisionEntity::CollisionTag::Player:
+		case CollisionEntity::CollisionTag::PLAYER:
 			if (m_stateMachine->GetCurrentState() == m_stateMachine->GetBoomerangRightThrow())
 			{
-				Messenger::GetInstance()->Notify(GameMessageType::BoomerangRecoverable, nullptr);
+				Messenger::GetInstance()->Notify(GameMessageType::BOOMERANG_RECOVERBLE, nullptr);
 				m_isCatch = true;
 
 			}
@@ -216,8 +215,8 @@ void Boomerang::OnCollisionExit(CollisionEntity* object, CollisionTag tag)
 
 	switch (tag)
 	{
-		case CollisionEntity::CollisionTag::Player:			
-			Messenger::GetInstance()->Notify(GameMessageType::BoomerangNotRecoverable, nullptr);
+		case CollisionEntity::CollisionTag::PLAYER:			
+			Messenger::GetInstance()->Notify(GameMessageType::BOOMERANG_NOT_RECOVERBLE, nullptr);
 			m_isCatch = false;
 			break;
 		default:
@@ -249,7 +248,7 @@ void Boomerang::Update(const float& elapsedTime)
 		if (kbTracker->released.F)
 		{
 			m_stateMachine->ChangeState(m_stateMachine->GetBoomerangIdel());
-			Messenger::GetInstance()->Notify(GameMessageType::BoomerangNotRecoverable,nullptr);
+			Messenger::GetInstance()->Notify(GameMessageType::BOOMERANG_NOT_RECOVERBLE,nullptr);
 
 		}
 

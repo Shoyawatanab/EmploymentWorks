@@ -8,7 +8,6 @@
 #include "Libraries/WataLib/Animation.h"
 #include "Libraries/MyLib/DebugString.h"
 
-using namespace DirectX::SimpleMath;
 
 /// <summary>
 /// コンストラクタ

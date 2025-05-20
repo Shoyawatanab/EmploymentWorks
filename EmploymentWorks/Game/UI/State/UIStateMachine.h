@@ -33,9 +33,9 @@ public:
 	void AddPointer(Player* player, PlayScene* playScene, EnemyManager* enemyManager);
 	//Œ»İ‚Ìó‘Ô‚Ìæ“¾
 	IState* GetCurrentState() { return m_currentState; }
-
+	//
 	GamePlayUI* GetGamePlayUI() { return m_playUi.get(); }
-
+	//
 	GameEndUI* GetGameEndUI() { return m_gameEndUI.get(); }
 
 

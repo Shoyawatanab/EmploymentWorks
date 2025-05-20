@@ -21,10 +21,6 @@
 
 #include "Game/Params.h"
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
-
-
 
 const std::vector<D3D11_INPUT_ELEMENT_DESC> BirdEnemyBeamEnergyBall::INPUT_LAYOUT =
 {
@@ -45,7 +41,7 @@ const std::vector<D3D11_INPUT_ELEMENT_DESC> BirdEnemyBeamEnergyBall::INPUT_LAYOU
 /// <param name="parent">親</param>
 BirdEnemyBeamEnergyBall::BirdEnemyBeamEnergyBall(CommonResources* resources, BaseEntity* parent, BirdEnemyBeam* beam)
 	:
-	CollisionEntity(resources,Vector3::Zero, Vector3(0, 100, 0),Quaternion::Identity)
+	CollisionEntity(resources,DirectX::SimpleMath::Vector3::Zero, DirectX::SimpleMath::Vector3(0, 100, 0), DirectX::SimpleMath::Quaternion::Identity)
 	,m_model{}
 	,m_initialScale{}
 	,m_iniialPosition{}
@@ -77,6 +73,7 @@ BirdEnemyBeamEnergyBall::~BirdEnemyBeamEnergyBall()
 /// </summary>
 void BirdEnemyBeamEnergyBall::Initialize()
 {
+	using namespace DirectX::SimpleMath;
 
 	CollisionEntity::Initialize();
 
@@ -84,15 +81,14 @@ void BirdEnemyBeamEnergyBall::Initialize()
 	// モデルを読み込む
 	m_model = BaseEntity::GetCommonResources()->GetGameResources()->GetModel("BeamEnergyBall");
 
+	//初期化
 	m_maxScale = Params::BIRDENEMY_BEAM_BALL_MAX_SIZE;
-
-
 	m_maxSizeTime = Params::BIRDENEMY_BEAM_BALL_ACCUMULATIONTIME;
-
 	m_time = 0;
 
-	CollisionEntity::GetBounding()->CreateBoundingSphere(BaseEntity::GetPosition(), 1.0f);
-	CollisionEntity::GetBounding()->CreateBoundingBox(BaseEntity::GetPosition(), Vector3(0.5, 0.5, 0.5));
+	//当たり判定の作成
+	CollisionEntity::GetBounding()->CreateBoundingSphere(BaseEntity::GetPosition(), SPHERE_COLLIDER_SIZE);
+	CollisionEntity::GetBounding()->CreateBoundingBox(BaseEntity::GetPosition(), BOX_COLLIDER_SIZE);
 
 
 }
@@ -111,10 +107,12 @@ void BirdEnemyBeamEnergyBall::Render(const DirectX::SimpleMath::Matrix& view, co
 		return;
 	}
 
+	using namespace DirectX::SimpleMath;
+	//コンテキストの取得
 	auto context = BaseEntity::GetCommonResources()->GetDeviceResources()->GetD3DDeviceContext();
+	//コモンステートの作成
 	auto states = BaseEntity::GetCommonResources()->GetCommonStates();
 
-	//m_rotation = m_initialRotate;
 
 	CollisionEntity::Render(view, projection);
 
@@ -124,13 +122,13 @@ void BirdEnemyBeamEnergyBall::Render(const DirectX::SimpleMath::Matrix& view, co
 		{
 		});
 
+	//Matriから座標などを取得する
 	Vector3 scale;
 	Quaternion roatation;
+	Matrix matrix = BaseEntity::GetWorldMatrix();
+	matrix.Decompose(scale, roatation, m_wordlPosition);
 
-	Matrix a = BaseEntity::GetWorldMatrix();
-
-	a.Decompose(scale, roatation, m_wordlPosition);
-
+	//当たり判定の描画
 	CollisionEntity::GetBounding()->DrawBoundingSphere(m_wordlPosition, view, projection);
 	CollisionEntity::GetBounding()->DrawBoundingBox(m_wordlPosition, view, projection);
 
@@ -148,6 +146,7 @@ void BirdEnemyBeamEnergyBall::Update(const float& elapsedTime)
 	{
 		return;
 	}
+
 
 	CollisionEntity::Update(elapsedTime);
 
@@ -172,10 +171,13 @@ void BirdEnemyBeamEnergyBall::OnCollisionEnter(CollisionEntity* object, Collisio
 {
 	UNREFERENCED_PARAMETER(object);
 
+	using namespace DirectX::SimpleMath;
+
 	switch (tag)
 	{
-		case CollisionEntity::CollisionTag::Player:
-		case CollisionEntity::CollisionTag::Stage:
+		//プレイヤかステージに当たったら
+		case CollisionEntity::CollisionTag::PLAYER:
+		case CollisionEntity::CollisionTag::STAGE:
 		{
 			m_beam->GetStateMahine()->ChangeState(m_beam->GetStateMahine()->GetBirdEnemyBeamIdle());
 
@@ -183,7 +185,7 @@ void BirdEnemyBeamEnergyBall::OnCollisionEnter(CollisionEntity* object, Collisio
 			Vector3 position = m_wordlPosition;
 			Vector3 scale = Vector3::One;
 			UnknownDataTwo aa = { &position , &scale };
-			Messenger::GetInstance()->Notify(GameMessageType::CreateExplosion, &aa);
+			Messenger::GetInstance()->Notify(GameMessageType::CREATE_EXPLOSION, &aa);
 
 		}
 		break;

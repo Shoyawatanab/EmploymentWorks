@@ -43,59 +43,15 @@ void EffectsManager::Initialize(CommonResources* resources)
 	assert(resources);
 	m_commonResources = resources;
 
+	//各エフェクトの作成
+	CreateEffect();
 
-
-	for (int i = 0; i < 10; i++)
-	{
-
-		auto explosion = std::make_unique<ExplosionEffects>(m_commonResources);
-		explosion->Initialize();
-
-		m_effects.push_back(std::move(explosion));
-
-	}
-
-	//ダメージエフェクト
-	auto damegeVignette = std::make_unique<DamageVignette>(m_commonResources);
-	damegeVignette->Initialize();
-	m_effects.push_back(std::move(damegeVignette));
-
-	//
-	auto particle = std::make_unique < Particle>(m_commonResources);
-	particle->Initialize();
-
-	m_effects.push_back(std::move(particle));
-	
-	particle = std::make_unique < Particle>(m_commonResources);
-	particle->Initialize();
-
-	m_effects.push_back(std::move(particle));
-
-
-	for (int i = 0; i < 40; i++)
-	{
-
-		auto hit = std::make_unique<HitEffect>(m_commonResources);
-		hit->Initialize();
-		m_effects.push_back(std::move(hit));
-
-	}
-
-	auto chargeEffect = std::make_unique<ChargeEffect>(m_commonResources);
-	chargeEffect->Initialize();
-
-	m_effects.push_back(std::move(chargeEffect));
-
-
-	//通知の種類と自身を登録
-	Messenger::GetInstance()->Rigister(GameMessageType::PlayerDamage, this);
-
-
-
-	Messenger::GetInstance()->Rigister(GameMessageType::CreateExplosion, this);
-	Messenger::GetInstance()->Rigister(GameMessageType::CreateParticle, this);
-	Messenger::GetInstance()->Rigister(GameMessageType::CreateHitEffect, this);
-	Messenger::GetInstance()->Rigister(GameMessageType::CreateChageEffect, this);
+	//メッセージクラスに登録
+	Messenger::GetInstance()->Rigister(GameMessageType::PLAYER_DAMAGE, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::CREATE_EXPLOSION, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::CREATE_PARTICLE, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::CREATE_HIT_EFFECT, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::CREATE_CHAGE_EFFECT, this);
 
 }
 
@@ -105,7 +61,7 @@ void EffectsManager::Initialize(CommonResources* resources)
 /// <param name="elapsedTime">経過時間</param>
 void EffectsManager::Update(const float& elapsedTime)
 {
-
+	//エフェクトの更新
 	for (auto& effect : m_effects)
 	{
 		effect->Update(elapsedTime);
@@ -120,13 +76,12 @@ void EffectsManager::Update(const float& elapsedTime)
 /// <param name="projection">射影行列</param>
 void EffectsManager::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
 {
-	using namespace DirectX::SimpleMath;
 
+	//エフェクトの描画
 	for (auto& effect : m_effects)
 	{
 
 		effect->Render(view, projection);
-
 
 	}
 
@@ -146,7 +101,7 @@ void EffectsManager::Finalize()
 /// <param name="datas">データ</param>
 void EffectsManager::CreateExploion(void* datas)
 {
-
+	//データの取得
 	UnknownDataTwo* data = static_cast<UnknownDataTwo*>(datas);
 
 	//使えるエフェクトの取得
@@ -154,7 +109,7 @@ void EffectsManager::CreateExploion(void* datas)
 		m_effects.begin(), m_effects.end(),
 		[](const std::unique_ptr<IEffect>& effect)
 		{
-			return effect->GetEffectType() == IEffect::EffectType::Explosion && !effect->GetIsActive();
+			return effect->GetEffectType() == IEffect::EffectType::EXPLOSION && !effect->GetIsActive();
 		});
 
 	//エフェクトがあれば
@@ -180,7 +135,7 @@ void EffectsManager::CreatePlayerDamageEffect(void* datas)
 		m_effects.begin(), m_effects.end(),
 		[](const std::unique_ptr<IEffect>& effect)
 		{
-			return effect->GetEffectType() == IEffect::EffectType::PlayerDamage && !effect->GetIsActive();
+			return effect->GetEffectType() == IEffect::EffectType::PLAYER_DAMAGE && !effect->GetIsActive();
 		});
 
 	//エフェクトがあれば
@@ -205,7 +160,7 @@ void EffectsManager::CreateParticle(void* datas)
 		m_effects.begin(), m_effects.end(),
 		[](const std::unique_ptr<IEffect>& effect)
 		{
-			return effect->GetEffectType() == IEffect::EffectType::Particle && !effect->GetIsActive();
+			return effect->GetEffectType() == IEffect::EffectType::PARTICLE && !effect->GetIsActive();
 		});
 
 	//エフェクトがあれば
@@ -233,7 +188,7 @@ void EffectsManager::CreateHitEffect(void* datas)
 		m_effects.begin(), m_effects.end(),
 		[](const std::unique_ptr<IEffect>& effect)
 		{
-			return effect->GetEffectType() == IEffect::EffectType::HitEffect && !effect->GetIsActive();
+			return effect->GetEffectType() == IEffect::EffectType::HIT_EFFECT && !effect->GetIsActive();
 		});
 
 	//エフェクトがあれば
@@ -257,7 +212,7 @@ void EffectsManager::CreateChargeEffect(void* datas)
 		m_effects.begin(), m_effects.end(),
 		[](const std::unique_ptr<IEffect>& effect)
 		{
-			return effect->GetEffectType() == IEffect::EffectType::ChargeEffect && !effect->GetIsActive();
+			return effect->GetEffectType() == IEffect::EffectType::CHARGE_EFFECT && !effect->GetIsActive();
 		});
 
 	//エフェクトがあれば
@@ -282,24 +237,81 @@ void EffectsManager::Notify(const Telegram<GameMessageType>& telegram)
 
 	switch (telegram.messageType)
 	{
-		case GameMessageType::CreateExplosion:
+		//爆発の生成
+		case GameMessageType::CREATE_EXPLOSION:
 			CreateExploion(telegram.extraInfo);
 			break;
-		case GameMessageType::PlayerDamage:
+		//プレイヤのダメージエフェクトの生成
+		case GameMessageType::PLAYER_DAMAGE:
 			CreatePlayerDamageEffect(telegram.extraInfo);
 			break;
-		case GameMessageType::CreateParticle:
+		//パーティクルエフェクトの生成
+		case GameMessageType::CREATE_PARTICLE:
 			CreateParticle(telegram.extraInfo);
 			break;
-		case GameMessageType::CreateHitEffect:
+		//ヒットエフェクトの生成
+		case GameMessageType::CREATE_HIT_EFFECT:
 			//CreateHitEffect(datas);
 			break;
-		case GameMessageType::CreateChageEffect:
+		//チャージエフェクトの生成
+		case GameMessageType::CREATE_CHAGE_EFFECT:
 			CreateChargeEffect(telegram.extraInfo);
 			break;
 		default:
 			break;
 	}
+
+}
+
+/// <summary>
+/// エフェクトの作成
+/// </summary>
+void EffectsManager::CreateEffect()
+{
+
+	//爆発エフェクト
+	for (int i = 0; i < EXPLOION_EFFECT_COUNT; i++)
+	{
+		auto explosion = std::make_unique<ExplosionEffects>(m_commonResources);
+		explosion->Initialize();
+
+		m_effects.push_back(std::move(explosion));
+	}
+
+	//ダメージエフェクト
+	auto damegeVignette = std::make_unique<DamageVignette>(m_commonResources);
+	damegeVignette->Initialize();
+	m_effects.push_back(std::move(damegeVignette));
+
+	//パーティクルエフェクト
+	for (int i = 0; i < PARTICLE_EFFECT_COUNT;i++)
+	{
+		auto particle = std::make_unique < Particle>(m_commonResources);
+		particle->Initialize();
+
+		m_effects.push_back(std::move(particle));
+
+		particle = std::make_unique < Particle>(m_commonResources);
+		particle->Initialize();
+
+		m_effects.push_back(std::move(particle));
+
+	}
+
+
+	//ヒットエフェクト
+	for (int i = 0; i < HIT_EFFECT_COUNT; i++)
+	{
+		auto hit = std::make_unique<HitEffect>(m_commonResources);
+		hit->Initialize();
+		m_effects.push_back(std::move(hit));
+	}
+
+	//チャージエフェクト
+	auto chargeEffect = std::make_unique<ChargeEffect>(m_commonResources);
+	chargeEffect->Initialize();
+	m_effects.push_back(std::move(chargeEffect));
+
 
 }
 

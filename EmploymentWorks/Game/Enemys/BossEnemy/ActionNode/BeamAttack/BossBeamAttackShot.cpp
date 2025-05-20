@@ -21,8 +21,6 @@
 #include "Game/Enemys/BossEnemy/Beam/BeamChargeEffect.h"
 #include "Game/Enemys/BossEnemy/Beam/BeamRays.h"
 #include "Game/Player/Player.h"
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
 
 
 
@@ -31,6 +29,10 @@ using namespace DirectX::SimpleMath;
 /// コンストラクタ
 /// </summary>
 /// <param name="resources">共通リソース</param>
+/// <param name="bossEnemy">所有者</param>
+/// <param name="beam">ビーム</param>
+/// <param name="beamAttack">ビーム攻撃</param>
+/// <param name="player">プレイヤ</param>
 BossBeamAttackShot::BossBeamAttackShot(CommonResources* resources
 	, CharacterEntity* bossEnemy
 	, Beam* beam
@@ -54,21 +56,32 @@ BossBeamAttackShot::~BossBeamAttackShot()
 	// do nothing.
 }
 
+/// <summary>
+/// 初期化
+/// </summary>
 void BossBeamAttackShot::Initialize()
 {
+
+
+
 }
 
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="elapsedTime">経過時間</param>
+/// <returns>継続か終了か</returns>
 BossBeamAttackShot::ActionState BossBeamAttackShot::Update(const float& elapsedTime)
 {
-
+	//エネルギー弾の取得
 	Vector3 position = m_beam->GetBeamEnergyBall()->GetLocalPosition();
-
+	//動かす方向
 	Vector3 moveDirection = Vector3::UnitZ;
-
+	//どれだけ動かすか
 	moveDirection *= elapsedTime * Params::BOSSENEMY_BEAM_BALL_MOVE_SPPED;
-
+	//座標を加算
 	position += moveDirection;
-
+	//座標の登録
 	m_beam->GetBeamEnergyBall()->SetLocalPosition(position);
 
 	//ビーム光線の大きさの取得
@@ -84,11 +97,13 @@ BossBeamAttackShot::ActionState BossBeamAttackShot::Update(const float& elapsedT
 	//ビーム光線の大きさを
 	m_beam->GetBeamRays()->SetLocalScale(scale);
 
-	return ActionState::Running;
+	return ActionState::RUNNING;
 
 }
 
-
+/// <summary>
+/// 状態に入った時
+/// </summary>
 void BossBeamAttackShot::Enter()
 {
 
@@ -97,8 +112,8 @@ void BossBeamAttackShot::Enter()
 	Vector3 s = m_beam->GetScale();
 	//敵の現在の座標の取得
 	Vector3 startPosition = m_beam->GetPosition();
-	//プレイヤの現在の座標の取得
-	Vector3 endPosition = m_player->GetPosition() + Vector3(0,1,0);
+	//プレイヤの現在の座標の取得　少し上を狙うようにする
+	Vector3 endPosition = m_player->GetPosition() + TARGET_OFFSET;
 	//敵からプレイヤの方向ベクトルの計算
 	Vector3 toPlayer = endPosition - startPosition;
 	//yawの計算　（左右回転）
@@ -112,10 +127,17 @@ void BossBeamAttackShot::Enter()
 
 	m_beam->GetBeamRays()->SetIsEntityActive(true);
 
+	m_beam->GetBeamEnergyBall()->SetIsCollisionActive(true);
+
 
 }
 
+/// <summary>
+/// 状態を抜けた時
+/// </summary>
 void BossBeamAttackShot::Exit()
 {
+	m_beam->GetBeamEnergyBall()->SetIsCollisionActive(false);
+
 }
 

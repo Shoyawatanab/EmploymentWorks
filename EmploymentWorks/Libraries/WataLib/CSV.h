@@ -6,10 +6,6 @@ namespace WataLib
 {
 	class CSV final
 	{
-	private:
-
-		std::string  m_nodeCsv;
-
 
 	public:
 

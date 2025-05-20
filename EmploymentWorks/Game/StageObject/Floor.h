@@ -40,9 +40,7 @@ public:
 
 	//ICollisionObject
 	//タグの取得
-	CollisionTag GetCollisionTag() override { return CollisionEntity::CollisionTag::Stage; };
-	//当たった時に呼び出される
-	void OnCollisionEnter(CollisionEntity* object, CollisionTag tag) override;
+	CollisionTag GetCollisionTag() override { return CollisionEntity::CollisionTag::STAGE; };
 	//当たり判定の種類の取得
 	const CollisionType GetCollisionType() override { return CollisionType::AABB; };
 	//押し出しをするかどうか
@@ -50,7 +48,7 @@ public:
 	//当たり判定を行わないタグ
 	const std::vector<CollisionTag> GetNoHitDetectionTag() {
 		return  {
-			{CollisionTag::Stage }
+			{CollisionTag::STAGE }
 		};
 	};
 
@@ -60,11 +58,6 @@ public:
 		};
 	};
 
-
-	//基本情報の設定
-	void SetDatas(DirectX::SimpleMath::Vector3 scale,
-		DirectX::SimpleMath::Vector3 position,
-		DirectX::SimpleMath::Quaternion rotation);
 
 private:
 	// モデル

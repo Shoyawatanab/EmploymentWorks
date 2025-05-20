@@ -18,19 +18,15 @@
 #include <random>
 #include <cmath>
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
-
-
 
 /// <summary>
 /// インプットレイアウト
 /// </summary>
 const std::vector<D3D11_INPUT_ELEMENT_DESC> ChargeEffect::INPUT_LAYOUT =
 {
-	{ "POSITION",	0, DXGI_FORMAT_R32G32B32_FLOAT, 0,							 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	{ "COLOR",	0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0,	sizeof(SimpleMath::Vector3), D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	{ "TEXCOORD",	0, DXGI_FORMAT_R32G32_FLOAT,	0, sizeof(SimpleMath::Vector3) + sizeof(SimpleMath::Vector4), D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT,    0, 0,                                                                           D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "COLOR",	  0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0,	sizeof(DirectX::SimpleMath::Vector3),                                        D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT,	     0, sizeof(DirectX::SimpleMath::Vector3) + sizeof(DirectX::SimpleMath::Vector4), D3D11_INPUT_PER_VERTEX_DATA, 0 },
 };
 
 /// <summary>
@@ -39,8 +35,7 @@ const std::vector<D3D11_INPUT_ELEMENT_DESC> ChargeEffect::INPUT_LAYOUT =
 /// <param name="resources">共通リソース</param>
 ChargeEffect::ChargeEffect(CommonResources* resources)
 	:
-	m_commonResources{ resources },
-	m_timer{}
+	m_commonResources{ resources }
 	, m_isActive{ false }
 	, m_CBuffer{}
 	, m_inputLayout{}
@@ -50,13 +45,8 @@ ChargeEffect::ChargeEffect(CommonResources* resources)
 	, m_vertexShader{}
 	, m_pixelShader{}
 	, m_geometryShader{}
-	, m_world{}
-	, m_view{}
-	, m_proj{}
 	, m_billboard{}
 	, m_vertices{}
-	, m_cameraPosition{}
-	, m_cameraTarget{}
 	, m_ChargeEffectUtility{}
 	, m_position{}
 	, m_scale{}
@@ -76,21 +66,22 @@ ChargeEffect::~ChargeEffect()
 /// </summary>
 void ChargeEffect::Initialize()
 {
+	using namespace DirectX;
 
+	//デバイスの取得
 	ID3D11Device1* device = m_commonResources->GetDeviceResources()->GetD3DDevice();
+	//コンテキストの取得
 	ID3D11DeviceContext1* context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
 
 	//	シェーダーの作成
 	CreateShader();
-
-	//	画像の読み込み（２枚ともデフォルトは読み込み失敗でnullptr)
-	//LoadTexture(L"Resources/Textures/da.png");
-
+	
+	//画像の取得
 	m_texture.push_back(m_commonResources->GetGameResources()->GetTexture("da"));
 
 	//	プリミティブバッチの作成
 	m_batch = std::make_unique<PrimitiveBatch<VertexPositionColorTexture>>(context);
-
+	//コモンステートの作成
 	m_states = std::make_unique<CommonStates>(device);
 
 
@@ -100,14 +91,16 @@ void ChargeEffect::Initialize()
 /// <summary>
 /// 更新
 /// </summary>
-/// <param name="elapsedTime"></param>
+/// <param name="elapsedTime">経過時間</param>
 void ChargeEffect::Update(const float& elapsedTime)
 {
+	//オブジェクトが有効なら
 	if (!m_isActive)
 	{
 		return;
 	}
 
+	//ユーティリティの更新
 	for (auto it = m_ChargeEffectUtility.begin(); it != m_ChargeEffectUtility.end(); )
 	{
 		if (!it->Update(elapsedTime)) {
@@ -119,19 +112,20 @@ void ChargeEffect::Update(const float& elapsedTime)
 	}
 
 	//0.5秒ごとにエフェクトの作成
-	if (fmod(m_time, 0.5f) < elapsedTime)
+	if (fmod(m_time, GENERATION_INTERVAL) < elapsedTime)
 	{
-		CreateUtikity();
-
+		CreateUtility();
 	}
 
-
-	if (m_time >= 1.5f)
+	//終了かどうか
+	if (m_time >= GENERATION_TIME)
 	{
+		//初期化
 		m_time = 0.0f;
 		m_isActive = false;
 	}
 
+	//経過時間の加算
 	m_time += elapsedTime;
 
 
@@ -144,13 +138,14 @@ void ChargeEffect::Update(const float& elapsedTime)
 /// <param name="proj">射影行列</param>
 void ChargeEffect::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& proj)
 {
+	using namespace DirectX;
+	//オブジェクトが有効かどうか
 	if (!m_isActive)
 	{
 		return;
 	}
-
+	//コンテキストの取得
 	ID3D11DeviceContext1* context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
-	//	頂点情報(板ポリゴンの４頂点の座標情報）
 
 
 	//	登録されている頂点をリセット
@@ -185,7 +180,7 @@ void ChargeEffect::Render(const DirectX::SimpleMath::Matrix& view, const DirectX
 	m_billboard._42 = 0.0f;
 	m_billboard._43 = 0.0f;
 
-	//	シェーダーに渡す追加のバッファを作成する。(ConstBuffer）
+	//シェーダーに渡す追加のバッファを作成する。(ConstBuffer）
 	ConstBuffer cbuff;
 	cbuff.matView = view.Transpose();
 	cbuff.matProj = proj.Transpose();
@@ -251,45 +246,26 @@ void ChargeEffect::Render(const DirectX::SimpleMath::Matrix& view, const DirectX
 
 }
 
-void ChargeEffect::SetIsActive(bool isActive)
-{
-	m_isActive = isActive;
-
-}
-
+/// <summary>
+/// エフェクトの作成
+/// </summary>
+/// <param name="datas">データ</param>
 void ChargeEffect::Create(void* datas)
 {
-
+	//必要データの取得
 	CreateChargeEffectDatas* data = static_cast<CreateChargeEffectDatas*>(datas);
-
+	//座標の取得
 	m_position = data->Position;
-
-	CreateUtikity();
-
+	//ユーティリティの作成
+	CreateUtility();
+	//初期化
 	m_time = 0.0f;
 
 }
 
-/// <summary>
-/// テクスチャリソース読み込み関数
-/// </summary>
-/// <param name="path">相対パス(Resources/Textures/・・・.pngなど）</param>
-void ChargeEffect::LoadTexture(const wchar_t* path)
-{
-
-	ID3D11Device1* device = m_commonResources->GetDeviceResources()->GetD3DDevice();
-
-
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> texture;
-	DirectX::CreateWICTextureFromFile(device, path, nullptr, texture.ReleaseAndGetAddressOf());
-
-	m_texture.push_back(texture);
-}
-
-
 
 /// <summary>
-/// Shader作成部分だけ分離した関数
+/// Shaderの作成
 /// </summary>
 void ChargeEffect::CreateShader()
 {
@@ -339,8 +315,12 @@ void ChargeEffect::CreateShader()
 
 }
 
-void ChargeEffect::CreateUtikity()
+/// <summary>
+/// ユーティリティの作成
+/// </summary>
+void ChargeEffect::CreateUtility()
 {
+	using namespace DirectX::SimpleMath;
 
 	int count = 12;
 	float radius = 2.0f;
@@ -363,11 +343,11 @@ void ChargeEffect::CreateUtikity()
 			3.0f,																			//	生存時間(s)
 			pos + m_position,				                                                        //	基準座標
 			velocity,		//	速度
-			SimpleMath::Vector3(0.5f,0.0f,0.5f),														//	加速度
+			Vector3(0.5f,0.0f,0.5f),														//	加速度
 			scale,                                                      //	初期スケール
 			scale,							                  //	最終スケール
-			SimpleMath::Color(1.f, 1.f, 1.f, 1.f),											// 初期カラー、
-			SimpleMath::Color(1.f, 1.f, 1.f, -1.f)										   //	最終カラー
+			Color(1.f, 1.f, 1.f, 1.f),											// 初期カラー、
+			Color(1.f, 1.f, 1.f, -1.f)										   //	最終カラー
 		);
 
 		m_ChargeEffectUtility.push_back(pU);

@@ -14,13 +14,15 @@
 #include "Libraries/WataLib/GameResources.h"
 #include <cassert>
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
 
 
-//---------------------------------------------------------
-// コンストラクタ
-//---------------------------------------------------------
+/// <summary>
+/// コンストラク
+/// </summary>
+/// <param name="resources">共通リソース</param>
+/// <param name="scale">大きさ</param>
+/// <param name="position">座標</param>
+/// <param name="rotation">回転</param>
 Sky::Sky(CommonResources* resources
 	, DirectX::SimpleMath::Vector3 scale,
 	DirectX::SimpleMath::Vector3 position,
@@ -31,14 +33,17 @@ Sky::Sky(CommonResources* resources
 {
 }
 
-//---------------------------------------------------------
-// デストラクタ
-//---------------------------------------------------------
+/// <summary>
+/// デストラクタ
+/// </summary>
 Sky::~Sky()
 {
 	// do nothing.
 }
 
+/// <summary>
+/// 初期化
+/// </summary>
 void Sky::Initialize()
 {
 
@@ -50,8 +55,15 @@ void Sky::Initialize()
 
 }
 
+/// <summary>
+/// 描画
+/// </summary>
+/// <param name="view">ビュー行列</param>
+/// <param name="projection">射影行列</param>
 void Sky::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
 {
+	using namespace DirectX;
+
 	//オブジェクトか描画が無効なら
 	if (!BaseEntity::GetIsEntityActive() || !BaseEntity::GetIsRenderActive())
 	{
@@ -95,6 +107,10 @@ void Sky::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleM
 
 }
 
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="elapsedTime">経過時間</param>
 void Sky::Update(const float& elapsedTime)
 {
 	//オブジェクトか更新が無効なら

@@ -23,15 +23,23 @@ class BossJumpAttackCharge : public IAction
 {
 
 public:
+
+	//エフェクトの大きさ
+	static constexpr DirectX::SimpleMath::Vector3 EFFECTE_SCALE{ 5.0f,5.0f,5.0f };
+	//チャージ時間
+	static constexpr float CHARGE_TIME = 1.5f;
+
+public:
+	//コンストラクタ
 	BossJumpAttackCharge(CommonResources* resources,
 		BossJumpAttackAction* parent
 		,BossEnemy* bossEnemy
 		, Player* player);
 	//デストラクタ
 	~BossJumpAttackCharge() override ;
-
+	//初期化
 	void Initialize() override;
-
+	//更新処理
 	ActionState Update(const float& elapsedTime)  override ;
 	//状態に入った時
 	void Enter() override ;
@@ -43,11 +51,13 @@ public:
 private:
 	// 共通リソース
 	CommonResources* m_commonResources;
-
+	//所有や
 	BossEnemy* m_bossEnemy;
+	//プレイヤ
 	Player* m_player;
-
+	//時間
 	float m_time;
+	//コントローラー
 	BossJumpAttackAction* m_parent;
 
 

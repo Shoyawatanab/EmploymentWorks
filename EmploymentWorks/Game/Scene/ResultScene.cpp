@@ -67,7 +67,7 @@ void ResultScene::Update(float elapsedTime)
 	UNREFERENCED_PARAMETER(elapsedTime);
 
 	//フェードが終わるまで
-	if (m_commonResources->GetFade()->GetFadeState() != Fade::FadeState::None)
+	if (m_commonResources->GetFade()->GetFadeState() != Fade::FadeState::NONE)
 	{
 		return;
 	}
@@ -103,7 +103,7 @@ IScene::SceneID ResultScene::GetNextSceneID() const
 	// シーン変更がある場合
 	if (m_isChangeScene)
 	{
-		if (m_commonResources->GetFade()->GetFadeState() == Fade::FadeState::None)
+		if (m_commonResources->GetFade()->GetFadeState() == Fade::FadeState::NONE)
 		{
 			m_commonResources->GetFade()->StartNormalFadeIn();
 		}

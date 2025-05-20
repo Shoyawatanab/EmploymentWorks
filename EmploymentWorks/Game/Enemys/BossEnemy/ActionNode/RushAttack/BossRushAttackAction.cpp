@@ -19,8 +19,7 @@
 #include "Game/Enemys/BossEnemy/BossEnemy.h"
 #include "Game/Enemys/BossEnemy/Beam/Beam.h"
 #include "BossRushAttackAction.h"
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
+
 
 
 
@@ -28,6 +27,8 @@ using namespace DirectX::SimpleMath;
 /// コンストラクタ
 /// </summary>
 /// <param name="resources">共通リソース</param>
+/// <param name="bossenemy">所有者</param>
+/// <param name="player">プレイヤ</param>
 BossRushAttackAction::BossRushAttackAction(CommonResources* resources
 	,BossEnemy* bossenemy
 	, Player* player)
@@ -37,14 +38,13 @@ BossRushAttackAction::BossRushAttackAction(CommonResources* resources
 {
 
 
-
+	//各状態を作成
 	m_charge = std::make_unique<BossRushAttackCharge>(resources,this,bossenemy,player);
 	m_rush = std::make_unique<BossRushAttackRush>(resources, this, bossenemy, player);
 
 
-	//イベントタイプの登録
-	Messenger::GetInstance()->Rigister(GameMessageType::BossBeamHit, this);
 
+	//動作順に追加
 	ActionStateController::Initialize({
 		m_charge.get()
 		,m_rush.get()
@@ -60,17 +60,6 @@ BossRushAttackAction::~BossRushAttackAction()
 	// do nothing.
 }
 
-void BossRushAttackAction::Notify(const Telegram<GameMessageType>& telegram)
-{
-	
-	switch (telegram.messageType)
-	{
-		case GameMessageType::BossBeamHit:
-			break;
-		default:
-			break;
-	}
 
-}
 
 

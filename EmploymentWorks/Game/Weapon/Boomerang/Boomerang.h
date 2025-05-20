@@ -49,7 +49,7 @@ public:
 
 	//ICollisionObject
 	//タグの取得
-	CollisionTag GetCollisionTag() override { return CollisionEntity::CollisionTag::Boomerang; };
+	CollisionTag GetCollisionTag() override { return CollisionEntity::CollisionTag::BOOMERANG; };
 	//当たった時に呼び出される
 	void OnCollisionEnter(CollisionEntity* object, CollisionTag tag) override;
 	//衝突が終了したときに呼び出される
@@ -63,9 +63,9 @@ public:
 	const std::vector<CollisionTag> GetNoHitDetectionTag() override {
 		return  {
 			//{CollisionTag::Player},
-			{CollisionTag::PlayerParts}
-			,{CollisionTag::Boomerang}
-			,{CollisionTag::Enemy}
+			{CollisionTag::PLAYERPARTS}
+			,{CollisionTag::BOOMERANG}
+			,{CollisionTag::ENEMY}
 
 		};
 	};
@@ -76,7 +76,7 @@ public:
 		};
 	};
 
-
+	//回収したとき
 	void OnAcquired() override ;
 
 
@@ -94,18 +94,17 @@ private:
 
 	//初期座標
 	DirectX::SimpleMath::Vector3 m_initialPosition;
-	//
+	//初期の大きさ
 	DirectX::SimpleMath::Vector3 m_initialScale;
-
+	//初期回転
 	DirectX::SimpleMath::Quaternion m_initialRotation;
 	//投げる軌道の基準座標
 	std::vector<DirectX::SimpleMath::Vector3> m_throwbasePosition;
-
-
+	//影
 	std::unique_ptr<WataLib::Shadow> m_shadow;
 	//1フレ前の座標
 	DirectX::SimpleMath::Vector3 m_prevPosition;
-
+	//つかむことができるか
 	bool m_isCatch;
 
 };

@@ -14,6 +14,19 @@ namespace WataLib
 	private:
 
 
+		// 画角
+		const float FOV = DirectX::XMConvertToRadians(45.0f);
+
+		// 近い投影面
+		const float NEAR_PLANE = 1.0f;
+
+		// 遠い投影面
+		const float FAR_PLANE = 100.0f;
+
+		//ターゲットまでの距離
+		static constexpr DirectX::SimpleMath::Vector3 DISTANCE_TO_TARGET{6.0f, 4.0f, 6.0f};
+
+		static constexpr float ROTATION_SPEED = 0.25f;
 
 	public:
 		// getter
@@ -35,14 +48,13 @@ namespace WataLib
 
 		// デストラクタ
 		~TitleCamera() = default;
-
+		//初期化
 		void Initialize(CommonResources* resources) override;
-
-
+		//更新処理
 		void Update(const float& elapsedTime);
-
+		//状態に入った時
 		void Enter() override;
-
+		//状態を抜けた時
 		void Exit() override;
 
 		//描画
@@ -56,21 +68,9 @@ namespace WataLib
 		void CalculateProjectionMatrix();
 
 		// カメラ座標を計算する
-		void CalculateEyePosition();
+		void CalculateEyePosition(const float& elapsedTime);
 
 	private:
-		// ターゲットからのデフォルト距離
-		const float CAMERA_DISTANCE = 7.0f;
-		const float CAMERA_HIGHT = 5.0f;
-
-		// 画角
-		const float FOV = DirectX::XMConvertToRadians(45.0f);
-
-		// 近い投影面
-		const float NEAR_PLANE = 1.0f;
-
-		// 遠い投影面
-		const float FAR_PLANE = 100.0f;
 
 		// ビュー行列
 		DirectX::SimpleMath::Matrix m_view;
@@ -86,7 +86,7 @@ namespace WataLib
 
 		// カメラの頭の方向
 		DirectX::SimpleMath::Vector3 m_up;
-
+		//横回転
 		DirectX::SimpleMath::Quaternion m_rotationX;
 
 

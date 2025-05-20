@@ -45,7 +45,7 @@ IBehaviorNode::State DecoratorNode::Update(float elapsedTime)
 	//条件がfalseなら
 	if (!m_condition(elapsedTime))
 	{
-		return State::Failure;
+		return State::FAILURE;
 	}
 	//子ノードの実行
 	return m_childNode->Update(elapsedTime);

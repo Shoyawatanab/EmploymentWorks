@@ -4,8 +4,6 @@
 #include "Game/CollisiionManager.h"
 #include "Libraries/WataLib/Animation.h"
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
 
 
 /// <summary>

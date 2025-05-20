@@ -1,41 +1,42 @@
 #pragma once
-//イベントの種類
+//ゲームの種類
 enum class GameMessageType
 {
 	None = -1
-	, BoomerangGetReady    //ブーメランを構える
-	, BoomerangGetReadyEnd  //ブーメランの構えを終わる
-	, BoomerangThrow      //ブーメランを投げる
-	, GetBoomerang        //ブーメランの取得
-	, GameClear
-	, GameOver
-	, DefeatedAllEnemies  // 全ての敵を倒したら
-	, PlayerDamage
-	, BossBeamAttackEnd
-	, CreateExplosion
-	, CreateParticle  
-	, CreateHitEffect
-	,CreateChageEffect
-	, BossBeamHit  
-	,ChangeBoomerangThrowState
-	,MouseWheelUp
-	,MouseWheelDown
-	,BoomerangRecoverable  //ブーメランを回収可能
-	,BoomerangNotRecoverable  //ブーメランを回収不可
-	,CameraShake  //カメラを揺らす
+	, BOOMERANG_GET_READY    //ブーメランを構える
+	, BOOMERANG_GET_READY_END  //ブーメランの構えを終わる
+	, BOOMERANG_THTROW      //ブーメランを投げる
+	, GET_BOOMERANG        //ブーメランの取得
+	, GAME_CLEAR
+	, GAME_OVER
+	, DEFEATED_All_ENEMIES  // 全ての敵を倒したら
+	, PLAYER_DAMAGE
+	, BOSS_BEAM_ATTACK_END
+	, CREATE_EXPLOSION
+	, CREATE_PARTICLE  
+	, CREATE_HIT_EFFECT
+	, CREATE_CHAGE_EFFECT
+	, BOSS_BEAM_HIT  
+	,CHARGE_BOOMERANG_THROW_STATE
+	,MOUSE_WHEEL_UP
+	,MOUSE_WHEEL_DOWN
+	,BOOMERANG_RECOVERBLE  //ブーメランを回収可能
+	, BOOMERANG_NOT_RECOVERBLE  //ブーメランを回収不可
+	,CAMERA_SHAKE  //カメラを揺らす
 
 };
 
-
+//敵のイベントの種類
 enum class EnemyMessageType
 {
-	None
-	,Walking
-	,JumpAttack
-	, BarrierDefense
-	,BeamAttack
-	, SwingDown
+	NONE
+	,WALKING
+	,JUMP_ATTACK
+	, BARRIER_DEFENSE
+	, BEAM_ATTACK
+	, SWING_DOWN
 };
+
 
 struct CreateHitEffectDatas
 {

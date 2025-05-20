@@ -25,13 +25,13 @@ public:
 	//フェード状態
 	enum FadeState
 	{
-		None,
-		FadeIn,
-		FadeOut
+		NONE,
+		FADE_IN,
+		FADE_OUT
 	};
 
 
-	//	データ受け渡し用コンスタントバッファ(送信側)
+	//コンスタントバッファ)
 	struct ConstBuffer
 	{
 		DirectX::SimpleMath::Matrix		matWorld;
@@ -40,6 +40,10 @@ public:
 		DirectX::SimpleMath::Vector4	Diffuse;
 		DirectX::SimpleMath::Vector4	time;
 	};
+
+public:
+	//	関数
+	static const std::vector<D3D11_INPUT_ELEMENT_DESC> INPUT_LAYOUT;
 
 
 public:
@@ -55,8 +59,6 @@ public:
 
 
 public:
-	//	関数
-	static const std::vector<D3D11_INPUT_ELEMENT_DESC> INPUT_LAYOUT;
 	//コンストラクタ
 	Fade(ID3D11Device1* m_device,ID3D11DeviceContext* m_contect);
 	//デストラクタ
@@ -96,19 +98,16 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11PixelShader> m_currentPS;
 	//	使用するジオメトリシェーダ
 	Microsoft::WRL::ComPtr<ID3D11GeometryShader> m_currentGS;
-
-	DirectX::SimpleMath::Matrix m_world;
-	DirectX::SimpleMath::Matrix m_view;
-	DirectX::SimpleMath::Matrix m_proj;
-
+	//時間
 	float m_time;
+	//フェードの種類
 	FadeState m_fadeState;
 
 	//シーン切り替えをするか
 	bool m_isSceneChange;
-
-
+	//デバイス
 	ID3D11Device1* m_device;
+	//コンテキスト
 	ID3D11DeviceContext* m_context;
 
 	//	通常フェードインピクセルシェーダ

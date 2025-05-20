@@ -9,7 +9,6 @@
 #include "Game/Weapon/Boomerang/Boomerang.h"
 #include "Game/Weapon/Boomerang/State/BoomerangStateMachine.h"
 
-using namespace DirectX::SimpleMath;
 
 /// <summary>
 /// コンストラクタ
@@ -59,7 +58,7 @@ bool Conditions::IsInCloseRangeAttack()
 	float Distance = Vector3::Distance(PlayerPosition, EnemyPosition);
 
 	//攻撃範囲内かどうか
-	if(Distance < CLOSERANGEDISTANCE)
+	if(Distance < CLOSERANGE_ATTACK_DISTANCE)
 	{
 		return true;
 	}
@@ -85,7 +84,7 @@ bool Conditions::IsInLongRangeAttack()
 	float Distance = Vector3::Distance(PlayerPosition, EnemyPosition);
 
 	//攻撃範囲内かどうか
-	if (Distance < LONGRANGEDISTANCE)
+	if (Distance < LONGRANGE_ATTACK_DISTANCE)
 	{
 		return true;
 	}
@@ -95,30 +94,33 @@ bool Conditions::IsInLongRangeAttack()
 }
 
 /// <summary>
-/// 視野角ないかどうか
+/// ジャンプ攻撃範囲内かどうか
 /// </summary>
-/// <returns>ture 視野角外  false　視野角内 </returns>
-bool Conditions::WithinViewingAngle()
+/// <returns>ture : 範囲内  false :　範囲外</returns>
+bool Conditions::IsJumpAttackRange()
 {
+	//座標の取得
+	Vector3 PlayerPosition = m_palyer->GetPosition();
+	Vector3 EnemyPosition = m_enemy->GetPosition();
 
-	Vector3 forward = Vector3::Backward;
+	//Y座標を統一する
+	PlayerPosition.y = 0;
+	EnemyPosition.y = 0;
 
-	forward = Vector3::Transform(forward, m_enemy->GetRotation());
-	forward.y = 0.0f;
-	//しかいないかどうか
-	if(IsEnemyInview(m_enemy->GetPosition(), forward, m_palyer->GetPosition()))
+	//距離を求める
+	float Distance = Vector3::Distance(PlayerPosition, EnemyPosition);
+
+	//攻撃範囲内かどうか
+	if (Distance < JUMP_ATTACK_DISTANCE)
 	{
-
-		//視界内なら 
-		return false;
-
+		return true;
 	}
 
 
+	return false;
 
-	//視野角がい
-	return true;
 }
+
 
 /// <summary>
 ///  敵がプレイヤの視界に入っているかどうか

@@ -56,12 +56,7 @@ IBehaviorNode::State ActionNode::RunningUpdate(float elapsedTime)
 	return m_executionNode(elapsedTime);
 }
 
-/// <summary>
-/// •`‰æ
-/// </summary>
-void ActionNode::Render()
-{
-}
+
 
 void ActionNode::Finalize()
 {

@@ -8,8 +8,7 @@
 #include "Game/Enemys/BirdEnemy/State/BirdEnemyAttack.h"
 #include "Game/Enemys/BirdEnemy/State/BirdEnemyMove.h"
 
-
-
+//前方宣言
 class Player;
 class BirdEnemy;
 
@@ -33,9 +32,9 @@ public:
 	~BirdEnemyStateMachine() override;
 	//初期化
 	void Initialize(CommonResources* resources, IState* startState = nullptr) override;
-	// 更新する
+	// 更新処理
 	void Update(const float& elapsedTime) override;
-	//描画
+	//描画処理
 	void Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection) override;
 	//状態の変更
 	void ChangeState(IState* nextState) override;

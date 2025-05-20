@@ -47,8 +47,8 @@ void BirdEnemyMove::Initialize(CommonResources* resoure)
 
 	m_commonResources = resoure;
 
+	//初期化
 	m_startPosition = m_birdEnemy->GetPosition();
-
 	m_time = 0;
 
 }
@@ -102,8 +102,8 @@ void BirdEnemyMove::Render(const DirectX::SimpleMath::Matrix& view, const Direct
 /// </summary>
 void BirdEnemyMove::Enter()
 {
+	//初期化
 	m_startPosition = m_birdEnemy->GetPosition();
-
 	m_time = 0;
 
 	//シード値を生成
@@ -121,7 +121,7 @@ void BirdEnemyMove::Enter()
 	offsetPosition.y = Params::BIRDENEMY_MOVE_RADIUS * sin(angle);
 
 
-
+	//終わりの座標を求める
 	m_endPosition = m_startPosition  + offsetPosition;
 
 

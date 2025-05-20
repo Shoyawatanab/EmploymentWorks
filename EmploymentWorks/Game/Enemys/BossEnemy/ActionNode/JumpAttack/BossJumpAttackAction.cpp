@@ -19,8 +19,7 @@
 #include "Game/Enemys/BossEnemy/BossEnemy.h"
 #include "Game/Enemys/BossEnemy/Beam/Beam.h"
 #include "BossJumpAttackAction.h"
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
+
 
 
 
@@ -37,17 +36,15 @@ BossJumpAttackAction::BossJumpAttackAction(CommonResources* resources
 {
 
 
-
+	//各状態を作成
 	m_charge = std::make_unique<BossJumpAttackCharge>(resources,this,bossenemy,player);
 	m_jump = std::make_unique<BossJumpAttackJump>(resources, this, bossenemy, player);
 
 
 	//m_currentState->Enter();
 
-	//イベントタイプの登録
-	Messenger::GetInstance()->Rigister(GameMessageType::BossBeamHit, this);
 
-	
+	//動作順に追加
 	ActionStateController::Initialize({
 		m_charge.get(),
 		m_jump.get()
@@ -65,18 +62,6 @@ BossJumpAttackAction::~BossJumpAttackAction()
 }
 
 
-void BossJumpAttackAction::Notify(const Telegram<GameMessageType>& telegram)
-{
-	
-	switch (telegram.messageType)
-	{
-		case GameMessageType::BossBeamHit:
-			break;
-		default:
-			break;
-	}
-
-}
 
 
 

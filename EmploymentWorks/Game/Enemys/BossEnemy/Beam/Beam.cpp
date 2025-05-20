@@ -20,10 +20,6 @@
 #include "Game/Params.h"
 #include "Game/Player/Player.h"
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
-
-
 
 
 /// <summary>
@@ -33,18 +29,19 @@ using namespace DirectX::SimpleMath;
 Beam::Beam(CommonResources* resources)
 	:
 	BaseEntity(resources,Params::BOSSENEMY_BEAM_SCALE,Params::BOSSENEMY_BEAM_POSITION,Params::BOSSENEMY_BEAM_ROTATION)
-	,m_initialScale{}
 	,m_energyBall{}
 	,m_preliminaryActitonTime{}
 	,m_chargeEffect{}
 	,m_deleteChargeEffect{}
 	,m_rays{}
-	
 {
+	
 	m_energyBall = std::make_unique<BeamEnergyBall>(resources,this);
 	m_rays = std::make_unique<BeamRays>(resources,this);
 
 	BaseEntity::SetIsEntityActive(false);
+	m_energyBall->SetIsEntityActive(false);
+	m_rays->SetIsEntityActive(false);
 
 }
 
@@ -62,12 +59,9 @@ Beam::~Beam()
 void Beam::Initialize()
 {
 
-
+	//初期化
 	m_energyBall->Initialize();
 	m_rays->Initialize();
-
-
-
 
 	
 }
@@ -80,10 +74,12 @@ void Beam::Initialize()
 void Beam::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
 {
 
+	//オブジェクトが有効か
 	if (!BaseEntity::GetIsEntityActive())
 	{
 		return;
 	}
+
 
 	BaseEntity::Render(view, projection);
 
@@ -93,6 +89,7 @@ void Beam::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::Simple
 	{
 		partcle->Render(view, projection);
 	}
+
 	m_rays->Render(view, projection);
 
 
@@ -108,26 +105,7 @@ void Beam::Update(const float& elapsedTime)
 {
 	UNREFERENCED_PARAMETER(elapsedTime);
 
-
-	//敵の現在の座標の取得
-	Vector3 startPosition = BaseEntity::GetPosition();
-	//プレイヤの現在の座標の取得
-	Vector3 endPosition = m_player->GetPosition() ;
-	//敵からプレイヤの方向ベクトルの計算
-	Vector3 toPlayer = endPosition - startPosition;
-	//yawの計算　（左右回転）
-	//xz平面で敵からプレイヤの方向を求める
-	float yaw = atan2(toPlayer.x, toPlayer.z);
-	//pitchの計算（上下回転）
-	//敵からプレイヤのウ違勅方向を求める
-	float pitch = atan2(toPlayer.y, sqrt(toPlayer.x * toPlayer.x + toPlayer.z * toPlayer.z));
-
-	//yaw pitchから回転を計算 pitchは反転させる
-	BaseEntity::SetRotation(Quaternion::CreateFromYawPitchRoll(yaw, -pitch, 0.0f));
-
-
-
-
+	//エフェクトの削除
 	for (auto& effect : m_deleteChargeEffect)
 	{
 		m_chargeEffect.erase(
@@ -182,7 +160,7 @@ void Beam::CreateParticle()
 
 
 	float radius = 0.9f;
-
+	//パーティクルの生成
 	for (int angle = 0; angle < 360; angle += 45)
 	{
 		// 角度をラジアンに変換   スタートを上から始めるために９０度プラスする　９０足さないと右から始まる
@@ -200,12 +178,13 @@ void Beam::CreateParticle()
 
 	}
 
-
+	//パーティクルの生成
 	for (int i = 0; i < position.size(); i++)
 	{
-		auto particle = std::make_unique<BeamChargeEffect>();
+		auto particle = std::make_unique<BeamChargeEffect>(BaseEntity::GetCommonResources(), EFFECT_SCALE, position[i], rotate[i]);
 		particle->AddPointer(this);
-		particle->Initialize(BaseEntity::GetCommonResources(), position[i], rotate[i]);
+		particle->SetParent(this);
+		particle->Initialize();
 
 		m_chargeEffect.push_back(std::move(particle));
 
@@ -222,14 +201,6 @@ void Beam::RegistrationDeleteParticle(BeamChargeEffect* effect)
 
 }
 
-/// <summary>
-/// パーティクルのクリア
-/// </summary>
-void Beam::DeleteParticle()
-{
 
-	m_chargeEffect.clear();
-
-}
 
 

@@ -5,11 +5,10 @@
 #include "pch.h"
 #include "Shadow.h"
 
-using namespace DirectX;
 
-//---------------------------------------------------------
-// コンストラクタ
-//---------------------------------------------------------
+/// <summary>
+/// コンストラクタ
+/// </summary>
 WataLib::Shadow::Shadow()
 	:
 	m_texture{},
@@ -20,15 +19,20 @@ WataLib::Shadow::Shadow()
 {
 }
 
-//---------------------------------------------------------
-// 初期化する
-//---------------------------------------------------------
+/// <summary>
+/// 初期化
+/// </summary>
+/// <param name="device">デバイス</param>
+/// <param name="context">コンテキスト</param>
+/// <param name="states">コモンステート</param>
 void WataLib::Shadow::Initialize(
 	ID3D11Device* device,
 	ID3D11DeviceContext* context,
 	DirectX::CommonStates* states
 )
 {
+	using namespace DirectX;
+
 	assert(device);
 	assert(context);
 	assert(states);
@@ -86,9 +90,15 @@ void WataLib::Shadow::Initialize(
 	device->CreateDepthStencilState(&desc, m_depthStencilState.ReleaseAndGetAddressOf());
 }
 
-//---------------------------------------------------------
-// 描画する
-//---------------------------------------------------------
+/// <summary>
+/// 描画
+/// </summary>
+/// <param name="context">コンテキスト</param>
+/// <param name="states">コモンステート</param>
+/// <param name="view">ビュー行列</param>
+/// <param name="projection">射影行列</param>
+/// <param name="position">座標</param>
+/// <param name="radius">半径</param>
 void WataLib::Shadow::Render(
 	ID3D11DeviceContext* context,
 	DirectX::CommonStates* states,
@@ -98,6 +108,7 @@ void WataLib::Shadow::Render(
 	float radius
 )
 {
+	using namespace DirectX;
 	using namespace DirectX::SimpleMath;
 
 	assert(context);

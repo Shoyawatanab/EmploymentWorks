@@ -13,7 +13,6 @@
 #include "Game/CollisiionManager.h"
 #include "Game/Params.h"
 
-using namespace DirectX::SimpleMath;
 
 /// <summary>
 /// コンストラクタ
