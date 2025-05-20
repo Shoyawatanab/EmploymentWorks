@@ -21,14 +21,12 @@ namespace mylib
 }
 
 
-class BossRushAttackAction : public ActionStateController, IObserver<GameMessageType>
+class BossRushAttackAction : public ActionStateController
 {
 
-public:
-
-
 
 public:
+	//コンストラクタ
 	BossRushAttackAction(CommonResources* resources,
 		BossEnemy* bossEnemy
 		, Player* player);
@@ -36,18 +34,15 @@ public:
 	~BossRushAttackAction() ;
 
 
-	//IObserver
-//通知時に呼ばれる関数
-	void Notify(const Telegram<GameMessageType>& telegram)  override;
 
 
 
 private:
 	// 共通リソース
 	CommonResources* m_commonResources;
-
+	//チャージ
 	std::unique_ptr<BossRushAttackCharge> m_charge;
-
+	//ラッシュ
 	std::unique_ptr<BossRushAttackRush> m_rush;
 
 };

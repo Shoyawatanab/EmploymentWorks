@@ -9,9 +9,7 @@
 #include "Game/Player/Player.h"
 #include "Libraries/WataLib/Camera/TPS_Camera.h"
 #include "Game/Params.h"
-
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
+#include "Game/MathUtil.h"
 
 /// <summary>
 /// コンストラクタ
@@ -26,6 +24,11 @@ BoomerangLeftThrow::BoomerangLeftThrow()
 	,m_rotationDatas{}
 	,m_horizontalRotation{}
 	,m_initialRotation{}
+	, m_boomerang{}
+	, m_player{}
+	, m_targetMarker{}
+	, m_tpsCamera{}
+
 {
 
 
@@ -86,25 +89,36 @@ void BoomerangLeftThrow::CreateSplineCurvePositon()
 	
 	//ブーメランからターゲットまでの距離
 	Vector3 boomerangToTargetDistance = target - m_boomerang->GetPosition();
+
+
+	float boomerangToTargetLenght = boomerangToTargetDistance.Length();
+
+	boomerangToTargetDistance = Vector3(0, 0, -1) * boomerangToTargetLenght;
+
+	//値を正に
+	boomerangToTargetDistance.x = std::abs(boomerangToTargetDistance.x);
+	//boomerangToTargetDistance.y =std::abs(boomerangToTargetDistance.y);
+	boomerangToTargetDistance.z = std::abs(boomerangToTargetDistance.z);
+
 	//高さをゼロに
 	boomerangToTargetDistance.y = 0.0f;
 	//float型に変換　長さを半分に
-	float boomerangToTargetLenght = boomerangToTargetDistance.Length();
-
+	float boomerangToTargetHalfLenght = boomerangToTargetDistance.Length() / 2;
 	//基準点を変更
 	for (int i = 0; i < basePosition.size(); i++)
 	{
 		//基準点が右回りだから左回りにするためにｘ軸を反転させる
 		basePosition[i].x *= -1;
 
+
 		//基準点から中心までの長さを求める
 		float lenght = basePosition[i].Length();
 		//割合を求める
-		float ratio = (lenght == 0.0f) ? 0.0f : boomerangToTargetLenght / lenght;		
+		float ratio = (lenght == 0.0f) ? 0.0f : boomerangToTargetHalfLenght / lenght;
 		//割合をもとに基準点を変更
 		basePosition[i] *= ratio;
-		//高さをブーメランの位置に合わせる
-		basePosition[i].y = m_boomerang->GetPosition().y;
+
+		basePosition[i] -= boomerangToTargetDistance / 2;
 
 	}
 
@@ -113,7 +127,7 @@ void BoomerangLeftThrow::CreateSplineCurvePositon()
 		//一番遠い基準点との割合を求める
 		float ratio = basePosition[i].z / basePosition[basePosition.size() / 2].z;
 		//高さの調整
-		basePosition[i].y = Lerp(m_boomerang->GetPosition().y, target.y, ratio);
+		basePosition[i].y =MathUtil:: Lerp(m_boomerang->GetPosition().y, target.y, ratio);
 	
 	}
  
@@ -133,10 +147,6 @@ void BoomerangLeftThrow::CreateSplineCurvePositon()
 
 }
 
-float BoomerangLeftThrow::Lerp(float a, float b, float t)
-{
-	return a + t * (b - a);
-}
 
 /// <summary>
 /// スプライン曲線
@@ -181,7 +191,7 @@ void BoomerangLeftThrow::SplineCurve(const float& elapsedTime)
 		//最後の基準点に来たら
 		if ((m_index) % m_splineCurvePosition.size() == m_splineCurvePosition.size() - 1)
 		{
-			m_state = State::ChaseToPlayer;
+			m_state = State::CHASE_TO_PLAYER;
 		}
 	}
 
@@ -298,10 +308,10 @@ void BoomerangLeftThrow::Update(const float& elapsedTime)
 
 	switch (m_state)
 	{
-		case BoomerangLeftThrow::State::SplineCurve:
+		case BoomerangLeftThrow::State::SPINECURVE:
 			SplineCurve(elapsedTime);
 			break;
-		case BoomerangLeftThrow::State::ChaseToPlayer:
+		case BoomerangLeftThrow::State::CHASE_TO_PLAYER:
 			ChaseToPlayer(elapsedTime);
 			break;
 		default:
@@ -338,7 +348,7 @@ void BoomerangLeftThrow::Enter()
 	//初期化
 	m_index = 0;
 	m_horizontalRotation = Quaternion::Identity;
-	m_state = State::SplineCurve;
+	m_state = State::SPINECURVE;
 
 	//ブーメランの親子関係を切る
 	//m_boomerang->SetIsParentActive(false);

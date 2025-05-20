@@ -10,8 +10,6 @@
 #include "Game/Enemys/BossEnemy/BossEnemy.h"
 #include "Game/Params.h"
 
-using namespace DirectX::SimpleMath;
-
 
 /// <summary>
 /// コンストラクタ
@@ -114,7 +112,7 @@ void BossEnemyPartsBase::Render(const DirectX::SimpleMath::Matrix& view, const D
 			basicEffect->SetSpecularPower(20.0f);
 		});
 
-
+	//モデルの描画
 	m_model->Draw(context, *states, BaseEntity::GetWorldMatrix(), view, projection);
 
 
@@ -158,7 +156,7 @@ void BossEnemyPartsBase::OnCollisionEnter(CollisionEntity* object, CollisionTag 
 
 	switch (tag)
 	{
-		case CollisionEntity::CollisionTag::Boomerang:
+		case CollisionEntity::CollisionTag::BOOMERANG:
 			m_partsHP -= Params::BOOMERANG_DAMAGE;
 			m_partsHP = std::max(m_partsHP, 0);
 			m_root->Damage(Params::BOOMERANG_DAMAGE);
@@ -190,18 +188,13 @@ void BossEnemyPartsBase::OnCollisionEnter(CollisionEntity* object, CollisionTag 
 
 					UnknownDataThree aa = { static_cast<void*>(&pos) ,static_cast<void*>(&scale) };
 
-					Messenger::GetInstance()->Notify(GameMessageType::CreateHitEffect, &aa);
+					Messenger::GetInstance()->Notify(GameMessageType::CREATE_HIT_EFFECT, &aa);
 				}
 
 			}
 
 
 			break;
-		case CollisionEntity::CollisionTag::Beam:
-			break;
-
-		break;
-
 		default:
 			break;
 	}
@@ -226,7 +219,7 @@ void BossEnemyPartsBase::Update(const float& elapsedTime)
 
 	CompositeEntity::Update(elapsedTime);
 
-
+	//親があれば
 	if (BaseEntity::GetIsParent())
 	{
 		//親の回転を取得
@@ -237,8 +230,7 @@ void BossEnemyPartsBase::Update(const float& elapsedTime)
 	}
 
 
-
-
+	//パーツの更新
 	for (auto& parts : CompositeEntity::GetParts())
 	{
 		parts->Update(elapsedTime);

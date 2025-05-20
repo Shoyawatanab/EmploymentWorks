@@ -21,18 +21,23 @@ namespace mylib
 class BossBeamAttackShot : public IAction
 {
 public:
+
+	//ターゲットのオフセット
+	static constexpr DirectX::SimpleMath::Vector3 TARGET_OFFSET{ 0.0f,1.0f,0.0f };
+
+public:
+	//コンストラクタ
 	BossBeamAttackShot(CommonResources* resources
 		, CharacterEntity* bossEnemy
 		, Beam* beam
 		, BossBeamAttackAction* beamAttack
 		, CharacterEntity* player);
 
-	//継承関係
 	//デストラクタ
 	~BossBeamAttackShot() override;
 	//初期化
 	void Initialize() override;
-	// 更新する
+	// 更新処理
 	ActionState Update(const float& elapsedTime);
 	//状態に入った時
 	void Enter();
@@ -41,9 +46,13 @@ public:
 private:
 	// 共通リソース
 	CommonResources* m_commonResources;
+	//所有者
 	CharacterEntity* m_bossEnemy;
+	//ビーム
 	Beam* m_beam;
+	//ビーム攻撃
 	BossBeamAttackAction* m_beamAttack;
+	//プレイヤ
 	CharacterEntity* m_player;
 
 };

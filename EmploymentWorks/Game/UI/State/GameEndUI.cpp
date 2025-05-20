@@ -11,8 +11,6 @@
 #include "Game/Scene/PlayScene.h"
 #include "Libraries/WataLib/UserInterface.h"
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
 
 /// <summary>
 /// コンストラクタ
@@ -60,16 +58,18 @@ void GameEndUI::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::S
 	UNREFERENCED_PARAMETER(view);
 	UNREFERENCED_PARAMETER(projection);
 
-
+	//描画
 	m_backGraund->Render();
 	m_titleUI->Render();
 	m_reTryUI->Render();
 
+	//アニメーションが終われば
 	if (m_animationTime < MAXANIMATIONTIME)
 	{
 		return;
 	}
 
+	//画像の描画
 	for (auto& texture : m_textures)
 	{
 		texture->Render();
@@ -92,7 +92,9 @@ void GameEndUI::AddPointer(Player* player, PlayScene* playScene)
 	m_playScene = playScene;
 }
 
-//画像の読み込みと生成
+/// <summary>
+/// 画像の作成
+/// </summary>
 void GameEndUI::CreateTexture()
 {
 
@@ -165,14 +167,14 @@ void GameEndUI::Initialize(CommonResources* resources)
 
 	CreateTexture();
 
-	m_state = State::ReTry;
+	m_state = State::RETRY;
 
 	m_backGraund = m_clearBackGraund.get();
 
 
 	auto texture = std::make_unique<UserInterface>();
 	texture->Create(
-		m_commonResources, "ChangeUI", DirectX::SimpleMath::Vector2(200, 650), Vector2(0.4f, 0.4f)
+		m_commonResources, "ChangeUI", CHANGEUI_POSITION, CHANGEUI_SCALE
 	);
 
 	m_textures.push_back(std::move(texture));
@@ -180,7 +182,7 @@ void GameEndUI::Initialize(CommonResources* resources)
 
 	texture = std::make_unique<UserInterface>();
 	texture->Create(
-		m_commonResources, "DecisionUI", DirectX::SimpleMath::Vector2(570, 650), Vector2(0.4f, 0.4f)
+		m_commonResources, "DecisionUI", DECISIONUI_POSITION, DECISIONUI_SCALE
 	);
 
 	m_textures.push_back(std::move(texture));
@@ -189,7 +191,7 @@ void GameEndUI::Initialize(CommonResources* resources)
 	m_arrow = std::make_unique<UserInterface>();
 
 	m_arrow->Create(
-		m_commonResources, "Arrow", DirectX::SimpleMath::Vector2(450, 360), Vector2(0.2f, 0.2f));
+		m_commonResources, "Arrow", ARROW_UP_POSITION, ARROW_SCALE);
 
 
 
@@ -203,12 +205,14 @@ void GameEndUI::Initialize(CommonResources* resources)
 void GameEndUI::Update(const float& elapsedTime)
 {
 
+	//UIができるまでの時間
 	if (m_enemyAnimationTime < ENEMYANIMATIONTIME)
 	{
 		m_enemyAnimationTime += elapsedTime;
 		return;
 	}
 
+	//アニメーション
 	Animation(elapsedTime);
 
 	if (m_animationTime < MAXANIMATIONTIME)
@@ -221,24 +225,25 @@ void GameEndUI::Update(const float& elapsedTime)
 
 	if (kbTracker->released.W)
 	{
-		m_state = State::ReTry;
-		m_arrow->SetPosition(DirectX::SimpleMath::Vector2(450, 360));
+		m_state = State::RETRY;
+		m_arrow->SetPosition(ARROW_UP_POSITION);
 
 	}
 	else if (kbTracker->released.S)
 	{
-		m_state = State::Title;
-		m_arrow->SetPosition(DirectX::SimpleMath::Vector2(450, 500));
+		m_state = State::TITLE;
+		m_arrow->SetPosition(ARROW_DOWN_POSITION2);
 	}
 
+	//UIの大きさをStateに応じて変更
 	switch (m_state)
 	{
-		case GameEndUI::State::Title:
+		case GameEndUI::State::TITLE:
 			m_reTryUI->SetScale(m_reTryUI->GetInialScale());
 			m_titleUI->SetScale(m_titleUI->GetInialScale() * EXPANSION);
 
 			break;
-		case GameEndUI::State::ReTry:
+		case GameEndUI::State::RETRY:
 			m_reTryUI->SetScale(m_reTryUI->GetInialScale() * EXPANSION);
 			m_titleUI->SetScale(m_titleUI->GetInialScale());
 
@@ -247,14 +252,15 @@ void GameEndUI::Update(const float& elapsedTime)
 			break;
 	}
 
+	//次に遷移
 	if (kbTracker->released.Space)
 	{
 		switch (m_state)
 		{
-			case GameEndUI::State::Title:
+			case GameEndUI::State::TITLE:
 				m_playScene->SetNextSceneID(PlayScene::SceneID::TITLE);
 				break;
-			case GameEndUI::State::ReTry:
+			case GameEndUI::State::RETRY:
 				m_playScene->SetNextSceneID(PlayScene::SceneID::PLAY);
 				break;
 			default:

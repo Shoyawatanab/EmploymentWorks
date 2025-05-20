@@ -17,11 +17,11 @@ class BoomerangFrontThrow : public IState
 {
 
 private:
-
+	//状態
 	enum  class State
 	{
-		SplineCurve      //投げる
-		, ChaseToPlayer   //返ってくる
+		SPINECURVE      //投げる
+		, CHASE_TO_PLAYER   //返ってくる
 	};
 
 public:
@@ -49,14 +49,13 @@ public:
 	//必要なポインタの登録
 	void AddPointer(Boomerang* boomerang,Player* player, TargetMarker* targetMarker, WataLib::TPS_Camera* tpsCamera);
 
-	float Lerp(float a, float b, float t);
-	
+	//ターゲットを追いかける
 	bool ChaseToTarget(const float& elapsedTime);
 
 	
 	//回転
 	void Rotation(const float& elapsedTime);
-
+	//回転情報の切り替え
 	void ChangeRotationDatas(DirectX::SimpleMath::Quaternion firstVec, DirectX::SimpleMath::Quaternion secondVec);
 
 
@@ -66,19 +65,18 @@ private:
 	CommonResources* m_commonResources;
 	//ブーメラン
 	Boomerang* m_boomerang;
-
+	//プレイヤ
 	Player* m_player;
-
-
+	//ターゲットマーカー
 	TargetMarker* m_targetMarker;
-
+	//カメラ
 	WataLib::TPS_Camera* m_tpsCamera;
 
 	//経過時間
 	float m_totalTime;
 	//状態
 	State m_state;
-
+	//ターゲット座標
 	DirectX::SimpleMath::Vector3 m_targetPosistion;
 
 };

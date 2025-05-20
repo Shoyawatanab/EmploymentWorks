@@ -4,8 +4,9 @@
 #pragma once
 #include <pch.h>
 #include "Game/Interface/IState.h"
-class CommonResources;
 
+//前方宣言
+class CommonResources;
 class Boomerang;
 class Player;
 class BirdEnemy;
@@ -22,16 +23,16 @@ public:
 	// 初期化する
 	void Initialize(CommonResources* resoure);
 
-	// 更新する
+	// 更新処理
 	void Update(const float& elapsedTime);
-	//描画
+	//描画処理
 	void Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection) ;
-
+	//状態に入った時
 	void Enter();
+	//状態を抜けた時
 	void Exit();
 
 
-	float Lerp(float start, float end, float t);
 
 private:
 

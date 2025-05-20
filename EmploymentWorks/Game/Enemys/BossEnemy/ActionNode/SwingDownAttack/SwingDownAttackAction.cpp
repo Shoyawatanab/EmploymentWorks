@@ -27,7 +27,8 @@ using namespace DirectX::SimpleMath;
 /// <summary>
 /// コンストラクタ
 /// </summary>
-/// <param name="resources">共通リソース</param>
+/// <param name="resources">経過時間</param>
+/// <param name="owner">所有者</param>
 SwingDownAttackAction::SwingDownAttackAction(CommonResources* resources
 	, CharacterEntity* owner
 	)
@@ -36,6 +37,7 @@ SwingDownAttackAction::SwingDownAttackAction(CommonResources* resources
 	m_commonResources{resources}
 {
 
+	//各状態の作成
 	m_raisePhase = std::make_unique<SwingDownAttackRaisePhase>(m_commonResources,this, owner);
 
 	m_swingPhase = std::make_unique<SwingDownAttackSwingPhase>(m_commonResources, this, owner);
@@ -43,10 +45,8 @@ SwingDownAttackAction::SwingDownAttackAction(CommonResources* resources
 
 	//m_currentState->Enter();
 
-	//イベントタイプの登録
-	Messenger::GetInstance()->Rigister(GameMessageType::BossBeamHit, this);
 
-	
+	//動作順に追加
 	ActionStateController::Initialize({
 		m_raisePhase.get()
 		,m_swingPhase.get()
@@ -64,18 +64,7 @@ SwingDownAttackAction::~SwingDownAttackAction()
 }
 
 
-void SwingDownAttackAction::Notify(const Telegram<GameMessageType>& telegram)
-{
-	
-	switch (telegram.messageType)
-	{
-		case GameMessageType::BossBeamHit:
-			break;
-		default:
-			break;
-	}
 
-}
 
 
 

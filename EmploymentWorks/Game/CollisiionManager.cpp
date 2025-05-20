@@ -4,14 +4,12 @@
 
 #include "Libraries/WataLib/Bounding.h"
 
-using namespace DirectX::SimpleMath;
 
 
 std::unordered_map<int, std::function<void(CollisionEntity* object1, CollisionEntity* object2)>> CollisionManager::m_extrusionFunction = {
 	{(int)CollisionEntity::CollisionType::AABB | (int)CollisionEntity::CollisionType::AABB,CollisionManager::AABB_AABB_Extrusion}
 
 };
-
 
 
 
@@ -51,7 +49,6 @@ void CollisionManager::Update()
 
 	for (int i = 0; i < m_collisionObjects.size() - 1; i++)
 	{
-
 
 		//アクティブ状態でない場合
 		if (!m_collisionObjects[i]->GetIsEntityActive() || !m_collisionObjects[i]->GetIsCollisionActive())
@@ -186,6 +183,7 @@ void CollisionManager::Extrusion(CollisionEntity* object1, CollisionEntity* obje
 /// <param name="object2">オブジェクト２</param>
 void CollisionManager::AABB_AABB_Extrusion(CollisionEntity* object1, CollisionEntity* object2)
 {
+	using namespace DirectX::SimpleMath;
 
 	DirectX::BoundingBox* Box1 = object1->GetBounding()->GetBoundingBox();
 	DirectX::BoundingBox* Box2 = object2->GetBounding()->GetBoundingBox();

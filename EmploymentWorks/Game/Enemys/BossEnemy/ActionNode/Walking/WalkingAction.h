@@ -23,21 +23,20 @@ public:
 
 	static  constexpr float ROTATESPEED = 1.0f;
 
-
-public:
-
-
+	//歩く時間
+	static constexpr float WALK_TIME = 4.0f;
 
 
 public:
+	//コンストラクタ
 	WalkingAction(CommonResources* resources,
 		CharacterEntity* own
 		, CharacterEntity* target);
 	//デストラクタ
 	~WalkingAction() override ;
-
+	//初期化
 	void Initialize() override;
-
+	//更新処理
 	ActionState Update(const float& elapsedTime)  override ;
 	//状態に入った時
 	void Enter() override ;
@@ -49,10 +48,10 @@ public:
 private:
 	// 共通リソース
 	CommonResources* m_commonResources;
-
+	//ターゲット
 	CharacterEntity* m_target;
-
+	//所有者
 	CharacterEntity* m_own;
-	
+	//時間
 	float m_time;
 };

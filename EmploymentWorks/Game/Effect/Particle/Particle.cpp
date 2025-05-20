@@ -25,16 +25,15 @@
 #include "Game/Observer/EventParams.h"
 #include "Libraries/WataLib/GameResources.h"
 
-using namespace DirectX;
 
 /// <summary>
 /// インプットレイアウト
 /// </summary>
 const std::vector<D3D11_INPUT_ELEMENT_DESC> Particle::INPUT_LAYOUT =
 {
-	{ "POSITION",	0, DXGI_FORMAT_R32G32B32_FLOAT, 0,							 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	{ "COLOR",	0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0,	sizeof(SimpleMath::Vector3), D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	{ "TEXCOORD",	0, DXGI_FORMAT_R32G32_FLOAT,	0, sizeof(SimpleMath::Vector3) + sizeof(SimpleMath::Vector4), D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "POSITION",	0, DXGI_FORMAT_R32G32B32_FLOAT,    0,   0,                                                                           D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "COLOR",	    0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0,	sizeof(DirectX::SimpleMath::Vector3),                                        D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "TEXCOORD",	0, DXGI_FORMAT_R32G32_FLOAT,	   0,   sizeof(DirectX::SimpleMath::Vector3) + sizeof(DirectX::SimpleMath::Vector4), D3D11_INPUT_PER_VERTEX_DATA, 0 },
 };
 
 /// <summary>
@@ -43,8 +42,7 @@ const std::vector<D3D11_INPUT_ELEMENT_DESC> Particle::INPUT_LAYOUT =
 /// <param name="resources">共通リソース</param>
 Particle::Particle(CommonResources* resources)
 	:
-	m_commonResources{resources},
-	m_timer{}
+	m_commonResources{resources}
 	, m_isActive{ false }
 	,m_CBuffer{}
 	,m_inputLayout{}
@@ -55,13 +53,8 @@ Particle::Particle(CommonResources* resources)
 	,m_vertexShader{}
 	,m_pixelShader{}
 	,m_geometryShader{}
-	,m_world{}
-	,m_view{}
-	,m_proj{}
 	,m_billboard{}
 	,m_vertices{}
-	,m_cameraPosition{}
-	,m_cameraTarget{}
 	,m_particleUtility{}
 	,m_position{}
 	,m_scale{}
@@ -80,21 +73,21 @@ Particle::~Particle()
 /// </summary>
 void Particle::Initialize()
 {
+	using namespace DirectX;
 
+	//デバイスの取得
 	ID3D11Device1* device = m_commonResources->GetDeviceResources()->GetD3DDevice();
+	//コンテキストの取得
 	ID3D11DeviceContext1* context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
 
 	//	シェーダーの作成
 	CreateShader();
-
-	//	画像の読み込み（２枚ともデフォルトは読み込み失敗でnullptr)
-	LoadTexture(L"Resources/Textures/da.png");
-
-	//m_texture.push_back();
+	//画像の取得
+	m_texture.push_back(m_commonResources->GetGameResources()->GetTexture("da"));
 
 	//	プリミティブバッチの作成
 	m_batch = std::make_unique<PrimitiveBatch<VertexPositionColorTexture>>(context);
-
+	//コモンステートの作成
 	m_states = std::make_unique<CommonStates>(device);
 
 
@@ -106,11 +99,13 @@ void Particle::Initialize()
 /// <param name="elapsedTime"></param>
 void Particle::Update(const float& elapsedTime)
 {
+	//オブジェクトが有効か
 	if (!m_isActive)
 	{
 		return;
 	}
 
+	//ユーティリティの更新
 	for (auto it = m_particleUtility.begin(); it != m_particleUtility.end(); )
 	{
 		if (!it->Update(elapsedTime)) {
@@ -131,6 +126,9 @@ void Particle::Update(const float& elapsedTime)
 /// <param name="proj">射影行列</param>
 void Particle::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& proj)
 {
+	using namespace DirectX;
+
+	//オブジェクトが有効か
 	if (!m_isActive)
 	{
 		return;
@@ -221,8 +219,6 @@ void Particle::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::Si
 	//	指定した座標を中心に、シェーダ側で板ポリゴンを生成・描画させる
 	m_batch->Begin();
 
-	//	ここまでの処理の関係上、以下は使えない
-	//m_batch->DrawQuad(vertex[0], vertex[1], vertex[2], vertex[3]);
 
 	//	ジオメトリシェーダでPointを受け取ることになっているため、
 	//	ここではD3D11_PRIMITIVE_TOPOLOGY_POINTLISTを使う
@@ -244,54 +240,57 @@ void Particle::SetIsActive(bool isActive)
 	
 }
 
+/// <summary>
+/// エフェクトの作成
+/// </summary>
+/// <param name="datas">データ</param>
 void Particle::Create(void* datas)
 {
+	using namespace DirectX;
+	using namespace DirectX::SimpleMath;
 
+	//データの取得
+	Vector3* pos = static_cast<DirectX::SimpleMath::Vector3*>(datas);
 
-	DirectX::SimpleMath::Vector3* pos = static_cast<DirectX::SimpleMath::Vector3*>(datas);
-
-
-	for (int i = 0; i < 20; i++)
+	//パーティクルを作成
+	for (int i = 0; i < UTILITY_COUNT; i++)
 	{
-
 
 		//	完全なランダムをハードウェア的に生成するためのクラスの変数
 		std::random_device seed;
-		//	上記の完全なランダムは動作が遅いため、seed値の決定のみに使用する
-		//	※「default_random_engine」はusingで「mt19937」となっている
+		//ランダムエンジン
 		std::default_random_engine engine(seed());
-		//	生成して欲しいランダムの範囲をDistributionに任せる。今回は0～2PI
+		//ランダム範囲の指定
 		std::uniform_real_distribution<> dist(0, XM_2PI);
-
-
+		//角度の作成
 		float angle = static_cast<float>(dist(engine));
-
+		//ランダム範囲の指定
 		std::uniform_real_distribution<> dist2(0.5f, 1.0f);
-
+		//乱数の生成
 		float speedY = static_cast<float>(dist2(engine) / 2.5f);
 		float speedX = static_cast<float>(dist2(engine));
 
-		float radi = 3.0f;
-
-		DirectX::SimpleMath::Vector3 vectorFormCenter = DirectX::SimpleMath::Vector3(
-			radi * cosf(angle),
+		//中心から放射状に広がる方向のベクトル
+		Vector3 vectorFormCenter = Vector3(
+			GENERATE_RADIUS * cosf(angle),
 			0.0f,
-			radi * sinf(angle)
+			GENERATE_RADIUS * sinf(angle)
 		);
-
+		//中心からの距離を取得
 		float distanceFormCenter = vectorFormCenter.Length();
-
+		//正規化
 		vectorFormCenter.Normalize();
+		//中心からの距離に応じて速度を増加
+		float scaleFactor = 2.0f + (distanceFormCenter / GENERATE_RADIUS);
+		Vector3 adjustedVelocity = vectorFormCenter * scaleFactor;
 
-		float scaleFactor = 2.0f + (distanceFormCenter / radi);
-		DirectX::SimpleMath::Vector3 adjustedVelocity = vectorFormCenter * scaleFactor;
-
-		DirectX::SimpleMath::Vector3 velocity = -adjustedVelocity;
-
-		DirectX::SimpleMath::Vector3 dustPos = *pos + DirectX::SimpleMath::Vector3(
-			radi * cosf(angle),
+		//負になるように反転
+		Vector3 velocity = -adjustedVelocity;
+		//初期座標
+		Vector3 dustPos = *pos + Vector3(
+			GENERATE_RADIUS * cosf(angle),
 			0.0f,
-			radi * sinf(angle)
+			GENERATE_RADIUS * sinf(angle)
 
 		);
 
@@ -299,37 +298,20 @@ void Particle::Create(void* datas)
 		//	0～2PIの値をdefault_random_engine(恐らくしばらくはmt19937)を使って取り出す
 		ParticleUtility pU(
 			1.0f,																			//	生存時間(s)
-			dustPos,				//	基準座標
-			SimpleMath::Vector3(-velocity.x * speedX, speedY, -velocity.z * speedX),												//	速度
-			SimpleMath::Vector3::Zero,														//	加速度
-			SimpleMath::Vector3::One,
-			SimpleMath::Vector3(10, 10, 10),							//	初期スケール、最終スケール
-			SimpleMath::Color(1.f, 1.f, 1.f, 1.f),
-			SimpleMath::Color(1.f, 1.f, 1.f, -1.f)	//	初期カラー、最終カラー
+			dustPos,																		//	基準座標
+			Vector3(-velocity.x * speedX, speedY, -velocity.z * speedX),					//	速度
+			Vector3::Zero,																	//	加速度
+			Vector3::One,																	//	初期スケール、
+			Vector3(10, 10, 10),															//  最終スケール
+			Color(1.f, 1.f, 1.f, 1.f),														//	初期カラー
+			Color(1.f, 1.f, 1.f, -1.f)														//  最終カラー
 		);
-
+		//追加
 		m_particleUtility.push_back(pU);
 	}
 
 
 }
-
-/// <summary>
-/// テクスチャリソース読み込み関数
-/// </summary>
-/// <param name="path">相対パス(Resources/Textures/・・・.pngなど）</param>
-void Particle::LoadTexture(const wchar_t* path)
-{
-
-	ID3D11Device1* device = m_commonResources->GetDeviceResources()->GetD3DDevice();
-
-
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> texture;
-	DirectX::CreateWICTextureFromFile(device, path, nullptr, texture.ReleaseAndGetAddressOf());
-	
-	m_texture.push_back(texture);
-}
-
 
 
 /// <summary>
@@ -391,15 +373,14 @@ void Particle::CreateShader()
 /// <param name="up">上向きベクトル（基本はYのみ１のベクトル）</param>
 void Particle::CreateBillboard(DirectX::SimpleMath::Vector3 target, DirectX::SimpleMath::Vector3 eye, DirectX::SimpleMath::Vector3 up)
 {
-	m_billboard =
-		SimpleMath::Matrix::CreateBillboard(SimpleMath::Vector3::Zero,eye - target, up);
+	using namespace DirectX::SimpleMath;
 
-	SimpleMath::Matrix rot = SimpleMath::Matrix::Identity;
+	m_billboard = Matrix::CreateBillboard(Vector3::Zero,eye - target, up);
+
+	Matrix rot = Matrix::Identity;
 	rot._11 = -1;
 	rot._33 = -1;
 
-	m_cameraPosition = eye;
-	m_cameraTarget = target;
 	m_billboard = rot * m_billboard;
 }
 

@@ -34,17 +34,18 @@ public:
 
 
 private:
+	//ブーメラン
 	Boomerang* m_boomerang;
 
 	// ワールドマトリックス
 	DirectX::SimpleMath::Matrix m_worldMatrix;
-
+	//方向
 	DirectX::SimpleMath::Vector3 m_direction;
-
+	//座標
 	DirectX::SimpleMath::Vector3 m_position;
-
+	//パワー
 	float m_pwoer;
-
+	//重力
 	float m_graivty;
 
 

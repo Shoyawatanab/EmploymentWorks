@@ -20,8 +20,8 @@ private:
 
 	enum  class State
 	{
-		SplineCurve      //投げる
-		, ChaseToPlayer   //返ってくる
+		SPINECURVE      //投げる
+		, CHASE_TO_PLAYER   //返ってくる
 	};
 
 public:
@@ -52,16 +52,15 @@ public:
 	//スプライン曲線の基準点の作成
 	void CreateSplineCurvePositon();
 
-	float Lerp(float a, float b, float t);
 	//スプライン曲線
 	void SplineCurve(const float& elapsedTime);
-	
+	//プレイヤを追いかける
 	void ChaseToPlayer(const float& elapsedTime);
 
 	
 	//回転
 	void Rotation(const float& elapsedTime);
-
+	//回転情報の切り替え
 	void ChangeRotationDatas(DirectX::SimpleMath::Quaternion firstVec, DirectX::SimpleMath::Quaternion secondVec);
 
 
@@ -71,12 +70,11 @@ private:
 	CommonResources* m_commonResources;
 	//ブーメラン
 	Boomerang* m_boomerang;
-
+	//プレイヤ
 	Player* m_player;
-
-
+	//ターゲットマーカー
 	TargetMarker* m_targetMarker;
-
+	//カメラ
 	WataLib::TPS_Camera* m_tpsCamera;
 
 	//スプライン曲線の座標
@@ -89,7 +87,8 @@ private:
 	State m_state;
 	//回転の情報
 	std::pair<DirectX::SimpleMath::Quaternion, DirectX::SimpleMath::Quaternion> m_rotationDatas;
+	//横回転
 	DirectX::SimpleMath::Quaternion m_horizontalRotation;
-
+	//初期回転
 	DirectX::SimpleMath::Quaternion m_initialRotation;
 };

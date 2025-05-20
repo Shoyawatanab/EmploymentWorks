@@ -50,14 +50,14 @@ public:
 	//IObject
 		//初期化
 	void Initialize() override;
-	//描画
+	//描画処理
 	void Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection) override;
 	//更新処理
 	void  Update(const float& elapsedTime) override;
 
-	//ICollisionObject
-		//タグの取得
-	CollisionTag GetCollisionTag() override { return CollisionEntity::CollisionTag::EnemyParts; };
+
+	//タグの取得
+	CollisionTag GetCollisionTag() override { return CollisionEntity::CollisionTag::ENEYPARTS; };
 	//当たり判定クラスに登録
 	void  AddCollision(CollisionManager* collsionManager) override;
 
@@ -70,9 +70,9 @@ public:
 	//当たり判定を行わないタグ
 	const std::vector<CollisionTag> GetNoHitDetectionTag() {
 		return  {
-			{CollisionTag::PlayerParts}
-			,{CollisionTag::EnemyParts}
-			,{CollisionTag::Beam}
+			{CollisionTag::PLAYERPARTS}
+			,{CollisionTag::ENEYPARTS}
+			,{CollisionTag::BEAM}
 		};
 	}
 	//押し出しを行わないタグ
@@ -104,7 +104,7 @@ private:
 	EnemyManager* m_enemyManager;
 	//プレイヤ
 	Player* m_player;
-
+	//影
 	std::unique_ptr<WataLib::Shadow> m_shadow;
 	//Hp
 	int m_hp;
@@ -115,9 +115,9 @@ private:
 
 	//ステートマシン
 	std::unique_ptr<BirdEnemyStateMachine>  m_stateMachine;
-
+	//ビームの生成座標
 	DirectX::SimpleMath::Vector3 m_beamPosition;
-
+	//ビーム
 	std::vector<std::unique_ptr<BirdEnemyBeam>> m_beam;
 
 

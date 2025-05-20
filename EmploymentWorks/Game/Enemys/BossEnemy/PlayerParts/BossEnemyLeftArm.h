@@ -20,9 +20,7 @@ class BossEnemyLeftArm : public BossEnemyPartsBase
 {
 
 private:
-	//static constexpr コンパイル時に決定する　クラス外での変更をする必要がないため
-	//static cons      クラス外で変更する可能性がある場合
-
+	//パーツ名
 	static constexpr const char PARTSNAME[] = "LeftArm";
 
 
@@ -41,7 +39,6 @@ public:
 	//初期化
 	void Initialize() override;
 
-	//ICollisionObject
 	//当たった時に呼び出される
 	void OnCollisionEnter(CollisionEntity* object, CollisionTag tag) override;
 

@@ -35,7 +35,7 @@ BossRushAttackRush::BossRushAttackRush(CommonResources* resources
 	,m_bossEnemy{bossenemy}
 	,m_player{player}
 	,m_parent{parent}
-	,m_jumpDirection{}
+	,m_rushDirection{}
 {
 
 }
@@ -58,18 +58,8 @@ void BossRushAttackRush::Initialize()
 BossRushAttackRush::ActionState BossRushAttackRush::Update(const float& elapsedTime)
 {
 
-	float speed = 9.0f;
 
-
-	Vector3 velocity = m_bossEnemy->GetVelocity();
-
-	velocity.x = m_jumpDirection.x * elapsedTime * speed;
-
-	velocity.z = m_jumpDirection.z * elapsedTime * speed;
-
-	m_bossEnemy->SetVelocity(velocity);
-
-	return ActionState::Running;
+	return ActionState::RUNNING;
 }
 
 
@@ -79,37 +69,12 @@ BossRushAttackRush::ActionState BossRushAttackRush::Update(const float& elapsedT
 void BossRushAttackRush::Enter()
 {
 
-	Vector3 velocity = m_bossEnemy->GetVelocity();
-
-	velocity.y += 1.0f;
-
-	m_bossEnemy->SetVelocity(velocity);
-
-
-	Vector3 bossPos = m_bossEnemy->GetPosition();
-
-	Vector3 playerPos = m_player->GetPosition();
-
-
-
-	//•ûŒü‚ð‹‚ß‚é
-	m_jumpDirection = playerPos - bossPos;
-	//³‹K‰»
-	m_jumpDirection.Normalize();
 
 
 }
 
 void BossRushAttackRush::Exit()
 {
-
-	m_bossEnemy->ChangeAnimation("Idel");
-
-	Vector3 pos = m_bossEnemy->GetPosition();
-
-	pos.y = 0.1f;
-
-	Messenger::GetInstance()->Notify(GameMessageType::CreateParticle, &pos);
 
 
 

@@ -31,9 +31,8 @@ public:
 private:
 	// 共通リソース
 	CommonResources* m_commonResources;
-	//
+	//プレイヤ
 	Player* m_player;
-
 	//座標
 	DirectX::SimpleMath::Vector3 m_position;
 	//大きさ

@@ -56,7 +56,7 @@ public:
 private:
 	//ステージを作成
 	void CreateStageObject();
-	//
+	//マウスホイールのチェック
 	void CheckMouseWheel();
 
 

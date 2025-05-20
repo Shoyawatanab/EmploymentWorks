@@ -12,6 +12,7 @@ namespace WataLib
 class PlayerHead : public PlayerPartsBase
 {
 private:
+	//ÉpÅ[Écñº
 	static constexpr const char PARTSNAME[] = "Head";
 
 public:

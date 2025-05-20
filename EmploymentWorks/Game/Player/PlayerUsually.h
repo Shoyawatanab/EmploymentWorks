@@ -20,7 +20,7 @@ public:
 	PlayerUsually() ;
 	//デストラクタ
 	~PlayerUsually();
-
+	//
 	void AddPointer(Player* player, WataLib::TPS_Camera* tpsCamera);
 
 	//初期化

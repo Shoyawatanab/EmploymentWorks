@@ -13,8 +13,8 @@ class SceneManager
 public:
 	enum StageID
 	{
-		Stage1 = 0,
-		Stage2
+		STAGE1 = 0,
+		STAGE2
 
 	};
 

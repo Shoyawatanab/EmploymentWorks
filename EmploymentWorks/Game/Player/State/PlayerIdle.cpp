@@ -9,8 +9,7 @@
 #include "Game/Player/State/PlayerStateMachine.h"
 #include "Game/Weapon/Boomerang/State/BoomerangStateMachine.h"
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
+
 
 /// <summary>
 /// コンストラクタ
@@ -66,6 +65,8 @@ void PlayerIdle::Update(const float& elapsedTime)
 {
 	UNREFERENCED_PARAMETER(elapsedTime);
 
+	using namespace DirectX;
+
 
 	const auto& tracker = m_commonResources->GetInputManager()->GetMouseTracker();
 
@@ -78,6 +79,11 @@ void PlayerIdle::Update(const float& elapsedTime)
 
 }
 
+/// <summary>
+/// 描画
+/// </summary>
+/// <param name="view">ビュー行列</param>
+/// <param name="projection">射影行列</param>
 void PlayerIdle::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
 {
 	UNREFERENCED_PARAMETER(view);

@@ -10,8 +10,7 @@
 #include "Libraries/WataLib/Camera/TPS_Camera.h"
 #include "Game/Params.h"
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
+#include "Game/MathUtil.h"
 
 /// <summary>
 /// コンストラクタ
@@ -27,6 +26,11 @@ BoomerangRightThrow::BoomerangRightThrow()
 	,m_horizontalRotation{}
 	,m_initialRotation{}
 	,m_moveDirection{}
+	, m_boomerang{}
+	, m_player{}
+	, m_targetMarker{}
+	, m_tpsCamera{}
+
 {
 
 
@@ -87,15 +91,7 @@ void BoomerangRightThrow::CreateSplineCurvePositon()
 		target += m_tpsCamera->GetTargetPosition();
 
 	}	
-
-	target = m_tpsCamera->GetCameraForward();
-
-	target.Normalize();
-
-	target *= TARGET_LENGTH;
-
-	target += m_tpsCamera->GetTargetPosition();
-
+	
 
 	//ブーメランからターゲットまでの距離
 	Vector3 boomerangToTargetDistance = target - m_boomerang->GetPosition();
@@ -136,7 +132,7 @@ void BoomerangRightThrow::CreateSplineCurvePositon()
 		//一番遠い基準点との割合を求める
 		float ratio = basePosition[i].z / basePosition[basePosition.size() / 2].z;
 		//高さの調整
-		basePosition[i].y = Lerp(m_boomerang->GetPosition().y, target.y, ratio);
+		basePosition[i].y = MathUtil::Lerp(m_boomerang->GetPosition().y, target.y, ratio);
 
 		
 	}
@@ -160,10 +156,6 @@ void BoomerangRightThrow::CreateSplineCurvePositon()
 
 }
 
-float BoomerangRightThrow::Lerp(float a, float b, float t)
-{
-	return a + t * (b - a);
-}
 
 /// <summary>
 /// スプライン曲線
@@ -207,7 +199,7 @@ void BoomerangRightThrow::SplineCurve(const float& elapsedTime)
 		//最後の基準点に来たら
 		if ((m_index) % m_splineCurvePosition.size() == m_splineCurvePosition.size() - 1)
 		{
-			m_state = State::ChaseToPlayer;
+			m_state = State::CHASE_TO_PLAYER;
 		}
 	}
 
@@ -246,29 +238,16 @@ void BoomerangRightThrow::ChaseToPlayer(const float& elapsedTime)
 	{
 		//状態変化
 		//m_boomerang->GetBoomerangStatemachine()->ChangeState(m_boomerang->GetBoomerangStatemachine()->GetBoomerangIdel());
-		m_state = State::PassingThrough;
+		m_state = State::PASSING_THROUGH;
 	}
 
 
 }
 
-void BoomerangRightThrow::GoStraight(const float& elapsedTime)
-{
-
-	//Vector3 direction = m_splineCurvePosition[0] - m_splineCurvePosition[5];
-	Vector3 direction = m_boomerang->GetPrevPosition() - m_boomerang->GetPosition();
-
-	direction.Normalize();
-
-	direction *= Params::BOOMERANG_MOVE_SPEED * elapsedTime;
-
-	Vector3 position = m_boomerang->GetPosition();
-
-	position += direction ;
-
-	m_boomerang->SetPosition(position);
-}
-
+/// <summary>
+/// 通過
+/// </summary>
+/// <param name="elapsedTime">経過時間</param>
 void BoomerangRightThrow::PassingThrough(const float& elapsedTime)
 {
 
@@ -353,14 +332,14 @@ void BoomerangRightThrow::Update(const float& elapsedTime)
 
 	switch (m_state)
 	{
-		case BoomerangRightThrow::State::SplineCurve:
+		case BoomerangRightThrow::State::SPINECURVE:
 			SplineCurve(elapsedTime);
 			break;
-		case BoomerangRightThrow::State::ChaseToPlayer:
+		case BoomerangRightThrow::State::CHASE_TO_PLAYER:
 			ChaseToPlayer(elapsedTime);
 			//GoStraight(elapsedTime);
 			break;
-		case BoomerangRightThrow::State::PassingThrough:
+		case BoomerangRightThrow::State::PASSING_THROUGH:
 			PassingThrough(elapsedTime);
 			break;
 		default:
@@ -397,7 +376,7 @@ void BoomerangRightThrow::Enter()
 	//初期化
 	m_index = 0;
 	m_horizontalRotation = Quaternion::Identity;
-	m_state = State::SplineCurve;
+	m_state = State::SPINECURVE;
 
 	//ブーメランの親子関係を切る
 	//m_boomerang->SetIsParentActive(false);

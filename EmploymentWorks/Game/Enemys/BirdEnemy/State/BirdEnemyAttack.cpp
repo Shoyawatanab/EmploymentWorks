@@ -60,6 +60,7 @@ void BirdEnemyAttack::Update(const float& elapsedTime)
 	using namespace DirectX;
 	using namespace DirectX::SimpleMath;
 
+	//回転の更新
 	m_birdEnemy->Rotate(elapsedTime);
 
 
@@ -85,15 +86,13 @@ void BirdEnemyAttack::Render(const DirectX::SimpleMath::Matrix& view, const Dire
 /// </summary>
 void BirdEnemyAttack::Enter()
 {
+	//初期化
 	m_accumulationTime = 0;
 	m_shotTime = 0;
-
 	m_bulletCount = 0;
 
-
+	//ビームの取得
 	std::vector<std::unique_ptr<BirdEnemyBeam>>& beams = m_birdEnemy->GetBeams();
-
-
 
 	for (auto& beam : beams)
 	{

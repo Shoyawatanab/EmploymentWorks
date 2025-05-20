@@ -22,9 +22,9 @@ const char*    SoundManager::SOUND_BASE_PATH = "Resources/Sounds/";
 
 
 
-//---------------------------------------------------------
-// コンストラクタ
-//---------------------------------------------------------
+/// <summary>
+/// コンストラク
+/// </summary>
 SoundManager::SoundManager()
 	:
 	m_sound{}
@@ -37,13 +37,14 @@ SoundManager::SoundManager()
 	//システムの初期化
 	m_system->init(32, FMOD_INIT_NORMAL, nullptr);
 
+	//音の読み込み
 	LoadSound();
 
 }
 
-//---------------------------------------------------------
-// デストラクタ
-//---------------------------------------------------------
+/// <summary>
+/// デストラクタ
+/// </summary>
 SoundManager::~SoundManager()
 {
 	// do nothing.
@@ -52,6 +53,9 @@ SoundManager::~SoundManager()
 
 }
 
+/// <summary>
+/// 初期化
+/// </summary>
 void SoundManager::Initialize()
 {
 
@@ -60,6 +64,9 @@ void SoundManager::Initialize()
 }
 
 
+/// <summary>
+/// 更新処理
+/// </summary>
 void SoundManager::Update()
 {
 
@@ -68,7 +75,10 @@ void SoundManager::Update()
 }
 
 
-
+/// <summary>
+/// BGMの再生
+/// </summary>
+/// <param name="key"></param>
 void SoundManager::PlaySoundBGM(std::string key)
 {
 
@@ -83,26 +93,20 @@ void SoundManager::PlaySoundBGM(std::string key)
 }
 
 
+/// <summary>
+/// SEの再生
+/// </summary>
+/// <param name="key"></param>
 void SoundManager::PlaySoundSE(std::string key)
 {
 	m_system->playSound(m_soundList[key], nullptr, false, &m_channelSE);
 
 }
 
-void SoundManager::DeleteSound()
-{
 
-
-
-}
-
-void SoundManager::ChangeVolume()
-{
-
-
-
-}
-
+/// <summary>
+/// 音の読み込み
+/// </summary>
 void SoundManager::LoadSound()
 {
 	//Jsonファイルを開く

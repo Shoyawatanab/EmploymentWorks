@@ -15,8 +15,8 @@ public:
 
 	enum class State
 	{
-		Recoverable     //回収可能
-		,NotReturnable  //回収不可
+		RECOVERABLE     //回収可能
+		,NOT_RECOVERABLE  //回収不可
 	};
 
 	struct  ItemDatas
@@ -26,13 +26,14 @@ public:
 		ItemEntity* ItemEntity;
 	};
 
-
+	static constexpr float RECOVERBLE_RADIUS = 2.0f;
 
 public:
 
 	//コンストラクタ
-	ItemAcquisition() {};
-	~ItemAcquisition() {}
+	ItemAcquisition();
+	//デストラクタ
+	~ItemAcquisition();
 
 	//初期化
 	void Initialize(CommonResources* resources);
@@ -51,9 +52,9 @@ public:
 private:
 	// 共通リソース
 	CommonResources* m_commonResources;
-
+	//プレイヤ
 	Player* m_player;
-
+	//アイテム
 	std::vector<ItemDatas> m_items;
 
 

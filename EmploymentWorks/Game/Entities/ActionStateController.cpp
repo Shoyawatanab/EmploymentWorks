@@ -44,27 +44,36 @@ void ActionStateController::Initialize(std::vector<IAction*> actions)
 
 }
 
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="elapsedTime">経過時間</param>
+/// <returns>継続か終了か</returns>
 IAction::ActionState ActionStateController::Update(const float& elapsedTime)
 {
-
-	if(m_actionState[m_currentIndex]->Update(elapsedTime) == IAction::ActionState::End)
+	//状態の更新
+	if(m_actionState[m_currentIndex]->Update(elapsedTime) == IAction::ActionState::END)
 	{
+		//状態が終わったら
 		ChangeState();
-
+		//すべての状態が終わった
 		if (m_currentIndex >= m_actionState.size())
 		{
 
-			return IAction::ActionState::End;
+			return IAction::ActionState::END;
 
 		}
 
 	}
 
 
-	return IAction::ActionState::Running;
+	return IAction::ActionState::RUNNING;
 
 }
 
+/// <summary>
+/// 状態に入った時
+/// </summary>
 void ActionStateController::Enter()
 {
 
@@ -79,16 +88,23 @@ void ActionStateController::Enter()
 
 }
 
+/// <summary>
+/// 状態を抜けた時
+/// </summary>
 void ActionStateController::Exit()
 {
 	m_currentIndex = 0;
 }
 
+/// <summary>
+/// 状態の切り替え
+/// </summary>
 void ActionStateController::ChangeState()
 {
 	//初期化段階では行わないように
 	if (m_currentIndex != 0)
 	{
+		//状態を抜けた時の処理
 		m_actionState[m_currentIndex]->Exit();
 	}
 
@@ -99,7 +115,7 @@ void ActionStateController::ChangeState()
 	{
 		return;
 	}
-	
+	//状態に入った時の処理
 	m_actionState[m_currentIndex]->Enter();
 }
 

@@ -8,7 +8,7 @@ class Boomerang;
 class BoomerangDrop : public IState
 {
 public:
-
+	//ワールド行列の取得
 	DirectX::SimpleMath::Matrix GetMatrix() { return m_worldMatrix; }
 
 public:
@@ -31,6 +31,7 @@ public:
 
 
 private:
+	//ブーメラン
 	Boomerang* m_boomerang;
 
 

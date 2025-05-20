@@ -22,12 +22,13 @@ class BossBeamAttackEnd : public IAction
 {
 
 public:
+	//コンストラクタ
 	BossBeamAttackEnd(CommonResources* resources
 		, CharacterEntity* bossEnemy
 		, Beam* beam
 		, BossBeamAttackAction* beamAttack);
 
-//継承関係
+
 	//デストラクタ
 	~BossBeamAttackEnd() override ;
 	//初期化
@@ -41,10 +42,13 @@ public:
 private:
 	// 共通リソース
 	CommonResources* m_commonResources;
+	//所有者
 	CharacterEntity* m_bossEnemy;
+	//ビーム
 	Beam* m_beam;
+	//ビーム攻撃
 	BossBeamAttackAction* m_beamAttack;
-
+	//経過時間
 	float m_time;
 
 };

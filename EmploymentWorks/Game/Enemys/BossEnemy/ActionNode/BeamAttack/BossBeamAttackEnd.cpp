@@ -22,16 +22,15 @@
 #include "Game/Enemys/BossEnemy/Beam/BeamChargeEffect.h"
 #include "Game/Enemys/BossEnemy/Beam/BeamRays.h"
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
-
-
 
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
 /// <param name="resources">共通リソース</param>
+/// <param name="bossenemy">所有者</param>
+/// <param name="beam">ビーム</param>
+/// <param name="beamAttack">ビーム攻撃</param>
 BossBeamAttackEnd::BossBeamAttackEnd(CommonResources* resources
 	, CharacterEntity* bossenemy
 	, Beam* beam
@@ -54,10 +53,18 @@ BossBeamAttackEnd::~BossBeamAttackEnd()
 	// do nothing.
 }
 
+/// <summary>
+/// 初期化
+/// </summary>
 void BossBeamAttackEnd::Initialize()
 {
 }
 
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="elapsedTime">経過時間</param>
+/// <returns>継続か終了か</returns>
 BossBeamAttackEnd::ActionState BossBeamAttackEnd::Update(const float& elapsedTime)
 {
 
@@ -89,24 +96,29 @@ BossBeamAttackEnd::ActionState BossBeamAttackEnd::Update(const float& elapsedTim
 
 	if (m_time == Params::BOSSENEMY_BEAM_SHRINK_TIME)
 	{
-		return ActionState::End;
+		return ActionState::END;
 	}
 
 
 	m_time += elapsedTime;
 
-	return ActionState::Running;
+	return ActionState::RUNNING;
 
 }
 
 
-
+/// <summary>
+/// 状態に入った時
+/// </summary>
 void BossBeamAttackEnd::Enter()
 {
 	m_bossEnemy->ChangeAnimation("BeamAttackEnd");
 	m_time = 0;
 }
 
+/// <summary>
+/// 状態を抜けた時
+/// </summary>
 void BossBeamAttackEnd::Exit()
 {
 }

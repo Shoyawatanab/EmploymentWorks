@@ -35,23 +35,23 @@ public:
 
 
 public:
+	//コンストラクタ
 	TargetMarker();
+	//デストラクタ
 	~TargetMarker();
-
+	//初期化
 	void Initialize(CommonResources* resources);
+	//更新処理
 	void Update(float elapsedTime);
+	//描画
 	void Render();
 
 	//クラスに必要な情報（ポインタ）を登録する
 	void AddPointer(WataLib::TPS_Camera* tpsCamera);
-
-
-
-
+	//範囲内かどうかさがす
 	DirectX::SimpleMath::Vector2 FilterWithinRange(const std::vector<DirectX::SimpleMath::Vector3>& points, const DirectX::SimpleMath::Vector2& center, float range);
 
-	//void AddTargetObject(ICharacter* object) { m_targetObject.push_back(object); }
-
+	//ターゲットオブジェクトの追加
 	void AddTargetObject(std::vector<std::unique_ptr<EnemyEntity>>& object)
 	{ 
 		for (auto& ob : object)
@@ -78,20 +78,19 @@ private:
 	//宣言
 // 共通リソース
 	CommonResources* m_commonResources;
-
+	//マーカー
 	std::unique_ptr<UserInterface> m_marker;
-
-
+	//カメラ
 	WataLib::TPS_Camera* m_tpsCamera;
 	//構えているか
 	bool m_isTargetMarker;
 	//範囲内にターゲットがいるかどうか
 	bool m_isLockOn;
-
+	//ターゲットオブジェクト
 	std::vector<EnemyEntity*> m_targetObject;
-
+	//画面サイズ
 	std::pair<int, int> m_windowSize;
-
+	//ターゲット座標
 	DirectX::SimpleMath::Vector3 m_target;
 
 

@@ -9,11 +9,14 @@
 #include "Game/Enemys/BirdEnemy/BirdEnemy.h"
 
 #include "Game/Params.h"
-
+#include "Game/MathUtil.h"
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
+/// <param name="player">プレイヤ</param>
+/// <param name="birdEnemy">鳥の敵</param>
+/// <param name="beam">ビーム</param>
 BirdEnemyBeamAttack::BirdEnemyBeamAttack(Player* player, BirdEnemy* birdEnemy, BirdEnemyBeam* beam)
 	:
 	m_commonResources{},
@@ -70,7 +73,7 @@ void BirdEnemyBeamAttack::Update(const float& elapsedTime)
 	//補間のための時間を求める　　経過時間が減速時間になるまでは０～１の間　経過時間が減速時間を超えると１
 	float t = std::min(m_time,m_decelerationTime) / m_decelerationTime;
 	//初速と終速で補間して移動速度を求める
-	float moveSpeed =  Lerp(m_initialSpeed,m_finalSpeed,t);
+	float moveSpeed =  MathUtil::Lerp(m_initialSpeed,m_finalSpeed,t);
 	//方向ベクトルに経過時間　速度をかけて位置を更新
 	position += m_moveDirectiion * elapsedTime * moveSpeed;
 	//更新した座標を設定
@@ -123,9 +126,4 @@ void BirdEnemyBeamAttack::Exit()
 }
 
 
-
-float BirdEnemyBeamAttack::Lerp(float start, float end, float t)
-{
-	return start + t * (end - start);
-}
 

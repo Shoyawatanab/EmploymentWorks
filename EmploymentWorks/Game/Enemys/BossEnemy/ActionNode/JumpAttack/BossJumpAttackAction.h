@@ -23,7 +23,7 @@ namespace mylib
 }
 
 
-class BossJumpAttackAction : public ActionStateController , IObserver<GameMessageType>
+class BossJumpAttackAction : public ActionStateController 
 {
 
 public:
@@ -40,9 +40,9 @@ public:
 
 	BossJumpAttackJump* GetBossJumpAttackJump() { return m_jump.get(); }
 
-	OrientationAction* GetOrientationAction() { return m_orientationAction.get(); }
 
 public:
+	//コンストラクタ
 	BossJumpAttackAction(CommonResources* resources,
 		BossEnemy* bossEnemy
 		, Player* player);
@@ -50,22 +50,16 @@ public:
 	~BossJumpAttackAction();
 
 
-	//IObserver
-//通知時に呼ばれる関数
-	void Notify(const Telegram<GameMessageType>& telegram)  override;
 
 
 private:
 	// 共通リソース
 	CommonResources* m_commonResources;
 
-
+	//チャージ
 	std::unique_ptr<BossJumpAttackCharge> m_charge;
-
+	//ジャンプ
 	std::unique_ptr<BossJumpAttackJump> m_jump;
-
-	std::unique_ptr<OrientationAction> m_orientationAction;
-
 
 
 };

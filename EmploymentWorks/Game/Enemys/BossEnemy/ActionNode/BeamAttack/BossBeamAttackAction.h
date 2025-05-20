@@ -29,6 +29,7 @@ class BossBeamAttackAction : public ActionStateController, IObserver<GameMessage
 public:
 
 public:
+	//コンストラクタ
 	BossBeamAttackAction(CommonResources* resources,
 		CharacterEntity* bossEnemy
 		, Beam* beam
@@ -45,13 +46,13 @@ public:
 private:
 	// 共通リソース
 	CommonResources* m_commonResources;
-
+	//予備動作
 	std::unique_ptr<BossBeamAttackPreliminaryAction> m_preliminaryAction;
-
+	//チャージ
 	std::unique_ptr<BossBeamAttackCharge> m_charge;
-
+	//ショット
 	std::unique_ptr<BossBeamAttackShot> m_shot;
-
+	//攻撃終了
 	std::unique_ptr<BossBeamAttackEnd> m_attackEnd;
 
 };

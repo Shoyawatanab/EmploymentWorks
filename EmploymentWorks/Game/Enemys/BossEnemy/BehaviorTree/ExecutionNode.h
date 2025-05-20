@@ -24,16 +24,15 @@ public:
 	//‰Šú‰»
 	void Initialize(CommonResources* resources);
 	
-	IBehaviorNode::State Action();
-
+	//ƒr[ƒ€UŒ‚
 	IBehaviorNode::State BossEnemyBeamAction();
-
+	//ƒoƒŠƒA–hŒä
 	IBehaviorNode::State BossEnemyBarrierDefenseAction();
-
+	//ƒWƒƒƒ“ƒvUŒ‚
 	IBehaviorNode::State BossEnemyJumpAttackAction();
-
+	//•à‚­
 	IBehaviorNode::State BossEnemyWalking();
-
+	//U‚è‰º‚ë‚µUŒ‚
 	IBehaviorNode::State BossEnemySwingDown();
 
 

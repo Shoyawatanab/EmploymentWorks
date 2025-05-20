@@ -25,31 +25,24 @@ public:
 
 	static  constexpr float ROTATESPEED = 1.0f;
 
-
 public:
-
-
-
-
-public:
+	//コンストラク
 	WalkingActionComtroller(CommonResources* resources,
 		CharacterEntity* own
 		, CharacterEntity* target);
 	//デストラクタ
 	~WalkingActionComtroller();
 
-
-
 private:
 	// 共通リソース
 	CommonResources* m_commonResources;
-
+	//ターゲット
 	CharacterEntity* m_target;
-
+	//所有者
 	CharacterEntity* m_own;
-
+	//歩き状態
 	std::unique_ptr<WalkingAction> m_walkingAction;
-
+	//回転状態
 	std::unique_ptr<OrientationAction> m_orientation;
 
 };

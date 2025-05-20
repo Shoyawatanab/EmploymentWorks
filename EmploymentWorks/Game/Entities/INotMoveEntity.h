@@ -10,13 +10,12 @@
 class INotMoveEntity : public CollisionEntity
 {
 public:
-
-
+	//コンストラク
 	INotMoveEntity(CommonResources* resources
 		, const DirectX::SimpleMath::Vector3& scale
 		, const DirectX::SimpleMath::Vector3& position
 		, const DirectX::SimpleMath::Quaternion& rotation);
-
+	//デストラクタ
 	~INotMoveEntity() override;
 
 	//初期化

@@ -14,21 +14,24 @@
 #include "Game/Enemys/BossEnemy/Barrier/Barrier.h"
 #include "Game/Enemys/BossEnemy/BossEnemy.h"
 
-using namespace DirectX::SimpleMath;
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
+/// <param name="resources">共通リソース</param>
+/// <param name="barrierDefenseAction">コントローラー</param>
+/// <param name="barrier">バリは</param>
+/// <param name="owner">所有者</param>
 BarrierClose::BarrierClose(CommonResources* resources,
 	BarrierDefenseAction* barrierDefenseAction
 	,Barrier* barrier
-	, CharacterEntity* bossEnemy)
+	, CharacterEntity* owner)
 	:
 	m_commonResources{resources}
 	,m_barrierDefenseAction{ barrierDefenseAction }
 	,m_barrier{barrier}
 	,m_time{}
-	,m_bossEnemy{bossEnemy}
+	, m_owner{owner}
 {
 
 
@@ -55,29 +58,27 @@ void BarrierClose::Initialize()
 }
 
 /// <summary>
-/// 更新
+/// 更新処理
 /// </summary>
 /// <param name="elapsedTime">経過時間</param>
+/// <returns>継続か終了か</returns>
 BarrierClose::ActionState BarrierClose::Update(const float& elapsedTime)
 {
 	UNREFERENCED_PARAMETER(elapsedTime);
 
 	
-	if (m_time >= 1.0f)
+	if (m_time >= CLOSE_TIME)
 	{
-		return ActionState::End;
+		return ActionState::END;
 	}
-
 
 
 	m_time += elapsedTime;
 
 
-	return ActionState::Running;
+	return ActionState::RUNNING;
 
 }
-
-
 
 
 /// <summary>
@@ -86,7 +87,7 @@ BarrierClose::ActionState BarrierClose::Update(const float& elapsedTime)
 void BarrierClose::Enter()
 {
 
-	m_bossEnemy->ChangeAnimation("BarrierEnd");
+	m_owner->ChangeAnimation("BarrierEnd");
 
 	m_time = 0;
 

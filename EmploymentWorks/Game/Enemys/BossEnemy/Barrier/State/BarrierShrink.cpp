@@ -21,15 +21,12 @@
 #include "Game/Enemys/BossEnemy/Barrier/Barrier.h"
 #include "Game/Enemys/BossEnemy/Barrier/State/BarrierStateMachine.h"
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
-
 
 /// <summary>
-/// コンストラクタ
+/// コンストラク
 /// </summary>
 /// <param name="resources">共通リソース</param>
-/// <param name="parent">親</param>
+/// <param name="barrier">バリア</param>
 BarrierShrink::BarrierShrink(CommonResources* resources
 	, Barrier* barrier)
 	:
@@ -50,6 +47,10 @@ BarrierShrink::~BarrierShrink()
 	// do nothing.
 }
 
+/// <summary>
+/// 初期化
+/// </summary>
+/// <param name="resources">共通リソース</param>
 void BarrierShrink::Initialize(CommonResources* resources)
 {
 	UNREFERENCED_PARAMETER(resources);
@@ -58,6 +59,8 @@ void BarrierShrink::Initialize(CommonResources* resources)
 
 void BarrierShrink::Update(const float& elapsedTime)
 {
+
+	using namespace DirectX::SimpleMath;
 
 	float ratio = m_time / 0.35f;
 
@@ -71,6 +74,11 @@ void BarrierShrink::Update(const float& elapsedTime)
 
 }
 
+/// <summary>
+/// 描画
+/// </summary>
+/// <param name="view">ビュー行列</param>
+/// <param name="projection">射影行列</param>
 void BarrierShrink::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
 {
 	UNREFERENCED_PARAMETER(view);
@@ -78,6 +86,9 @@ void BarrierShrink::Render(const DirectX::SimpleMath::Matrix& view, const Direct
 
 }
 
+/// <summary>
+/// 状態に入った時
+/// </summary>
 void BarrierShrink::Enter()
 {
 
@@ -85,6 +96,9 @@ void BarrierShrink::Enter()
 
 }
 
+/// <summary>
+/// 状態を抜けた時
+/// </summary>
 void BarrierShrink::Exit()
 {
 }

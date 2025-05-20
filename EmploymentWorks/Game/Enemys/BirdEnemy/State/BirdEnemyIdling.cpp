@@ -59,14 +59,14 @@ void BirdEnemyldling::Update(const float& elapsedTime)
 	using namespace DirectX::SimpleMath;
 
 
-
+	//回転の更新
 	m_birdEnemy->Rotate(elapsedTime);
 
 
 	if (m_time >= m_attackInterval)
 	{
 
-				//	完全なランダムをハードウェア的に生成するためのクラスの変数
+		//	完全なランダムをハードウェア的に生成するためのクラスの変数
 		std::random_device seed;
 		//	上記の完全なランダムは動作が遅いため、seed値の決定のみに使用する
 		//	※「default_random_engine」はusingで「mt19937」となっている
@@ -75,13 +75,11 @@ void BirdEnemyldling::Update(const float& elapsedTime)
 		std::uniform_real_distribution<> dist(0, 100);
 
 		float ratio = static_cast<float>(dist(engine));
-
-
+		
 		if (ratio < Params::BIRDENEMY_ATTACK_RATIO)
 		{
 
 			m_birdEnemy->GetPlayerStateMachine()->ChangeState(m_birdEnemy->GetPlayerStateMachine()->GetBirdEnemyMove());
-
 
 		}
 		else
@@ -116,9 +114,10 @@ void BirdEnemyldling::Render(const DirectX::SimpleMath::Matrix& view, const Dire
 /// </summary>
 void BirdEnemyldling::Enter()
 {
+	//初期化
 	m_time = 0;
 
-
+	//ランダムでインターバルの作成
 	std::random_device rd;
 	std::mt19937 gen(rd());
 	std::uniform_real_distribution<float> dis(Params::BIRDENEMY_ACTIONS_MIN_TIME, Params::BIRDENEMY_ACTIONS_MAX_TIME);

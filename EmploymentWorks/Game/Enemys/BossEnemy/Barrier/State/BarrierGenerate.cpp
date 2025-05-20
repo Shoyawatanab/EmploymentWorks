@@ -51,12 +51,20 @@ BarrierGenerate::~BarrierGenerate()
 	// do nothing.
 }
 
+/// <summary>
+/// 初期化
+/// </summary>
+/// <param name="resources">共通リソース</param>
 void BarrierGenerate::Initialize(CommonResources* resources)
 {
 	UNREFERENCED_PARAMETER(resources);
 
 }
 
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="elapsedTime">経過時間</param>
 void BarrierGenerate::Update(const float& elapsedTime)
 {
 
@@ -72,6 +80,11 @@ void BarrierGenerate::Update(const float& elapsedTime)
 
 }
 
+/// <summary>
+/// 描画処理
+/// </summary>
+/// <param name="view">ビュー行列</param>
+/// <param name="projection">射影行列</param>
 void BarrierGenerate::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
 {
 	UNREFERENCED_PARAMETER(view);
@@ -79,6 +92,9 @@ void BarrierGenerate::Render(const DirectX::SimpleMath::Matrix& view, const Dire
 
 }
 
+/// <summary>
+/// 状態に入った時
+/// </summary>
 void BarrierGenerate::Enter()
 {
 
@@ -94,6 +110,9 @@ void BarrierGenerate::Enter()
 
 }
 
+/// <summary>
+/// 状態を抜けた時
+/// </summary>
 void BarrierGenerate::Exit()
 {
 }

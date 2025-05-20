@@ -2,9 +2,8 @@
 #include "DetectionCollision.h"
 #include "Libraries/WataLib/Bounding.h"
 
-using namespace DirectX::SimpleMath;
 
-
+//関数の登録
 std::unordered_map<int, std::function<void(CollisionEntity* object1, CollisionEntity* object2, bool& isHit)>> WataLib::DetectionCollision::m_detectionFunction = {
 	{(int)CollisionEntity::CollisionType::AABB    | (int)CollisionEntity::CollisionType::AABB,    DetectionCollision::AABB_AABB}
 	,{(int)CollisionEntity::CollisionType::OBB    | (int)CollisionEntity::CollisionType::OBB,     DetectionCollision::OBB_OBB}
@@ -16,7 +15,12 @@ std::unordered_map<int, std::function<void(CollisionEntity* object1, CollisionEn
 
 
 
-
+/// <summary>
+/// 当たったかどうか
+/// </summary>
+/// <param name="object1">オブジェクト１</param>
+/// <param name="object2">オブジェクト２</param>
+/// <param name="isHit">結果を返すための変数</param>
 void WataLib::DetectionCollision::CheckHit(CollisionEntity* object1, CollisionEntity* object2, bool& isHit)
 {
 
@@ -41,6 +45,12 @@ void WataLib::DetectionCollision::CheckHit(CollisionEntity* object1, CollisionEn
 
 }
 
+/// <summary>
+/// AABB同士
+/// </summary>
+/// <param name="object1">オブジェクト１</param>
+/// <param name="object2">オブジェクト２</param>
+/// <param name="isHit">結果を返すための変数</param>
 void WataLib::DetectionCollision::AABB_AABB(CollisionEntity* object1, CollisionEntity* object2, bool& isHit)
 {
 	//スフィア同士の判定
@@ -70,6 +80,12 @@ void WataLib::DetectionCollision::AABB_AABB(CollisionEntity* object1, CollisionE
 	isHit = false;
 }
 
+/// <summary>
+/// OBB同士
+/// </summary>
+/// <param name="object1">オブジェクト１</param>
+/// <param name="object2">オブジェクト２</param>
+/// <param name="isHit">結果を返すためのへんすう</param>
 void WataLib::DetectionCollision::OBB_OBB(CollisionEntity* object1, CollisionEntity* object2, bool& isHit)
 {
 
@@ -99,6 +115,12 @@ void WataLib::DetectionCollision::OBB_OBB(CollisionEntity* object1, CollisionEnt
 
 }
 
+/// <summary>
+/// スフィア同士
+/// </summary>
+/// <param name="object1">オブジェクト１</param>
+/// <param name="object2">オブジェクト２</param>
+/// <param name="isHit">結果を返すための変数</param>
 void WataLib::DetectionCollision::SPHERE_SPHERE(CollisionEntity* object1, CollisionEntity* object2, bool& isHit)
 {
 	DirectX::BoundingSphere* Sphere1 = object1->GetBounding()->GetBoundingSphere();
@@ -117,6 +139,12 @@ void WataLib::DetectionCollision::SPHERE_SPHERE(CollisionEntity* object1, Collis
 
 }
 
+/// <summary>
+/// AABBとOBB
+/// </summary>
+/// <param name="object1">オブジェクト１</param>
+/// <param name="object2">オブジェクト２</param>
+/// <param name="isHit">結果を返すための変数</param>
 void WataLib::DetectionCollision::AABB_OBB(CollisionEntity* object1, CollisionEntity* object2, bool& isHit)
 {
 	//スフィア同士の判定
@@ -145,6 +173,12 @@ void WataLib::DetectionCollision::AABB_OBB(CollisionEntity* object1, CollisionEn
 
 }
 
+/// <summary>
+/// AABBとスフィア
+/// </summary>
+/// <param name="object1">オブジェクト１</param>
+/// <param name="object2">オブジェクト２</param>
+/// <param name="isHit">結果を返すための変数</param>
 void WataLib::DetectionCollision::AABB_SPHERE(CollisionEntity* object1, CollisionEntity* object2, bool& isHit)
 {
 
@@ -176,10 +210,21 @@ void WataLib::DetectionCollision::AABB_SPHERE(CollisionEntity* object1, Collisio
 
 }
 
+/// <summary>
+/// 円と四角の判定
+/// </summary>
+/// <param name="circleCenter">円の中心</param>
+/// <param name="circleRadius">円の半径</param>
+/// <param name="rectCenter">四角の中心</param>
+/// <param name="rectWidth">四角の横の長さ</param>
+/// <param name="rectHeight">四角の縦の長さ</param>
+/// <returns>ture:当たっている   false:当たっていない</returns>
 bool WataLib::DetectionCollision::Circle_RectCheckHit(const DirectX::SimpleMath::Vector2& circleCenter, float circleRadius,
 	const DirectX::SimpleMath::Vector2& rectCenter, float rectWidth, float rectHeight)
 {
-	
+
+	using namespace DirectX::SimpleMath;
+
 	// 四角形の境界座標を計算
 	float rectLeft = rectCenter.x - rectWidth / 2;
 	float rectRight = rectCenter.x + rectWidth / 2;

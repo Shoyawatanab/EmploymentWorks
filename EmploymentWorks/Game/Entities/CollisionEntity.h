@@ -19,6 +19,7 @@ class CollisionEntity : public BaseEntity
 {
 public:
 
+	//当たり判定の種類
 	enum  class CollisionType
 	{
 		AABB = 1 << 0
@@ -26,23 +27,24 @@ public:
 		, SPHERE = 1 << 2
 	};
 
+	//当たり判定のタグ
 	enum class CollisionTag
 	{
-		None = 0
-		, Player = 1 << 0
-		, PlayerParts = 1 << 1
-		, Stage = 1 << 2
-		, Enemy = 1 << 3
-		, EnemyParts = 1 << 4
-		, Boomerang = 1 << 5
-		, Beam = 1 << 6
-		, Barrier = 1 << 7
+		NONE = 0
+		, PLAYER = 1 << 0
+		, PLAYERPARTS = 1 << 1
+		, STAGE = 1 << 2
+		, ENEMY = 1 << 3
+		, ENEYPARTS = 1 << 4
+		, BOOMERANG = 1 << 5
+		, BEAM = 1 << 6
+		, BARRIER = 1 << 7
 	};
 
 public:
-
+	//当たり判定が有効かどうか
 	bool GetIsCollisionActive() { return m_isCollisionActive; }
-
+	//当たり判定の有効かどうかの登録
 	void SetIsCollisionActive(bool isActive) { m_isCollisionActive = isActive; }
 
 public:
@@ -58,7 +60,7 @@ public:
 	void Initialize() override;
 	//更新処理
 	void  Update(const float& elapsedTime) override ;
-	//描画
+	//描画処理
 	void Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection) override ;
 
 
@@ -99,9 +101,6 @@ public:
 
 	//押し出しを行わないタグ
 	virtual const std::vector<CollisionTag> GetNoExtrusionTag()  = 0;
-
-
-
 
 private:
 	//当たり判定

@@ -18,7 +18,6 @@
 #include "Libraries/MyLib/DebugString.h"
 
 
-using namespace DirectX::SimpleMath;
 
 /// <summary>
 /// コンストラクタ
@@ -71,11 +70,6 @@ void BossEnemyLeftShoulder::Initialize()
 
 }
 
-void BossEnemyLeftShoulder::Update(const float& elapsedTime)
-{
-
-	BossEnemyPartsBase::Update(elapsedTime);
-}
 
 
 

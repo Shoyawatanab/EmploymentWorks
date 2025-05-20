@@ -22,8 +22,6 @@
 #include "Game/Enemys/BossEnemy/ActionNode/BeamAttack/BossBeamAttackCharge.h"
 #include "Game/Enemys/BossEnemy/ActionNode/BeamAttack/BossBeamAttackShot.h"
 #include "Game/Enemys/BossEnemy/ActionNode/BeamAttack/BossBeamAttackEnd.h"
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
 
 
 /// <summary>
@@ -41,7 +39,7 @@ BossBeamAttackAction::BossBeamAttackAction(CommonResources* resources
 	,m_shot{}
 	,m_attackEnd{}
 {
-
+	//各状態の生成
 	m_preliminaryAction = std::make_unique<BossBeamAttackPreliminaryAction>(m_commonResources,bossenemy,beam,this);
 	m_charge = std::make_unique<BossBeamAttackCharge>(m_commonResources, bossenemy, beam,this);
 	m_shot = std::make_unique<BossBeamAttackShot>(m_commonResources, bossenemy, beam,this,player);
@@ -49,9 +47,9 @@ BossBeamAttackAction::BossBeamAttackAction(CommonResources* resources
 
 
 	//イベントタイプの登録
-	Messenger::GetInstance()->Rigister(GameMessageType::BossBeamHit, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::BOSS_BEAM_HIT, this);
 
-
+	//行動順に追加
 	ActionStateController::Initialize({
 		m_preliminaryAction.get()
 		,m_charge.get()
@@ -71,13 +69,16 @@ BossBeamAttackAction::~BossBeamAttackAction()
 	ActionStateController::~ActionStateController();
 }
 
-
+/// <summary>
+/// 通知を受け取る関数
+/// </summary>
+/// <param name="telegram">情報</param>
 void BossBeamAttackAction::Notify(const Telegram<GameMessageType>& telegram)
 {
 	
 	switch (telegram.messageType)
 	{
-		case GameMessageType::BossBeamHit:
+		case GameMessageType::BOSS_BEAM_HIT:
 
 			ActionStateController::ChangeState();
 			break;

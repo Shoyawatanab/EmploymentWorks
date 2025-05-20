@@ -21,9 +21,9 @@ namespace WataLib
 	class CameraManager : public IObserver<GameMessageType>
 	{
 	public:
-
+		//ビュー行列の取得
 		const DirectX::SimpleMath::Matrix& GetViewMatrix() const { return m_currentState->GetViewMatrix(); }
-
+		
 		ICamera* GetGameCameraState() { return m_currentState; }
 
 		WataLib::TPS_Camera* GetTPSCamera() { return m_tpsCamera.get(); }
@@ -38,13 +38,12 @@ namespace WataLib
 
 		// デストラクタ
 		~CameraManager();
-
+		//初期化
 		void Initialize(CommonResources* resources);
-
 
 		// 更新処理
 		void Update(float elapsedTime);
-
+		//カメラの切り替え
 		void ChangeState(ICamera* nestState);
 
 		//クラスに必要な情報（ポインタ）を登録する
@@ -55,12 +54,13 @@ namespace WataLib
 		void Notify(const Telegram<GameMessageType>& telegram)  override;
 
 	private:
-
+		//現在のカメラ
 		ICamera* m_currentState;
+		//TPSカメラ
 		std::unique_ptr<WataLib::TPS_Camera> m_tpsCamera;
-
+		//ゲーム終了カメラ
 		std::unique_ptr<WataLib::GameEndCamera> m_endCamera;
-
+		//プレイヤ
 		Player* m_player;
 
 

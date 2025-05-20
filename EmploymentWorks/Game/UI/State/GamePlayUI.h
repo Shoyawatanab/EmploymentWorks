@@ -19,36 +19,17 @@ namespace WataLib
 }
 
 
-class Message
-{
-public:
-	// メッセージID
-	enum MessageID : int
-	{
-		// ボール状態
-		TOUCH = 0,									// 「ボールに触れた」状態
-		KICK,												// 「キック」状態
-		STOPPING,									// 「停止」状態
-		MOVING,										// 「移動」状態
-		// プレイヤー状態
-		IDLING = 10,								// アイドリング状態
-		STRIKE_FORWARDING			// ストライクフォワーディング状態
-
-		, PlayerDamage
-	};
-};
-
-
 class GamePlayUI : public IState ,  public IObserver<GameMessageType>
 {
 
 private :
 
+	//プレイヤHP関係
 	static constexpr int HP_COUNT{ 3 };
 	static constexpr DirectX::SimpleMath::Vector2 HP_POSITION        { 50.0f,680.0f};
 	static constexpr DirectX::SimpleMath::Vector2 HP_POSITION_OFFSET { 70.0f,1.0f};
 	static constexpr DirectX::SimpleMath::Vector2 HP_SCALE { 1.0f,1.0f};
-
+	//ブーメラン関係
 	static constexpr int BOOMERANG_COUNT{ 3 };
 	static constexpr DirectX::SimpleMath::Vector2 BOOMERANG_POSITION        { 50.0f, 600.0f};
 	static constexpr DirectX::SimpleMath::Vector2 BOOMERANG_POSITION_OFFSET { 70.0f, 1.0f};
@@ -58,6 +39,25 @@ private :
 
 	static constexpr int MAXDAMAGEUICOUNT = 10;
 
+	//ボスHP関係
+	static constexpr DirectX::SimpleMath::Vector2 ENEMY_HP_BASE_POSITION{640,50};
+	static constexpr DirectX::SimpleMath::Vector2 ENEMY_HP_BASE_SCALE{0.9f,0.5f};
+
+	static constexpr DirectX::SimpleMath::Vector2 ENEMY_HP_POSITION     {640, 50};
+	static constexpr DirectX::SimpleMath::Vector2 ENEMY_HP_SCALE        {0.9f,0.39f};
+
+	static constexpr DirectX::SimpleMath::Vector2 ENEMY_NAME_POSITION     {640, 25};
+	static constexpr DirectX::SimpleMath::Vector2 ENEMY_NAME_SCALE        {0.3f, 0.3f};
+
+	//ブーメランの投げ方のUI
+	static constexpr DirectX::SimpleMath::Vector2 RIGHT_THROW_POSITION {1220, 500};
+	static constexpr DirectX::SimpleMath::Vector2 RIGHT_THROW_SCALE {0.2f, 0.2f};
+	
+	static constexpr DirectX::SimpleMath::Vector2 FRONT_THROW_POSITION {1220, 550};
+	static constexpr DirectX::SimpleMath::Vector2 FRONT_THROW_SCALE {0.2f, 0.2f};
+	
+	static constexpr DirectX::SimpleMath::Vector2 LEFT_THROW_POSITION {1220, 600};
+	static constexpr DirectX::SimpleMath::Vector2 LEFT_THROW_SCALE {0.2f, 0.2f};
 
 
 public:
@@ -85,27 +85,22 @@ public:
 		, DirectX::SimpleMath::Vector2 scale
 		);
 
-
-
+private:
+	//敵HPの作成
 	void CreateEnemyHP();
-
+	//プレイヤHPの作成
 	void CreatePlayerHP();
-
+	//ブウーメランUIの作成
 	void CreateBoomerang();
-
+	//ダメージUIの作成
 	void CreateDamageUI(void* datas);
 
 	//IObserver
 //通知時に呼ばれる関数
 	void Notify(const Telegram<GameMessageType>& telegram)  override;
 
-
-public:
-
-	void Notify(Message::MessageID);
-
 private:
-
+	//プレイヤがダメージを受けた時
 	void PlayerDamage();
 
 private:
@@ -125,9 +120,9 @@ private:
 
 	//投げ状態のUI
 	std::vector<std::unique_ptr<UserInterface>> m_throwUI;
-
+	//敵マネージャー
 	EnemyManager* m_enemyManager;
-
+	//画面サイズ
 	std::pair<int, int> m_windowSize;
 
 	//座標
@@ -136,11 +131,11 @@ private:
 	DirectX::SimpleMath::Vector3 m_scale;
 	//回転
 	DirectX::SimpleMath::Quaternion m_rotation;
-	
+	//プレイヤHP
 	int m_playerHPCount;
-
+	//ブーメランの数
 	int m_boomerangCount;
-
+	//ダメージUI
 	std::vector<std::unique_ptr<WataLib::DamageCountUI>> m_damageCountUI;
 	
 

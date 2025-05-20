@@ -17,10 +17,6 @@
 #include "Game/Player/Player.h"
 #include "Game/Enemys/BossEnemy/ActionNode/JumpAttack/BossJumpAttackAction.h"
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
-
-
 
 /// <summary>
 /// コンストラクタ
@@ -57,15 +53,15 @@ void BossJumpAttackCharge::Initialize()
 BossJumpAttackCharge::ActionState BossJumpAttackCharge::Update(const float& elapsedTime)
 {
 	//時間はアニメーションと合わせる
-	if (m_time >= 1.5f)
+	if (m_time >= CHARGE_TIME)
 	{
-		return ActionState::End;
+		return ActionState::END;
 	}
 
 	
 	m_time += elapsedTime;
 
-	return ActionState::Running;
+	return ActionState::RUNNING;
 
 }
 
@@ -80,15 +76,15 @@ void BossJumpAttackCharge::Enter()
 	m_bossEnemy->ChangeAnimation("JumpCharge");
 	m_time = 0;
 
-	Vector3 pos = m_bossEnemy->GetPosition();
+	//Vector3 pos = m_bossEnemy->GetPosition();
 
-	pos.y = 0.1f;
+	//pos.y = 0.1f;
 
-	Vector3 scale = Vector3(5, 5, 5);
+	//Vector3 scale = EFFECTE_SCALE;
 
-	UnknownDataThree aa = {  static_cast<void*>(& pos), static_cast<void*>(&scale)};
+	//UnknownDataThree aa = {  static_cast<void*>(& pos), static_cast<void*>(&scale)};
 
-	Messenger::GetInstance()->Notify(GameMessageType::CreateChageEffect, &aa);
+	//Messenger::GetInstance()->Notify(GameMessageType::CREATE_CHAGE_EFFECT, &aa);
 
 
 }

@@ -12,7 +12,9 @@ namespace WataLib
 	{
 
 	public:
+		//コンストラクタ
 		Shadow();
+		//デストラクタ
 		~Shadow() = default;
 
 		// 初期化する

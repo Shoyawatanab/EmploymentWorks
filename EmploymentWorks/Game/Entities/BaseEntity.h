@@ -11,9 +11,9 @@ class CommonResources;
 class BaseEntity
 {
 public:
-
+	//共通リソース
 	CommonResources* GetCommonResources() { return m_commonResources; }
-
+	//IDの取得
 	 int GetID() const { return m_id; }
 
 	 static int GetNextID() { return m_nextId; };
@@ -67,19 +67,20 @@ public:
 	const DirectX::SimpleMath::Quaternion& GetLocalRotation() { return m_parent  ? m_localRotation : m_rotation; };
 	//ローカル回転の設定
 	void SetLocalRotation(const DirectX::SimpleMath::Quaternion& rotation) { m_parent  ? m_localRotation = rotation :m_rotation = rotation ; };
-	
-
+	//速度の取得
 	const DirectX::SimpleMath::Vector3& GetVelocity() { return m_velocity; }
-
+	//速度の登録
 	void SetVelocity(const DirectX::SimpleMath::Vector3& velocity) { m_velocity = velocity; }
-
+	//重量が有効かどうか
+	const bool GetIsGravity() { return m_isGravity; }
+	//重力が有効かの登録
 	void SetIsGravity(bool isGravity) { m_isGravity = isGravity; }
 
 	//親の取得
 	BaseEntity* GetParent() { return m_parent; }
 	//親の登録
 	void SetParent(BaseEntity* parent);
-
+	//親がいるかどうか
 	bool GetIsParent() { return m_isParent; }
 
 
@@ -126,11 +127,11 @@ private:
 	int m_id;
 
 	static int m_nextId;
-
+	//エンティティが有効かどうか
 	bool m_isEntityActive;
-
+	//更新が有効かどうか
 	bool m_isUpdateActive;
-
+	//描画が有効かどうか
 	bool m_isRenderActive;
 
 	//座標
@@ -155,12 +156,11 @@ private:
 	DirectX::SimpleMath::Quaternion m_localRotation;
 	//ローカル行列
 	DirectX::SimpleMath::Matrix m_localMatrix;
-
-
+	//重力があるかどうか
 	bool m_isGravity;
-
+	//速度
 	DirectX::SimpleMath::Vector3 m_velocity;
-
+	//重力
 	float m_gravity;
 
 };

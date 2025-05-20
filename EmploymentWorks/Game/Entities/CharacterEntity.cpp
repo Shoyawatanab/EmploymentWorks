@@ -4,9 +4,6 @@
 #include "Game/CollisiionManager.h"
 #include "Libraries/WataLib/Animation.h"
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
-
 
 /// <summary>
 /// コンストラクタ
@@ -88,8 +85,10 @@ void CharacterEntity::Initialize()
 /// <param name="elapsedTime">経過時間</param>
 void CharacterEntity::Update(const float& elapsedTime)
 {
+	//アニメーションがあれば
 	if (m_animation)
 	{
+		//アニメーションの更新
 		m_animation->Update(elapsedTime);
 
 	}

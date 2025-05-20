@@ -11,11 +11,14 @@
 #include "Game/CollisiionManager.h"
 #include "Libraries/WataLib/Bounding.h"
 
-using namespace DirectX::SimpleMath;
 
-//---------------------------------------------------------
-// コンストラクタ
-//---------------------------------------------------------
+/// <summary>
+/// コンストラク
+/// </summary>
+/// <param name="resources">共通リソース</param>
+/// <param name="scale">大きさ</param>
+/// <param name="position">座標</param>
+/// <param name="rotation">回転</param>
 Wall::Wall(CommonResources* resources
 	,DirectX::SimpleMath::Vector3 scale,
 	DirectX::SimpleMath::Vector3 position,
@@ -26,17 +29,20 @@ Wall::Wall(CommonResources* resources
 {
 }
 
-//---------------------------------------------------------
-// デストラクタ
-//---------------------------------------------------------
+/// <summary>
+/// デストラクタ
+/// </summary>
 Wall::~Wall()
 {
 	// do nothing.
 }
 
-
+/// <summary>
+/// 初期化
+/// </summary>
 void Wall::Initialize()
 {
+	using namespace DirectX::SimpleMath;
 
 	INotMoveEntity::Initialize();
 
@@ -58,6 +64,11 @@ void Wall::Initialize()
 
 }
 
+/// <summary>
+/// 描画
+/// </summary>
+/// <param name="view">ビュー行列</param>
+/// <param name="projection">射影行列</param>
 void Wall::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
 {
 	//オブジェクトか描画が無効なら
@@ -77,6 +88,11 @@ void Wall::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::Simple
 	CollisionEntity::GetBounding()->DrawBoundingBox(BaseEntity::GetPosition(), view, projection);
 }
 
+
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="elapsedTime">経過時間</param>
 void Wall::Update(const float& elapsedTime)
 {
 
@@ -91,12 +107,7 @@ void Wall::Update(const float& elapsedTime)
 
 }
 
-void Wall::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
-{
-	UNREFERENCED_PARAMETER(object);
-	UNREFERENCED_PARAMETER(tag);
 
-}
 
 
 

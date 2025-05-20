@@ -8,10 +8,23 @@
 #include "Libraries/WataLib/Bounding.h"
 #include "Game/Player/Player.h"
 
-using namespace DirectX::SimpleMath;
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
+ItemAcquisition::ItemAcquisition()
+	:
+	m_commonResources{}
+	,m_player{}
+{
+}
 
-
+/// <summary>
+/// デストラクタ
+/// </summary>
+ItemAcquisition::~ItemAcquisition()
+{
+}
 
 /// <summary>
 /// 初期化
@@ -40,19 +53,19 @@ void ItemAcquisition::Update()
 		Vector3 itemPos = item.ItemEntity->GetPosition();
 
 		Vector3 playerPos = m_player->GetPosition();
-
+		//アイテムとプレイヤとの距離
 		float lenght = Vector3::Distance(itemPos, playerPos);
-
-		if (lenght <= 2.0f)
+		//回収可能なら
+		if (lenght <= RECOVERBLE_RADIUS)
 		{
 
-			item.State = State::Recoverable;
+			item.State = State::RECOVERABLE;
 			recoverableCount++;
 
 		}
 		else
 		{
-			item.State = State::NotReturnable;
+			item.State = State::NOT_RECOVERABLE;
 
 		}
 
@@ -66,7 +79,7 @@ void ItemAcquisition::Update()
 
 		auto it = std::remove_if(m_items.begin(), m_items.end(),
 			[](const ItemDatas& item) {
-				return item.State == State::Recoverable;  // Stateが一致する場合
+				return item.State == State::RECOVERABLE;  // Stateが一致する場合
 			});
 
 		if (it != m_items.end())
@@ -79,6 +92,11 @@ void ItemAcquisition::Update()
 
 }
 
+/// <summary>
+/// アイテムの追加
+/// </summary>
+/// <param name="id">オブジェクトID</param>
+/// <param name="item">アイテム</param>
 void ItemAcquisition::AddItem(int id,ItemEntity* item)
 {
 
@@ -86,12 +104,16 @@ void ItemAcquisition::AddItem(int id,ItemEntity* item)
 	
 	itemData.ID = id;
 	itemData.ItemEntity = item;
-	itemData.State = State::NotReturnable;
+	itemData.State = State::NOT_RECOVERABLE;
 
 	m_items.push_back(itemData);
 
 }
 
+/// <summary>
+/// アイテムの削除
+/// </summary>
+/// <param name="id">オブジェクトID</param>
 void ItemAcquisition::DeleteItem(int id)
 {
 

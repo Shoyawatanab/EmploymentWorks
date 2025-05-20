@@ -14,7 +14,7 @@ namespace FMOD
 namespace WataLib
 {
 
-	class GameResources : public Singleton<GameResources>
+	class GameResources //: public Singleton<GameResources>
 	{
 		// ------------------------
 		// ファイルパス
@@ -28,10 +28,6 @@ namespace WataLib
 		static const wchar_t* TEXTURE_JSON;
 		static const wchar_t* TEXTURE_BASE_PATH;
 
-
-		// ------------------------
-		// アクセサ
-		// ------------------------
 	public:
 
 		// モデルを取得する
@@ -39,20 +35,12 @@ namespace WataLib
 		// テクスチャを取得する
 		ID3D11ShaderResourceView* GetTexture(std::string key) const;
 
-		FMOD::Sound* GetSound(std::string key) const;
-
-		// ------------------------
-		// 公開関数
-		// ------------------------
 	public:
 		// コンストラクタ
 		GameResources(ID3D11Device1* device);
 		// デストラクタ
 		~GameResources() = default;
 
-		// ------------------------
-		// 内部関数
-		// ------------------------
 	private:
 		// Jsonファイルを読み込んでモデルを生成する
 		void LoadModelFromJson(ID3D11Device1* device);
@@ -61,9 +49,6 @@ namespace WataLib
 		void LoadTexture(ID3D11Device1* device);
 
 
-		// ------------------------
-		// 内部変数
-		// ------------------------
 	private:
 
 

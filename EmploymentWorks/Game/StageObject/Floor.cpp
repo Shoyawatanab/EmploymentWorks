@@ -12,11 +12,15 @@
 #include "Libraries/WataLib/Bounding.h"
 #include "Game/CollisiionManager.h"
 
-using namespace DirectX::SimpleMath;
 
-//---------------------------------------------------------
-// コンストラクタ
-//---------------------------------------------------------
+
+/// <summary>
+/// コンストラク
+/// </summary>
+/// <param name="resources">共通リソース</param>
+/// <param name="scale">大きさ</param>
+/// <param name="position">座標</param>
+/// <param name="rotation">回転</param>
 Floor::Floor(CommonResources* resources
 	,DirectX::SimpleMath::Vector3 scale,
 	DirectX::SimpleMath::Vector3 position,
@@ -37,8 +41,9 @@ Floor::~Floor()
 }
 
 
-
-
+/// <summary>
+/// 初期化
+/// </summary>
 void Floor::Initialize()
 {
 
@@ -54,6 +59,11 @@ void Floor::Initialize()
 
 }
 
+/// <summary>
+/// 描画
+/// </summary>
+/// <param name="view">ビュー行列</param>
+/// <param name="projection">射影行列</param>
 void Floor::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
 {
 
@@ -63,9 +73,6 @@ void Floor::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::Simpl
 		return;
 	}
 
-
-
-
 	auto context = BaseEntity::GetCommonResources()->GetDeviceResources()->GetD3DDeviceContext();
 	auto states = BaseEntity::GetCommonResources()->GetCommonStates();
 
@@ -74,10 +81,14 @@ void Floor::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::Simpl
 	//モデルの描画
 	m_model->Draw(context, *states, BaseEntity::GetWorldMatrix(), view, projection);
 
-	//m_bounding->DrawBoundingSphere(view, projection);
+	//当たり判定の描画
 	CollisionEntity::GetBounding()->DrawBoundingBox(BaseEntity::GetPosition(), view, projection);
 }
 
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="elapsedTime">経過時間</param>
 void Floor::Update(const float& elapsedTime)
 {
 	UNREFERENCED_PARAMETER(elapsedTime);
@@ -91,23 +102,7 @@ void Floor::Update(const float& elapsedTime)
 
 }
 
-void Floor::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
-{
-	INotMoveEntity::OnCollisionEnter(object, tag);
-}
 
 
 
 
-void Floor::SetDatas(DirectX::SimpleMath::Vector3 scale, DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Quaternion rotation)
-{
-
-	UNREFERENCED_PARAMETER(rotation);
-	UNREFERENCED_PARAMETER(position);
-	UNREFERENCED_PARAMETER(scale);
-
-
-}
-
-
-//---------------------------------------------------------

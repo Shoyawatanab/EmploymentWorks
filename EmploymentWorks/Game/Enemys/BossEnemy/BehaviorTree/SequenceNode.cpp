@@ -43,14 +43,14 @@ IBehaviorNode::State SequenceNode::Update(float elapsedTime)
 		switch (node->Update(elapsedTime))
 		{
 
-			case IBehaviorNode::State::Success:
+			case IBehaviorNode::State::SUCCESS:
 				break;
-			case IBehaviorNode::State::Failure:
-				return State::Failure;
-			case IBehaviorNode::State::Runngin:
+			case IBehaviorNode::State::FAILURE:
+				return State::FAILURE;
+			case IBehaviorNode::State::RUNNING:
 				//Às’†ƒm[ƒh‚ğŠi”[
 				m_runningNode = node.get();
-				return State::Runngin;
+				return State::RUNNING;
 			default:
 				break;
 		}
@@ -58,7 +58,7 @@ IBehaviorNode::State SequenceNode::Update(float elapsedTime)
 	}
 
 	//‚·‚×‚Ä¬Œ÷‚µ‚½‚ç
-	return State::Success;
+	return State::SUCCESS;
 }
 
 /// <summary>

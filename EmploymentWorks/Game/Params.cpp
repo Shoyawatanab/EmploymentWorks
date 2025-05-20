@@ -205,7 +205,7 @@ const Quaternion       Params::BOOMERANG_ROTATION = Quaternion::Identity;
  //ボスビームの回転
  const Quaternion Params::BOSSENEMY_BEAM_ROTATION = Quaternion::Identity;
  //ボスビームのエネルギー弾のボックスの当たり判定の大きさ
- const Vector3  Params::BOSSENEMY_BEAM_BALL_BOX_COLLIDER_SIZE = Vector3(2.0f,2.0f,2.0f);
+ const Vector3  Params::BOSSENEMY_BEAM_BALL_BOX_COLLIDER_SIZE = Vector3(1.5f,1.5f,1.5f);
  //ボスビームのエネルギー弾のスフィアの当たり判定の大きさ
  const float  Params::BOSSENEMY_BEAM_BALL_SPHERE_COLLIDER_SIZE = 3.0f;
 

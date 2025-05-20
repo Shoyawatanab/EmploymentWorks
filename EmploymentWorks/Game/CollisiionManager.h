@@ -21,7 +21,7 @@ public:
 	void AddCollsion(CollisionEntity* object);
 	//‰Ÿ‚µo‚µ
 	void Extrusion(CollisionEntity* object1, CollisionEntity* object2);
-	//
+	//AABB“¯m‚Ì‰Ÿ‚µo‚µ
 	static void AABB_AABB_Extrusion(CollisionEntity* object1, CollisionEntity* object2);
 
 private:

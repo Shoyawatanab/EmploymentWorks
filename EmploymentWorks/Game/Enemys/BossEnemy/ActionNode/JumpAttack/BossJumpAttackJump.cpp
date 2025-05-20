@@ -26,6 +26,9 @@ using namespace DirectX::SimpleMath;
 /// コンストラクタ
 /// </summary>
 /// <param name="resources">共通リソース</param>
+/// <param name="parent">コントローラー</param>
+/// <param name="bossenemy">所有者</param>
+/// <param name="player">プレイヤ</param>
 BossJumpAttackJump::BossJumpAttackJump(CommonResources* resources
 	,BossJumpAttackAction* parent
 	,BossEnemy* bossenemy
@@ -50,6 +53,9 @@ BossJumpAttackJump::~BossJumpAttackJump()
 	// do nothing.
 }
 
+/// <summary>
+/// 初期化
+/// </summary>
 void BossJumpAttackJump::Initialize()
 {
 
@@ -57,29 +63,37 @@ void BossJumpAttackJump::Initialize()
 
 }
 
+
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="elapsedTime">経過時間</param>
+/// <returns>継続か終了か</returns>
 BossJumpAttackJump::ActionState BossJumpAttackJump::Update(const float& elapsedTime)
 {
 
-
+	//速度の取得
 	Vector3 velocity = m_bossEnemy->GetVelocity();
-
+	//速度の更新
 	velocity.x = m_jumpDirection.x * elapsedTime * BossJumpAttackAction::MOVESPEED;
-
 	velocity.z = m_jumpDirection.z * elapsedTime * BossJumpAttackAction::MOVESPEED;
 
+	//速度の登録
 	m_bossEnemy->SetVelocity(velocity);
 
-
+	//着地したら
 	if (m_bossEnemy->GetIsGrounded())
 	{
-		return ActionState::End;
+		return ActionState::END;
 	}
 
-	return ActionState::Running;
+	return ActionState::RUNNING;
 
 }
 
-
+/// <summary>
+/// 状態に入った時
+/// </summary>
 void BossJumpAttackJump::Enter()
 {
 
@@ -104,6 +118,9 @@ void BossJumpAttackJump::Enter()
 
 }
 
+/// <summary>
+/// 状態を抜けた時
+/// </summary>
 void BossJumpAttackJump::Exit()
 {
 
@@ -113,7 +130,7 @@ void BossJumpAttackJump::Exit()
 
 	pos.y = 0.1f;
 
-	Messenger::GetInstance()->Notify(GameMessageType::CreateParticle, &pos);
+	Messenger::GetInstance()->Notify(GameMessageType::CREATE_PARTICLE, &pos);
 
 	m_bossEnemy->SetVelocity(Vector3::Zero);
 

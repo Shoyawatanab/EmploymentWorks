@@ -39,6 +39,9 @@ enum ANCHOR
 
 class UserInterface
 {
+public:
+	static const std::vector<D3D11_INPUT_ELEMENT_DESC> INPUT_LAYOUT;
+
 
 public:
 	//データ受け渡し用コンスタントバッファ(送信側)
@@ -79,34 +82,32 @@ public:
 
 	//関数
 public:
-	static const std::vector<D3D11_INPUT_ELEMENT_DESC> INPUT_LAYOUT;
-
+	//コンストラク
 	UserInterface();
+	//デストラクタ
 	~UserInterface();
-
+	//画像の読み込み
 	void LoadTexture(std::string key);
-
+	//生成
 	void Create(CommonResources* resources
 		, std::string key
 		, DirectX::SimpleMath::Vector2 position
 		, DirectX::SimpleMath::Vector2 scale
 	);
-
+	//描画
 	void Render();
 
 
 
 
 private:
-
+	//シェーダーの作成
 	void CreateUIShader();
 
 	//変数
 private:
-
+	//定数バッファ
 	Microsoft::WRL::ComPtr<ID3D11Buffer>	m_CBuffer;
-
-	DX::StepTimer                           m_timer;
 	// 入力レイアウト
 	Microsoft::WRL::ComPtr<ID3D11InputLayout> m_inputLayout;
 
@@ -123,13 +124,15 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11PixelShader> m_pixelShader;
 	// ジオメトリシェーダ
 	Microsoft::WRL::ComPtr<ID3D11GeometryShader> m_geometryShader;
-
+	//画像の大きさ
 	int m_textureWidth, m_textureHeight;
-
+	//大きさ
 	DirectX::SimpleMath::Vector2 m_scale;
+	//座標
 	DirectX::SimpleMath::Vector2 m_position;
-
+	//初期座標
 	DirectX::SimpleMath::Vector2 m_initialPosition;
+	//初期の大きさ
 	DirectX::SimpleMath::Vector2 m_initialScale;
 
 	float m_renderRatio;

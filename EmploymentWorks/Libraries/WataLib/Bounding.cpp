@@ -10,12 +10,10 @@
 #include <cassert>
 
 
-using namespace DirectX;
-
-
-//---------------------------------------------------------
-// コンストラクタ
-//---------------------------------------------------------
+/// <summary>
+/// コンストラクタ
+/// </summary>
+/// <param name="resources"></param>
 WataLib::Bounding::Bounding(CommonResources* resources)
 	:
 	m_boundingBox{}
@@ -28,6 +26,9 @@ WataLib::Bounding::Bounding(CommonResources* resources)
 
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 WataLib::Bounding::~Bounding()
 {
 
@@ -41,6 +42,8 @@ WataLib::Bounding::~Bounding()
 /// <param name="resources">共通リソース</param>
 void WataLib::Bounding::Initialize()
 {
+
+	using namespace DirectX;
 
 	auto device = m_commonResources->GetDeviceResources()->GetD3DDevice();
 	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
@@ -62,6 +65,10 @@ void WataLib::Bounding::Initialize()
 
 }
 
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="CenterPos">中心座標</param>
 void WataLib::Bounding::Update(DirectX::SimpleMath::Vector3 CenterPos)
 {
 
@@ -70,6 +77,11 @@ void WataLib::Bounding::Update(DirectX::SimpleMath::Vector3 CenterPos)
 
 }
 
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="CenterPos">中心座標</param>
+/// <param name="rotation">回転</param>
 void WataLib::Bounding::Update(DirectX::SimpleMath::Vector3 CenterPos, DirectX::SimpleMath::Quaternion rotation)
 {
 	m_boundingSphere->Center = CenterPos;
@@ -79,19 +91,29 @@ void WataLib::Bounding::Update(DirectX::SimpleMath::Vector3 CenterPos, DirectX::
 
 }
 
-
+/// <summary>
+/// AABBの生成
+/// </summary>
+/// <param name="CenterPos">中心座標</param>
+/// <param name="Extents">大きさ</param>
 void WataLib::Bounding::CreateBoundingBox(DirectX::SimpleMath::Vector3 CenterPos, DirectX::SimpleMath::Vector3 Extents)
 {
 
 	using namespace DirectX;
 
-	m_boundingBox = std::make_unique<DirectX::BoundingBox>();
+	m_boundingBox = std::make_unique<BoundingBox>();
 	
 	m_boundingBox->Center = CenterPos;
 	m_boundingBox->Extents = Extents;
 
 }
 
+/// <summary>
+/// OBBの生成
+/// </summary>
+/// <param name="CenterPos">中心座標</param>
+/// <param name="rotation">回転</param>
+/// <param name="Extents">大きさ</param>
 void WataLib::Bounding::CreateBoundingOrientedBox(DirectX::SimpleMath::Vector3 CenterPos, DirectX::SimpleMath::Quaternion rotation, DirectX::SimpleMath::Vector3 Extents)
 {
 
@@ -103,9 +125,16 @@ void WataLib::Bounding::CreateBoundingOrientedBox(DirectX::SimpleMath::Vector3 C
 
 }
 
+/// <summary>
+/// 描画
+/// </summary>
+/// <param name="CenterPos">中心座標</param>
+/// <param name="rotation">回転</param>
+/// <param name="view">ビュー行列</param>
+/// <param name="projection">射影行列</param>
 void WataLib::Bounding::Draw(const DirectX::SimpleMath::Vector3 CenterPos, DirectX::SimpleMath::Quaternion rotation, DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 {
-
+	//オブジェクトがあれば
 	if (m_boundingSphere)
 	{
 		DrawBoundingSphere(CenterPos, view, projection);
@@ -124,18 +153,28 @@ void WataLib::Bounding::Draw(const DirectX::SimpleMath::Vector3 CenterPos, Direc
 }
 
 
-
+/// <summary>
+/// スフィアの生成
+/// </summary>
+/// <param name="CenterPos">中心座標</param>
+/// <param name="radius">半径</param>
 void WataLib::Bounding::CreateBoundingSphere(DirectX::SimpleMath::Vector3 CenterPos, float radius)
 {
 	using namespace DirectX;
 
-	m_boundingSphere = std::make_unique<DirectX::BoundingSphere>();
+	m_boundingSphere = std::make_unique<BoundingSphere>();
 
 	m_boundingSphere->Radius = radius;
 	m_boundingSphere->Center = CenterPos;
 
 }
 
+/// <summary>
+/// AABBの描画
+/// </summary>
+/// <param name="CenterPos">中心座標</param>
+/// <param name="view">ビュー行列</param>
+/// <param name="projection">射影行列</param>
 void WataLib::Bounding::DrawBoundingBox(const DirectX::SimpleMath::Vector3 CenterPos, DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 {
 	m_boundingBox->Center = CenterPos;
@@ -152,6 +191,7 @@ void WataLib::Bounding::DrawBoundingBox(const DirectX::SimpleMath::Vector3 Cente
 
 	DirectX::XMVECTOR color = DirectX::Colors::Green;
 
+	//当たっていたら色を変更
 	if (m_isBoxHit)
 	{
 		color = DirectX::Colors::Red;
@@ -170,6 +210,13 @@ void WataLib::Bounding::DrawBoundingBox(const DirectX::SimpleMath::Vector3 Cente
 
 }
 
+/// <summary>
+/// OBBの描画
+/// </summary>
+/// <param name="CenterPos">中心座標</param>
+/// <param name="rotation">回転</param>
+/// <param name="view">ビュー行列</param>
+/// <param name="projection">射影行列</param>
 void WataLib::Bounding::DrawBoundingOrientedBox(const DirectX::SimpleMath::Vector3 CenterPos, DirectX::SimpleMath::Quaternion rotation, DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 {
 	m_orientexBox->Center = CenterPos;
@@ -188,6 +235,7 @@ void WataLib::Bounding::DrawBoundingOrientedBox(const DirectX::SimpleMath::Vecto
 
 	DirectX::XMVECTOR color = DirectX::Colors::Green;
 
+	//当たっていたら色を変更
 	if (m_isBoxHit)
 	{
 		color = DirectX::Colors::Red;
@@ -207,6 +255,12 @@ void WataLib::Bounding::DrawBoundingOrientedBox(const DirectX::SimpleMath::Vecto
 
 }
 
+/// <summary>
+/// スフィアの描画
+/// </summary>
+/// <param name="CenterPos">中心座標</param>
+/// <param name="view">ビュー行列</param>
+/// <param name="projection">射影行列</param>
 void WataLib::Bounding::DrawBoundingSphere(const DirectX::SimpleMath::Vector3 CenterPos, DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
 {
 	m_boundingSphere->Center = CenterPos;
@@ -223,6 +277,8 @@ void WataLib::Bounding::DrawBoundingSphere(const DirectX::SimpleMath::Vector3 Ce
 
 	DirectX::XMVECTOR color = DirectX::Colors::Yellow;
 
+
+	//当たっていたら色を変更
 	if (m_isSphereHit)
 	{
 		color = DirectX::Colors::Red;

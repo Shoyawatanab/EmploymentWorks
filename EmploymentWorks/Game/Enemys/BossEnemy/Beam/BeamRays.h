@@ -21,7 +21,7 @@ class BeamRays : public BaseEntity
 {
 public:
 
-
+	//コンスタントバッファ
 	struct ConstBuffer
 	{
 		DirectX::SimpleMath::Matrix		matWorld;
@@ -46,13 +46,14 @@ public:
 	DirectX::SimpleMath::Vector3 GetInitialScale() { return m_initialScale; }
 
 public:
+	//コンストラク
 	BeamRays(CommonResources* resources, BaseEntity* parent);
 	
 	//デストラクタ
 	~BeamRays() override;
 
-	//IObject
-		//初期化
+	
+	//初期化
 	void Initialize() override;
 	//描画
 	void Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection) override;
@@ -68,33 +69,28 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11VertexShader> m_vertexShader;
 	//	ピクセルシェーダ
 	Microsoft::WRL::ComPtr<ID3D11PixelShader> m_pixelShader;
-
+	//インプットレイアウト
 	Microsoft::WRL::ComPtr<ID3D11InputLayout> m_inputLayout;
+	//定数バッファ
 	Microsoft::WRL::ComPtr<ID3D11Buffer>	m_CBuffer;
 
 
 
 	// モデル
 	DirectX::Model* m_model;
-
+	//初期回転
 	DirectX::SimpleMath::Quaternion m_initialRotate;
-
-
+	//ターゲット
 	DirectX::SimpleMath::Vector3 m_target;
-
+	//初期の大きさ
 	DirectX::SimpleMath::Vector3 m_initialScale;
-
-	//State
-
 	//ビームの細さ
 	float m_thickness;
-
+	//当たったかどうか
 	bool m_isHit;
-
-	float m_maxLength;
-
+	//ビーム
 	Beam* m_beam;
-
+	//初期座標
 	DirectX::SimpleMath::Vector3 m_initialPosition;
 
 };

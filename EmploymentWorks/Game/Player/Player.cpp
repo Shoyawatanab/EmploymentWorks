@@ -16,8 +16,6 @@
 
 #include "Game/Params.h"
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
 
 
 /// <summary>
@@ -206,20 +204,20 @@ void Player::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 
 	switch (tag)
 	{
-		case CollisionEntity::CollisionTag::Beam:
-		case CollisionEntity::CollisionTag::EnemyParts:
+		case CollisionEntity::CollisionTag::BEAM:
+		case CollisionEntity::CollisionTag::ENEYPARTS:
 			m_hp--;
 			//Subject::Notify(EventManager::EventTypeName::PlayerDamage);
 
 
 			//プレイヤのダメージの通知
-			Messenger::GetInstance()->Notify(::GameMessageType::PlayerDamage);
+			Messenger::GetInstance()->Notify(::GameMessageType::PLAYER_DAMAGE);
 			
 
 			if (m_hp <= 0)
 			{
 				//Subject::Notify(EventManager::EventTypeName::GameOver);
-				Messenger::GetInstance()->Notify(::GameMessageType::GameOver);
+				Messenger::GetInstance()->Notify(::GameMessageType::GAME_OVER);
 			}
 			break;
 		default:
@@ -237,7 +235,7 @@ void Player::OnCollisionStay(CollisionEntity* object, CollisionTag tag)
 
 	switch (tag)
 	{
-		case CollisionEntity::CollisionTag::Stage:
+		case CollisionEntity::CollisionTag::STAGE:
 		{
 			Vector3 velocity = BaseEntity::GetVelocity();
 

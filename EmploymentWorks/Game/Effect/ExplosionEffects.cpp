@@ -10,8 +10,6 @@
 #include "Libraries/MyLib/MemoryLeakDetector.h"
 #include <cassert>
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
 
 /// <summary>
 /// コンストラクタ
@@ -47,8 +45,12 @@ ExplosionEffects::~ExplosionEffects()
 /// </summary>
 void ExplosionEffects::Initialize()
 {
+	using namespace DirectX;
+	using namespace DirectX::SimpleMath;
 
+	//デバイスの取得
 	auto device  = m_commonResources->GetDeviceResources()->GetD3DDevice();
+	//コンテキストの取得
 	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
 
 	// ポリゴンを設定する
@@ -97,6 +99,7 @@ void ExplosionEffects::Update(const float& elapsedTime)
 {
 	UNREFERENCED_PARAMETER(elapsedTime);
 
+	//オブジェクトが有効か
 	if (!m_isActive)
 	{
 		return;
@@ -130,13 +133,17 @@ void ExplosionEffects::Update(const float& elapsedTime)
 void ExplosionEffects::Render(const DirectX::SimpleMath::Matrix& view, const  DirectX::SimpleMath::Matrix& proj)
 {
 
+	using namespace DirectX::SimpleMath;
+
+	//オブジェクトが有効か
 	if (!m_isActive)
 	{
 		return;
 	}
 
-
+	//コンテキストの取得
 	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
+	//コモンステートの主特区
 	auto states = m_commonResources->GetCommonStates();
 
 	// ビルボードマトリックスを計算する
@@ -203,6 +210,10 @@ void ExplosionEffects::Render(const DirectX::SimpleMath::Matrix& view, const  Di
 
 }
 
+/// <summary>
+/// エフェクトの生成
+/// </summary>
+/// <param name="datas">データ</param>
 void ExplosionEffects::Create(void* datas)
 {	
 	UNREFERENCED_PARAMETER(datas);

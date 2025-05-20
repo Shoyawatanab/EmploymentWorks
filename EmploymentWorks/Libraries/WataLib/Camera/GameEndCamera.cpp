@@ -13,9 +13,9 @@ const float MAXTIME = 4;
 
 
 
-//-------------------------------------------------------------------
-// コンストラクタ
-//-------------------------------------------------------------------
+/// <summary>
+/// コンストラクタ
+/// </summary>
 WataLib::GameEndCamera::GameEndCamera()
 	:
 	m_view{},
@@ -23,9 +23,9 @@ WataLib::GameEndCamera::GameEndCamera()
 	m_eye{},
 	m_target{ TARGET },
 	m_up{ DirectX::SimpleMath::Vector3::UnitY },
-	m_angle{},
-	m_character{}
+	m_angle{}
 	,m_rotation{}
+	,m_enemyManager{}
 {
 
 }
@@ -35,6 +35,10 @@ void WataLib::GameEndCamera::AddPointer(EnemyManager* enemyManger)
 	m_enemyManager = enemyManger;
 }
 
+/// <summary>
+/// 初期化
+/// </summary>
+/// <param name="resources">経過時間</param>
 void WataLib::GameEndCamera::Initialize(CommonResources* resources)
 {
 	UNREFERENCED_PARAMETER(resources);
@@ -46,16 +50,13 @@ void WataLib::GameEndCamera::Initialize(CommonResources* resources)
 
 }
 
-//-------------------------------------------------------------------
-// 更新する
-//-------------------------------------------------------------------
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="elapsedTime">経過時間</param>
 void WataLib::GameEndCamera::Update(const float& elapsedTime)
 {
 	UNREFERENCED_PARAMETER(elapsedTime);
-
-	using namespace DirectX;
-	using namespace DirectX::SimpleMath;
-
 
 
 	// カメラ座標を計算する
@@ -68,17 +69,17 @@ void WataLib::GameEndCamera::Update(const float& elapsedTime)
 
 
 
-//-------------------------------------------------------------------
-// ビュー行列を計算する
-//-------------------------------------------------------------------
+/// <summary>
+/// ビュー行列の計算
+/// </summary>
 void WataLib::GameEndCamera::CalculateViewMatrix()
 {
 	m_view = DirectX::SimpleMath::Matrix::CreateLookAt(m_eye, m_target, m_up);
 }
 
-//-------------------------------------------------------------------
-// プロジェクション行列を計算する
-//-------------------------------------------------------------------
+/// <summary>
+/// 射影行列の計算
+/// </summary>
 void WataLib::GameEndCamera::CalculateProjectionMatrix()
 {
 	// ウィンドウサイズ
@@ -92,26 +93,25 @@ void WataLib::GameEndCamera::CalculateProjectionMatrix()
 		FOV, aspectRatio, NEAR_PLANE, FAR_PLANE);
 }
 
-//-------------------------------------------------------------------
-// カメラ座標を計算する
-//-------------------------------------------------------------------
+/// <summary>
+/// カメラ座標の計算
+/// </summary>
 void WataLib::GameEndCamera::CalculateEyePosition()
 {
 
 	// 既定の進行方向ベクトル
 	DirectX::SimpleMath::Vector3 forward;
 
-	// カメラがターゲットからどれくらい離れているか
-	forward = DirectX::SimpleMath::Vector3(-6,4,15);
-
 	// ターゲットの向いている方向に対応させる
-	forward = DirectX::SimpleMath::Vector3::Transform(forward, m_rotation);
+	forward = DirectX::SimpleMath::Vector3::Transform(DISTANCE_TO_TARGET, m_rotation);
 	// カメラ座標を計算する
 	m_eye = m_target + forward;
 
 }
 
-
+/// <summary>
+/// 状態に入った時
+/// </summary>
 void WataLib::GameEndCamera::Enter()
 {
 
@@ -121,7 +121,9 @@ void WataLib::GameEndCamera::Enter()
 
 }
 
-
+/// <summary>
+/// 状態を抜けた時
+/// </summary>
 void WataLib::GameEndCamera::Exit()
 {
 

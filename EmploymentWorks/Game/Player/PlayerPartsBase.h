@@ -36,7 +36,7 @@ public:
 	void Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection) override;
 	//ICollisionObject
 	//タグの取得
-	CollisionTag GetCollisionTag() override { return CollisionEntity::CollisionTag::Player; };
+	CollisionTag GetCollisionTag() override { return CollisionEntity::CollisionTag::PLAYER; };
 	//当たった時に呼び出される
 	void OnCollisionEnter(CollisionEntity* object, CollisionTag tag) override;
 	//当たり判定の種類の取得
@@ -46,7 +46,7 @@ public:
 	//当たり判定を行わないタグ
 	const std::vector<CollisionTag> GetNoHitDetectionTag() {
 		return  {
-			CollisionTag::Player
+			CollisionTag::PLAYER
 		};
 	};
 	//押し出しを行わないタグ
@@ -77,18 +77,17 @@ private:
 
 	//親子関係を行うかどうか
 	bool m_isParentActive;
-
-
+	//モデル
 	DirectX::Model* m_model;
 	//親クラス
 	CharacterEntity* m_parent;
 	//パーツ名
 	std::string m_partsName;
-
+	//初期座標
 	DirectX::SimpleMath::Vector3 m_initialPosition;
-
+	//初期の大きさ
 	DirectX::SimpleMath::Vector3 m_initialScale;
-
+	//初期回転
 	DirectX::SimpleMath::Quaternion m_initialRotation;
 
 };

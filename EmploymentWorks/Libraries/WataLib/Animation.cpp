@@ -11,9 +11,10 @@
 #include "Libraries/MyLib/InputManager.h"
 #include <cassert>
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
 
+/// <summary>
+/// コンストラクタ
+/// </summary>
 WataLib::Animation::Animation()
 	:
 	m_animationData{}
@@ -25,6 +26,9 @@ WataLib::Animation::Animation()
 {
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 WataLib::Animation::~Animation()
 {
 
@@ -32,22 +36,29 @@ WataLib::Animation::~Animation()
 
 }
 
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="elapsedTime">経過時間</param>
+/// <returns>ture:  アニメーション終了 false:　アニメーション中</returns>
 bool WataLib::Animation::Update(const float& elapsedTime)
 {
-
+	//座標更新
 	PositionUpdate(elapsedTime);
+	//回転更新
 	RotationUpdate(elapsedTime);
 
-	//
-
+	//アニメーションが終わったら
 	if (m_time > m_currentAnimationData.TotalTime)
 	{
+		//ループなら
 		if (m_currentAnimationData.IsLoop)
 		{
 			//ループ
 			m_time = 0;
 
 		}
+		//ループじゃないなら
 		else
 		{
 			//再生アニメーションを通常アニメーションに変化
@@ -64,20 +75,23 @@ bool WataLib::Animation::Update(const float& elapsedTime)
 	return false;
 }
 
+/// <summary>
+/// 座標の更新
+/// </summary>
+/// <param name="elapsedTime">経過時間</param>
 void WataLib::Animation::PositionUpdate(const float& elapsedTime)
 {
 	UNREFERENCED_PARAMETER(elapsedTime);
-
+	using namespace DirectX::SimpleMath;
+	//初めの時間
 	float startTime = m_fromToPosition.first.keyFrame.Time;
-
+	//獣領事館
 	float endTime = m_fromToPosition.second.keyFrame.Time;
-
-
-
+	//割合
 	float raito  = ( m_time - startTime ) / (endTime - startTime ) ;
-
+	
 	raito = std::min(raito, 1.0f);
-
+	//座標を決める
 	m_position = Vector3::SmoothStep(m_fromToPosition.first.keyFrame.Data, m_fromToPosition.second.keyFrame.Data, raito);
 
 	//アニメーションの切り替え
@@ -86,26 +100,28 @@ void WataLib::Animation::PositionUpdate(const float& elapsedTime)
 		ChangePositionKeyFrame();
 		
 	}
-
-
-
+	
 }
 
+/// <summary>
+/// 回転の更新
+/// </summary>
+/// <param name="elapsedTime">経過時間</param>
 void WataLib::Animation::RotationUpdate(const float& elapsedTime)
 {
 	UNREFERENCED_PARAMETER(elapsedTime);
+	using namespace DirectX::SimpleMath;
 
-
+	//初めの時間
 	float startTime = m_fromToRotation.first.keyFrame.Time;
-
+	//終わりの時間
 	float endTime = m_fromToRotation.second.keyFrame.Time;
-
+	//初めのデータ
 	Vector3 startData = m_fromToRotation.first.keyFrame.Data;
-
+	//終わりのデータ
 	Vector3 endData = m_fromToRotation.second.keyFrame.Data;
 
-
-
+	//割合
 	float raito = 0;
 	//０同時では計算をしないため
 	if (endTime != startTime)
@@ -117,18 +133,19 @@ void WataLib::Animation::RotationUpdate(const float& elapsedTime)
 
 	raito = std::min(raito, 1.0f);
 	
+	//データから回転を作成
 	Quaternion startRotation = Quaternion::CreateFromYawPitchRoll(
 		DirectX::XMConvertToRadians(startData.y),
 		DirectX::XMConvertToRadians(startData.x),
 		DirectX::XMConvertToRadians(startData.z)
 	);
-
 	Quaternion endRotation = Quaternion::CreateFromYawPitchRoll(
 		DirectX::XMConvertToRadians(endData.y),
 		DirectX::XMConvertToRadians(endData.x),
 		DirectX::XMConvertToRadians(endData.z)
 	);
 
+	//回転
 	m_rotation = Quaternion::Slerp(startRotation, endRotation, raito);
 
 	//アニメーションの切り替え
@@ -142,7 +159,12 @@ void WataLib::Animation::RotationUpdate(const float& elapsedTime)
 }
 
 
-
+/// <summary>
+/// アニメーション
+/// </summary>
+/// <param name="animationType"></param>
+/// <param name="data"></param>
+/// <param name="isNormalAnimation"></param>
 void WataLib::Animation::SetAnimationData(const std::string& animationType, const WataLib::Json::AnimationData& data, bool isNormalAnimation)
 {
 	
@@ -329,7 +351,10 @@ void WataLib::Animation::SetAnimationData(const std::string& animationType, cons
 }
 
 
-
+/// <summary>
+/// アニメーションの切り替え
+/// </summary>
+/// <param name="animationType">経過時間</param>
 void WataLib::Animation::ChangeAnimation(const std::string& animationType)
 {
 
@@ -345,6 +370,10 @@ void WataLib::Animation::ChangeAnimation(const std::string& animationType)
 
 }
 
+/// <summary>
+/// アニメーションの初期化
+/// </summary>
+/// <param name="animationType"></param>
 void WataLib::Animation::InitializAnimationData(const std::string& animationType)
 {
 	//再生アニメーション情報の変更
@@ -363,6 +392,9 @@ void WataLib::Animation::InitializAnimationData(const std::string& animationType
 	m_time = 0;
 }
 
+/// <summary>
+/// 座標のキーフレームの切り替え
+/// </summary>
 void WataLib::Animation::ChangePositionKeyFrame()
 {
 
@@ -379,6 +411,9 @@ void WataLib::Animation::ChangePositionKeyFrame()
 	m_fromToPosition.second.keyFrame = m_currentAnimationData.Position[index];
 }
 
+/// <summary>
+/// 回転のキーフレームの切り替え
+/// </summary>
 void WataLib::Animation::ChangeRotationKeyFrame()
 {
 	m_fromToRotation.first = m_fromToRotation.second;

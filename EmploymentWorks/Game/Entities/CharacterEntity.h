@@ -17,21 +17,20 @@ class CharacterEntity : public MoveEntity
 {
 public:
 
-
+	//実行中のアニメーションの種類
 	const std::string& GetCurrentAnimationType() { return m_currentAnimationType; }
-
+	//実行するアニメーションの登録
 	void SetCurrentAnimationType(const std::string& type) { m_currentAnimationType = type; }
-
+	//アニメーションの取得
 	WataLib::Animation* GetAnimation() { return m_animation.get(); }
 
 public:
-
-
+	//コンストラク
 	CharacterEntity(CommonResources* resources
 		,const DirectX::SimpleMath::Vector3& scale
 		, const DirectX::SimpleMath::Vector3& position
 		, const DirectX::SimpleMath::Quaternion& rotation);
-
+	//デストラクタ
 	~CharacterEntity() override;
 
 //BaseEntity
@@ -39,13 +38,11 @@ public:
 	void Initialize();
 	//更新処理
 	void  Update(const float& elapsedTime)  override;
-	//描画
+	//描画処理
 	void Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection);
 //CollisionEntity
 	//当たった時に呼び出される
 	void OnCollisionEnter(CollisionEntity* object, CollisionTag tag) override;
-
-
 
 
 	//アニメーションの登録
@@ -56,14 +53,11 @@ public:
 	//アニメーションの変更
 	virtual	void ChangeAnimation(std::string animationType);
 
-
-
-
 private:
 
 	//実行アニメーション名
 	std::string m_currentAnimationType;
-
+	//アニメーション
 	std::unique_ptr<WataLib::Animation> m_animation;
 
 

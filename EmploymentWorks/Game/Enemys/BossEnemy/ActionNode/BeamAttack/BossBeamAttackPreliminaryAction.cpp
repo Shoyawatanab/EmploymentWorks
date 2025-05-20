@@ -18,16 +18,15 @@
 #include "Game/Enemys/BossEnemy/Beam/Beam.h"
 #include "Game/Enemys/BossEnemy/ActionNode/BeamAttack/BossBeamAttackAction.h"
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
-
-
 
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
 /// <param name="resources">共通リソース</param>
+/// <param name="bossEnemy">所有者</param>
+/// <param name="beam">ビーム</param>
+/// <param name="beamAttack">ビーム攻撃</param>
 BossBeamAttackPreliminaryAction::BossBeamAttackPreliminaryAction(CommonResources* resources
 	, CharacterEntity* bossEnemy
 	, Beam* beam
@@ -49,28 +48,37 @@ BossBeamAttackPreliminaryAction::~BossBeamAttackPreliminaryAction()
 	// do nothing.
 }
 
+/// <summary>
+/// 初期化
+/// </summary>
 void BossBeamAttackPreliminaryAction::Initialize()
 {
 }
 
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="elapsedTime">経過時間</param>
+/// <returns>継続か終了か</returns>
 BossBeamAttackPreliminaryAction::ActionState BossBeamAttackPreliminaryAction::Update(const float& elapsedTime)
 {
 
 	if (m_time >= Params::BOSSENEMY_BEAM_BALL_PRELIMINARY_ACTION_TIME)
 	{
-		//m_beamAttack->ChangeState(m_beamAttack->GetBossBeamAttackCharge());
-
+		return ActionState::END;
 	}
 
 
 
 	m_time += elapsedTime;
 
-	return ActionState::Running;
+	return ActionState::RUNNING;
 
 }
 
-
+/// <summary>
+/// 状態に入った時
+/// </summary>
 void BossBeamAttackPreliminaryAction::Enter()
 {
 
@@ -80,6 +88,9 @@ void BossBeamAttackPreliminaryAction::Enter()
 
 }
 
+/// <summary>
+/// 状態を抜けた時
+/// </summary>
 void BossBeamAttackPreliminaryAction::Exit()
 {
 

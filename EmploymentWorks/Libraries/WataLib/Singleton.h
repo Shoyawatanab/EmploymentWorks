@@ -32,7 +32,7 @@ public:
 
 private:
 
-	//
+	//インスタンス
 	static std::unique_ptr<T> instance;
 
 };

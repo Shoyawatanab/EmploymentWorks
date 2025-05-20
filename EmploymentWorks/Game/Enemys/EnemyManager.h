@@ -18,6 +18,16 @@ class StageObjectManager;
 class EnemyManager 
 {
 public:
+	//ボステキの取得
+	BossEnemy* GetBossEnemy() { return m_bossEnemy; }
+
+	//ボスのHP割合の取得
+	float GetBossHPRation();
+	//すべての敵情報の取得
+	std::vector<std::unique_ptr<EnemyEntity>>& GetEnemys() { return m_enemys; }
+
+
+public:
 	//コンストラクタ
 	EnemyManager(Player* player, StageObjectManager* stageObjectmanger);
 	//デストラクタ
@@ -30,17 +40,12 @@ public:
 	void Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection) ;
 	//
 	void Finalize() ;
-
-
-	void CreateEnemy();
-
+	//敵情報の追加
 	void AddEnemyData(WataLib::Json::StageData enemyData);
-
 
 	//当たり判定クラスに登録
 	void  AddCollision(CollisionManager* collsionManager);
 
-	std::vector<std::unique_ptr<EnemyEntity>>& GetEnemys() { return m_enemys; }
 
 	//最後の敵の取得
 	EnemyEntity* GetLastEnemy() { return m_remainingEnemys[0]; }
@@ -50,8 +55,8 @@ public:
 	{
 
 		if (m_remainingEnemys.size() <= 1) {
-			Messenger::GetInstance()->Notify(GameMessageType::GameClear, nullptr);
-			Messenger::GetInstance()->Notify(GameMessageType::DefeatedAllEnemies, nullptr);
+			Messenger::GetInstance()->Notify(GameMessageType::GAME_CLEAR, nullptr);
+			Messenger::GetInstance()->Notify(GameMessageType::DEFEATED_All_ENEMIES, nullptr);
 			return;
 		}
 
@@ -63,24 +68,29 @@ public:
 	}
 
 
-	//ボスのHP割合の取得
-	float GetBossHPRation();
 
-	BossEnemy* GetBossEnemy() { return m_bossEnemy; }
 
-	std::vector<WataLib::Json::StageData> m_enemyDatas;
+
+
+private:
+
+	void CreateEnemy();
 
 private:
 	// 共通リソース
 	CommonResources* m_commonResources;
 	//敵配列
 	std::vector<std::unique_ptr<EnemyEntity>> m_enemys;
-
+	//残りの敵
 	std::vector<EnemyEntity*> m_remainingEnemys;
-
+	//プレイヤ
 	Player* m_player;
+	//ステージオブジェクトマネージャー
 	StageObjectManager* m_stageObjectmanger;
-
+	//ボス敵
 	BossEnemy* m_bossEnemy;
+	//敵情報
+	std::vector<WataLib::Json::StageData> m_enemyDatas;
+
 
 };

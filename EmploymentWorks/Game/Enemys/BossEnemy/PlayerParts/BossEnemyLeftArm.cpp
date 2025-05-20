@@ -13,15 +13,12 @@
 #include"Game/Enemys/BossEnemy/PlayerParts/BossEnemyRightThigh.h"
 #include "Game/Observer/Messenger.h"
 
-#include "Game/Interface/ICollisionObject.h"
 #include "Game/Observer/Messenger.h"
 #include "Game/Weapon/Boomerang/Boomerang.h"
 #include "Game/Enemys/BossEnemy/BossEnemy.h"
 #include "Game/Params.h"
 #include "Game/Enemys/BossEnemy/BossEnemy.h"
 
-
-using namespace DirectX::SimpleMath;
 
 /// <summary>
 /// コンストラクタ
@@ -65,7 +62,11 @@ void BossEnemyLeftArm::Initialize()
 
 
 
-
+/// <summary>
+/// 当たった時に呼ばれる関数
+/// </summary>
+/// <param name="object">当たったオブジェクト</param>
+/// <param name="tag">相手のタグ</param>
 void BossEnemyLeftArm::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 {
 
@@ -73,38 +74,40 @@ void BossEnemyLeftArm::OnCollisionEnter(CollisionEntity* object, CollisionTag ta
 
 	switch (tag)
 	{
-		case CollisionEntity::CollisionTag::Stage:
+		case CollisionEntity::CollisionTag::STAGE:
 		{
+			//パーツのHPがあれば
 			if(BossEnemyPartsBase::GetPartsHP() > 0)
 			{
+				//パーティクルの生成のメッセージを送る
 				Vector3	pos = BaseEntity::GetPosition();
-
-
 				pos.y = 0;
-
-
-
-				Messenger::GetInstance()->Notify(GameMessageType::CreateParticle, &pos);
+				Messenger::GetInstance()->Notify(GameMessageType::CREATE_PARTICLE, &pos);
 
 			}
 			else 
 			{
+				//HPがない場合
+
+				//部位破壊で爆発エフェクトの生成をメッセージに送る
 				Vector3 scale = BaseEntity::GetScale() * 3;
 				Vector3 position = BaseEntity::GetPosition();
 				UnknownDataTwo aa = { static_cast<void*>(&position) ,static_cast<void*>(&scale) };
 
-				Messenger::GetInstance()->Notify(GameMessageType::CreateExplosion, &aa);
+				Messenger::GetInstance()->Notify(GameMessageType::CREATE_EXPLOSION, &aa);
 
+				//カメラを揺らすメッセージを送る
 				float power = 0.1f;
-
-				Messenger::GetInstance()->Notify(GameMessageType::CameraShake, &power);
+				Messenger::GetInstance()->Notify(GameMessageType::CAMERA_SHAKE, &power);
 
 			}
 		}
 			break;
-		case CollisionTag::Boomerang:
+		case CollisionTag::BOOMERANG:
+			//パーツHPが０以下なら
 			if (BossEnemyPartsBase::GetPartsHP() <= 0)
 			{
+				//部位破壊として親子関係をなくす
 				BaseEntity::SetParent(nullptr);
 				BaseEntity::SetIsGravity(true);
 			}
@@ -116,7 +119,6 @@ void BossEnemyLeftArm::OnCollisionEnter(CollisionEntity* object, CollisionTag ta
 	}
 
 
-	BossEnemyPartsBase::OnCollisionEnter(object, tag);
 
 }
 

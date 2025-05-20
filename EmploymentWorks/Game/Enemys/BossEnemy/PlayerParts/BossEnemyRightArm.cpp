@@ -18,7 +18,6 @@
 #include "Game/Enemys/BossEnemy/BossEnemy.h"
 
 
-using namespace DirectX::SimpleMath;
 
 /// <summary>
 /// コンストラクタ
@@ -70,15 +69,13 @@ void BossEnemyRightArm::OnCollisionEnter(CollisionEntity* object, CollisionTag t
 
 	switch (tag)
 	{
-		case CollisionEntity::CollisionTag::Stage:
+		case CollisionEntity::CollisionTag::STAGE:
 		{
 
-
+			//パーティクルの生成のメッセージを送る
 			Vector3 pos = BaseEntity::GetPosition();
-
 			pos.y = 0;
-
-			Messenger::GetInstance()->Notify(GameMessageType::CreateParticle, &pos);
+			Messenger::GetInstance()->Notify(GameMessageType::CREATE_PARTICLE, &pos);
 		}
 		break;
 		default:

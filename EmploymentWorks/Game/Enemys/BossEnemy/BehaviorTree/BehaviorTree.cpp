@@ -50,37 +50,69 @@ void BehaviorTree::Initialize(CommonResources* resources)
 	m_conditions = std::make_unique<Conditions>(m_commonResources, m_player, m_enemy);
 
 
-	//selector->AddNode(std::make_unique<ActionNode>(std::bind(&ExecutionNode::ApproachingThePlayer, m_executionNode.get(), std::placeholders::_1)));
+//////HP半分以下
 
-	//auto rootSequence = std::make_unique<SequenceNode>();
-	////プレイヤの方向に向く
-	//rootSequence->AddNode(std::make_unique<ActionNode>(std::bind(&ExecutionNode::FacingThePlayer, m_executionNode.get(), std::placeholders::_1)));
-	////Selectorの追加
-	//rootSequence->AddNode(std::move(selector));
+	//ジャンプ攻撃のデコレーター
+	auto jumpAttackDecorator = CreateJumpAttackDecorator();
+	jumpAttackDecorator->AddNode(CreateJumpAttackActionNode());
 
-	////ルートの作成
-	//m_root = std::make_unique<Root>();
-	////RootSequenceノードの追加
-	//m_root->AddNode(std::move(rootSequence));
+	//振り下ろし攻撃のデコレーター
+	auto closeRangeAttackDecorator = CreateCloseRangeAttackDecorator();
+	//振り下ろし攻撃の追加
+	closeRangeAttackDecorator->AddNode(CreateSwingDownActionNode());
+
+
+
+	//HPが半分以下のSelector
+	auto lessThanHalfHP = std::make_unique<SelectorNode>();
+	//近距離攻撃の追加
+	lessThanHalfHP->AddNode(std::move(closeRangeAttackDecorator));
+	//ジャンプ攻撃の追加
+	lessThanHalfHP->AddNode(std::move(jumpAttackDecorator));
+	//歩きの追加
+	lessThanHalfHP->AddNode(CreateWalkingActionNode());
+
+
 
 ///////HP半分以上
 
+	//遠距離攻撃のデコレーター
+	auto longRangeAttackDecorator = CreateLongRangeAttackDecorator();
+	//ビーム攻撃の追加
+	longRangeAttackDecorator->AddNode(CreateBeamAttackActionNode());
+
+
+	//振り下ろし攻撃のデコレーター
+	closeRangeAttackDecorator = CreateCloseRangeAttackDecorator();
+	//振り下ろし攻撃の追加
+	closeRangeAttackDecorator->AddNode(CreateSwingDownActionNode());
+
+
+	//HP半分以上のSelector
+	auto moreThanHalfHP = std::make_unique<SelectorNode>();
+	//近距離攻撃の追加
+	moreThanHalfHP->AddNode(std::move(closeRangeAttackDecorator));
+	//遠距離攻撃の追加
+	moreThanHalfHP->AddNode(std::move(longRangeAttackDecorator));
+	//歩きの追加
+	moreThanHalfHP->AddNode(CreateWalkingActionNode());
+
+///////
+
+	auto rootSelector = std::make_unique<SelectorNode>();
+	//HPが半分以上のとき
+	rootSelector->AddNode(std::move(moreThanHalfHP));
+	//HPが半分以下
+	rootSelector->AddNode(std::move(lessThanHalfHP));
 
 	//ルートの作成
 	m_root = std::make_unique<Root>();
 	//RootSequenceノードの追加
-	m_root->AddNode(std::make_unique<ActionNode>(std::bind(&ExecutionNode::BossEnemySwingDown, m_executionNode.get())));
+	m_root->AddNode(std::move(rootSelector));
 	
+
 	//状態の初期化
-	m_currentState = IBehaviorNode::State::Failure;
-
-
-
-	//敵の武器 　　　石を投げたり
-	//切れる演出
-	//エフェクト
-
-
+	m_currentState = IBehaviorNode::State::FAILURE;
 
 
 }
@@ -95,12 +127,12 @@ void BehaviorTree::Update(float elapsedTime)
 	//実行中とそれ以外で更新処理を変える
 	switch (m_currentState)
 	{
-		case IBehaviorNode::State::Success:
-		case IBehaviorNode::State::Failure:
+		case IBehaviorNode::State::SUCCESS:
+		case IBehaviorNode::State::FAILURE:
 			//評価と代入
 			m_currentState = m_root->Update(elapsedTime);
 			break;
-		case IBehaviorNode::State::Runngin:
+		case IBehaviorNode::State::RUNNING:
 			//実行中の更新と代入
 			m_currentState = m_root->RunningUpdate(elapsedTime);
 			break;
@@ -125,6 +157,70 @@ void BehaviorTree::AddPointer(Player* player, BossEnemy* enemy)
 	m_player = player;
 	m_enemy = enemy;
 
+}
+
+
+/// <summary>
+/// 振り下ろし攻撃のアクションノードの作成
+/// </summary>
+/// <returns>クラスを返す</returns>
+std::unique_ptr<ActionNode> BehaviorTree::CreateSwingDownActionNode()
+{
+	return std::make_unique<ActionNode>(std::bind(&ExecutionNode::BossEnemySwingDown,m_executionNode.get()));
+}
+
+/// <summary>
+/// ビーム攻撃のアクションノードの作成
+/// </summary>
+/// <returns></returns>
+std::unique_ptr<ActionNode> BehaviorTree::CreateBeamAttackActionNode()
+{
+	return std::make_unique<ActionNode>(std::bind(&ExecutionNode::BossEnemyBeamAction, m_executionNode.get()));
+}
+
+/// <summary>
+/// 歩くアクションノードの作成
+/// </summary>
+/// <returns></returns>
+std::unique_ptr<ActionNode> BehaviorTree::CreateWalkingActionNode()
+{
+	return std::make_unique<ActionNode>(std::bind(&ExecutionNode::BossEnemyWalking, m_executionNode.get()));
+}
+
+/// <summary>
+/// ジャンプ攻撃のアクションノードの作成
+/// </summary>
+/// <returns></returns>
+std::unique_ptr<ActionNode> BehaviorTree::CreateJumpAttackActionNode()
+{
+	return std::make_unique<ActionNode>(std::bind(&ExecutionNode::BossEnemyJumpAttackAction, m_executionNode.get()));
+}
+
+/// <summary>
+/// 近距離攻撃範囲内かどうかのDecoratorの作成
+/// </summary>
+/// <returns>クラスを返す</returns>
+std::unique_ptr<DecoratorNode> BehaviorTree::CreateCloseRangeAttackDecorator()
+{
+	return std::make_unique<DecoratorNode>(std::bind(&Conditions::IsInCloseRangeAttack, m_conditions.get()));
+}
+
+/// <summary>
+/// 遠距離攻撃範囲内かどうかかのDecoratorの作成
+/// </summary>
+/// <returns></returns>
+std::unique_ptr<DecoratorNode> BehaviorTree::CreateLongRangeAttackDecorator()
+{
+	return std::make_unique<DecoratorNode>(std::bind(&Conditions::IsInLongRangeAttack, m_conditions.get()));
+}
+
+/// <summary>
+/// ジャンプ攻撃攻撃範囲内かどうかのDecoratorの作成
+/// </summary>
+/// <returns></returns>
+std::unique_ptr<DecoratorNode> BehaviorTree::CreateJumpAttackDecorator()
+{
+	return std::make_unique<DecoratorNode>(std::bind(&Conditions::IsJumpAttackRange, m_conditions.get()));
 }
 
 

@@ -56,14 +56,15 @@ void SwingDownAttackSwingPhase::Initialize()
 SwingDownAttackSwingPhase::ActionState SwingDownAttackSwingPhase::Update(const float& elapsedTime)
 {
 
-	if (m_time >= 3.0f)
+	if (m_time >= SWING_TIME)
 	{
-		return ActionState::End;
+		return ActionState::END;
 	}
 
 	m_time += elapsedTime;
 
-	return ActionState::Running;
+	return ActionState::RUNNING
+		;
 
 }
 

@@ -9,8 +9,7 @@
 #include "Game/Player/State/PlayerStateMachine.h"
 #include "Game/Observer/Messenger.h"
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
+
 
 /// <summary>
 /// コンストラクタ
@@ -50,10 +49,10 @@ void PlayerAttack::Initialize(CommonResources* resources)
 {
 	m_commonResources = resources;
 
-	Messenger::GetInstance()->Rigister(GameMessageType::MouseWheelUp, this);
-	Messenger::GetInstance()->Rigister(GameMessageType::MouseWheelDown, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::MOUSE_WHEEL_UP, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::MOUSE_WHEEL_DOWN, this);
 
-	m_throwState = ThrowState::Right;
+	m_throwState = ThrowState::RIGHT;
 
 
 }
@@ -66,6 +65,8 @@ void PlayerAttack::Initialize(CommonResources* resources)
 void PlayerAttack::Update(const float& elapsedTime)
 {
 	UNREFERENCED_PARAMETER(elapsedTime);
+
+	using namespace DirectX;
 
 	const auto& tracker = m_commonResources->GetInputManager()->GetMouseTracker();
 
@@ -81,7 +82,7 @@ void PlayerAttack::Update(const float& elapsedTime)
 		Boomerang* boomerang = m_player->GetBoomerang<BoomerangGetReady>();
 
 		boomerang->GetBoomerangStatemachine()->ChangeState(boomerang->GetBoomerangStatemachine()->GetBoomerangIdel());
-		Messenger::GetInstance()->Notify(::GameMessageType::BoomerangGetReadyEnd, nullptr);
+		Messenger::GetInstance()->Notify(::GameMessageType::BOOMERANG_GET_READY_END, nullptr);
 	}
 	//投げる
 	else if (tracker->leftButton == Mouse::ButtonStateTracker::ButtonState::PRESSED)
@@ -97,21 +98,21 @@ void PlayerAttack::Update(const float& elapsedTime)
 
 		switch (m_throwState)
 		{
-			case PlayerAttack::ThrowState::Right:
+			case PlayerAttack::ThrowState::RIGHT:
 				boomerang->GetBoomerangStatemachine()->ChangeState(boomerang->GetBoomerangStatemachine()->GetBoomerangRightThrow());
 				break;
-			case PlayerAttack::ThrowState::Left:
+			case PlayerAttack::ThrowState::LEFT:
 				boomerang->GetBoomerangStatemachine()->ChangeState(boomerang->GetBoomerangStatemachine()->GetBoomerangLeftThrow());
 				break;
-			case PlayerAttack::ThrowState::Front:
+			case PlayerAttack::ThrowState::FRONT:
 				boomerang->GetBoomerangStatemachine()->ChangeState(boomerang->GetBoomerangStatemachine()->GetBoomerangFrontThrow());
 				break;
 			default:
 				break;
 		}
 
-		Messenger::GetInstance()->Notify(::GameMessageType::BoomerangGetReadyEnd, nullptr);
-		Messenger::GetInstance()->Notify(::GameMessageType::BoomerangThrow, nullptr);
+		Messenger::GetInstance()->Notify(::GameMessageType::BOOMERANG_GET_READY_END, nullptr);
+		Messenger::GetInstance()->Notify(::GameMessageType::BOOMERANG_THTROW, nullptr);
 
 
 	}
@@ -119,6 +120,11 @@ void PlayerAttack::Update(const float& elapsedTime)
 
 }
 
+/// <summary>
+/// 描画
+/// </summary>
+/// <param name="view">ビュー行列</param>
+/// <param name="projection">射影行列</param>
 void PlayerAttack::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
 {
 	UNREFERENCED_PARAMETER(view);
@@ -140,7 +146,7 @@ void PlayerAttack::Enter()
 	{
 		boomerang->GetBoomerangStatemachine()->ChangeState(boomerang->GetBoomerangStatemachine()->GetBoomerangGetReady());
 
-		Messenger::GetInstance()->Notify(::GameMessageType::BoomerangGetReady, nullptr);
+		Messenger::GetInstance()->Notify(::GameMessageType::BOOMERANG_GET_READY, nullptr);
 		//プレイヤのアニメーションの変更
 		m_player->ChangeAnimation("GetReady");
 
@@ -165,48 +171,48 @@ void PlayerAttack::Exit()
 
 }
 
+/// <summary>
+/// 通知を受け取る関数
+/// </summary>
+/// <param name="telegram">データ</param>
 void PlayerAttack::Notify(const Telegram<GameMessageType>& telegram)
 {
 	
 
 	switch (telegram.messageType)
 	{
-		case ::GameMessageType::MouseWheelUp:
+		case ::GameMessageType::MOUSE_WHEEL_UP:
 		{
 			switch (m_throwState)
 			{
-				case PlayerAttack::ThrowState::Right:
+				case PlayerAttack::ThrowState::FRONT:
+					m_throwState = ThrowState::RIGHT;
 					break;
-				case PlayerAttack::ThrowState::Front:
-					m_throwState = ThrowState::Right;
-					break;
-				case PlayerAttack::ThrowState::Left:
-					m_throwState = ThrowState::Front;
+				case PlayerAttack::ThrowState::LEFT:
+					m_throwState = ThrowState::FRONT;
 					break;
 				default:
 					break;
 			}
 
-			Messenger::GetInstance()->Notify(::GameMessageType::ChangeBoomerangThrowState, &m_throwState);
+			Messenger::GetInstance()->Notify(::GameMessageType::CHARGE_BOOMERANG_THROW_STATE, &m_throwState);
 		}
 			break;
-		case ::GameMessageType::MouseWheelDown:
+		case ::GameMessageType::MOUSE_WHEEL_DOWN:
 		{
 			switch (m_throwState)
 			{
-				case PlayerAttack::ThrowState::Right:
-					m_throwState = ThrowState::Front;
+				case PlayerAttack::ThrowState::RIGHT:
+					m_throwState = ThrowState::FRONT;
 					break;
-				case PlayerAttack::ThrowState::Front:
-					m_throwState = ThrowState::Left;
-					break;
-				case PlayerAttack::ThrowState::Left:
+				case PlayerAttack::ThrowState::FRONT:
+					m_throwState = ThrowState::LEFT;
 					break;
 				default:
 					break;
 			}
 
-			Messenger::GetInstance()->Notify(::GameMessageType::ChangeBoomerangThrowState, &m_throwState);
+			Messenger::GetInstance()->Notify(::GameMessageType::CHARGE_BOOMERANG_THROW_STATE, &m_throwState);
 		}
 			break;
 		default:

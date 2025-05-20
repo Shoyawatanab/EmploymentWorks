@@ -48,57 +48,71 @@ void ExecutionNode::Initialize(CommonResources* resources)
 
 }
 
-IBehaviorNode::State ExecutionNode::Action()
-{
-	
-	return IBehaviorNode::State::Success;
 
-}
-
+/// <summary>
+/// ƒr[ƒ€UŒ‚
+/// </summary>
+/// <returns></returns>
 IBehaviorNode::State ExecutionNode::BossEnemyBeamAction()
 {
 
-	EnemyMessenger::GetInstance()->Notify(m_enemy->GetID(), EnemyMessageType::BeamAttack, nullptr);
+	EnemyMessenger::GetInstance()->Notify(m_enemy->GetID(), EnemyMessageType::BEAM_ATTACK, nullptr);
 
 
-	return IBehaviorNode::State::Success;
+	return IBehaviorNode::State::SUCCESS;
 
 }
 
+/// <summary>
+/// ƒoƒŠƒA–hŒä
+/// </summary>
+/// <returns></returns>
 IBehaviorNode::State ExecutionNode::BossEnemyBarrierDefenseAction()
 {
 
-	EnemyMessenger::GetInstance()->Notify(m_enemy->GetID(), EnemyMessageType::BarrierDefense, nullptr);
+	EnemyMessenger::GetInstance()->Notify(m_enemy->GetID(), EnemyMessageType::BARRIER_DEFENSE, nullptr);
 
-	return IBehaviorNode::State::Success;
+	return IBehaviorNode::State::SUCCESS;
 
 }
 
+/// <summary>
+/// ƒWƒƒƒ“ƒvUŒ‚
+/// </summary>
+/// <returns></returns>
 IBehaviorNode::State ExecutionNode::BossEnemyJumpAttackAction()
 {
 
-	EnemyMessenger::GetInstance()->Notify(m_enemy->GetID(), EnemyMessageType::JumpAttack, nullptr);
+	EnemyMessenger::GetInstance()->Notify(m_enemy->GetID(), EnemyMessageType::JUMP_ATTACK, nullptr);
 
 
-	return IBehaviorNode::State::Success;
+	return IBehaviorNode::State::SUCCESS;
 
 }
 
+/// <summary>
+/// •à‚«
+/// </summary>
+/// <returns></returns>
 IBehaviorNode::State ExecutionNode::BossEnemyWalking()
 {
-	EnemyMessenger::GetInstance()->Notify(m_enemy->GetID(), EnemyMessageType::Walking, nullptr);
+	EnemyMessenger::GetInstance()->Notify(m_enemy->GetID(), EnemyMessageType::WALKING, nullptr);
 
-	return IBehaviorNode::State::Success;
+	return IBehaviorNode::State::SUCCESS;
 
 }
 
+/// <summary>
+/// U‚è‰º‚ë‚µUŒ‚
+/// </summary>
+/// <returns></returns>
 IBehaviorNode::State ExecutionNode::BossEnemySwingDown()
 {
 
-	EnemyMessenger::GetInstance()->Notify(m_enemy->GetID(), EnemyMessageType::SwingDown, nullptr);
+	EnemyMessenger::GetInstance()->Notify(m_enemy->GetID(), EnemyMessageType::SWING_DOWN, nullptr);
 
 
-	return IBehaviorNode::State::Success;
+	return IBehaviorNode::State::SUCCESS;
 }
 
 

@@ -6,12 +6,6 @@
 #include "Game/Effect/HitEffect/CircleParticle.h"
 #include "Game/Observer/EventParams.h"
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
-
-
-
-
 
 /// <summary>
 /// コンストラクタ
@@ -40,12 +34,12 @@ HitEffect::~HitEffect()
 void HitEffect::Initialize()
 {
 
-
-	m_time = 0;
 	//外の円
 	m_circleHitEffect = std::make_unique<CircleParticle>(m_commonResources);
-
+	
+	//初期化
 	m_circleHitEffect->Initialize();
+	m_time = 0;
 
 }
 
@@ -55,11 +49,13 @@ void HitEffect::Initialize()
 /// <param name="elapsedTime">経過時間</param>
 void HitEffect::Update(const float& elapsedTime)
 {
+	//オブジェクトが有効か
 	if (!m_isActive)
 	{
 		return;
 	}
 
+	//円の更新と終わったかどうか
 	if (m_circleHitEffect->Update(elapsedTime))
 	{
 		m_isActive = false;
@@ -74,12 +70,13 @@ void HitEffect::Update(const float& elapsedTime)
 /// <param name="proj">射影行列</param>
 void HitEffect::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& proj)
 {
-
+	//オブジェクトが有効かどうか
 	if (!m_isActive)
 	{
 		return;
 	}
 
+	//描画
 	m_circleHitEffect->Render(view, proj);
 
 }

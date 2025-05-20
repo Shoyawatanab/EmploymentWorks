@@ -11,17 +11,19 @@ class CompositeEntity : public CharacterEntity
 {
 public:
 
+	//パーツの取得
+	std::vector<std::unique_ptr<CharacterEntity>>& GetParts() { return m_parts; }
 
+public:
+	//コンストラク
 	CompositeEntity(CommonResources* resources
 		, const DirectX::SimpleMath::Vector3& scale
 		, const DirectX::SimpleMath::Vector3& position
 		, const DirectX::SimpleMath::Quaternion& rotation);
-
+	//デストラクタ
 	~CompositeEntity() override;
-
+	//子の追加
 	void AddChild(std::unique_ptr<CharacterEntity> parts);
-
-	std::vector<std::unique_ptr<CharacterEntity>>& GetParts() { return m_parts; }
 
 
 //BaseEntity

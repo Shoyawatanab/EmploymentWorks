@@ -68,7 +68,7 @@ void StageSelectScene::Initialize(CommonResources* resources)
 
 	m_textures.push_back(std::move(texture));
 
-	m_sceneManager->SetStageID(SceneManager::Stage1);
+	m_sceneManager->SetStageID(SceneManager::STAGE1);
 
 	// シーン変更フラグを初期化する
 	m_isChangeScene = false;
@@ -131,10 +131,10 @@ void StageSelectScene::Update(float elapsedTime)
 			switch (m_selectButtomId)
 			{
 				case 0:
-					m_sceneManager->SetStageID(SceneManager::Stage1);
+					m_sceneManager->SetStageID(SceneManager::STAGE1);
 					break;
 				case 1:
-					m_sceneManager->SetStageID(SceneManager::Stage2);
+					m_sceneManager->SetStageID(SceneManager::STAGE2);
 					break;
 				default:
 					break;
@@ -189,7 +189,7 @@ IScene::SceneID StageSelectScene::GetNextSceneID() const
 	// シーン変更がある場合
 	if (m_isChangeScene)
 	{
-		if (m_commonResources->GetFade()->GetFadeState() == Fade::FadeState::None)
+		if (m_commonResources->GetFade()->GetFadeState() == Fade::FadeState::NONE)
 		{
 			m_commonResources->GetFade()->StartNormalFadeIn();
 

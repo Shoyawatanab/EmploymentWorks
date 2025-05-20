@@ -14,6 +14,7 @@ class EnemyMessenger : public Singleton<EnemyMessenger>
 
 public:
 
+	//イベントの保存リスト
 	std::unordered_map<int, IObserver<EnemyMessageType>*> m_eventList;
 
 public:
@@ -29,6 +30,7 @@ public:
 
 	// コンストラクタ
 	EnemyMessenger();
+	//デストラクタ
 	~EnemyMessenger();
 
 

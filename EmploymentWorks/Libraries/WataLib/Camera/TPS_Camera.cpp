@@ -17,9 +17,9 @@ const int MAXANGLEY = 100;
 
 const float EXPANSIOOSPEED = 0.7f;   //拡大時のスピード
 
-//-------------------------------------------------------------------
-// コンストラクタ
-//-------------------------------------------------------------------
+/// <summary>
+/// コンストラクタ
+/// </summary>
 WataLib::TPS_Camera::TPS_Camera()
 	:
 	m_view{},
@@ -41,19 +41,25 @@ WataLib::TPS_Camera::TPS_Camera()
 
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 WataLib::TPS_Camera::~TPS_Camera()
 {
 
 
 }
 
-
+/// <summary>
+/// 初期化
+/// </summary>
+/// <param name="resources">共通リソース</param>
 void WataLib::TPS_Camera::Initialize(CommonResources* resources)
 {
 	assert(resources);
 	m_mouse->Initialize();
 	m_angle = {0,0};
-	m_zoomState = ZoomState::None;
+	m_zoomState = ZoomState::NONE;
 
 	m_target = m_player->GetPosition() + Vector3(0, 1, 0);
 
@@ -62,17 +68,17 @@ void WataLib::TPS_Camera::Initialize(CommonResources* resources)
 	CalculateProjectionMatrix();
 
 
-	//イベントにObserverとして登録
-
-	Messenger::GetInstance()->Rigister(GameMessageType::BoomerangGetReady, this);
-	Messenger::GetInstance()->Rigister(GameMessageType::BoomerangGetReadyEnd, this);
-	Messenger::GetInstance()->Rigister(GameMessageType::CameraShake, this);
+	//メッセージクラスに登録
+	Messenger::GetInstance()->Rigister(GameMessageType::BOOMERANG_GET_READY, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::BOOMERANG_GET_READY_END, this);
+	Messenger::GetInstance()->Rigister(GameMessageType::CAMERA_SHAKE, this);
 
 }
 
-//-------------------------------------------------------------------
-// 更新する
-//-------------------------------------------------------------------
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="elapsedTime">経過時間</param>
 void WataLib::TPS_Camera::Update(const float& elapsedTime)
 {
 	UNREFERENCED_PARAMETER(elapsedTime);
@@ -86,52 +92,50 @@ void WataLib::TPS_Camera::Update(const float& elapsedTime)
 	m_mouse->Update();
 
 	// targetの位置を更新する
-	m_target = m_player->GetPosition() + Vector3(0,1,0);
+	m_target = m_player->GetPosition() + TARGET_OFFSET;
 
 	m_angle.x -= static_cast<LONG>( m_mouse->GetDiffX());
 	m_angle.y -= static_cast<LONG>( m_mouse->GetDiffY());
 
 	//下の制限
-	if (m_angle.y > 2100)
+	if (m_angle.y > ANGELE_UPPER_LIMIT)
 	{
-		m_angle.y = 2100;
+		m_angle.y = ANGELE_UPPER_LIMIT;
 	}
 	//上の制限
-	if (m_angle.y < -950)
+	if (m_angle.y < ANGELE_LOWER_LIMIT)
 	{
-		m_angle.y = -950;
+		m_angle.y = ANGELE_LOWER_LIMIT;
 
 	}
 
 
-	Vector3 direction = Vector3(0.2, 0, -1);
 	//初期化
 	m_moveEye = Vector3::Zero;
 
 	switch (m_zoomState)
 	{
-		case WataLib::TPS_Camera::ZoomState::None:
-			break;
-		case WataLib::TPS_Camera::ZoomState::ZoomIn:
+
+		case WataLib::TPS_Camera::ZoomState::ZOOM_IN:
 			//向いている方向
 			if (m_lerpTime < 1)
 			{
 				m_lerpTime += 0.1f * EXPANSIOOSPEED;
 			}
-			m_moveEye = Vector3::Lerp(Vector3::Zero, direction, m_lerpTime);
+			m_moveEye = Vector3::Lerp(Vector3::Zero, ZOOM_DIRECTION, m_lerpTime);
 			break;
-		case WataLib::TPS_Camera::ZoomState::ZoomOut:
+		case WataLib::TPS_Camera::ZoomState::ZOOM_OUT:
 			//向いている方向
 			if (m_lerpTime > 0)
 			{
 				m_lerpTime -= 0.1f * EXPANSIOOSPEED;
-				m_moveEye = Vector3::Lerp(Vector3::Zero, direction, m_lerpTime);
+				m_moveEye = Vector3::Lerp(Vector3::Zero, ZOOM_DIRECTION, m_lerpTime);
 			}
 			else
 			{
 				m_lerpTime = 0;
 				m_moveEye = Vector3::Zero;
-				m_zoomState = ZoomState::None;
+				m_zoomState = ZoomState::NONE;
 			}
 			break;
 		default:
@@ -158,9 +162,9 @@ void WataLib::TPS_Camera::Render(const DirectX::SimpleMath::Matrix& view, const 
 	assert(&projection);
 }
 
-//-------------------------------------------------------------------
-// ビュー行列を計算する
-//-------------------------------------------------------------------
+/// <summary>
+// ビュー行列の計算
+/// </summary>
 void WataLib::TPS_Camera::CalculateViewMatrix()
 {
 	using namespace DirectX::SimpleMath;
@@ -169,9 +173,9 @@ void WataLib::TPS_Camera::CalculateViewMatrix()
 	m_view = Matrix::CreateLookAt(m_eye + m_shakePosition, m_target + m_shakePosition, m_up);
 }
 
-//-------------------------------------------------------------------
-// プロジェクション行列を計算する
-//-------------------------------------------------------------------
+/// <summary>
+/// プロジェクション行列の計算
+/// </summary>
 void WataLib::TPS_Camera::CalculateProjectionMatrix()
 {
 	using namespace DirectX::SimpleMath;
@@ -188,9 +192,9 @@ void WataLib::TPS_Camera::CalculateProjectionMatrix()
 		FOV, aspectRatio, NEAR_PLANE, FAR_PLANE);
 }
 
-//-------------------------------------------------------------------
-// カメラ座標を計算する
-//-------------------------------------------------------------------
+/// <summary>
+/// カメラ座標の計算
+/// </summary>
 void WataLib::TPS_Camera::CalculateEyePosition()
 {
 
@@ -245,7 +249,9 @@ void WataLib::TPS_Camera::AddPointer(Player* Player)
 }
 
 
-
+/// <summary>
+/// 状態に入った時
+/// </summary>
 void WataLib::TPS_Camera::Enter()
 {
 
@@ -254,24 +260,30 @@ void WataLib::TPS_Camera::Enter()
 }
 
 
+/// <summary>
+/// 状態を抜けた時
+/// </summary>
 void WataLib::TPS_Camera::Exit()
 {
 
 }
 
+/// <summary>
+/// 通知を受け取る関数
+/// </summary>
+/// <param name="telegram">データ</param>
 void WataLib::TPS_Camera::Notify(const Telegram<GameMessageType>& telegram)
 {
 	
-
 	switch (telegram.messageType)
 	{
-		case GameMessageType::BoomerangGetReady:
-			m_zoomState = ZoomState::ZoomIn;
+		case GameMessageType::BOOMERANG_GET_READY:
+			m_zoomState = ZoomState::ZOOM_IN;
 			break;
-		case GameMessageType::BoomerangGetReadyEnd:
-			m_zoomState = ZoomState::ZoomOut;
+		case GameMessageType::BOOMERANG_GET_READY_END:
+			m_zoomState = ZoomState::ZOOM_OUT;
 			break;
-		case GameMessageType::CameraShake:
+		case GameMessageType::CAMERA_SHAKE:
 			
 			m_shaleTime = SHAKETIME;
 			m_isShake = true;
@@ -319,9 +331,9 @@ void WataLib::TPS_Camera::Shake(const float& elapsedTime)
 	//	生成して欲しいランダムの範囲をDistributionに任せる。今回は0～2PI
 	std::uniform_real_distribution<> dist(-power, power);
 
-	float x = dist(engine);
-	float y = dist(engine);
-	float z = dist(engine);
+	float x = static_cast<float>(dist(engine));
+	float y = static_cast<float>(dist(engine));
+	float z = static_cast<float>(dist(engine));
 	
 	m_shakePosition = Vector3(x, y, z);
 

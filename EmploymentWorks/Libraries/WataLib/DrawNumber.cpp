@@ -19,7 +19,6 @@
 #include <vector>
 #include "Game/Screen.h"
 
-using namespace DirectX;
 
 /// <summary>
 /// インプットレイアウト
@@ -27,8 +26,8 @@ using namespace DirectX;
 const std::vector<D3D11_INPUT_ELEMENT_DESC> DrawNumber::INPUT_LAYOUT =
 {
 	{ "POSITION",	0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	{ "COLOR",	0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, sizeof(SimpleMath::Vector3), D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	{ "TEXCOORD",	0, DXGI_FORMAT_R32G32_FLOAT, 0, sizeof(SimpleMath::Vector3) + sizeof(SimpleMath::Vector4), D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "COLOR",	0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, sizeof(DirectX::SimpleMath::Vector3), D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "TEXCOORD",	0, DXGI_FORMAT_R32G32_FLOAT, 0, sizeof(DirectX::SimpleMath::Vector3) + sizeof(DirectX::SimpleMath::Vector4), D3D11_INPUT_PER_VERTEX_DATA, 0 },
 };
 
 /// <summary>
@@ -40,8 +39,8 @@ DrawNumber::DrawNumber()
 	, m_textureWidth(0)
 	, m_texture(nullptr)
 	, m_res(nullptr)
-	, m_scale(SimpleMath::Vector2::One)
-	, m_position(SimpleMath::Vector2::Zero)
+	, m_scale(DirectX::SimpleMath::Vector2::One)
+	, m_position(DirectX::SimpleMath::Vector2::Zero)
 	, m_renderRatio(1.0f)
 	, m_renderRatioOffset(0.0f)
 	, m_alphaValue{ 1.0f }
@@ -96,6 +95,8 @@ void DrawNumber::Create(DX::DeviceResources* pDR
 	, DirectX::SimpleMath::Vector2 scale
 	)
 {
+	using namespace DirectX;
+
 	m_pDR = pDR;
 	auto device = pDR->GetD3DDevice();
 	m_position = position;
@@ -135,7 +136,9 @@ void DrawNumber::SetRenderRatio(float ratio)
 
 
 
-
+/// <summary>
+/// シェーダーの作成
+/// </summary>
 void DrawNumber::CreateUIShader()
 {
 	auto device = m_pDR->GetD3DDevice();
@@ -189,7 +192,9 @@ void DrawNumber::CreateUIShader()
 /// </summary>
 void DrawNumber::Render(int number , DirectX::SimpleMath::Vector2 offsetPosition)
 {
+	using namespace DirectX;
 
+	//有効かどうか
 	if (!m_isActive)
 	{
 		return;

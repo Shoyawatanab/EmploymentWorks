@@ -13,9 +13,9 @@ public:
 
 	enum class ThrowState
 	{
-		Right = 0
-		,Front
-		, Left
+		RIGHT = 0
+		,FRONT
+		, LEFT
 
 	};
 
@@ -55,7 +55,7 @@ private:
 	DirectX::SimpleMath::Vector3 m_scale;
 	//‰ñ“]
 	DirectX::SimpleMath::Quaternion m_rotation;
-	
+	//“Š‚°‚Ìó‘Ô
 	ThrowState m_throwState;
 
 };

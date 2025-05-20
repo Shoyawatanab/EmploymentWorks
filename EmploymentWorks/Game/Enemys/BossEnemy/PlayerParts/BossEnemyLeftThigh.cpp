@@ -15,8 +15,6 @@
 #include "Game/Enemys/BossEnemy/BossEnemy.h"
 
 
-using namespace DirectX::SimpleMath;
-
 /// <summary>
 /// コンストラクタ
 /// </summary>

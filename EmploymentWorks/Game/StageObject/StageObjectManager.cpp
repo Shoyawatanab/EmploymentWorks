@@ -11,9 +11,10 @@
 #include "Game/StageObject/Floor.h"
 #include "Game/StageObject/Wall.h"
 
-//---------------------------------------------------------
-// コンストラクタ
-//---------------------------------------------------------
+/// <summary>
+/// コンストラク
+/// </summary>
+/// <param name="resources"></param>
 StageObjectManager::StageObjectManager(CommonResources* resources)
 	:
 	m_commonResources{resources}
@@ -24,21 +25,21 @@ StageObjectManager::StageObjectManager(CommonResources* resources)
 
 }
 
-//---------------------------------------------------------
-// デストラクタ
-//---------------------------------------------------------
+/// <summary>
+/// デストラクタ
+/// </summary>
 StageObjectManager::~StageObjectManager()
 {
 	// do nothing.
 }
 
-//---------------------------------------------------------
-// 初期化する
-//---------------------------------------------------------
+/// <summary>
+/// 初期化
+/// </summary>
 void StageObjectManager::Initialize()
 {
-	using namespace DirectX::SimpleMath;
 
+	//オブジェクトの初期化
 	for (auto& TypeObjects : m_stageObjects)
 	{
 		for (auto& object : TypeObjects.second)
@@ -51,9 +52,14 @@ void StageObjectManager::Initialize()
 
 }
 
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="elapsedTime">経過時間</param>
 void StageObjectManager::Update(const float& elapsedTime)
 {
 
+	//オブジェクトの更新
 	for (auto& TypeObjects : m_stageObjects)
 	{
 		for (auto& object : TypeObjects.second)
@@ -66,15 +72,16 @@ void StageObjectManager::Update(const float& elapsedTime)
 
 }
 
-//---------------------------------------------------------
-// 描画する
-//---------------------------------------------------------
+/// <summary>
+/// 描画
+/// </summary>
+/// <param name="view">ビュー行列</param>
+/// <param name="projection">射影行列</param>
 void StageObjectManager::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
 {
-	using namespace DirectX::SimpleMath;
 
 
-
+	//オブジェクトの描画
 	for (auto& TypeObjects : m_stageObjects)
 	{
 		for (auto& object : TypeObjects.second)
@@ -87,14 +94,15 @@ void StageObjectManager::Render(const DirectX::SimpleMath::Matrix& view, const D
 	
 }
 
-//---------------------------------------------------------
-// 後始末する
-//---------------------------------------------------------
 void StageObjectManager::Finalize()
 {
 	// do nothing.
 }
 
+/// <summary>
+/// 当たり判定クラスに追加
+/// </summary>
+/// <param name="collsionManager">コリジョンマネージャー</param>
 void StageObjectManager::AddCollision(CollisionManager* collsionManager)
 {
 
@@ -108,9 +116,7 @@ void StageObjectManager::AddCollision(CollisionManager* collsionManager)
 }
 
 
-
-
-
+//オブジェクトの追加
 void StageObjectManager::AddObject(std::string objectType, std::unique_ptr<CollisionEntity> object)
 {
 

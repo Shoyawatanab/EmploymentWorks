@@ -15,12 +15,13 @@ class BossEnemyPartsBase : public CompositeEntity
 {
 
 public:
-
+	//モデルの取得
 	DirectX::Model* GetModel() { return m_model; }
+	//モデルの登録
 	void  SetModel(DirectX::Model* model) { m_model = model; }
-
+	//ルートの主特区
 	BossEnemy* GetRoot() { return m_root; }
-
+	//パーツHPの取得
 	const int& GetPartsHP() { return m_partsHP; }
 
 public:
@@ -35,17 +36,17 @@ public:
 		int partsHP
 		, DirectX::SimpleMath::Vector3 boxColliderSize,
 		float SphereColliderSize);
+	//デストラクタ
 	~BossEnemyPartsBase()  override;
 
 
-	//IObject
+	
 	//初期化
 	void Initialize() override;
-	//描画
+	//描画処理
 	void Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection) override;
-	//ICollisionObject
 	//タグの取得
-	CollisionTag GetCollisionTag() override { return CollisionEntity::CollisionTag::EnemyParts; };
+	CollisionTag GetCollisionTag() override { return CollisionEntity::CollisionTag::ENEYPARTS; };
 	//当たり判定クラスに登録
 	void  AddCollision(CollisionManager* collsionManager) override;
 	//当たった時に呼び出される
@@ -57,9 +58,9 @@ public:
 	//当たり判定を行わないタグ
 	const std::vector<CollisionTag> GetNoHitDetectionTag() {
 		return  {
-			{CollisionTag::PlayerParts}
-			,{CollisionTag::Enemy}
-			,{CollisionTag::EnemyParts}
+			{CollisionTag::PLAYERPARTS}
+			,{CollisionTag::ENEMY}
+			,{CollisionTag::ENEYPARTS}
 
 		};
 	};
@@ -69,13 +70,10 @@ public:
 		return  {
 		};
 	};
-
-
-	//IMoveObject
 	//更新処理
 	void  Update(const float& elapsedTime) override;
 
-	//ICharacter
+
 	//アニメーションの登録
 	void SetAnimationData(std::string animationType
 		, std::unordered_map<std::string, std::unordered_map<std::string, WataLib::Json::AnimationData>> datas
@@ -86,23 +84,22 @@ public:
 
 
 private:
-	//
+	//モデル
 	DirectX::Model* m_model;
 	//パーツ名
 	std::string m_partsName;
-
+	//初期座標
 	DirectX::SimpleMath::Vector3 m_initialPosition;
-
+	//初期の大きさ
 	DirectX::SimpleMath::Vector3 m_initialScale;
-
+	//初期回転
 	DirectX::SimpleMath::Quaternion m_initialRotation;
-
+	//パーツHP
 	int m_partsHP;
-
+	//四角の当たり判定の大きさ
 	DirectX::SimpleMath::Vector3 m_boxColliderSize;
-
+	//円の当たり判定の大きさ
 	float m_sphereColliderSize;
-
 	//根本のクラス
 	BossEnemy* m_root;
 

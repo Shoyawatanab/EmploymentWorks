@@ -28,8 +28,10 @@ using namespace DirectX::SimpleMath;
 /// コンストラクタ
 /// </summary>
 /// <param name="resources">共通リソース</param>
+/// <param name="owner">所有者</param>
+/// <param name="barrier"></param>
 BarrierDefenseAction::BarrierDefenseAction(CommonResources* resources
-	, CharacterEntity* bossEnemy
+	, CharacterEntity* owner
 	, Barrier* barrier
 	)
 	:
@@ -38,16 +40,12 @@ BarrierDefenseAction::BarrierDefenseAction(CommonResources* resources
 	,m_deployment{}
 	,m_barrier{barrier}
 {
-	
-	m_preliminaryAction = std::make_unique<BarrierPreliminaryAction>(resources, this,bossEnemy);
+	//各行動を作成
+	m_preliminaryAction = std::make_unique<BarrierPreliminaryAction>(resources, this, owner);
 	m_deployment = std::make_unique<BarrierDeployment>(resources, this,barrier);
-	m_close = std::make_unique<BarrierClose>(resources, this, barrier,bossEnemy);
+	m_close = std::make_unique<BarrierClose>(resources, this, barrier, owner);
 
-
-
-	//イベントタイプの登録
-	Messenger::GetInstance()->Rigister(GameMessageType::BossBeamHit, this);
-
+	//動作順に追加
 	ActionStateController::Initialize({
 		m_preliminaryAction.get()
 		,m_deployment.get()

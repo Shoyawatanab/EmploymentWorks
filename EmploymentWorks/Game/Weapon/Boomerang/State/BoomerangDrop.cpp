@@ -5,8 +5,9 @@
 #include "Game/ItemAcquisition.h"
 
 
-
-// コンストラクタ
+/// <summary>
+/// コンストラクタ
+/// </summary>
 BoomerangDrop::BoomerangDrop()
 	:
 	m_worldMatrix{},
@@ -14,12 +15,18 @@ BoomerangDrop::BoomerangDrop()
 {
 }
 
-// デストラクタ
+/// <summary>
+/// デストラクタ
+/// </summary>
 BoomerangDrop::~BoomerangDrop()
 {
 
 }
 
+/// <summary>
+/// 初期化
+/// </summary>
+/// <param name="resources">共通リソース</param>
 void BoomerangDrop::Initialize(CommonResources* resources)
 {
 	UNREFERENCED_PARAMETER(resources);
@@ -29,12 +36,14 @@ void BoomerangDrop::Initialize(CommonResources* resources)
 
 
 
-// 更新する
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="elapsedTime">経過時間</param>
 void BoomerangDrop::Update(const float& elapsedTime)
 {
 	UNREFERENCED_PARAMETER(elapsedTime);
-	using namespace DirectX;
-	using namespace DirectX::SimpleMath;
+
 
 	
 
@@ -48,7 +57,9 @@ void BoomerangDrop::Render(const DirectX::SimpleMath::Matrix& view, const Direct
 
 }
 
-
+/// <summary>
+/// 状態に入った時
+/// </summary>
 void BoomerangDrop::Enter()
 {
 	using namespace DirectX::SimpleMath;
@@ -58,6 +69,9 @@ void BoomerangDrop::Enter()
 
 }
 
+/// <summary>
+/// 状態を抜けた時
+/// </summary>
 void BoomerangDrop::Exit()
 {
 	using namespace DirectX;
@@ -69,6 +83,10 @@ void BoomerangDrop::Exit()
 
 }
 
+/// <summary>
+/// 
+/// </summary>
+/// <param name="boomerang"></param>
 void BoomerangDrop::AddPointer(Boomerang* boomerang)
 {
 

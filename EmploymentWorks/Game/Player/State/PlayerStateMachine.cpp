@@ -1,8 +1,7 @@
 #include "pch.h"
 #include "PlayerStateMachine.h"
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
+
 
 /// <summary>
 /// コンストラクタ

@@ -126,7 +126,6 @@ void Barrier::Initialize()
 
 	m_initialRotate = Quaternion::Identity;
 
-	m_target = Vector3(0, 0, 5);
 
 	//何秒で最大サイズになるか
 	m_maxSizeTime =Params::BOSSENEMY_BEAM_BALL_ACCUMULATIONTIME ;
@@ -165,8 +164,6 @@ void Barrier::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::Sim
 
 	Vector4 color = Vector4(1, 1, 1, 0.5f);
 
-
-
 	//モデルを描画する
 	m_model->Draw(context, *states, BaseEntity::GetWorldMatrix(), view, projection, false, [&]()
 		{
@@ -201,6 +198,8 @@ void Barrier::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::Sim
 		});
 
 
+
+	//当たり判定の描画
 	CollisionEntity::GetBounding()->DrawBoundingSphere(BaseEntity::GetPosition(), view, projection);
 	CollisionEntity::GetBounding()->DrawBoundingBox(BaseEntity::GetPosition(), view, projection);
 
@@ -231,7 +230,7 @@ void Barrier::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 
 	switch (tag)
 	{
-		case CollisionEntity::CollisionTag::Boomerang:
+		case CollisionEntity::CollisionTag::BOOMERANG:
 			break;
 		default:
 			break;
@@ -260,7 +259,9 @@ void Barrier::Update(const float& elapsedTime)
 
 }
 
-
+/// <summary>
+/// 有効になったら
+/// </summary>
 void Barrier::OnEnable()
 {
 
@@ -268,6 +269,9 @@ void Barrier::OnEnable()
 
 }
 
+/// <summary>
+/// 無効になったら
+/// </summary>
 void Barrier::OnDisable()
 {
 }
@@ -283,6 +287,9 @@ void Barrier::AddPointer(Beam* beam)
 
 }
 
+/// <summary>
+/// リセット
+/// </summary>
 void Barrier::ReSet()
 {
 	m_time = 0;

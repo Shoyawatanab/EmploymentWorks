@@ -17,15 +17,15 @@
 #include "Game/Player/Player.h"
 #include "Game/Enemys/BossEnemy/ActionNode/RushAttack/BossRushAttackAction.h"
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
-
 
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
 /// <param name="resources">共通リソース</param>
+/// <param name="parent">コントローラー</param>
+/// <param name="bossenemy">所有者</param>
+/// <param name="player">プレイヤ</param>
 BossRushAttackCharge::BossRushAttackCharge(CommonResources* resources
 	, BossRushAttackAction* parent
 	,BossEnemy* bossenemy
@@ -47,28 +47,38 @@ BossRushAttackCharge::~BossRushAttackCharge()
 	// do nothing.
 }
 
+/// <summary>
+/// 初期化
+/// </summary>
 void BossRushAttackCharge::Initialize()
 {
 }
 
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="elapsedTime">経過時間</param>
+/// <returns>継続か終了か</returns>
 BossRushAttackCharge::ActionState BossRushAttackCharge::Update(const float& elapsedTime)
 {
 	//時間はアニメーションと合わせる
-	if (m_time >= 1.5f)
+	if (m_time >= CHARGE_TIME)
 	{
 
-		return ActionState::End;
+		return ActionState::END;
 
 	}
 
 	
 	m_time += elapsedTime;
 
-	return ActionState::Running;
+	return ActionState::RUNNING;
 }
 
 
-
+/// <summary>
+/// 状態に入った時
+/// </summary>
 void BossRushAttackCharge::Enter()
 {
 
@@ -79,16 +89,19 @@ void BossRushAttackCharge::Enter()
 
 	pos.y = 0.1f;
 
-	Vector3 scale = Vector3(5, 5, 5);
+	Vector3 scale = EFFECTE_SCALE;
 
 
 	UnknownDataThree aa = { static_cast<void*>(&pos), static_cast<void*>(&scale) };
 
-	Messenger::GetInstance()->Notify(GameMessageType::CreateChageEffect, &aa);
+	Messenger::GetInstance()->Notify(GameMessageType::CREATE_CHAGE_EFFECT, &aa);
 
 
 }
 
+/// <summary>
+/// 状態を抜けた時
+/// </summary>
 void BossRushAttackCharge::Exit()
 {
 }

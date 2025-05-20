@@ -42,18 +42,17 @@ namespace WataLib
 //
 
 	public:
-
+		//コンストラクタ
 		Json();
+		//デストラクタ
 		~Json();
-
-		void LoadJson();
-
+		//ステージ情報の読み込み
 		std::vector<StageData> LoadStageDatas(const std::wstring& fileName);
-
+		//アニメーションデータの読み込み
 		std::unordered_map<std::string, AnimationData> LoadAnimationData(const std::wstring& fileName);
 
 	private:
-
+		//ステージ情報のパラメーター
 		std::vector<StageData> m_stageParamter;
 
 		

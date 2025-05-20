@@ -16,7 +16,6 @@
 #include "Libraries/MyLib/BinaryFile.h"
 #include "Game/Enemys/BirdEnemy/BirdEnemy.h"
 #include "Game/Player/Player.h"
-#include "Game/Interface/ICollisionObject.h"
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
@@ -47,6 +46,7 @@ BirdEnemyBeam::BirdEnemyBeam(CommonResources* resources, Player* player, BirdEne
 	,m_energyBall{}
 	,m_stateMachine{}
 {
+	//各ステートの作成
 	m_stateMachine = std::make_unique<BirdEnemyBeamStateMachine>(player,enemy,this);
 	m_energyBall = std::make_unique<BirdEnemyBeamEnergyBall>(resources,this,this);
 
@@ -66,17 +66,12 @@ BirdEnemyBeam::~BirdEnemyBeam()
 /// </summary>
 void BirdEnemyBeam::Initialize()
 {
-
-
-
+	//初期化
 	m_target = Vector3(0, 0, 5);
-
-
 	m_energyBall->Initialize();
-
+	m_stateMachine->Initialize(BaseEntity::GetCommonResources(), m_stateMachine->GetBirdEnemyBeamIdle());
 	BaseEntity::SetPosition(m_enemy->GetBeamPosition());
 
-	m_stateMachine->Initialize(BaseEntity::GetCommonResources(), m_stateMachine->GetBirdEnemyBeamIdle());
 
 }
 
@@ -87,8 +82,9 @@ void BirdEnemyBeam::Initialize()
 /// <param name="projection">射影行列</param>
 void BirdEnemyBeam::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
 {
-
+	//基底クラスの描画
 	BaseEntity::Render(view, projection);
+	//エネルギー弾の描画
 	m_energyBall->Render(view, projection);
 
 }
@@ -99,10 +95,11 @@ void BirdEnemyBeam::Render(const DirectX::SimpleMath::Matrix& view, const Direct
 /// <param name="elapsedTime">経過時間</param>
 void BirdEnemyBeam::Update(const float& elapsedTime)
 {
+	//基底クラスの更新
 	BaseEntity::Update(elapsedTime);
-
+	//ターゲットの更新
 	m_target = m_player->GetPosition();
-
+	//ステートマシーンの更新
 	m_stateMachine->Update(elapsedTime);
 
 }
@@ -113,10 +110,12 @@ void BirdEnemyBeam::Update(const float& elapsedTime)
 /// </summary>
 void BirdEnemyBeam::UpdateBirdEnemyBeamPosition()
 {
-
+	
 	BaseEntity::SetPosition( m_enemy->GetBeamPosition());
 
+	//
 	m_energyBall->SetLocalPosition(Vector3::Zero);
+
 
 }
 

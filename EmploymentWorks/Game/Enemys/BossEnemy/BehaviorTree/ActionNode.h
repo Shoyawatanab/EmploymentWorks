@@ -29,7 +29,6 @@ public:
 	//Às’†‚ÌXV
 	IBehaviorNode::State RunningUpdate(float elapsedTime) override;
 
-	void Render();
 	void Finalize()override;
 
 private:

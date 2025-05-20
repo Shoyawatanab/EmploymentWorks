@@ -16,11 +16,10 @@
 #include <sstream>
 
 
-
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
-
-
+/// <summary>
+/// ブーメランのcsvファイルの読み込み
+/// </summary>
+/// <returns></returns>
 std::vector<DirectX::SimpleMath::Vector3> WataLib::CSV::LoadCSVBoomerang()
 {
 	std::string line;  //1行
@@ -53,9 +52,7 @@ std::vector<DirectX::SimpleMath::Vector3> WataLib::CSV::LoadCSVBoomerang()
 		std::getline(stream, str, ',');
 		Pos.back().z = std::stof(str);
 
-
 		
-
 	}
 
 

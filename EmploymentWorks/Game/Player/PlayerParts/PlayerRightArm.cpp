@@ -9,7 +9,6 @@
 
 
 
-using namespace DirectX::SimpleMath;
 
 /// <summary>
 /// コンストラクタ
