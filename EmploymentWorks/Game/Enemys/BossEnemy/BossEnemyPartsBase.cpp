@@ -39,8 +39,10 @@ BossEnemyPartsBase::BossEnemyPartsBase(CommonResources* resources,
 	,m_partsHP{partsHP}
 	,m_boxColliderSize{boxColliderSize}
 	,m_sphereColliderSize{SphereColliderSize}
+	,m_isPartDestruction{false}
 {
 	BaseEntity::SetParent(parent);
+	BaseEntity::SetIsGravity(false);
 }
 
 /// <summary>
@@ -277,6 +279,35 @@ void BossEnemyPartsBase::ChangeAnimation(std::string animationType)
 	for (auto& part : CompositeEntity::GetParts())
 	{
 		part->ChangeAnimation(animationType);
+	}
+
+}
+
+
+
+/// <summary>
+/// ボスパーツの通知を受け取る
+/// </summary>
+/// <param name="type">通知の種類</param>
+void BossEnemyPartsBase::NotifyParts(PartMessageType type)
+{
+
+	switch (type)
+	{
+		case PartMessageType::PART_DESTRUCTION:
+
+			m_isPartDestruction = true;
+
+			for (auto& part : CompositeEntity::GetParts())
+			{
+
+				part->NotifyParts(type);
+
+			}
+
+			break;
+		default:
+			break;
 	}
 
 }

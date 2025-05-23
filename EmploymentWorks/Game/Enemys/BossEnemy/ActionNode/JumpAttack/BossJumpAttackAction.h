@@ -60,6 +60,8 @@ private:
 	std::unique_ptr<BossJumpAttackCharge> m_charge;
 	//ƒWƒƒƒ“ƒv
 	std::unique_ptr<BossJumpAttackJump> m_jump;
+	//‰ñ“]
+	std::unique_ptr<OrientationAction> m_orientation;
 
 
 };

@@ -54,6 +54,7 @@ PlayScene::PlayScene(SceneManager::StageID stageID)
 	,m_stageID{stageID}
 	,m_tutorialTex{}
 	,m_isTutolialTex{}
+	,m_soundManager{}
 {
 	Messenger::GetInstance()->Clear();
 }
@@ -163,7 +164,7 @@ void PlayScene::Initialize(CommonResources* resources)
 
 	m_soundManager = SoundManager::GetInstance();
 
-	m_soundManager->PlaySoundBGM("Play");
+	//m_soundManager->PlaySoundBGM("Play");
 
 }
 
@@ -204,7 +205,7 @@ void PlayScene::Update(float elapsedTime)
 	m_uiManager->Update(elapsedTime);
 	m_targetMarker->Update(elapsedTime);
 	m_effectsManager->Update(elapsedTime);
-
+	m_soundManager->Update();
 
 
 }

@@ -21,7 +21,6 @@ const wchar_t* SoundManager::SOUND_JSON = L"Resources//Dates/SoundData.json";
 const char*    SoundManager::SOUND_BASE_PATH = "Resources/Sounds/";
 
 
-
 /// <summary>
 /// コンストラク
 /// </summary>
@@ -88,7 +87,11 @@ void SoundManager::PlaySoundBGM(std::string key)
 	}
 
 
+
 	m_system->playSound(m_soundList[key], nullptr, false, &m_channelBGM);
+
+	//m_channelBGM->setVolume(100);
+
 
 }
 
@@ -161,7 +164,10 @@ void SoundManager::LoadSound()
 			std::string path = SOUND_BASE_PATH + std::string(pathStr.begin(), pathStr.end());
 
 			FMOD::Sound* sound;
+			
 			system->createSound(path.c_str(), FMOD_DEFAULT, nullptr, &sound);
+
+
 
 			m_soundList[key] = sound;
 

@@ -5,14 +5,14 @@
 #pragma once
 
 #include "CharacterEntity.h"
-
+#include "Game/Observer/EventParams.h"
 
 class CompositeEntity : public CharacterEntity
 {
 public:
 
 	//パーツの取得
-	std::vector<std::unique_ptr<CharacterEntity>>& GetParts() { return m_parts; }
+	std::vector<std::unique_ptr<CompositeEntity>>& GetParts() { return m_parts; }
 
 public:
 	//コンストラク
@@ -23,7 +23,7 @@ public:
 	//デストラクタ
 	~CompositeEntity() override;
 	//子の追加
-	void AddChild(std::unique_ptr<CharacterEntity> parts);
+	void AddChild(std::unique_ptr<CompositeEntity> parts);
 
 
 //BaseEntity
@@ -47,12 +47,14 @@ public:
 	void ChangeAnimation(std::string animationType) override ;
 
 
+	//パーツに対してメッセージを送る　
+	virtual void NotifyParts(PartMessageType type) {};
+
 private:
 
 	//パーツ
-	std::vector<std::unique_ptr<CharacterEntity>> m_parts;
+	std::vector<std::unique_ptr<CompositeEntity>> m_parts;
 
 
 };
-
 

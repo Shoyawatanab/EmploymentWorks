@@ -67,24 +67,64 @@ void BossEnemyRightArm::Initialize()
 void BossEnemyRightArm::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 {
 
+
+	BossEnemyPartsBase::OnCollisionEnter(object, tag);
+
 	switch (tag)
 	{
 		case CollisionEntity::CollisionTag::STAGE:
 		{
+			//破壊されていない場合
+			if (!BossEnemyPartsBase::GetIsPartDestruction())
+			{
+				//パーティクルの生成のメッセージを送る
+				Vector3	pos = BaseEntity::GetPosition();
+				pos.y = 0;
+				Messenger::GetInstance()->Notify(GameMessageType::CREATE_PARTICLE, &pos);
 
-			//パーティクルの生成のメッセージを送る
-			Vector3 pos = BaseEntity::GetPosition();
-			pos.y = 0;
-			Messenger::GetInstance()->Notify(GameMessageType::CREATE_PARTICLE, &pos);
+			}
+			else
+			{
+				//破壊されている場合
+
+				//部位破壊で爆発エフェクトの生成をメッセージに送る
+				Vector3 scale = BaseEntity::GetScale() * 3;
+				Vector3 position = BaseEntity::GetPosition();
+				UnknownDataTwo aa = { static_cast<void*>(&position) ,static_cast<void*>(&scale) };
+
+				Messenger::GetInstance()->Notify(GameMessageType::CREATE_EXPLOSION, &aa);
+
+				//カメラを揺らすメッセージを送る
+				float power = 0.1f;
+				Messenger::GetInstance()->Notify(GameMessageType::CAMERA_SHAKE, &power);
+
+			}
 		}
 		break;
+		case CollisionTag::BOOMERANG:
+			//パーツHPが０以下なら
+			if (BossEnemyPartsBase::GetPartsHP() <= 0)
+			{
+				//部位破壊として親子関係をなくす
+				BaseEntity::SetParent(nullptr);
+				BaseEntity::SetIsGravity(true);
+
+				//部位破壊として親子関係をなくす
+				BaseEntity::SetParent(nullptr);
+				//重力をなくす
+				BaseEntity::SetIsGravity(true);
+				//パーツ破壊を有効に
+				BossEnemyPartsBase::SetIsPartDestruction(true);
+
+
+
+			}
+
+			break;
+
 		default:
 			break;
 	}
-
-
-	BossEnemyPartsBase::OnCollisionEnter(object, tag);
-
 
 }
 

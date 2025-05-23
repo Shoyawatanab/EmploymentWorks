@@ -1,5 +1,6 @@
 #pragma once
 #include "Game/Entities/CompositeEntity.h"
+#include "Game/Observer/EventParams.h"
 
 class CommonResources;
 class BossEnemy;
@@ -23,6 +24,14 @@ public:
 	BossEnemy* GetRoot() { return m_root; }
 	//パーツHPの取得
 	const int& GetPartsHP() { return m_partsHP; }
+
+	/// <summary>
+	/// パーツ破壊されているかどうかの取得
+	/// </summary>
+	/// <returns>ture:破壊されている false:破壊されていない</returns>
+	const bool& GetIsPartDestruction() { return m_isPartDestruction; }
+	//パーツ破壊されているかどうかの登録
+	void SetIsPartDestruction(bool isPartDestruction) { m_isPartDestruction = isPartDestruction;; }
 
 public:
 	// コンストラクタ
@@ -83,6 +92,10 @@ public:
 	void ChangeAnimation(std::string animationType) override;
 
 
+
+	//パーツに対してメッセージを送る
+	void NotifyParts(PartMessageType type);
+
 private:
 	//モデル
 	DirectX::Model* m_model;
@@ -102,7 +115,8 @@ private:
 	float m_sphereColliderSize;
 	//根本のクラス
 	BossEnemy* m_root;
-
+	//パーツ破壊されているか
+	bool m_isPartDestruction;
 
 
 };

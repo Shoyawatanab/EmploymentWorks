@@ -97,11 +97,16 @@ void BehaviorTree::Initialize(CommonResources* resources)
 	//歩きの追加
 	moreThanHalfHP->AddNode(CreateWalkingActionNode());
 
+	//HPが範囲内かどうかのデコレーター
+	auto isMoreThanHalfHP = CreateIsHPMoreThanHalfDecorator();
+	//Selectorの追加
+	isMoreThanHalfHP->AddNode(std::move(moreThanHalfHP));
+
 ///////
 
 	auto rootSelector = std::make_unique<SelectorNode>();
 	//HPが半分以上のとき
-	rootSelector->AddNode(std::move(moreThanHalfHP));
+	rootSelector->AddNode(std::move(isMoreThanHalfHP));
 	//HPが半分以下
 	rootSelector->AddNode(std::move(lessThanHalfHP));
 
@@ -194,6 +199,11 @@ std::unique_ptr<ActionNode> BehaviorTree::CreateWalkingActionNode()
 std::unique_ptr<ActionNode> BehaviorTree::CreateJumpAttackActionNode()
 {
 	return std::make_unique<ActionNode>(std::bind(&ExecutionNode::BossEnemyJumpAttackAction, m_executionNode.get()));
+}
+
+std::unique_ptr<DecoratorNode> BehaviorTree::CreateIsHPMoreThanHalfDecorator()
+{
+	return std::make_unique<DecoratorNode>(std::bind(&Conditions::IsHPMoreThanHalf, m_conditions.get()));
 }
 
 /// <summary>

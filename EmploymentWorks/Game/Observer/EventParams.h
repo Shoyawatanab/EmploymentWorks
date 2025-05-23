@@ -37,6 +37,11 @@ enum class EnemyMessageType
 	, SWING_DOWN
 };
 
+//パーツの通知の種類　敵　プレイヤなど混合　分けたい
+enum class PartMessageType
+{
+	PART_DESTRUCTION     //パーツ破壊
+};
 
 struct CreateHitEffectDatas
 {

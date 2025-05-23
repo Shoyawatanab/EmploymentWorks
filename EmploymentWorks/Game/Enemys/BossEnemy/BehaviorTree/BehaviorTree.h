@@ -40,8 +40,8 @@ private:
 	std::unique_ptr<ActionNode> CreateJumpAttackActionNode();
 
 
-
-
+	//HP‚ª”¼•ª‚ ‚é‚©‚Ç‚¤‚©‚ÌDecorator‚Ìì¬
+	std::unique_ptr<DecoratorNode> CreateIsHPMoreThanHalfDecorator();
 
 	//‹ß‹——£UŒ‚‚Ì”ÍˆÍ“à‚©‚Ç‚¤‚©‚ÌDecorator‚Ìì¬
 	std::unique_ptr<DecoratorNode> CreateCloseRangeAttackDecorator();
