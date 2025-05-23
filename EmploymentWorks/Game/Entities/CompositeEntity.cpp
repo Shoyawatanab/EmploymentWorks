@@ -30,7 +30,7 @@ CompositeEntity::~CompositeEntity()
 /// パーツの追加
 /// </summary>
 /// <param name="parts">パーツ</param>
-void CompositeEntity::AddChild(std::unique_ptr<CharacterEntity> parts)
+void CompositeEntity::AddChild(std::unique_ptr<CompositeEntity> parts)
 {
 
 	parts->Initialize();

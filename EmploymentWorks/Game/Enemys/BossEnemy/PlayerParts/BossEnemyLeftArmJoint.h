@@ -39,6 +39,8 @@ public:
 	//‰Šú‰»
 	void Initialize() override;
 
+	//“–‚½‚Á‚½‚ÉŒÄ‚Ño‚³‚ê‚é
+	void OnCollisionEnter(CollisionEntity* object, CollisionTag tag) override;
 
 };
 

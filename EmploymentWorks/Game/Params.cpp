@@ -159,13 +159,13 @@ const Quaternion       Params::BOOMERANG_ROTATION = Quaternion::Identity;
  //ボス敵のHEADのHP						  			
  const  int Params::BOSSENEMY_HEAD_HP			= 100;
  //ボス敵のLEFTARMのHP						  		 
- const  int Params::BOSSENEMY_LEFTARM_HP			= 100;
+ const  int Params::BOSSENEMY_LEFTARM_HP		= 100;
  //ボス敵のLEFTARMJOINTのHP							 
- const  int Params::BOSSENEMY_LEFTARMJOINT_HP		= 10;
+ const  int Params::BOSSENEMY_LEFTARMJOINT_HP	= 100;
  //ボス敵のLEFTLEGのHP							 	 
- const  int Params::BOSSENEMY_LEFTLEG_HP			= 100;
+ const  int Params::BOSSENEMY_LEFTLEG_HP		= 100;
  //ボス敵のLEFTSHOULDERのHP							 
- const  int Params::BOSSENEMY_LEFTSHOULDER_HP		= 100;
+ const  int Params::BOSSENEMY_LEFTSHOULDER_HP	= 100;
  //ボス敵のLEFTTHIGHのHP							 	 
  const  int Params::BOSSENEMY_LEFTTHIGH_HP		= 100;
  //ボス敵のPELVISのHP							 	 
@@ -173,7 +173,7 @@ const Quaternion       Params::BOOMERANG_ROTATION = Quaternion::Identity;
  //ボス敵のRIGHTARMのHP							 	 
  const  int Params::BOSSENEMY_RIGHTARM_HP		= 100;
  //ボス敵のRIGHTARMJOINTのHP							 
- const  int Params::BOSSENEMY_RIGHTARMJOINT_HP	= 100;
+ const  int Params::BOSSENEMY_RIGHTARMJOINT_HP	= 10;
  //ボス敵のRIGHTLEGのHP							 	 
  const  int Params::BOSSENEMY_RIGHTLEG_HP		= 100;
  //ボス敵のRIGHTSHOULDERのHP							 

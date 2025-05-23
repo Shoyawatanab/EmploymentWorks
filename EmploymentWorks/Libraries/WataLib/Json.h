@@ -19,6 +19,15 @@ namespace WataLib
 			float BoundingSphereRadius;
 		};
 
+		struct ObjectData
+		{
+			std::string ModelName;
+			DirectX::SimpleMath::Vector3 Position;
+			DirectX::SimpleMath::Vector3 Scale;
+			DirectX::SimpleMath::Vector3 Rotation;
+			float BoundingSphereRadius;
+		};
+
 //アニメーションのJson読み込み専用構造体
 
 		struct AnimationKeyFram

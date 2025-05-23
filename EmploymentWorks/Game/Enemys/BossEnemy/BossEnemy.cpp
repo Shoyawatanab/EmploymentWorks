@@ -371,12 +371,12 @@ void BossEnemy::Update(const float& elapsedTime)
 
 
 	//行動の更新
-	if (m_action.second->Update(elapsedTime) == IAction::ActionState::END)
-	{
-		//ビヘイビアツリーの更新
-		m_behavior->Update(elapsedTime);
+	//if (m_action.second->Update(elapsedTime) == IAction::ActionState::END)
+	//{
+	//	//ビヘイビアツリーの更新
+	//	m_behavior->Update(elapsedTime);
 
-	 }	
+	// }	
 
 	CollisionEntity::Update(elapsedTime);
 	

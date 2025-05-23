@@ -76,8 +76,8 @@ void BossEnemyLeftArm::OnCollisionEnter(CollisionEntity* object, CollisionTag ta
 	{
 		case CollisionEntity::CollisionTag::STAGE:
 		{
-			//パーツのHPがあれば
-			if(BossEnemyPartsBase::GetPartsHP() > 0)
+			//破壊されていない場合
+			if(!BossEnemyPartsBase::GetIsPartDestruction())
 			{
 				//パーティクルの生成のメッセージを送る
 				Vector3	pos = BaseEntity::GetPosition();
@@ -87,7 +87,7 @@ void BossEnemyLeftArm::OnCollisionEnter(CollisionEntity* object, CollisionTag ta
 			}
 			else 
 			{
-				//HPがない場合
+				//破壊されている場合
 
 				//部位破壊で爆発エフェクトの生成をメッセージに送る
 				Vector3 scale = BaseEntity::GetScale() * 3;
@@ -110,6 +110,16 @@ void BossEnemyLeftArm::OnCollisionEnter(CollisionEntity* object, CollisionTag ta
 				//部位破壊として親子関係をなくす
 				BaseEntity::SetParent(nullptr);
 				BaseEntity::SetIsGravity(true);
+				
+					//部位破壊として親子関係をなくす
+					BaseEntity::SetParent(nullptr);
+					//重力をなくす
+					BaseEntity::SetIsGravity(true);
+					//パーツ破壊を有効に
+					BossEnemyPartsBase::SetIsPartDestruction(true);
+
+
+
 			}
 
 			break;
