@@ -87,7 +87,7 @@ public:
 	//ブーメランの回転
 	static const DirectX::SimpleMath::Quaternion BOOMERANG_ROTATION;
 	//ブーメランの数
-	static const int BOOMERANG_MAX_COUNT;
+	static int BOOMERANG_MAX_COUNT;
 	//ブーメランの移動スピード
 	static const float BOOMERANG_MOVE_SPEED;
 	//ブーメランの横回転スピード

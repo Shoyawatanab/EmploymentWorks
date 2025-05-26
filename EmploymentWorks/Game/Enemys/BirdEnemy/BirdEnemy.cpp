@@ -13,6 +13,7 @@
 #include "Game/Enemys/BirdEnemy/BirdEnemyBody.h"
 #include "Game/Enemys/BirdEnemy/Beam/BirdEnemyBeam.h"
 #include "Game/Params.h"
+#include "Game/InstanceRegistry.h"
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
@@ -46,6 +47,7 @@ BirdEnemy::BirdEnemy(CommonResources* resources
 	m_shadow = std::make_unique<WataLib::Shadow>();
 
 	BaseEntity::SetIsGravity(false);
+
 }
 
 
@@ -54,19 +56,6 @@ BirdEnemy::BirdEnemy(CommonResources* resources
 /// </summary>
 BirdEnemy::~BirdEnemy()
 {
-}
-
-
-/// <summary>
-/// 必要なポインタの追加
-/// </summary>
-/// <param name="player">プレイヤ</param>
-void BirdEnemy::AddPointer(Player* player)
-{
-	m_player = player;
-
-	m_stateMachine->AddPointer(m_player, this);
-
 }
 
 /// <summary>
@@ -110,6 +99,7 @@ void BirdEnemy::Rotate(float elapsedTime)
 void BirdEnemy::Initialize()
 {
 
+	m_player = InstanceRegistry::GetInstance()->GetRegistryInstance<Player>("Player");
 
 	//各リソースの取得
 	auto device = BaseEntity::GetCommonResources()->GetDeviceResources()->GetD3DDevice();
@@ -118,7 +108,7 @@ void BirdEnemy::Initialize()
 
 	//初期化
 	EnemyEntity::Initialize();
-	m_stateMachine->Initialize(BaseEntity::GetCommonResources(), m_stateMachine->GetBirdEnemyldling());
+	m_stateMachine->Initialize(BaseEntity::GetCommonResources(),this);
 	m_hp = Params::BIRDENEMY_HP;
 	m_shadow->Initialize(device, context, states);
 
@@ -130,7 +120,7 @@ void BirdEnemy::Initialize()
 	//ビームを10作っておく
 	for (int i = 0; i < 10; i++)
 	{
-		auto beam = std::make_unique<BirdEnemyBeam>(BaseEntity::GetCommonResources(),m_player,this);
+		auto beam = std::make_unique<BirdEnemyBeam>(BaseEntity::GetCommonResources(),this);
 		beam->Initialize();
 
 		m_beam.push_back(std::move(beam));

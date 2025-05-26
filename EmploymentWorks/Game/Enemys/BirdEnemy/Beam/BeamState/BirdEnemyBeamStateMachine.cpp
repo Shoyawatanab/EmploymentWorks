@@ -8,7 +8,7 @@
 /// <param name="player">プレイヤ</param>
 /// <param name="enemy">鳥の敵</param>
 /// <param name="beam">ビーム</param>
-BirdEnemyBeamStateMachine::BirdEnemyBeamStateMachine(Player* player, BirdEnemy* enemy, BirdEnemyBeam* beam)
+BirdEnemyBeamStateMachine::BirdEnemyBeamStateMachine(BirdEnemy* enemy, BirdEnemyBeam* beam)
 	:
 	m_currentState{}
 	,m_idle{}
@@ -16,9 +16,9 @@ BirdEnemyBeamStateMachine::BirdEnemyBeamStateMachine(Player* player, BirdEnemy* 
 	,m_preliminaryAction{}
 {
 	//各ステートを生成
-	m_idle = std::make_unique<BirdEnemyBeamIdling>(player,enemy,beam);
-	m_attack = std::make_unique<BirdEnemyBeamAttack>(player,enemy,beam);
-	m_preliminaryAction = std::make_unique<BirdEnemyBeamPreliminaryAction>(player, enemy, beam);
+	m_idle = std::make_unique<BirdEnemyBeamIdling>(enemy,beam);
+	m_attack = std::make_unique<BirdEnemyBeamAttack>(enemy,beam);
+	m_preliminaryAction = std::make_unique<BirdEnemyBeamPreliminaryAction>( enemy, beam);
 }
 
 /// <summary>

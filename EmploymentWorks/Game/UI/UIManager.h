@@ -31,7 +31,7 @@ public:
 	void Finalize() ;
 
 	//必要なポインタの登録
-	void AddPointer(Player* player , PlayScene* playScene, EnemyManager* enemyManager);
+	void AddPointer(PlayScene* playScene, EnemyManager* enemyManager);
 
 	//IObserver
 //通知時に呼ばれる関数

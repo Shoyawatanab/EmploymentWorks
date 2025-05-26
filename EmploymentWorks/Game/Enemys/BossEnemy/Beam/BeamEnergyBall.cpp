@@ -48,7 +48,6 @@ BeamEnergyBall::BeamEnergyBall(CommonResources* resources, BaseEntity* parent)
 	,m_initialRotate{}
 	,m_maxScale{}
 	,m_maxSizeTime{}
-	,m_beam{}
 	,m_time{}
 {
 	BaseEntity::SetParent(parent);
@@ -259,8 +258,6 @@ void BeamEnergyBall::Render(const DirectX::SimpleMath::Matrix& view, const Direc
 	CollisionEntity::GetBounding()->DrawBoundingBox(BaseEntity::GetPosition(), view, projection);
 
 
-
-
 }
 
 
@@ -313,16 +310,7 @@ void BeamEnergyBall::Update(const float& elapsedTime)
 	m_time += elapsedTime;
 }
 
-/// <summary>
-/// 必要なポインタの追加
-/// </summary>
-/// <param name="beam">ビーム</param>
-void BeamEnergyBall::AddPointer(Beam* beam)
-{
 
-	m_beam = beam;
-
-}
 
 /// <summary>
 /// リセット

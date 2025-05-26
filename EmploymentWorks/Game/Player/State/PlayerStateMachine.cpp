@@ -6,13 +6,13 @@
 /// <summary>
 /// コンストラクタ
 /// </summary>
-PlayerStateMachine::PlayerStateMachine()
+PlayerStateMachine::PlayerStateMachine(Player* player)
 	:
 	m_currentState{}
 	,m_idle{}
 {
-	m_idle = std::make_unique<PlayerIdle>();
-	m_attack = std::make_unique<PlayerAttack>();
+	m_idle = std::make_unique<PlayerIdle>(player);
+	m_attack = std::make_unique<PlayerAttack>(player);
 }
 
 /// <summary>
@@ -23,15 +23,6 @@ PlayerStateMachine::~PlayerStateMachine()
 }
 
 
-/// <summary>
-/// 必要なポインタの追加
-/// </summary>
-/// <param name="player">プレイヤ</param>
-void PlayerStateMachine::AddPointer(Player* player)
-{
-	m_idle->AddPointer(player);
-	m_attack->AddPointer(player);
-}
 
 /// <summary>
 /// 初期化

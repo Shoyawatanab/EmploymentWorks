@@ -12,8 +12,6 @@ class IState
 public:
 	//デストラクタ
 	virtual ~IState() = default;
-	//初期化
-	virtual void Initialize(CommonResources* resources) = 0;
 	// 更新する
 	virtual void Update(const float& elapsedTime) = 0;
 	//描画

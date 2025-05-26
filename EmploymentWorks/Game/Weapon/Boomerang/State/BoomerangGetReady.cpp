@@ -17,9 +17,10 @@
 /// <summary>
 /// コンストラクタ
 /// </summary>
-BoomerangGetReady::BoomerangGetReady()
+BoomerangGetReady::BoomerangGetReady(Boomerang* boomerang)
 	:
 	m_commonResources{}
+	,m_boomerang{boomerang}
 {
 }
 
@@ -31,14 +32,7 @@ BoomerangGetReady::~BoomerangGetReady()
 }
 
 
-/// <summary>
-/// 必要なポインタの追加
-/// </summary>
-/// <param name="boomerang">ブーメラン</param>
-void BoomerangGetReady::AddPointer(Boomerang* boomerang)
-{
-	m_boomerang = boomerang;
-}
+
 
 /// <summary>
 /// 初期化

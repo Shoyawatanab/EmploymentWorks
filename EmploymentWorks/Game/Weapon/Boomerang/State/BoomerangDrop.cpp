@@ -8,10 +8,10 @@
 /// <summary>
 /// コンストラクタ
 /// </summary>
-BoomerangDrop::BoomerangDrop()
+BoomerangDrop::BoomerangDrop(Boomerang* boomerang)
 	:
 	m_worldMatrix{},
-	m_boomerang{}
+	m_boomerang{boomerang}
 {
 }
 
@@ -83,14 +83,3 @@ void BoomerangDrop::Exit()
 
 }
 
-/// <summary>
-/// 
-/// </summary>
-/// <param name="boomerang"></param>
-void BoomerangDrop::AddPointer(Boomerang* boomerang)
-{
-
-	m_boomerang = boomerang;
-
-
-}

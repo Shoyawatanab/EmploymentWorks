@@ -41,7 +41,7 @@ public:
 	//
 	void Finalize() ;
 	//“Gî•ñ‚Ì’Ç‰Á
-	void AddEnemyData(WataLib::Json::StageData enemyData);
+	void AddEnemyData(WataLib::Json::ObjectData enemyData);
 
 	//“–‚½‚è”»’èƒNƒ‰ƒX‚É“o˜^
 	void  AddCollision(CollisionManager* collsionManager);
@@ -90,7 +90,7 @@ private:
 	//ƒ{ƒX“G
 	BossEnemy* m_bossEnemy;
 	//“Gî•ñ
-	std::vector<WataLib::Json::StageData> m_enemyDatas;
+	std::vector<WataLib::Json::ObjectData> m_enemyDatas;
 
 
 };

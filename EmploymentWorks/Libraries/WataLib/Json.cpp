@@ -31,7 +31,7 @@ WataLib::Json::~Json()
 /// </summary>
 /// <param name="fileName">ファイル名</param>
 /// <returns>ステージデータ</returns>
-std::vector<WataLib::Json::StageData> WataLib::Json::LoadStageDatas(const std::wstring& fileName)
+WataLib::Json::StageData WataLib::Json::LoadStageDatas(const std::wstring& fileName)
 {
 
 	std::ifstream file(L"Resources/Dates/Stages/" + fileName + L".json");
@@ -45,35 +45,43 @@ std::vector<WataLib::Json::StageData> WataLib::Json::LoadStageDatas(const std::w
 	//ファイルの内容をJSONオブジェックとしてパース
 	json data = json::parse(file);
 
+	StageData stageData;
+
+	//必要データの取得
+
+	stageData.BoomerangCount = data["BoomerangCount"];
+
+
+
 	//ステージ情報の保存配列を作成
-	std::vector<StageData> stageData;
+	std::vector<ObjectData> objectData;
 
 	//StageObject[](ピンク色)内のデータの{}(青色)の要素だけ回す
 	for (const auto& item : data["StageObject"])
 	{
 		//ステージデータ変数
-		StageData stage;
+		ObjectData object;
 		//kindsの要素の値を代入
-		stage.ModelName = item["kinds"];
+		object.ModelName = item["kinds"];
 
 
 		//BoundingSphereRadiusがあるか
 		if (item.contains("BoundingSphereRadius"))
 		{
 			//BoundingSphereRadiusの要素の値を代入
-			stage.BoundingSphereRadius = item["BoundingSphereRadius"];
+			object.BoundingSphereRadius = item["BoundingSphereRadius"];
 		}
 		//なければ
 		else
 		{
-			stage.BoundingSphereRadius = 0.0f;
+			object.BoundingSphereRadius = 0.0f;
 		}
 
 		//Positionがあるか
 		if (item.contains("Position"))
 		{
 			//Positionの要素を代入
-			stage.Position = DirectX::SimpleMath::Vector3(
+			object.Position = DirectX::SimpleMath::Vector3(
 				item["Position"]["x"],           //Positionの要素のxの要素を代入x値
 				item["Position"]["y"],           //Positionの要素のxの要素を代入y値
 				item["Position"]["z"]            //Positionの要素のxの要素を代入z値
@@ -82,14 +90,14 @@ std::vector<WataLib::Json::StageData> WataLib::Json::LoadStageDatas(const std::w
 		//なければ
 		else
 		{
-			stage.Position = DirectX::SimpleMath::Vector3::Zero;
+			object.Position = DirectX::SimpleMath::Vector3::Zero;
 		}
 
 		//Scaleがあるか
 		if (item.contains("Scale"))
 		{
 			//Scaleの要素を代入
-			stage.Scale = DirectX::SimpleMath::Vector3(
+			object.Scale = DirectX::SimpleMath::Vector3(
 				item["Scale"]["x"],             //Scaleの要素のxの要素を代入
 				item["Scale"]["y"],             //Scaleの要素のyの要素を代入
 				item["Scale"]["z"]              //Scaleの要素のzの要素を代入
@@ -98,14 +106,14 @@ std::vector<WataLib::Json::StageData> WataLib::Json::LoadStageDatas(const std::w
 		//なければ
 		else
 		{
-			stage.Scale = DirectX::SimpleMath::Vector3::Zero;
+			object.Scale = DirectX::SimpleMath::Vector3::Zero;
 		}
 
 		//Rotationがあるか
 		if (item.contains("Rotation"))
 		{
 			//Rotationの要素を代入
-			stage.Rotation = DirectX::SimpleMath::Vector3(
+			object.Rotation = DirectX::SimpleMath::Vector3(
 				item["Rotation"]["x"],          //Rotationの要素のxの要素を代入
 				item["Rotation"]["y"],          //Rotationの要素のyの要素を代入
 				item["Rotation"]["z"]           //Rotationの要素のzの要素を代入
@@ -114,16 +122,19 @@ std::vector<WataLib::Json::StageData> WataLib::Json::LoadStageDatas(const std::w
 		//なければ
 		else
 		{
-			stage.Rotation = DirectX::SimpleMath::Vector3::Zero;
+			object.Rotation = DirectX::SimpleMath::Vector3::Zero;
 		}
 
 		
 		//１つのステージデータを代入
-		stageData.push_back(stage);
+		objectData.push_back(object);
 
 	}
 
-	
+
+	//オブジェクトデータの登録
+	stageData.ObjectDatas = objectData;
+
 
 	return stageData;
 

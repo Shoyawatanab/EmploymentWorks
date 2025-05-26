@@ -24,6 +24,7 @@
 
 #include "Game/Observer/Enemy/EnemyMessenger.h"
 #include "Libraries/MyLib/DebugString.h"
+#include "Game/InstanceRegistry.h"
 
 
 
@@ -69,7 +70,6 @@ BossEnemy::BossEnemy(CommonResources* resources, DirectX::SimpleMath::Vector3 sc
 BossEnemy::~BossEnemy()
 {
 
-
 	m_actionList.clear();
 }
 
@@ -78,15 +78,12 @@ BossEnemy::~BossEnemy()
 /// 必要なポインタの追加
 /// </summary>
 /// <param name="player">プレイヤ</param>
-void BossEnemy::AddPointer(Player* player, StageObjectManager* stageObjectManager)
+void BossEnemy::AddPointer( StageObjectManager* stageObjectManager)
 {
 
 
-	m_player = player;
-
 	m_stageObjectmanger = stageObjectManager;
 
-	m_beam->AddPointer(this,player);
 }
 
 /// <summary>
@@ -128,6 +125,8 @@ void BossEnemy::Initialize()
 {
 
 	EnemyEntity::Initialize();
+
+	m_player = InstanceRegistry::GetInstance()->GetRegistryInstance<Player>("Player");
 
 	auto device = BaseEntity::GetCommonResources()->GetDeviceResources()->GetD3DDevice();
 	auto context = BaseEntity::GetCommonResources()->GetDeviceResources()->GetD3DDeviceContext();
@@ -180,10 +179,8 @@ void BossEnemy::Initialize()
 	//初期状態
 	ChangeAction("Idle");
 
-	m_behavior->AddPointer(m_player, this);
-
 	//初期化
-	m_behavior->Initialize(BaseEntity::GetCommonResources());
+	m_behavior->Initialize(BaseEntity::GetCommonResources(),this);
 	m_beam->Initialize();
 	m_barrier->Initialize();
 	m_shadow->Initialize(device, context, states);
@@ -203,8 +200,6 @@ void BossEnemy::Initialize()
 
 
 	m_target = m_player;
-
-	
 
 
 }

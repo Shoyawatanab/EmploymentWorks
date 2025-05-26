@@ -46,8 +46,6 @@ public:
 	//描画
 	void Render();
 
-	//クラスに必要な情報（ポインタ）を登録する
-	void AddPointer(WataLib::TPS_Camera* tpsCamera);
 	//範囲内かどうかさがす
 	DirectX::SimpleMath::Vector2 FilterWithinRange(const std::vector<DirectX::SimpleMath::Vector3>& points, const DirectX::SimpleMath::Vector2& center, float range);
 

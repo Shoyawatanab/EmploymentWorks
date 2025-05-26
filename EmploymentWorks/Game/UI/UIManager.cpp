@@ -85,10 +85,10 @@ void UIManager::Finalize()
 /// <param name="player">プレイヤ</param>
 /// <param name="playScene">プレイシーン</param>
 /// <param name="enemyManager">エネミーマネージャー</param>
-void UIManager::AddPointer(Player* player, PlayScene* playScene, EnemyManager* enemyManager)
+void UIManager::AddPointer(PlayScene* playScene, EnemyManager* enemyManager)
 {
 
-	m_stateMahine->AddPointer(player,playScene,enemyManager);
+	m_stateMahine->AddPointer(playScene,enemyManager);
 
 }
 

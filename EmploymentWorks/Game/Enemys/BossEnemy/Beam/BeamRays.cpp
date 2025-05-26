@@ -262,15 +262,7 @@ void BeamRays::Update(const float& elapsedTime)
 
 }
 
-/// <summary>
-/// 必要なポインタの追加
-/// </summary>
-/// <param name="beam">ビーム</param>
-void BeamRays::AddPointer(Beam* beam)
-{
-	m_beam = beam;
 
-}
 
 
 

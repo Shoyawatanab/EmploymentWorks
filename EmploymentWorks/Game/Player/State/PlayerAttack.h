@@ -21,12 +21,12 @@ public:
 
 public:
 	//コンストラクタ
-	PlayerAttack() ;
+	PlayerAttack(Player* player) ;
 	//デストラクタ
 	~PlayerAttack() override;
 
 	//初期化
-	void Initialize(CommonResources* resources) override;
+	void Initialize(CommonResources* resources);
 	// 更新する
 	void Update(const float& elapsedTime) override;
 	//描画
@@ -38,11 +38,6 @@ public:
 
 	//通知時に呼び出される
 	void Notify(const Telegram<GameMessageType>& telegram) override;
-
-
-	//必要なポインタの登録
-	void AddPointer(Player* player);
-
 
 private:
 	// 共通リソース

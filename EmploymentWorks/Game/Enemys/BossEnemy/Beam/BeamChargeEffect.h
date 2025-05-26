@@ -32,11 +32,12 @@ public:
 
 public:
 	//コンストラク
-	BeamChargeEffect(CommonResources* resoure, DirectX::SimpleMath::Vector3 scale, DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Quaternion rotate);
+	BeamChargeEffect(CommonResources* resoure, Beam* beam,DirectX::SimpleMath::Vector3 scale, DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Quaternion rotate);
 	//デストラクタ
 	~BeamChargeEffect();
 	//初期化
 	void Initialize() override ;
+
 	//更新処理
 	void Update(const float& elapsedTime) override ;
 	//描画処理
@@ -44,8 +45,6 @@ public:
 	//
 	void Finalize();
 
-	//クラスに必要な情報（ポインタ）の登録
-	void AddPointer(Beam* beam);
 
 private:
 

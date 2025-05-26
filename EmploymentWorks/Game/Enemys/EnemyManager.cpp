@@ -11,6 +11,9 @@
 #include "Game/Enemys/BossEnemy/BossEnemy.h"
 #include "Game/Enemys/BirdEnemy/BirdEnemy.h"
 #include "Game/Params.h"
+#include "Game/InstanceRegistry.h"
+#include "Game/Player/Player.h"
+
 
 /// <summary>
 /// コンストラクタ
@@ -22,7 +25,7 @@ EnemyManager::EnemyManager(Player* player, StageObjectManager* stageObjectmanger
 	m_commonResources{}
 	,m_enemys{}
 	,m_remainingEnemys{}
-	,m_player{player}
+	,m_player{InstanceRegistry::GetInstance()->GetRegistryInstance<Player>("Player")}
 	,m_bossEnemy{}
 	,m_enemyDatas{}
 	,m_stageObjectmanger{stageObjectmanger}
@@ -119,7 +122,7 @@ void EnemyManager::CreateEnemy()
 					DirectX::XMConvertToRadians(enemyData.Rotation.z))
 			);
 			enemy->SetManager(this);
-			enemy->AddPointer(m_player,m_stageObjectmanger);
+			enemy->AddPointer(m_stageObjectmanger);
 			enemy->Initialize();
 
 			m_bossEnemy = enemy.get();
@@ -137,7 +140,6 @@ void EnemyManager::CreateEnemy()
 					DirectX::XMConvertToRadians(enemyData.Rotation.z))
 			);
 			enemy->SetManager(this);
-			enemy->AddPointer(m_player);
 			enemy->Initialize();
 
 
@@ -153,7 +155,7 @@ void EnemyManager::CreateEnemy()
 /// 敵データの追加
 /// </summary>
 /// <param name="enemyData">データ</param>
-void EnemyManager::AddEnemyData(WataLib::Json::StageData enemyData)
+void EnemyManager::AddEnemyData(WataLib::Json::ObjectData enemyData)
 {
 
 	m_enemyDatas.push_back(enemyData);

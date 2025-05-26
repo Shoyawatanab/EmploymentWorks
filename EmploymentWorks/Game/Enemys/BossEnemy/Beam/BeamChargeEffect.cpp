@@ -37,7 +37,7 @@ const std::vector<D3D11_INPUT_ELEMENT_DESC> BeamChargeEffect::INPUT_LAYOUT =
 /// <param name="scale">大きさ</param>
 /// <param name="position">座標</param>
 /// <param name="rotate">回転</param>
-BeamChargeEffect::BeamChargeEffect(CommonResources* resoure, DirectX::SimpleMath::Vector3 scale,DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Quaternion rotate)
+BeamChargeEffect::BeamChargeEffect(CommonResources* resoure, Beam* beam,DirectX::SimpleMath::Vector3 scale,DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Quaternion rotate)
 	:
 	BaseEntity(resoure, scale,position,rotate)
 	,m_model{}
@@ -46,7 +46,7 @@ BeamChargeEffect::BeamChargeEffect(CommonResources* resoure, DirectX::SimpleMath
 	,m_inputLayout{}
 	,m_CBuffer{}
 	,m_initialPosition{}
-	,m_beam{}
+	,m_beam{beam}
 {
 }
 
@@ -70,6 +70,7 @@ void BeamChargeEffect::Initialize()
 
 
 }
+
 
 /// <summary>
 /// 更新
@@ -151,16 +152,6 @@ void BeamChargeEffect::Render(DirectX::SimpleMath::Matrix view, DirectX::SimpleM
 void BeamChargeEffect::Finalize()
 {
 	// do nothing.
-}
-
-/// <summary>
-/// 必要なポインタの追加
-/// </summary>
-/// <param name="beam">ビーム</param>
-void BeamChargeEffect::AddPointer(Beam* beam)
-{
-	m_beam = beam;
-
 }
 
 /// <summary>

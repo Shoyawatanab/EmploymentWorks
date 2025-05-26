@@ -51,7 +51,6 @@ Barrier::Barrier(CommonResources* resources, BaseEntity* parent)
 	,m_initialRotate{}
 	,m_maxScale{}
 	,m_maxSizeTime{}
-	,m_beam{}
 	,m_time{}
 	,m_stateMachine{}
 {
@@ -276,16 +275,6 @@ void Barrier::OnDisable()
 {
 }
 
-/// <summary>
-/// 必要なポインタの追加
-/// </summary>
-/// <param name="beam">ビーム</param>
-void Barrier::AddPointer(Beam* beam)
-{
-
-	m_beam = beam;
-
-}
 
 /// <summary>
 /// リセット

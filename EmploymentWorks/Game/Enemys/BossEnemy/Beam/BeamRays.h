@@ -59,8 +59,6 @@ public:
 	void Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection) override;
 	//更新処理
 	void  Update(const float& elapsedTime) override;
-	//クラスに必要な情報（ポインタ）の登録
-	void AddPointer(Beam* beam);
 
 private:
 	static const std::vector<D3D11_INPUT_ELEMENT_DESC> INPUT_LAYOUT;
@@ -88,8 +86,6 @@ private:
 	float m_thickness;
 	//当たったかどうか
 	bool m_isHit;
-	//ビーム
-	Beam* m_beam;
 	//初期座標
 	DirectX::SimpleMath::Vector3 m_initialPosition;
 

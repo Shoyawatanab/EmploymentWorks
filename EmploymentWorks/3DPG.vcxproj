@@ -276,6 +276,7 @@
     <ClInclude Include="Game\Entities\INotMoveEntity.h" />
     <ClInclude Include="Game\Entities\ItemEntity.h" />
     <ClInclude Include="Game\Entities\MoveEntity.h" />
+    <ClInclude Include="Game\InstanceRegistry.h" />
     <ClInclude Include="Game\Interface\IActione.h" />
     <ClInclude Include="Game\Interface\IBehaviorNode.h" />
     <ClInclude Include="Game\Interface\ICamera.h" />
@@ -453,6 +454,7 @@
     <ClCompile Include="Game\Entities\INotMoveEntity.cpp" />
     <ClCompile Include="Game\Entities\ItemEntity.cpp" />
     <ClCompile Include="Game\Entities\MoveEntity.cpp" />
+    <ClCompile Include="Game\InstanceRegistry.cpp" />
     <ClCompile Include="Game\ItemAcquisition.cpp" />
     <ClCompile Include="Game\Observer\Enemy\EnemyMessenger.cpp" />
     <ClCompile Include="Game\Observer\Messenger.cpp" />

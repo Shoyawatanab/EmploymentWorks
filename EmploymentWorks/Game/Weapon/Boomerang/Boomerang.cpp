@@ -12,6 +12,7 @@
 #include "Game/Player/Player.h"
 #include "Game/Params.h"
 #include "Game/Observer/Messenger.h"
+#include "Game/InstanceRegistry.h"
 
 using namespace DirectX::SimpleMath;
 
@@ -40,7 +41,9 @@ Boomerang::Boomerang(CommonResources* resources
 	,m_isCatch{}
 {
 
-	m_stateMachine = std::make_unique<BoomerangStateMachine>();
+	InstanceRegistry::GetInstance()->Register<Boomerang>("Boomerang",this);
+
+	m_stateMachine = std::make_unique<BoomerangStateMachine>(this);
 
 	m_shadow = std::make_unique<WataLib::Shadow>();
 
@@ -66,24 +69,15 @@ void Boomerang::OnAcquired()
 
 }
 
-/// <summary>
-/// 必要なポインタの追加
-/// </summary>
-/// <param name="player">プレイヤ</param>
-/// <param name="targetMarker">ターゲットマーカー</param>
-/// <param name="tpsCamera">TPSカメラ</param>
-void Boomerang::AddPointer(Player* player, TargetMarker* targetMarker, WataLib::TPS_Camera* tpsCamera)
-{
 
-	m_stateMachine->AddPointer(this,player,targetMarker,tpsCamera);
-
-}
 
 /// <summary>
 /// 初期化
 /// </summary>
 void Boomerang::Initialize()
 {
+
+
 	auto device = BaseEntity::GetCommonResources()->GetDeviceResources()->GetD3DDevice();
 
 	ItemEntity::Initialize();

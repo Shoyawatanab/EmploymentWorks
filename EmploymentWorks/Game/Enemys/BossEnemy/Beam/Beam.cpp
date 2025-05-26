@@ -19,7 +19,7 @@
 #include "Game/CollisiionManager.h"
 #include "Game/Params.h"
 #include "Game/Player/Player.h"
-
+#include "Game/InstanceRegistry.h"
 
 
 /// <summary>
@@ -58,6 +58,8 @@ Beam::~Beam()
 /// </summary>
 void Beam::Initialize()
 {
+
+	m_player = InstanceRegistry::GetInstance()->GetRegistryInstance<Player>("Player");
 
 	//初期化
 	m_energyBall->Initialize();
@@ -126,21 +128,6 @@ void Beam::Update(const float& elapsedTime)
 
 
 /// <summary>
-/// 必要なポインタの追加
-/// </summary>
-/// <param name="bossEnemy">ボス敵</param>
-/// <param name="player">プレイヤ</param>
-void Beam::AddPointer(BossEnemy* bossEnemy, Player* player)
-
-{
-	UNREFERENCED_PARAMETER(bossEnemy);
-
-	m_energyBall->AddPointer(this);
-	m_rays->AddPointer(this);
-	m_player = player;
-}
-
-/// <summary>
 /// 当たり判定に追加
 /// </summary>
 /// <param name="collsionManager">当たり判定クラス</param>
@@ -181,8 +168,7 @@ void Beam::CreateParticle()
 	//パーティクルの生成
 	for (int i = 0; i < position.size(); i++)
 	{
-		auto particle = std::make_unique<BeamChargeEffect>(BaseEntity::GetCommonResources(), EFFECT_SCALE, position[i], rotate[i]);
-		particle->AddPointer(this);
+		auto particle = std::make_unique<BeamChargeEffect>(BaseEntity::GetCommonResources(),this, EFFECT_SCALE, position[i], rotate[i]);
 		particle->SetParent(this);
 		particle->Initialize();
 

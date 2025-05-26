@@ -14,13 +14,13 @@
 /// <summary>
 /// コンストラクタ
 /// </summary>
-PlayerIdle::PlayerIdle()
+PlayerIdle::PlayerIdle(Player* player)
 	:
 	m_commonResources{}
 	,m_position{}
 	,m_scale{}
 	,m_rotation{}
-	,m_player{}
+	,m_player{player}
 {
 
 
@@ -34,14 +34,7 @@ PlayerIdle::~PlayerIdle()
 }
 
 
-/// <summary>
-/// 必要なポインタの追加
-/// </summary>
-/// <param name="player">プレイヤ</param>
-void PlayerIdle::AddPointer(Player* player)
-{
-	m_player = player;
-}
+
 
 /// <summary>
 /// 初期化

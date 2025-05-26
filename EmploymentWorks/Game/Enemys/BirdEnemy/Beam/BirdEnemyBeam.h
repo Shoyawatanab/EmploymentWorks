@@ -40,7 +40,7 @@ public:
 
 public:
 	//コンストラクタ
-	BirdEnemyBeam(CommonResources* resources, Player* player, BirdEnemy* enemy);
+	BirdEnemyBeam(CommonResources* resources, BirdEnemy* enemy);
 	//デストラクタ
 	~BirdEnemyBeam() override;	
 	//初期化

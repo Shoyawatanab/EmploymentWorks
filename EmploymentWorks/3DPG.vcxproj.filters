@@ -717,6 +717,9 @@
     <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\Idleing\IdleingActionComtroller.h">
       <Filter>Game\Enemys\BossEnemy\ActionNode\Idleing</Filter>
     </ClInclude>
+    <ClInclude Include="Game\InstanceRegistry.h">
+      <Filter>Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -1186,6 +1189,9 @@
     </ClCompile>
     <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\Idleing\IdleingActionComtroller.cpp">
       <Filter>Game\Enemys\BossEnemy\ActionNode\Idleing</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\InstanceRegistry.cpp">
+      <Filter>Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

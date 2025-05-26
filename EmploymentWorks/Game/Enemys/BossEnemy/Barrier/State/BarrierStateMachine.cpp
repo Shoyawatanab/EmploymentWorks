@@ -26,15 +26,6 @@ BarrierStateMachine::~BarrierStateMachine()
 }
 
 
-/// <summary>
-/// 必要なポインタの追加
-/// </summary>
-/// <param name="player">プレイヤ</param>
-void BarrierStateMachine::AddPointer(Player* player)
-{
-	UNREFERENCED_PARAMETER(player);
-
-}
 
 /// <summary>
 /// 初期化

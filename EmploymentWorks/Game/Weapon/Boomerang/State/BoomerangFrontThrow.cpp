@@ -9,6 +9,7 @@
 #include "Game/Player/Player.h"
 #include "Libraries/WataLib/Camera/TPS_Camera.h"
 #include "Game/Params.h"
+#include "Game/InstanceRegistry.h"
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
@@ -16,12 +17,12 @@ using namespace DirectX::SimpleMath;
 /// <summary>
 /// コンストラクタ
 /// </summary>
-BoomerangFrontThrow::BoomerangFrontThrow()
+BoomerangFrontThrow::BoomerangFrontThrow(Boomerang* boomerang)
 	:
 	m_commonResources{}
 	,m_totalTime{}
 	,m_state{}
-	,m_boomerang{}
+	,m_boomerang{boomerang}
 	,m_player{}
 	,m_targetMarker{}
 	,m_tpsCamera{}
@@ -38,20 +39,7 @@ BoomerangFrontThrow::~BoomerangFrontThrow()
 }
 
 
-/// <summary>
-/// 必要なポインタの追加
-/// </summary>
-/// <param name="boomerang">ブーメラン</param>
-/// <param name="player">プレイヤ</param>
-/// <param name="targetMarker">ターゲットマーカー</param>
-/// <param name="tpsCamera">TPSカメラ</param>
-void BoomerangFrontThrow::AddPointer(Boomerang* boomerang, Player* player, TargetMarker* targetMarker,WataLib::TPS_Camera* tpsCamera)
-{
-	m_boomerang = boomerang;
-	m_player = player;
-	m_targetMarker = targetMarker;
-	m_tpsCamera = tpsCamera;
-}
+
 
 
 
@@ -129,6 +117,11 @@ void BoomerangFrontThrow::ChangeRotationDatas(DirectX::SimpleMath::Quaternion fi
 void BoomerangFrontThrow::Initialize(CommonResources* resources)
 {
 	m_commonResources = resources;
+
+	m_player = InstanceRegistry::GetInstance()->GetRegistryInstance<Player>("Player");
+	m_targetMarker = InstanceRegistry::GetInstance()->GetRegistryInstance<TargetMarker>("TargetMarker");
+	m_tpsCamera = InstanceRegistry::GetInstance()->GetRegistryInstance<WataLib::TPS_Camera>("TPS_Camera");
+
 	
 }
 

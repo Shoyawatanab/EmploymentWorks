@@ -32,12 +32,12 @@ public:
 
 public:
 	//コンストラクタ
-	BoomerangRightThrow() ;
+	BoomerangRightThrow(Boomerang* boomerang) ;
 	//デストラクタ
 	~BoomerangRightThrow() override;
 
 	//初期化
-	void Initialize(CommonResources* resources) override;
+	void Initialize(CommonResources* resources) ;
 	// 更新する
 	void Update(const float& elapsedTime) override;
 	//描画
@@ -47,8 +47,6 @@ public:
 	//状態を抜けた時
 	void Exit() override;
 
-	//必要なポインタの登録
-	void AddPointer(Boomerang* boomerang,Player* player, TargetMarker* targetMarker, WataLib::TPS_Camera* tpsCamera);
 
 	//スプライン曲線の基準点の作成
 	void CreateSplineCurvePositon();

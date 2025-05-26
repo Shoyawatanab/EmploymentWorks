@@ -117,7 +117,7 @@ public:
 
 
 	//必要なポインタの登録
-	void AddPointer(Player* player, StageObjectManager* stageObjectManager);
+	void AddPointer(StageObjectManager* stageObjectManager);
 
 
 	//HPの取得

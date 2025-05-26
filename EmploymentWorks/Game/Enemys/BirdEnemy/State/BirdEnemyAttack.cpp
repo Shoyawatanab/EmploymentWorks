@@ -7,7 +7,7 @@
 #include "Game/Player/Player.h"
 #include "Game/Enemys/BirdEnemy/BirdEnemy.h"
 #include "Game/Enemys/BirdEnemy/Beam/BirdEnemyBeam.h"
-
+#include "Game/InstanceRegistry.h"
 
 
 /// <summary>
@@ -41,11 +41,14 @@ BirdEnemyAttack::~BirdEnemyAttack()
 /// 初期化
 /// </summary>
 /// <param name="resoure">共通リソース</param>
-void BirdEnemyAttack::Initialize(CommonResources* resoure)
+void BirdEnemyAttack::Initialize(CommonResources* resoure, BirdEnemy* owner)
 {
 
 	m_commonResources = resoure;
 
+	m_player = InstanceRegistry::GetInstance()->GetRegistryInstance<Player>("Player");
+
+	m_birdEnemy = owner;
 
 }
 
@@ -116,15 +119,4 @@ void BirdEnemyAttack::Exit()
 
 }
 
-/// <summary>
-/// 必要なポインタの追加
-/// </summary>
-/// <param name="player">プレイヤ</param>
-/// <param name="birdEnemy">鳥の敵</param>
-void BirdEnemyAttack::AddPointer(Player* player, BirdEnemy* birdEnemy)
-{
-	m_player = player;
-	m_birdEnemy = birdEnemy;
-
-}
 

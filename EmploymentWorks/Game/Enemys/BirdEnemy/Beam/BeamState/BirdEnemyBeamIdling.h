@@ -17,7 +17,7 @@ class BirdEnemyBeamIdling : public IState
 {
 public:
 	// コンストラクタ
-	BirdEnemyBeamIdling(Player* player, BirdEnemy* birdEnemy, BirdEnemyBeam* beam);
+	BirdEnemyBeamIdling(BirdEnemy* birdEnemy, BirdEnemyBeam* beam);
 	// デストラクタ
 	~BirdEnemyBeamIdling();
 	// 初期化する

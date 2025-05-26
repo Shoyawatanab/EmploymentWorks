@@ -33,10 +33,10 @@ UIStateMachine::~UIStateMachine()
 /// <param name="player">プレイヤ</param>
 /// <param name="playScene">プレイシーン</param>
 /// <param name="enemyManager">エネミーマネージャー</param>
-void UIStateMachine::AddPointer(Player* player, PlayScene* playScene, EnemyManager* enemyManager)
+void UIStateMachine::AddPointer(PlayScene* playScene, EnemyManager* enemyManager)
 {
-	m_playUi->AddPointer(player,enemyManager);
-	m_gameEndUI->AddPointer(player,playScene);
+	m_playUi->AddPointer(enemyManager);
+	m_gameEndUI->AddPointer(playScene);
 }
 
 /// <summary>

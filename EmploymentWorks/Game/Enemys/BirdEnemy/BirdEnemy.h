@@ -92,10 +92,6 @@ public:
 	//アニメーションの変更
 	void ChangeAnimation(std::string animationType) override;
 
-
-	//必要なポインタの登録
-	void AddPointer(Player* player);
-
 	void Rotate(float elapsedTime);
 
 private:

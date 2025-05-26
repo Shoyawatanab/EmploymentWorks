@@ -30,31 +30,21 @@ BirdEnemyStateMachine::~BirdEnemyStateMachine()
 }
 
 
-/// <summary>
-/// 必要なポインタの追加
-/// </summary>
-/// <param name="player">プレイヤ</param>
-/// <param name="enemy">鳥の敵</param>
-void BirdEnemyStateMachine::AddPointer(Player* player, BirdEnemy* enemy)
-{
-	m_idle->AddPointer(player,enemy);
-	m_attack->AddPointer(player,enemy);
-	m_move->AddPointer(player, enemy);
-}
+
 
 /// <summary>
 /// 初期化
 /// </summary>
 /// <param name="resources">共通リソース</param>
 /// <param name="startState">s初期のステート</param>
-void BirdEnemyStateMachine::Initialize(CommonResources* resources, IState* startState)
+void BirdEnemyStateMachine::Initialize(CommonResources* resources, BirdEnemy* owner)
 {
 
-	m_idle->Initialize(resources);
-	m_attack->Initialize(resources);
-	m_move->Initialize(resources);
+	m_idle->Initialize(resources,owner);
+	m_attack->Initialize(resources,owner);
+	m_move->Initialize(resources,owner);
 
-	m_currentState = startState;
+	m_currentState = m_idle.get();
 
 
 

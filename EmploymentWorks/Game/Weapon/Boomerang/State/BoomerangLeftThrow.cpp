@@ -10,11 +10,12 @@
 #include "Libraries/WataLib/Camera/TPS_Camera.h"
 #include "Game/Params.h"
 #include "Game/MathUtil.h"
+#include "Game/InstanceRegistry.h"
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
-BoomerangLeftThrow::BoomerangLeftThrow()
+BoomerangLeftThrow::BoomerangLeftThrow(Boomerang* boomerang)
 	:
 	m_commonResources{}
 	,m_splineCurvePosition{}
@@ -24,7 +25,7 @@ BoomerangLeftThrow::BoomerangLeftThrow()
 	,m_rotationDatas{}
 	,m_horizontalRotation{}
 	,m_initialRotation{}
-	, m_boomerang{}
+	, m_boomerang{boomerang}
 	, m_player{}
 	, m_targetMarker{}
 	, m_tpsCamera{}
@@ -42,20 +43,7 @@ BoomerangLeftThrow::~BoomerangLeftThrow()
 }
 
 
-/// <summary>
-/// 必要なポインタの追加
-/// </summary>
-/// <param name="boomerang">ブーメラン</param>
-/// <param name="player">プレイヤ</param>
-/// <param name="targetMarker">ターゲットマーカー</param>
-/// <param name="tpsCamera">TPSカメラ</param>
-void BoomerangLeftThrow::AddPointer(Boomerang* boomerang, Player* player, TargetMarker* targetMarker,WataLib::TPS_Camera* tpsCamera)
-{
-	m_boomerang = boomerang;
-	m_player = player;
-	m_targetMarker = targetMarker;
-	m_tpsCamera = tpsCamera;
-}
+
 
 /// <summary>
 /// スプライン曲線の基準点の作成
@@ -292,6 +280,9 @@ void BoomerangLeftThrow::Initialize(CommonResources* resources)
 	m_commonResources = resources;
 
 
+	m_player = InstanceRegistry::GetInstance()->GetRegistryInstance<Player>("Player");
+	m_targetMarker = InstanceRegistry::GetInstance()->GetRegistryInstance<TargetMarker>("TargetMarker");
+	m_tpsCamera = InstanceRegistry::GetInstance()->GetRegistryInstance<WataLib::TPS_Camera>("TPS_Camera");
 
 	
 }

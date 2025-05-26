@@ -46,9 +46,8 @@ public:
 	//アニメーションの変更
 	void ChangeAnimation(std::string animationType) override ;
 
-
 	//パーツに対してメッセージを送る　
-	virtual void NotifyParts(PartMessageType type) {};
+	virtual void NotifyParts(PartMessageType type) { UNREFERENCED_PARAMETER(type); };
 
 private:
 

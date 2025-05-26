@@ -30,7 +30,6 @@ private :
 	static constexpr DirectX::SimpleMath::Vector2 HP_POSITION_OFFSET { 70.0f,1.0f};
 	static constexpr DirectX::SimpleMath::Vector2 HP_SCALE { 1.0f,1.0f};
 	//ブーメラン関係
-	static constexpr int BOOMERANG_COUNT{ 3 };
 	static constexpr DirectX::SimpleMath::Vector2 BOOMERANG_POSITION        { 50.0f, 600.0f};
 	static constexpr DirectX::SimpleMath::Vector2 BOOMERANG_POSITION_OFFSET { 70.0f, 1.0f};
 	static constexpr DirectX::SimpleMath::Vector2 BOOMERANG_SCALE { 0.1f, 0.1f};
@@ -68,7 +67,7 @@ public:
 
 	void Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection) override;
 	//初期化
-	void Initialize(CommonResources* resources) override;
+	void Initialize(CommonResources* resources) ;
 	// 更新する
 	void Update(const float& elapsedTime) override;
 	//状態に入った時
@@ -77,7 +76,7 @@ public:
 	void Exit() override;
 
 	//必要なポインタの登録
-	void AddPointer(Player* player, EnemyManager* enemyManager);
+	void AddPointer(EnemyManager* enemyManager);
 
 	//画像の読み込み
 	std::unique_ptr<UserInterface> AddTexture(std::string key

@@ -30,6 +30,8 @@
 #include "Game/Score.h"
 #include "Libraries/WataLib/UserInterface.h"
 #include "Game/Sound/SoundManager.h"
+#include "Game/Params.h"
+#include "Game/InstanceRegistry.h"
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
@@ -57,6 +59,9 @@ PlayScene::PlayScene(SceneManager::StageID stageID)
 	,m_soundManager{}
 {
 	Messenger::GetInstance()->Clear();
+
+	InstanceRegistry::GetInstance()->RegistryClear();
+
 }
 
 //---------------------------------------------------------
@@ -66,8 +71,10 @@ PlayScene::~PlayScene()
 {
 
 	// do nothing.
+	Messenger::GetInstance()->Clear();
 
 
+	InstanceRegistry::GetInstance()->RegistryClear();
 
 }
 
@@ -101,14 +108,12 @@ void PlayScene::Initialize(CommonResources* resources)
 	m_uiManager = std::make_unique<UIManager>();
 	m_targetMarker = std::make_unique<TargetMarker>();
 	m_effectsManager = std::make_unique<EffectsManager>();
-	m_sky = std::make_unique<Sky>(m_commonResources,Vector3::Zero,Vector3::Zero,Quaternion::Identity);
+	m_sky = std::make_unique<Sky>(m_commonResources,Vector3::One,Vector3::Zero,Quaternion::Identity);
 
 
 	//各クラスに必要なポインタを登録
-	m_cameraManager->AddPointer(m_player.get(),m_enemyManager.get());
-	m_player->AddPointer(m_cameraManager->GetTPSCamera(),m_targetMarker.get());
-	m_uiManager->AddPointer(m_player.get(),this,m_enemyManager.get());
-	m_targetMarker->AddPointer(m_cameraManager->GetTPSCamera());
+	m_cameraManager->AddPointer(m_enemyManager.get());
+	m_uiManager->AddPointer(this,m_enemyManager.get());
 
 	//ステージの作成
 	CreateStageObject();
@@ -270,7 +275,7 @@ IScene::SceneID PlayScene::GetNextSceneID() const
 void PlayScene::CreateStageObject()
 {
 
-	std::vector<WataLib::Json::StageData> stageParameters;
+	WataLib::Json::StageData stageParameters;
 
 	std::unique_ptr<WataLib::Json> json = std::make_unique<WataLib::Json>();
 
@@ -288,8 +293,14 @@ void PlayScene::CreateStageObject()
 			break;
 	}
 
+	int a = stageParameters.BoomerangCount;
+
+	//ブーメランの数
+	 Params::BOOMERANG_MAX_COUNT = a;
+
+
 	//ステージオブジェックとの生成
-	for (auto& parameter : stageParameters)
+	for (auto& parameter : stageParameters.ObjectDatas)
 	{
 
 		if (parameter.ModelName == "Floor")

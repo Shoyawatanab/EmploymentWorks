@@ -49,7 +49,7 @@ namespace WataLib
 		// デストラクタ
 		~GameEndCamera() = default;
 		//初期化
-		void Initialize(CommonResources* resources) override;
+		void Initialize(CommonResources* resources);
 		//更新処理
 		void Update(const float& elapsedTime);
 		//状態に入った時

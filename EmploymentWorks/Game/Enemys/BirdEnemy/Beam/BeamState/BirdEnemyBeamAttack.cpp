@@ -10,17 +10,17 @@
 
 #include "Game/Params.h"
 #include "Game/MathUtil.h"
+#include "Game/InstanceRegistry.h"
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
-/// <param name="player">プレイヤ</param>
 /// <param name="birdEnemy">鳥の敵</param>
 /// <param name="beam">ビーム</param>
-BirdEnemyBeamAttack::BirdEnemyBeamAttack(Player* player, BirdEnemy* birdEnemy, BirdEnemyBeam* beam)
+BirdEnemyBeamAttack::BirdEnemyBeamAttack(BirdEnemy* birdEnemy, BirdEnemyBeam* beam)
 	:
 	m_commonResources{},
-	m_player{player}
+	m_player{}
 	,m_birdEnemy{birdEnemy}
 	,m_beam{beam}
 	,m_moveDirectiion{}
@@ -49,6 +49,8 @@ void BirdEnemyBeamAttack::Initialize(CommonResources* resoure)
 {
 	m_commonResources = resoure;
 
+	m_player = InstanceRegistry::GetInstance()->GetRegistryInstance<Player>("Player");
+
 	//初期化
 	m_initialSpeed = Params::BIRDENEMY_BEAM_BALL_INITIAL_SPEED;
 	m_finalSpeed = Params::BIRDENEMY_BEAM_BALL_FAINAL_SPEED;
@@ -65,6 +67,7 @@ void BirdEnemyBeamAttack::Initialize(CommonResources* resoure)
 void BirdEnemyBeamAttack::Update(const float& elapsedTime)
 {
 	UNREFERENCED_PARAMETER(elapsedTime);
+
 	using namespace DirectX;
 	using namespace DirectX::SimpleMath;
 
