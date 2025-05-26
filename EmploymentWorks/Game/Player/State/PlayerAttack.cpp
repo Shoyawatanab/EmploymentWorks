@@ -14,12 +14,13 @@
 /// <summary>
 /// コンストラクタ
 /// </summary>
-PlayerAttack::PlayerAttack()
+PlayerAttack::PlayerAttack(Player* player)
 	:
 	m_commonResources{}
 	,m_position{}
 	,m_scale{}
 	,m_rotation{}
+	,m_player{player}
 {
 
 }
@@ -32,14 +33,6 @@ PlayerAttack::~PlayerAttack()
 }
 
 
-/// <summary>
-/// 必要なポインタの追加
-/// </summary>
-/// <param name="player">プレイヤ</param>
-void PlayerAttack::AddPointer(Player* player)
-{
-	m_player = player;
-}
 
 /// <summary>
 /// 初期化

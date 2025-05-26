@@ -23,11 +23,9 @@ public:
 	//デストラクタ
 	~BehaviorTree();
 	//初期化
-	void Initialize(CommonResources* resources);
+	void Initialize(CommonResources* resources,BossEnemy* enemy);
 	//更新
 	void Update(float elapsedTime);
-	//クラスに必要な情報（ポインタ）の登録
-	void AddPointer(Player* player, BossEnemy* enemy);
 
 private:
 	//振り下ろし攻撃の作成

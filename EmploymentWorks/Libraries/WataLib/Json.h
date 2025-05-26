@@ -10,14 +10,6 @@ namespace WataLib
 	public:
 
 //ステージ情報のJson読み込み専用構造体
-		struct StageData
-		{
-			std::string ModelName;
-			DirectX::SimpleMath::Vector3 Position;
-			DirectX::SimpleMath::Vector3 Scale;
-			DirectX::SimpleMath::Vector3 Rotation;
-			float BoundingSphereRadius;
-		};
 
 		struct ObjectData
 		{
@@ -27,6 +19,14 @@ namespace WataLib
 			DirectX::SimpleMath::Vector3 Rotation;
 			float BoundingSphereRadius;
 		};
+
+		struct StageData
+		{
+			int BoomerangCount;
+			std::vector<ObjectData> ObjectDatas;
+		};
+
+
 
 //アニメーションのJson読み込み専用構造体
 
@@ -56,7 +56,7 @@ namespace WataLib
 		//デストラクタ
 		~Json();
 		//ステージ情報の読み込み
-		std::vector<StageData> LoadStageDatas(const std::wstring& fileName);
+		StageData LoadStageDatas(const std::wstring& fileName);
 		//アニメーションデータの読み込み
 		std::unordered_map<std::string, AnimationData> LoadAnimationData(const std::wstring& fileName);
 

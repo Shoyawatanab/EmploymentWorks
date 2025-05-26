@@ -106,9 +106,6 @@ public:
 	//アニメーションの変更
 	void ChangeAnimation(std::string animationType) override;
 
-	//必要なポインタの登録
-	void AddPointer(WataLib::TPS_Camera* tpsCamera, TargetMarker* targetMarker);
-
 private:
 	//宣言
 

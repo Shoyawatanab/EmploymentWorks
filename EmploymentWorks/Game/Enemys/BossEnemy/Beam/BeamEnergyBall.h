@@ -81,8 +81,6 @@ public:
 		};
 	};
 
-	//クラスに必要な情報（ポインタ）の登録
-	void AddPointer(Beam* beam);
 	//リセット
 	void ReSet();
 
@@ -111,8 +109,6 @@ private:
 	DirectX::SimpleMath::Vector3 m_initialScale;
 	//最大サイズ
 	DirectX::SimpleMath::Vector3 m_maxScale;
-	//ビーム
-	Beam* m_beam;
 	//最大サイズになる時間
 	float m_maxSizeTime;
 	//時間

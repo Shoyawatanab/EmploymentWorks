@@ -10,6 +10,7 @@
 #include "Game/Observer/Messenger.h"
 #include <cassert>
 #include <random>
+#include "Game/InstanceRegistry.h"
 
 
 const POINT MOUSESENSITIVITY = { static_cast<LONG> (0.001f),static_cast<LONG> (0.001f) };      // マウスの感度
@@ -37,6 +38,9 @@ WataLib::TPS_Camera::TPS_Camera()
 	,m_shaleTime{}
 	,m_shakePower{}
 {
+
+	InstanceRegistry::GetInstance()->Register<WataLib::TPS_Camera>("TPS_Camera", this);
+
 	m_mouse = std::make_unique<WataLib::Mouse>();
 
 }
@@ -57,6 +61,9 @@ WataLib::TPS_Camera::~TPS_Camera()
 void WataLib::TPS_Camera::Initialize(CommonResources* resources)
 {
 	assert(resources);
+	
+	m_player = InstanceRegistry::GetInstance()->GetRegistryInstance<Player>("Player");
+
 	m_mouse->Initialize();
 	m_angle = {0,0};
 	m_zoomState = ZoomState::NONE;
@@ -238,13 +245,6 @@ void WataLib::TPS_Camera::CalculateEyePosition()
 	//正面ベクトルを求める
 	m_forward = (m_target - m_eye);
 	m_forward.Normalize();
-
-}
-
-void WataLib::TPS_Camera::AddPointer(Player* Player)
-{
-
-	m_player = Player;
 
 }
 

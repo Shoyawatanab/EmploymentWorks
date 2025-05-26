@@ -80,9 +80,6 @@ public:
 	void OnAcquired() override ;
 
 
-	//必要なポインタの登録
-	void AddPointer(Player* player, TargetMarker* targetMarker, WataLib::TPS_Camera* tpsCamera);
-
 private:
 	//親
 	BaseEntity* m_parent;

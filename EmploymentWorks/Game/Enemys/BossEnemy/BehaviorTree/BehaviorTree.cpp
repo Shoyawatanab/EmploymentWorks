@@ -11,6 +11,7 @@
 #include "Conditions.h"
 #include "Game/Player/Player.h"
 #include "Game/Enemys/BossEnemy/BossEnemy.h"
+#include "Game/InstanceRegistry.h"
 
 
 /// <summary>
@@ -40,9 +41,13 @@ BehaviorTree::~BehaviorTree()
 /// 初期化
 /// </summary>
 /// <param name="resources">共通リソース</param>
-void BehaviorTree::Initialize(CommonResources* resources)
+void BehaviorTree::Initialize(CommonResources* resources, BossEnemy* enemy)
 {
 	m_commonResources = resources;
+	m_enemy = enemy;
+	
+	m_player = InstanceRegistry::GetInstance()->GetRegistryInstance<Player>("Player");
+
 	//実行ノードの作成
 	m_executionNode = std::make_unique<ExecutionNode>(m_player, m_enemy);
 	m_executionNode->Initialize(m_commonResources);
@@ -151,18 +156,7 @@ void BehaviorTree::Update(float elapsedTime)
 
 
 
-/// <summary>
-/// 必要なポインタの追加
-/// </summary>
-/// <param name="player">プレイヤ</param>
-/// <param name="enemy">ボス敵</param>
-void BehaviorTree::AddPointer(Player* player, BossEnemy* enemy)
-{
 
-	m_player = player;
-	m_enemy = enemy;
-
-}
 
 
 /// <summary>

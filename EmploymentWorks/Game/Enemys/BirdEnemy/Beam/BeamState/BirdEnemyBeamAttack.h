@@ -17,7 +17,7 @@ class BirdEnemyBeamAttack : public IState
 {
 public:
 	// コンストラクタ
-	BirdEnemyBeamAttack(Player* player, BirdEnemy* birdEnemy, BirdEnemyBeam* beam);
+	BirdEnemyBeamAttack(BirdEnemy* birdEnemy, BirdEnemyBeam* beam);
 	// デストラクタ
 	~BirdEnemyBeamAttack();
 	// 初期化する

@@ -7,6 +7,7 @@
 #include "Game/Enemys/BirdEnemy/Beam/BirdEnemyBeam.h"
 #include "Game/Enemys/BirdEnemy/Beam/BirdEnemyBeamEnergyBall.h"
 #include "Game/Enemys/BirdEnemy/BirdEnemy.h"
+#include "Game/InstanceRegistry.h"
 
 /// <summary>
 /// コンストラクタ
@@ -14,10 +15,10 @@
 /// <param name="player">プレイヤ</param>
 /// <param name="birdEnemy">鳥の敵</param>
 /// <param name="beam">ビーム</param>
-BirdEnemyBeamIdling::BirdEnemyBeamIdling(Player* player, BirdEnemy* birdEnemy, BirdEnemyBeam* beam)
+BirdEnemyBeamIdling::BirdEnemyBeamIdling(BirdEnemy* birdEnemy, BirdEnemyBeam* beam)
 	:
 	m_commonResources{},
-	m_player{player}
+	m_player{}
 	,m_birdEnemy{birdEnemy}
 	,m_beam{beam}
 {
@@ -38,6 +39,8 @@ BirdEnemyBeamIdling::~BirdEnemyBeamIdling()
 void BirdEnemyBeamIdling::Initialize(CommonResources* resoure)
 {
 	m_commonResources = resoure;
+
+	m_player = InstanceRegistry::GetInstance()->GetRegistryInstance<Player>("Player");
 
 }
 

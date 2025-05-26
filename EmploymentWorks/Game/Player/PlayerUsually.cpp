@@ -9,7 +9,7 @@
 #include "Game/Player/State/PlayerStateMachine.h"
 #include "Game/Observer/Messenger.h"
 #include "Game/Params.h"
-
+#include "Game/InstanceRegistry.h"
 
 
 /// <summary>
@@ -32,17 +32,7 @@ PlayerUsually::~PlayerUsually()
 }
 
 
-/// <summary>
-/// 必要なポインタの追加
-/// </summary>
-/// <param name="player">プレイヤ</param>
-/// <param name="tpsCamera">TPSカメラ</param>
-void PlayerUsually::AddPointer(Player* player, WataLib::TPS_Camera* tpsCamera)
-{
-	m_palyer = player;
 
-	m_tpsCamera = tpsCamera;
-}
 
 /// <summary>
 /// 初期化
@@ -52,6 +42,9 @@ void PlayerUsually::Initialize(CommonResources* resources)
 {
 	m_commonResources = resources;
 
+	m_palyer = InstanceRegistry::GetInstance()->GetRegistryInstance<Player>("Player");
+
+	m_tpsCamera = InstanceRegistry::GetInstance()->GetRegistryInstance<WataLib::TPS_Camera>("TPS_Camera");
 
 	//イベントにObserverとして登録
 	Messenger::GetInstance()->Rigister(::GameMessageType::BOOMERANG_GET_READY, this);

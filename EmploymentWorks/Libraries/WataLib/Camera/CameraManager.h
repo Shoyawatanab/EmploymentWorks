@@ -47,7 +47,7 @@ namespace WataLib
 		void ChangeState(ICamera* nestState);
 
 		//クラスに必要な情報（ポインタ）を登録する
-		void AddPointer(Player* Player,EnemyManager* enemyManger);
+		void AddPointer(EnemyManager* enemyManger);
 
 		//IObserver
 //通知時に呼ばれる関数
@@ -60,8 +60,6 @@ namespace WataLib
 		std::unique_ptr<WataLib::TPS_Camera> m_tpsCamera;
 		//ゲーム終了カメラ
 		std::unique_ptr<WataLib::GameEndCamera> m_endCamera;
-		//プレイヤ
-		Player* m_player;
 
 
 	};

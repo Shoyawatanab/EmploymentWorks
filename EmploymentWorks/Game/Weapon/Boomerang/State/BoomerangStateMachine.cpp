@@ -7,19 +7,19 @@ using namespace DirectX::SimpleMath;
 /// <summary>
 /// コンストラクタ
 /// </summary>
-BoomerangStateMachine::BoomerangStateMachine()
+BoomerangStateMachine::BoomerangStateMachine(Boomerang* boomerang)
 	:
 	m_currentState{}
 	,m_idle{}
 	,m_getReady{}
 {
-	m_idle = std::make_unique<BoomerangIdle>();
-	m_getReady = std::make_unique<BoomerangGetReady>();
-	m_rigntThrow = std::make_unique<BoomerangRightThrow>();
-	m_leftThrow = std::make_unique<BoomerangLeftThrow>();
-	m_frontThrow = std::make_unique<BoomerangFrontThrow>();
-	m_repelled = std::make_unique<BoomerangRepelled>();
-	m_drop = std::make_unique<BoomerangDrop>();
+	m_idle = std::make_unique<BoomerangIdle>(boomerang);
+	m_getReady = std::make_unique<BoomerangGetReady>(boomerang);
+	m_rigntThrow = std::make_unique<BoomerangRightThrow>(boomerang);
+	m_leftThrow = std::make_unique<BoomerangLeftThrow>(boomerang);
+	m_frontThrow = std::make_unique<BoomerangFrontThrow>(boomerang);
+	m_repelled = std::make_unique<BoomerangRepelled>(boomerang);
+	m_drop = std::make_unique<BoomerangDrop>(boomerang);
 }
 
 /// <summary>
@@ -30,23 +30,7 @@ BoomerangStateMachine::~BoomerangStateMachine()
 }
 
 
-/// <summary>
-/// 必要なポインタの追加
-/// </summary>
-/// <param name="boomerang">ブーメラン</param>
-/// <param name="player">プレイヤ</param>
-/// <param name="targetMarker">ターゲットマーカー</param>
-/// <param name="tpsCamera">TPSカメラ</param>
-void BoomerangStateMachine::AddPointer(Boomerang* boomerang, Player* player, TargetMarker* targetMarker, WataLib::TPS_Camera* tpsCamera)
-{
-	m_idle->AddPointer(player, boomerang);
-	m_getReady->AddPointer(boomerang);
-	m_rigntThrow->AddPointer(boomerang,player,targetMarker,tpsCamera);
-	m_leftThrow->AddPointer(boomerang,player,targetMarker,tpsCamera);
-	m_frontThrow->AddPointer(boomerang, player, targetMarker, tpsCamera);
-	m_repelled->AddPointer(boomerang);
-	m_drop->AddPointer(boomerang);
-}
+
 
 /// <summary>
 /// 初期化

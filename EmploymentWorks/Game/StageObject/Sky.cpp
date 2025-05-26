@@ -121,6 +121,8 @@ void Sky::Update(const float& elapsedTime)
 
 	BaseEntity::Update(elapsedTime);
 
+
+
 }
 
 

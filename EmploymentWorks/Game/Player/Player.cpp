@@ -15,7 +15,7 @@
 #include "Game/Observer/Messenger.h"
 
 #include "Game/Params.h"
-
+#include "Game/InstanceRegistry.h"
 
 
 /// <summary>
@@ -30,15 +30,13 @@ Player::Player(CommonResources* resources)
 	,m_hp{Params::PLAYER_HP}
 	,CompositeEntity(resources, Params::PLAYER_SCALE,Params::PLAYER_POSITION,Params::PLAYER_ROTATION)
 {
+
+	InstanceRegistry::GetInstance()->Register<Player>("Player", this);
+
 	m_usually = std::make_unique<PlayerUsually>();
-	m_stateMachine = std::make_unique<PlayerStateMachine>();
+	m_stateMachine = std::make_unique<PlayerStateMachine>(this);
 
-	for (int i = 0; i < Params::BOOMERANG_MAX_COUNT; i++)
-	{
 
-		auto boomerang = std::make_unique<Boomerang>(resources,this,Params::BOOMERANG_SCALE,Params::BOOMERANG_POSITION,Params::BOOMERANG_ROTATION);
-		m_boomerangs.push_back(std::move(boomerang));
-	}
 	
 	m_shadow = std::make_unique<WataLib::Shadow>();
 
@@ -52,26 +50,6 @@ Player::~Player()
 }
 
 
-/// <summary>
-/// 必要なポインタの追加
-/// </summary>
-/// <param name="tpsCamera">TPSカメラ</param>
-/// <param name="targetMarker">ターゲットマーカー</param>
-void Player::AddPointer(WataLib::TPS_Camera* tpsCamera, TargetMarker* targetMarker)
-{
-
-	m_targetMarker = targetMarker;
-
-	m_usually->AddPointer(this,tpsCamera);
-	m_stateMachine->AddPointer(this);
-
-	for (auto& boomerang : m_boomerangs)
-	{
-		boomerang->AddPointer(this, targetMarker,tpsCamera);
-	}
-
-}
-
 
 
 /// <summary>
@@ -79,6 +57,8 @@ void Player::AddPointer(WataLib::TPS_Camera* tpsCamera, TargetMarker* targetMark
 /// </summary>
 void Player::Initialize()
 {
+
+	m_targetMarker = InstanceRegistry::GetInstance()->GetRegistryInstance<TargetMarker>("TargetMarker");
 
 	CompositeEntity::Initialize();
 
@@ -110,11 +90,14 @@ void Player::Initialize()
 	m_usually->Initialize(BaseEntity::GetCommonResources());
 	m_stateMachine->Initialize(BaseEntity::GetCommonResources(), m_stateMachine->GetPlayerIdle());
 
-	for (auto& boomerang : m_boomerangs)
-	{
-		boomerang->Initialize();
-	}
 
+	for (int i = 0; i < Params::BOOMERANG_MAX_COUNT; i++)
+	{
+
+		auto boomerang = std::make_unique<Boomerang>(BaseEntity::GetCommonResources(), this, Params::BOOMERANG_SCALE, Params::BOOMERANG_POSITION, Params::BOOMERANG_ROTATION);
+		boomerang->Initialize();
+		m_boomerangs.push_back(std::move(boomerang));
+	}
 
 
 	//当たり判定の作成

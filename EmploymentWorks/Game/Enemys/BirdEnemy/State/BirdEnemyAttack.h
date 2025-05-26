@@ -20,7 +20,7 @@ public:
 	// デストラクタ
 	~BirdEnemyAttack();
 	// 初期化
-	void Initialize(CommonResources* resoure);
+	void Initialize(CommonResources* resoure, BirdEnemy* owner);
 
 	// 更新処理
 	void Update(const float& elapsedTime);
@@ -30,10 +30,6 @@ public:
 	void Enter();
 	//状態を抜けた時
 	void Exit();
-
-	//クラスに必要な情報（ポインタ）の登録
-	void AddPointer(Player* player, BirdEnemy* birdEnemy);
-
 
 
 private:

@@ -9,6 +9,7 @@
 #include "Game/Player/Player.h"
 #include "Game/Observer/Messenger.h"
 #include "Game/Params.h"
+#include "Game/InstanceRegistry.h"
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
@@ -16,12 +17,15 @@ using namespace DirectX::SimpleMath;
 /// <summary>
 /// コンストラクタ
 /// </summary>
-BoomerangIdle::BoomerangIdle()
+BoomerangIdle::BoomerangIdle(Boomerang* boomerang)
 	:
 	m_commonResources{}
-	,m_boomerang{}
+	,m_boomerang{boomerang}
 	,m_player{}
 {
+
+
+
 }
 
 /// <summary>
@@ -32,16 +36,6 @@ BoomerangIdle::~BoomerangIdle()
 }
 
 
-/// <summary>
-/// 必要なポインタの追加
-/// </summary>
-/// <param name="player">プレイヤ</param>
-/// <param name="boomerang">ブーメラン</param>
-void BoomerangIdle::AddPointer(Player* player, Boomerang* boomerang)
-{
-	m_boomerang = boomerang;
-	m_player = player;
-}
 
 /// <summary>
 /// 初期化
@@ -52,6 +46,7 @@ void BoomerangIdle::Initialize(CommonResources* resources)
 	m_commonResources = resources;
 
 
+	m_player = InstanceRegistry::GetInstance()->GetRegistryInstance<Player>("Player");
 
 
 }
@@ -81,6 +76,7 @@ void BoomerangIdle::Render(const DirectX::SimpleMath::Matrix& view, const Direct
 /// </summary>
 void BoomerangIdle::Enter()
 {
+
 	//親を登録
 	m_boomerang->SetParent(m_player);
 	//ローカル回転の設定

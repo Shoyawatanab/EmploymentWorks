@@ -12,6 +12,9 @@
 #include "Game/Observer/Messenger.h"
 #include "Libraries/WataLib/DamageCountUI.h"
 
+#include "Game/Params.h"
+#include "Game/InstanceRegistry.h"
+
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
 
@@ -34,7 +37,9 @@ GamePlayUI::GamePlayUI()
 	,m_enemyHPBase{}
 	, m_itemAcquisitionUI{}
 	,m_throwUI{}
+	,m_enemyManager{}
 {
+
 }
 
 /// <summary>
@@ -95,9 +100,9 @@ void GamePlayUI::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::
 /// </summary>
 /// <param name="player">プレイヤ</param>
 /// <param name="enemyManager">エネミーマネージャー</param>
-void GamePlayUI::AddPointer(Player* player, EnemyManager* enemyManager)
+void GamePlayUI::AddPointer(EnemyManager* enemyManager)
 {
-	m_player = player;
+
 	m_enemyManager = enemyManager;
 }
 
@@ -173,7 +178,7 @@ void GamePlayUI::CreatePlayerHP()
 void GamePlayUI::CreateBoomerang()
 {
 
-	for (int i = 0; i < BOOMERANG_COUNT; i++)
+	for (int i = 0; i < Params::BOOMERANG_MAX_COUNT; i++)
 	{
 		auto texture = std::make_unique<UserInterface>();
 		texture->Create(m_commonResources, "BoomerangUI"
@@ -220,13 +225,15 @@ void GamePlayUI::Initialize(CommonResources* resources)
 {
 	m_commonResources = resources;
 
+	m_player = InstanceRegistry::GetInstance()->GetRegistryInstance<Player>("Player");
+
 	//画面サイズの取得
 	m_windowSize.first = m_commonResources->GetDeviceResources()->GetOutputSize().right;
 	m_windowSize.second = m_commonResources->GetDeviceResources()->GetOutputSize().bottom;
 
 	m_playerHPCount = HP_COUNT;
 
-	m_boomerangCount = BOOMERANG_COUNT;
+	m_boomerangCount = Params::BOOMERANG_MAX_COUNT;
 
 	CreatePlayerHP();
 	CreateBoomerang();
@@ -334,7 +341,7 @@ void GamePlayUI::Notify(const Telegram<GameMessageType>& telegram)
 			break;
 		case GameMessageType::GET_BOOMERANG:
 			m_boomerangCount++;
-			m_boomerangCount = std::min(m_boomerangCount, BOOMERANG_COUNT);
+			m_boomerangCount = std::min(m_boomerangCount, Params::BOOMERANG_MAX_COUNT);
 
 			break;
 		case GameMessageType::PLAYER_DAMAGE:

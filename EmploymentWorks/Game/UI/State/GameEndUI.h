@@ -62,7 +62,7 @@ public:
 	//描画
 	void Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection) override;
 	//初期化
-	void Initialize(CommonResources* resources) override;
+	void Initialize(CommonResources* resources) ;
 	// 更新する
 	void Update(const float& elapsedTime) override;
 	//状態に入った時
@@ -71,7 +71,7 @@ public:
 	void Exit() override;
 
 	//必要なポインタの登録
-	void AddPointer(Player* player, PlayScene* playScene);
+	void AddPointer(PlayScene* playScene);
 
 
 	/// <summary>

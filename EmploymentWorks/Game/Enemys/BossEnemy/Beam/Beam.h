@@ -55,9 +55,6 @@ public:
 	//更新処理
 	void  Update(const float& elapsedTime) override;
 
-	//クラスに必要な情報（ポインタ）を登録する
-	void AddPointer(BossEnemy* bossEnemy,Player* player);
-
 	//当たり判定の追加
 	void AddCollionManager(CollisionManager* collsionManager) ;
 	//パーティクル生成

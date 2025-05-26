@@ -11,6 +11,7 @@
 #include <random>
 
 #include "Game/Params.h"
+#include "Game/InstanceRegistry.h"
 
 
 /// <summary>
@@ -42,10 +43,12 @@ BirdEnemyMove::~BirdEnemyMove()
 /// 初期化
 /// </summary>
 /// <param name="resoure">共通リソース</param>
-void BirdEnemyMove::Initialize(CommonResources* resoure)
+void BirdEnemyMove::Initialize(CommonResources* resoure,BirdEnemy* owner)
 {
 
 	m_commonResources = resoure;
+
+	m_player = InstanceRegistry::GetInstance()->GetRegistryInstance<Player>("Player");
 
 	//初期化
 	m_startPosition = m_birdEnemy->GetPosition();
@@ -136,17 +139,6 @@ void BirdEnemyMove::Exit()
 
 }
 
-/// <summary>
-/// 必要なポインタの追加
-/// </summary>
-/// <param name="player">プレイヤ</param>
-/// <param name="birdEnemy">鳥の敵</param>
-void BirdEnemyMove::AddPointer(Player* player, BirdEnemy* birdEnemy)
-{
-	m_player = player;
-	m_birdEnemy = birdEnemy;
-
-}
 
 
 

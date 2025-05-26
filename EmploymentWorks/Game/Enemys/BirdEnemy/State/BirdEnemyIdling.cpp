@@ -9,7 +9,7 @@
 #include <random>
 
 #include "Game/Params.h"
-
+#include "Game/InstanceRegistry.h"
 
 /// <summary>
 /// コンストラクタ
@@ -39,9 +39,13 @@ BirdEnemyldling::~BirdEnemyldling()
 /// 初期化
 /// </summary>
 /// <param name="resoure">共通リソース</param>
-void BirdEnemyldling::Initialize(CommonResources* resoure)
+void BirdEnemyldling::Initialize(CommonResources* resoure, BirdEnemy* owner)
 {
 	m_commonResources = resoure;
+	
+	m_player = InstanceRegistry::GetInstance()->GetRegistryInstance<Player>("Player");
+
+	m_birdEnemy = owner;
 
 
 }
@@ -134,15 +138,5 @@ void BirdEnemyldling::Exit()
 
 }
 
-/// <summary>
-/// 必要なポインタの追加
-/// </summary>
-/// <param name="player">プレイヤ</param>
-/// <param name="birdEnemy">鳥の敵</param>
-void BirdEnemyldling::AddPointer(Player* player, BirdEnemy* birdEnemy)
-{
-	m_player = player;
-	m_birdEnemy = birdEnemy;
 
-}
 

@@ -73,7 +73,7 @@ void TitleScene::Initialize(CommonResources* resources)
 	m_camera->Initialize(m_commonResources);
 
 
-	std::vector<WataLib::Json::StageData> stageParameters;
+	WataLib::Json::StageData stageParameters;
 
 	std::unique_ptr<WataLib::Json> json = std::make_unique<WataLib::Json>();
 
@@ -81,7 +81,7 @@ void TitleScene::Initialize(CommonResources* resources)
 	stageParameters = json->LoadStageDatas(L"Stage");
 
 	//ステージオブジェックとの生成
-	for (auto& parameter : stageParameters)
+	for (auto& parameter : stageParameters.ObjectDatas)
 	{
 
 		if (parameter.ModelName == "Floor")
@@ -125,8 +125,6 @@ void TitleScene::Initialize(CommonResources* resources)
 	//m_objects.push_back(std::move(model));
 
 	m_player = std::make_unique<Player>(m_commonResources);
-	m_player->AddPointer(nullptr,nullptr);
-
 	m_player->Initialize();
 
 	m_player->SetPosition(PLAYERPOSITION);

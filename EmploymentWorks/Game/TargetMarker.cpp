@@ -15,7 +15,7 @@
 #include "Libraries/WataLib/Camera/TPS_Camera.h"
 #include "Game/Observer/Messenger.h"
 #include "Libraries/WataLib/UserInterface.h"
-
+#include "Game/InstanceRegistry.h"
 
 /// <summary>
 /// コンストラクタ
@@ -31,7 +31,7 @@ TargetMarker::TargetMarker()
 	, m_isLockOn{false}
 {
 
-
+	InstanceRegistry::GetInstance()->Register<TargetMarker>("TargetMarker", this);
 
 }
 
@@ -52,6 +52,8 @@ void TargetMarker::Initialize(CommonResources* resources)
 	using namespace DirectX::SimpleMath;
 
 	m_commonResources = resources;
+
+	m_tpsCamera = InstanceRegistry::GetInstance()->GetRegistryInstance<WataLib::TPS_Camera>("TPS_Camera");
 
 	//画面サイズの取得
 	m_windowSize.first = m_commonResources->GetDeviceResources()->GetOutputSize().right;
@@ -187,18 +189,6 @@ void TargetMarker::Render()
 
 
 }
-
-/// <summary>
-/// 必要なポインタの追加
-/// </summary>
-/// <param name="tpsCamera">TPSカメラ</param>
-void TargetMarker::AddPointer(WataLib::TPS_Camera* tpsCamera)
-{
-
-	m_tpsCamera = tpsCamera;
-
-}
-
 
 /// <summary>
 /// 通知を受け取る関数

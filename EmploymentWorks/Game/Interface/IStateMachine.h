@@ -13,8 +13,6 @@ class IStateMachine
 public:
 	//デストラクタ
 	virtual ~IStateMachine() = default;
-	//初期化
-	virtual void Initialize(CommonResources* resources, IState* startState = nullptr) = 0;
 	// 更新する
 	virtual void Update(const float& elapsedTime) = 0;
 	//描画

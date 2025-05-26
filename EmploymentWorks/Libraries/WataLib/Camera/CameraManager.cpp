@@ -21,8 +21,7 @@ const float EXPANSIOOSPEED = 0.7f;   //拡大時のスピード
 WataLib::CameraManager::CameraManager()
 	:
 	m_currentState{},
-	m_tpsCamera{},
-	m_player{ }
+	m_tpsCamera{}
 {
 	m_tpsCamera = std::make_unique<WataLib::TPS_Camera>();
 	m_endCamera = std::make_unique<WataLib::GameEndCamera>();
@@ -82,13 +81,10 @@ void WataLib::CameraManager::ChangeState(ICamera* nextState)
 
 }
 
-void WataLib::CameraManager::AddPointer(Player* Player, EnemyManager* enemyManger)
+void WataLib::CameraManager::AddPointer(EnemyManager* enemyManger)
 {
 
-	m_player = Player;
-	//m_enemy = enemy;
 
-	m_tpsCamera->AddPointer(m_player);
 	m_endCamera->AddPointer(enemyManger);
 }
 

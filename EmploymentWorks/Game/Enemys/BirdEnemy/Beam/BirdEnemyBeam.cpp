@@ -16,6 +16,7 @@
 #include "Libraries/MyLib/BinaryFile.h"
 #include "Game/Enemys/BirdEnemy/BirdEnemy.h"
 #include "Game/Player/Player.h"
+#include "Game/InstanceRegistry.h"
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
@@ -36,18 +37,18 @@ const std::vector<D3D11_INPUT_ELEMENT_DESC> BirdEnemyBeam::INPUT_LAYOUT =
 /// コンストラクタ
 /// </summary>
 /// <param name="resources">共通リソース</param>
-BirdEnemyBeam::BirdEnemyBeam(CommonResources* resources, Player* player, BirdEnemy* enemy)
+BirdEnemyBeam::BirdEnemyBeam(CommonResources* resources,BirdEnemy* enemy)
 	:
 	BaseEntity(resources,Vector3::One,Vector3::Zero,Quaternion::Identity),
 	m_model{}
 	,m_target{}
 	,m_enemy{enemy}
-	,m_player{player}
+	,m_player{}
 	,m_energyBall{}
 	,m_stateMachine{}
 {
 	//各ステートの作成
-	m_stateMachine = std::make_unique<BirdEnemyBeamStateMachine>(player,enemy,this);
+	m_stateMachine = std::make_unique<BirdEnemyBeamStateMachine>(enemy,this);
 	m_energyBall = std::make_unique<BirdEnemyBeamEnergyBall>(resources,this,this);
 
 
@@ -66,6 +67,9 @@ BirdEnemyBeam::~BirdEnemyBeam()
 /// </summary>
 void BirdEnemyBeam::Initialize()
 {
+
+	m_player = InstanceRegistry::GetInstance()->GetRegistryInstance<Player>("Player");
+
 	//初期化
 	m_target = Vector3(0, 0, 5);
 	m_energyBall->Initialize();

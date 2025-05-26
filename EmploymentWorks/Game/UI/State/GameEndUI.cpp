@@ -10,7 +10,7 @@
 #include "Game/Weapon/Boomerang/State/BoomerangStateMachine.h"
 #include "Game/Scene/PlayScene.h"
 #include "Libraries/WataLib/UserInterface.h"
-
+#include "Game/InstanceRegistry.h"
 
 /// <summary>
 /// コンストラクタ
@@ -86,9 +86,8 @@ void GameEndUI::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::S
 /// </summary>
 /// <param name="player">プレイヤ</param>
 /// <param name="playScene">プレイシーン</param>
-void GameEndUI::AddPointer(Player* player, PlayScene* playScene)
+void GameEndUI::AddPointer(PlayScene* playScene)
 {
-	m_player = player;
 	m_playScene = playScene;
 }
 
@@ -160,6 +159,8 @@ void GameEndUI::Animation(const float& elapsedTime)
 void GameEndUI::Initialize(CommonResources* resources)
 {
 	m_commonResources = resources;
+
+	m_player = InstanceRegistry::GetInstance()->GetRegistryInstance<Player>("Player");
 
 	//画面サイズの取得
 	m_windowSize.first = m_commonResources->GetDeviceResources()->GetOutputSize().right;

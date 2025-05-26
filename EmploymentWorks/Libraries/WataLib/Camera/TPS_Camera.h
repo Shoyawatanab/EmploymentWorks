@@ -97,7 +97,7 @@ namespace WataLib
 		~TPS_Camera() override ;
 
 		// 初期化する
-		void Initialize(CommonResources* resources) override;
+		void Initialize(CommonResources* resources) ;
 		// 更新処理
 		void Update(const float& elapsedTime) override;
 		//描画
@@ -107,9 +107,6 @@ namespace WataLib
 		//状態を抜けた時
 		void Exit() override;
 
-
-		//クラスに必要な情報（ポインタ）を登録する
-		void AddPointer(Player* Player);
 
 		// ビュー行列を計算する
 		void CalculateViewMatrix();

@@ -19,7 +19,7 @@ class BirdEnemyBeamPreliminaryAction : public IState
 {
 public:
 	// コンストラクタ
-	BirdEnemyBeamPreliminaryAction(Player* player, BirdEnemy* birdEnemy, BirdEnemyBeam* beam);
+	BirdEnemyBeamPreliminaryAction(BirdEnemy* birdEnemy, BirdEnemyBeam* beam);
 	// デストラクタ
 	~BirdEnemyBeamPreliminaryAction();
 	// 初期化する
