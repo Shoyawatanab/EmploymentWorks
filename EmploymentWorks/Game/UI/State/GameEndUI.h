@@ -78,7 +78,7 @@ public:
 	/// 背景の設定
 	/// </summary>
 	/// <param name="isClear"> ture :クリア  false: ゲームオーバー </param>
-	void SetBackGraund(bool isClear) {
+	void SetBackGraund(const bool& isClear) {
 
 		if (isClear)
 		{

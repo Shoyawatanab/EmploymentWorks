@@ -276,6 +276,7 @@
     <ClInclude Include="Game\Entities\INotMoveEntity.h" />
     <ClInclude Include="Game\Entities\ItemEntity.h" />
     <ClInclude Include="Game\Entities\MoveEntity.h" />
+    <ClInclude Include="Game\Entities\UIBaseEntity.h" />
     <ClInclude Include="Game\InstanceRegistry.h" />
     <ClInclude Include="Game\Interface\IActione.h" />
     <ClInclude Include="Game\Interface\IBehaviorNode.h" />
@@ -289,7 +290,6 @@
     <ClInclude Include="Game\Interface\IStateMachine.h" />
     <ClInclude Include="Game\ItemAcquisition.h" />
     <ClInclude Include="Game\MathUtil.h" />
-    <ClInclude Include="Game\Observer\Enemy\EnemyMessenger.h" />
     <ClInclude Include="Game\Observer\EventParams.h" />
     <ClInclude Include="Game\Observer\Messenger.h" />
     <ClInclude Include="Game\Observer\Telegram.h" />
@@ -323,6 +323,7 @@
     <ClInclude Include="Game\UI\State\GameEndUI.h" />
     <ClInclude Include="Game\UI\State\GamePlayUI.h" />
     <ClInclude Include="Game\UI\State\UIStateMachine.h" />
+    <ClInclude Include="Game\UI\ThrowQuantity.h" />
     <ClInclude Include="Game\UI\UIManager.h" />
     <ClInclude Include="Game\Weapon\Boomerang\Boomerang.h" />
     <ClInclude Include="Game\Weapon\Boomerang\State\BoomerangDrop.h" />
@@ -454,9 +455,9 @@
     <ClCompile Include="Game\Entities\INotMoveEntity.cpp" />
     <ClCompile Include="Game\Entities\ItemEntity.cpp" />
     <ClCompile Include="Game\Entities\MoveEntity.cpp" />
+    <ClCompile Include="Game\Entities\UIBaseEntity.cpp" />
     <ClCompile Include="Game\InstanceRegistry.cpp" />
     <ClCompile Include="Game\ItemAcquisition.cpp" />
-    <ClCompile Include="Game\Observer\Enemy\EnemyMessenger.cpp" />
     <ClCompile Include="Game\Observer\Messenger.cpp" />
     <ClCompile Include="Game\Params.cpp" />
     <ClCompile Include="Game\Player\Player.cpp" />
@@ -486,6 +487,7 @@
     <ClCompile Include="Game\UI\State\GameEndUI.cpp" />
     <ClCompile Include="Game\UI\State\GamePlayUI.cpp" />
     <ClCompile Include="Game\UI\State\UIStateMachine.cpp" />
+    <ClCompile Include="Game\UI\ThrowQuantity.cpp" />
     <ClCompile Include="Game\UI\UIManager.cpp" />
     <ClCompile Include="Game\Weapon\Boomerang\Boomerang.cpp" />
     <ClCompile Include="Game\Weapon\Boomerang\State\BoomerangDrop.cpp" />

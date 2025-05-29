@@ -10,9 +10,9 @@ namespace WataLib
     {
     public:
         //X軸の差分の取得
-        float GetDiffX() { return m_diffX; }
+        float GetDiffX() const { return m_diffX; }
         //Y軸の差分の取得
-        float GetDiffY() { return m_diffY; }
+        float GetDiffY() const { return m_diffY; }
 
     public:
         //コンストラクタ

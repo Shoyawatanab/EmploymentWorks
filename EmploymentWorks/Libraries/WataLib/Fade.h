@@ -53,9 +53,9 @@ public:
 	//フェード状態の取得
 	FadeState GetFadeState() { return m_fadeState; }
 	//シーン切り替えをするかの登録
-	void SetIsSceneChange(bool is) { m_isSceneChange = is; }
+	void SetIsSceneChange(const bool& is) { m_isSceneChange = is; }
 	//シーン切り替えをするかどうかを取得
-	bool GetIsSceneChange() { return m_isSceneChange; }
+	bool GetIsSceneChange() const { return m_isSceneChange; }
 
 
 public:

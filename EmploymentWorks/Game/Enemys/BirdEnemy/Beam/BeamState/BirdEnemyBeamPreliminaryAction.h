@@ -23,7 +23,7 @@ public:
 	// デストラクタ
 	~BirdEnemyBeamPreliminaryAction();
 	// 初期化する
-	void Initialize(CommonResources* resoure);
+	void Initialize();
 
 	// 更新処理
 	void Update(const float& elapsedTime);
@@ -37,8 +37,6 @@ public:
 
 private:
 
-	// 共通リソース
-	CommonResources* m_commonResources;
 	//鳥の敵
 	BirdEnemy* m_birdEnemy;
 	//プレイヤ

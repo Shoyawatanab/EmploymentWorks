@@ -11,6 +11,7 @@
 #include "Game/Params.h"
 #include "Game/MathUtil.h"
 #include "Game/InstanceRegistry.h"
+#include "Game/Observer/Messenger.h"
 
 /// <summary>
 /// コンストラクタ
@@ -19,7 +20,6 @@
 /// <param name="beam">ビーム</param>
 BirdEnemyBeamAttack::BirdEnemyBeamAttack(BirdEnemy* birdEnemy, BirdEnemyBeam* beam)
 	:
-	m_commonResources{},
 	m_player{}
 	,m_birdEnemy{birdEnemy}
 	,m_beam{beam}
@@ -45,10 +45,8 @@ BirdEnemyBeamAttack::~BirdEnemyBeamAttack()
 /// 初期化
 /// </summary>
 /// <param name="resoure">共通リソース</param>
-void BirdEnemyBeamAttack::Initialize(CommonResources* resoure)
+void BirdEnemyBeamAttack::Initialize()
 {
-	m_commonResources = resoure;
-
 	m_player = InstanceRegistry::GetInstance()->GetRegistryInstance<Player>("Player");
 
 	//初期化
@@ -115,7 +113,9 @@ void BirdEnemyBeamAttack::Enter()
 	//時間の初期化
 	m_time = 0;
 	//鳥の敵のステートをアイドルに変更
-	m_birdEnemy->GetPlayerStateMachine()->ChangeState(m_birdEnemy->GetPlayerStateMachine()->GetBirdEnemyldling());
+
+	Messenger::GetInstance()->Notify(m_birdEnemy->GetID(), EnemyMessageType::IDLING);
+
 }
 
 /// <summary>

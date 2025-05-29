@@ -5,6 +5,7 @@
 #pragma once
 #include "IScene.h"
 #include "SceneManager.h"
+#include "Game/Interface/IObserver.h"
 
 // 前方宣言
 class CommonResources;
@@ -31,7 +32,7 @@ namespace WataLib
 }
 
 class PlayScene final :
-    public IScene
+    public IScene ,public IObserver<GamePlayMessageType>
 {
 public:
 	//コンストラクタ
@@ -58,6 +59,10 @@ private:
 	void CreateStageObject();
 	//マウスホイールのチェック
 	void CheckMouseWheel();
+
+
+	//通知時に呼び出される
+	void Notify(const Telegram<GamePlayMessageType>& telegram) override;
 
 
 private:

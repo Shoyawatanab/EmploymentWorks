@@ -18,9 +18,9 @@
 /// <summary>
 /// コンストラクタ
 /// </summary>
-EffectsManager::EffectsManager()
+EffectsManager::EffectsManager(CommonResources* resources)
 	:
-	m_commonResources{}
+	m_commonResources{resources}
 	, m_effects{}
 {
 }
@@ -37,21 +37,19 @@ EffectsManager::~EffectsManager()
 /// 初期化
 /// </summary>
 /// <param name="resources">共通リソース</param>
-void EffectsManager::Initialize(CommonResources* resources)
+void EffectsManager::Initialize()
 {
 	using namespace DirectX::SimpleMath;
-	assert(resources);
-	m_commonResources = resources;
 
 	//各エフェクトの作成
 	CreateEffect();
 
 	//メッセージクラスに登録
-	Messenger::GetInstance()->Rigister(GameMessageType::PLAYER_DAMAGE, this);
-	Messenger::GetInstance()->Rigister(GameMessageType::CREATE_EXPLOSION, this);
-	Messenger::GetInstance()->Rigister(GameMessageType::CREATE_PARTICLE, this);
-	Messenger::GetInstance()->Rigister(GameMessageType::CREATE_HIT_EFFECT, this);
-	Messenger::GetInstance()->Rigister(GameMessageType::CREATE_CHAGE_EFFECT, this);
+	Messenger::GetInstance()->Rigister(GamePlayMessageType::PLAYER_DAMAGE, this);
+	Messenger::GetInstance()->Rigister(GamePlayMessageType::CREATE_EXPLOSION, this);
+	Messenger::GetInstance()->Rigister(GamePlayMessageType::CREATE_PARTICLE, this);
+	Messenger::GetInstance()->Rigister(GamePlayMessageType::CREATE_HIT_EFFECT, this);
+	Messenger::GetInstance()->Rigister(GamePlayMessageType::CREATE_CHAGE_EFFECT, this);
 
 }
 
@@ -232,29 +230,29 @@ void EffectsManager::CreateChargeEffect(void* datas)
 /// </summary>
 /// <param name="type">イベントの種類</param>
 /// <param name="datas">イベントのデータ</param>
-void EffectsManager::Notify(const Telegram<GameMessageType>& telegram)
+void EffectsManager::Notify(const Telegram<GamePlayMessageType>& telegram)
 {
 
 	switch (telegram.messageType)
 	{
 		//爆発の生成
-		case GameMessageType::CREATE_EXPLOSION:
+		case GamePlayMessageType::CREATE_EXPLOSION:
 			CreateExploion(telegram.extraInfo);
 			break;
 		//プレイヤのダメージエフェクトの生成
-		case GameMessageType::PLAYER_DAMAGE:
+		case GamePlayMessageType::PLAYER_DAMAGE:
 			CreatePlayerDamageEffect(telegram.extraInfo);
 			break;
 		//パーティクルエフェクトの生成
-		case GameMessageType::CREATE_PARTICLE:
+		case GamePlayMessageType::CREATE_PARTICLE:
 			CreateParticle(telegram.extraInfo);
 			break;
 		//ヒットエフェクトの生成
-		case GameMessageType::CREATE_HIT_EFFECT:
+		case GamePlayMessageType::CREATE_HIT_EFFECT:
 			//CreateHitEffect(datas);
 			break;
 		//チャージエフェクトの生成
-		case GameMessageType::CREATE_CHAGE_EFFECT:
+		case GamePlayMessageType::CREATE_CHAGE_EFFECT:
 			CreateChargeEffect(telegram.extraInfo);
 			break;
 		default:

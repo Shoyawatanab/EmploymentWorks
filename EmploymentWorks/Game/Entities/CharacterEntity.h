@@ -46,12 +46,12 @@ public:
 
 
 	//アニメーションの登録
-	virtual void SetAnimationData(std::string animationType
+	virtual void SetAnimationData(const std::string& animationType
 		, std::unordered_map<std::string, std::unordered_map<std::string, WataLib::Json::AnimationData>> datas
 		, const std::string& partsName = ""
 		, bool isNormalAnimation = false);
 	//アニメーションの変更
-	virtual	void ChangeAnimation(std::string animationType);
+	virtual	void ChangeAnimation(const std::string& animationType);
 
 private:
 

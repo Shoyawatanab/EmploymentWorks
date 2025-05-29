@@ -58,8 +58,6 @@ Player::~Player()
 void Player::Initialize()
 {
 
-	m_targetMarker = InstanceRegistry::GetInstance()->GetRegistryInstance<TargetMarker>("TargetMarker");
-
 	CompositeEntity::Initialize();
 
 	//「Body」を生成する
@@ -194,13 +192,13 @@ void Player::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 
 
 			//プレイヤのダメージの通知
-			Messenger::GetInstance()->Notify(::GameMessageType::PLAYER_DAMAGE);
+			Messenger::GetInstance()->Notify(::GamePlayMessageType::PLAYER_DAMAGE);
 			
 
 			if (m_hp <= 0)
 			{
 				//Subject::Notify(EventManager::EventTypeName::GameOver);
-				Messenger::GetInstance()->Notify(::GameMessageType::GAME_OVER);
+				Messenger::GetInstance()->Notify(::GamePlayMessageType::GAME_OVER);
 			}
 			break;
 		default:
@@ -276,7 +274,7 @@ void Player::Update(const float& elapsedTime)
 /// <param name="animationType">アニメーションの種類</param>
 /// <param name="datas">アニメーションデータ</param>
 /// <param name="isNormalAnimation">通常アニメーションかどうか</param>
-void Player::SetAnimationData(std::string animationType
+void Player::SetAnimationData(const std::string& animationType
 	, std::unordered_map<std::string, std::unordered_map<std::string, WataLib::Json::AnimationData>> datas
 	, const std::string& partsName
 	, bool isNormalAnimation )
@@ -294,7 +292,7 @@ void Player::SetAnimationData(std::string animationType
 /// アニメーションの変更
 /// </summary>
 /// <param name="animationType">アニメーションの種類</param>
-void Player::ChangeAnimation(std::string animationType)
+void Player::ChangeAnimation(const std::string& animationType)
 {
 	CharacterEntity::ChangeAnimation(animationType);
 	//パーツのアニメーションを変更

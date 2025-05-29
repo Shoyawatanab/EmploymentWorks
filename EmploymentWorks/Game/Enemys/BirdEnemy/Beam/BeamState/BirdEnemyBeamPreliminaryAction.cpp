@@ -18,7 +18,6 @@
 /// <param name="beam">ビーム</param>
 BirdEnemyBeamPreliminaryAction::BirdEnemyBeamPreliminaryAction(BirdEnemy* birdEnemy, BirdEnemyBeam* beam)
 	:
-	m_commonResources{},
 	m_player{}
 	,m_time{}
 	,m_birdEnemy{birdEnemy}
@@ -38,10 +37,9 @@ BirdEnemyBeamPreliminaryAction::~BirdEnemyBeamPreliminaryAction()
 /// 初期化
 /// </summary>
 /// <param name="resoure">共通リソース</param>
-void BirdEnemyBeamPreliminaryAction::Initialize(CommonResources* resoure)
+void BirdEnemyBeamPreliminaryAction::Initialize()
 {
 
-	m_commonResources = resoure;
 
 	m_player = InstanceRegistry::GetInstance()->GetRegistryInstance<Player>("Player");
 

@@ -13,17 +13,15 @@
 /// <summary>
 /// コンストラクタ
 /// </summary>
-BirdEnemyAttack::BirdEnemyAttack()
+BirdEnemyAttack::BirdEnemyAttack(BirdEnemy* owner, std::vector<std::unique_ptr<BirdEnemyBeam>>& beams)
 	:
-	m_commonResources{},
 	m_player{}
-	,m_birdEnemy{}
+	,m_birdEnemy{owner}
 	,m_accumulationTime{}
 	,m_shotTime{}
 	,m_bulletCount{}
+	,m_beams{beams}
 {
-
-
 
 }
 
@@ -41,14 +39,11 @@ BirdEnemyAttack::~BirdEnemyAttack()
 /// 初期化
 /// </summary>
 /// <param name="resoure">共通リソース</param>
-void BirdEnemyAttack::Initialize(CommonResources* resoure, BirdEnemy* owner)
+void BirdEnemyAttack::Initialize()
 {
-
-	m_commonResources = resoure;
 
 	m_player = InstanceRegistry::GetInstance()->GetRegistryInstance<Player>("Player");
 
-	m_birdEnemy = owner;
 
 }
 
@@ -65,7 +60,6 @@ void BirdEnemyAttack::Update(const float& elapsedTime)
 
 	//回転の更新
 	m_birdEnemy->Rotate(elapsedTime);
-
 
 
 
@@ -94,10 +88,8 @@ void BirdEnemyAttack::Enter()
 	m_shotTime = 0;
 	m_bulletCount = 0;
 
-	//ビームの取得
-	std::vector<std::unique_ptr<BirdEnemyBeam>>& beams = m_birdEnemy->GetBeams();
-
-	for (auto& beam : beams)
+	//ビーム
+	for (auto& beam : m_beams)
 	{
 		//通常状態かどうか
 		if (beam->GetStateMahine()->GetCurrentState() == beam->GetStateMahine()->GetBirdEnemyBeamIdle())

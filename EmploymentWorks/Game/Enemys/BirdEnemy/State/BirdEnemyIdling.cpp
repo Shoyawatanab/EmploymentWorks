@@ -10,17 +10,17 @@
 
 #include "Game/Params.h"
 #include "Game/InstanceRegistry.h"
+#include "Game/Observer/Messenger.h"
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
-BirdEnemyldling::BirdEnemyldling()
+BirdEnemyldling::BirdEnemyldling(BirdEnemy* owner)
 	:
-	m_commonResources{},
 	m_player{}
 	,m_time{}
 	,m_attackInterval{}
-	,m_birdEnemy{}
+	, m_birdEnemy{ owner }
 {
 
 
@@ -39,14 +39,10 @@ BirdEnemyldling::~BirdEnemyldling()
 /// 初期化
 /// </summary>
 /// <param name="resoure">共通リソース</param>
-void BirdEnemyldling::Initialize(CommonResources* resoure, BirdEnemy* owner)
+void BirdEnemyldling::Initialize()
 {
-	m_commonResources = resoure;
 	
 	m_player = InstanceRegistry::GetInstance()->GetRegistryInstance<Player>("Player");
-
-	m_birdEnemy = owner;
-
 
 }
 
@@ -83,12 +79,17 @@ void BirdEnemyldling::Update(const float& elapsedTime)
 		if (ratio < Params::BIRDENEMY_ATTACK_RATIO)
 		{
 
-			m_birdEnemy->GetPlayerStateMachine()->ChangeState(m_birdEnemy->GetPlayerStateMachine()->GetBirdEnemyMove());
+			//m_birdEnemy->GetPlayerStateMachine()->ChangeState(m_birdEnemy->GetPlayerStateMachine()->GetBirdEnemyMove());
 
+			Messenger::GetInstance()->Notify(m_birdEnemy->GetID(), EnemyMessageType::MOVEING);
+			
 		}
 		else
 		{
-			m_birdEnemy->GetPlayerStateMachine()->ChangeState(m_birdEnemy->GetPlayerStateMachine()->GetBirdEnemyAttack());
+
+			//m_birdEnemy->GetPlayerStateMachine()->ChangeState(m_birdEnemy->GetPlayerStateMachine()->GetBirdEnemyAttack());
+
+			Messenger::GetInstance()->Notify(m_birdEnemy->GetID(), EnemyMessageType::BEAM_ATTACK);
 
 		}
 	}

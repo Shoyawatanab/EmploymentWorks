@@ -91,7 +91,7 @@ void CompositeEntity::OnCollisionEnter(CollisionEntity* object, CollisionTag tag
 /// <param name="datas">アニメーションのデータ</param>
 /// <param name="partsName">パーツ名</param>
 /// <param name="isNormalAnimation">初期アニメーションかどうか</param>
-void CompositeEntity::SetAnimationData(std::string animationType
+void CompositeEntity::SetAnimationData(const std::string& animationType
 	, std::unordered_map<std::string, std::unordered_map<std::string, WataLib::Json::AnimationData>> datas
 	, const std::string& partsName
 	, bool isNormalAnimation)
@@ -105,7 +105,7 @@ void CompositeEntity::SetAnimationData(std::string animationType
 /// アニメーションの切り替え
 /// </summary>
 /// <param name="animationType">アニメーションの種類</param>
-void CompositeEntity::ChangeAnimation(std::string animationType)
+void CompositeEntity::ChangeAnimation(const std::string& animationType)
 {
 
 	CharacterEntity::ChangeAnimation(animationType);

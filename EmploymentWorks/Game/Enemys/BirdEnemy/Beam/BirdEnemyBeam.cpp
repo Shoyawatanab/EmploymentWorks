@@ -51,6 +51,7 @@ BirdEnemyBeam::BirdEnemyBeam(CommonResources* resources,BirdEnemy* enemy)
 	m_stateMachine = std::make_unique<BirdEnemyBeamStateMachine>(enemy,this);
 	m_energyBall = std::make_unique<BirdEnemyBeamEnergyBall>(resources,this,this);
 
+	BaseEntity::SetIsGravity(false);
 
 }
 
@@ -73,7 +74,7 @@ void BirdEnemyBeam::Initialize()
 	//‰Šú‰»
 	m_target = Vector3(0, 0, 5);
 	m_energyBall->Initialize();
-	m_stateMachine->Initialize(BaseEntity::GetCommonResources(), m_stateMachine->GetBirdEnemyBeamIdle());
+	m_stateMachine->Initialize();
 	BaseEntity::SetPosition(m_enemy->GetBeamPosition());
 
 

@@ -38,12 +38,14 @@ const static float ENDLESS = -100.0f;
 /// <param name="startColor">初期色</param>
 /// <param name="endColor">最終色</param>
 ParticleUtility::ParticleUtility(
-	float life,
-	DirectX::SimpleMath::Vector3 pos,
-	DirectX::SimpleMath::Vector3 velocity,
-	DirectX::SimpleMath::Vector3 accele,
-	DirectX::SimpleMath::Vector3 startScale, DirectX::SimpleMath::Vector3 endScale,
-	DirectX::SimpleMath::Color startColor, DirectX::SimpleMath::Color endColor)
+	float life
+	, const DirectX::SimpleMath::Vector3& pos
+	, const DirectX::SimpleMath::Vector3& velocity
+	, const DirectX::SimpleMath::Vector3& accele
+	, const DirectX::SimpleMath::Vector3& startScale
+	, const DirectX::SimpleMath::Vector3& endScale
+	, const DirectX::SimpleMath::Color& startColor
+	, const DirectX::SimpleMath::Color& endColor)
 	:
 	m_position{}
 	,m_velocity{}
@@ -81,6 +83,7 @@ ParticleUtility::ParticleUtility(
 	//	終了の色を取得
 	m_endColor = endColor;
 }
+
 /// <summary>
 /// デストラクタ
 /// </summary>

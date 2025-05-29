@@ -38,7 +38,7 @@ CharacterEntity::~CharacterEntity()
 /// <param name="datas">アニメーションのデータ</param>
 /// <param name="partsName">パーツ名</param>
 /// <param name="isNormalAnimation">初期アニメーションかどうか</param>
-void CharacterEntity::SetAnimationData(std::string animationType
+void CharacterEntity::SetAnimationData(const std::string& animationType
 	, std::unordered_map<std::string, std::unordered_map<std::string, WataLib::Json::AnimationData>> datas
 	, const std::string& partsName
 	, bool isNormalAnimation)
@@ -60,7 +60,7 @@ void CharacterEntity::SetAnimationData(std::string animationType
 /// アニメーションの切り替え
 /// </summary>
 /// <param name="animationType">アニメーションの種類</param>
-void CharacterEntity::ChangeAnimation(std::string animationType)
+void CharacterEntity::ChangeAnimation(const std::string& animationType)
 {
 	//名前の変更
 	m_currentAnimationType = animationType;

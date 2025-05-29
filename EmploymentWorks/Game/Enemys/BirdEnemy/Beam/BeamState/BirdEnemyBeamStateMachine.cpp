@@ -37,16 +37,15 @@ BirdEnemyBeamStateMachine::~BirdEnemyBeamStateMachine()
 /// ‰Šú‰»
 /// </summary>
 /// <param name="resources">‹¤’ÊƒŠƒ\[ƒX</param>
-void BirdEnemyBeamStateMachine::Initialize(CommonResources* resources, IState* startState)
+void BirdEnemyBeamStateMachine::Initialize()
 {
 	//‰Šú‰»
-	m_idle->Initialize(resources);
-	m_attack->Initialize(resources);
-	m_preliminaryAction->Initialize(resources);
+	m_idle->Initialize();
+	m_attack->Initialize();
+	m_preliminaryAction->Initialize();
 	//‰Šúó‘Ô‚ğİ’è
-	m_currentState = startState;
 
-
+	m_currentState = m_idle.get();
 
 }
 

@@ -13,7 +13,7 @@ namespace WataLib
 	class TPS_Camera;
 }
 
-class PlayerUsually  : public IObserver<GameMessageType>
+class PlayerUsually  : public IObserver<GamePlayMessageType>
 {
 public:
 	//コンストラクタ
@@ -32,7 +32,7 @@ public:
 
 	//IObserver
 	//通知時に呼ばれる関数
-	void Notify(const Telegram<GameMessageType>& telegram)  override;
+	void Notify(const Telegram<GamePlayMessageType>& telegram)  override;
 
 
 private:

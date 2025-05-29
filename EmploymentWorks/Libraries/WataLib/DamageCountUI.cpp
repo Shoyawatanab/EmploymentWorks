@@ -18,26 +18,26 @@
 
 
 
-void WataLib::DamageCountUI::SetPosition(DirectX::SimpleMath::Vector3 Pos)
+void WataLib::DamageCountUI::SetPosition(const DirectX::SimpleMath::Vector3& Pos)
 {
 	 m_position = Pos;
 }
 
-void WataLib::DamageCountUI::SetScale(DirectX::SimpleMath::Vector2 scale)
+void WataLib::DamageCountUI::SetScale(const DirectX::SimpleMath::Vector2& scale)
 {
 	m_scale = scale;
 	m_backGraund->SetScale(m_scale);
 	m_numberUI->SetScale(m_scale);
 }
 
-void WataLib::DamageCountUI::SetRotate(float rotate)
+void WataLib::DamageCountUI::SetRotate(const float& rotate)
 {
 	m_rotate = rotate;
 	m_backGraund->SetRenderRatio(rotate);
 }
 
 
-void WataLib::DamageCountUI::SetDamage(int damage)
+void WataLib::DamageCountUI::SetDamage(const int& damage)
 {
 
 	m_damage = damage;
@@ -77,7 +77,7 @@ void WataLib::DamageCountUI::SetDamage(int damage)
 
 }
 
-void WataLib::DamageCountUI::SetScreenPosition(DirectX::SimpleMath::Vector2 position)
+void WataLib::DamageCountUI::SetScreenPosition(const DirectX::SimpleMath::Vector2& position)
 {
 
 	m_screenPosition = position;

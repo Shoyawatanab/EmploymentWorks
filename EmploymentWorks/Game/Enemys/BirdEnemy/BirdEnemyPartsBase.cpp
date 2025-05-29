@@ -26,7 +26,12 @@ void BirdEnemyPartsBase::Initialize()
 /// <param name="scale">大きさ</param>
 /// <param name="position">座標</param>
 /// <param name="rotation">回転</param>
-BirdEnemyPartsBase::BirdEnemyPartsBase(CommonResources* resources, CharacterEntity* parent, std::string partsName, DirectX::SimpleMath::Vector3 scale, DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Quaternion rotation)
+BirdEnemyPartsBase::BirdEnemyPartsBase(CommonResources* resources
+	, CharacterEntity* parent
+	, const std::string& partsName
+	, const DirectX::SimpleMath::Vector3& scale
+	, const DirectX::SimpleMath::Vector3& position
+	, const DirectX::SimpleMath::Quaternion& rotation)
 	:
 	CompositeEntity(resources, scale, position, rotation)
 	,m_model{}
@@ -127,7 +132,10 @@ void BirdEnemyPartsBase::Update(const float& elapsedTime)
 /// <param name="datas">アニメーションデータ</param>
 /// <param name="partsName">パーツ名</param>
 /// <param name="isNormalAnimation">初期アニメーションかどうか</param>
-void BirdEnemyPartsBase::SetAnimationData(std::string animationType, std::unordered_map<std::string, std::unordered_map<std::string, WataLib::Json::AnimationData>> datas, const std::string& partsName, bool isNormalAnimation)
+void BirdEnemyPartsBase::SetAnimationData(const std::string& animationType
+	,std::unordered_map<std::string, std::unordered_map<std::string, WataLib::Json::AnimationData>> datas
+	,const std::string& partsName
+	,bool isNormalAnimation)
 {
 		UNREFERENCED_PARAMETER(partsName);
 
@@ -146,7 +154,7 @@ void BirdEnemyPartsBase::SetAnimationData(std::string animationType, std::unorde
 /// アニメーションの変更
 /// </summary>
 /// <param name="animationType">アニメーションの種類</param>
-void BirdEnemyPartsBase::ChangeAnimation(std::string animationType)
+void BirdEnemyPartsBase::ChangeAnimation(const std::string& animationType)
 {
 
 	//アニメーションの変更

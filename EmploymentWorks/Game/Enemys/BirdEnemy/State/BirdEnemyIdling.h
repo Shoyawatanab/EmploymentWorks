@@ -16,11 +16,11 @@ class BirdEnemyldling : public IState
 {
 public:
 	// コンストラクタ
-	BirdEnemyldling();
+	BirdEnemyldling(BirdEnemy* owner);
 	// デストラクタ
 	~BirdEnemyldling();
 	// 初期化
-	void Initialize(CommonResources* resoure, BirdEnemy* owner)  ;
+	void Initialize()  ;
 
 	// 更新処理
 	void Update(const float& elapsedTime);
@@ -33,8 +33,6 @@ public:
 
 private:
 
-	// 共通リソース
-	CommonResources* m_commonResources;
 	//鳥の敵
 	BirdEnemy* m_birdEnemy;
 	//プレイヤ

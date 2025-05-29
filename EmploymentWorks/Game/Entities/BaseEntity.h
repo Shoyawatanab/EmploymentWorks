@@ -19,7 +19,7 @@ public:
 	 static int GetNextID() { return m_nextId; };
 
 	//座標の取得
-	const DirectX::SimpleMath::Vector3& GetPosition() { return m_position  ; };
+	const DirectX::SimpleMath::Vector3& GetPosition() { return m_position ; };
 	//座標の設定
 	void SetPosition(const DirectX::SimpleMath::Vector3& position) 
 	{ 
@@ -71,32 +71,32 @@ public:
 	const DirectX::SimpleMath::Vector3& GetVelocity() { return m_velocity; }
 	//速度の登録
 	void SetVelocity(const DirectX::SimpleMath::Vector3& velocity) { m_velocity = velocity; }
-	//重量が有効かどうか
+	//重量が有効かどうか　true:有効  false:無効
 	const bool GetIsGravity() { return m_isGravity; }
-	//重力が有効かの登録
-	void SetIsGravity(bool isGravity) { m_isGravity = isGravity; }
+	//重力が有効かの登録 true:有効  false:無効
+	void SetIsGravity(const bool& enabled) { m_isGravity = enabled; }
 
 	//親の取得
 	BaseEntity* GetParent() { return m_parent; }
 	//親の登録
 	void SetParent(BaseEntity* parent);
-	//親がいるかどうか
+	//親がいるかどうか　true:あり  false:なし
 	bool GetIsParent() { return m_isParent; }
 
 
-	//オブジェクトが有効かどうかの登録
+	//オブジェクトが有効かどうかの登録　true:有効  false:無効
 	void SetIsEntityActive(const bool& isActive) { m_isEntityActive = isActive;  if(m_isEntityActive)OnEnable(); else OnDisable(); }
-	//オブジェクトが有効かどうかの取得
+	//オブジェクトが有効かどうかの取得　true:有効  false:無効
 	const bool& GetIsEntityActive() { return m_isEntityActive; }
 
-	//更新が有効かどうかの登録
+	//更新が有効かどうかの登録　true:有効  false:無効
 	void SetIsUpdateActive(const bool& isActive) { m_isUpdateActive = isActive; }
-	//更新が有効かどうかの取得
+	//更新が有効かどうかの取得　true:有効  false:無効
 	const bool& GetIsUpdateActive() { return m_isUpdateActive; }
 
-	//描画が有効かどうかの登録
+	//描画が有効かどうかの登録　true:有効  false:無効
 	void SetIsRenderActive(const bool& isActive) { m_isRenderActive = isActive; }
-	//描画が有効かどうかの取得
+	//描画が有効かどうかの取得　true:有効  false:無効
 	const bool& GetIsRenderActive() { return m_isRenderActive; }
 	//有効になったら
 	virtual void OnEnable()  {};
@@ -127,11 +127,11 @@ private:
 	int m_id;
 
 	static int m_nextId;
-	//エンティティが有効かどうか
+	//エンティティが有効かどうか　true:有効  false:無効
 	bool m_isEntityActive;
-	//更新が有効かどうか
+	//更新が有効かどうか　true:有効  false:無効
 	bool m_isUpdateActive;
-	//描画が有効かどうか
+	//描画が有効かどうか　true:有効  false:無効
 	bool m_isRenderActive;
 
 	//座標

@@ -45,7 +45,7 @@ void SceneManager::Initialize(CommonResources* resources)
 	assert(resources);
 	m_commonResources = resources;
 
-	m_stageID = STAGE2;
+	m_stageID = STAGE1;
 
 	ChangeScene(IScene::SceneID::PLAY);
 

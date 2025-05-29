@@ -91,7 +91,7 @@ void BossEnemyLeftArmJoint::OnCollisionEnter(CollisionEntity* object, CollisionT
 				//パーティクルの生成のメッセージを送る
 				Vector3	pos = BaseEntity::GetPosition();
 				pos.y = 0;
-				Messenger::GetInstance()->Notify(GameMessageType::CREATE_PARTICLE, &pos);
+				Messenger::GetInstance()->Notify(GamePlayMessageType::CREATE_PARTICLE, &pos);
 
 			}
 			else
@@ -103,11 +103,11 @@ void BossEnemyLeftArmJoint::OnCollisionEnter(CollisionEntity* object, CollisionT
 				Vector3 position = BaseEntity::GetPosition();
 				UnknownDataTwo aa = { static_cast<void*>(&position) ,static_cast<void*>(&scale) };
 
-				Messenger::GetInstance()->Notify(GameMessageType::CREATE_EXPLOSION, &aa);
+				Messenger::GetInstance()->Notify(GamePlayMessageType::CREATE_EXPLOSION, &aa);
 
 				//カメラを揺らすメッセージを送る
 				float power = 0.1f;
-				Messenger::GetInstance()->Notify(GameMessageType::CAMERA_SHAKE, &power);
+				Messenger::GetInstance()->Notify(GamePlayMessageType::CAMERA_SHAKE, &power);
 
 			}
 		}

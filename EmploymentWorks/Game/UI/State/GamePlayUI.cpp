@@ -11,9 +11,11 @@
 #include "Game/Enemys/EnemyManager.h"
 #include "Game/Observer/Messenger.h"
 #include "Libraries/WataLib/DamageCountUI.h"
-
+#include "Libraries/WataLib/GameResources.h"
 #include "Game/Params.h"
 #include "Game/InstanceRegistry.h"
+#include "Game/UI/ThrowQuantity.h"
+
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
@@ -38,7 +40,10 @@ GamePlayUI::GamePlayUI()
 	, m_itemAcquisitionUI{}
 	,m_throwUI{}
 	,m_enemyManager{}
+	,m_throwQuantityUI{}
 {
+
+	
 
 }
 
@@ -84,6 +89,8 @@ void GamePlayUI::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::
 	{
 		throwUI->Render();
 	}
+
+	m_throwQuantityUI->Render();
 
 	m_itemAcquisitionUI->Render();
 
@@ -217,6 +224,8 @@ void GamePlayUI::CreateDamageUI(void* datas)
 
 }
 
+
+
 /// <summary>
 /// 初期化
 /// </summary>
@@ -273,14 +282,19 @@ void GamePlayUI::Initialize(CommonResources* resources)
 
 	}
 
-	Messenger::GetInstance()->Rigister(GameMessageType::BOOMERANG_THTROW, this);
-	Messenger::GetInstance()->Rigister(GameMessageType::GET_BOOMERANG, this);
-	Messenger::GetInstance()->Rigister(GameMessageType::PLAYER_DAMAGE, this);
-	Messenger::GetInstance()->Rigister(GameMessageType::CHARGE_BOOMERANG_THROW_STATE, this);
-	Messenger::GetInstance()->Rigister(GameMessageType::BOOMERANG_RECOVERBLE, this);
-	Messenger::GetInstance()->Rigister(GameMessageType::BOOMERANG_NOT_RECOVERBLE, this);
+	Messenger::GetInstance()->Rigister(GamePlayMessageType::BOOMERANG_THTROW, this);
+	Messenger::GetInstance()->Rigister(GamePlayMessageType::GET_BOOMERANG, this);
+	Messenger::GetInstance()->Rigister(GamePlayMessageType::PLAYER_DAMAGE, this);
+	Messenger::GetInstance()->Rigister(GamePlayMessageType::CHARGE_BOOMERANG_THROW_STATE, this);
+	Messenger::GetInstance()->Rigister(GamePlayMessageType::BOOMERANG_RECOVERBLE, this);
+	Messenger::GetInstance()->Rigister(GamePlayMessageType::BOOMERANG_NOT_RECOVERBLE, this);
 
-	Messenger::GetInstance()->Rigister(GameMessageType::CREATE_HIT_EFFECT, this);
+	Messenger::GetInstance()->Rigister(GamePlayMessageType::CREATE_HIT_EFFECT, this);
+	Messenger::GetInstance()->Rigister(GamePlayMessageType::CHANGE_THROW_COUNT, this);
+
+	m_throwQuantityUI = std::make_unique<ThrowQuantity>(m_commonResources, Vector2::Zero, Vector2::Zero);
+	m_throwQuantityUI->Initialize();
+
 
 }
 
@@ -328,26 +342,26 @@ void GamePlayUI::Exit()
 /// </summary>
 /// <param name="type">イベントの種類</param>
 /// <param name="datas">イベントのデータ</param>
-void GamePlayUI::Notify(const Telegram<GameMessageType>& telegram)
+void GamePlayUI::Notify(const Telegram<GamePlayMessageType>& telegram)
 {
 
 	switch (telegram.messageType)
 	{
-		case GameMessageType::BOOMERANG_THTROW:
+		case GamePlayMessageType::BOOMERANG_THTROW:
 			m_boomerangCount--;
 
 			m_boomerangCount = std::max(m_boomerangCount, 0);
 
 			break;
-		case GameMessageType::GET_BOOMERANG:
+		case GamePlayMessageType::GET_BOOMERANG:
 			m_boomerangCount++;
 			m_boomerangCount = std::min(m_boomerangCount, Params::BOOMERANG_MAX_COUNT);
 
 			break;
-		case GameMessageType::PLAYER_DAMAGE:
+		case GamePlayMessageType::PLAYER_DAMAGE:
 			m_playerHPCount--;
 			break;
-		case GameMessageType::CHARGE_BOOMERANG_THROW_STATE:
+		case GamePlayMessageType::CHARGE_BOOMERANG_THROW_STATE:
 			{
 				
 				switch (*static_cast<int*>(telegram.extraInfo))
@@ -374,14 +388,18 @@ void GamePlayUI::Notify(const Telegram<GameMessageType>& telegram)
 				}
 			}
 			break;
-		case GameMessageType::BOOMERANG_RECOVERBLE:
+		case GamePlayMessageType::BOOMERANG_RECOVERBLE:
 			m_itemAcquisitionUI->SetIsActive(true);
 			break;
-		case GameMessageType::BOOMERANG_NOT_RECOVERBLE:
+		case GamePlayMessageType::BOOMERANG_NOT_RECOVERBLE:
 			m_itemAcquisitionUI->SetIsActive(false);
 			break;
-		case GameMessageType::CREATE_HIT_EFFECT:
+		case GamePlayMessageType::CREATE_HIT_EFFECT:
 			CreateDamageUI(telegram.extraInfo);
+			break;
+		case GamePlayMessageType::CHANGE_THROW_COUNT:
+
+			
 			break;
 		default:
 			break;
@@ -394,6 +412,8 @@ void GamePlayUI::Notify(const Telegram<GameMessageType>& telegram)
 void GamePlayUI::PlayerDamage()
 {
 }
+
+
 
 
 

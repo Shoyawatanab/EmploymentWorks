@@ -22,7 +22,7 @@
 #include "Game/Enemys/BossEnemy/ActionNode/SwingDownAttack/SwingDownAttackAction.h"
 #include "Game/Enemys/BossEnemy/ActionNode/Idleing/IdleingActionComtroller.h"
 
-#include "Game/Observer/Enemy/EnemyMessenger.h"
+#include "Game/Observer/Messenger.h"
 #include "Libraries/MyLib/DebugString.h"
 #include "Game/InstanceRegistry.h"
 
@@ -35,9 +35,10 @@
 /// <param name="scale">大きさ</param>
 /// <param name="position">座標</param>
 /// <param name="rotation">回転</param>
-BossEnemy::BossEnemy(CommonResources* resources, DirectX::SimpleMath::Vector3 scale,
-	DirectX::SimpleMath::Vector3 position,
-	DirectX::SimpleMath::Quaternion rotation)
+BossEnemy::BossEnemy(CommonResources* resources
+	, const DirectX::SimpleMath::Vector3& scale
+	, const DirectX::SimpleMath::Vector3& position
+	, const DirectX::SimpleMath::Quaternion& rotation)
 	:
 	EnemyEntity(resources,scale,position,rotation)
 	,m_animationDatas{}
@@ -193,10 +194,10 @@ void BossEnemy::Initialize()
 
 	m_hp = Params::BOSSENEMY_MAX_HP;
 
-	Messenger::GetInstance()->Rigister(GameMessageType::BOSS_BEAM_ATTACK_END, this);
+	Messenger::GetInstance()->Rigister(GamePlayMessageType::BOSS_BEAM_ATTACK_END, this);
 
-	//
-	EnemyMessenger::GetInstance()->Rigister(GetID(), this);
+	//敵メッセージに対して自身を登録
+	Messenger::GetInstance()->Rigister(GetID(), this);
 
 
 	m_target = m_player;
@@ -394,7 +395,10 @@ void BossEnemy::Update(const float& elapsedTime)
 /// <param name="datas">アニメーションのデータ</param>
 /// <param name="partsName">パーツ名</param>
 /// <param name="isNormalAnimation">初期アニメーションかどうか</param>
-void BossEnemy::SetAnimationData(std::string animationType, std::unordered_map<std::string, std::unordered_map<std::string, WataLib::Json::AnimationData>> datas, const std::string& partsName, bool isNormalAnimation)
+void BossEnemy::SetAnimationData(const std::string& animationType
+	, std::unordered_map<std::string, std::unordered_map<std::string, WataLib::Json::AnimationData>> datas
+	, const std::string& partsName
+	, bool isNormalAnimation)
 {
 	CharacterEntity::SetAnimationData(animationType, datas, partsName, isNormalAnimation);
 
@@ -412,7 +416,7 @@ void BossEnemy::SetAnimationData(std::string animationType, std::unordered_map<s
 /// アニメーションの変更
 /// </summary>
 /// <param name="animationType">アニメーションの種類</param>
-void BossEnemy::ChangeAnimation(std::string animationType)
+void BossEnemy::ChangeAnimation(const std::string& animationType)
 {
 	CharacterEntity::ChangeAnimation(animationType);
 	//パーツのアニメーションを変更
@@ -430,12 +434,12 @@ void BossEnemy::ChangeAnimation(std::string animationType)
 /// </summary>
 /// <param name="type">種類</param>
 /// <param name="datas">データ</param>
-void BossEnemy::Notify(const Telegram<GameMessageType>& telegram)
+void BossEnemy::Notify(const Telegram<GamePlayMessageType>& telegram)
 {
 	
 	switch (telegram.messageType)
 	{
-		case GameMessageType::BOSS_BEAM_ATTACK_END:
+		case GamePlayMessageType::BOSS_BEAM_ATTACK_END:
 			break;
 		default:
 			break;

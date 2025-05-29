@@ -23,14 +23,14 @@ private:
 
 public:
 
-	//オブジェクトが有効か
-	bool GetIsActive() override { return m_isActive; };
-	//オブジェクトが有効かの登録
-	void SetIsActive(bool isActive) override { m_isActive = isActive; };
+	//エフェクトが有効かどうか
+	const bool& GetIsActive() override { return m_isActive; };
+	//エフェクトが有効かどうかの登録
+	void SetIsActive(const bool& isActive) override { m_isActive = isActive; };
 	//座標の登録
-	void SetPosition(DirectX::SimpleMath::Vector3 position) override { m_position = position; };
+	void SetPosition(const DirectX::SimpleMath::Vector3& position) override { m_position = position; };
 	//大きさの登録
-	void SetScale(DirectX::SimpleMath::Vector3 scale) override { m_scale = scale; };
+	void SetScale(const DirectX::SimpleMath::Vector3& scale) override { m_scale = scale; };
 	//エフェクトの種類のタグ
 	EffectType GetEffectType()  override { return EffectType::EXPLOSION; };
 

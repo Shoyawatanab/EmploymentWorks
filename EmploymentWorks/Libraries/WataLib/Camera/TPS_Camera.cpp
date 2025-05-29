@@ -76,9 +76,9 @@ void WataLib::TPS_Camera::Initialize(CommonResources* resources)
 
 
 	//メッセージクラスに登録
-	Messenger::GetInstance()->Rigister(GameMessageType::BOOMERANG_GET_READY, this);
-	Messenger::GetInstance()->Rigister(GameMessageType::BOOMERANG_GET_READY_END, this);
-	Messenger::GetInstance()->Rigister(GameMessageType::CAMERA_SHAKE, this);
+	Messenger::GetInstance()->Rigister(GamePlayMessageType::BOOMERANG_GET_READY, this);
+	Messenger::GetInstance()->Rigister(GamePlayMessageType::BOOMERANG_GET_READY_END, this);
+	Messenger::GetInstance()->Rigister(GamePlayMessageType::CAMERA_SHAKE, this);
 
 }
 
@@ -272,18 +272,18 @@ void WataLib::TPS_Camera::Exit()
 /// 通知を受け取る関数
 /// </summary>
 /// <param name="telegram">データ</param>
-void WataLib::TPS_Camera::Notify(const Telegram<GameMessageType>& telegram)
+void WataLib::TPS_Camera::Notify(const Telegram<GamePlayMessageType>& telegram)
 {
 	
 	switch (telegram.messageType)
 	{
-		case GameMessageType::BOOMERANG_GET_READY:
+		case GamePlayMessageType::BOOMERANG_GET_READY:
 			m_zoomState = ZoomState::ZOOM_IN;
 			break;
-		case GameMessageType::BOOMERANG_GET_READY_END:
+		case GamePlayMessageType::BOOMERANG_GET_READY_END:
 			m_zoomState = ZoomState::ZOOM_OUT;
 			break;
-		case GameMessageType::CAMERA_SHAKE:
+		case GamePlayMessageType::CAMERA_SHAKE:
 			
 			m_shaleTime = SHAKETIME;
 			m_isShake = true;

@@ -15,8 +15,8 @@ namespace WataLib
 		DirectX::BoundingSphere* GetBoundingSphere() { return m_boundingSphere.get(); }
 		DirectX::BoundingOrientedBox* GetOrientedBox() { return m_orientexBox.get(); }
 
-		void SetIsBoxHit(bool isHit) { m_isBoxHit = isHit; }
-		void SetIsSphereHit(bool isHit) { m_isSphereHit = isHit; }
+		void SetIsBoxHit(const bool& isHit) { m_isBoxHit = isHit; }
+		void SetIsSphereHit(const bool& isHit) { m_isSphereHit = isHit; }
 
 
 
@@ -29,26 +29,27 @@ namespace WataLib
 		//初期化
 		void Initialize();
 		//更新処理
-		void Update(DirectX::SimpleMath::Vector3 CenterPos);
+		void Update(const DirectX::SimpleMath::Vector3& CenterPos);
 		//更新処理
-		void Update(DirectX::SimpleMath::Vector3 CenterPos, DirectX::SimpleMath::Quaternion rotation);
+		void Update(const DirectX::SimpleMath::Vector3& CenterPos, const DirectX::SimpleMath::Quaternion& rotation);
 		//スフィアの作成
-		void CreateBoundingSphere(DirectX::SimpleMath::Vector3 CenterPos, float radius);
+		void CreateBoundingSphere(const DirectX::SimpleMath::Vector3& CenterPos, const float& radius);
 		//AABBの作成
-		void CreateBoundingBox(DirectX::SimpleMath::Vector3 CenterPos, DirectX::SimpleMath::Vector3 Extents);
+		void CreateBoundingBox(const DirectX::SimpleMath::Vector3& CenterPos, const DirectX::SimpleMath::Vector3& Extents);
 		//OBBの作成
-		void CreateBoundingOrientedBox(DirectX::SimpleMath::Vector3 CenterPos,DirectX::SimpleMath::Quaternion rotation,
-			DirectX::SimpleMath::Vector3 Extents);
+		void CreateBoundingOrientedBox(const DirectX::SimpleMath::Vector3& CenterPos,const DirectX::SimpleMath::Quaternion& rotation,
+			const DirectX::SimpleMath::Vector3& Extents);
+
 		//描画
-		void Draw(const DirectX::SimpleMath::Vector3 CenterPos, DirectX::SimpleMath::Quaternion rotation,
-			DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection);
+		void Draw(const DirectX::SimpleMath::Vector3& CenterPos, const DirectX::SimpleMath::Quaternion& rotation,
+			const DirectX::CXMMATRIX& view, const DirectX::CXMMATRIX& projection);
 		//スフィアの描画
-		void DrawBoundingSphere(const DirectX::SimpleMath::Vector3 CenterPos, DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection);
+		void DrawBoundingSphere(const DirectX::SimpleMath::Vector3& CenterPos, const DirectX::CXMMATRIX& view, const DirectX::CXMMATRIX& projection);
 		//AABBの描画
-		void DrawBoundingBox(const DirectX::SimpleMath::Vector3 CenterPos, DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection);
+		void DrawBoundingBox(const DirectX::SimpleMath::Vector3& CenterPos, const DirectX::CXMMATRIX& view, const DirectX::CXMMATRIX& projection);
 		//OBBの描画
-		void DrawBoundingOrientedBox(const DirectX::SimpleMath::Vector3 CenterPos, DirectX::SimpleMath::Quaternion rotation, 
-			DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection);
+		void DrawBoundingOrientedBox(const DirectX::SimpleMath::Vector3& CenterPos,const  DirectX::SimpleMath::Quaternion& rotation, 
+			const DirectX::CXMMATRIX& view, const DirectX::CXMMATRIX& projection);
 
 	private:
 		//スフィア

@@ -57,6 +57,8 @@ BirdEnemyBeamEnergyBall::BirdEnemyBeamEnergyBall(CommonResources* resources, Bas
 	,m_time{}
 {
 	BaseEntity::SetParent(parent);
+
+	BaseEntity::SetIsGravity(false);
 }
 
 /// <summary>
@@ -185,7 +187,7 @@ void BirdEnemyBeamEnergyBall::OnCollisionEnter(CollisionEntity* object, Collisio
 			Vector3 position = m_wordlPosition;
 			Vector3 scale = Vector3::One;
 			UnknownDataTwo aa = { &position , &scale };
-			Messenger::GetInstance()->Notify(GameMessageType::CREATE_EXPLOSION, &aa);
+			Messenger::GetInstance()->Notify(GamePlayMessageType::CREATE_EXPLOSION, &aa);
 
 		}
 		break;

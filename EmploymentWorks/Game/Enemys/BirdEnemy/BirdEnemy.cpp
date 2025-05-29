@@ -15,8 +15,6 @@
 #include "Game/Params.h"
 #include "Game/InstanceRegistry.h"
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
 
 /// <summary>
 /// コンストラクタ
@@ -26,9 +24,9 @@ using namespace DirectX::SimpleMath;
 /// <param name="position">座標</param>
 /// <param name="rotation">回転</param>
 BirdEnemy::BirdEnemy(CommonResources* resources
-	, DirectX::SimpleMath::Vector3 scale,
-	DirectX::SimpleMath::Vector3 position,
-	DirectX::SimpleMath::Quaternion rotation)
+	, const DirectX::SimpleMath::Vector3& scale
+	, const DirectX::SimpleMath::Vector3& position
+	, const DirectX::SimpleMath::Quaternion& rotation)
 	:
 	EnemyEntity(resources,scale,position,rotation)
 	,m_hp{}
@@ -36,13 +34,12 @@ BirdEnemy::BirdEnemy(CommonResources* resources
 	, m_player{}
 	,m_shadow{}
 	, m_punchTime{}
-	,m_beam{}
+	,m_beams{}
 	,m_stateMachine{}
 	,m_beamPosition{}
 
 {
 
-	m_stateMachine = std::make_unique<BirdEnemyStateMachine>();
 
 	m_shadow = std::make_unique<WataLib::Shadow>();
 
@@ -106,9 +103,12 @@ void BirdEnemy::Initialize()
 	auto context = BaseEntity::GetCommonResources()->GetDeviceResources()->GetD3DDeviceContext();
 	auto states = BaseEntity::GetCommonResources()->GetCommonStates();
 
+	m_stateMachine = std::make_unique<BirdEnemyStateMachine>(this, m_beams);
+
+
 	//初期化
 	EnemyEntity::Initialize();
-	m_stateMachine->Initialize(BaseEntity::GetCommonResources(),this);
+	m_stateMachine->Initialize();
 	m_hp = Params::BIRDENEMY_HP;
 	m_shadow->Initialize(device, context, states);
 
@@ -123,7 +123,7 @@ void BirdEnemy::Initialize()
 		auto beam = std::make_unique<BirdEnemyBeam>(BaseEntity::GetCommonResources(),this);
 		beam->Initialize();
 
-		m_beam.push_back(std::move(beam));
+		m_beams.push_back(std::move(beam));
 	}
 
 	//体の生成
@@ -132,6 +132,7 @@ void BirdEnemy::Initialize()
 		Params::BIRDENEMY_BODY_SCALE,
 		Params::BIRDENEMY_BODY_POSITION,
 		Params::BIRDENEMY_BODY_ROTATION));
+
 
 }
 
@@ -166,7 +167,7 @@ void BirdEnemy::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::S
 	}
 
 	//ビームの描画
-	for (auto& beam : m_beam)
+	for (auto& beam : m_beams)
 	{
 		//idling状態じゃないものを描画する
 		if (beam->GetStateMahine()->GetCurrentState() != beam->GetStateMahine()->GetBirdEnemyBeamIdle())
@@ -198,7 +199,7 @@ void BirdEnemy::AddCollision(CollisionManager* collsionManager)
 	//コリジョンマネージャーに追加
 	collsionManager->AddCollsion(this);
 
-	for (auto& beam : m_beam)
+	for (auto& beam : m_beams)
 	{
 		beam->AddCollision(collsionManager);
 	}
@@ -228,7 +229,7 @@ void BirdEnemy::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 					Vector3 scale = BaseEntity::GetScale();
 					Vector3 position = object->GetPosition();
 					UnknownDataTwo aa = { static_cast<void*>(&position) ,static_cast<void*>(&scale)};
-					Messenger::GetInstance()->Notify(GameMessageType::CREATE_EXPLOSION, &aa);
+					Messenger::GetInstance()->Notify(GamePlayMessageType::CREATE_EXPLOSION, &aa);
 					BaseEntity::SetIsEntityActive(false);
 
 				}
@@ -241,7 +242,7 @@ void BirdEnemy::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 
 				UnknownDataThree aa = { static_cast<void*>(&pos) ,static_cast<void*>(&scale)};
 
-				Messenger::GetInstance()->Notify(GameMessageType::CREATE_HIT_EFFECT, &aa);
+				Messenger::GetInstance()->Notify(GamePlayMessageType::CREATE_HIT_EFFECT, &aa);
 
 			}
 
@@ -278,7 +279,7 @@ void BirdEnemy::Update(const float& elapsedTime)
 	}
 
 	//ビームの更新
-	for (auto& beam : m_beam)
+	for (auto& beam : m_beams)
 	{
 		beam->Update(elapsedTime);
 	}
@@ -292,7 +293,10 @@ void BirdEnemy::Update(const float& elapsedTime)
 /// <param name="datas">アニメーションデータ</param>
 /// <param name="partsName">パーツ名</param>
 /// <param name="isNormalAnimation">初期アニメーションかどうか</param>
-void BirdEnemy::SetAnimationData(std::string animationType, std::unordered_map<std::string, std::unordered_map<std::string, WataLib::Json::AnimationData>> datas, const std::string& partsName, bool isNormalAnimation)
+void BirdEnemy::SetAnimationData(const std::string& animationType
+	, std::unordered_map<std::string, std::unordered_map<std::string, WataLib::Json::AnimationData>> datas, 
+	const std::string& partsName, 
+	bool isNormalAnimation)
 {
 	CharacterEntity::SetAnimationData(animationType, datas, partsName, isNormalAnimation);
 
@@ -308,7 +312,7 @@ void BirdEnemy::SetAnimationData(std::string animationType, std::unordered_map<s
 /// アニメーションの変更
 /// </summary>
 /// <param name="animationType">アニメーションの種類</param>
-void BirdEnemy::ChangeAnimation(std::string animationType)
+void BirdEnemy::ChangeAnimation(const std::string& animationType)
 {
 	CharacterEntity::ChangeAnimation(animationType);
 	//パーツのアニメーションを変更

@@ -18,8 +18,7 @@ std::unordered_map<int, std::function<void(CollisionEntity* object1, CollisionEn
 /// </summary>
 CollisionManager::CollisionManager()
 	:
-	m_commonResources{}
-	,m_collisionObjects{}
+	m_collisionObjects{}
 {
 }
 
@@ -34,10 +33,9 @@ CollisionManager::~CollisionManager()
 /// ‰Šú‰»
 /// </summary>
 /// <param name="resources">‹¤’ÊƒŠƒ\[ƒX</param>
-void CollisionManager::Initialize(CommonResources* resources)
+void CollisionManager::Initialize()
 {
 
-	m_commonResources = resources;
 
 }
 

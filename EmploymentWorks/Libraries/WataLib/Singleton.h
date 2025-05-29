@@ -21,14 +21,18 @@ public:
 
 public:
 	
-	// コピー・ムーブ禁止
-	Singleton(const Singleton&) = delete;
-	Singleton& operator=(const Singleton&) = delete;
+	//コピー禁止
+	Singleton(const T&) = delete;
+	Singleton& operator=(const T&) = delete;
+	//ムーブ禁止
+	Singleton(T&&) = delete;
+	Singleton& operator=(T&&) = delete;
 
-	Singleton(Singleton&&) = delete;
-	Singleton& operator=(Singleton&&) = delete;
+protected:
 	
 	Singleton() = default;
+
+	virtual ~Singleton() = default;
 
 private:
 

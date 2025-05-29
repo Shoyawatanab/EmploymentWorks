@@ -91,8 +91,8 @@ void DrawNumber::LoadTexture(const wchar_t* path)
 /// <param name="pDR">ユーザーリソース等から持ってくる</param>
 void DrawNumber::Create(DX::DeviceResources* pDR
 	, const wchar_t* path
-	, DirectX::SimpleMath::Vector2 position
-	, DirectX::SimpleMath::Vector2 scale
+	, const DirectX::SimpleMath::Vector2& position
+	, const DirectX::SimpleMath::Vector2& scale
 	)
 {
 	using namespace DirectX;
@@ -118,18 +118,18 @@ void DrawNumber::Create(DX::DeviceResources* pDR
 
 }
 
-void DrawNumber::SetScale(DirectX::SimpleMath::Vector2 scale)
+void DrawNumber::SetScale(const DirectX::SimpleMath::Vector2& scale)
 {
 	m_scale = scale;
 }
-void DrawNumber::SetPosition(DirectX::SimpleMath::Vector2 position)
+void DrawNumber::SetPosition(const DirectX::SimpleMath::Vector2& position)
 {
 	m_position = position;
 }
 
 
 
-void DrawNumber::SetRenderRatio(float ratio)
+void DrawNumber::SetRenderRatio(const float& ratio)
 {
 	m_renderRatio = ratio;
 }
@@ -190,7 +190,7 @@ void DrawNumber::CreateUIShader()
 /// <summary>
 /// 描画関数
 /// </summary>
-void DrawNumber::Render(int number , DirectX::SimpleMath::Vector2 offsetPosition)
+void DrawNumber::Render(const int& number , const DirectX::SimpleMath::Vector2& offsetPosition)
 {
 	using namespace DirectX;
 
@@ -227,7 +227,6 @@ void DrawNumber::Render(int number , DirectX::SimpleMath::Vector2 offsetPosition
 	//	画像用サンプラーの登録
 	ID3D11SamplerState* sampler[1] = { m_states->LinearWrap() };
 	context->PSSetSamplers(0, 1, sampler);
-
 
 	//	半透明描画指定
 	ID3D11BlendState* blendstate = m_states->NonPremultiplied();

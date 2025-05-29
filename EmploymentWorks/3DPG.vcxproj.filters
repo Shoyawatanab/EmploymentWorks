@@ -185,9 +185,6 @@
     <Filter Include="Game\Enemys\BossEnemy\ActionNode\Walking">
       <UniqueIdentifier>{38a6fa73-654c-4cc0-88cd-3ed308baaff3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\Observer\Enemy">
-      <UniqueIdentifier>{53ea08f1-ba8d-4905-aa27-6e977390f391}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\Enemys\BossEnemy\ActionNode\SwingDownAttack">
       <UniqueIdentifier>{e5ef2522-319a-4e67-b6c9-02021fb92a7b}</UniqueIdentifier>
     </Filter>
@@ -501,9 +498,6 @@
     <ClInclude Include="Game\Enemys\BirdEnemy\State\BirdEnemyStateMachine.h">
       <Filter>Game\Enemys\BirdEnemy\State</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Enemys\BirdEnemy\Beam\BirdEnemyBeam.h">
-      <Filter>Game\Enemys\BirdEnemy\Beam</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Enemys\BirdEnemy\Beam\BirdEnemyBeamEnergyBall.h">
       <Filter>Game\Enemys\BirdEnemy\Beam</Filter>
     </ClInclude>
@@ -699,9 +693,6 @@
     <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\Walking\WalkingActionComtroller.h">
       <Filter>Game\Enemys\BossEnemy\ActionNode\Walking</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Observer\Enemy\EnemyMessenger.h">
-      <Filter>Game\Observer\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Enemys\BossEnemy\ActionNode\SwingDownAttack\SwingDownAttackAction.h">
       <Filter>Game\Enemys\BossEnemy\ActionNode\SwingDownAttack</Filter>
     </ClInclude>
@@ -719,6 +710,15 @@
     </ClInclude>
     <ClInclude Include="Game\InstanceRegistry.h">
       <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Enemys\BirdEnemy\Beam\BirdEnemyBeam.h">
+      <Filter>Game\Enemys\BirdEnemy\Beam</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\UI\ThrowQuantity.h">
+      <Filter>Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Entities\UIBaseEntity.h">
+      <Filter>Game\Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -992,9 +992,6 @@
     <ClCompile Include="Game\Enemys\BirdEnemy\State\BirdEnemyStateMachine.cpp">
       <Filter>Game\Enemys\BirdEnemy\State</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Enemys\BirdEnemy\Beam\BirdEnemyBeam.cpp">
-      <Filter>Game\Enemys\BirdEnemy\Beam</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Enemys\BirdEnemy\Beam\BirdEnemyBeamEnergyBall.cpp">
       <Filter>Game\Enemys\BirdEnemy\Beam</Filter>
     </ClCompile>
@@ -1172,9 +1169,6 @@
     <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\Walking\WalkingActionComtroller.cpp">
       <Filter>Game\Enemys\BossEnemy\ActionNode\Walking</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Observer\Enemy\EnemyMessenger.cpp">
-      <Filter>Game\Observer\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Enemys\BossEnemy\ActionNode\SwingDownAttack\SwingDownAttackAction.cpp">
       <Filter>Game\Enemys\BossEnemy\ActionNode\SwingDownAttack</Filter>
     </ClCompile>
@@ -1192,6 +1186,15 @@
     </ClCompile>
     <ClCompile Include="Game\InstanceRegistry.cpp">
       <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Enemys\BirdEnemy\Beam\BirdEnemyBeam.cpp">
+      <Filter>Game\Enemys\BirdEnemy\Beam</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\UI\ThrowQuantity.cpp">
+      <Filter>Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Entities\UIBaseEntity.cpp">
+      <Filter>Game\Entities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

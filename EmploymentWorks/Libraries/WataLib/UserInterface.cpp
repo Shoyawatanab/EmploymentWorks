@@ -120,18 +120,18 @@ void UserInterface::Create(CommonResources* resources, std::string key, DirectX:
 
 }
 
-void UserInterface::SetScale(DirectX::SimpleMath::Vector2 scale)
+void UserInterface::SetScale(const DirectX::SimpleMath::Vector2& scale)
 {
 	m_scale = scale;
 }
-void UserInterface::SetPosition(DirectX::SimpleMath::Vector2 position)
+void UserInterface::SetPosition(const DirectX::SimpleMath::Vector2& position)
 {
 	m_position = position;
 }
 
 
 
-void UserInterface::SetRenderRatio(float ratio)
+void UserInterface::SetRenderRatio(const float& ratio)
 {
 	m_renderRatio = ratio;
 }

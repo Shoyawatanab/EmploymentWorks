@@ -31,7 +31,7 @@ public:
 	~BirdEnemyBeamStateMachine() override;
 
 	//‰Šú‰»
-	void Initialize(CommonResources* resources, IState* startState = nullptr) ;
+	void Initialize() ;
 	// XVˆ—
 	void Update(const float& elapsedTime) override;
 	//•`‰æˆ—

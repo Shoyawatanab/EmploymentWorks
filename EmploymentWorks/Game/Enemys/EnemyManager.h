@@ -22,7 +22,7 @@ public:
 	BossEnemy* GetBossEnemy() { return m_bossEnemy; }
 
 	//ƒ{ƒX‚ÌHPŠ„‡‚Ìæ“¾
-	float GetBossHPRation();
+	float const  GetBossHPRation();
 	//‚·‚×‚Ä‚Ì“Gî•ñ‚Ìæ“¾
 	std::vector<std::unique_ptr<EnemyEntity>>& GetEnemys() { return m_enemys; }
 
@@ -55,8 +55,8 @@ public:
 	{
 
 		if (m_remainingEnemys.size() <= 1) {
-			Messenger::GetInstance()->Notify(GameMessageType::GAME_CLEAR, nullptr);
-			Messenger::GetInstance()->Notify(GameMessageType::DEFEATED_All_ENEMIES, nullptr);
+			Messenger::GetInstance()->Notify(GamePlayMessageType::GAME_CLEAR, nullptr);
+			Messenger::GetInstance()->Notify(GamePlayMessageType::DEFEATED_All_ENEMIES, nullptr);
 			return;
 		}
 

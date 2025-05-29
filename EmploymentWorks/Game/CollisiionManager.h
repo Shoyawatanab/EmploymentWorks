@@ -14,7 +14,7 @@ public:
 	//デストラクタ
 	~CollisionManager();
 	//初期化
-	void Initialize(CommonResources* resources);
+	void Initialize();
 	//更新
 	void Update();
 	//当たり判定クラスの登録
@@ -25,8 +25,6 @@ public:
 	static void AABB_AABB_Extrusion(CollisionEntity* object1, CollisionEntity* object2);
 
 private:
-	// 共通リソース
-	CommonResources* m_commonResources;
 	//当たり判定クラスの配列
 	std::vector<CollisionEntity*> m_collisionObjects;
 	//押し出しの

@@ -11,10 +11,15 @@
 
 class InstanceRegistry : public Singleton<InstanceRegistry>
 {
+	friend class Singleton<InstanceRegistry>;
+
+
 
 public:
 	//コンストラクタ
-	InstanceRegistry() = default;
+	InstanceRegistry() = default ;
+
+	~InstanceRegistry() override = default;
 
 	/// <summary>
 	/// 登録

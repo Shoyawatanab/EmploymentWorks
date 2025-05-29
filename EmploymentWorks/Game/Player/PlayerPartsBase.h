@@ -20,11 +20,11 @@ public:
 
 public:
 	PlayerPartsBase(CommonResources* resources
-		, CharacterEntity* parent,
-		std::string partsName,
-		DirectX::SimpleMath::Vector3 scale,
-		DirectX::SimpleMath::Vector3 position,
-		DirectX::SimpleMath::Quaternion rotation);
+		, CharacterEntity* parent
+		,const std::string& partsName
+		,const DirectX::SimpleMath::Vector3& scale
+		,const DirectX::SimpleMath::Vector3& position
+		,const DirectX::SimpleMath::Quaternion& rotation);
 
 	~PlayerPartsBase()  override;
 
@@ -63,12 +63,12 @@ public:
 
 	//ICharacter
 	//アニメーションの登録
-	void SetAnimationData(std::string animationType
+	void SetAnimationData(const std::string& animationType
 		, std::unordered_map<std::string, std::unordered_map<std::string, WataLib::Json::AnimationData>> datas
 		, const std::string& partsName = ""
 		, bool isNormalAnimation = false) override;
 	//アニメーションの変更
-	void ChangeAnimation(std::string animationType) override;
+	void ChangeAnimation(const std::string& animationType) override;
 
 
 

@@ -10,17 +10,18 @@ class CommonResources;
 class Boomerang;
 class Player;
 class BirdEnemy;
+class BirdEnemyBeam;
 
 // BirdEnemyAttackクラスを定義する
 class BirdEnemyAttack : public IState
 {
 public:
 	// コンストラクタ
-	BirdEnemyAttack();
+	BirdEnemyAttack(BirdEnemy* owner, std::vector<std::unique_ptr<BirdEnemyBeam>>& beams);
 	// デストラクタ
 	~BirdEnemyAttack();
 	// 初期化
-	void Initialize(CommonResources* resoure, BirdEnemy* owner);
+	void Initialize();
 
 	// 更新処理
 	void Update(const float& elapsedTime);
@@ -34,8 +35,6 @@ public:
 
 private:
 
-	// 共通リソース
-	CommonResources* m_commonResources;
 	//鳥の敵
 	BirdEnemy* m_birdEnemy;
 	//プレイヤ
@@ -47,6 +46,9 @@ private:
 
 	//打つ玉の数
 	int m_bulletCount;
+
+
+	std::vector<std::unique_ptr<BirdEnemyBeam>>& m_beams;
 
 };
 

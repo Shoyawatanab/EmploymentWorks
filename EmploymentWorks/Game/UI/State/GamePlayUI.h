@@ -11,6 +11,8 @@
 
 class Player;
 class UserInterface;
+class ThrowQuantity;
+
 
 class EnemyManager;
 namespace WataLib 
@@ -19,7 +21,7 @@ namespace WataLib
 }
 
 
-class GamePlayUI : public IState ,  public IObserver<GameMessageType>
+class GamePlayUI : public IState ,  public IObserver<GamePlayMessageType>
 {
 
 private :
@@ -59,6 +61,7 @@ private :
 	static constexpr DirectX::SimpleMath::Vector2 LEFT_THROW_SCALE {0.2f, 0.2f};
 
 
+
 public:
 	//コンストラクタ
 	GamePlayUI() ;
@@ -94,9 +97,10 @@ private:
 	//ダメージUIの作成
 	void CreateDamageUI(void* datas);
 
+
 	//IObserver
 //通知時に呼ばれる関数
-	void Notify(const Telegram<GameMessageType>& telegram)  override;
+	void Notify(const Telegram<GamePlayMessageType>& telegram)  override;
 
 private:
 	//プレイヤがダメージを受けた時
@@ -119,6 +123,9 @@ private:
 
 	//投げ状態のUI
 	std::vector<std::unique_ptr<UserInterface>> m_throwUI;
+
+	std::unique_ptr<ThrowQuantity> m_throwQuantityUI;
+
 	//敵マネージャー
 	EnemyManager* m_enemyManager;
 	//画面サイズ

@@ -30,9 +30,9 @@ public:
 
 public:
 	//ターゲットの取得
-	DirectX::SimpleMath::Vector3 GetTarget() { return m_target; }
+	const DirectX::SimpleMath::Vector3& GetTarget() { return m_target; }
 	//ターゲットの登録
-	void SetTarget(DirectX::SimpleMath::Vector3 target) { m_target = target; }
+	void SetTarget(const DirectX::SimpleMath::Vector3& target) { m_target = target; }
 	//ステートマシーンの取得
 	BirdEnemyBeamStateMachine* GetStateMahine() { return m_stateMachine.get(); }
 	//

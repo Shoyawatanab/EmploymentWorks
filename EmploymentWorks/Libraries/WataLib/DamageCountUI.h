@@ -23,25 +23,25 @@ namespace WataLib
 
 	public:
 
-		DirectX::SimpleMath::Vector3 GetPosition() { return m_position; }
+		const DirectX::SimpleMath::Vector3& GetPosition() { return m_position; }
 
-		void SetPosition(DirectX::SimpleMath::Vector3 Pos);
+		void SetPosition(const DirectX::SimpleMath::Vector3& Pos);
 
-		void SetScale(DirectX::SimpleMath::Vector2 scale);
+		void SetScale(const DirectX::SimpleMath::Vector2& scale);
 
-		float GetRotate() { return m_rotate; }
+		float GetRotate() const  { return m_rotate; }
 
-		void SetRotate(float rotate);
+		void SetRotate(const float& rotate);
 
-		DirectX::SimpleMath::Vector2 GetCenter() { return m_texCenter; }
+		const DirectX::SimpleMath::Vector2& GetCenter() { return m_texCenter; }
 
-		void SetDamage(int damage);
+		void SetDamage(const int& damage);
 
-		void SetScreenPosition(DirectX::SimpleMath::Vector2 position);
+		void SetScreenPosition(const DirectX::SimpleMath::Vector2& position);
 
-		void SetIsActive(bool isActive) { m_isActive = isActive; }
+		void SetIsActive(const bool& isActive) { m_isActive = isActive; }
 
-		bool GetIsActive() { return m_isActive; }
+		bool GetIsActive() const { return m_isActive; }
 		
 	public:
 		//コンストラクタ

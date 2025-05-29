@@ -19,7 +19,7 @@ namespace WataLib
 
 
 
-class TargetMarker : public IObserver<GameMessageType>
+class TargetMarker : public IObserver<GamePlayMessageType>
 
 {
 public:
@@ -29,9 +29,9 @@ public:
 
 public:
 
-	bool GetIsLockOn() { return m_isLockOn; }
+	const bool& GetIsLockOn() { return m_isLockOn; }
 
-	DirectX::SimpleMath::Vector3 GetTargetPosition() { return m_target; }
+	const DirectX::SimpleMath::Vector3& GetTargetPosition() { return m_target; }
 
 
 public:
@@ -61,7 +61,7 @@ public:
 
 	//IObserver
 //通知時に呼ばれる関数
-	void Notify(const Telegram<GameMessageType>& telegram)  override;
+	void Notify(const Telegram<GamePlayMessageType>& telegram)  override;
 
 
 	//ワールド座標をスクリーン座標に変換する
