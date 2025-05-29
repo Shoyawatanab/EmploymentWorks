@@ -18,10 +18,12 @@
 /// <param name="scale">ëÂÇ´Ç≥</param>
 /// <param name="position">ç¿ïW</param>
 /// <param name="rotation">âÒì]</param>
-PlayerLeftFeet::PlayerLeftFeet(CommonResources* resources, 
-	CharacterEntity* parent, DirectX::SimpleMath::Vector3 scale,
-	DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Quaternion rotation)
-	:
+PlayerLeftFeet::PlayerLeftFeet(CommonResources* resources 
+	, CharacterEntity* parent
+	, const DirectX::SimpleMath::Vector3& scale
+	, const DirectX::SimpleMath::Vector3& position
+	, const DirectX::SimpleMath::Quaternion& rotation)
+:
 	PlayerPartsBase(resources, parent, PARTSNAME, scale, position, rotation)
 
 {

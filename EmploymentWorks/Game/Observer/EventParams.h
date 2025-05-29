@@ -1,6 +1,6 @@
 #pragma once
 //ゲームの種類
-enum class GameMessageType
+enum class GamePlayMessageType
 {
 	None = -1
 	, BOOMERANG_GET_READY    //ブーメランを構える
@@ -23,6 +23,9 @@ enum class GameMessageType
 	,BOOMERANG_RECOVERBLE  //ブーメランを回収可能
 	, BOOMERANG_NOT_RECOVERBLE  //ブーメランを回収不可
 	,CAMERA_SHAKE  //カメラを揺らす
+	,NEXT_SCENE  //次のシーンに
+	,CHANGE_THROW_COUNT                      //ブーメランをまとめてなげるかどうかの切り替え
+
 
 };
 
@@ -30,11 +33,13 @@ enum class GameMessageType
 enum class EnemyMessageType
 {
 	NONE
-	,WALKING
-	,JUMP_ATTACK
-	, BARRIER_DEFENSE
-	, BEAM_ATTACK
-	, SWING_DOWN
+	, IDLING            //通常状態
+	, WALKING           //歩き
+	, JUMP_ATTACK	    //ジャンプ攻撃
+	, BARRIER_DEFENSE   //バリア防御
+	, BEAM_ATTACK	    //ビーム攻撃
+	, SWING_DOWN	    //振り下ろし攻撃
+	, MOVEING           //動く
 };
 
 //パーツの通知の種類　敵　プレイヤなど混合　分けたい

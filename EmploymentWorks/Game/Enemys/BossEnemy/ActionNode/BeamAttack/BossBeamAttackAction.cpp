@@ -47,7 +47,7 @@ BossBeamAttackAction::BossBeamAttackAction(CommonResources* resources
 
 
 	//イベントタイプの登録
-	Messenger::GetInstance()->Rigister(GameMessageType::BOSS_BEAM_HIT, this);
+	Messenger::GetInstance()->Rigister(GamePlayMessageType::BOSS_BEAM_HIT, this);
 
 	//行動順に追加
 	ActionStateController::Initialize({
@@ -73,12 +73,12 @@ BossBeamAttackAction::~BossBeamAttackAction()
 /// 通知を受け取る関数
 /// </summary>
 /// <param name="telegram">情報</param>
-void BossBeamAttackAction::Notify(const Telegram<GameMessageType>& telegram)
+void BossBeamAttackAction::Notify(const Telegram<GamePlayMessageType>& telegram)
 {
 	
 	switch (telegram.messageType)
 	{
-		case GameMessageType::BOSS_BEAM_HIT:
+		case GamePlayMessageType::BOSS_BEAM_HIT:
 
 			ActionStateController::ChangeState();
 			break;

@@ -125,7 +125,7 @@ void TitleScene::Initialize(CommonResources* resources)
 	//m_objects.push_back(std::move(model));
 
 	m_player = std::make_unique<Player>(m_commonResources);
-	m_player->Initialize();
+	//m_player->Initialize();
 
 	m_player->SetPosition(PLAYERPOSITION);
 	m_player->SetScale(PLAYERSCALE);

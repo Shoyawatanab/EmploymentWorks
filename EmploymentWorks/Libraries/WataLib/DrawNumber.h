@@ -36,34 +36,34 @@ public:
 
 public:
 
-	void SetScale(DirectX::SimpleMath::Vector2 scale);
-	DirectX::SimpleMath::Vector2 GetScale() { return m_scale; }
+	void SetScale(const DirectX::SimpleMath::Vector2& scale);
+	const DirectX::SimpleMath::Vector2& GetScale() { return m_scale; }
 
-	DirectX::SimpleMath::Vector2 GetInialScale() { return m_initialScale; }
+	const DirectX::SimpleMath::Vector2& GetInialScale() { return m_initialScale; }
 
-	void SetPosition(DirectX::SimpleMath::Vector2 position);
-	DirectX::SimpleMath::Vector2 GetPosition() { return m_position; }
+	void SetPosition(const DirectX::SimpleMath::Vector2& position);
+	const DirectX::SimpleMath::Vector2& GetPosition() { return m_position; }
 
-	DirectX::SimpleMath::Vector2 GetInitialPosition() { return m_initialPosition; }
+	const DirectX::SimpleMath::Vector2& GetInitialPosition() { return m_initialPosition; }
 
-	void SetRenderRatio(float ratio);
-	float GetRenderRatio() { return m_renderRatio; }
+	void SetRenderRatio(const float& ratio);
+	float GetRenderRatio() const { return m_renderRatio; }
 
-	void SetRenderRatioOffset(float offset) { m_renderRatioOffset = offset; };
-	float GetRenderRatioOffset() { return m_renderRatioOffset; }
+	void SetRenderRatioOffset(const float& offset) { m_renderRatioOffset = offset; };
+	float GetRenderRatioOffset() const { return m_renderRatioOffset; }
 
-	void SetAlphaValue(float value) { m_alphaValue = value; }
-	float GetAlphaValue() { return m_alphaValue; }
+	void SetAlphaValue(const float& value) { m_alphaValue = value; }
+	float GetAlphaValue() const { return m_alphaValue; }
 
-	void SetIsActive(bool isActive) { m_isActive = isActive; }
+	void SetIsActive(const bool& isActive) { m_isActive = isActive; }
 
-	bool GetIsActive() { return m_isActive; }
+	bool GetIsActive() const { return m_isActive; }
 
-	int GetWidth() { return m_textureWidth; }
-	int GetHeight() { return m_textureHeight; }
+	int GetWidth() const { return m_textureWidth; }
+	int GetHeight() const { return m_textureHeight; }
 
 
-	void SetOffSetPosition(DirectX::SimpleMath::Vector2 offsetPostion) { m_offsetPosition = offsetPostion; }
+	void SetOffSetPosition(const DirectX::SimpleMath::Vector2& offsetPostion) { m_offsetPosition = offsetPostion; }
 
 	//ä÷êî
 public:
@@ -76,11 +76,11 @@ public:
 	//ê∂ê¨
 	void Create(DX::DeviceResources* pDR
 		, const wchar_t* path
-		, DirectX::SimpleMath::Vector2 position
-		, DirectX::SimpleMath::Vector2 scale
+		, const DirectX::SimpleMath::Vector2& position
+		, const DirectX::SimpleMath::Vector2& scale
 		);
 	//ï`âÊ
-	void Render(int number , DirectX::SimpleMath::Vector2 offsetPosition);
+	void Render(const int& number , const DirectX::SimpleMath::Vector2& offsetPosition);
 
 
 private:

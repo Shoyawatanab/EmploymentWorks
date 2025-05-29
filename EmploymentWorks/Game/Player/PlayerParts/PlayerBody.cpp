@@ -24,9 +24,9 @@
 /// <param name="rotation">‰ñ“]</param>
 PlayerBody::PlayerBody(CommonResources* resources
 	,CharacterEntity* parent
-	, DirectX::SimpleMath::Vector3 scale,
-	DirectX::SimpleMath::Vector3 position
-	,DirectX::SimpleMath::Quaternion rotation)
+	, const DirectX::SimpleMath::Vector3& scale
+	, const DirectX::SimpleMath::Vector3& position
+	, const DirectX::SimpleMath::Quaternion& rotation)
 	:
 	PlayerPartsBase(resources, parent ,PARTSNAME,scale,position,rotation)
 {

@@ -16,11 +16,11 @@ class BirdEnemyMove : public IState
 
 public:
 	// コンストラクタ
-	BirdEnemyMove();
+	BirdEnemyMove(BirdEnemy* owner);
 	// デストラクタ
 	~BirdEnemyMove();
 	// 初期化
-	void Initialize(CommonResources* resoure, BirdEnemy* owner);
+	void Initialize();
 
 	// 更新処理
 	void Update(const float& elapsedTime);

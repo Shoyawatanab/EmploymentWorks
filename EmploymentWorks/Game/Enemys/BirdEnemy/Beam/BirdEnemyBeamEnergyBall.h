@@ -39,26 +39,26 @@ public:
 	static constexpr float SPHERE_COLLIDER_SIZE = 1.0f;
 	static constexpr DirectX::SimpleMath::Vector3  BOX_COLLIDER_SIZE {0.5f,0.5f,0.5f};
 	
-	
-
 public:
 
 
 	//ターゲットの取得
-	DirectX::SimpleMath::Vector3 GetTarget() { return m_target; }
+	const DirectX::SimpleMath::Vector3& GetTarget() { return m_target; }
 	//ターゲットの登録
-	void SetTarget(DirectX::SimpleMath::Vector3 target) { m_target = target; }
+	void SetTarget(const DirectX::SimpleMath::Vector3& target) { m_target = target; }
 	//初期の大きさの取得
-	DirectX::SimpleMath::Vector3 GetInitialScale() { return m_initialScale; }
+	const DirectX::SimpleMath::Vector3& GetInitialScale() { return m_initialScale; }
 	//最大サイズの取得
-	DirectX::SimpleMath::Vector3 GetMaxScale() { return m_maxScale; }
+	const DirectX::SimpleMath::Vector3& GetMaxScale() { return m_maxScale; }
 	//最大サイズの時間の取得
-	float GetMaxSizeTime() { return m_maxSizeTime; }
+	float GetMaxSizeTime() const { return m_maxSizeTime; }
 
 
 public :
 	//コンストラクタ
-	BirdEnemyBeamEnergyBall(CommonResources* resources, BaseEntity* parent, BirdEnemyBeam* beam);
+	BirdEnemyBeamEnergyBall(CommonResources* resources
+		, BaseEntity* parent
+		, BirdEnemyBeam* beam);
 
 	//デストラクタ
 	~BirdEnemyBeamEnergyBall() override;

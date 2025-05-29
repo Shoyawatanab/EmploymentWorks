@@ -13,17 +13,28 @@ class Messenger : public Singleton<Messenger>
 	
 
 private:
-	//イベントリスト
-	std::unordered_map<GameMessageType, std::vector<IObserver<GameMessageType>*>> m_eventList;
+	//ゲームイベントリスト
+	std::unordered_map<GamePlayMessageType, std::vector<IObserver<GamePlayMessageType>*>> m_gameEventList;
+
+	//キャラ単体イベントの保存リスト
+	std::unordered_map<int, IObserver<EnemyMessageType>*> m_characterSingleEventList;
 
 
 public:
 
 
-	// 観察者をアタッチ
-	void Rigister(GameMessageType type, IObserver<GameMessageType>* observer);
-	// 通知する
-	void Notify(GameMessageType type, void* datas = nullptr);
+	//ゲームイベントリストに追加
+	void Rigister(GamePlayMessageType type, IObserver<GamePlayMessageType>* observer);
+	//ゲームイベントの通知
+	void Notify(GamePlayMessageType type, void* datas = nullptr);
+
+	//キャラクターイベントリストに追加
+	void Rigister(int enemyId, IObserver<EnemyMessageType>* observer);
+	//キャラクターイベントの通知
+	void Notify(int enemyId, EnemyMessageType type, void* datas = nullptr);
+
+
+
 	//イベントのクリア
 	void Clear();
 
@@ -33,7 +44,7 @@ public:
 	// コンストラクタ
 	Messenger();
 	//デストラクタ
-	~Messenger();
+	~Messenger() ;
 
 
 public:

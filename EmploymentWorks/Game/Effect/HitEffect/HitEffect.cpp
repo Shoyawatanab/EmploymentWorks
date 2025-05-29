@@ -82,14 +82,14 @@ void HitEffect::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::S
 }
 
 
-void HitEffect::SetPosition(DirectX::SimpleMath::Vector3 position)
+void HitEffect::SetPosition(const DirectX::SimpleMath::Vector3& position)
 {
 
 	m_circleHitEffect->SetPosition(position);
 
 }
 
-void HitEffect::SetScale(DirectX::SimpleMath::Vector3 scale)
+void HitEffect::SetScale(const DirectX::SimpleMath::Vector3& scale)
 {
 	m_circleHitEffect->SetScale(scale);
 }

@@ -23,7 +23,7 @@ namespace mylib
 }
 
 
-class BossBeamAttackAction : public ActionStateController, IObserver<GameMessageType>
+class BossBeamAttackAction : public ActionStateController, IObserver<GamePlayMessageType>
 {
 
 public:
@@ -39,7 +39,7 @@ public:
 
 	//IObserver
 //’Ê’m‚ÉŒÄ‚Î‚ê‚éŠÖ”
-	void Notify(const Telegram<GameMessageType>& telegram)  override;
+	void Notify(const Telegram<GamePlayMessageType>& telegram)  override;
 
 
 

@@ -17,7 +17,7 @@ namespace WataLib
 
 namespace WataLib
 {
-	class TPS_Camera :public ICamera ,public IObserver<GameMessageType>
+	class TPS_Camera :public ICamera ,public IObserver<GamePlayMessageType>
 	{
 	private:
 		//マウス感度の構造体
@@ -68,7 +68,7 @@ namespace WataLib
 
 		const DirectX::SimpleMath::Vector3& GetEyePosition() const { return m_eye; }
 
-		void SetEyePosition(DirectX::SimpleMath::Vector3 pos)
+		void SetEyePosition(const DirectX::SimpleMath::Vector3& pos)
 		{
 			m_eye = pos; 	// カメラ座標を計算する
 			// ビュー行列を更新する
@@ -79,9 +79,9 @@ namespace WataLib
 
 		const DirectX::SimpleMath::Vector3& GetUpVector() const { return m_up; }
 
-		DirectX::SimpleMath::Quaternion GetRotationX() { return m_rotationX; }
+		const DirectX::SimpleMath::Quaternion& GetRotationX() { return m_rotationX; }
 
-		DirectX::SimpleMath::Vector3 GetCameraForward() { return m_forward; }
+		const DirectX::SimpleMath::Vector3& GetCameraForward() { return m_forward; }
 
 		//////
 		//
@@ -117,7 +117,7 @@ namespace WataLib
 		// カメラ座標を計算する
 		void CalculateEyePosition();
 		//通知時に呼ばれる関数
-		void Notify(const Telegram<GameMessageType>& telegram)  override;
+		void Notify(const Telegram<GamePlayMessageType>& telegram)  override;
 		
 
 	private:

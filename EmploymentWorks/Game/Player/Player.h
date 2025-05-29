@@ -50,6 +50,7 @@ public:
 	};
 
 
+
 public:
 	//コンストラクタ
 	Player(CommonResources* resources);
@@ -57,9 +58,14 @@ public:
 	//デストラクタ
 	~Player() override;
 
+
+
 //IObject
 	//初期化
 	void Initialize() override;
+
+	//void TitleInitialize();
+
 	//描画
 	void Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection) override;
 	//更新処理
@@ -99,12 +105,12 @@ public:
 
 //ICharacter
 	//アニメーションの登録
-	void SetAnimationData(std::string animationType
+	void SetAnimationData(const std::string& animationType
 		,std::unordered_map<std::string, std::unordered_map<std::string, WataLib::Json::AnimationData>> datas
 		, const std::string& partsName = ""
 		, bool isNormalAnimation = false) override;
 	//アニメーションの変更
-	void ChangeAnimation(std::string animationType) override;
+	void ChangeAnimation(const std::string& animationType) override;
 
 private:
 	//宣言
@@ -120,8 +126,6 @@ private:
 	std::vector<std::unique_ptr<Boomerang>> m_boomerangs;
 	//使用中のブーメラン
 	Boomerang* m_currentBoomerang;
-	//
-	TargetMarker* m_targetMarker;
 	//HP
 	int m_hp;
 	// 影オブジェクト

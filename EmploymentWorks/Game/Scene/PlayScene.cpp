@@ -107,7 +107,7 @@ void PlayScene::Initialize(CommonResources* resources)
 	m_collisionManager = std::make_unique<CollisionManager>();
 	m_uiManager = std::make_unique<UIManager>();
 	m_targetMarker = std::make_unique<TargetMarker>();
-	m_effectsManager = std::make_unique<EffectsManager>();
+	m_effectsManager = std::make_unique<EffectsManager>(m_commonResources);
 	m_sky = std::make_unique<Sky>(m_commonResources,Vector3::One,Vector3::Zero,Quaternion::Identity);
 
 
@@ -124,10 +124,10 @@ void PlayScene::Initialize(CommonResources* resources)
 	m_enemyManager->Initialize(m_commonResources);
 	m_player->Initialize();
 	m_cameraManager->Initialize(m_commonResources);
-	m_collisionManager->Initialize(m_commonResources);
+	m_collisionManager->Initialize();
 	m_uiManager->Initialize(m_commonResources);
 	m_targetMarker->Initialize(m_commonResources);
-	m_effectsManager->Initialize(m_commonResources);
+	m_effectsManager->Initialize();
 	m_sky->Initialize();
 	ItemAcquisition::GetInstance()->Initialize(m_commonResources);
 
@@ -170,6 +170,9 @@ void PlayScene::Initialize(CommonResources* resources)
 	m_soundManager = SoundManager::GetInstance();
 
 	//m_soundManager->PlaySoundBGM("Play");
+
+
+	Messenger::GetInstance()->Rigister(GamePlayMessageType::NEXT_SCENE, this);
 
 }
 
@@ -353,16 +356,34 @@ void PlayScene::CheckMouseWheel()
 	//ã‚É‰ñ“]
 	if (scrollWheelValue > 0)
 	{
-		Messenger::GetInstance()->Notify(::GameMessageType::MOUSE_WHEEL_UP, nullptr);
+		Messenger::GetInstance()->Notify(::GamePlayMessageType::MOUSE_WHEEL_UP, nullptr);
 	}
 	//‰º‚É‰ñ“]
 	else if (scrollWheelValue < 0)
 	{
 
-		Messenger::GetInstance()->Notify(::GameMessageType::MOUSE_WHEEL_DOWN, nullptr);
+		Messenger::GetInstance()->Notify(::GamePlayMessageType::MOUSE_WHEEL_DOWN, nullptr);
 
 	}
 
 	Mouse::Get().ResetScrollWheelValue();
+
+}
+
+void PlayScene::Notify(const Telegram<GamePlayMessageType>& telegram)
+{
+
+	switch (telegram.messageType)
+	{
+		case GamePlayMessageType::NEXT_SCENE:
+		{
+			auto next = static_cast<IScene::SceneID*>(telegram.extraInfo);
+
+			SetNextSceneID(*next);
+		}
+			break;
+		default:
+			break;
+	}
 
 }

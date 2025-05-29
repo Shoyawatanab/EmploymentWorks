@@ -42,10 +42,10 @@ public:
 	};
 
 public:
-	//当たり判定が有効かどうか
-	bool GetIsCollisionActive() { return m_isCollisionActive; }
+	//当たり判定が有効かどうか true:有効  false:無効
+	const bool& GetIsCollisionActive() { return m_isCollisionActive; }
 	//当たり判定の有効かどうかの登録
-	void SetIsCollisionActive(bool isActive) { m_isCollisionActive = isActive; }
+	void SetIsCollisionActive(const bool& isActive) { m_isCollisionActive = isActive; }
 
 public:
 
@@ -107,7 +107,7 @@ private:
 	std::unique_ptr<WataLib::Bounding> m_bounding;
 	//当たったオブジェクトの格納変数
 	std::vector<CollisionEntity*> m_hitObject;
-	//当たり判定の有無
+	//当たり判定の有無 true:有効  false:無効
 	bool m_isCollisionActive;
 
 };

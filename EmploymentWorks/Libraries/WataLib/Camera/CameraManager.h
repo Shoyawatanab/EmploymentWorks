@@ -18,7 +18,7 @@ namespace WataLib
 
 namespace WataLib
 {
-	class CameraManager : public IObserver<GameMessageType>
+	class CameraManager : public IObserver<GamePlayMessageType>
 	{
 	public:
 		//ビュー行列の取得
@@ -51,7 +51,7 @@ namespace WataLib
 
 		//IObserver
 //通知時に呼ばれる関数
-		void Notify(const Telegram<GameMessageType>& telegram)  override;
+		void Notify(const Telegram<GamePlayMessageType>& telegram)  override;
 
 	private:
 		//現在のカメラ

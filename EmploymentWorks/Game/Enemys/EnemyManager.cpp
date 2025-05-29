@@ -179,7 +179,7 @@ void EnemyManager::AddCollision(CollisionManager* collsionManager)
 /// ƒ{ƒX‚ÌHPŠ„‡‚Ìæ“¾
 /// </summary>
 /// <returns>Š„‡</returns>
-float EnemyManager::GetBossHPRation()
+float const EnemyManager::GetBossHPRation()
 {
 	//Š„‡‚ğ‹‚ß‚é
 	float ration = m_bossEnemy->GetHP() / static_cast<float>(Params::BOSSENEMY_MAX_HP);

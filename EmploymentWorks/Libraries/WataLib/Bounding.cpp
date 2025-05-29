@@ -69,7 +69,7 @@ void WataLib::Bounding::Initialize()
 /// 更新処理
 /// </summary>
 /// <param name="CenterPos">中心座標</param>
-void WataLib::Bounding::Update(DirectX::SimpleMath::Vector3 CenterPos)
+void WataLib::Bounding::Update(const DirectX::SimpleMath::Vector3& CenterPos)
 {
 
 	m_boundingSphere->Center = CenterPos;
@@ -82,7 +82,8 @@ void WataLib::Bounding::Update(DirectX::SimpleMath::Vector3 CenterPos)
 /// </summary>
 /// <param name="CenterPos">中心座標</param>
 /// <param name="rotation">回転</param>
-void WataLib::Bounding::Update(DirectX::SimpleMath::Vector3 CenterPos, DirectX::SimpleMath::Quaternion rotation)
+void WataLib::Bounding::Update(const DirectX::SimpleMath::Vector3& CenterPos
+	, const DirectX::SimpleMath::Quaternion& rotation)
 {
 	m_boundingSphere->Center = CenterPos;
 	m_orientexBox->Center = CenterPos;
@@ -96,7 +97,8 @@ void WataLib::Bounding::Update(DirectX::SimpleMath::Vector3 CenterPos, DirectX::
 /// </summary>
 /// <param name="CenterPos">中心座標</param>
 /// <param name="Extents">大きさ</param>
-void WataLib::Bounding::CreateBoundingBox(DirectX::SimpleMath::Vector3 CenterPos, DirectX::SimpleMath::Vector3 Extents)
+void WataLib::Bounding::CreateBoundingBox(const DirectX::SimpleMath::Vector3& CenterPos
+	, const DirectX::SimpleMath::Vector3& Extents)
 {
 
 	using namespace DirectX;
@@ -114,7 +116,9 @@ void WataLib::Bounding::CreateBoundingBox(DirectX::SimpleMath::Vector3 CenterPos
 /// <param name="CenterPos">中心座標</param>
 /// <param name="rotation">回転</param>
 /// <param name="Extents">大きさ</param>
-void WataLib::Bounding::CreateBoundingOrientedBox(DirectX::SimpleMath::Vector3 CenterPos, DirectX::SimpleMath::Quaternion rotation, DirectX::SimpleMath::Vector3 Extents)
+void WataLib::Bounding::CreateBoundingOrientedBox(const DirectX::SimpleMath::Vector3& CenterPos
+	, const DirectX::SimpleMath::Quaternion& rotation
+	, const DirectX::SimpleMath::Vector3& Extents)
 {
 
 	m_orientexBox = std::make_unique<DirectX::BoundingOrientedBox>();
@@ -132,7 +136,7 @@ void WataLib::Bounding::CreateBoundingOrientedBox(DirectX::SimpleMath::Vector3 C
 /// <param name="rotation">回転</param>
 /// <param name="view">ビュー行列</param>
 /// <param name="projection">射影行列</param>
-void WataLib::Bounding::Draw(const DirectX::SimpleMath::Vector3 CenterPos, DirectX::SimpleMath::Quaternion rotation, DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
+void WataLib::Bounding::Draw(const DirectX::SimpleMath::Vector3& CenterPos, const DirectX::SimpleMath::Quaternion& rotation, const DirectX::CXMMATRIX& view, const DirectX::CXMMATRIX& projection)
 {
 	//オブジェクトがあれば
 	if (m_boundingSphere)
@@ -158,7 +162,7 @@ void WataLib::Bounding::Draw(const DirectX::SimpleMath::Vector3 CenterPos, Direc
 /// </summary>
 /// <param name="CenterPos">中心座標</param>
 /// <param name="radius">半径</param>
-void WataLib::Bounding::CreateBoundingSphere(DirectX::SimpleMath::Vector3 CenterPos, float radius)
+void WataLib::Bounding::CreateBoundingSphere(const DirectX::SimpleMath::Vector3& CenterPos, const float& radius)
 {
 	using namespace DirectX;
 
@@ -175,7 +179,7 @@ void WataLib::Bounding::CreateBoundingSphere(DirectX::SimpleMath::Vector3 Center
 /// <param name="CenterPos">中心座標</param>
 /// <param name="view">ビュー行列</param>
 /// <param name="projection">射影行列</param>
-void WataLib::Bounding::DrawBoundingBox(const DirectX::SimpleMath::Vector3 CenterPos, DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
+void WataLib::Bounding::DrawBoundingBox(const DirectX::SimpleMath::Vector3& CenterPos, const DirectX::CXMMATRIX& view, const DirectX::CXMMATRIX& projection)
 {
 	m_boundingBox->Center = CenterPos;
 	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();
@@ -217,7 +221,8 @@ void WataLib::Bounding::DrawBoundingBox(const DirectX::SimpleMath::Vector3 Cente
 /// <param name="rotation">回転</param>
 /// <param name="view">ビュー行列</param>
 /// <param name="projection">射影行列</param>
-void WataLib::Bounding::DrawBoundingOrientedBox(const DirectX::SimpleMath::Vector3 CenterPos, DirectX::SimpleMath::Quaternion rotation, DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
+void WataLib::Bounding::DrawBoundingOrientedBox(const DirectX::SimpleMath::Vector3& CenterPos, const DirectX::SimpleMath::Quaternion& rotation, const DirectX::CXMMATRIX& view
+	, const DirectX::CXMMATRIX& projection)
 {
 	m_orientexBox->Center = CenterPos;
 	m_orientexBox->Orientation = rotation;
@@ -261,7 +266,7 @@ void WataLib::Bounding::DrawBoundingOrientedBox(const DirectX::SimpleMath::Vecto
 /// <param name="CenterPos">中心座標</param>
 /// <param name="view">ビュー行列</param>
 /// <param name="projection">射影行列</param>
-void WataLib::Bounding::DrawBoundingSphere(const DirectX::SimpleMath::Vector3 CenterPos, DirectX::CXMMATRIX view, DirectX::CXMMATRIX projection)
+void WataLib::Bounding::DrawBoundingSphere(const DirectX::SimpleMath::Vector3& CenterPos, const DirectX::CXMMATRIX& view, const DirectX::CXMMATRIX& projection)
 {
 	m_boundingSphere->Center = CenterPos;
 	auto context = m_commonResources->GetDeviceResources()->GetD3DDeviceContext();

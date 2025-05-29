@@ -234,7 +234,7 @@ void Particle::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::Si
 
 }
 
-void Particle::SetIsActive(bool isActive)
+void Particle::SetIsActive(const bool& isActive)
 {
 	m_isActive = isActive;
 	

@@ -63,7 +63,7 @@ BarrierDefenseAction::~BarrierDefenseAction()
 }
 
 
-void BarrierDefenseAction::Notify(const Telegram<GameMessageType>& telegram)
+void BarrierDefenseAction::Notify(const Telegram<GamePlayMessageType>& telegram)
 {
 	UNREFERENCED_PARAMETER(telegram);
 	

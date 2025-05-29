@@ -12,16 +12,17 @@
 
 #include "Game/Params.h"
 #include "Game/InstanceRegistry.h"
+#include "Game/Observer/Messenger.h"
 
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
-BirdEnemyMove::BirdEnemyMove()
+BirdEnemyMove::BirdEnemyMove(BirdEnemy* owner)
 	:
 	m_commonResources{},
 	m_player{}
-	,m_birdEnemy{}
+	,m_birdEnemy{owner}
 	,m_startPosition{}
 	,m_endPosition{}
 	,m_time{}
@@ -43,10 +44,9 @@ BirdEnemyMove::~BirdEnemyMove()
 /// 初期化
 /// </summary>
 /// <param name="resoure">共通リソース</param>
-void BirdEnemyMove::Initialize(CommonResources* resoure,BirdEnemy* owner)
+void BirdEnemyMove::Initialize()
 {
 
-	m_commonResources = resoure;
 
 	m_player = InstanceRegistry::GetInstance()->GetRegistryInstance<Player>("Player");
 
@@ -84,6 +84,9 @@ void BirdEnemyMove::Update(const float& elapsedTime)
 	if (ratio == 1.0f)
 	{
 		m_birdEnemy->GetPlayerStateMachine()->ChangeState(m_birdEnemy->GetPlayerStateMachine()->GetBirdEnemyldling());
+
+		Messenger::GetInstance()->Notify(m_birdEnemy->GetID(), EnemyMessageType::IDLING);
+
 	}
 
 }

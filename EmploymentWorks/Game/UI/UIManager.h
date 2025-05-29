@@ -14,7 +14,7 @@ class Player;
 class PlayScene;
 class EnemyManager;
 
-class UIManager :  public IObserver<GameMessageType>
+class UIManager :  public IObserver<GamePlayMessageType>
 {
 public:
 	//コンストラクタ
@@ -35,7 +35,7 @@ public:
 
 	//IObserver
 //通知時に呼ばれる関数
-	void Notify(const Telegram<GameMessageType>& telegram)  override;
+	void Notify(const Telegram<GamePlayMessageType>& telegram)  override;
 
 private:
 	// 共通リソース

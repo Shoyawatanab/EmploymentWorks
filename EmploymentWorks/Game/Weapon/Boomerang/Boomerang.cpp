@@ -25,10 +25,10 @@ using namespace DirectX::SimpleMath;
 /// <param name="position">ç¿ïW</param>
 /// <param name="rotation">âÒì]</param>
 Boomerang::Boomerang(CommonResources* resources
-	, BaseEntity* parent,
-	DirectX::SimpleMath::Vector3 scale,
-	DirectX::SimpleMath::Vector3 position,
-	DirectX::SimpleMath::Quaternion rotation)
+	, BaseEntity* parent
+	, const DirectX::SimpleMath::Vector3& scale
+	, const DirectX::SimpleMath::Vector3& position
+	, const DirectX::SimpleMath::Quaternion& rotation)
 	:
 	m_parent{parent}
 	,m_initialScale{scale}
@@ -190,7 +190,7 @@ void Boomerang::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 		case CollisionEntity::CollisionTag::PLAYER:
 			if (m_stateMachine->GetCurrentState() == m_stateMachine->GetBoomerangRightThrow())
 			{
-				Messenger::GetInstance()->Notify(GameMessageType::BOOMERANG_RECOVERBLE, nullptr);
+				Messenger::GetInstance()->Notify(GamePlayMessageType::BOOMERANG_RECOVERBLE, nullptr);
 				m_isCatch = true;
 
 			}
@@ -210,7 +210,7 @@ void Boomerang::OnCollisionExit(CollisionEntity* object, CollisionTag tag)
 	switch (tag)
 	{
 		case CollisionEntity::CollisionTag::PLAYER:			
-			Messenger::GetInstance()->Notify(GameMessageType::BOOMERANG_NOT_RECOVERBLE, nullptr);
+			Messenger::GetInstance()->Notify(GamePlayMessageType::BOOMERANG_NOT_RECOVERBLE, nullptr);
 			m_isCatch = false;
 			break;
 		default:
@@ -242,7 +242,7 @@ void Boomerang::Update(const float& elapsedTime)
 		if (kbTracker->released.F)
 		{
 			m_stateMachine->ChangeState(m_stateMachine->GetBoomerangIdel());
-			Messenger::GetInstance()->Notify(GameMessageType::BOOMERANG_NOT_RECOVERBLE,nullptr);
+			Messenger::GetInstance()->Notify(GamePlayMessageType::BOOMERANG_NOT_RECOVERBLE,nullptr);
 
 		}
 

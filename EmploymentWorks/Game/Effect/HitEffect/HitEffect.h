@@ -14,16 +14,17 @@ class HitEffect : public IEffect
 
 public:
 
-	//オブジェクトが有効かどうか
-	bool GetIsActive() override { return m_isActive; };
-	//オブジェクトが有効かどうかの登録
-	void SetIsActive(bool isActive) override { m_isActive = isActive; };
+	//エフェクトが有効かどうか
+	const bool& GetIsActive() override { return m_isActive; };
+	//エフェクトが有効かどうかの登録
+	void SetIsActive(const bool& isActive) override { m_isActive = isActive; };
+	//座標の登録
+	void SetPosition(const DirectX::SimpleMath::Vector3& position) override;
+	//大きさの登録
+	void SetScale(const DirectX::SimpleMath::Vector3& scale) override;
 	//エフェクトの種類のタグ
 	EffectType GetEffectType()  override { return EffectType::HIT_EFFECT; };
-	//座標の登録
-	void SetPosition(DirectX::SimpleMath::Vector3 position) override;
-	//大きさの登録
-	void SetScale(DirectX::SimpleMath::Vector3 scale) override;
+
 
 
 public:

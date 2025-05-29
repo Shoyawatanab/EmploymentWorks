@@ -12,6 +12,7 @@
 #include "Game/Enemys/BirdEnemy/State/BirdEnemyStateMachine.h"
 #include "Libraries/WataLib/Shadow.h"
 
+
 // 前方宣言
 class CommonResources;
 class EnemyManager;
@@ -34,16 +35,15 @@ public:
 
 	DirectX::SimpleMath::Vector3 GetBeamPosition() { return m_beamPosition; };
 
-	std::vector<std::unique_ptr<BirdEnemyBeam>>& GetBeams() { return m_beam; }
-
 
 public:
 
 	//コンストラクタ
 	BirdEnemy(CommonResources* resources
-		, DirectX::SimpleMath::Vector3 scale,
-		DirectX::SimpleMath::Vector3 position,
-		DirectX::SimpleMath::Quaternion rotation);
+		, const DirectX::SimpleMath::Vector3& scale
+		, const DirectX::SimpleMath::Vector3& position
+		, const DirectX::SimpleMath::Quaternion& rotation);
+
 	//デストラクタ
 	~BirdEnemy() override;
 
@@ -85,12 +85,12 @@ public:
 
 	//ICharacter
 		//アニメーションの登録
-	void SetAnimationData(std::string animationType
+	void SetAnimationData(const std::string& animationType
 		, std::unordered_map<std::string, std::unordered_map<std::string, WataLib::Json::AnimationData>> datas
 		, const std::string& partsName = ""
 		, bool isNormalAnimation = false) override;
 	//アニメーションの変更
-	void ChangeAnimation(std::string animationType) override;
+	void ChangeAnimation(const std::string& animationType) override;
 
 	void Rotate(float elapsedTime);
 
@@ -114,7 +114,7 @@ private:
 	//ビームの生成座標
 	DirectX::SimpleMath::Vector3 m_beamPosition;
 	//ビーム
-	std::vector<std::unique_ptr<BirdEnemyBeam>> m_beam;
+	std::vector<std::unique_ptr<BirdEnemyBeam>> m_beams;
 
 
 

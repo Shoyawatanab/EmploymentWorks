@@ -30,15 +30,15 @@ public:
 	//•`‰æ
 	virtual void Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection) = 0;
 	//—LŒø‚©‚Ç‚¤‚©‚Ìæ“¾
-	virtual bool GetIsActive() = 0;
+	virtual const bool& GetIsActive() = 0;
 	//—LŒø‚©‚Ç‚¤‚©‚Ì“o˜^
-	virtual void SetIsActive(bool isActive) = 0;
+	virtual void SetIsActive(const bool& isActive) = 0;
 	//ƒGƒtƒFƒNƒg‚Ìí—Ş‚Ìæ“¾
 	virtual EffectType GetEffectType() = 0;
 	//À•W‚Ì“o˜^
-	virtual void SetPosition(DirectX::SimpleMath::Vector3 position) = 0;
+	virtual void SetPosition(const DirectX::SimpleMath::Vector3& position) = 0;
 	//‘å‚«‚³‚Ì“o˜^
-	virtual void SetScale(DirectX::SimpleMath::Vector3 scale) = 0;
+	virtual void SetScale(const DirectX::SimpleMath::Vector3& scale) = 0;
 	//ì¬
 	virtual void Create(void* datas) = 0;
 };

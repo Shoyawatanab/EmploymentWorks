@@ -94,7 +94,7 @@ void BossRushAttackCharge::Enter()
 
 	UnknownDataThree aa = { static_cast<void*>(&pos), static_cast<void*>(&scale) };
 
-	Messenger::GetInstance()->Notify(GameMessageType::CREATE_CHAGE_EFFECT, &aa);
+	Messenger::GetInstance()->Notify(GamePlayMessageType::CREATE_CHAGE_EFFECT, &aa);
 
 
 }

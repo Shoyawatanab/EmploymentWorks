@@ -33,9 +33,9 @@ public:
 	//コンストラクタ
 	Boomerang(CommonResources* resources
 		, BaseEntity* parent
-		, DirectX::SimpleMath::Vector3 scale,
-		DirectX::SimpleMath::Vector3 position,
-		DirectX::SimpleMath::Quaternion rotation);
+		, const DirectX::SimpleMath::Vector3& scale
+		, const DirectX::SimpleMath::Vector3& position
+		, const DirectX::SimpleMath::Quaternion& rotation);
 	//デストラクタ
 	~Boomerang() override;
 

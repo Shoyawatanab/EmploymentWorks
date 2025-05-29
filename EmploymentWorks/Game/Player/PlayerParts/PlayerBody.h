@@ -23,11 +23,11 @@ private:
 
 public:
 	//コンストラクタ
-	PlayerBody(CommonResources* resources, 
-		CharacterEntity* parent, 		                         //親クラス
-		DirectX::SimpleMath::Vector3 scale,                  //初期の大きさ
-		DirectX::SimpleMath::Vector3 position,               //親の座標からどれだけ離れているか
-		DirectX::SimpleMath::Quaternion rotation);           //+Zに向いているときの回転情報
+	PlayerBody(CommonResources* resources 
+		, CharacterEntity* parent 		                         //親クラス
+		, const DirectX::SimpleMath::Vector3& scale                  //初期の大きさ
+		, const DirectX::SimpleMath::Vector3& position               //親の座標からどれだけ離れているか
+		, const DirectX::SimpleMath::Quaternion& rotation);           //+Zに向いているときの回転情報
 	//デストラクタ
 	~PlayerBody() override;
 

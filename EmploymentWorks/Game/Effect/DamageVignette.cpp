@@ -229,7 +229,7 @@ void DamageVignette::Render(const DirectX::SimpleMath::Matrix& view, const  Dire
 
 }
 
-void DamageVignette::SetIsActive(bool isActive)
+void DamageVignette::SetIsActive(const bool& isActive)
 {
 	 m_isActive = isActive; 
 	 //“§–¾“x‚Ì‰Šú‰»

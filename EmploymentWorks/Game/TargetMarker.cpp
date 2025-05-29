@@ -67,8 +67,8 @@ void TargetMarker::Initialize(CommonResources* resources)
 		,Vector2(200,200), Vector2(0.3f,0.3f));
 	
 
-	Messenger::GetInstance()->Rigister(::GameMessageType::BOOMERANG_GET_READY, this);
-	Messenger::GetInstance()->Rigister(::GameMessageType::BOOMERANG_GET_READY_END, this);
+	Messenger::GetInstance()->Rigister(GamePlayMessageType::BOOMERANG_GET_READY, this);
+	Messenger::GetInstance()->Rigister(GamePlayMessageType::BOOMERANG_GET_READY_END, this);
 
 }
 
@@ -195,15 +195,15 @@ void TargetMarker::Render()
 /// </summary>
 /// <param name="type">イベントの種類</param>
 /// <param name="datas">イベントのデータ</param>
-void TargetMarker::Notify(const Telegram<GameMessageType>& telegram)
+void TargetMarker::Notify(const Telegram<GamePlayMessageType>& telegram)
 {
 
 	switch (telegram.messageType)
 	{
-		case ::GameMessageType::BOOMERANG_GET_READY:
+		case ::GamePlayMessageType::BOOMERANG_GET_READY:
 			m_isTargetMarker = true;
 			break;
-		case ::GameMessageType::BOOMERANG_GET_READY_END:
+		case ::GamePlayMessageType::BOOMERANG_GET_READY_END:
 			m_isTargetMarker = false;
 			m_isLockOn = false;
 

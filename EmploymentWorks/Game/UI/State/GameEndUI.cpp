@@ -11,6 +11,7 @@
 #include "Game/Scene/PlayScene.h"
 #include "Libraries/WataLib/UserInterface.h"
 #include "Game/InstanceRegistry.h"
+#include "Game/Observer/Messenger.h"
 
 /// <summary>
 /// コンストラクタ
@@ -259,10 +260,26 @@ void GameEndUI::Update(const float& elapsedTime)
 		switch (m_state)
 		{
 			case GameEndUI::State::TITLE:
-				m_playScene->SetNextSceneID(PlayScene::SceneID::TITLE);
+				//m_playScene->SetNextSceneID(PlayScene::SceneID::TITLE);
+
+				{
+					auto nextSceneID = IScene::SceneID::TITLE;
+
+					Messenger::GetInstance()->Notify(GamePlayMessageType::NEXT_SCENE, &nextSceneID);
+				}
+
 				break;
 			case GameEndUI::State::RETRY:
-				m_playScene->SetNextSceneID(PlayScene::SceneID::PLAY);
+				//m_playScene->SetNextSceneID(PlayScene::SceneID::PLAY);
+				
+			{
+				auto nextSceneID = IScene::SceneID::PLAY;
+
+				Messenger::GetInstance()->Notify(GamePlayMessageType::NEXT_SCENE, &nextSceneID);
+			}
+
+
+				
 				break;
 			default:
 				break;

@@ -130,7 +130,7 @@ void BossJumpAttackJump::Exit()
 
 	pos.y = 0.1f;
 
-	Messenger::GetInstance()->Notify(GameMessageType::CREATE_PARTICLE, &pos);
+	Messenger::GetInstance()->Notify(GamePlayMessageType::CREATE_PARTICLE, &pos);
 
 	m_bossEnemy->SetVelocity(Vector3::Zero);
 

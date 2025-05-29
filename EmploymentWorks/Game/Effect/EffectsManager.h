@@ -11,7 +11,7 @@
 // 前方宣言
 class CommonResources;
 
-class EffectsManager : public IObserver<GameMessageType>
+class EffectsManager : public IObserver<GamePlayMessageType>
 {
 public:
 
@@ -23,11 +23,11 @@ public:
 	static constexpr int HIT_EFFECT_COUNT = 30;
 public:
 	//コンストラクタ
-	EffectsManager();
+	EffectsManager(CommonResources* resources);
 	//デストラクタ
 	~EffectsManager() ;
 	//初期化
-	void Initialize(CommonResources* resources);
+	void Initialize();
 	//更新処理
 	void Update(const float& elapsedTime);
 	//描画処理
@@ -47,7 +47,7 @@ private:
 	//チャージエフェクトの生成
 	void CreateChargeEffect(void* datas);
 	//通知
-	void Notify(const Telegram<GameMessageType>& telegram)  override;
+	void Notify(const Telegram<GamePlayMessageType>& telegram)  override;
 	//エフェクトの作成
 	void CreateEffect();
 

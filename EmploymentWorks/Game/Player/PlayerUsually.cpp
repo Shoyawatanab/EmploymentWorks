@@ -47,8 +47,8 @@ void PlayerUsually::Initialize(CommonResources* resources)
 	m_tpsCamera = InstanceRegistry::GetInstance()->GetRegistryInstance<WataLib::TPS_Camera>("TPS_Camera");
 
 	//イベントにObserverとして登録
-	Messenger::GetInstance()->Rigister(::GameMessageType::BOOMERANG_GET_READY, this);
-	Messenger::GetInstance()->Rigister(::GameMessageType::BOOMERANG_GET_READY_END, this);
+	Messenger::GetInstance()->Rigister(::GamePlayMessageType::BOOMERANG_GET_READY, this);
+	Messenger::GetInstance()->Rigister(::GamePlayMessageType::BOOMERANG_GET_READY_END, this);
 }
 
 
@@ -123,17 +123,17 @@ void PlayerUsually::Rotation(const float& elapsedTime, DirectX::SimpleMath::Vect
 /// </summary>
 /// <param name="type">種類</param>
 /// <param name="datas">データ</param>
-void PlayerUsually::Notify(const Telegram<GameMessageType>& telegram)
+void PlayerUsually::Notify(const Telegram<GamePlayMessageType>& telegram)
 {
 	
 	//イベントの種類
 	switch (telegram.messageType)
 	{
-		case ::GameMessageType::BOOMERANG_GET_READY:
+		case ::GamePlayMessageType::BOOMERANG_GET_READY:
 			//構えている
 			m_isGetReady = true;
 			break;
-		case ::GameMessageType::BOOMERANG_GET_READY_END:
+		case ::GamePlayMessageType::BOOMERANG_GET_READY_END:
 			//構えていない
 			m_isGetReady = false;
 			break;

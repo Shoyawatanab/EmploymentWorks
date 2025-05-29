@@ -20,10 +20,10 @@ private:
 public:
 	//コンストラクタ
 	PlayerLeftArm(CommonResources* resources, 
-		CharacterEntity* parent,
-		DirectX::SimpleMath::Vector3 scale,
-		DirectX::SimpleMath::Vector3 position,
-		DirectX::SimpleMath::Quaternion rotation);
+		CharacterEntity* parent
+		, const DirectX::SimpleMath::Vector3& scale
+		, const DirectX::SimpleMath::Vector3& position
+		, const DirectX::SimpleMath::Quaternion& rotation);
 	//デストラクタ
 	~PlayerLeftArm() override;
 

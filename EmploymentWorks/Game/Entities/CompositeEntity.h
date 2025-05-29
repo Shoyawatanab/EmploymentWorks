@@ -39,12 +39,12 @@ public:
 
 //CharactorEntity
 	//アニメーションの登録
-	void SetAnimationData(std::string animationType
+	void SetAnimationData(const std::string& animationType
 		, std::unordered_map<std::string, std::unordered_map<std::string, WataLib::Json::AnimationData>> datas
 		, const std::string& partsName = ""
 		, bool isNormalAnimation = false) override ;
 	//アニメーションの変更
-	void ChangeAnimation(std::string animationType) override ;
+	void ChangeAnimation(const std::string& animationType) override ;
 
 	//パーツに対してメッセージを送る　
 	virtual void NotifyParts(PartMessageType type) { UNREFERENCED_PARAMETER(type); };

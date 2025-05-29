@@ -18,6 +18,7 @@ namespace FMOD
 
 class SoundManager : public Singleton<SoundManager>
 {
+	friend class Singleton<SoundManager>;
 
 public:
 	//サウンドのJsonファイル
@@ -29,7 +30,7 @@ public:
 	//コンストラク
 	SoundManager();
 	//デストラクタ
-	~SoundManager() ;
+	~SoundManager() override ;
 	//初期化
 	void Initialize();
 	//更新処理

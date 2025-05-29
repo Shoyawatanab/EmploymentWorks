@@ -18,19 +18,20 @@
 /// <param name="scale">大きさ</param>
 /// <param name="position">座標</param>
 /// <param name="rotation">回転</param>
-PlayerPartsBase::PlayerPartsBase(CommonResources* resources,
-	CharacterEntity* parent
-	, std::string partsName
-	, DirectX::SimpleMath::Vector3 scale
-	, DirectX::SimpleMath::Vector3 position
-	, DirectX::SimpleMath::Quaternion rotation)
-	:
+PlayerPartsBase::PlayerPartsBase(CommonResources* resources
+	, CharacterEntity* parent
+	, const std::string& partsName
+	, const DirectX::SimpleMath::Vector3& scale
+	, const DirectX::SimpleMath::Vector3& position
+	, const DirectX::SimpleMath::Quaternion& rotation)
+:
 	m_parent{parent}
 	,m_partsName{partsName}
 	,m_initialScale{scale}
 	,m_initialPosition{position}
 	,m_initialRotation{rotation}
 	,m_isParentActive{true}
+	,m_model{}
 	,CompositeEntity(resources, scale,position,rotation)
 {
 	BaseEntity::SetParent(parent);
@@ -137,7 +138,7 @@ void PlayerPartsBase::Update(const float& elapsedTime)
 /// <param name="datas">アニメーションのデータ</param>
 /// <param name="partsName">パーツ名</param>
 /// <param name="isNormalAnimation">初期アニメーションかどうか</param>
-void PlayerPartsBase::SetAnimationData(std::string animationType
+void PlayerPartsBase::SetAnimationData(const std::string& animationType
 	, std::unordered_map<std::string, std::unordered_map<std::string, WataLib::Json::AnimationData>> datas
 	, const std::string& partsName
 	, bool isNormalAnimation)
@@ -160,7 +161,7 @@ void PlayerPartsBase::SetAnimationData(std::string animationType
 /// アニメーションの切り替え
 /// </summary>
 /// <param name="animationType">アニメーションの種類</param>
-void PlayerPartsBase::ChangeAnimation(std::string animationType)
+void PlayerPartsBase::ChangeAnimation(const std::string& animationType)
 {
 
 	//アニメーションの変更

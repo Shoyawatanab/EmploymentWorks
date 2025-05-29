@@ -7,7 +7,7 @@
 
 class Player;
 
-class PlayerAttack : public IState , IObserver<GameMessageType>
+class PlayerAttack : public IState , IObserver<GamePlayMessageType>
 {
 public:
 
@@ -37,7 +37,7 @@ public:
 	void Exit() override;
 
 	//通知時に呼び出される
-	void Notify(const Telegram<GameMessageType>& telegram) override;
+	void Notify(const Telegram<GamePlayMessageType>& telegram) override;
 
 private:
 	// 共通リソース

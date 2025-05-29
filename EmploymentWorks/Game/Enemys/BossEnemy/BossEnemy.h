@@ -31,12 +31,11 @@ namespace WataLib
 	class Bounding;
 }
 
-class BossEnemy : public EnemyEntity  , public IObserver<GameMessageType> , public IObserver<EnemyMessageType>
+class BossEnemy : public EnemyEntity  , public IObserver<GamePlayMessageType> , public IObserver<EnemyMessageType>
 {
 public:
 
 	static constexpr float PUNCHTIME{ 5.0f };
-
 
 public:
 
@@ -53,9 +52,9 @@ public:
 public:
 	//コンストラクタ
 	BossEnemy(CommonResources* resources,
-		DirectX::SimpleMath::Vector3 scale,
-		DirectX::SimpleMath::Vector3 position,
-		DirectX::SimpleMath::Quaternion rotation);
+		const DirectX::SimpleMath::Vector3& scale,
+		const DirectX::SimpleMath::Vector3& position,
+		const DirectX::SimpleMath::Quaternion& rotation);
 	//デストラクタ
 	~BossEnemy() override;
 
@@ -100,18 +99,17 @@ public:
 		};
 	};
 
-
 	//アニメーションの登録
-	void SetAnimationData(std::string animationType
+	void SetAnimationData(const std::string& animationType
 		, std::unordered_map<std::string, std::unordered_map<std::string, WataLib::Json::AnimationData>> datas
 		, const std::string& partsName = ""
 		, bool isNormalAnimation = false) override;
 	//アニメーションの変更
-	void ChangeAnimation(std::string animationType) override;
+	void ChangeAnimation(const std::string& animationType) override;
 
 
 //通知時に呼ばれる関数
-	void Notify(const Telegram<GameMessageType>& telegram)  override;
+	void Notify(const Telegram<GamePlayMessageType>& telegram)  override;
 
 	void Notify(const Telegram<EnemyMessageType>& telegram)  override;
 
@@ -132,12 +130,10 @@ public:
 			//倒れるアニメーションに切り替える
 			ChangeAnimation("FallDown");
 			EnemyEntity::GetEnemyManager()->DeleteRemainingEnemy(this);
-			Messenger::GetInstance()->Notify(::GameMessageType::GAME_CLEAR, nullptr);
+			Messenger::GetInstance()->Notify(::GamePlayMessageType::GAME_CLEAR, nullptr);
 		}
 
 	}
-
-	//ビヘイビアツリーで使用
 
 
 	//行動の変更

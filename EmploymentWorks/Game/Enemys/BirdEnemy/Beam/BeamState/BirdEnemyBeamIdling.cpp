@@ -17,7 +17,6 @@
 /// <param name="beam">ビーム</param>
 BirdEnemyBeamIdling::BirdEnemyBeamIdling(BirdEnemy* birdEnemy, BirdEnemyBeam* beam)
 	:
-	m_commonResources{},
 	m_player{}
 	,m_birdEnemy{birdEnemy}
 	,m_beam{beam}
@@ -36,9 +35,8 @@ BirdEnemyBeamIdling::~BirdEnemyBeamIdling()
 /// 初期化
 /// </summary>
 /// <param name="resoure">共通リソース</param>
-void BirdEnemyBeamIdling::Initialize(CommonResources* resoure)
+void BirdEnemyBeamIdling::Initialize()
 {
-	m_commonResources = resoure;
 
 	m_player = InstanceRegistry::GetInstance()->GetRegistryInstance<Player>("Player");
 

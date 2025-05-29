@@ -24,10 +24,16 @@
 /// <param name="partsHP">パーツのＨＰ</param>
 /// <param name="boxColliderSize">ボックスの当たり判定の大きさ</param>
 /// <param name="SphereColliderSize">スフィアの当たり判定の大きさ</param>
-BossEnemyPartsBase::BossEnemyPartsBase(CommonResources* resources,
-	BossEnemy* root, CharacterEntity* parent, DirectX::SimpleMath::Vector3 scale, DirectX::SimpleMath::Vector3 position,
-	DirectX::SimpleMath::Quaternion rotation, std::string partsName, int partsHP
-	, DirectX::SimpleMath::Vector3 boxColliderSize, float SphereColliderSize)
+BossEnemyPartsBase::BossEnemyPartsBase(CommonResources* resources
+	, BossEnemy* root
+	, CharacterEntity* parent
+	, const DirectX::SimpleMath::Vector3& scale
+	, const DirectX::SimpleMath::Vector3& position
+	, const DirectX::SimpleMath::Quaternion& rotation
+	, const std::string& partsName
+	, const int partsHP
+	, const DirectX::SimpleMath::Vector3& boxColliderSize
+	, const float SphereColliderSize)
 	:
 	CompositeEntity(resources,scale,position,rotation),
 	m_model{}
@@ -190,7 +196,7 @@ void BossEnemyPartsBase::OnCollisionEnter(CollisionEntity* object, CollisionTag 
 
 					UnknownDataThree aa = { static_cast<void*>(&pos) ,static_cast<void*>(&scale) };
 
-					Messenger::GetInstance()->Notify(GameMessageType::CREATE_HIT_EFFECT, &aa);
+					Messenger::GetInstance()->Notify(GamePlayMessageType::CREATE_HIT_EFFECT, &aa);
 				}
 
 			}
@@ -248,7 +254,10 @@ void BossEnemyPartsBase::Update(const float& elapsedTime)
 /// <param name="datas">アニメーションのデータ</param>
 /// <param name="partsName">パーツ名</param>
 /// <param name="isNormalAnimation">初期アニメーションかどうか</param>
-void BossEnemyPartsBase::SetAnimationData(std::string animationType, std::unordered_map<std::string, std::unordered_map<std::string, WataLib::Json::AnimationData>> datas, const std::string& partsName, bool isNormalAnimation)
+void BossEnemyPartsBase::SetAnimationData(const std::string& animationType
+	, std::unordered_map<std::string, std::unordered_map<std::string, WataLib::Json::AnimationData>> datas
+	, const std::string& partsName
+	, bool isNormalAnimation)
 {
 		UNREFERENCED_PARAMETER(partsName);
 
@@ -269,7 +278,7 @@ void BossEnemyPartsBase::SetAnimationData(std::string animationType, std::unorde
 /// アニメーションの切り替え
 /// </summary>
 /// <param name="animationType">アニメーションの種類</param>
-void BossEnemyPartsBase::ChangeAnimation(std::string animationType)
+void BossEnemyPartsBase::ChangeAnimation(const std::string& animationType)
 {
 
 	//アニメーションの変更
