@@ -13,7 +13,7 @@
 #include "Libraries/MyLib/MemoryLeakDetector.h"
 #include <cassert>
 
-#include "Game/Enemys/BossEnemy/BossEnemy.h"
+#include "Game/Enemies/BossEnemy/BossEnemy.h"
 #include "Game/Player/Player.h"
 
 using namespace DirectX;

@@ -3,7 +3,7 @@
 	@brief	タイトルシーンクラス
 */
 #include "pch.h"
-#include "Game/Screen.h"
+#include "GameBase/Screen.h"
 #include "Mouse.h"
 
 #include <cassert>

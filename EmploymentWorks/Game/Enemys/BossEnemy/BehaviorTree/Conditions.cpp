@@ -2,7 +2,7 @@
 #include "Conditions.h"
 
 #include "Game/Player/Player.h"
-#include "Game/Enemys/BossEnemy/BossEnemy.h"
+#include "Game/Enemies/BossEnemy/BossEnemy.h"
 #include "Game/CommonResources.h"
 #include "Game/Params.h"
 #include <random>
@@ -46,22 +46,22 @@ bool Conditions::IsInCloseRangeAttack()
 {
 
 
-	//座標の取得
-	Vector3 PlayerPosition = m_palyer->GetPosition();
-	Vector3 EnemyPosition = m_enemy->GetPosition();
+	////座標の取得
+	//Vector3 PlayerPosition = m_palyer->GetPosition();
+	//Vector3 EnemyPosition = m_enemy->GetPosition();
 
-	//Y座標を統一する
-	PlayerPosition.y = 0;
-	EnemyPosition.y = 0;
+	////Y座標を統一する
+	//PlayerPosition.y = 0;
+	//EnemyPosition.y = 0;
 
-	//距離を求める
-	float Distance = Vector3::Distance(PlayerPosition, EnemyPosition);
+	////距離を求める
+	//float Distance = Vector3::Distance(PlayerPosition, EnemyPosition);
 
-	//攻撃範囲内かどうか
-	if(Distance < CLOSERANGE_ATTACK_DISTANCE)
-	{
-		return true;
-	}
+	////攻撃範囲内かどうか
+	//if(Distance < CLOSERANGE_ATTACK_DISTANCE)
+	//{
+	//	return true;
+	//}
 
 	return false;
 }
@@ -72,22 +72,22 @@ bool Conditions::IsInCloseRangeAttack()
 /// <returns>true  範囲内  false　範囲外　</returns>
 bool Conditions::IsInLongRangeAttack()
 {
-	//座標の取得
-	Vector3 PlayerPosition = m_palyer->GetPosition();
-	Vector3 EnemyPosition = m_enemy->GetPosition();
+	////座標の取得
+	//Vector3 PlayerPosition = m_palyer->GetPosition();
+	//Vector3 EnemyPosition = m_enemy->GetPosition();
 
-	//Y座標を統一する
-	PlayerPosition.y = 0;
-	EnemyPosition.y = 0;
+	////Y座標を統一する
+	//PlayerPosition.y = 0;
+	//EnemyPosition.y = 0;
 
-	//距離を求める
-	float Distance = Vector3::Distance(PlayerPosition, EnemyPosition);
+	////距離を求める
+	//float Distance = Vector3::Distance(PlayerPosition, EnemyPosition);
 
-	//攻撃範囲内かどうか
-	if (Distance < LONGRANGE_ATTACK_DISTANCE)
-	{
-		return true;
-	}
+	////攻撃範囲内かどうか
+	//if (Distance < LONGRANGE_ATTACK_DISTANCE)
+	//{
+	//	return true;
+	//}
 
 
 	return false;
@@ -99,22 +99,22 @@ bool Conditions::IsInLongRangeAttack()
 /// <returns>ture : 範囲内  false :　範囲外</returns>
 bool Conditions::IsJumpAttackRange()
 {
-	//座標の取得
-	Vector3 PlayerPosition = m_palyer->GetPosition();
-	Vector3 EnemyPosition = m_enemy->GetPosition();
+	////座標の取得
+	//Vector3 PlayerPosition = m_palyer->GetPosition();
+	//Vector3 EnemyPosition = m_enemy->GetPosition();
 
-	//Y座標を統一する
-	PlayerPosition.y = 0;
-	EnemyPosition.y = 0;
+	////Y座標を統一する
+	//PlayerPosition.y = 0;
+	//EnemyPosition.y = 0;
 
-	//距離を求める
-	float Distance = Vector3::Distance(PlayerPosition, EnemyPosition);
+	////距離を求める
+	//float Distance = Vector3::Distance(PlayerPosition, EnemyPosition);
 
-	//攻撃範囲内かどうか
-	if (Distance < JUMP_ATTACK_DISTANCE)
-	{
-		return true;
-	}
+	////攻撃範囲内かどうか
+	//if (Distance < JUMP_ATTACK_DISTANCE)
+	//{
+	//	return true;
+	//}
 
 
 	return false;
@@ -156,13 +156,13 @@ bool Conditions::IsEnemyInview(const DirectX::SimpleMath::Vector3& playerPos, co
 bool Conditions::IsMaxHp()
 {
 
-	return false;
+	//return false;
 
 
-	if (m_enemy->GetHP() == Params::BOSSENEMY_MAX_HP)
-	{
-		return true;
-	}
+	//if (m_enemy->GetHP() == Params::BOSSENEMY_MAX_HP)
+	//{
+	//	return true;
+	//}
 
 	return false;
 }
@@ -174,14 +174,14 @@ bool Conditions::IsMaxHp()
 bool Conditions::IsHPMoreThanHalf()
 {
 
-	return false;
+	//return false;
 
-	if (m_enemy->GetHP() >= Params::BOSSENEMY_MAX_HP / 2)
-	{
-		return true;
-	}
+	//if (m_enemy->GetHP() >= Params::BOSSENEMY_MAX_HP / 2)
+	//{
+	//	return true;
+	//}
 
-	
+	//
 	return false;
 }
 
@@ -215,31 +215,31 @@ bool Conditions::IsAttack()
 bool Conditions::IsUnderAttack()
 {
 
-	std::vector<std::unique_ptr<Boomerang>>* boomerangs = m_palyer->GetBoomerangs();
+	//std::vector<std::unique_ptr<Boomerang>>* boomerangs = m_palyer->GetBoomerangs();
 
-	float length = 1000;
-	
-	for (auto& boo : *boomerangs)
-	{
-		if (boo->GetBoomerangStatemachine()->GetCurrentState() == boo->GetBoomerangStatemachine()->GetBoomerangFrontThrow()
-			 ||boo->GetBoomerangStatemachine()->GetCurrentState() == boo->GetBoomerangStatemachine()->GetBoomerangRightThrow()
-			 || boo->GetBoomerangStatemachine()->GetCurrentState() == boo->GetBoomerangStatemachine()->GetBoomerangLeftThrow())
-		{
-			float length2 = Vector3::Distance(boo->GetPosition(), m_enemy->GetPosition());
+	//float length = 1000;
+	//
+	//for (auto& boo : *boomerangs)
+	//{
+	//	if (boo->GetBoomerangStatemachine()->GetCurrentState() == boo->GetBoomerangStatemachine()->GetBoomerangFrontThrow()
+	//		 ||boo->GetBoomerangStatemachine()->GetCurrentState() == boo->GetBoomerangStatemachine()->GetBoomerangRightThrow()
+	//		 || boo->GetBoomerangStatemachine()->GetCurrentState() == boo->GetBoomerangStatemachine()->GetBoomerangLeftThrow())
+	//	{
+	//		float length2 = Vector3::Distance(boo->GetPosition(), m_enemy->GetPosition());
 
-			if (length > length2)
-			{
-				length = length2;
-			}
+	//		if (length > length2)
+	//		{
+	//			length = length2;
+	//		}
 
-		}
+	//	}
 
-	}
+	//}
 
-	if (length <= 10.0f)
-	{
-		return true;
-	}
+	//if (length <= 10.0f)
+	//{
+	//	return true;
+	//}
 
 
 	return false;

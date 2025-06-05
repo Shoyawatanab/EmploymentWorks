@@ -4,12 +4,13 @@
 */
 #include "pch.h"
 #include "Animation.h"
-#include "Game/Screen.h"
+#include "GameBase/Screen.h"
 #include "Game/CommonResources.h"
 #include "DeviceResources.h"
 #include "Libraries/MyLib/MemoryLeakDetector.h"
 #include "Libraries/MyLib/InputManager.h"
 #include <cassert>
+#include "Animation.h"
 
 
 /// <summary>
@@ -35,6 +36,8 @@ WataLib::Animation::~Animation()
 
 
 }
+
+
 
 /// <summary>
 /// çXêVèàóù

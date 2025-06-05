@@ -61,12 +61,6 @@ void BoomerangRepelled::Update(const float& elapsedTime)
 
 }
 
-void BoomerangRepelled::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
-{
-	UNREFERENCED_PARAMETER(view);
-	UNREFERENCED_PARAMETER(projection);
-
-}
 
 /// <summary>
 /// èÛë‘Ç…ì¸Ç¡ÇΩéû

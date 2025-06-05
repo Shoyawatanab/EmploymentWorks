@@ -4,7 +4,7 @@
 */
 #include "pch.h"
 #include "ResultScene.h"
-#include "Game/Screen.h"
+#include "GameBase/Screen.h"
 #include "Game/CommonResources.h"
 #include "DeviceResources.h"
 #include "Libraries/MyLib/MemoryLeakDetector.h"
@@ -22,7 +22,6 @@ using namespace DirectX::SimpleMath;
 //---------------------------------------------------------
 ResultScene::ResultScene()
 	:
-	m_commonResources{},
 	m_isChangeScene{}
 {
 }
@@ -38,10 +37,8 @@ ResultScene::~ResultScene()
 //---------------------------------------------------------
 // 初期化する
 //---------------------------------------------------------
-void ResultScene::Initialize(CommonResources* resources)
+void ResultScene::Initialize()
 {
-	assert(resources);
-	m_commonResources = resources;
 
 
 
@@ -52,38 +49,38 @@ void ResultScene::Initialize(CommonResources* resources)
 
 
 	//フェードアウトの開始
-	m_commonResources->GetFade()->StartNormalFadeOut();
+	CommonResources::GetInstance()->GetFade()->StartNormalFadeOut();
 
-	m_commonResources->GetScore()->Reset();
+	CommonResources::GetInstance()->GetScore()->Reset();
 
 }
 
 //---------------------------------------------------------
 // 更新する
 //---------------------------------------------------------
-void ResultScene::Update(float elapsedTime)
+void ResultScene::SceneUpdate(float elapsedTime)
 {
 	// 宣言をしたが、実際は使用していない変数
 	UNREFERENCED_PARAMETER(elapsedTime);
 
 	//フェードが終わるまで
-	if (m_commonResources->GetFade()->GetFadeState() != Fade::FadeState::NONE)
+	if (CommonResources::GetInstance()->GetFade()->GetFadeState() != Fade::FadeState::NONE)
 	{
 		return;
 	}
 
 
-	m_commonResources->GetScore()->Update(elapsedTime);
+	CommonResources::GetInstance()->GetScore()->Update(elapsedTime);
 
 }
 
 //---------------------------------------------------------
 // 描画する
 //---------------------------------------------------------
-void ResultScene::Render()
+void ResultScene::SceneRender()
 {
 
-	m_commonResources->GetScore()->Render();
+	CommonResources::GetInstance()->GetScore()->Render();
 
 }
 
@@ -95,22 +92,4 @@ void ResultScene::Finalize()
 	// do nothing.
 }
 
-//---------------------------------------------------------
-// 次のシーンIDを取得する
-//---------------------------------------------------------
-IScene::SceneID ResultScene::GetNextSceneID() const
-{
-	// シーン変更がある場合
-	if (m_isChangeScene)
-	{
-		if (m_commonResources->GetFade()->GetFadeState() == Fade::FadeState::NONE)
-		{
-			m_commonResources->GetFade()->StartNormalFadeIn();
-		}
 
-		return IScene::SceneID::PLAY;
-	}
-
-	// シーン変更がない場合
-	return IScene::SceneID::NONE;
-}

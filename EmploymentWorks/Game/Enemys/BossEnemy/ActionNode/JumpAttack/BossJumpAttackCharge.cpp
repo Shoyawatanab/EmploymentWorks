@@ -13,7 +13,7 @@
 #include "Libraries/MyLib/MemoryLeakDetector.h"
 #include <cassert>
 
-#include "Game/Enemys/BossEnemy/BossEnemy.h"
+#include "Game/Enemies/BossEnemy/BossEnemy.h"
 #include "Game/Player/Player.h"
 #include "Game/Enemys/BossEnemy/ActionNode/JumpAttack/BossJumpAttackAction.h"
 
@@ -73,7 +73,7 @@ BossJumpAttackCharge::ActionState BossJumpAttackCharge::Update(const float& elap
 void BossJumpAttackCharge::Enter()
 {
 
-	m_bossEnemy->ChangeAnimation("JumpCharge");
+	//m_bossEnemy->ChangeAnimation("JumpCharge");
 	m_time = 0;
 
 	//Vector3 pos = m_bossEnemy->GetPosition();

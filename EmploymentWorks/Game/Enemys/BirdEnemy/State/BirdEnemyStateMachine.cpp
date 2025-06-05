@@ -22,7 +22,7 @@ BirdEnemyStateMachine::BirdEnemyStateMachine(BirdEnemy* owner, std::vector<std::
 	m_move = std::make_unique<BirdEnemyMove>(owner);
 
 
-	Messenger::GetInstance()->Rigister(owner->GetID(), this);
+	//Messenger::GetInstance()->Rigister(owner->GetID(), this);
 
 
 }
@@ -68,15 +68,7 @@ void BirdEnemyStateMachine::Update(const float& elapsedTime)
 	m_currentState->Update(elapsedTime);
 }
 
-/// <summary>
-/// 描画
-/// </summary>
-/// <param name="view">ビュー行列</param>
-/// <param name="projection">射影行列</param>
-void BirdEnemyStateMachine::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
-{
-	m_currentState->Render(view, projection);
-}
+
 
 /// <summary>
 /// ステートの切り替え
@@ -95,25 +87,25 @@ void BirdEnemyStateMachine::ChangeState(IState* nextState)
 
 
 
-void BirdEnemyStateMachine::Notify(const Telegram<EnemyMessageType>& telegram)
-{
-
-	switch (telegram.messageType)
-	{
-		case EnemyMessageType::IDLING:
-			ChangeState(m_idle.get());
-			break;
-
-		case EnemyMessageType::MOVEING:
-			ChangeState(m_move.get());
-			break;
-		case EnemyMessageType::BEAM_ATTACK:
-			ChangeState(m_attack.get());
-			break;
-		default:
-			break;
-	}
-
-}
+//void BirdEnemyStateMachine::Notify(const Telegram<EnemyMessageType>& telegram)
+//{
+//
+//	switch (telegram.messageType)
+//	{
+//		case EnemyMessageType::IDLING:
+//			ChangeState(m_idle.get());
+//			break;
+//
+//		case EnemyMessageType::MOVEING:
+//			ChangeState(m_move.get());
+//			break;
+//		case EnemyMessageType::BEAM_ATTACK:
+//			ChangeState(m_attack.get());
+//			break;
+//		default:
+//			break;
+//	}
+//
+//}
 
 

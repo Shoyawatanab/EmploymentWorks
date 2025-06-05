@@ -3,12 +3,13 @@
 #define IOBSERVER_DEFINED
 
 #include "Game/Observer/Telegram.h"
+#include "Game/Interface/IBaseObserver.h"
 
 //int m_observerId = 0;
 
 // IObserverインターフェースを定義する
 template<typename T>
-class IObserver
+class IObserver : public IBaseObserver
 {
 public:
 	//通知時に呼び出される

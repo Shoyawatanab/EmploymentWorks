@@ -7,7 +7,6 @@
 #include "Game/Enemys/BirdEnemy/State/BirdEnemyIdling.h"
 #include "Game/Enemys/BirdEnemy/State/BirdEnemyAttack.h"
 #include "Game/Enemys/BirdEnemy/State/BirdEnemyMove.h"
-#include "Game/Enemys/EnemyManager.h"
 
 
 //前方宣言
@@ -15,7 +14,7 @@ class Player;
 class BirdEnemy;
 class BirdEnemyBeam;
 
-class BirdEnemyStateMachine : public IStateMachine , public IObserver<EnemyMessageType>
+class BirdEnemyStateMachine : public IStateMachine<IState>//, public IObserver<EnemyMessageType>
 {
 public:
 
@@ -37,13 +36,11 @@ public:
 	void Initialize();
 	// 更新処理
 	void Update(const float& elapsedTime) override;
-	//描画処理
-	void Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection) override;
 	//状態の変更
 	void ChangeState(IState* nextState) override;
 
-	//敵メッセンジャーからの通知を受け取る関数
-	void Notify(const Telegram<EnemyMessageType>& telegram)  override;
+	////敵メッセンジャーからの通知を受け取る関数
+	//void Notify(const Telegram<EnemyMessageType>& telegram)  override;
 
 
 private:

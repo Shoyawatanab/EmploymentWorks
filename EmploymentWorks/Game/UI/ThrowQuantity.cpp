@@ -6,11 +6,9 @@
 /// <summary>
 /// 
 /// </summary>
-ThrowQuantity::ThrowQuantity(CommonResources* resources,
-	const DirectX::SimpleMath::Vector2& scale,
-	const DirectX::SimpleMath::Vector2& position)
+ThrowQuantity::ThrowQuantity(CommonResources* resources)
 	:
-	UIBaseEntity(resources,scale,position)
+	UIBaseEntity(resources)
 	,m_state{}
 {
 }
@@ -41,6 +39,17 @@ void ThrowQuantity::Initialize()
 		THROW_QUANTITYUI_POSITION + THROW_QUANTITYUI_OFFSET_POSITION, THROW_QUANTITYUI_SCALE);
 
 	m_throwQuantityUI.push_back(std::move(one));
+
+	m_state = State::ONE;
+
+	//
+	m_throwQuantityUI[0]->SetScale(m_throwQuantityUI[0]->GetInialScale() * 1.2f);
+	//
+	m_throwQuantityUI[1]->SetScale(m_throwQuantityUI[1]->GetInialScale());
+
+
+
+	Messenger::GetInstance()->Rigister(GamePlayMessageType::CHANGE_THROW_COUNT, this);
 
 
 }
@@ -79,10 +88,22 @@ void ThrowQuantity::Render()
 
 }
 
-
+/// <summary>
+/// ゲームイベントの通知を受け取る
+/// </summary>
+/// <param name="telegram"></param>
 void ThrowQuantity::Notify(const Telegram<GamePlayMessageType>& telegram)
 {
 
+
+	switch (telegram.messageType)
+	{
+		case GamePlayMessageType::CHANGE_THROW_COUNT:
+			ChangeState();
+			break;
+		default:
+			break;
+	}
 
 
 }
@@ -96,10 +117,18 @@ void ThrowQuantity::ChangeState()
 	{
 		case ThrowQuantity::State::ONE:
 			m_state = State::THREE;
-			
+			//
+			m_throwQuantityUI[0]->SetScale(m_throwQuantityUI[0]->GetInialScale());
+			//
+			m_throwQuantityUI[1]->SetScale(m_throwQuantityUI[1]->GetInialScale() * 1.2f);
+
 			break;
 		case ThrowQuantity::State::THREE:
 			m_state = State::ONE;
+			//
+			m_throwQuantityUI[0]->SetScale(m_throwQuantityUI[0]->GetInialScale() * 1.2f);
+			//
+			m_throwQuantityUI[1]->SetScale(m_throwQuantityUI[1]->GetInialScale());
 
 			break;
 		default:
@@ -107,9 +136,5 @@ void ThrowQuantity::ChangeState()
 	}
 
 
-	//
-	m_throwQuantityUI[0]->SetScale(m_throwQuantityUI[0]->GetInialScale() * 1.2f);
-	//
-	m_throwQuantityUI[1]->SetScale(m_throwQuantityUI[1]->GetInialScale());
 
 }

@@ -3,7 +3,7 @@
 	@brief	シーンマネージャクラス
 */
 #pragma once
-#include "IScene.h"
+#include "GameBase/Scene/Scene.h"
 
 // 前方宣言
 class CommonResources;
@@ -35,12 +35,12 @@ public:
 
 
 private:
-	void ChangeScene(IScene::SceneID sceneID);
-	void CreateScene(IScene::SceneID sceneID);
+	void ChangeScene(Scene::SceneID sceneID);
+	void CreateScene(Scene::SceneID sceneID);
 	void DeleteScene();
 
 private:
-	std::unique_ptr<IScene> m_currentScene;
+	std::unique_ptr<Scene> m_currentScene;
 	CommonResources* m_commonResources;
 
 	StageID m_stageID;

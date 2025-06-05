@@ -26,11 +26,11 @@ const wchar_t* WataLib::GameResources::MODEL_BASE_PATH = L"Resources/Models/";
 /// <param name="device">デバイス</param>
 WataLib::GameResources::GameResources(ID3D11Device1* device)
 {
+
 	// Jsonファイルを読み込んでモデルを生成する
 	LoadModelFromJson(device);
 	// テクスチャを読み込む
 	LoadTexture(device);
-
 
 }
 

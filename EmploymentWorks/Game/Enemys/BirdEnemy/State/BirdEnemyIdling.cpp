@@ -79,17 +79,15 @@ void BirdEnemyldling::Update(const float& elapsedTime)
 		if (ratio < Params::BIRDENEMY_ATTACK_RATIO)
 		{
 
-			//m_birdEnemy->GetPlayerStateMachine()->ChangeState(m_birdEnemy->GetPlayerStateMachine()->GetBirdEnemyMove());
 
-			Messenger::GetInstance()->Notify(m_birdEnemy->GetID(), EnemyMessageType::MOVEING);
+			Messenger::GetInstance()->Notify<EnemyMessageType>(m_birdEnemy->GetID(), EnemyMessageType::MOVEING);
 			
 		}
 		else
 		{
 
-			//m_birdEnemy->GetPlayerStateMachine()->ChangeState(m_birdEnemy->GetPlayerStateMachine()->GetBirdEnemyAttack());
 
-			Messenger::GetInstance()->Notify(m_birdEnemy->GetID(), EnemyMessageType::BEAM_ATTACK);
+			Messenger::GetInstance()->Notify<EnemyMessageType>(m_birdEnemy->GetID(), EnemyMessageType::BEAM_ATTACK);
 
 		}
 	}
@@ -100,17 +98,7 @@ void BirdEnemyldling::Update(const float& elapsedTime)
 
 }
 
-/// <summary>
-/// 描画
-/// </summary>
-/// <param name="view">ビュー行列</param>
-/// <param name="projection">射影行列</param>
-void BirdEnemyldling::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
-{
-	UNREFERENCED_PARAMETER(view);
-	UNREFERENCED_PARAMETER(projection);
 
-}
 
 
 

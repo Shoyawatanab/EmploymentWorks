@@ -7,7 +7,7 @@
 
 #include "Libraries/WataLib/Bounding.h"
 #include "Libraries/WataLib/CSV.h"
-#include "Game/CollisiionManager.h"
+#include "GameBase/Manager/CollisiionManager.h"
 #include "Game/Weapon/Boomerang/State/BoomerangStateMachine.h"
 #include "Game/Player/Player.h"
 #include "Game/Params.h"
@@ -142,8 +142,6 @@ void Boomerang::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::S
 	//ƒ‚ƒfƒ‹‚Ì•`‰æ
 	m_model->Draw(context, *states, BaseEntity::GetWorldMatrix(), view, projection);
 
-
-	m_stateMachine->Render(view, projection);
 
 
 	DirectX::SimpleMath::Vector3 shadowPos = BaseEntity::GetPosition();

@@ -1,0 +1,37 @@
+{
+	"AnimationType" : "GetReady",
+	"AnimationTime"  : 4.0,
+	"AnimationSpeed" : 1.0,
+	"Loop": true,
+	"KeyFrame" :
+	[
+		{
+			"FreamTime" : 0.0 ,
+			"Parts" : 
+			[
+				{
+					"PartName" : "RightArm",
+					"Rotation" :{ 
+						"x" : 200.0,
+						"y" : 0.0,
+						"z" : 0.0
+					}
+				}
+			]
+		},
+		{
+			"FreamTime" : 4.0 ,
+			"Parts" : 
+			[
+				{
+					"PartName" : "RightArm",
+					"Rotation" :{ 
+						"x" : 200.0,
+						"y" : 0.0,
+						"z" : 0.0
+					}
+				}
+			]
+		}
+	]
+}

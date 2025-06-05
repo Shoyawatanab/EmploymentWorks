@@ -1,18 +1,25 @@
 #include "pch.h"
 #include "PlayerStateMachine.h"
-
-
+#include "Game/Player/Player2.h"
+#include "Game/Observer/Messenger.h"
+#include "Game/Player//State/PlayerStates.h"
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
-PlayerStateMachine::PlayerStateMachine(Player* player)
-	:
-	m_currentState{}
-	,m_idle{}
+PlayerStateMachine::PlayerStateMachine(Player2* player)
 {
-	m_idle = std::make_unique<PlayerIdle>(player);
-	m_attack = std::make_unique<PlayerAttack>(player);
+	//Messenger::GetInstance()->Rigister<PlayerMessageType>(player->GetID(), this);
+	
+	//IDEL状態の追加
+	AddState(PlayerState::IDEL,std::make_unique<PlayerIdle>(this, player));
+	//ATTACK状態の追加
+	AddState(PlayerState::ATTACK, std::make_unique<PlayerAttack>(this, player));
+	//WALK状態の追加
+	AddState(PlayerState::WALK, std::make_unique<PlayerWalk>(this, player));
+
+	SetStartState(PlayerState::WALK);
+
 }
 
 /// <summary>
@@ -24,51 +31,21 @@ PlayerStateMachine::~PlayerStateMachine()
 
 
 
-/// <summary>
-/// 初期化
-/// </summary>
-/// <param name="resources">共通リソース</param>
-/// <param name="startState">初期ステート</param>
-void PlayerStateMachine::Initialize(CommonResources* resources, IState* startState)
-{
-
-	m_idle->Initialize(resources);
-	m_attack->Initialize(resources);
-
-	m_currentState = startState;
-
-
-
-}
-
-
-/// <summary>
-/// 更新処理
-/// </summary>
-/// <param name="elapsedTime">経過時間</param>
-void PlayerStateMachine::Update(const float& elapsedTime)
-{
-	m_currentState->Update(elapsedTime);
-}
-
-void PlayerStateMachine::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
-{
-	m_currentState->Render(view, projection);
-}
-
-/// <summary>
-/// ステートの切り替え
-/// </summary>
-/// <param name="nextState">次のステート</param>
-void PlayerStateMachine::ChangeState(IState* nextState)
-{
-
-	m_currentState->Exit();
-	m_currentState = nextState;
-	m_currentState->Enter();
-
-
-
-}
+//void PlayerStateMachine::Notify(const Telegram<PlayerMessageType>& telegram)
+//{
+//
+//	switch (telegram.messageType)
+//	{
+//		case PlayerMessageType::IDLING:
+//			//ChangeState(m_idle.get());
+//			break;
+//		case PlayerMessageType::ATTACK:
+//			//ChangeState(m_attack.get());
+//			break;
+//		default:
+//			break;
+//	}
+//
+//}
 
 

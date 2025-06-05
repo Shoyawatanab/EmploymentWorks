@@ -39,8 +39,6 @@ public:
 	void Initialize(CommonResources* resources) ;
 	// XV‚·‚é
 	void Update(const float& elapsedTime) override;
-	//•`‰æ
-	void Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection) override;
 	//ó‘Ô‚É“ü‚Á‚½
 	void Enter() override;
 	//ó‘Ô‚ğ”²‚¯‚½

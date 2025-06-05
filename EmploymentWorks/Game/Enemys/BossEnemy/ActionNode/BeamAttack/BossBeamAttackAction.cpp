@@ -16,7 +16,7 @@
 #include "Game/Params.h"
 #include "Game/Observer/Messenger.h"
 
-#include "Game/Enemys/BossEnemy/BossEnemy.h"
+#include "Game/Enemies/BossEnemy/BossEnemy.h"
 #include "Game/Enemys/BossEnemy/Beam/Beam.h"
 #include "Game/Enemys/BossEnemy/ActionNode/BeamAttack/BossBeamAttackPreliminaryAction.h"
 #include "Game/Enemys/BossEnemy/ActionNode/BeamAttack/BossBeamAttackCharge.h"

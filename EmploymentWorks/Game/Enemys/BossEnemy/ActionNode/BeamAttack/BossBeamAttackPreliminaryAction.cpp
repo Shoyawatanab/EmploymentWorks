@@ -14,7 +14,7 @@
 #include <cassert>
 
 #include "Game/Params.h"
-#include "Game/Enemys/BossEnemy/BossEnemy.h"
+#include "Game/Enemies/BossEnemy/BossEnemy.h"
 #include "Game/Enemys/BossEnemy/Beam/Beam.h"
 #include "Game/Enemys/BossEnemy/ActionNode/BeamAttack/BossBeamAttackAction.h"
 
@@ -84,7 +84,7 @@ void BossBeamAttackPreliminaryAction::Enter()
 
 	m_time = 0.0f;
 
-	m_bossEnemy->ChangeAnimation("BeamAttack");
+	//m_bossEnemy->ChangeAnimation("BeamAttack");
 
 }
 

@@ -6,11 +6,10 @@
 #include "Game/Player/PlayerParts/PlayerBody.h"
 
 #include "Libraries/WataLib/Json.h"
-#include "Libraries/WataLib/Camera/TPS_Camera.h"
 #include "Libraries/WataLib/Bounding.h"
 
 #include "Game/Player/PlayerUsually.h"
-#include "Game/CollisiionManager.h"
+#include "GameBase/Manager/CollisiionManager.h"
 #include "Game/Player/State/PlayerStateMachine.h"
 #include "Game/Observer/Messenger.h"
 
@@ -24,7 +23,8 @@
 /// <param name="resources">共通リソース</param>
 Player::Player(CommonResources* resources)
 	:
-	m_animationDatas{}
+	m_stateMachine{}
+	,m_animationDatas{}
 	,m_usually{}
 	,m_boomerangs{}
 	,m_hp{Params::PLAYER_HP}
@@ -34,7 +34,7 @@ Player::Player(CommonResources* resources)
 	InstanceRegistry::GetInstance()->Register<Player>("Player", this);
 
 	m_usually = std::make_unique<PlayerUsually>();
-	m_stateMachine = std::make_unique<PlayerStateMachine>(this);
+	//m_stateMachine = std::make_unique<PlayerStateMachine>(this);
 
 
 	
@@ -61,13 +61,13 @@ void Player::Initialize()
 	CompositeEntity::Initialize();
 
 	//「Body」を生成する
-	AddChild(std::make_unique<PlayerBody>(
-		BaseEntity::GetCommonResources(),
-		this,
-		Params::PLAYER_BODY_SCALE , 
-		Params::PLAYER_BODY_POSITION,
-		Params::PLAYER_BODY_ROTATION)
-	);
+	//AddChild(std::make_unique<PlayerBody>(
+	//	BaseEntity::GetCommonResources(),
+	//	this,
+	//	Params::PLAYER_BODY_SCALE , 
+	//	Params::PLAYER_BODY_POSITION,
+	//	Params::PLAYER_BODY_ROTATION)
+	//);
 
 	//アニメーションデータの読み込み
 	std::unique_ptr<WataLib::Json> json = std::make_unique<WataLib::Json>();
@@ -86,7 +86,6 @@ void Player::Initialize()
 
 	//初期化
 	m_usually->Initialize(BaseEntity::GetCommonResources());
-	m_stateMachine->Initialize(BaseEntity::GetCommonResources(), m_stateMachine->GetPlayerIdle());
 
 
 	for (int i = 0; i < Params::BOOMERANG_MAX_COUNT; i++)
@@ -111,6 +110,7 @@ void Player::Initialize()
 	m_shadow->Initialize(device, context, states);
 
 
+	BaseEntity::SetIsGravity(false);
 }
 
 

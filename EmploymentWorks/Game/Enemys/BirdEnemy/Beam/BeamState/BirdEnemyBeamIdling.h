@@ -19,18 +19,16 @@ public:
 	// コンストラクタ
 	BirdEnemyBeamIdling(BirdEnemy* birdEnemy, BirdEnemyBeam* beam);
 	// デストラクタ
-	~BirdEnemyBeamIdling();
+	~BirdEnemyBeamIdling() override;
 	// 初期化する
 	void Initialize();
 
 	// 更新する
-	void Update(const float& elapsedTime);
-	//描画
-	void Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection);
+	void Update(const float& elapsedTime) override ;
 	//状態に入った時
-	void Enter();
+	void Enter() override;
 	//状態を抜けた時
-	void Exit();
+	void Exit()override ;
 
 
 private:

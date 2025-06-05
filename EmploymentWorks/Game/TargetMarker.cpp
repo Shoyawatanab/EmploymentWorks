@@ -11,8 +11,7 @@
 #include "Libraries/MyLib/InputManager.h"
 #include "Libraries/MyLib/MemoryLeakDetector.h"
 #include <cassert>
-#include "Game/Screen.h"
-#include "Libraries/WataLib/Camera/TPS_Camera.h"
+#include "GameBase/Screen.h"
 #include "Game/Observer/Messenger.h"
 #include "Libraries/WataLib/UserInterface.h"
 #include "Game/InstanceRegistry.h"
@@ -95,36 +94,6 @@ DirectX::SimpleMath::Vector2 TargetMarker::FilterWithinRange(const std::vector<D
 	//
 	for (const auto& point : points)
 	{
-		//座標をスクリーン座標に変換
-		Vector2 ScreenPos = WorldToScreen(point,
-			Matrix::Identity,
-			m_tpsCamera->GetViewMatrix(),
-			m_tpsCamera->GetProjectionMatrix(),
-			m_windowSize.first,
-			m_windowSize.second
-		);
-
-		float distance = Vector2::Distance(ScreenPos, center);
-
-		//raneg内の座標かどうかの判定
-		if (distance <= range)
-		{
-			//最小値よりも小さければ
-			if (minLength > distance)
-			{
-
-				//配列に格納
-				result = ScreenPos;
-				//最小値を更新
-				minLength = distance;
-				//ターゲットを更新
-				m_target = point;
-				
-				m_isLockOn = true;
-
-			}
-
-		}
 	}
 
 	return result;

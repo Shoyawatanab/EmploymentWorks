@@ -4,7 +4,6 @@
 #include "DeviceResources.h"
 #include "Libraries/MyLib/InputManager.h"
 
-#include "Libraries/WataLib/Camera/TPS_Camera.h"
 #include "Game/Weapon/Boomerang/Boomerang.h"
 #include "Game/Params.h"
 
@@ -59,16 +58,7 @@ void BoomerangGetReady::Update(const float& elapsedTime)
 
 }
 
-void BoomerangGetReady::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
-{
-	UNREFERENCED_PARAMETER(view);
-	UNREFERENCED_PARAMETER(projection);
 
-
-
-
-
-}
 
 /// <summary>
 /// èÛë‘Ç…ì¸Ç¡ÇΩéû

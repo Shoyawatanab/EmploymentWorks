@@ -4,7 +4,7 @@
 */
 #include "pch.h"
 #include "StageSelectScene.h"
-#include "Game/Screen.h"
+#include "GameBase/Screen.h"
 #include "Game/CommonResources.h"
 #include "DeviceResources.h"
 #include "Libraries/MyLib/MemoryLeakDetector.h"
@@ -44,10 +44,9 @@ StageSelectScene::~StageSelectScene()
 //---------------------------------------------------------
 // 初期化する
 //---------------------------------------------------------
-void StageSelectScene::Initialize(CommonResources* resources)
+void StageSelectScene::Initialize()
 {
-	assert(resources);
-	m_commonResources = resources;
+	m_commonResources = CommonResources::GetInstance();
 
 
 	auto buttom = std::make_unique<UserInterface>();
@@ -83,7 +82,7 @@ void StageSelectScene::Initialize(CommonResources* resources)
 //---------------------------------------------------------
 // 更新する
 //---------------------------------------------------------
-void StageSelectScene::Update(float elapsedTime)
+void StageSelectScene::SceneUpdate(float elapsedTime)
 {
 	// 宣言をしたが、実際は使用していない変数
 	UNREFERENCED_PARAMETER(elapsedTime);
@@ -149,7 +148,7 @@ void StageSelectScene::Update(float elapsedTime)
 //---------------------------------------------------------
 // 描画する
 //---------------------------------------------------------
-void StageSelectScene::Render()
+void StageSelectScene::SceneRender()
 {
 
 	for (auto& texture : m_textures)
@@ -181,23 +180,3 @@ void StageSelectScene::Finalize()
 	// do nothing.
 }
 
-//---------------------------------------------------------
-// 次のシーンIDを取得する
-//---------------------------------------------------------
-IScene::SceneID StageSelectScene::GetNextSceneID() const
-{
-	// シーン変更がある場合
-	if (m_isChangeScene)
-	{
-		if (m_commonResources->GetFade()->GetFadeState() == Fade::FadeState::NONE)
-		{
-			m_commonResources->GetFade()->StartNormalFadeIn();
-
-		}
-
-		return IScene::SceneID::PLAY;
-	}
-
-	// シーン変更がない場合
-	return IScene::SceneID::NONE;
-}

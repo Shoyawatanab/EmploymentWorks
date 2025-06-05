@@ -8,6 +8,7 @@ class IState;
 class CommonResources;
 
 
+template<typename T>
 class IStateMachine
 {
 public:
@@ -15,9 +16,7 @@ public:
 	virtual ~IStateMachine() = default;
 	// XV‚·‚é
 	virtual void Update(const float& elapsedTime) = 0;
-	//•`‰æ
-	virtual void Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection) = 0;
 	//ó‘Ô‚Ì•ÏX
-	virtual void ChangeState(IState* nextState) = 0;
+	virtual void ChangeState(T* nextState) = 0;
 
 };

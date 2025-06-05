@@ -16,7 +16,7 @@
 #include "Libraries/MyLib/BinaryFile.h"
 #include "Game/Enemys/BirdEnemy/Beam/BirdEnemyBeam.h"
 #include "Libraries/WataLib/Bounding.h"
-#include "Game/CollisiionManager.h"
+#include "GameBase/Manager/CollisiionManager.h"
 #include "Game/Observer/Messenger.h"
 
 #include "Game/Params.h"

@@ -8,7 +8,7 @@
 #include "PlayScene.h"
 #include "ResultScene.h"
 #include "StageSelectScene.h"
-#include "Game/Screen.h"
+#include "GameBase/Screen.h"
 #include "Game/CommonResources.h"
 #include "DeviceResources.h"
 #include "Libraries/MyLib/MemoryLeakDetector.h"
@@ -47,7 +47,7 @@ void SceneManager::Initialize(CommonResources* resources)
 
 	m_stageID = STAGE1;
 
-	ChangeScene(IScene::SceneID::PLAY);
+	ChangeScene(Scene::SceneID::PLAY);
 
 
 }
@@ -61,10 +61,13 @@ void SceneManager::Update(float elapsedTime)
 	m_currentScene->Update(elapsedTime);
 
 	// 説明用変数：次のシーン
-	const IScene::SceneID nextSceneID = m_currentScene->GetNextSceneID();
+	const Scene::SceneID nextSceneID = m_currentScene->GetNextSceneID();
 
 	// シーンを変更しないとき
-	if (nextSceneID == IScene::SceneID::NONE) return;
+	if (nextSceneID == Scene::SceneID::NONE) return;
+
+	ChangeScene(nextSceneID);
+	return;
 
 	//フェードクラスのシーン切り替えフラグがtrueなら
 	if (m_commonResources->GetFade()->GetIsSceneChange())
@@ -93,7 +96,7 @@ void SceneManager::Finalize()
 //---------------------------------------------------------
 // シーンを変更する
 //---------------------------------------------------------
-void SceneManager::ChangeScene(IScene::SceneID sceneID)
+void SceneManager::ChangeScene(Scene::SceneID sceneID)
 {
 	DeleteScene();
 	CreateScene(sceneID);
@@ -102,22 +105,22 @@ void SceneManager::ChangeScene(IScene::SceneID sceneID)
 //---------------------------------------------------------
 // シーンを作成する
 //---------------------------------------------------------
-void SceneManager::CreateScene(IScene::SceneID sceneID)
+void SceneManager::CreateScene(Scene::SceneID sceneID)
 {
 	assert(m_currentScene == nullptr);
 
 	switch (sceneID)
 	{
-		case IScene::SceneID::TITLE:
+		case Scene::SceneID::TITLE:
 			m_currentScene = std::make_unique<TitleScene>();
 			break;
-		case IScene::SceneID::PLAY:
+		case Scene::SceneID::PLAY:
 			m_currentScene = std::make_unique<PlayScene>(m_stageID);
 			break;
-		case IScene::SceneID::STAGESELECT:
+		case Scene::SceneID::STAGESELECT:
 			m_currentScene = std::make_unique<StageSelectScene>(this);
 			break;
-		case IScene::SceneID::RESULT:
+		case Scene::SceneID::RESULT:
 			m_currentScene = std::make_unique<ResultScene>();
 			break;
 		default:
@@ -126,7 +129,7 @@ void SceneManager::CreateScene(IScene::SceneID sceneID)
 	}
 
 	assert(m_currentScene && "SceneManager::CreateScene::次のシーンが生成されませんでした！");
-	m_currentScene->Initialize(m_commonResources);
+	m_currentScene->Initialize();
 }
 
 //---------------------------------------------------------

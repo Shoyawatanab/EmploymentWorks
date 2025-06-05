@@ -59,7 +59,6 @@ public:
 	~Player() override;
 
 
-
 //IObject
 	//‰Šú‰»
 	void Initialize() override;

@@ -24,8 +24,6 @@ public:
 
 	// XVˆ—
 	void Update(const float& elapsedTime);
-	//•`‰æˆ—
-	void Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection) override ;
 	//ó‘Ô‚É“ü‚Á‚½
 	void Enter();
 	//ó‘Ô‚ğ”²‚¯‚½

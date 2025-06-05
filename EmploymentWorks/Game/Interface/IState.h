@@ -14,8 +14,6 @@ public:
 	virtual ~IState() = default;
 	// XV‚·‚é
 	virtual void Update(const float& elapsedTime) = 0;
-	//•`‰æ
-	virtual void Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection) = 0;
 	//ó‘Ô‚É“ü‚Á‚½
 	virtual void Enter() = 0;
 	//ó‘Ô‚ğ”²‚¯‚½

@@ -13,7 +13,7 @@
 #include "Libraries/MyLib/MemoryLeakDetector.h"
 #include <cassert>
 
-#include "Game/Enemys/BossEnemy/BossEnemy.h"
+#include "Game/Enemies/BossEnemy/BossEnemy.h"
 #include "Game/Player/Player.h"
 #include "BossJumpAttackAction.h"
 
@@ -72,20 +72,20 @@ void BossJumpAttackJump::Initialize()
 BossJumpAttackJump::ActionState BossJumpAttackJump::Update(const float& elapsedTime)
 {
 
-	//‘¬“x‚ÌŽæ“¾
-	Vector3 velocity = m_bossEnemy->GetVelocity();
-	//‘¬“x‚ÌXV
-	velocity.x = m_jumpDirection.x * elapsedTime * BossJumpAttackAction::MOVESPEED;
-	velocity.z = m_jumpDirection.z * elapsedTime * BossJumpAttackAction::MOVESPEED;
+	////‘¬“x‚ÌŽæ“¾
+	//Vector3 velocity = m_bossEnemy->GetVelocity();
+	////‘¬“x‚ÌXV
+	//velocity.x = m_jumpDirection.x * elapsedTime * BossJumpAttackAction::MOVESPEED;
+	//velocity.z = m_jumpDirection.z * elapsedTime * BossJumpAttackAction::MOVESPEED;
 
-	//‘¬“x‚Ì“o˜^
-	m_bossEnemy->SetVelocity(velocity);
+	////‘¬“x‚Ì“o˜^
+	//m_bossEnemy->SetVelocity(velocity);
 
-	//’…’n‚µ‚½‚ç
-	if (m_bossEnemy->GetIsGrounded())
-	{
-		return ActionState::END;
-	}
+	////’…’n‚µ‚½‚ç
+	//if (m_bossEnemy->GetIsGrounded())
+	//{
+	//	return ActionState::END;
+	//}
 
 	return ActionState::RUNNING;
 
@@ -97,23 +97,23 @@ BossJumpAttackJump::ActionState BossJumpAttackJump::Update(const float& elapsedT
 void BossJumpAttackJump::Enter()
 {
 
-	Vector3 velocity = m_bossEnemy->GetVelocity();
+	//Vector3 velocity = m_bossEnemy->GetVelocity();
 
-	velocity.y += BossJumpAttackAction::JUMPPOWER;
-	//velocity.y += 5.0f;
+	//velocity.y += BossJumpAttackAction::JUMPPOWER;
+	////velocity.y += 5.0f;
 
-	m_bossEnemy->SetVelocity(velocity);
-
-
-	Vector3 bossPos = m_bossEnemy->GetPosition();
-
-	Vector3 playerPos = m_player->GetPosition();
+	//m_bossEnemy->SetVelocity(velocity);
 
 
-	//•ûŒü‚ð‹‚ß‚é
-	m_jumpDirection = playerPos - bossPos;
-	//³‹K‰»
-	m_jumpDirection.Normalize();
+	//Vector3 bossPos = m_bossEnemy->GetPosition();
+
+	//Vector3 playerPos = m_player->GetPosition();
+
+
+	////•ûŒü‚ð‹‚ß‚é
+	//m_jumpDirection = playerPos - bossPos;
+	////³‹K‰»
+	//m_jumpDirection.Normalize();
 
 
 }
@@ -124,14 +124,14 @@ void BossJumpAttackJump::Enter()
 void BossJumpAttackJump::Exit()
 {
 
-	m_bossEnemy->ChangeAnimation("Idel");
+	//m_bossEnemy->ChangeAnimation("Idel");
 
-	Vector3 pos = m_bossEnemy->GetPosition();
+	//Vector3 pos = m_bossEnemy->GetPosition();
 
-	pos.y = 0.1f;
+	//pos.y = 0.1f;
 
-	Messenger::GetInstance()->Notify(GamePlayMessageType::CREATE_PARTICLE, &pos);
+	//Messenger::GetInstance()->Notify(GamePlayMessageType::CREATE_PARTICLE, &pos);
 
-	m_bossEnemy->SetVelocity(Vector3::Zero);
+	//m_bossEnemy->SetVelocity(Vector3::Zero);
 
 }

@@ -33,9 +33,8 @@ UIStateMachine::~UIStateMachine()
 /// <param name="player">プレイヤ</param>
 /// <param name="playScene">プレイシーン</param>
 /// <param name="enemyManager">エネミーマネージャー</param>
-void UIStateMachine::AddPointer(PlayScene* playScene, EnemyManager* enemyManager)
+void UIStateMachine::AddPointer(PlayScene* playScene)
 {
-	m_playUi->AddPointer(enemyManager);
 	m_gameEndUI->AddPointer(playScene);
 }
 
@@ -43,7 +42,7 @@ void UIStateMachine::AddPointer(PlayScene* playScene, EnemyManager* enemyManager
 /// 初期化
 /// </summary>
 /// <param name="resources">共通リソース</param>
-void UIStateMachine::Initialize(CommonResources* resources, IState* startState)
+void UIStateMachine::Initialize(CommonResources* resources, IUIState* startState)
 {
 
 	m_playUi->Initialize(resources);
@@ -75,7 +74,7 @@ void UIStateMachine::Render(const DirectX::SimpleMath::Matrix& view, const Direc
 /// ステートの切り替え
 /// </summary>
 /// <param name="nextState">次のステート</param>
-void UIStateMachine::ChangeState(IState* nextState)
+void UIStateMachine::ChangeState(IUIState* nextState)
 {
 
 	m_currentState->Exit();

@@ -50,30 +50,7 @@ void Messenger::Notify(GamePlayMessageType type, void* datas)
 
 }
 
-void Messenger::Rigister(int enemyId, IObserver<EnemyMessageType>* observer)
-{
 
-	//’Ç‰Á
-	m_characterSingleEventList[enemyId] = observer;
-
-}
-
-void Messenger::Notify(int enemyId, EnemyMessageType type, void* datas)
-{
-
-	//‘—‚èæ‚ª‚ ‚é‚©
-	auto it = m_characterSingleEventList.find(enemyId);
-
-	//‚ ‚ê‚Î
-	if (it != m_characterSingleEventList.end())
-	{
-		Telegram telegram(type, datas);
-		it->second->Notify(telegram);
-
-	}
-
-
-}
 
 void Messenger::Clear()
 {

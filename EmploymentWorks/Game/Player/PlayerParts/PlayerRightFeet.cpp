@@ -1,30 +1,23 @@
 #include "pch.h"
 #include "PlayerRightFeet.h"
-#include "Game/CommonResources.h"
-#include "DeviceResources.h"
-#include "Libraries/WataLib/GameResources.h"
-
-#include "Libraries/WataLib/Animation.h"
-#include "Game/CollisiionManager.h"
+#include "GameBase/Scene/Scene.h"
+#include "GameBase/Component/Components.h"
+#include "Game/Player/PlayerPartss.h"
+#include "Game/Params.h"
 
 
 
-/// <summary>
-/// コンストラクタ
-/// </summary>
-/// <param name="resources">共通リソース</param>
-/// <param name="parent">親</param>
-/// <param name="scale">大きさ</param>
-/// <param name="position">座標</param>
-/// <param name="rotation">回転</param>
-PlayerRightFeet::PlayerRightFeet(CommonResources* resources, 
-	CharacterEntity* parent
-	, const DirectX::SimpleMath::Vector3& scale
-	, const DirectX::SimpleMath::Vector3& position
-	, const DirectX::SimpleMath::Quaternion& rotation)
-:
-	PlayerPartsBase(resources, parent, PARTSNAME, scale, position, rotation)
+
+PlayerRightFeet::PlayerRightFeet(Scene* scene)
+	:
+	PlayerParts(scene, PARTS_NAME, "PlayerFeet")
 {
+	//大きさ
+	GetTransform()->SetScale(Params::PLAYER_RIGHTFEET_SCALE);
+	//位置情報
+	GetTransform()->Translate(Params::PLAYER_RIGHTFEET_POSITION);
+	//回転
+	GetTransform()->SetRotate(Params::PLAYER_RIGHTFEET_ROTATION);
 
 }
 
@@ -36,21 +29,5 @@ PlayerRightFeet::~PlayerRightFeet()
 
 }
 
-/// <summary>
-/// 初期化
-/// </summary>
-void PlayerRightFeet::Initialize()
-{
 
-	//// モデルを読み込む
-	auto model = PlayerPartsBase::GetCommonResources()->GetGameResources()->GetModel("PlayerFeet");
-
-	PlayerPartsBase::SetModel(model);
-
-	PlayerPartsBase::SetModel(model);
-
-	PlayerPartsBase::Initialize();
-
-
-}
 

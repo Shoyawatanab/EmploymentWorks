@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "ActionStateController.h"
 #include "Libraries/WataLib/Bounding.h"
-#include "Game/CollisiionManager.h"
+#include "GameBase/Manager/CollisiionManager.h"
 
 using namespace DirectX;
 using namespace DirectX::SimpleMath;

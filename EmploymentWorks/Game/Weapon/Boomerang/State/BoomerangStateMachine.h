@@ -15,7 +15,7 @@
 
 class TargetMarker;
 
-class BoomerangStateMachine : public IStateMachine
+class BoomerangStateMachine : public IStateMachine<IState>
 {
 public:
 
@@ -46,12 +46,8 @@ public:
 	void Initialize(CommonResources* resources, IState* startState = nullptr) ;
 	// XV‚·‚é
 	void Update(const float& elapsedTime) override;
-	//•`‰æ
-	void Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection) override;
 	//ó‘Ô‚Ì•ÏX
 	void ChangeState(IState* nextState) override;
-
-
 
 
 private:

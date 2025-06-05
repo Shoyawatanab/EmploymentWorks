@@ -12,14 +12,9 @@
 /// <param name="scale">ëÂÇ´Ç≥</param>
 /// <param name="position">ç¿ïW</param>
 /// <param name="rotation">âÒì]</param>
-UIBaseEntity::UIBaseEntity(CommonResources* resources
-	, const DirectX::SimpleMath::Vector2& scale
-	, const DirectX::SimpleMath::Vector2& position
-	)
+UIBaseEntity::UIBaseEntity(CommonResources* resources)
 	:
 	m_commonResources{resources}
-	,m_scale{scale}
-	,m_position{position}
 	,m_isEntityActive{true}
 	,m_isUpdateActive{true}
 	,m_isRenderActive{true}

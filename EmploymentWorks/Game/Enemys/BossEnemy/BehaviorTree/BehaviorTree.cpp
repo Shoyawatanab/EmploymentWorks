@@ -10,7 +10,7 @@
 #include "ExecutionNode.h"
 #include "Conditions.h"
 #include "Game/Player/Player.h"
-#include "Game/Enemys/BossEnemy/BossEnemy.h"
+#include "Game/Enemies/BossEnemy/BossEnemy.h"
 #include "Game/InstanceRegistry.h"
 
 

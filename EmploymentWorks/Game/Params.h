@@ -11,6 +11,8 @@ public:
 	static const float GRAVITY;
 	//影のY座標
 	static const float SHADOW_POSITION_Y;
+	//地上摩擦力
+	static const float GRAUND_FRICTION;
 
 //プレイヤ
    	//プレイヤの大きさ
