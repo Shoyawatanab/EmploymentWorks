@@ -12,7 +12,7 @@
 #include "Libraries/MyLib/MemoryLeakDetector.h"
 #include "Libraries/WataLib/GameResources.h"
 #include <cassert>
-#include "Game/CollisiionManager.h"
+#include "GameBase/Manager/CollisiionManager.h"
 #include "BirdEnemyBody.h"
 #include"Game/Enemys/BirdEnemy/BirdEnemyFeather.h"
 #include "Game/Params.h"

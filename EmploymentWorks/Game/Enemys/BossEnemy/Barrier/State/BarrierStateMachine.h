@@ -11,7 +11,7 @@
 //前方宣言
 class Player;
 
-class BarrierStateMachine : public IStateMachine
+class BarrierStateMachine : public IStateMachine<IState>
 {
 public:
 
@@ -33,8 +33,6 @@ public:
 	void Initialize(CommonResources* resources, IState* startState = nullptr);
 	// 更新処理
 	void Update(const float& elapsedTime) override;
-	//描画処理
-	void Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection) override;
 	//状態の変更
 	void ChangeState(IState* nextState) override;
 

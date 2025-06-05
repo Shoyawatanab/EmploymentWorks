@@ -66,11 +66,6 @@ void BoomerangStateMachine::Update(const float& elapsedTime)
 	m_currentState->Update(elapsedTime);
 }
 
-void BoomerangStateMachine::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
-{
-	
-	m_currentState->Render(view, projection);
-}
 
 
 /// <summary>

@@ -3,7 +3,7 @@
 */
 #pragma once
 #include <unordered_map>
-#include "Game/Interface/IState.h"
+#include "Game/Interface/IUIState.h"
 #include "Game/Interface/IObserver.h"
 
 #include "Libraries/WataLib/UserInterface.h"
@@ -11,17 +11,17 @@
 
 class Player;
 class UserInterface;
+
 class ThrowQuantity;
+class BossEnemyHP;
 
-
-class EnemyManager;
 namespace WataLib 
 {
 	class DamageCountUI;
 }
 
 
-class GamePlayUI : public IState ,  public IObserver<GamePlayMessageType>
+class GamePlayUI : public IUIState,  public IObserver<GamePlayMessageType>
 {
 
 private :
@@ -40,15 +40,6 @@ private :
 
 	static constexpr int MAXDAMAGEUICOUNT = 10;
 
-	//ボスHP関係
-	static constexpr DirectX::SimpleMath::Vector2 ENEMY_HP_BASE_POSITION{640,50};
-	static constexpr DirectX::SimpleMath::Vector2 ENEMY_HP_BASE_SCALE{0.9f,0.5f};
-
-	static constexpr DirectX::SimpleMath::Vector2 ENEMY_HP_POSITION     {640, 50};
-	static constexpr DirectX::SimpleMath::Vector2 ENEMY_HP_SCALE        {0.9f,0.39f};
-
-	static constexpr DirectX::SimpleMath::Vector2 ENEMY_NAME_POSITION     {640, 25};
-	static constexpr DirectX::SimpleMath::Vector2 ENEMY_NAME_SCALE        {0.3f, 0.3f};
 
 	//ブーメランの投げ方のUI
 	static constexpr DirectX::SimpleMath::Vector2 RIGHT_THROW_POSITION {1220, 500};
@@ -78,8 +69,6 @@ public:
 	//状態を抜けた時
 	void Exit() override;
 
-	//必要なポインタの登録
-	void AddPointer(EnemyManager* enemyManager);
 
 	//画像の読み込み
 	std::unique_ptr<UserInterface> AddTexture(std::string key
@@ -88,8 +77,6 @@ public:
 		);
 
 private:
-	//敵HPの作成
-	void CreateEnemyHP();
 	//プレイヤHPの作成
 	void CreatePlayerHP();
 	//ブウーメランUIの作成
@@ -116,18 +103,17 @@ private:
 	//ブーメラン残機			 
 	std::vector<std::unique_ptr<UserInterface>> m_boomerang;
 
-	std::unique_ptr<UserInterface> m_enemyHP;
-	std::vector<std::unique_ptr<UserInterface>> m_enemyHPBase;
 	//アイテムを回収するときのUI
 	std::unique_ptr<UserInterface> m_itemAcquisitionUI;
 
 	//投げ状態のUI
 	std::vector<std::unique_ptr<UserInterface>> m_throwUI;
 
-	std::unique_ptr<ThrowQuantity> m_throwQuantityUI;
 
-	//敵マネージャー
-	EnemyManager* m_enemyManager;
+	std::unique_ptr<ThrowQuantity> m_throwQuantityUI;
+	std::unique_ptr<BossEnemyHP> m_bossEnemyHP;
+
+
 	//画面サイズ
 	std::pair<int, int> m_windowSize;
 

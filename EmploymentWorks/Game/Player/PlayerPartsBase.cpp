@@ -4,7 +4,7 @@
 #include "Game/CommonResources.h"
 
 #include "Libraries/WataLib/Bounding.h"
-#include "Game/CollisiionManager.h"
+#include "GameBase/Manager/CollisiionManager.h"
 #include "Libraries/WataLib/Animation.h"
 #include "Libraries/MyLib/DebugString.h"
 

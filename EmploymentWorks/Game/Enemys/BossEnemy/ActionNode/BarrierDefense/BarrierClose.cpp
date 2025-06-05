@@ -12,7 +12,7 @@
 
 #include "Game/Enemys/BossEnemy/ActionNode/BarrierDefense/BarrierDefenseAction.h"
 #include "Game/Enemys/BossEnemy/Barrier/Barrier.h"
-#include "Game/Enemys/BossEnemy/BossEnemy.h"
+#include "Game/Enemies/BossEnemy/BossEnemy.h"
 
 
 /// <summary>
@@ -87,9 +87,7 @@ BarrierClose::ActionState BarrierClose::Update(const float& elapsedTime)
 void BarrierClose::Enter()
 {
 
-	m_owner->ChangeAnimation("BarrierEnd");
 
-	m_time = 0;
 
 }
 

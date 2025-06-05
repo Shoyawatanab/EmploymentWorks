@@ -4,10 +4,8 @@
 #include "DeviceResources.h"
 #include "Libraries/MyLib/InputManager.h"
 
-#include "Libraries/WataLib/Camera/TPS_Camera.h"
 #include "Game/Weapon/Boomerang/Boomerang.h"
 #include "Game/Player/Player.h"
-#include "Libraries/WataLib/Camera/TPS_Camera.h"
 #include "Game/Params.h"
 #include "Game/MathUtil.h"
 #include "Game/InstanceRegistry.h"
@@ -65,13 +63,13 @@ void BoomerangLeftThrow::CreateSplineCurvePositon()
 	else
 	{
 
-		target = m_tpsCamera->GetCameraForward();
+		//target = m_tpsCamera->GetCameraForward();
 
-		target.Normalize();
+		//target.Normalize();
 
-		target *= TARGET_LENGTH;
+		//target *= TARGET_LENGTH;
 
-		target += m_tpsCamera->GetTargetPosition();
+		//target += m_tpsCamera->GetTargetPosition();
 
 	}
 	
@@ -312,12 +310,7 @@ void BoomerangLeftThrow::Update(const float& elapsedTime)
 
 }
 
-void BoomerangLeftThrow::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
-{
-	UNREFERENCED_PARAMETER(view);
-	UNREFERENCED_PARAMETER(projection);
 
-}
 
 /// <summary>
 /// èÛë‘Ç…ì¸Ç¡ÇΩéû

@@ -5,9 +5,8 @@
 #include "Libraries/MyLib/InputManager.h"
 
 #include "Libraries/WataLib/Json.h"
-#include "Libraries/WataLib/Camera/TPS_Camera.h"
 #include "Libraries/WataLib/Bounding.h"
-#include "Game/CollisiionManager.h"
+#include "GameBase/Manager/CollisiionManager.h"
 #include "Game/Player/Player.h"
 #include "Game/Observer/Messenger.h"
 #include "Game/Enemys/BirdEnemy/BirdEnemyBody.h"
@@ -225,7 +224,7 @@ void BirdEnemy::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
 				if (BaseEntity::GetIsEntityActive())
 				{
 
-					EnemyEntity::GetEnemyManager()->DeleteRemainingEnemy(this);
+					//EnemyEntity::GetEnemyManager()->DeleteRemainingEnemy(this);
 					Vector3 scale = BaseEntity::GetScale();
 					Vector3 position = object->GetPosition();
 					UnknownDataTwo aa = { static_cast<void*>(&position) ,static_cast<void*>(&scale)};

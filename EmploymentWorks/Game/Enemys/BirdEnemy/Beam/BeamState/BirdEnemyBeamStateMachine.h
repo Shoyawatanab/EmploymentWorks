@@ -12,7 +12,7 @@
 class Player;
 class BirdEnemy;
 
-class BirdEnemyBeamStateMachine : public IStateMachine
+class BirdEnemyBeamStateMachine : public IStateMachine<IState>
 {
 public:
 	//Œ»İ‚Ìó‘Ô‚Ìæ“¾
@@ -34,8 +34,6 @@ public:
 	void Initialize() ;
 	// XVˆ—
 	void Update(const float& elapsedTime) override;
-	//•`‰æˆ—
-	void Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection) override;
 	//ó‘Ô‚Ì•ÏX
 	void ChangeState(IState* nextState) override;
 

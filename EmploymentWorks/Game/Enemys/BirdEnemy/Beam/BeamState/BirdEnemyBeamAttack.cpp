@@ -84,18 +84,6 @@ void BirdEnemyBeamAttack::Update(const float& elapsedTime)
 	
 }
 
-/// <summary>
-/// 描画
-/// </summary>
-/// <param name="view">ビュー行列</param>
-/// <param name="projection">射影行列</param>
-void BirdEnemyBeamAttack::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
-{
-	UNREFERENCED_PARAMETER(view);
-	UNREFERENCED_PARAMETER(projection);
-
-}
-
 
 /// <summary>
 /// 状態に入った時
@@ -114,7 +102,7 @@ void BirdEnemyBeamAttack::Enter()
 	m_time = 0;
 	//鳥の敵のステートをアイドルに変更
 
-	Messenger::GetInstance()->Notify(m_birdEnemy->GetID(), EnemyMessageType::IDLING);
+	Messenger::GetInstance()->Notify<EnemyMessageType>(m_birdEnemy->GetID(), EnemyMessageType::IDLING);
 
 }
 

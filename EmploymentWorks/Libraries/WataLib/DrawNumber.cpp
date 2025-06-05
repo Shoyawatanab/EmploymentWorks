@@ -17,7 +17,7 @@
 #include <WICTextureLoader.h>
 #include <CommonStates.h>
 #include <vector>
-#include "Game/Screen.h"
+#include "GameBase/Screen.h"
 
 
 /// <summary>

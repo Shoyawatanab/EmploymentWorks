@@ -3,7 +3,7 @@
 	@brief	タイトルシーンクラス
 */
 #pragma once
-#include "IScene.h"
+#include "GameBase/Scene/Scene.h"
 #include "Game/Entities/BaseEntity.h"
 #include <unordered_map>
 #include "Libraries/WataLib/UserInterface.h"
@@ -14,13 +14,11 @@ class CommonResources;
 
 namespace WataLib
 {
-	class TitleCamera;
     class Model3D;
 }
 
 
-class TitleScene final :
-    public IScene
+class TitleScene :  public Scene
 {
 
 private:
@@ -44,25 +42,31 @@ public:
 
     };
 
+public:
+    Camera* GetCamera() const  override { return m_camera; };
 
 
 public:
     TitleScene();
     ~TitleScene() override;
 
-    void Initialize(CommonResources* resources) override;
-    void Update(float elapsedTime)override;
-    void Render() override;
+
+private:
+    Camera* m_camera;
+
+
+
+public:
+    void Initialize() override;
+    void SceneUpdate(float elapsedTime)override;
+    void SceneRender() override;
     void Finalize() override;
 
-    SceneID GetNextSceneID() const;
-
+    SceneID GetSceneID() const override { return SceneID::TITLE; }
 
     void CreateTextures();
 
 private:
-    // 共通リソース
-    CommonResources* m_commonResources;
     // 射影行列
     DirectX::SimpleMath::Matrix m_projection;
 
@@ -74,8 +78,6 @@ private:
     std::vector<std::unique_ptr< BaseEntity>> m_object;
     //モデル
     std::vector<  std::unique_ptr<WataLib::Model3D>> m_objects;
-    //カメラ
-    std::unique_ptr<WataLib::TitleCamera> m_camera;
     //
     std::vector<std::unique_ptr<UserInterface>> m_textures;
 

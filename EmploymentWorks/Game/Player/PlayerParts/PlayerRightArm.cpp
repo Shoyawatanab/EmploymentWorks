@@ -1,32 +1,27 @@
 #include "pch.h"
-#include "PlayerRightArm.h"
-#include "Game/CommonResources.h"
-#include "DeviceResources.h"
-#include "Libraries/WataLib/GameResources.h"
-
-#include "Libraries/WataLib/Animation.h"
-#include "Game/CollisiionManager.h"
+#include "PlayerBody.h"
+#include "GameBase/Scene/Scene.h"
+#include "GameBase/Component/Components.h"
+#include "Game/Player/PlayerPartss.h"
+#include "Game/Params.h"
 
 
 
 
-/// <summary>
-/// コンストラクタ
-/// </summary>
-/// <param name="resources">共通リソース</param>
-/// <param name="parent">親</param>
-/// <param name="scale">大きさ</param>
-/// <param name="position">座標</param>
-/// <param name="rotation">回転</param>
-PlayerRightArm::PlayerRightArm(CommonResources* resources, 
-	CharacterEntity* parent
-	, const DirectX::SimpleMath::Vector3& scale
-	, const DirectX::SimpleMath::Vector3& position
-	, const DirectX::SimpleMath::Quaternion& rotation)
-:
-	PlayerPartsBase(resources, parent, PARTSNAME, scale, position, rotation)
 
+
+PlayerRightArm::PlayerRightArm(Scene* scene)
+	:
+	PlayerParts(scene, PARTS_NAME, "PlayerArm")
 {
+
+	//大きさ
+	GetTransform()->SetScale(Params::PLAYER_RIGHTARM_SCALE);
+	//位置情報
+	GetTransform()->Translate(Params::PLAYER_RIGHTARM_POSITION);
+	//回転
+	GetTransform()->SetRotate(Params::PLAYER_RIGHTARM_ROTATION);
+
 
 }
 
@@ -37,24 +32,7 @@ PlayerRightArm::~PlayerRightArm()
 {
 }
 
-/// <summary>
-/// 初期化
-/// </summary>
-void PlayerRightArm::Initialize()
-{
 
-
-
-	//// モデルを読み込む
-	auto model = PlayerPartsBase::GetCommonResources()->GetGameResources()->GetModel("PlayerArm");
-
-	PlayerPartsBase::SetModel(model);
-
-	PlayerPartsBase::Initialize();
-
-
-
-}
 
 
 

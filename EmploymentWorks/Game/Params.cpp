@@ -11,13 +11,15 @@ const float            Params::GRAVITY = 0.5f;
 
 const float            Params::SHADOW_POSITION_Y = 0.1f;
 
+//地上摩擦力
+const float            Params::GRAUND_FRICTION =  0.95f;
 
 //プレイヤの大きさ
 const Vector3          Params::PLAYER_SCALE = Vector3(0.2f, 0.2f, 0.2f);
 //プレイヤの座標
 const Vector3          Params::PLAYER_POSITION = Vector3(0.0f,0.55f,5.0f);
 //プレイヤの回転
-const Quaternion       Params::PLAYER_ROTATION = Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0)
+const Quaternion       Params::PLAYER_ROTATION = Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(180)
 																			 ,DirectX::XMConvertToRadians(0)
 																			 ,DirectX::XMConvertToRadians(0));
 //プレイヤの影の大きさ
@@ -31,7 +33,7 @@ const float            Params::PLAYER_SPHERE_COLLIDER_SIZE = 0.9f;
 //プレイヤのHP
 const int              Params::PLAYER_HP = 3;
 //プレイヤの動くスピード
-const float            Params::PLAYER_MOVE_SPEED = 4.0f;
+const float            Params::PLAYER_MOVE_SPEED = 10.0f;
 //プレイヤの回転スピード
 const float            Params::PLAYER_ROTATION_SPEED = 10.0f;
 //プレイヤのBODYの大きさ
@@ -39,7 +41,7 @@ const Vector3         Params::PLAYER_BODY_SCALE = Vector3::One;
 //プレイヤのBODYの座標
 const Vector3         Params::PLAYER_BODY_POSITION = Vector3(0.0f,-0.28f,0.0f);
 //プレイヤのBODYの座標
-const Quaternion      Params::PLAYER_BODY_ROTATION = Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(180)
+const Quaternion      Params::PLAYER_BODY_ROTATION = Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0)
 																						, DirectX::XMConvertToRadians(0)
 																						, DirectX::XMConvertToRadians(0));
 //プレイヤのHEADの大きさ
@@ -414,6 +416,7 @@ int Params::BOOMERANG_MAX_COUNT = 3;
   const float Params::BIRDENEMY_MOVE_RADIUS = 2.0f;
   //鳥の敵の攻撃の確率
   const float Params::BIRDENEMY_ATTACK_RATIO = 20.0f;
+
 
 
   //鳥の敵のBODYの大きさ

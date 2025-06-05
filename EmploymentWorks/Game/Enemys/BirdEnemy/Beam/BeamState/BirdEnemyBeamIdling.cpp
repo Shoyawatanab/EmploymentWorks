@@ -57,17 +57,7 @@ void BirdEnemyBeamIdling::Update(const float& elapsedTime)
 
 
 }
-/// <summary>
-/// 描画
-/// </summary>
-/// <param name="view">ビュー行列</param>
-/// <param name="projection">射影行列</param>
-void BirdEnemyBeamIdling::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
-{
-	UNREFERENCED_PARAMETER(view);
-	UNREFERENCED_PARAMETER(projection);
 
-}
 
 /// <summary>
 /// 状態に入った時

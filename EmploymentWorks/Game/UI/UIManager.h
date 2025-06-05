@@ -12,10 +12,11 @@ class CommonResources;
 class UIStateMachine;
 class Player;
 class PlayScene;
-class EnemyManager;
 
 class UIManager :  public IObserver<GamePlayMessageType>
 {
+
+
 public:
 	//コンストラクタ
 	UIManager();
@@ -31,7 +32,7 @@ public:
 	void Finalize() ;
 
 	//必要なポインタの登録
-	void AddPointer(PlayScene* playScene, EnemyManager* enemyManager);
+	void AddPointer(PlayScene* playScene);
 
 	//IObserver
 //通知時に呼ばれる関数

@@ -1,29 +1,27 @@
 #include "pch.h"
 #include "PlayerHead.h"
-#include "Game/CommonResources.h"
-#include "DeviceResources.h"
-#include "Libraries/WataLib/GameResources.h"
-
-#include "Libraries/WataLib/Animation.h"
-#include "Game/CollisiionManager.h"
+#include "GameBase/Scene/Scene.h"
+#include "GameBase/Component/Components.h"
+#include "Game/Player/PlayerPartss.h"
+#include "Game/Params.h"
 
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
-/// <param name="resources">共通リソース</param>
-/// <param name="parent">親</param>
-/// <param name="scale">大きさ</param>
-/// <param name="position">座標</param>
-/// <param name="rotation">回転</param>
-PlayerHead::PlayerHead(CommonResources* resources 
-	, CharacterEntity* parent
-	, const DirectX::SimpleMath::Vector3& scale
-	, const DirectX::SimpleMath::Vector3& position
-	, const DirectX::SimpleMath::Quaternion& rotation)
+/// <param name="scene">シーン</param>
+PlayerHead::PlayerHead(Scene* scene)
 	:
-	PlayerPartsBase(resources, parent, PARTSNAME, scale, position, rotation)
+	PlayerParts(scene, PARTS_NAME,"PlayerHead")
 {
+	//大きさ
+	GetTransform()->SetScale(Params::PLAYER_HEAD_SCALE);
+	//位置情報
+	GetTransform()->Translate(Params::PLAYER_HEAD_POSITION);
+	//回転
+	GetTransform()->SetRotate(Params::PLAYER_HEAD_ROTATION);
+
+
 }
 
 /// <summary>
@@ -33,20 +31,5 @@ PlayerHead::~PlayerHead()
 {
 }
 
-/// <summary>
-/// 初期化
-/// </summary>
-void PlayerHead::Initialize()
-{
 
-
-
-	//// モデルを読み込む
-	auto model = PlayerPartsBase::GetCommonResources()->GetGameResources()->GetModel("PlayerHead");
-
-	PlayerPartsBase::SetModel(model);
-
-	PlayerPartsBase::Initialize();
-
-}
 

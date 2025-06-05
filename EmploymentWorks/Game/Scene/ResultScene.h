@@ -3,7 +3,7 @@
 	@brief	タイトルシーンクラス
 */
 #pragma once
-#include "IScene.h"
+#include "GameBase/Scene/Scene.h"
 #include "Game/Scene/SceneManager.h"
 
 // 前方宣言
@@ -13,24 +13,28 @@ class CommonResources;
 
 
 
-class ResultScene final :
-    public IScene
+class ResultScene  :  public Scene
 {
 
 public:
     ResultScene();
     ~ResultScene() override;
 
-    void Initialize(CommonResources* resources) override;
-    void Update(float elapsedTime)override;
-    void Render() override;
+    Camera* GetCamera() const { return nullptr; };
+
+
+
+
+public:
+
+
+    void Initialize() override;
+    void SceneUpdate(float elapsedTime)override;
+    void SceneRender() override;
     void Finalize() override;
 
-    SceneID GetNextSceneID() const;
-
+	SceneID GetSceneID() const override { return SceneID::RESULT; }
 private:
-	// 共通リソース
-	CommonResources* m_commonResources;
 
 
 	// シーンチェンジフラグ

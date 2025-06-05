@@ -16,7 +16,7 @@
 #include "Game/Enemys/BossEnemy/Beam/BeamRays.h"
 #include "Game/Enemys/BossEnemy/Beam/BeamEnergyBall.h"
 #include "Game/Enemys/BossEnemy/Beam/BeamChargeEffect.h"
-#include "Game/CollisiionManager.h"
+#include "GameBase/Manager/CollisiionManager.h"
 #include "Game/Params.h"
 #include "Game/Player/Player.h"
 #include "Game/InstanceRegistry.h"

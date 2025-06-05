@@ -3,15 +3,14 @@
 */
 #pragma once
 #include "Game/Interface/IStateMachine.h"
-#include "Game/Interface/IState.h"
+#include "Game/Interface/IUIState.h"
 #include "Game/UI/State/GamePlayUI.h"
 #include "Game/UI/State/GameEndUI.h"
 
 class Player;
 class PlayScene;
-class EnemyManager;
 
-class UIStateMachine : public IStateMachine 
+class UIStateMachine : public IStateMachine<IUIState>
 {
 public:
 	//コンストラクタ
@@ -20,19 +19,19 @@ public:
 	~UIStateMachine() override;
 
 	//初期化
-	void Initialize(CommonResources* resources, IState* startState  =nullptr) ;
+	void Initialize(CommonResources* resources, IUIState* startState  =nullptr) ;
 	// 更新する
 	void Update(const float& elapsedTime) override;
 	//描画
-	void Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection) override;
+	void Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection) ;
 	//状態の変更
-	void ChangeState(IState* nextState) override;
+	void ChangeState(IUIState* nextState) ;
 
 
 	//必要なポインタの登録
-	void AddPointer(PlayScene* playScene, EnemyManager* enemyManager);
+	void AddPointer(PlayScene* playScene);
 	//現在の状態の取得
-	IState* GetCurrentState() { return m_currentState; }
+	IUIState* GetCurrentState() { return m_currentState; }
 	//
 	GamePlayUI* GetGamePlayUI() { return m_playUi.get(); }
 	//
@@ -44,7 +43,7 @@ public:
 
 private:
 	//現在の状態
-	IState* m_currentState;
+	IUIState* m_currentState;
 	//通常状態
 	std::unique_ptr<GamePlayUI> m_playUi;
 	//クリア

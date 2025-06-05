@@ -4,21 +4,17 @@
 #include "DeviceResources.h"
 #include "Libraries/MyLib/InputManager.h"
 
-#include "Libraries/WataLib/Camera/TPS_Camera.h"
 #include "Game/Player/Player.h"
 #include "Game/Player/State/PlayerStateMachine.h"
 #include "Game/Weapon/Boomerang/State/BoomerangStateMachine.h"
-#include "Game/Enemys/EnemyManager.h"
 #include "Game/Observer/Messenger.h"
 #include "Libraries/WataLib/DamageCountUI.h"
 #include "Libraries/WataLib/GameResources.h"
 #include "Game/Params.h"
 #include "Game/InstanceRegistry.h"
 #include "Game/UI/ThrowQuantity.h"
+#include "Game/UI/BossEnemyHP.h"
 
-
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
 
 /// <summary>
 /// コンストラクタ
@@ -35,11 +31,8 @@ GamePlayUI::GamePlayUI()
 	,m_windowSize{}
 	,m_playerHPCount{}
 	,m_boomerangCount{}
-	,m_enemyHP{}
-	,m_enemyHPBase{}
 	, m_itemAcquisitionUI{}
 	,m_throwUI{}
-	,m_enemyManager{}
 	,m_throwQuantityUI{}
 {
 
@@ -73,17 +66,7 @@ void GamePlayUI::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::
 		m_boomerang[i]->Render();
 	}
 
-	if (m_enemyManager->GetBossEnemy() != nullptr)
-	{
-		for (auto& enemyHP : m_enemyHPBase)
-		{
-			enemyHP->Render();
 
-		}
-
-		m_enemyHP->Render();
-
-	}
 
 	for (auto& throwUI : m_throwUI)
 	{
@@ -102,16 +85,7 @@ void GamePlayUI::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::
 }
 
 
-/// <summary>
-/// 必要なポインタの追加
-/// </summary>
-/// <param name="player">プレイヤ</param>
-/// <param name="enemyManager">エネミーマネージャー</param>
-void GamePlayUI::AddPointer(EnemyManager* enemyManager)
-{
 
-	m_enemyManager = enemyManager;
-}
 
 /// <summary>
 /// 画像の追加
@@ -137,30 +111,6 @@ std::unique_ptr<UserInterface> GamePlayUI::AddTexture(std::string key, DirectX::
 	return userInterface;
 }
 
-/// <summary>
-/// 敵HPの作成
-/// </summary>
-void GamePlayUI::CreateEnemyHP()
-{
-
-	m_enemyHPBase.push_back(AddTexture("BossHPBase"
-		, ENEMY_HP_BASE_POSITION
-		, ENEMY_HP_BASE_SCALE
-		));
-
-	m_enemyHP = AddTexture("EnemyHP"
-		, ENEMY_HP_POSITION
-		, ENEMY_HP_SCALE
-		);
-
-	m_enemyHPBase.push_back(AddTexture("EnemyName"
-		, ENEMY_NAME_POSITION
-		, ENEMY_NAME_SCALE
-		));
-
-
-
-}
 
 /// <summary>
 /// プレイヤHPの作成
@@ -246,7 +196,6 @@ void GamePlayUI::Initialize(CommonResources* resources)
 
 	CreatePlayerHP();
 	CreateBoomerang();
-	CreateEnemyHP();
 
 	m_itemAcquisitionUI = AddTexture("F"
 		, Vector2(750, 600)
@@ -290,10 +239,12 @@ void GamePlayUI::Initialize(CommonResources* resources)
 	Messenger::GetInstance()->Rigister(GamePlayMessageType::BOOMERANG_NOT_RECOVERBLE, this);
 
 	Messenger::GetInstance()->Rigister(GamePlayMessageType::CREATE_HIT_EFFECT, this);
-	Messenger::GetInstance()->Rigister(GamePlayMessageType::CHANGE_THROW_COUNT, this);
 
-	m_throwQuantityUI = std::make_unique<ThrowQuantity>(m_commonResources, Vector2::Zero, Vector2::Zero);
+	m_throwQuantityUI = std::make_unique<ThrowQuantity>(m_commonResources);
 	m_throwQuantityUI->Initialize();
+
+	m_bossEnemyHP = std::make_unique<BossEnemyHP>(m_commonResources);
+	m_bossEnemyHP->Initialize();
 
 
 }
@@ -306,17 +257,13 @@ void GamePlayUI::Initialize(CommonResources* resources)
 void GamePlayUI::Update(const float& elapsedTime)
 {
 
-	if (m_enemyManager->GetBossEnemy() != nullptr)
-	{
-		m_enemyHP->SetRenderRatio(m_enemyManager->GetBossHPRation());
-
-	}
 
 
 	for (auto& da : m_damageCountUI)
 	{
 		da->Update(elapsedTime);
 	}
+
 
 }
 
@@ -348,14 +295,23 @@ void GamePlayUI::Notify(const Telegram<GamePlayMessageType>& telegram)
 	switch (telegram.messageType)
 	{
 		case GamePlayMessageType::BOOMERANG_THTROW:
-			m_boomerangCount--;
+		{
+
+			int value = *static_cast<int*>(telegram.extraInfo);
+			m_boomerangCount-= value;
 
 			m_boomerangCount = std::max(m_boomerangCount, 0);
-
+		}
 			break;
 		case GamePlayMessageType::GET_BOOMERANG:
-			m_boomerangCount++;
+		{
+
+			int value = *static_cast<int*>(telegram.extraInfo);
+			m_boomerangCount+= value;
 			m_boomerangCount = std::min(m_boomerangCount, Params::BOOMERANG_MAX_COUNT);
+
+		}
+
 
 			break;
 		case GamePlayMessageType::PLAYER_DAMAGE:
@@ -396,10 +352,6 @@ void GamePlayUI::Notify(const Telegram<GamePlayMessageType>& telegram)
 			break;
 		case GamePlayMessageType::CREATE_HIT_EFFECT:
 			CreateDamageUI(telegram.extraInfo);
-			break;
-		case GamePlayMessageType::CHANGE_THROW_COUNT:
-
-			
 			break;
 		default:
 			break;

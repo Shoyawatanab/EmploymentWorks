@@ -40,7 +40,7 @@ WalkingActionComtroller::WalkingActionComtroller(CommonResources* resources
 {
 	//Šeó‘Ô‚Ìì¬
 	m_walkingAction = std::make_unique<WalkingAction>(m_commonResources,m_own,m_target);
-	m_orientation = std::make_unique<OrientationAction>(m_commonResources, m_own, m_target);
+	//m_orientation = std::make_unique<OrientationAction>(m_commonResources, m_own, m_target);
 
 	//“®ì‡‚É’Ç‰Á
 	ActionStateController::Initialize({ 

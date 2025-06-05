@@ -3,7 +3,7 @@
 	@brief	タイトルシーンクラス
 */
 #pragma once
-#include "IScene.h"
+#include "GameBase/Scene/Scene.h"
 #include "Game/Scene/SceneManager.h"
 #include "Libraries/WataLib/UserInterface.h"
 
@@ -14,8 +14,7 @@ class CommonResources;
 
 
 
-class StageSelectScene final :
-    public IScene
+class StageSelectScene  :  public Scene
 {
 public:
 	static constexpr int BUTTOM_INIAL_ID{ -1000 };
@@ -25,12 +24,19 @@ public:
     StageSelectScene(SceneManager* sceneManager);
     ~StageSelectScene() override;
 
-    void Initialize(CommonResources* resources) override;
-    void Update(float elapsedTime)override;
-    void Render() override;
+	Camera* GetCamera() const { return nullptr; };
+
+
+
+
+public:
+
+    void Initialize() override;
+    void SceneUpdate(float elapsedTime)override;
+    void SceneRender() override;
     void Finalize() override;
 
-    SceneID GetNextSceneID() const;
+	SceneID GetSceneID() const override { return SceneID::STAGESELECT; }
 
 private:
 	// 共通リソース

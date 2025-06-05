@@ -54,15 +54,7 @@ void BarrierStateMachine::Update(const float& elapsedTime)
 	m_currentState->Update(elapsedTime);
 }
 
-/// <summary>
-/// 描画処理
-/// </summary>
-/// <param name="view">ビュー行列</param>
-/// <param name="projection">射影行列</param>
-void BarrierStateMachine::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
-{
-	m_currentState->Render(view, projection);
-}
+
 
 /// <summary>
 /// ステートの切り替え

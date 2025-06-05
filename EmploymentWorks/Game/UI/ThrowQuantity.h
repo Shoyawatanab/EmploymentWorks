@@ -30,9 +30,7 @@ public:
 
 public:
 	//コンストラクタ
-	ThrowQuantity(CommonResources* resources,
-		const DirectX::SimpleMath::Vector2& scale,
-		const DirectX::SimpleMath::Vector2& position);
+	ThrowQuantity(CommonResources* resources);
 	//デストラクタ
 	~ThrowQuantity();
 

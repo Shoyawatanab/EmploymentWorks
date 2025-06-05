@@ -4,7 +4,7 @@
 
 #include "pch.h"
 #include "Game.h"
-#include "Game/Screen.h"
+#include "GameBase/Screen.h"
 #include "Game/Scene/SceneManager.h"
 
 extern void ExitGame() noexcept;
@@ -18,7 +18,6 @@ Game::Game() noexcept(false)
     m_deviceResources{},
     m_timer{},
     m_commonStates{},
-    m_commonResources{},
     m_debugString{},
     m_inputManager{},
     m_sceneManager{}
@@ -72,11 +71,9 @@ void Game::Initialize(HWND window, int width, int height)
         L"Resources/Fonts/SegoeUI_18.spritefont"
     );
 
-    // 共通リソースを作成する
-    m_commonResources = std::make_unique<CommonResources>();
 
     // シーンへ渡す共通リソースを設定する
-    m_commonResources->Initialize(
+    CommonResources::GetInstance()->Initialize(
         &m_timer,
         m_deviceResources.get(),
         m_commonStates.get(),
@@ -87,13 +84,11 @@ void Game::Initialize(HWND window, int width, int height)
         ,m_gameResources.get()
     );
 
-    m_score->Initialize(m_commonResources.get());
+    m_score->Initialize(CommonResources::GetInstance());
 
     // シーンマネージャを初期化する
     m_sceneManager = std::make_unique<SceneManager>();
-    m_sceneManager->Initialize(m_commonResources.get());
-
-    m_timer.SetFixedTimeStep(true);
+    m_sceneManager->Initialize(CommonResources::GetInstance());
 
     m_soundManager = SoundManager::GetInstance();
     m_soundManager->Initialize();

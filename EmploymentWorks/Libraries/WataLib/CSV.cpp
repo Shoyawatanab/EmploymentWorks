@@ -4,7 +4,7 @@
 */
 #include "pch.h"
 #include "CSV.h"
-#include "Game/Screen.h"
+#include "GameBase/Screen.h"
 #include "Game/CommonResources.h"
 #include "DeviceResources.h"
 #include "Libraries/MyLib/MemoryLeakDetector.h"

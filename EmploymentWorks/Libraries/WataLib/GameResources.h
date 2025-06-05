@@ -3,6 +3,8 @@
 
 #include "Libraries/WataLib/Singleton.h"
 
+
+
 namespace FMOD
 {
 	class Sound;
@@ -60,7 +62,8 @@ namespace WataLib
 
 		std::unordered_map<std::string, FMOD::Sound*> m_soundList;
 
-
-
 	};
 }
+
+
+

@@ -1,35 +1,64 @@
 #include "pch.h"
 #include "PlayerBody.h"
-#include "Game/CommonResources.h"
-#include "DeviceResources.h"
-#include "Libraries/WataLib/GameResources.h"
-#include "Libraries/WataLib/Animation.h"
-
-#include "Game/Player/PlayerParts/PlayerHead.h"
-#include "Game/Player/PlayerParts/PlayerLeftArm.h"
-#include "Game/Player/PlayerParts/PlayerRightArm.h"
-#include "Game/Player/PlayerParts/PlayerLeftFeet.h"
-#include "Game/Player/PlayerParts/PlayerRightFeet.h"
-#include "Game/CollisiionManager.h"
+#include "GameBase/Scene/Scene.h"
+#include "GameBase/Component/Components.h"
+#include "Game/Player/PlayerPartss.h"
 #include "Game/Params.h"
 
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
-/// <param name="resources">共通リソース</param>
-/// <param name="parent">親</param>
-/// <param name="scale">大きさ</param>
-/// <param name="position">座標</param>
-/// <param name="rotation">回転</param>
-PlayerBody::PlayerBody(CommonResources* resources
-	,CharacterEntity* parent
-	, const DirectX::SimpleMath::Vector3& scale
-	, const DirectX::SimpleMath::Vector3& position
-	, const DirectX::SimpleMath::Quaternion& rotation)
+/// <param name="scene">シーン</param>
+PlayerBody::PlayerBody(Scene* scene)
 	:
-	PlayerPartsBase(resources, parent ,PARTSNAME,scale,position,rotation)
+	PlayerParts(scene, PARTS_NAME,"PlayerBody")
 {
+
+	//位置情報
+	GetTransform()->Translate(Params::PLAYER_BODY_POSITION);
+	//大きさ
+	GetTransform()->SetScale(Params::PLAYER_BODY_SCALE);
+	//回転
+	GetTransform()->SetRotate(Params::PLAYER_BODY_ROTATION);
+
+
+	//Headの作成
+	auto head = GetScene()->AddActor<PlayerHead>(GetScene());
+	//親の登録
+	//head->GetTransform()->SetParent(GetTransform());
+	head->SetParent(this);
+
+	//LeftArmの作成
+	auto leftArm = GetScene()->AddActor<PlayerLeftArm>(GetScene());
+	//親の登録
+	//leftArm->GetTransform()->SetParent(GetTransform());
+	leftArm->SetParent(this);
+
+	//RightArmの作成
+	auto rightArm = GetScene()->AddActor<PlayerRightArm>(GetScene());
+	//親の登録
+	//rightArm->GetTransform()->SetParent(GetTransform());
+	rightArm->SetParent(this);
+
+
+	//LeftFeetの作成
+	auto leftfeet = GetScene()->AddActor<PlayerLeftFeet>(GetScene());
+	//親の登録
+	//leftfeet->GetTransform()->SetParent(GetTransform());
+	leftfeet->SetParent(this);
+
+
+	//rightFeetの作成
+	auto rightfeet = GetScene()->AddActor<PlayerRightFeet>(GetScene());
+	//親の登録
+	//rightfeet->GetTransform()->SetParent(GetTransform());
+	rightfeet->SetParent(this);
+
+
+	DirectX::SimpleMath::Vector3 pos = GetTransform()->GetPosition();
+
+
 }
 
 /// <summary>
@@ -39,54 +68,5 @@ PlayerBody::~PlayerBody()
 {
 }
 
-/// <summary>
-/// 初期化
-/// </summary>
-void PlayerBody::Initialize()
-{
 
-
-	//// モデルを読み込む準備
-	auto model = PlayerPartsBase::GetCommonResources()->GetGameResources()->GetModel("PlayerBody");
-
-	PlayerPartsBase::SetModel(model);
-
-	PlayerPartsBase::Initialize();
-
-	//「Head」を生成する
-	AddChild(std::make_unique<PlayerHead>(BaseEntity::GetCommonResources(),
-		this, 
-		Params::PLAYER_HEAD_SCALE, 
-		Params::PLAYER_HEAD_POSITION,
-		Params::PLAYER_HEAD_ROTATION));
-	//「LeftArm」を生成する
-	AddChild(std::make_unique<PlayerLeftArm>(BaseEntity::GetCommonResources(),
-		this,
-		Params::PLAYER_LEFRARM_SCALE,
-		Params::PLAYER_LEFRARM_POSITION,
-		Params::PLAYER_LEFRARM_ROTATION));
-
-	//「RightArm」を生成する
-	AddChild(std::make_unique<PlayerRightArm>(BaseEntity::GetCommonResources(),
-		this,
-		Params::PLAYER_RIGHTARM_SCALE,
-		Params::PLAYER_RIGHTARM_POSITION,
-		Params::PLAYER_RIGHTARM_ROTATION));
-
-	//「LeftFeet」を生成する
-	AddChild(std::make_unique<PlayerLeftFeet>(BaseEntity::GetCommonResources(),
-		this,
-		Params::PLAYER_LEFRFEET_SCALE,
-		Params::PLAYER_LEFRFEET_POSITION,
-		Params::PLAYER_LEFRFEET_ROTATION));
-
-	//「RightFeet」を生成する
-	AddChild(std::make_unique<PlayerRightFeet>(BaseEntity::GetCommonResources(),
-		this, 
-		Params::PLAYER_RIGHTFEET_SCALE, 
-		Params::PLAYER_RIGHTFEET_POSITION,
-		Params::PLAYER_RIGHTFEET_ROTATION));
-
-
-}
 

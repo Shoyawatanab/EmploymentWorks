@@ -4,7 +4,6 @@
 #include "DeviceResources.h"
 #include "Libraries/MyLib/InputManager.h"
 
-#include "Libraries/WataLib/Camera/TPS_Camera.h"
 #include "Game/Player/Player.h"
 #include "Game/Player/State/PlayerStateMachine.h"
 #include "Game/Observer/Messenger.h"
@@ -110,10 +109,10 @@ void PlayerUsually::Rotation(const float& elapsedTime, DirectX::SimpleMath::Vect
 	else
 	{
 
-		Quaternion rotation = m_tpsCamera->GetRotationX();
+		//Quaternion rotation = m_tpsCamera->GetRotationX();
 
 
-		m_palyer->SetRotation(rotation);
+		//m_palyer->SetRotation(rotation);
 
 	}
 }
@@ -176,7 +175,7 @@ void PlayerUsually::Update(const float& elapsedTime)
 	}
 
 	//ƒJƒƒ‰‚ÌŒü‚¢‚Ä‚¢‚é•ûŒü‚ð‚à‚Æ‚É‰ñ“]
-	moveDirection = Vector3::Transform(moveDirection, m_tpsCamera->GetRotationX());
+	//moveDirection = Vector3::Transform(moveDirection, m_tpsCamera->GetRotationX());
 	moveDirection.Normalize();
 
 	//“®‚«

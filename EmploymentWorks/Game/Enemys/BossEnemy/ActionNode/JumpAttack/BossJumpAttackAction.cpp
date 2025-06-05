@@ -16,7 +16,7 @@
 #include "Game/Params.h"
 #include "Game/Observer/Messenger.h"
 
-#include "Game/Enemys/BossEnemy/BossEnemy.h"
+#include "Game/Enemies/BossEnemy/BossEnemy.h"
 #include "Game/Enemys/BossEnemy/Beam/Beam.h"
 #include "BossJumpAttackAction.h"
 
@@ -41,7 +41,7 @@ BossJumpAttackAction::BossJumpAttackAction(CommonResources* resources
 	//Šeó‘Ô‚ğì¬
 	m_charge = std::make_unique<BossJumpAttackCharge>(resources,this,bossenemy,player);
 	m_jump = std::make_unique<BossJumpAttackJump>(resources, this, bossenemy, player);
-	m_orientation = std::make_unique<OrientationAction>(resources,  bossenemy, player);
+	//m_orientation = std::make_unique<OrientationAction>(resources,  bossenemy, player);
 
 
 	//m_currentState->Enter();

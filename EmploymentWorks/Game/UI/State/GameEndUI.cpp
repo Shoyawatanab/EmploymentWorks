@@ -4,7 +4,6 @@
 #include "DeviceResources.h"
 #include "Libraries/MyLib/InputManager.h"
 
-#include "Libraries/WataLib/Camera/TPS_Camera.h"
 #include "Game/Player/Player.h"
 #include "Game/Player/State/PlayerStateMachine.h"
 #include "Game/Weapon/Boomerang/State/BoomerangStateMachine.h"
@@ -263,7 +262,7 @@ void GameEndUI::Update(const float& elapsedTime)
 				//m_playScene->SetNextSceneID(PlayScene::SceneID::TITLE);
 
 				{
-					auto nextSceneID = IScene::SceneID::TITLE;
+					auto nextSceneID = Scene::SceneID::TITLE;
 
 					Messenger::GetInstance()->Notify(GamePlayMessageType::NEXT_SCENE, &nextSceneID);
 				}
@@ -273,7 +272,7 @@ void GameEndUI::Update(const float& elapsedTime)
 				//m_playScene->SetNextSceneID(PlayScene::SceneID::PLAY);
 				
 			{
-				auto nextSceneID = IScene::SceneID::PLAY;
+				auto nextSceneID = Scene::SceneID::PLAY;
 
 				Messenger::GetInstance()->Notify(GamePlayMessageType::NEXT_SCENE, &nextSceneID);
 			}

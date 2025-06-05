@@ -3,6 +3,7 @@
 	@brief	シーンへ渡す、ゲーム内で使用する共通リソース
 */
 #pragma once
+#include "Libraries/WataLib/Singleton.h"
 
 class Fade;
 class Score;
@@ -25,8 +26,10 @@ namespace WataLib
 }
 
 // 共通リソース
-class CommonResources
+class CommonResources : public Singleton<CommonResources>
 {
+	friend class Singleton<CommonResources>;
+
 private:
 	// 受け渡しするリソース一覧
 	DX::StepTimer* m_stepTimer;

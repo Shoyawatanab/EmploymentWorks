@@ -2,34 +2,24 @@
 * プレイヤの左腕クラス
 */
 #pragma once
-#include "Game/Player/PlayerPartsBase.h"
+#include "Game/Player/PlayerParts.h"
 
-namespace WataLib
-{
-	class Animation;
-}
+
 
 
 // 「砲塔」クラスを定義する
-class PlayerLeftArm : public PlayerPartsBase
+class PlayerLeftArm : public PlayerParts
 {
 private:
 	//パーツ名
-	static constexpr const char PARTSNAME[] = "LeftArm";
+	static constexpr const char PARTS_NAME[] = "LeftArm";
 
 public:
 	//コンストラクタ
-	PlayerLeftArm(CommonResources* resources, 
-		CharacterEntity* parent
-		, const DirectX::SimpleMath::Vector3& scale
-		, const DirectX::SimpleMath::Vector3& position
-		, const DirectX::SimpleMath::Quaternion& rotation);
+	PlayerLeftArm(Scene* scene);
 	//デストラクタ
 	~PlayerLeftArm() override;
 
-
-	//初期化
-	void Initialize() override;
 
 
 };

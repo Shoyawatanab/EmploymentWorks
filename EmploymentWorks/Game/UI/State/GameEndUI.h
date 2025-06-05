@@ -3,7 +3,7 @@
 */
 #pragma once
 #include <unordered_map>
-#include "Game/Interface/IState.h"
+#include "Game/Interface/IUIState.h"
 
 //‘O•ûéŒ¾
 class Player;
@@ -12,7 +12,7 @@ class PlayScene;
 
 
 
-class GameEndUI : public IState
+class GameEndUI : public IUIState
 {
 private :
 

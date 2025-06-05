@@ -14,20 +14,6 @@ class UIBaseEntity
 public:
 	//共通リソース
 	CommonResources* GetCommonResources() { return m_commonResources; }
-	//座標の取得
-	const DirectX::SimpleMath::Vector2& GetPosition() { return m_position ; };
-	//座標の設定
-	void SetPosition(const DirectX::SimpleMath::Vector2& position) 
-	{ 
-		m_position = position;  
-	};
-	//大きさの取得
-	const DirectX::SimpleMath::Vector2& GetScale() { return m_scale; };
-	//大きさの設定
-	void SetScale(const DirectX::SimpleMath::Vector2& scale) 
-	{ 
-		m_scale = scale; 
-	};
 
 	//オブジェクトが有効かどうかの登録　true:有効  false:無効
 	void SetIsEntityActive(const bool& isActive) { m_isEntityActive = isActive;  if(m_isEntityActive)OnEnable(); else OnDisable(); }
@@ -50,10 +36,7 @@ public:
 
 public:
 	//コンストラクタ
-	UIBaseEntity(CommonResources* resources,
-				const DirectX::SimpleMath::Vector2&    scale, 
-		        const DirectX::SimpleMath::Vector2&    position
-		       ) ;
+	UIBaseEntity(CommonResources* resources) ;
 
 	//デストラクタ
 	virtual ~UIBaseEntity();
@@ -75,11 +58,6 @@ private:
 	bool m_isUpdateActive;
 	//描画が有効かどうか　true:有効  false:無効
 	bool m_isRenderActive;
-
-	//座標
-	DirectX::SimpleMath::Vector2 m_position;
-	//大きさ
-	DirectX::SimpleMath::Vector2 m_scale;
 
 };
 

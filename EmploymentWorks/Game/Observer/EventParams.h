@@ -25,7 +25,7 @@ enum class GamePlayMessageType
 	,CAMERA_SHAKE  //カメラを揺らす
 	,NEXT_SCENE  //次のシーンに
 	,CHANGE_THROW_COUNT                      //ブーメランをまとめてなげるかどうかの切り替え
-
+	, BOSS_DAMAGE                            //ボスへのダメージ
 
 };
 
@@ -40,6 +40,13 @@ enum class EnemyMessageType
 	, BEAM_ATTACK	    //ビーム攻撃
 	, SWING_DOWN	    //振り下ろし攻撃
 	, MOVEING           //動く
+};
+
+enum  class PlayerMessageType
+{
+	NONE
+	, IDLING            //通常状態
+	, ATTACK           //攻撃
 };
 
 //パーツの通知の種類　敵　プレイヤなど混合　分けたい

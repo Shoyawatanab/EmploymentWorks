@@ -3,15 +3,13 @@
 	@brief	プレイシーンクラス
 */
 #pragma once
-#include "IScene.h"
+#include "GameBase/Scene/Scene.h"
 #include "SceneManager.h"
 #include "Game/Interface/IObserver.h"
 
 // 前方宣言
-class CommonResources;
 class StageObjectManager;
 class Player;
-class EnemyManager;
 class CollisionManager;
 class UIManager;
 class TargetMarker;
@@ -31,34 +29,41 @@ namespace WataLib
 	class CameraManager;
 }
 
-class PlayScene final :
-    public IScene ,public IObserver<GamePlayMessageType>
+class PlayScene  :  public Scene ,public IObserver<GamePlayMessageType>
 {
+public:
+
+	Camera* GetCamera() const  override { return m_camera; };
+
+
 public:
 	//コンストラクタ
 	PlayScene(SceneManager::StageID stageID);
 	//デストラクタ
 	~PlayScene() override;
 
-	//初期化
-	void Initialize(CommonResources* resources) override;
-	//更新
-	void Update(float elapsedTime)override;
-	//描画
-	void Render() override;
+
+
+
+private:
+
+	Camera* m_camera;
+	
+
+
+public:
+
+	void Initialize() override;
+	void SceneUpdate(float elapsedTime)override;
+	void SceneRender() override;
 
 	void Finalize() override;
 	
-	//シーン切り替え
-	SceneID GetNextSceneID() const;
+	SceneID GetSceneID() const override { return SceneID::PLAY; }
 
 	void SetNextSceneID(SceneID ID) { m_nextScene = ID; }
 
 private:
-	//ステージを作成
-	void CreateStageObject();
-	//マウスホイールのチェック
-	void CheckMouseWheel();
 
 
 	//通知時に呼び出される
@@ -66,43 +71,13 @@ private:
 
 
 private:
-	// 共通リソース
-	CommonResources* m_commonResources;
 
-	//プレイヤ
-	std::unique_ptr<Player> m_player;
-	//ステージオブジェクトマネージャー
-	std::unique_ptr<StageObjectManager> m_stageObjectManager;
-	//
-	std::unique_ptr<EnemyManager> m_enemyManager;
-	//カメラマネージャー
-	std::unique_ptr<WataLib::CameraManager> m_cameraManager;
-	//当たり判定マネージャー
-	std::unique_ptr<CollisionManager> m_collisionManager;
-	//UIマネージャー
-	std::unique_ptr<UIManager> m_uiManager;
-	//ターゲットマーカー
-	std::unique_ptr<TargetMarker> m_targetMarker;
-	//エフェクトマイクロソフト
-	std::unique_ptr<EffectsManager> m_effectsManager;
-	SceneManager::StageID m_stageID;
-
-	//チュートリアル画像
-	std::unique_ptr<UserInterface> m_tutorialTex;
-
-	std::unique_ptr<Sky> m_sky;
-
-	
-	// 射影行列
-	DirectX::SimpleMath::Matrix m_projection;
 
 	// シーンチェンジフラグ
 	bool m_isChangeScene;
 	//次のシーン
 	SceneID m_nextScene;
 
-	bool m_isTutolialTex;
 
-	SoundManager* m_soundManager;
 
 };

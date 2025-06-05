@@ -13,7 +13,7 @@
 #include "Libraries/MyLib/MemoryLeakDetector.h"
 #include <cassert>
 
-#include "Game/Enemys/BossEnemy/BossEnemy.h"
+#include "Game/Enemies/BossEnemy/BossEnemy.h"
 #include "Game/Player/Player.h"
 #include "Game/Enemys/BossEnemy/ActionNode/RushAttack/BossRushAttackAction.h"
 
@@ -82,19 +82,19 @@ BossRushAttackCharge::ActionState BossRushAttackCharge::Update(const float& elap
 void BossRushAttackCharge::Enter()
 {
 
-	m_bossEnemy->ChangeAnimation("JumpCharge");
-	m_time = 0;
+	//m_bossEnemy->ChangeAnimation("JumpCharge");
+	//m_time = 0;
 
-	Vector3 pos = m_bossEnemy->GetPosition();
+	//Vector3 pos = m_bossEnemy->GetPosition();
 
-	pos.y = 0.1f;
+	//pos.y = 0.1f;
 
-	Vector3 scale = EFFECTE_SCALE;
+	//Vector3 scale = EFFECTE_SCALE;
 
 
-	UnknownDataThree aa = { static_cast<void*>(&pos), static_cast<void*>(&scale) };
+	//UnknownDataThree aa = { static_cast<void*>(&pos), static_cast<void*>(&scale) };
 
-	Messenger::GetInstance()->Notify(GamePlayMessageType::CREATE_CHAGE_EFFECT, &aa);
+	//Messenger::GetInstance()->Notify(GamePlayMessageType::CREATE_CHAGE_EFFECT, &aa);
 
 
 }

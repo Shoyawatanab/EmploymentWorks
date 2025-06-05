@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "CharacterEntity.h"
 #include "Libraries/WataLib/Bounding.h"
-#include "Game/CollisiionManager.h"
+#include "GameBase/Manager/CollisiionManager.h"
 #include "Libraries/WataLib/Animation.h"
 
 

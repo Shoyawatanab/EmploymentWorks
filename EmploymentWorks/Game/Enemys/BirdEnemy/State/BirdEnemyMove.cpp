@@ -85,23 +85,13 @@ void BirdEnemyMove::Update(const float& elapsedTime)
 	{
 		m_birdEnemy->GetPlayerStateMachine()->ChangeState(m_birdEnemy->GetPlayerStateMachine()->GetBirdEnemyldling());
 
-		Messenger::GetInstance()->Notify(m_birdEnemy->GetID(), EnemyMessageType::IDLING);
+		Messenger::GetInstance()->Notify<EnemyMessageType>(m_birdEnemy->GetID(), EnemyMessageType::IDLING);
 
 	}
 
 }
 
-/// <summary>
-/// 描画
-/// </summary>
-/// <param name="view">ビュー行列</param>
-/// <param name="projection">射影行列</param>
-void BirdEnemyMove::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
-{
-	UNREFERENCED_PARAMETER(view);
-	UNREFERENCED_PARAMETER(projection);
 
-}
 
 /// <summary>
 /// 状態に入った時

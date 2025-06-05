@@ -50,12 +50,7 @@ void BoomerangDrop::Update(const float& elapsedTime)
 
 }
 
-void BoomerangDrop::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
-{
-	UNREFERENCED_PARAMETER(view);
-	UNREFERENCED_PARAMETER(projection);
 
-}
 
 /// <summary>
 /// èÛë‘Ç…ì¸Ç¡ÇΩéû

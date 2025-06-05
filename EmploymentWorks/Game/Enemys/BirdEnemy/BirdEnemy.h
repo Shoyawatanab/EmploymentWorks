@@ -5,7 +5,6 @@
 #pragma once
 #include "Game/Entities/EnemyEntity.h"
 #include "Libraries/WataLib/Json.h"
-#include "Game/Enemys/EnemyManager.h"
 #include "Game/Interface/IObserver.h"
 
 #include "Game/Observer/Messenger.h"
@@ -15,7 +14,6 @@
 
 // ‘O•ûéŒ¾
 class CommonResources;
-class EnemyManager;
 class Player;
 class BirdEnemyBeam;
 
