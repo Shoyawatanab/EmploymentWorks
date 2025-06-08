@@ -1,8 +1,8 @@
 {
-	"AnimationType" : "GetReady",
-	"AnimationTime"  : 4.0,
+	"AnimationType" : "Throw",
+	"AnimationTime"  : 1.0,
 	"AnimationSpeed" : 1.0,
-	"Loop": true,
+	"Loop": false,
 	"KeyFrame" :
 	[
 		{
@@ -20,13 +20,13 @@
 			]
 		},
 		{
-			"FreamTime" : 4.0 ,
+			"FreamTime" : 1.0 ,
 			"Parts" : 
 			[
 				{
 					"PartName" : "RightArm",
 					"Rotation" :{ 
-						"x" : 200.0,
+						"x" : 360.0,
 						"y" : 0.0,
 						"z" : 0.0
 					}

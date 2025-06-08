@@ -189,6 +189,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameBase\Actor.h" />
     <ClInclude Include="GameBase\Animation\Animation2.h" />
+    <ClInclude Include="GameBase\Animation\Animator.h" />
     <ClInclude Include="GameBase\Animation\AnimationController.h" />
     <ClInclude Include="GameBase\Camera\Camera.h" />
     <ClInclude Include="GameBase\Component.h" />
@@ -411,6 +412,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameBase\Actor.cpp" />
     <ClCompile Include="GameBase\Animation\Animation2.cpp" />
+    <ClCompile Include="GameBase\Animation\Animator.cpp" />
     <ClCompile Include="GameBase\Animation\AnimationController.cpp" />
     <ClCompile Include="GameBase\Camera\Camera.cpp" />
     <ClCompile Include="GameBase\Component.cpp" />

@@ -1,7 +1,11 @@
+/*
+複数のアニメーターを管理するクラス
+*/
 #pragma once
 #include <unordered_map>
 
-class Animation2;
+class Animator;
+class Actor;
 
 class AnimationController
 {
@@ -9,7 +13,8 @@ public:
 	//アニメーションの実行状態
 	enum class ExecutionState
 	{
-		NONE        //通常
+		NONE        
+		,PLAY       //通常再生
 		,TRIIGER	//１回だけ実行
 		,FLOAT		//
 	};
@@ -21,6 +26,22 @@ public:
 		, BIDIRECTIONAL      //双方向
 	};
 
+	enum  class FloatState
+	{
+		Greater   //大きい
+		,Less	  //小さい
+	};
+
+
+
+	struct FloatParameter
+	{
+		std::string  FromName;
+		std::string  ToName;
+		FloatState   State;
+		float        Value;
+	};
+
 public:
 	//コンストラクタ
 	AnimationController();
@@ -30,30 +51,61 @@ public:
 	void Update(const float& deltaTime);
 
 	//アニメーションの追加
-	void AddAnimatoin(std::unique_ptr<Animation2> animatino);
+	void AddAnimatoin(Actor* owner,std::string animationName, std::string filePath,std::vector<std::pair<std::string,Actor*>>, bool isNormal = false);
+	//トリガー状態遷移フローの作成
+	void CreateTriggerTransition(const std::string& fromAnimationName,const std::string& toAnimationName , const std::string& connectionName);
+	//Float状態遷移フローの作成
+	void CreateFloatTransition(const std::string& fromAnimationName, const std::string& toAnimationName, const std::string& connectionName,const float& value, FloatState state);
+	//AnyStateからのトリガー状態遷移フローの作成 
+	void CreateAnyStateToTriggerTransition(const std::string& toAnimationName, const std::string& connectionName);
+	//AnyStateからのFloat状態遷移フローの作成
+	void CreateAnyStateToFloatTransition(const std::string& toAnimationName, const std::string& connectionName, const float& value, FloatState state);
+	//遷移パラメーターの作成    状態遷移名　状態
+	void CrateTransitionParameter(std::unordered_map<std::string, ExecutionState> parameters) { m_transitionParamter = parameters; };
+
+
+	//アニメーションの再生
+	void Play(const std::string& animationName);
+
 	//アニメーションの切り替え
-	void SetTrigger(std::string animationName);
+	void SetTrigger(const std::string& connectionName);
 	//アニメーションの切り替え　対よりも大きい場合のみ変更
-	void SetFloat(std::string animationName,float value);
-	//状態遷移フローの作成
-	void CreateTransitionFlow(std::string state1, std::string state2,TransitionState transitionState);
+	void SetFloat(const std::string& connectionName,const float& value);
+
 private:
 
 	//状態遷移リストに追加
 	void AddTransitionList(std::string state1, std::string state2);
+	//アニメーションの切り替えを行ってもいいか　true: よい  false:ダメ
+	bool IsChangeAnimation(const std::string& animationName);
+	//遷移名がパラメーターにあるか
+	bool IsFindParameter(const std::string& connectionName);
+	//トリガーの実行ができるかの判定
+	bool CheckTrigger(const std::string& connectionName);
+	//Floatの実行ができるかの判定
+	bool CheckFloat(const std::string& connectionName,const float& value);
 
+	//アニメーションの切り替え
+	void ChangeAnimation(Animator* animatior);
 private:
 
-	//デフォルトアニメーション
-
 	//実行アニメーション
-	Animation2* m_currentAnimation;
+	Animator* m_currentAnimation;
+	//通常アニメーション
+	Animator* m_normalAnimation;
 	//アニメーションの格納変数
-	std::vector<std::unique_ptr<Animation2>> m_animations;
+	std::unordered_map<std::string , std::unique_ptr<Animator>> m_animations;
 
 	//状態遷移の保存
 	std::unordered_map<std::string,std::vector<std::string>> m_stateTransitionList;
 
-
+	//実行状態
+	ExecutionState m_state;
+	//遷移パラメーター
+	std::unordered_map<std::string, ExecutionState> m_transitionParamter;
+	//トリガー遷移リスト
+	std::unordered_map<std::string, std::pair<std::string, std::string>> m_triggerTransitionList;
+	//フロート遷移リスト
+	std::unordered_map<std::string, FloatParameter> m_floatTransitionList;
 
 };

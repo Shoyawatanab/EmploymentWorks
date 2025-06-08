@@ -2,7 +2,7 @@
 	"AnimationType" : "Move",
 	"AnimationTime"  : 4.0,
 	"AnimationSpeed" : 1.0,
-	"Loop": true,
+	"Loop": false,
 	"KeyFrame" :
 	[
 		{
