@@ -748,9 +748,10 @@
     <ClInclude Include="GameBase\Model\ModelBase.h" />
     <ClInclude Include="Game\Player\Animation\PlayerAnimationController.h" />
     <ClInclude Include="GameBase\Animation\AnimationController.h" />
-    <ClInclude Include="GameBase\Animation\Animation2.h" />
+    <ClInclude Include="GameBase\Animation\Animator.h" />
     <ClInclude Include="Game\JsonPahtData.h" />
     <ClInclude Include="Game\Player\Model\PlayerModel.h" />
+    <ClInclude Include="GameBase\Animation\Animation2.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -1247,9 +1248,10 @@
     <ClCompile Include="GameBase\Model\ModelBase.cpp" />
     <ClCompile Include="Game\Player\Animation\PlayerAnimationController.cpp" />
     <ClCompile Include="GameBase\Animation\AnimationController.cpp" />
-    <ClCompile Include="GameBase\Animation\Animation2.cpp" />
+    <ClCompile Include="GameBase\Animation\Animator.cpp" />
     <ClCompile Include="Game\JsonPahtData.cpp" />
     <ClCompile Include="Game\Player\Model\PlayerModel.cpp" />
+    <ClCompile Include="GameBase\Animation\Animation2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />

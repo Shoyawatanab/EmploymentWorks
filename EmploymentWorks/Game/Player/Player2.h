@@ -5,6 +5,7 @@ class PlayerStateMachine;
 class PlaySceneCamera;
 class RigidbodyComponent;
 class PlayerModel;
+class AnimatorComponent;
 
 class Player2 : public Actor
 {
@@ -41,5 +42,7 @@ private:
 	RigidbodyComponent* m_rigidBody;
 	//プレイヤモデル
 	PlayerModel* m_model;
+	//アニメーション
+	AnimatorComponent* m_animation;
 
 };

@@ -7,7 +7,10 @@
 #include "GameBase/Component/Components.h"
 #include "Game/Player/Model/PlayerModel.h"
 #include "Game/Player/Animation/PlayerAnimationController.h"
-
+#include "DeviceResources.h"
+#include "Game/CommonResources.h"
+#include "Libraries/MyLib/InputManager.h"
+#include "Libraries/MyLib/MemoryLeakDetector.h"
 
 /// <summary>
 /// コンストラクタ
@@ -37,9 +40,9 @@ Player2::Player2(Scene* scene)
 	m_stateMachine = std::make_unique<PlayerStateMachine>(this);
 
 	//アニメーションコンポーネントの追加
-	auto animator = AddComponent<AnimatorComponent>(this, std::make_unique<PlayerAnimationController>(this));
+	m_animation  = AddComponent<AnimatorComponent>(this, std::make_unique<PlayerAnimationController>(this));
 	
-
+	m_animation->SetTrigger("GetReady");
 }
 
 /// <summary>
@@ -57,6 +60,15 @@ void Player2::UpdateActor(const float& deltaTime)
 {
 
 	m_stateMachine->Update(deltaTime);
+
+	const auto& tracker = CommonResources::GetInstance()->GetInputManager()->GetMouseTracker();
+
+
+	if (tracker->leftButton ==DirectX::Mouse::ButtonStateTracker::ButtonState::PRESSED)
+	{
+	}
+	m_animation->SetFloat("Move", 1.0f);
+
 
 }
 
@@ -80,7 +92,7 @@ void Player2::OnCollisionStay(ColliderComponent* collider)
 	switch (collider->GetActor()->GetObjectTag())
 	{
 		case Actor::ObjectTag::STAGE:
-		
+			//重力のリセット
 			m_rigidBody->ResetGravity();
 		break;
 		default:

@@ -1,30 +1,27 @@
 #include "pch.h"
 #include "Animation2.h"
-
-#include <iostream>
-#include <fstream>
-#include <nlohmann/json.hpp>
-
+#include "GameBase/Component/Components.h"
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
 /// <param name="owner">所有者</param>
-/// <param name="animationName">アニメーション名</param>
-/// <param name="actors">アニメーションさせたいオブジェクト</param>
-Animation2::Animation2(Actor* owner, std::string animationName,std::string filePath ,std::vector<std::pair<std::string, Transform*>> actors)
+Animation2::Animation2(Actor* owner)
 	:
-	m_ower{owner}
-	,m_animationName{animationName}
-	,m_actors{actors}
-	,m_isLoop{false}
-	,m_totalTime{}
+	m_actor{owner}
+	,m_isPositionUpdate{false}
+	,m_isRotateUpdate{false}
+	,m_animationTotalTime{}
+	,m_initialPosition{}
+	,m_initialRotate{}
+	,m_initialScale{}
 {
 
-	//アニメーションの読み込み　Jsonファイルから
-	LoadData(filePath);
-
-	//アニメーションデータを
+	//所有者の初期状態を取得
+	auto transform = m_actor->GetTransform();
+	m_initialPosition = transform->GetPosition();
+	m_initialRotate = transform->GetRotate();
+	m_initialScale = transform->GetScale();
 
 }
 
@@ -33,137 +30,280 @@ Animation2::Animation2(Actor* owner, std::string animationName,std::string fileP
 /// </summary>
 Animation2::~Animation2()
 {
+	m_positoinData.second.clear();
+	m_rotateData.second.clear();
 }
 
+ 
 /// <summary>
 /// 更新処理
 /// </summary>
-/// <param name="deltaTime">経過時間</param>
-void Animation2::Update(const float& deltaTime)
+/// <param name="animationTime">アニメーションの経過時間</param>
+void Animation2::Update(const float& animationTime)
 {
+	//座標の更新を行うか
+	if (m_isPositionUpdate)
+	{
+		//座標
+		PositionUpdate(animationTime);
 
-	//パーツごとのアニメーションを更新する
+	}
+	//回転の更新を行うか
+	if (m_isRotateUpdate)
+	{
+		//回転
+		RotationUpdate(animationTime);
 
+	}
 
-	//トランスフォームの更新
-
-
-
-
-}
-
-
-
-/// <summary>
-/// アニメーションの再生
-/// </summary>
-void Animation2::PlayAnimation()
-{
 }
 
 /// <summary>
-/// アニメーション情報の読み込み
+/// 座標データの追加
 /// </summary>
-void Animation2::LoadData(std::string filePath)
+/// <param name="framTime">フレーム時間</param>
+/// <param name="position">座標</param>
+void Animation2::AddPositionData(float framTime, DirectX::SimpleMath::Vector3 position)
+{
+	using namespace DirectX::SimpleMath;
+
+
+	//フレームの追加
+	KeyFram fram = { framTime,position };
+	m_positoinData.second.push_back(fram);
+
+	//更新を行うかを有効に
+	m_isPositionUpdate = true;
+	
+}
+
+/// <summary>
+/// 回転データの追加
+/// </summary>
+/// <param name="framTime">フレーム時間</param>
+/// <param name="rotate">回転</param>
+void Animation2::AddRotateData(float framTime, DirectX::SimpleMath::Vector3 rotate)
 {
 
-	using json = nlohmann::json;
+	//フレームの追加
+	KeyFram fram = { framTime,rotate };
+	m_rotateData.second.push_back(fram);
 
-	std::ifstream file(filePath);
+	//更新を行うかを有効に
+	m_isRotateUpdate = true;
 
-	//ファイルが開けないとき
-	if (!file.is_open())
+}
+
+/// <summary>
+/// リセット
+/// </summary>
+void Animation2::Reset()
+{
+	m_positoinData.first = 0;
+	m_rotateData.first = 0;
+}
+
+/// <summary>
+/// データの並び替え
+/// </summary>
+void Animation2::DataSort()
+{
+
+	//座標の並び替え
+	PositionSort();
+	//回転の並び替え
+	RotateSort();
+
+
+}
+/// <summary>
+/// 座標の並び替え
+/// </summary>
+void Animation2::PositionSort()
+{
+	using namespace DirectX::SimpleMath;
+
+	//データがなければ
+	if (m_positoinData.second.empty())
 	{
-		throw std::runtime_error("jsonファイルが開けません");
+		return;
 	}
-
-	//ファイルの内容をJSONオブジェックとしてパース
-	json data = json::parse(file);
-
-
-	//アニメーションの種類
-	std::string animationType = data["AnimationType"];
-
-	//アニメーションのトータル時間
-	float totalTime = data["AnimationTime"];
-
-	//アニメーションのスピード
-	float speed = data["AnimationSpeed"];
-
-	//ループ再生かどうか
-	bool isLoop = data["Loop"];
-
-	//パーツごとにアニメーションを分けるための格納変数
-	std::unordered_map<std::string, std::vector<AnimationKeyFram>> partsKeyFrame;
-
-
-
-	//KeyFrame[](ピンク色)内のデータの{}(青色)の要素だけ回す
-	for (const auto& frameData : data["KeyFrame"])
+	//１以上なら
+	if (m_positoinData.second.size() > 1)
 	{
-
-		//フレームの時間の取得
-		float frameTime = frameData["FreamTime"];
-
-
-
-		//部位ごとの情報の取得
-		for (const auto& partsData : frameData["Parts"])
-		{
-			std::string partsName = partsData["PartName"];
-
-			AnimationKeyFram keyFrame;
-
-			keyFrame.Time = frameTime;
-
-			//Positionがあるか
-			if (partsData.contains("Position"))
+		//回転情報をTimeで昇順に並び替え
+		std::sort(m_positoinData.second.begin(), m_positoinData.second.end(),
+			[](const KeyFram& a, const KeyFram& b)
 			{
-				//Positionの要素を代入
-				keyFrame.Position = DirectX::SimpleMath::Vector3(
-					partsData["Position"]["x"],           //Positionの要素のxの要素を代入x値
-					partsData["Position"]["y"],           //Positionの要素のxの要素を代入y値
-					partsData["Position"]["z"]            //Positionの要素のxの要素を代入z値
-				);
-			}
-
-
-
-			//Positionがあるか
-			if (partsData.contains("Rotation"))
-			{
-				//Positionの要素を代入
-				keyFrame.Rotation = DirectX::SimpleMath::Vector3(
-					partsData["Rotation"]["x"],           //Positionの要素のxの要素を代入x値
-					partsData["Rotation"]["y"],           //Positionの要素のxの要素を代入y値
-					partsData["Rotation"]["z"]            //Positionの要素のxの要素を代入z値
-				);
-			}
-
-
-			partsKeyFrame[partsName].push_back(keyFrame);
-
-		}
+				return a.Time < b.Time;
+			});
 	}
 
-	//パーツごとのアニメーションを
-	std::unordered_map<std::string, AnimationData> animations;
 
-	for (auto& parts : partsKeyFrame)
+	//はじめが0.0fではい場合
+	if (m_positoinData.second[0].Time != 0.0f)
 	{
+		//初めにゼロ初期化
+		m_positoinData.second.insert(m_positoinData.second.begin(), { 0.0f,Vector3::Zero });
+	}
+	//終わりがアニメーション時間でない場合
+	if (m_positoinData.second[m_positoinData.second.size() - 1].Time != m_animationTotalTime)
+	{
+		//終わりにゼロ初期化
+		m_positoinData.second.push_back({ m_animationTotalTime,Vector3::Zero });
 
-		std::string partsName = parts.first;
+	}
 
-		std::vector<AnimationKeyFram> keyFrame = parts.second;
+}
 
-		animations[partsName].FramDatas = keyFrame;
-		animations[partsName].TotalTime = totalTime;
-		animations[partsName].Speed = speed;
-		animations[partsName].IsLoop = isLoop;
+/// <summary>
+/// 回転の並び替え
+/// </summary>
+void Animation2::RotateSort()
+{
+
+	using namespace DirectX::SimpleMath;
+
+	//データがなければ
+	if (m_rotateData.second.empty())
+	{
+		return;
+	}
+	//１以上なら
+	if (m_rotateData.second.size() > 1)
+	{
+		//回転情報をTimeで昇順に並び替え
+		std::sort(m_rotateData.second.begin(), m_rotateData.second.end(),
+			[](const KeyFram& a, const KeyFram& b)
+			{
+				return a.Time < b.Time;
+			});
+	}
+
+
+	//はじめが0.0fではい場合
+	if (m_rotateData.second[0].Time != 0.0f)
+	{
+		//初めにゼロ初期化
+		m_rotateData.second.insert(m_rotateData.second.begin(), { 0.0f,Vector3::Zero });
 
 
 	}
+	//終わりがアニメーション時間でない場合
+	if (m_rotateData.second[m_rotateData.second.size() - 1].Time != m_animationTotalTime)
+	{
+		//終わりにゼロ初期化
+		m_rotateData.second.push_back({ m_animationTotalTime,Vector3::Zero });
+
+	}
+
+	
+
+}
+
+/// <summary>
+/// 座標の更新
+/// </summary>
+void Animation2::PositionUpdate(const float& animationTime)
+{
+	using namespace DirectX::SimpleMath;
+
+	//添え字
+	int index = m_positoinData.first;
+
+	//初めの時間
+	float startTime = m_positoinData.second[index].Time;
+	//終わりの時間
+	float endTime = m_rotateData.second[index + 1].Time;
+	//初めのデータ
+	Vector3 startData = m_positoinData.second[index].Data;
+	//終わりのデータ
+	Vector3 endData = m_positoinData.second[index + 1].Data;
+
+
+	//割合
+	float ratio = 0;
+	//０同時では計算をしないため
+	if (endTime != startTime)
+	{
+		ratio = (animationTime - startTime) / (endTime - startTime);
+	}
+	//割合が1を超えないように
+	ratio = std::min(ratio, 1.0f);
+
+	//回転
+	Vector3 position = Vector3::SmoothStep(startData, endData, ratio);
+
+	//ローカル座標の更新
+	m_actor->GetTransform()->SetPosition(m_initialPosition + position);
+
+	//フレームの切り替え
+	if (animationTime >= endTime)
+	{
+		m_positoinData.first++;
+		m_positoinData.first = m_positoinData.first % m_positoinData.second.size();
+	}
+
 
 
 
 }
+
+/// <summary>
+/// 回転の更新
+/// </summary>
+void Animation2::RotationUpdate(const float& animationTime)
+{
+	using namespace DirectX::SimpleMath;
+	
+	//添え字
+	int index = m_rotateData.first;
+
+	//初めの時間
+	float startTime = m_rotateData.second[index].Time;
+	//終わりの時間
+	float endTime = m_rotateData.second[index + 1].Time;
+	//初めのデータ
+	Vector3 startData = m_rotateData.second[index].Data;
+	//終わりのデータ
+	Vector3 endData = m_rotateData.second[index + 1].Data;
+
+
+	//データから回転を作成
+	Quaternion startRotation = Quaternion::CreateFromYawPitchRoll(
+		DirectX::XMConvertToRadians(startData.y),
+		DirectX::XMConvertToRadians(startData.x),
+		DirectX::XMConvertToRadians(startData.z)
+	);
+	Quaternion endRotation = Quaternion::CreateFromYawPitchRoll(
+		DirectX::XMConvertToRadians(endData.y),
+		DirectX::XMConvertToRadians(endData.x),
+		DirectX::XMConvertToRadians(endData.z)
+	);
+
+	//割合
+	float ratio = 0;
+	//０同時では計算をしないため
+	if (endTime != startTime)
+	{
+		ratio = (animationTime - startTime) / (endTime - startTime);
+	}
+
+	//割合が1を超えないように
+	ratio = std::min(ratio, 1.0f);
+
+	//回転
+	Quaternion rotation = Quaternion::Slerp(startRotation, endRotation, ratio);
+
+	//ローカル回転の更新
+	m_actor->GetTransform()->SetRotate(m_initialRotate *  rotation);
+
+	//フレームの切り替え
+	if (animationTime >= endTime)
+	{
+		m_rotateData.first++;
+		m_rotateData.first =  m_rotateData.first % m_rotateData.second.size();
+	}
+
+}
+

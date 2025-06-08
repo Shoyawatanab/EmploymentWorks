@@ -1,69 +1,71 @@
+/*
+	1つのパーツに対するアニメーションを行うクラス
+*/
+
 #pragma once
 #include "GameBase/Actor.h"
-#include <string>
-#include <optional>
-
 
 class Animation2
 {
 public:
-
-	//アニメーションのJson読み込み専用構造体
-
-	struct AnimationKeyFram
+	//キーフレームアニメーション構造体
+	struct KeyFram
 	{
-		float Time;                                //経過時間
-		std::optional<DirectX::SimpleMath::Vector3>  Scale;
-		std::optional< DirectX::SimpleMath::Vector3> Position;	    //経過時間に対しての座標
-		std::optional< DirectX::SimpleMath::Vector3> Rotation; 		//経過時間に対しての回転
-
-	};
-
-	struct AnimationData
-	{
-		float TotalTime;                              //アニメーション全体の時間
-		float Speed;								  //アニメーションの進行スピード
-		bool IsLoop;								  //1アニメーションをループさせるか
-		std::vector<AnimationKeyFram> FramDatas;	  //キーフレームの情報　時間順に並んでいるものとする
-
+		float Time;                             //経過時間
+		DirectX::SimpleMath::Vector3 Data;	    //経過時間に対してのデータ
 	};
 
 public:
-
-	//アニメーション名
-	std::string GetAnimaiionName() { return m_animationName; }
+	//アニメーション全体の時間のセット
+	void SetAnimationTotalTime(const float& time) { m_animationTotalTime = time; };
 
 public:
 	//コンストラクタ
-	Animation2(Actor* owner,std::string animationName, std::string fimePath,std::vector<std::pair<std::string, Transform*>> actors);
+	Animation2(Actor* owner);
 	//デストラクタ
 	~Animation2();
+	//更新処理
+	void Update(const float& animationTime);
+	//座標キーフレームの追加
+	void AddPositionData(float framTime,DirectX::SimpleMath::Vector3 position);
+	//回転キーフレームの追加
+	void AddRotateData(float framTime,DirectX::SimpleMath::Vector3 rotae);
+	//リセット
+	void Reset();
+	//データの並び替え
+	void DataSort();
 
-	void Update(const float& deltaTime);
-
-	//アニメーションの再生
-	void PlayAnimation();
 
 private:
+	//座標の並び替え
+	void PositionSort();
+	//回転の並び替え
+	void RotateSort();
 
-	//アニメーション情報の読み込み
-	void LoadData(std::string finePath);
+	//座標の更新
+	void PositionUpdate(const float& animationTime);
+	//回転の更新
+	void RotationUpdate(const float& animationTime);
+
 
 private:
 	//所有者
-	Actor* m_ower;
-
-	//アニメーション名
-	std::string m_animationName;
-
-	//アニメーション指せるオブジェクト
-	std::vector<std::pair<std::string ,Transform*>> m_actors;
-	//ループ
-	bool m_isLoop;
-	//
-	float m_totalTime;
-	//
-	float m_speed;
-
+	Actor* m_actor;
+	//座標のデータ
+	std::pair<int, std::vector<KeyFram>> m_positoinData;
+	//回転のデータ
+	std::pair<int, std::vector<KeyFram>> m_rotateData;
+	//座標の更新をするか
+	bool m_isPositionUpdate;
+	//回転の更新をするか
+	bool m_isRotateUpdate;
+	//アニメーション全体の時間
+	float m_animationTotalTime;
+	//オブジェクトの初期座標
+	DirectX::SimpleMath::Vector3 m_initialPosition;
+	//オブジェクトの初期回転
+	DirectX::SimpleMath::Quaternion m_initialRotate;
+	//オブジェクトの初期大きさ
+	DirectX::SimpleMath::Vector3 m_initialScale;
 
 };
