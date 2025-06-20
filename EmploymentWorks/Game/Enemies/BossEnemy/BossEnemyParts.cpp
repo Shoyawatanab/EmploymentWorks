@@ -10,11 +10,9 @@
 /// <param name="modelName">ƒ‚ƒfƒ‹–¼</param>
 BossEnemyParts::BossEnemyParts(Scene* scene, std::string partsName, std::string modelName)
 	:
-	Actor(scene)
-	,m_partsName{partsName}
+	ModelPartsBase(scene,partsName,modelName)
 {
 
-	AddComponent<ModelComponent>(this, modelName);
 
 }
 

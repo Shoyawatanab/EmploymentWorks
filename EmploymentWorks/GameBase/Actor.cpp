@@ -34,6 +34,8 @@ Actor::~Actor()
 /// <param name="deltaTime"></param>
 void Actor::Update(const float& deltaTime)
 {
+	if (!m_isActive) { return; }
+
 	// コンポーネント更新処理
 	UpdateComponent(deltaTime);
 	// コンポーネント個別アップデート
@@ -105,6 +107,16 @@ void Actor::SetActive(bool active)
 	for (auto& component : m_components)
 	{
 		component.get()->SetActive(active);
+	}
+
+	//結果に応じた関数を呼ぶ
+	if (active)
+	{
+		OnEnable();
+	}
+	else
+	{
+		OnDisable();
 	}
 
 }

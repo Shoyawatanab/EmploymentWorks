@@ -6,7 +6,7 @@
 #include <string>
 
 class Transform;
-class Animation2;
+class Animation;
 
 class Animator
 {
@@ -16,6 +16,8 @@ public:
 	const  std::string& GetAnimaiionName() { return m_animationName; }
 	//ループするかの取得　ture: ループする　false :ループなし
 	bool GetIsLoop() const { return m_isLoop; }
+	//アニメーションが終わっているか　true 終わっている　false 終わっていない
+	bool GetIsEnd() const { return m_isEnd; }
 
 public:
 	//コンストラクタ
@@ -38,8 +40,7 @@ private:
 	//アニメーション情報の読み込み
 	void LoadData(std::string finePath);
 
-	//リセット
-	void Reset();
+
 
 private:
 	//所有者
@@ -54,8 +55,9 @@ private:
 	//アニメーションスピード
 	float m_speed;
 	//パーツごとのデータ
-	std::unordered_map<std::string,std::unique_ptr<Animation2>> m_partsData;
+	std::unordered_map<std::string,std::unique_ptr<Animation>> m_partsData;
 	//アニメーションの経過時間
 	float m_animationTime;
-
+	//アニメーションが終わっているか
+	bool m_isEnd;
 };

@@ -1,14 +1,12 @@
 #pragma once
-#include "GameBase/Actor.h"
+#include "GameBase/Model/ModelPartsBase.h"
 
 
 
-class BossEnemyParts : public Actor
+class BossEnemyParts : public ModelPartsBase
 {
 public:
 
-	//名前の取得
-	std::string  GetPartsName() const { return m_partsName; }
 
 
 public:
@@ -16,10 +14,6 @@ public:
 	BossEnemyParts(Scene* scene, std::string partsName, std::string modelName);
 	//デストラクタ
 	~BossEnemyParts() override  ;
-
-private:
-	//パーツ名
-	std::string m_partsName;
 
 
 };

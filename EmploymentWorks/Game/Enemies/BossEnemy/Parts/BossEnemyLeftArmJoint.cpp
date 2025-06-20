@@ -15,7 +15,7 @@ BossEnemyLeftArmJoint::BossEnemyLeftArmJoint(Scene* scene)
 	//ˆÈ‰º’Ç‰Á•”ˆÊ‚Ìì¬
 
 	auto leftArm = GetScene()->AddActor<BossEnemyLeftArm>(GetScene());
-	leftArm->GetTransform()->SetParent(GetTransform());
+	leftArm->SetParent(this);
 
 
 	//ˆÊ’uî•ñ

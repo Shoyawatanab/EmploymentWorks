@@ -5,8 +5,7 @@
 #include "pch.h"
 #include "DamageCountUI.h"
 #include "GameBase/Screen.h"
-#include "Game/CommonResources.h"
-#include "DeviceResources.h"
+#include "GameBase/Common/Commons.h"
 #include "Libraries/MyLib/MemoryLeakDetector.h"
 #include "Libraries/MyLib/InputManager.h"
 #include <cassert>

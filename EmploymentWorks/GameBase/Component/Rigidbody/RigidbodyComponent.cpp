@@ -5,6 +5,9 @@
 #include "GameBase/Managers.h"
 #include "Game/Params.h"
 
+
+#include "GameBase/Common/Commons.h"
+
 /// <summary>
 /// コンストラクタ
 /// </summary>
@@ -44,6 +47,9 @@ RigidbodyComponent::~RigidbodyComponent()
 /// <param name="deltaTime">経過時間</param>
 void RigidbodyComponent::Update(const float& deltaTime)
 {
+
+	
+
 	using namespace DirectX::SimpleMath;
 
 	//固定なら
@@ -53,24 +59,29 @@ void RigidbodyComponent::Update(const float& deltaTime)
 	}
 
 	//重力計算
-	if (m_isGravity)
+	if(m_isGravity)
 	{
 		//重力加算
-		AddForce(Vector3(0.0f, -Params::GRAVITY * deltaTime,0.0f));
+		AddForce(Vector3(0.0f, Params::GRAVITY * deltaTime,0.0f));
 	}
 
 	//速度の計算
-	m_velocity += m_addforce * deltaTime;
+	auto velocity2 =  m_velocity + m_addforce * deltaTime;
 
 	//オブジェクトの移動
-	GetActor()->GetTransform()->Translate(m_velocity);
+	GetActor()->GetTransform()->Translate(velocity2);
 
 	//減速させる
-	m_velocity.x *= m_deceleration;
-	m_velocity.z *= m_deceleration;
+	m_velocity = Vector3::Zero;
 
-	//
-	m_addforce = Vector3::Zero;
+	//摩擦の原減速
+	m_addforce.x *= m_deceleration;
+	m_addforce.z *= m_deceleration;
+
+
+
+
+
 
 }
 

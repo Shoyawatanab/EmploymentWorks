@@ -18,7 +18,6 @@ public:
 	{
 		SUCCESS,         //成功
 		FAILURE,      //失敗
-		RUNNING      //実行中
 	};
 
 public:
@@ -27,10 +26,7 @@ public:
 	//初期化
 	virtual void Initialize() = 0;
 	//更新処理
-	virtual State Update(float elapsdTime) = 0;
-
-	//実行中の時のUpdate
-	virtual State RunningUpdate(float elapsdTime) = 0;
+	virtual State Update(const float& deltaTime) = 0;
 
 	virtual void Finalize() = 0;
 };

@@ -12,7 +12,7 @@ BossEnemyLeftShoulder::BossEnemyLeftShoulder(Scene* scene)
 	//ˆÈ‰º’Ç‰Á•”ˆÊ‚Ìì¬
 //uLeftArmJointv‚ğ¶¬‚·‚é
 	auto leftArmJoint = GetScene()->AddActor<BossEnemyLeftArmJoint>(GetScene());
-	leftArmJoint->GetTransform()->SetParent(GetTransform());
+	leftArmJoint->SetParent(this);
 
 
 	//ˆÊ’uî•ñ

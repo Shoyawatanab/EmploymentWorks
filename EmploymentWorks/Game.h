@@ -4,18 +4,16 @@
 
 #pragma once
 
-#include "DeviceResources.h"
-#include "StepTimer.h"
+#include"GameBase/Common/DeviceResources.h"
+#include"GameBase/Common/StepTimer.h"
 
 // ★includeの追記★
-#include "Game/CommonResources.h"
+#include "GameBase/Common/Commons.h"
 #include "GameBase/Scene/Scene.h"
 #include "Game/Scene/SceneManager.h"
 #include "Libraries/MyLib/DebugString.h"
 #include "Libraries/MyLib/InputManager.h"
 #include "Libraries/WataLib/Fade.h"
-#include "Game/Score.h"
-#include "Libraries/WataLib/GameResources.h"
 #include "Game/Sound/SoundManager.h"
 
 // A basic game implementation that creates a D3D11 device and
@@ -90,9 +88,6 @@ private:
     //フェード処理
     std::unique_ptr<Fade>                  m_fade;
 
-    std::unique_ptr<Score>                m_score;
-
-    std::unique_ptr<WataLib::GameResources> m_gameResources;
 
     SoundManager* m_soundManager;
 

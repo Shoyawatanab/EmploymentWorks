@@ -1,40 +1,32 @@
-/*
-* プレイヤの通常状態クラス
-*/
 #pragma once
-#include "Game/Interface/IState.h"
+#include "GameBase/Interface/IState.h"
 
+class BoomerangStateMachine;
 class Boomerang;
+class Player;
 
 class BoomerangGetReady : public IState
 {
-public:
-
-
 
 public:
 	//コンストラクタ
-	BoomerangGetReady(Boomerang* boomerang) ;
+	BoomerangGetReady(BoomerangStateMachine* stateMahine, Boomerang* boomerang, Player* player);
 	//デストラクタ
 	~BoomerangGetReady() override;
 
-	//初期化
-	void Initialize(CommonResources* resources) ;
 	// 更新する
-	void Update(const float& elapsedTime) override;
+	void Update(const float& deltaTime) override;
 	//状態に入った時
 	void Enter() override;
 	//状態を抜けた時
 	void Exit() override;
 
-public:
-	// 共通リソース
-	CommonResources* m_commonResources;
+private:
 	//ブーメラン
 	Boomerang* m_boomerang;
-
-
-
-private :
-	
+	//ステートマシーン
+	BoomerangStateMachine* m_stateMahine;
+	//
+	Player* m_player;
 };
+

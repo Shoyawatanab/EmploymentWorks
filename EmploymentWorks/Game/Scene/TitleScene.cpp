@@ -5,18 +5,14 @@
 #include "pch.h"
 #include "TitleScene.h"
 #include "GameBase/Screen.h"
-#include "Game/CommonResources.h"
-#include "DeviceResources.h"
+#include "GameBase/Common/Commons.h"
 #include "Libraries/MyLib/MemoryLeakDetector.h"
 #include "Libraries/MyLib/InputManager.h"
 #include "Libraries/WataLib/Fade.h"
 #include <cassert>
 #include "Libraries/WataLib/Json.h"
-#include "Game/StageObject/Floor.h"
-#include "Game/StageObject/Wall.h"
-#include "Libraries/WataLib/Model3D.h"
+#include "Game/Stage/StageObjects.h"
 #include "Game/Params.h"
-#include "Libraries/WataLib/DetectionCollision.h"
 
 
 #include "Libraries/MyLib/DebugString.h"
@@ -33,14 +29,8 @@ using namespace DirectX::SimpleMath;
 //---------------------------------------------------------
 TitleScene::TitleScene()
 	:
-	m_projection{},
-	m_isChangeScene{}
-	,m_object{}
-	,m_textures{}
-	,m_state{State::PLAY}
-	,m_buttom{}
-	,m_selectButtomId{}
-	,m_player{}
+	m_projection{}
+
 {
 
 }

@@ -3,8 +3,12 @@
 #include "GameBase/UI/Canvas/Canvas.h"
 #include "GameBase/Component/Components.h"
 
-
-Image::Image(Canvas* canvas, std::string textureName)
+/// <summary>
+/// コンストラクタ
+/// </summary>
+/// <param name="canvas">キャンバス</param>
+/// <param name="textureName">画像名</param>
+Image::Image(Canvas* canvas, const std::string& textureName)
 	:
 	Actor(canvas->GetScene())
 {

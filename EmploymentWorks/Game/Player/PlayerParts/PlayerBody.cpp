@@ -56,8 +56,6 @@ PlayerBody::PlayerBody(Scene* scene)
 	rightfeet->SetParent(this);
 
 
-	DirectX::SimpleMath::Vector3 pos = GetTransform()->GetPosition();
-
 
 }
 

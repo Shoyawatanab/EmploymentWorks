@@ -9,7 +9,7 @@
 #include "UserInterface.h"
 
 #include "Libraries/MyLib/BinaryFile.h"
-#include "DeviceResources.h"
+#include "GameBase/Common/Commons.h"
 #include <SimpleMath.h>
 #include <Effects.h>
 #include <PrimitiveBatch.h>
@@ -18,8 +18,7 @@
 #include <CommonStates.h>
 #include <vector>
 #include "GameBase/Screen.h"
-#include "Libraries/WataLib/GameResources.h"
-#include "Game/CommonResources.h"
+#include "GameBase/GameResources.h"
 
 using namespace DirectX;
 
@@ -69,7 +68,7 @@ void UserInterface::LoadTexture(std::string key)
 {
 
 	//画像の取得
-	m_texture = m_commonResources->GetGameResources()->GetTexture(key);
+	m_texture = GameResources::GetInstance()->GetTexture(key);
 
 	//シェーダーリソースビューから画像情報の取得
 	Microsoft::WRL::ComPtr<ID3D11Resource> resource;

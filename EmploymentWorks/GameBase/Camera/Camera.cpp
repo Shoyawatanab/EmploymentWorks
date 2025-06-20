@@ -16,6 +16,8 @@ Camera::Camera(Scene* scene)
 	,m_up{DirectX::SimpleMath::Vector3::Up}
 	,m_view{}
 	,m_projection{}
+	,m_forwardVector{ DirectX::SimpleMath::Vector3::Forward }
+
 {
 
 	using namespace DirectX::SimpleMath;

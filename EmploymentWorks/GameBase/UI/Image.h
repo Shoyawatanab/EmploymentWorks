@@ -9,24 +9,18 @@ class Image : public Actor
 {
 public:
 
-	//
-	void SetRenderRatio(const float& ratio) { m_imageComponent->SetRenderRatio(ratio); }
-	//
-	float GetRenderRatio() const { return m_imageComponent->GetRenderRatio(); }
-	//
-	void SetRenderRatioOffset(const float& offset) { m_imageComponent->SetRenderRatioOffset(offset); };
-	//
-	float GetRenderRatioOffset() const { return m_imageComponent->GetRenderRatioOffset(); }
-	//透明度のセット
-	void SetAlphaValue(const float& value) { m_imageComponent->SetAlphaValue(value); }
-	//透明度の取得
-	float GetAlphaValue() const { return m_imageComponent->GetAlphaValue(); }
+	//切り取り範囲のセット
+	void SetCutRange(DirectX::SimpleMath::Vector4 range) { m_imageComponent->SetCutRange(range); }
+	//色のセット
+	void SetColor(DirectX::SimpleMath::Vector4 color) { m_imageComponent->SetColor(color); }
 
-
+	//横の塗りつぶし量　０～１までの範囲
+	void SetHorizontalFillAmount(float fillAmount) { m_imageComponent->SetHorizontalFillAmount(fillAmount); }
 
 public:
+
 	//コンストラクタ
-	Image(Canvas* canvas, std::string textureName);
+	Image(Canvas* canvas, const std::string& textureName);
 	//デストラクタ
 	~Image();
 

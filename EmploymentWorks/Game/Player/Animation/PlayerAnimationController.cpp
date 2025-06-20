@@ -1,14 +1,16 @@
 #include "pch.h"
 #include "PlayerAnimationController.h"
-#include "Game/Player/Player2.h"
+#include "Game/Player/Player.h"
 #include "Game/Player/Model/PlayerModel.h"
 #include "GameBase/Component/Components.h"
+#include "GameBase/Messenger/Messenger.h"
+
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
 /// <param name="player"></param>
-PlayerAnimationController::PlayerAnimationController(Player2* player)
+PlayerAnimationController::PlayerAnimationController(Player* player)
 	:
 	AnimationController()
 {
@@ -43,7 +45,7 @@ PlayerAnimationController::PlayerAnimationController(Player2* player)
 		});
 
 	//基準値スピード
-	float speed = 0.1f;
+	float speed = 2.0f;
 
 	//状態遷移フローの作成　　　　　　アニメーション名　　　　　遷移名　　　遷移名に重複がないように
 	CreateAnyStateToTriggerTransition("PlayerIdle",           "Idle");
@@ -52,7 +54,17 @@ PlayerAnimationController::PlayerAnimationController(Player2* player)
 	//                    //遷移元　　　遷移先　　　　遷移名 基準値　　状態　大きいか　小さいか
 	CreateFloatTransition("PlayerIdle", "PlayerMove", "Move",speed, FloatState::Greater);
 
-	//MoveだけIdleからのアローを作成　そのほかわAnystateのフローの作成
+	//メッセージの登録
+	Messenger::GetInstance()->Rigister(
+		{ 
+		MessageType::PLAYER_IDLE_STATE
+		,MessageType::PLAYER_BOOMERANG_GET_READY_STATE
+		,MessageType::PLAYER_BOOMERANG_ATTACK_STATE
+		}
+		, this
+	);
+
+	
 
 
 }
@@ -62,4 +74,30 @@ PlayerAnimationController::PlayerAnimationController(Player2* player)
 /// </summary>
 PlayerAnimationController::~PlayerAnimationController()
 {
+}
+
+/// <summary>
+/// 通知を受け取る関数
+/// </summary>
+/// <param name="type">通知の種類</param>
+/// <param name="datas">追加データ</param>
+void PlayerAnimationController::Notify(MessageType type, void* datas)
+{
+
+	switch (type)
+	{
+		case MessageType::PLAYER_IDLE_STATE:
+			Play("PlayerIdle");
+			break;
+		case MessageType::PLAYER_BOOMERANG_GET_READY_STATE:
+			Play("PlayerGetReady");
+			break;
+		case MessageType::PLAYER_BOOMERANG_ATTACK_STATE:
+			SetTrigger("Throw");
+			break;
+		default:
+			break;
+	}
+
+
 }

@@ -3,7 +3,7 @@
 class Actor;
 class CommonResources;
 class RenderManager;
-class CollisionManager2;
+class CollisionManager;
 class RigidbodyManager;
 class Camera;
 
@@ -24,7 +24,7 @@ public:
 
 	//マネージャーの取得
 	RenderManager* GetRenderMangaer() { return m_renderMangaer.get(); }
-	CollisionManager2* GetCollisionManager() { return m_collisionManager.get(); }
+	CollisionManager* GetCollisionManager() { return m_collisionManager.get(); }
 	RigidbodyManager* GetRigidbodyManager() { return m_rigidbodyManager.get(); }
 
 	//カメラの取得
@@ -80,7 +80,7 @@ private:
 	//描画のマネージャー
 	std::unique_ptr<RenderManager> m_renderMangaer;
 	//当たり判定のマネージャー
-	std::unique_ptr<CollisionManager2> m_collisionManager;
+	std::unique_ptr<CollisionManager> m_collisionManager;
 	//リジットボディーマネージャー
 	std::unique_ptr<RigidbodyManager> m_rigidbodyManager;
 

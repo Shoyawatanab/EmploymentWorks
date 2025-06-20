@@ -1,11 +1,21 @@
 #pragma once
-#include "Game/Interface/IState.h"
+#include "GameBase/Interface/IState.h"
+#include "GameBase/Messenger/IObserver.h"
+
 
 class PlaySceneCamera;
 class PlaySceneCameraStateMachine;
 
-class PlaySceneCameraTPS : public IState
+class PlaySceneCameraTPS : public IState , public IObserver
 {
+public:
+	//ズーム状態
+	enum class ZoomState
+	{
+		NONE,             //通常
+		ZOOM_IN,		  //ズーム状態
+		ZOOM_OUT		  //ズームアウト状態
+	};
 public:
 	//マウス座標
 	static constexpr DirectX::SimpleMath::Vector2 MOUSE_POSITION{640.0f,320.0f};
@@ -18,9 +28,10 @@ public:
 	// ターゲットからのデフォルト距離
 	const float CAMERA_DISTANCE = 4.0f;
 
-public:
-
-	const DirectX::SimpleMath::Vector3& GetForwardVector() const { return m_forward; }
+	//ズーム方向
+	static constexpr DirectX::SimpleMath::Vector3 ZOOM_DIRECTION{0.2f, 0.0f, -1.0f};
+	//ズームにかかる時間
+	static constexpr float ZOOME_MAX_TIME = 0.2f;;
 
 public:
 	//コンストラクタ
@@ -29,16 +40,22 @@ public:
 	~PlaySceneCameraTPS();
 
 	// 更新する
-	void Update(const float& elapsedTime) override;
+	void Update(const float& deltaTime) override;
 	//状態に入った時
 	void Enter() override;
 	//状態を抜けた時
 	void Exit() override;
 
+	//通知を受け取る関数
+	void Notify(MessageType type, void* datas) override;
+
+
 private:
 
 	//マウス操作
 	void MouseOperation();
+	//ズームの更新
+	void ZoomUpdate(const float& deltaTime);
 
 private:
 	//カメラ
@@ -49,7 +66,11 @@ private:
 	float m_rotationX;
 	//縦回転
 	float m_rotationY;
-	//正面ベクトル
-	DirectX::SimpleMath::Vector3 m_forward;
+	//ズーム状態
+	ZoomState m_zoomState;
+	//ズームの移動量
+	DirectX::SimpleMath::Vector3 m_zoomMovement;
+	//
+	float m_zoomTime;
 
 };

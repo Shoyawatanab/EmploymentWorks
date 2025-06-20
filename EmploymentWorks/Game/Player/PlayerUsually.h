@@ -1,50 +1,45 @@
 /*
-* プレイヤの常時の更新のクラス
+* プレイヤの通常状態クラス
 */
 #pragma once
-#include"Game/Interface/IObserver.h"
+#include "GameBase/Interface/IState.h"
+#include "GameBase/Messenger/IObserver.h"
 
-// 前方宣言
-class CommonResources;
 class Player;
+class RigidbodyComponent;
 
-namespace WataLib
-{
-	class TPS_Camera;
-}
 
-class PlayerUsually  : public IObserver<GamePlayMessageType>
+class PlayerUsually : public IObserver
 {
+
+
 public:
 	//コンストラクタ
-	PlayerUsually() ;
+	PlayerUsually(Player* player);
 	//デストラクタ
 	~PlayerUsually();
-	
-	//初期化
-	void Initialize(CommonResources* resources);
 	// 更新する
-	void Update(const float& elapsedTime);
-	//動き
-	void Move(const float& elapsedTime, DirectX::SimpleMath::Vector3 moveDirection);
-	//回転
-	void Rotation(const float& elapsedTime, DirectX::SimpleMath::Vector3 moveDirection);
+	void Update(const float& deltatime) ;
 
-	//IObserver
-	//通知時に呼ばれる関数
-	void Notify(const Telegram<GamePlayMessageType>& telegram)  override;
+
+	//通知時に呼び出される
+	void Notify(MessageType type, void* datas) override;
 
 
 private:
-	//ポインタ
+	//移動
+	void Move(const float& deltatime);
+	//回転
+	void Rotate(const float& deltatime);
+private:
 	//プレイヤ
-	Player* m_palyer;
-	//カメラ
-	WataLib::TPS_Camera* m_tpsCamera;
-	// 共通リソース
-	CommonResources* m_commonResources;
+	Player* m_player;
+	//リジットボディー
+	RigidbodyComponent* m_rigidbody;
 
-	//構えているかどうか
+	//移動量
+	DirectX::SimpleMath::Vector3 m_moveDirection;
+	//ブーメランを構えているか true: 構えている  false:構えていない
 	bool m_isGetReady;
 
 };

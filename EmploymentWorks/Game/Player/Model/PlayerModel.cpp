@@ -1,27 +1,24 @@
 #include "pch.h"
 #include "PlayerModel.h"
+#include "GameBase/Scene/Scene.h"
 #include "Game/Player/PlayerPartss.h"
 #include "GameBase/Component/Transform/Transform.h"
 #include "Game/Params.h"
 
 PlayerModel::PlayerModel(Scene* scene)
 	:
-	Actor(scene)
-	,m_parts{}
+	ModelBase(scene)
 {
 
 	//Bodyの作成
 	auto body = GetScene()->AddActor<PlayerBody>(GetScene());
 	//親の登録
 	body->GetTransform()->SetParent(GetTransform());
-
+	//子孫モデルを取得
 	auto parts = body->GetAllDescendants();
-
+	//子孫モデルをパーツに登録
 	AddParts(parts);
 
-	GetTransform()->SetScale(Params::PLAYER_SCALE);
-	GetTransform()->Translate(Params::PLAYER_POSITION);
-	GetTransform()->SetRotate(Params::PLAYER_ROTATION);
 
 }
 
@@ -30,32 +27,6 @@ PlayerModel::PlayerModel(Scene* scene)
 /// </summary>
 PlayerModel::~PlayerModel()
 {
-	//クリア
-	m_parts.clear();
 }
 
-/// <summary>
-/// パーツの登録
-/// </summary>
-/// <param name=""></param>
-void PlayerModel::AddParts(std::vector<ModelBase*> partss)
-{
 
-	for (auto& parts : partss)
-	{
-		//パーツ名の取得
-		auto name = parts->GetPartsName();
-		//登録されたパーツ名があるか
-		auto sertchParts = m_parts.find(name);
-		//あれば
-		if (sertchParts != m_parts.end())
-		{
-			continue;
-		}
-
-		m_parts[name] = parts;
-
-
-	}
-
-}

@@ -4,18 +4,10 @@
 */
 #pragma once
 #include "GameBase/Scene/Scene.h"
-#include "Game/Entities/BaseEntity.h"
 #include <unordered_map>
 #include "Libraries/WataLib/UserInterface.h"
-#include "Game/Player/Player.h"
 
-// 前方宣言
-class CommonResources;
 
-namespace WataLib
-{
-    class Model3D;
-}
 
 
 class TitleScene :  public Scene
@@ -75,16 +67,5 @@ private:
     // シーンチェンジフラグ
     bool m_isChangeScene;
 
-    std::vector<std::unique_ptr< BaseEntity>> m_object;
-    //モデル
-    std::vector<  std::unique_ptr<WataLib::Model3D>> m_objects;
-    //
-    std::vector<std::unique_ptr<UserInterface>> m_textures;
-
-    std::unordered_map<int,std::unique_ptr<UserInterface>> m_buttom;
-
-    int m_selectButtomId;
-
-    std::unique_ptr<Player> m_player;
 
 };

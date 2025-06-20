@@ -1,8 +1,18 @@
 #pragma once
+#include "pch.h"
+#include "GameBase/Screen.h"
+
 
 namespace MathUtil
 {
-
+    /// <summary>
+    /// Lerp関数
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <param name="t"></param>
+    /// <returns></returns>
     template<typename T>
     inline T Lerp(const T& a, const T& b, float t)
     {
@@ -26,6 +36,34 @@ namespace MathUtil
             DirectX::XMConvertToRadians(vector3.z));
 
     }
+
+
+    /// <summary>
+    /// ワールド座標をスクリーン座標に変換
+    /// </summary>
+    /// <param name="worldPos">ワールド座標</param>
+    /// <param name="worldMatrix">ワールドマトリックス</param>
+    /// <param name="viewMatrix">ビュー行列</param>
+    /// <param name="projectionMatrix">射影行列</param>
+    /// <returns>スクリーン座標</returns>
+    inline DirectX::SimpleMath::Vector2 WorldToScreen(const DirectX::SimpleMath::Vector3& worldPos
+        , const DirectX::SimpleMath::Matrix& worldMatrix, const DirectX::SimpleMath::Matrix& viewMatrix
+        , const DirectX::SimpleMath::Matrix& projectionMatrix)
+    {
+        using namespace DirectX::SimpleMath;
+        // ワールド座標を変換するための行列を結合
+        Matrix transformMatrix = worldMatrix * viewMatrix * projectionMatrix;
+
+        // ワールド座標をプロジェクション空間に変換
+        Vector3 projectedPos = Vector3::Transform(worldPos, transformMatrix);
+
+        // 射影された座標をスクリーン座標に変換
+        float x = (projectedPos.x / projectedPos.z * 0.5f + 0.5f) * Screen::WIDTH;
+        float y = (0.5f - projectedPos.y / projectedPos.z * 0.5f) * Screen::HEIGHT;
+
+        return Vector2(x, y);
+    }
+
 
 
 }

@@ -63,13 +63,11 @@ public:
 	//遷移パラメーターの作成    状態遷移名　状態
 	void CrateTransitionParameter(std::unordered_map<std::string, ExecutionState> parameters) { m_transitionParamter = parameters; };
 
-
-	//アニメーションの再生
+	//アニメーションの再生　　終了後Loop出ないなら止まる
 	void Play(const std::string& animationName);
-
-	//アニメーションの切り替え
+	//アニメーションの切り替え　終了後通常に戻る
 	void SetTrigger(const std::string& connectionName);
-	//アニメーションの切り替え　対よりも大きい場合のみ変更
+	//アニメーションの切り替え　対よりも大きい場合のみ変更　
 	void SetFloat(const std::string& connectionName,const float& value);
 
 private:
@@ -82,8 +80,10 @@ private:
 	bool IsFindParameter(const std::string& connectionName);
 	//トリガーの実行ができるかの判定
 	bool CheckTrigger(const std::string& connectionName);
-	//Floatの実行ができるかの判定
-	bool CheckFloat(const std::string& connectionName,const float& value);
+	//Floatの遷移フローがあるかの判定
+	bool CheckFloatTransition(const std::string& connectionName,const float& value);
+	//Floatの値による判定
+	bool CheckFloatValue(const std::string& connectionName,const float& value);
 
 	//アニメーションの切り替え
 	void ChangeAnimation(Animator* animatior);

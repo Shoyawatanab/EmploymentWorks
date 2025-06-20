@@ -57,12 +57,16 @@ void AnimationController::Update(const float& deltaTime)
 			break;
 		case AnimationController::ExecutionState::PLAY:
 
-			m_currentAnimation->Rerun();
-
 			//ループ再生かどうか
-			if (!m_currentAnimation->GetIsLoop())
+			if (m_currentAnimation->GetIsLoop())
+			{
+				m_currentAnimation->Rerun();
+			}
+			//ループでないとき
+			else
 			{
 				m_state = ExecutionState::NONE;
+
 			}
 			break;
 		case AnimationController::ExecutionState::TRIIGER:
@@ -260,7 +264,7 @@ void AnimationController::Play(const std::string& animationName)
 /// <param name="connectionName">状態接続名</param>
 void AnimationController::SetTrigger(const std::string& connectionName)
 {
-	//なければ
+	//パラメーターになければ
 	if (!IsFindParameter(connectionName))
 	{
 		return;
@@ -286,24 +290,54 @@ void AnimationController::SetTrigger(const std::string& connectionName)
 /// <param name="value">比較値</param>
 void AnimationController::SetFloat(const std::string& connectionName, const float& value)
 {
-	//なければ
+	//トリガー状態ならやらない
+	if (m_state == ExecutionState::TRIIGER)
+	{
+		return;
+	}
+
+	//パラメーターになければ
 	if (!IsFindParameter(connectionName))
 	{
 		return;
 	}
-
-	//実行できるか
-	if (!CheckFloat(connectionName,value))
+	//探す
+	auto it = m_floatTransitionList.find(connectionName);
+	//リストに泣ければ
+	if (it == m_floatTransitionList.end())
 	{
-		//できない
 		return;
 	}
 
-	//様態の変更
-	m_state = ExecutionState::FLOAT;
-	//実行アニメーションの変更
-	ChangeAnimation(m_animations[m_floatTransitionList[connectionName].ToName].get());
 
+	//Anystateかどうか
+	if (it->second.FromName == "AnyState" ||                                   //AnyStateかどうか
+		m_currentAnimation->GetAnimaiionName() == it->second.FromName)		   //遷移元のアニメーションと実行アニメーションが同じか
+	{
+		if (CheckFloatValue(connectionName, value))
+		{
+			//様態の変更
+			m_state = ExecutionState::FLOAT;
+			//実行アニメーションの変更
+			ChangeAnimation(m_animations[m_floatTransitionList[connectionName].ToName].get());
+			return;
+		}
+	}
+
+
+	//すでにアニメーションに切り替わっている場合
+	if (m_currentAnimation->GetAnimaiionName() == it->second.ToName)
+	{
+		if (!CheckFloatValue(connectionName, value))
+		{
+			//様態の変更
+			m_state = ExecutionState::PLAY;
+			//実行アニメーションの変更
+			ChangeAnimation(m_normalAnimation);
+
+		}
+
+	}
 
 
 }
@@ -408,11 +442,11 @@ bool AnimationController::CheckTrigger(const std::string& connectionName)
 }
 
 /// <summary>
-/// Floatの実行ができるかの判定
+/// Floatの遷移フローがあるかの判定
 /// </summary>
 /// <param name="connectionName">遷移名</param>
 /// <returns>true:できる   false:できない</returns>
-bool AnimationController::CheckFloat(const std::string& connectionName, const float& value)
+bool AnimationController::CheckFloatTransition(const std::string& connectionName, const float& value)
 {
 	auto it = m_floatTransitionList.find(connectionName);
 	//リストに泣ければ
@@ -421,30 +455,7 @@ bool AnimationController::CheckFloat(const std::string& connectionName, const fl
 		return false;
 	}
 
-	//値の比較
-	switch (m_floatTransitionList[connectionName].State)
-	{
-		//大きい
-		case FloatState::Greater:
-			//小さい場合
-			if (value <= m_floatTransitionList[connectionName].Value)
-			{
-				//できない
-				return false;
-			}
-			break;
-			//小さい
-		case FloatState::Less:
-			//大きい場合
-			if (value >= m_floatTransitionList[connectionName].Value)
-			{
-				//できない
-				return false;
-			}
-			break;
-		default:
-			break;
-	}
+
 
 	//Anystateかどうか
 	if (it->second.FromName == "AnyState")
@@ -457,12 +468,46 @@ bool AnimationController::CheckFloat(const std::string& connectionName, const fl
 	//実行中アニメーションと遷移元アニメーション名が一致するか
 	if (m_currentAnimation->GetAnimaiionName() == it->second.FromName)
 	{
-		//しない場合
+		//できる
 		return true;
 	}
 
 
 
+	//できない
+	return false;
+}
+
+/// <summary>
+/// Floatの値による比較
+/// </summary>
+/// <param name="connectionName">遷移名</param>
+/// <param name="value">値</param>
+/// <returns>true: できる  false:できない</returns>
+bool AnimationController::CheckFloatValue(const std::string& connectionName, const float& value)
+{
+	//値の比較
+	switch (m_floatTransitionList[connectionName].State)
+	{
+		//大きい
+		case FloatState::Greater:
+			if (value > m_floatTransitionList[connectionName].Value)
+			{
+				//できる
+				return true;
+			}
+			break;
+			//小さい
+		case FloatState::Less:
+			if (value <= m_floatTransitionList[connectionName].Value)
+			{
+				//できる
+				return true;
+			}
+			break;
+		default:
+			break;
+	}
 
 	return false;
 }
@@ -477,6 +522,11 @@ void AnimationController::ChangeAnimation(Animator* animatior)
 	//同じなら行わない
 	if (m_currentAnimation == animatior)
 	{
+		if(!m_currentAnimation->GetIsEnd())
+		{
+			m_currentAnimation->Rerun();
+		}
+
 		return;
 	}
 	//初期化

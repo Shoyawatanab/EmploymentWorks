@@ -3,9 +3,8 @@
 #include "GameBase/Actor.h"
 #include "GameBase/Scene/Scene.h"
 #include "GameBase/Managers.h"
-#include "Game/CommonResources.h"
-#include "DeviceResources.h"
-#include "Libraries/WataLib/GameResources.h"
+#include "GameBase/Common/Commons.h"
+#include "GameBase/GameResources.h"
 #include "GameBase/Shader/ShaderFactory.h"
 #include "Libraries/MyLib/BinaryFile.h"
 #include "GameBase/Screen.h"
@@ -16,9 +15,8 @@
 /// </summary>
 const std::vector<D3D11_INPUT_ELEMENT_DESC> ImageComponent::INPUT_LAYOUT =
 {
-	{ "POSITION",	0, DXGI_FORMAT_R32G32B32_FLOAT,    0, 0,                                                                           D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	{ "COLOR",	    0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, sizeof(DirectX::SimpleMath::Vector3),                                        D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	{ "TEXCOORD",	0, DXGI_FORMAT_R32G32_FLOAT,       0, sizeof(DirectX::SimpleMath::Vector3) + sizeof(DirectX::SimpleMath::Vector4), D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	 { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 };
 
 
@@ -33,9 +31,9 @@ ImageComponent::ImageComponent(Actor* owner, std::string textureName)
 	,m_geometryShader{}
 	,m_textureHeight{}
 	,m_textureWidth{}
-	,m_renderRatio{1.0f}
-	,m_renderRatioOffset{}
-	, m_alphaValue{1.0f}
+	,m_color{DirectX::SimpleMath::Vector4(1.0f,1.0f,1.0f,1.0f)}
+	,m_cutRange{DirectX::SimpleMath::Vector4(0.0f,0.0f,1.0f,1.0f)}
+	,m_fillAmount{DirectX::SimpleMath::Vector4::One}
 {
 
 	using namespace DirectX;
@@ -63,7 +61,7 @@ ImageComponent::ImageComponent(Actor* owner, std::string textureName)
 
 
 	//	プリミティブバッチの作成
-	m_batch = std::make_unique<PrimitiveBatch<VertexPositionColorTexture>>(context);
+	m_batch = std::make_unique<PrimitiveBatch<VertexPositionTexture>>(context);
 
 
 	//	シェーダーにデータを渡すためのコンスタントバッファ生成
@@ -94,28 +92,25 @@ void ImageComponent::Render()
 	auto states = CommonResources::GetInstance()->GetCommonStates();
 
 
-	// 頂点情報
-	// Position.xy	:拡縮用スケール
-	// Position.z	:アンカータイプ(0～8)の整数で指定
-	// Color.xy　	:アンカー座標(ピクセル指定:1280 ×720)
-	// Color.zw		:画像サイズ
-	// Tex.xy		:ウィンドウサイズ（バッファも同じ。こちらは未使用）
-	VertexPositionColorTexture vertex[1] = {
-		VertexPositionColorTexture(
-			 Vector3(GetActor()->GetTransform()->GetWorldScale().x, GetActor()->GetTransform()->GetWorldScale().y, ANCHOR::MIDDLE_CENTER)
-			,Vector4(GetActor()->GetTransform()->GetWorldPosition().x, GetActor()->GetTransform()->GetWorldPosition().y, static_cast<float>(m_textureWidth), static_cast<float>(m_textureHeight))
-			,Vector2(m_renderRatio - m_renderRatioOffset,0))
-	};
 
+	VertexPositionTexture vertex{};
 
-	//	シェーダーに渡す追加のバッファを作成する。(ConstBuffer）
+	Vector3 pos = GetActor()->GetTransform()->GetWorldPosition();
+	Vector3 sca = GetActor()->GetTransform()->GetWorldScale();
+
+	//シェーダーに渡す追加のバッファを作成する。(ConstBuffer）
 	ConstBuffer cbuff;
-	cbuff.windowSize = SimpleMath::Vector4(Screen::WIDTH, Screen::HEIGHT, 1, 1);
-	cbuff.diffuse = SimpleMath::Vector4(1, 1, 1, m_alphaValue);
+	cbuff.windowSize = SimpleMath::Vector4(Screen::WIDTH, Screen::HEIGHT, 0, 0);
+	cbuff.Position = Vector4(GetActor()->GetTransform()->GetWorldPosition().x, GetActor()->GetTransform()->GetWorldPosition().y,0,0);
+	//cbuff.Position = Vector4(100,100,0,0);
+	cbuff.Size = Vector4(GetActor()->GetTransform()->GetWorldScale().x,GetActor()->GetTransform()->GetWorldScale().y,0,0);
+	//cbuff.Size = Vector4(100,100,0,0);
+	cbuff.Color = m_color;
+	cbuff.CutRange = m_cutRange;
+	cbuff.FillAmount = m_fillAmount;
 
 	//	受け渡し用バッファの内容更新(ConstBufferからID3D11Bufferへの変換）
 	context->UpdateSubresource(m_CBuffer.Get(), 0, NULL, &cbuff, 0, 0);
-
 
 	//	シェーダーにバッファを渡す
 	ID3D11Buffer* cb[1] = { m_CBuffer.Get() };
@@ -126,7 +121,6 @@ void ImageComponent::Render()
 	//	画像用サンプラーの登録
 	ID3D11SamplerState* sampler[1] = { states->LinearWrap() };
 	context->PSSetSamplers(0, 1, sampler);
-
 	//	半透明描画指定
 	ID3D11BlendState* blendstate = states->NonPremultiplied();
 
@@ -134,9 +128,8 @@ void ImageComponent::Render()
 	context->OMSetBlendState(blendstate, nullptr, 0xFFFFFFFF);
 
 	//	深度バッファに書き込み参照する
-	context->OMSetDepthStencilState(states->DepthDefault(), 0);
+	context->OMSetDepthStencilState(states->DepthNone(), 0);
 
-	//	カリングは左周り
 	context->RSSetState(states->CullNone());
 
 	//	シェーダをセットする
@@ -147,12 +140,14 @@ void ImageComponent::Render()
 	//	ピクセルシェーダにテクスチャを登録する。
 	context->PSSetShaderResources(0, 1, m_texture.GetAddressOf());
 
+
 	//	インプットレイアウトの登録
 	context->IASetInputLayout(m_inputLayout.Get());
 
+
 	//	板ポリゴンを描画
 	m_batch->Begin();
-	m_batch->Draw(D3D11_PRIMITIVE_TOPOLOGY_POINTLIST, &vertex[0], 1);
+	m_batch->Draw(D3D11_PRIMITIVE_TOPOLOGY_POINTLIST, &vertex, 1);
 	m_batch->End();
 
 	//	シェーダの登録を解除しておく
@@ -166,23 +161,23 @@ void ImageComponent::LoadTexture(std::string textureName)
 {
 
 	//画像の読み込み
-	m_texture = CommonResources::GetInstance()->GetGameResources()->GetTexture(textureName);
+	m_texture = GameResources::GetInstance()->GetTexture(textureName);
 
-	//シェーダーリソースビューから画像情報の取得
-	Microsoft::WRL::ComPtr<ID3D11Resource> resource;
-	m_texture->GetResource(&resource);
+	////シェーダーリソースビューから画像情報の取得
+	//Microsoft::WRL::ComPtr<ID3D11Resource> resource;
+	//m_texture->GetResource(&resource);
 
-	//リソースをTexture2Dにキャスト
-	Microsoft::WRL::ComPtr<ID3D11Texture2D> tex;
-	DX::ThrowIfFailed(resource.As(&tex));
+	////リソースをTexture2Dにキャスト
+	//Microsoft::WRL::ComPtr<ID3D11Texture2D> tex;
+	//DX::ThrowIfFailed(resource.As(&tex));
 
-	//画像情報を取得
-	D3D11_TEXTURE2D_DESC desc;
-	tex->GetDesc(&desc);
+	////画像情報を取得
+	//D3D11_TEXTURE2D_DESC desc;
+	//tex->GetDesc(&desc);
 
-	//画像のサイズを取得
-	m_textureWidth = desc.Width;
-	m_textureHeight = desc.Height;
+	////画像のサイズを取得
+	//m_textureWidth = desc.Width;
+	//m_textureHeight = desc.Height;
 }
 
 

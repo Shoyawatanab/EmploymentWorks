@@ -1,135 +1,74 @@
-/*
-* プレイヤクラス　
-*/
-
 #pragma once
-#include "Game/Entities/CompositeEntity.h"
-#include "Libraries/WataLib/Json.h"
-#include "Game/Weapon/Boomerang/Boomerang.h"
-#include "Game/Weapon/Boomerang/State/BoomerangStateMachine.h"
-#include "Game/TargetMarker.h"
-#include "Libraries/WataLib/Shadow.h"
+#include"GameBase/Actor.h"
 
-// 前方宣言
-class CommonResources;
-class PlayerUsually;
 class PlayerStateMachine;
-class Boomerang;
+class PlaySceneCamera;
+class RigidbodyComponent;
+class PlayerModel;
+class AnimatorComponent;
+class PlayerUsually;
+class TargetMarker;
+class PlayerDust;
 
-
-namespace WataLib
+class Player : public Actor
 {
-	class TPS_Camera;
-	class Bounding;
-}
-
-class Player : public CompositeEntity 
-{
-
 public:
 
-	PlayerStateMachine* GetPlayerStateMachine() { return m_stateMachine.get(); };
+	//モデルの取得
+	PlayerModel* GetPlayerModel() { return m_model; }
+	//着地しているか　true　着地してる　false　してない
+	bool GetIsGround() const { return m_isGround; }
 
-	std::vector<std::unique_ptr<Boomerang>>* GetBoomerangs() { return &m_boomerangs; }
+	//プレイシーンカメラの取得
+	PlaySceneCamera* GetPlaySceneCamera() { return m_playSceneCamera; }
+	//プレイシーンカメラのセット
+	void SetPlaySceneCamera(PlaySceneCamera* camera) { m_playSceneCamera = camera; }
 
-	/// <summary>
-	/// ブーメランの取得（Stateが該当するクラスと同じクラスを）
-	/// </summary>
-	/// <typeparam name="T">Stateクラス</typeparam>
-	/// <returns>該当するクラス（配列の初めの方から調べる）</returns>
-	template<typename T>
-	Boomerang* GetBoomerang()
-	{
-		auto it = std::find_if(m_boomerangs.begin(), m_boomerangs.end(),
-			[](const std::unique_ptr<Boomerang>& boomerang) {
-				return typeid(*boomerang->GetBoomerangStatemachine()->GetCurrentState()) == typeid(T);
-			});
+	TargetMarker* GetTargetMarker() { return m_targetMarker; }
 
-		// 見つからない場合は nullptr を返す
-		return (it != m_boomerangs.end()) ? it->get() : nullptr;
-	};
-
-
-
+	void SetTargetMarker(TargetMarker* targetMarker) { m_targetMarker = targetMarker; }
 public:
 	//コンストラクタ
-	Player(CommonResources* resources);
-
+	Player(Scene* scene);
 	//デストラクタ
-	~Player() override;
-
-
-//IObject
-	//初期化
-	void Initialize() override;
-
-	//void TitleInitialize();
-
-	//描画
-	void Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection) override;
-	//更新処理
-	void  Update(const float& elapsedTime) override;
-
-
-//ICollisionObject
-	//タグの取得
-	CollisionTag GetCollisionTag() override { return CollisionEntity::CollisionTag::PLAYER; };
-	//当たり判定クラスに登録
-	void  AddCollision(CollisionManager* collsionManager) override ;
+	~Player() override ;
+	//オブジェクト別の更新処理
+	void UpdateActor(const float& deltaTime) override;
 
 	//当たった時に呼び出される
-	void OnCollisionEnter(CollisionEntity* object, CollisionTag tag) override;
+	void OnCollisionEnter(ColliderComponent* collider) override;
+
 	//当たり続けているときの呼び出される
-	void OnCollisionStay(CollisionEntity* object, CollisionTag tag) override;
+	void OnCollisionStay(ColliderComponent* collider) override;
 
-	//当たり判定の種類の取得
-	const CollisionType GetCollisionType() override { return CollisionType::AABB; }
-	//押し出しをするかどうか
-	const bool GetIsExtrusion() override { return true; };
-	//当たり判定を行わないタグ
-	const std::vector<CollisionTag> GetNoHitDetectionTag() {
-		return  {
-			{CollisionTag::PLAYERPARTS}
-			//,{CollisionTag::Boomerang}
-		};
-	}
-
-	//押し出しを行わないタグ
-	const std::vector<CollisionTag> GetNoExtrusionTag() {
-		return  {
-			{CollisionTag::BOOMERANG}
-		};
-	};
-
-
-//ICharacter
-	//アニメーションの登録
-	void SetAnimationData(const std::string& animationType
-		,std::unordered_map<std::string, std::unordered_map<std::string, WataLib::Json::AnimationData>> datas
-		, const std::string& partsName = ""
-		, bool isNormalAnimation = false) override;
-	//アニメーションの変更
-	void ChangeAnimation(const std::string& animationType) override;
+	//衝突が終了したときに呼び出される
+	void OnCollisionExit(ColliderComponent* collider) override;
 
 private:
-	//宣言
+	//着地したとき
+	void Landing();
 
-	//動き
-	std::unique_ptr<PlayerUsually> m_usually;
-	//アニメーションデータ
-	std::unordered_map<std::string, std::unordered_map<std::string, WataLib::Json::AnimationData>> m_animationDatas;
+private:
 	//ステートマシン
 	std::unique_ptr<PlayerStateMachine>  m_stateMachine;
+	//プレイシーンカメラ
+	PlaySceneCamera* m_playSceneCamera;
+	//重力
+	RigidbodyComponent* m_rigidBody;
+	//プレイヤモデル
+	PlayerModel* m_model;
+	//アニメーション
+	AnimatorComponent* m_animation;
+	//常に行う処理クラス
+	std::unique_ptr<PlayerUsually> m_usually;
+	//着地しているか
+	bool m_isGround;
+	//1フレ前の座標
+	DirectX::SimpleMath::Vector3 m_lastPosition;
 
-	//ブーメラン
-	std::vector<std::unique_ptr<Boomerang>> m_boomerangs;
-	//使用中のブーメラン
-	Boomerang* m_currentBoomerang;
-	//HP
-	int m_hp;
-	// 影オブジェクト
-	std::unique_ptr<WataLib::Shadow> m_shadow;
+	//
+	TargetMarker* m_targetMarker;
+
+	PlayerDust* m_dust;
 
 };
-
-

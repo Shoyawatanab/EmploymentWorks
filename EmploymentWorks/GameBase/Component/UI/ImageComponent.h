@@ -30,8 +30,12 @@ public:
 	//データ受け渡し用コンスタントバッファ(送信側)
 	struct ConstBuffer
 	{
-		DirectX::SimpleMath::Vector4	windowSize;
-		DirectX::SimpleMath::Vector4    diffuse;
+		DirectX::SimpleMath::Vector4	windowSize;             //画面サイズ
+		DirectX::SimpleMath::Vector4    Position;				//座標
+		DirectX::SimpleMath::Vector4	Size;					//大きさ
+		DirectX::SimpleMath::Vector4    Color;					//色
+		DirectX::SimpleMath::Vector4    CutRange;				//切り取り範囲
+		DirectX::SimpleMath::Vector4    FillAmount;				//塗りつぶし量  x 横　y 縦
 	};
 
 public:
@@ -39,19 +43,12 @@ public:
 	//画像の取得
 	ID3D11ShaderResourceView* GetImage() { return m_texture.Get(); }
 
-	//
-	void SetRenderRatio(const float& ratio) { m_renderRatio = ratio; }
-	//
-	float GetRenderRatio() const { return m_renderRatio; }
-	//
-	void SetRenderRatioOffset(const float& offset) { m_renderRatioOffset = offset; };
-	//
-	float GetRenderRatioOffset() const { return m_renderRatioOffset; }
-	//透明度のセット
-	void SetAlphaValue(const float& value) { m_alphaValue = value; }
-	//透明度の取得
-	float GetAlphaValue() const { return m_alphaValue; }
-
+	//切り取り範囲のセット
+	void SetCutRange(DirectX::SimpleMath::Vector4 range) { m_cutRange = range; }
+	//色のセット
+	void SetColor(DirectX::SimpleMath::Vector4 color) { m_color = color; }
+	//横の塗りつぶし量　０～１までの範囲
+	void SetHorizontalFillAmount(float fillAmount) { m_fillAmount.x = fillAmount; }
 
 public:
 	//コンストラクタ
@@ -82,16 +79,20 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11GeometryShader> m_geometryShader;
 
 	// プリミティブバッチ
-	std::unique_ptr<DirectX::PrimitiveBatch<DirectX::VertexPositionColorTexture>> m_batch;
+	std::unique_ptr<DirectX::PrimitiveBatch<DirectX::VertexPositionTexture>> m_batch;
 
 
 	//画像の大きさ
 	int m_textureWidth, m_textureHeight;
-	float m_renderRatio;
-	float m_renderRatioOffset;
+	//色
+	DirectX::SimpleMath::Vector4 m_color;
+	//切り取り範囲
+	DirectX::SimpleMath::Vector4 m_cutRange;
+	//塗りつぶし量　x: 横　y :縦
+	DirectX::SimpleMath::Vector4 m_fillAmount;
+	//
 
-	//画像全体の透明度
-	float m_alphaValue;
+
 
 
 };
