@@ -1,0 +1,104 @@
+#include "pch.h"
+#include "ExecutionNode.h"
+#include "GameBase/Common/Commons.h"
+#include "Game/Player/Player.h"
+#include "Game/Enemies/BossEnemy/BossEnemy.h"
+
+#include "GameBase/Messenger/Messenger.h"
+
+
+
+static const float ROTATESPEED = 1.0f;
+static const float PATROLSPEED = 2.0f;;
+
+/// <summary>
+/// 
+/// </summary>
+/// <param name="player"></param>
+/// <param name="enemy"></param>
+ExecutionNode::ExecutionNode(Player* player, BossEnemy* enemy)
+	:
+	m_commonResources{},
+	m_palyer{ player },
+	m_enemy{ enemy }
+{
+
+}
+
+/// <summary>
+/// デストラクタ
+/// </summary>
+ExecutionNode::~ExecutionNode()
+{
+
+}
+
+
+
+
+/// <summary>
+/// ビーム攻撃
+/// </summary>
+/// <returns></returns>
+IBehaviorNode::State ExecutionNode::BossEnemyBeamAction()
+{
+
+	Messenger::GetInstance()->Notify(MessageType::BOSS_BEAM_ATTACK_STATE);
+
+
+	return IBehaviorNode::State::SUCCESS;
+
+}
+
+/// <summary>
+/// バリア防御
+/// </summary>
+/// <returns></returns>
+IBehaviorNode::State ExecutionNode::BossEnemyBarrierDefenseAction()
+{
+
+	//Messenger::GetInstance()->Notify<EnemyMessageType>(m_enemy->GetID(), EnemyMessageType::BARRIER_DEFENSE, nullptr);
+
+	return IBehaviorNode::State::SUCCESS;
+
+}
+
+/// <summary>
+/// ジャンプ攻撃
+/// </summary>
+/// <returns></returns>
+IBehaviorNode::State ExecutionNode::BossEnemyJumpAttackAction()
+{
+
+	Messenger::GetInstance()->Notify(MessageType::BOSS_JUMP_ATTACK_STATE);
+
+	return IBehaviorNode::State::SUCCESS;
+
+}
+
+/// <summary>
+/// 歩き
+/// </summary>
+/// <returns></returns>
+IBehaviorNode::State ExecutionNode::BossEnemyWalking()
+{
+	Messenger::GetInstance()->Notify(MessageType::BOSS_WAKING_STATE);
+
+	return IBehaviorNode::State::SUCCESS;
+
+}
+
+/// <summary>
+/// 振り下ろし攻撃
+/// </summary>
+/// <returns></returns>
+IBehaviorNode::State ExecutionNode::BossEnemySwingDown()
+{
+
+	Messenger::GetInstance()->Notify(MessageType::BOSS_SWING_DOWN_STATE);
+
+
+	return IBehaviorNode::State::SUCCESS;
+}
+
+

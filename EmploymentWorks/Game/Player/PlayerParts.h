@@ -1,8 +1,8 @@
 #pragma once
-#include "GameBase/Model/ModelBase.h"
+#include "GameBase/Model/ModelPartsBase.h"
 
 
-class PlayerParts  :public ModelBase
+class PlayerParts  :public ModelPartsBase
 {
 
 public:

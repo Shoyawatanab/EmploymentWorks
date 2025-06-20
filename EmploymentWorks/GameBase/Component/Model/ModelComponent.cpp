@@ -2,10 +2,8 @@
 #include "ModelComponent.h"
 #include "GameBase/Scene/Scene.h"
 #include "GameBase/Manager/RenderManager.h"
-#include "Libraries/WataLib/GameResources.h"
-#include "Game/CommonResources.h"
-#include "DeviceResources.h"
-#include "Game/CommonResources.h"
+#include "GameBase/Common/Commons.h"
+#include "GameBase/GameResources.h"
 #include "GameBase/Camera/Camera.h"
 
 
@@ -22,7 +20,7 @@ ModelComponent::ModelComponent(Actor* owner, std::string modelMame)
 	m_commonResources = CommonResources::GetInstance();
 
 	//ƒ‚ƒfƒ‹‚ÌŽæ“¾
-	m_model = m_commonResources->GetInstance()->GetGameResources()->GetModel(modelMame);
+	m_model = GameResources::GetInstance()->GetModel(modelMame);
 
 	GetActor()->GetScene()->GetRenderMangaer()->AddModel(this);
 

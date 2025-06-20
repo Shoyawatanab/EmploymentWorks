@@ -5,18 +5,8 @@
 #pragma once
 #include "GameBase/Scene/Scene.h"
 #include "SceneManager.h"
-#include "Game/Interface/IObserver.h"
 
 // ‘O•ûéŒ¾
-class StageObjectManager;
-class Player;
-class CollisionManager;
-class UIManager;
-class TargetMarker;
-class EffectsManager;
-class Sky;
-class UserInterface;
-class SoundManager;
 
 namespace mylib
 {
@@ -29,7 +19,7 @@ namespace WataLib
 	class CameraManager;
 }
 
-class PlayScene  :  public Scene ,public IObserver<GamePlayMessageType>
+class PlayScene  :  public Scene// ,public IObserver<GamePlayMessageType>
 {
 public:
 
@@ -67,7 +57,7 @@ private:
 
 
 	//’Ê’m‚ÉŒÄ‚Ño‚³‚ê‚é
-	void Notify(const Telegram<GamePlayMessageType>& telegram) override;
+	//void Notify(const Telegram<GamePlayMessageType>& telegram) override;
 
 
 private:

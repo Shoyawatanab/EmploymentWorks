@@ -2,31 +2,31 @@
 * プレイヤの通常状態クラス
 */
 #pragma once
-
 #include "GameBase/StateMachine/StateMachine.h"
+#include "GameBase/Messenger/IObserver.h"
 
-class Player2;
+class Player;
 
 
 enum class PlayerState
 {
-	IDEL
-	, ATTACK
-	,WALK
+	IDEL                                  //通常
+	, BOOMERANG_ATTACK					  //ブーメラン攻撃
+	, BOOMERANG_GET_READY				  //ブーメラン構え
 };
 
-class PlayerStateMachine : public StateMachine<IState,PlayerState>//, public IObserver<PlayerMessageType>
+class PlayerStateMachine : public StateMachine<IState,PlayerState>, public IObserver
 {
 
 public:
 	//コンストラクタ
-	PlayerStateMachine(Player2* player);
+	PlayerStateMachine(Player* player);
 	//デストラクタ
 	~PlayerStateMachine();
 
 
-
-	//void Notify(const Telegram<PlayerMessageType>& telegram)  override;
+	//通知時に呼び出される
+	void Notify(MessageType type, void* datas) override;
 
 	
 };

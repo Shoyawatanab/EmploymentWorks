@@ -1,9 +1,10 @@
 #include "pch.h"
 #include "RenderManager.h"
 #include "GameBase/Camera/Camera.h"
-#include "Game/CommonResources.h"
-#include "DeviceResources.h"
+#include "GameBase/Common/Commons.h"
 
+
+#include "GameBase/Camera/Camera.h"
 
 /// <summary>
 /// コンストラクタ
@@ -12,6 +13,7 @@ RenderManager::RenderManager()
 	:
 	m_models{}
 	,m_colliders{}
+	,m_particle{}
 {
 	
 	using namespace DirectX;
@@ -54,11 +56,20 @@ void RenderManager::Render(const Camera& camera)
 {
 	for (auto& model : m_models)
 	{
+		if (!model->GetActive()) { continue; }
 		model->Render(camera);
+	}
+
+	for (auto& a : m_particle)
+	{
+		a->Render(camera.GetViewMatrix(), camera.GetProjectionMatrix());
+	
 	}
 
 	for (auto& ui : m_uis)
 	{
+		if (!ui->GetActive()) { continue; }
+
 		ui->Render();
 	}
 	
@@ -68,7 +79,11 @@ void RenderManager::Render(const Camera& camera)
 #ifdef _DEBUG
 	for (auto& collider : m_colliders)
 	{
-		collider->Render(camera.GetViewMatrix(),camera.GetProjectionMatrix(), m_batch.get(),m_effect.get(),m_layout.Get());
+		if (collider->GetActive())
+		{
+			collider->Render(camera.GetViewMatrix(), camera.GetProjectionMatrix(), m_batch.get(), m_effect.get(), m_layout.Get());
+
+		}
 	}
 #endif
 }
@@ -163,5 +178,12 @@ void RenderManager::AddCollider(ColliderComponent* comp)
 	}
 #endif
 
+
+}
+
+void RenderManager::AddParticle(ParticleSystem* system)
+{
+
+	m_particle.push_back(system);
 
 }

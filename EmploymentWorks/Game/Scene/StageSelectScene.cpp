@@ -5,15 +5,13 @@
 #include "pch.h"
 #include "StageSelectScene.h"
 #include "GameBase/Screen.h"
-#include "Game/CommonResources.h"
-#include "DeviceResources.h"
+#include "GameBase/Common/Commons.h"
 #include "Libraries/MyLib/MemoryLeakDetector.h"
 #include "Libraries/MyLib/InputManager.h"
 #include <cassert>
 
 #include "Libraries/WataLib/Fade.h"
 #include "Game/Params.h"
-#include "Libraries/WataLib/DetectionCollision.h"
 #include "Libraries/MyLib/DebugString.h"
 
 using namespace DirectX;
@@ -106,16 +104,16 @@ void StageSelectScene::SceneUpdate(float elapsedTime)
 	for (auto& buttom : m_buttom)
 	{
 		buttom.second->SetScale(buttom.second->GetInialScale());
-		if (WataLib::DetectionCollision::Circle_RectCheckHit(mousePosition, Params::MOUSE_RADIUS,
-			buttom.second->GetPosition(), static_cast<float>(buttom.second->GetWidth()), static_cast<float>(buttom.second->GetHeight())))
-		{
-			buttom.second->SetScale(buttom.second->GetInialScale() * 1.4f);
+		//if (WataLib::DetectionCollision::Circle_RectCheckHit(mousePosition, Params::MOUSE_RADIUS,
+		//	buttom.second->GetPosition(), static_cast<float>(buttom.second->GetWidth()), static_cast<float>(buttom.second->GetHeight())))
+		//{
+		//	buttom.second->SetScale(buttom.second->GetInialScale() * 1.4f);
 
-			m_selectButtomId = buttom.first;
+		//	m_selectButtomId = buttom.first;
 
-			break;
+		//	break;
 
-		}
+		//}
 
 	}
 

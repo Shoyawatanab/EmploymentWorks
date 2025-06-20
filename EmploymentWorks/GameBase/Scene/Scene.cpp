@@ -20,7 +20,7 @@ Scene::Scene()
 
 	m_renderMangaer = std::make_unique<RenderManager>();
 
-	m_collisionManager = std::make_unique<CollisionManager2>();
+	m_collisionManager = std::make_unique<CollisionManager>();
 
 	m_rigidbodyManager = std::make_unique<RigidbodyManager> ();
 
@@ -47,7 +47,10 @@ Scene::~Scene()
 /// </summary>
 void Scene::Initialize()
 {
-
+	for (auto& actor : m_actors)
+	{
+		actor->Initialize();
+	}
 }
 
 /// <summary>
@@ -61,6 +64,7 @@ void Scene::Update(float deltaTime)
 	// アクターの更新をする
 	for (auto& actor : m_actors)
 	{
+		if (!actor->GetActive()) { continue; }
 		actor->Update(deltaTime);
 	}
 

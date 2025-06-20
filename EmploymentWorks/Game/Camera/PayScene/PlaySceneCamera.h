@@ -3,16 +3,16 @@
 
 
 class PlaySceneCameraStateMachine;
-class Player2;
+class Player;
 
 class PlaySceneCamera : public Camera
 {
 
 public:
 	//プレイヤのセット
-	void SetPlayer(Player2* player) { m_player = player; }
+	PlaySceneCamera* SetPlayer(Player* player) { m_player = player; return this; }
 	//プレイヤの取得
-	Player2* GetPlayer() const { return m_player; }
+	Player* GetPlayer() const { return m_player; }
 	//X軸回転の取得
 	float GetRotationX() const { return m_rotationX; }
 	//X軸回転のセット
@@ -39,7 +39,7 @@ private:
 	//ステートマシーン
 	std::unique_ptr<PlaySceneCameraStateMachine> m_stateMachine;
 	//プレイヤ
-	Player2* m_player;
+	Player* m_player;
 
 	//横回転
 	float m_rotationX;

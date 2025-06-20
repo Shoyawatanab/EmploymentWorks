@@ -222,6 +222,8 @@ DirectX::SimpleMath::Vector3 Transform::GetRotatePosition()
 	return m_parent->GetRotatePosition() + distance;
 }
 
+
+
 /// <summary>
 /// ³–ÊƒxƒNƒgƒ‹‚Ìæ“¾
 /// </summary>
@@ -230,10 +232,10 @@ DirectX::SimpleMath::Vector3 Transform::GetForwardVector()
 {
 	using namespace DirectX::SimpleMath;
 
-	Vector3 forward = Vector3::Transform(Vector3::UnitZ, m_rotate);
+	Vector3 forward = Vector3::Transform(Vector3::Backward, m_rotate);
 	forward.Normalize();
 
-	return forward; ;
+	return forward;
 }
 
 /// <summary>

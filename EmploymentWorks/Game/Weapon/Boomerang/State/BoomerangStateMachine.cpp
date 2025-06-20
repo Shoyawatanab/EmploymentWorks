@@ -1,25 +1,26 @@
 #include "pch.h"
 #include "BoomerangStateMachine.h"
-
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
+#include "Game/Weapon/Boomerang/State/BoomerangStates.h"
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
-BoomerangStateMachine::BoomerangStateMachine(Boomerang* boomerang)
-	:
-	m_currentState{}
-	,m_idle{}
-	,m_getReady{}
+/// <param name="boomerang">ブーメラン</param>
+BoomerangStateMachine::BoomerangStateMachine(Boomerang* boomerang, Player* player)
 {
-	m_idle = std::make_unique<BoomerangIdle>(boomerang);
-	m_getReady = std::make_unique<BoomerangGetReady>(boomerang);
-	m_rigntThrow = std::make_unique<BoomerangRightThrow>(boomerang);
-	m_leftThrow = std::make_unique<BoomerangLeftThrow>(boomerang);
-	m_frontThrow = std::make_unique<BoomerangFrontThrow>(boomerang);
-	m_repelled = std::make_unique<BoomerangRepelled>(boomerang);
-	m_drop = std::make_unique<BoomerangDrop>(boomerang);
+
+	//IDLE
+	AddState(BoomerangState::IDEL, std::make_unique<BoomerangIdle>(this, boomerang,player));
+	AddState(BoomerangState::THROW, std::make_unique<BoomerangThrow>(this, boomerang,player));
+	AddState(BoomerangState::GET_READY, std::make_unique<BoomerangGetReady>(this, boomerang,player));
+
+	//初期状態
+	SetStartState(BoomerangState::IDEL);
+	
+
+
+
+
 }
 
 /// <summary>
@@ -29,58 +30,27 @@ BoomerangStateMachine::~BoomerangStateMachine()
 {
 }
 
-
-
-
-/// <summary>
-/// 初期化
-/// </summary>
-/// <param name="resources">共通リソース</param>
-/// <param name="startState">初期ステート</param>
-void BoomerangStateMachine::Initialize(CommonResources* resources, IState* startState)
-{
-	//初期化
-	m_idle->Initialize(resources);
-	m_getReady->Initialize(resources);
-	m_rigntThrow->Initialize(resources);
-	m_leftThrow->Initialize(resources);
-	m_frontThrow->Initialize(resources);
-	m_repelled->Initialize(resources);
-	m_drop->Initialize(resources);
-
-	//ステートを設定
-	m_currentState = startState;
-	m_currentState->Enter();
-
-
-}
-
-
-/// <summary>
-/// 更新処理
-/// </summary>
-/// <param name="elapsedTime">経過時間</param>
-void BoomerangStateMachine::Update(const float& elapsedTime)
-{
-	//ステートの更新
-	m_currentState->Update(elapsedTime);
-}
-
-
-
-/// <summary>
-/// ステートの切り替え
-/// </summary>
-/// <param name="nextState">次のステート</param>
-void BoomerangStateMachine::ChangeState(IState* nextState)
-{
-
-	m_currentState->Exit();
-	m_currentState = nextState;
-	m_currentState->Enter();
-
-
-
-}
-
-
+///// <summary>
+///// 通知時に呼び出される関数
+///// </summary>
+///// <param name="type"></param>
+///// <param name="datas"></param>
+//void BoomerangStateMachine::Notify(MessageType type, void* datas)
+//{
+//	
+//	switch (type)
+//	{
+//		case MessageType::BOOMERANG_IDEL_STATE:
+//			ChangeState(BoomerangState::IDEL);
+//			break;
+//		case MessageType::BOOMERANG_GET_READY_STATE:
+//			ChangeState(BoomerangState::GET_READY);
+//			break;
+//		case MessageType::BOOMERANG_THROW_STATE:
+//			ChangeState(BoomerangState::THROW);
+//			break;
+//		default:
+//			break;
+//	}
+//	
+//}

@@ -16,7 +16,7 @@ BossEnemyLeftThigh::BossEnemyLeftThigh(Scene* scene)
 	//ˆÈ‰º’Ç‰Á•”ˆÊ‚Ìì¬
 	//LeftLeg‚Ì¶¬
 	auto leftLeg = GetScene()->AddActor<BossEnemyLeftLeg>(GetScene());
-	leftLeg->GetTransform()->SetParent(GetTransform());
+	leftLeg->SetParent(this);
 
 	//ˆÊ’uî•ñ
 	GetTransform()->Translate(Params::BOSSENEMY_LEFTTHIGH_POSITION);

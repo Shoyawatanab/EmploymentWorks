@@ -3,8 +3,7 @@
 #include "GameBase/Actor.h"
 #include "GameBase/Scene/Scene.h"
 #include "GameBase/Managers.h"
-#include "Game/CommonResources.h"
-#include "DeviceResources.h"
+#include "GameBase/Common/Commons.h"
 #include "Libraries/Microsoft/DebugDraw.h"
 
 
@@ -70,6 +69,7 @@ bool ColliderComponent::DleteHitObject(ColliderComponent* object)
 };
 
 
+
 /// <summary>
 /// 押し出し処理
 /// </summary>
@@ -82,6 +82,8 @@ void ColliderComponent::SetPushBack(DirectX::SimpleMath::Vector3 pushBackVector)
 	PositionUpdate();
 
 }
+
+
 
 
 
@@ -131,6 +133,15 @@ void AABB::UpdateCollider()
 }
 
 
+
+/// <summary>
+/// 当たり判定の描画
+/// </summary>
+/// <param name="view"></param>
+/// <param name="projection"></param>
+/// <param name="batch"></param>
+/// <param name="effect"></param>
+/// <param name="inputlayout"></param>
 void AABB::RenderCollider(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection
 	,DirectX::PrimitiveBatch<DirectX::VertexPositionColor>* batch, DirectX::BasicEffect* effect, ID3D11InputLayout* inputlayout)
 {
@@ -169,6 +180,24 @@ void AABB::PositionUpdate()
 	m_boundingBox->Center = GetActor()->GetTransform()->GetPosition();
 	m_boundingSphere->Center = GetActor()->GetTransform()->GetPosition();
 
+}
+
+
+DirectX::BoundingBox* AABB::GetBoundingBox()
+{
+	//座標の更新
+	m_boundingBox->Center = GetActor()->GetTransform()->GetPosition();
+	return m_boundingBox.get();
+}
+
+/// <summary>
+/// 
+/// </summary>
+/// <returns></returns>
+DirectX::BoundingSphere* AABB::GetBoundingSphere()
+{
+	m_boundingSphere->Center = GetActor()->GetTransform()->GetPosition();
+	return m_boundingSphere.get();
 }
 
 

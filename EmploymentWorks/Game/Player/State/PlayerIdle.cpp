@@ -1,23 +1,22 @@
 #include "pch.h"
 #include "PlayerIdle.h"
-#include "Game/CommonResources.h"
-#include "DeviceResources.h"
+#include "GameBase/Common/Commons.h"
 #include "Libraries/MyLib/InputManager.h"
-
-#include "Game/Player/Player2.h"
+#include "Game/Player/Player.h"
 #include "Game/Player/State/PlayerStateMachine.h"
-#include "Game/Weapon/Boomerang/State/BoomerangStateMachine.h"
-#include "Game/Observer/Messenger.h"
+#include "GameBase/Messenger/Messenger.h"
+#include "Game/Messenger/MessageParams.h"
 
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
-PlayerIdle::PlayerIdle(PlayerStateMachine* stateMachine, Player2* player)
+PlayerIdle::PlayerIdle(PlayerStateMachine* stateMachine, Player* player)
 	:
 	m_stateMahine{stateMachine}
 	,m_player{player}
 {
+
 
 
 }
@@ -35,21 +34,29 @@ PlayerIdle::~PlayerIdle()
 /// <summary>
 /// 更新処理
 /// </summary>
-/// <param name="elapsedTime">経過時間</param>
-void PlayerIdle::Update(const float& elapsedTime)
+/// <param name="deltaTime">経過時間</param>
+void PlayerIdle::Update(const float& deltaTime)
 {
-	UNREFERENCED_PARAMETER(elapsedTime);
+	UNREFERENCED_PARAMETER(deltaTime);
 
 	using namespace DirectX;
 
+	const auto& tracker = CommonResources::GetInstance()->GetInputManager()->GetMouseTracker();
 
 
-	////左ボタンが押されたら
-	//if (tracker->leftButton == Mouse::ButtonStateTracker::ButtonState::PRESSED)
-	//{
-	//	Messenger::GetInstance()->Notify<PlayerMessageType>(m_player->GetID(), PlayerMessageType::ATTACK);
+	//左ボタンが押されたら
+	if (tracker->leftButton == Mouse::ButtonStateTracker::ButtonState::PRESSED)
+	{
+		//通知
+		//プレイヤの状態についての通知
+		Messenger::GetInstance()->Notify(MessageType::PLAYER_BOOMERANG_GET_READY_STATE);
+		//プレイヤの構えた活動に対しての通知
+		Messenger::GetInstance()->Notify(MessageType::PLAYER_GET_REDAY);
+		//ブーメランの状態を構えに
+		Messenger::GetInstance()->Notify(MessageType::BOOMERANG_GET_READY_STATE);
 
-	//}
+
+	}
 
 
 

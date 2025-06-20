@@ -16,30 +16,33 @@ PlayerHp::PlayerHp(Canvas* canvas)
 
 	using namespace DirectX::SimpleMath;
 
-	Vector3 scale = Vector3(0.1f,0.1f,0.0f);
-	Vector3 position = Vector3(100.0f, 360.0f,0.0f);
 
-
-
-
-
-	auto image1 = GetScene()->AddActor<Image>(canvas, "BoomerangUI");
+	auto image1 = GetScene()->AddActor<Image>(canvas, "HP");
 	image1->GetTransform()->SetParent(GetTransform());
 
-	image1->GetTransform()->SetScale(Vector3(0.2f, 0.2f,0.0f));
-	image1->GetTransform()->SetPosition(Vector3(0.0f, 100.0f,0.0f));
+	image1->GetTransform()->SetScale(HEART_SCALE);
+	image1->GetTransform()->SetPosition(-OFFSET_POSITION);
 
-
-	auto image2 = GetScene()->AddActor<Image>(canvas, "BoomerangUI");
+	auto image2 = GetScene()->AddActor<Image>(canvas, "HP");
 	image2->GetTransform()->SetParent(GetTransform());
 
-	image2->GetTransform()->SetScale(Vector3(0.2f, 0.2f, 0.0f));
-	image2->GetTransform()->SetPosition(Vector3(0.0f, -100.0f, 0.0f));
+	image2->GetTransform()->SetScale(HEART_SCALE);
+	image2->GetTransform()->SetPosition(Vector3::Zero);
+
+	auto image3 = GetScene()->AddActor<Image>(canvas, "HP");
+	image3->GetTransform()->SetParent(GetTransform());
+
+	image3->GetTransform()->SetScale(HEART_SCALE);
+	image3->GetTransform()->SetPosition(OFFSET_POSITION);
 
 
+	m_heart.push_back(image1);
+	m_heart.push_back(image2);
+	m_heart.push_back(image3);
 
-	GetTransform()->SetScale(scale);
-	GetTransform()->SetPosition(position);
+	GetTransform()->SetScale(SCALE);
+	GetTransform()->SetPosition(POSITION);
+
 
 }
 
@@ -49,3 +52,4 @@ PlayerHp::PlayerHp(Canvas* canvas)
 PlayerHp::~PlayerHp()
 {
 }
+

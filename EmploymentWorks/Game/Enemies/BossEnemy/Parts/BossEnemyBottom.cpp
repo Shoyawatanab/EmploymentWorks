@@ -16,15 +16,15 @@ BossEnemyBottom::BossEnemyBottom(Scene* scene)
 
 	//Pelvis‚Ì¶¬
 	auto pelvis = GetScene()->AddActor<BossEnemyPelvis>(GetScene());
-	pelvis->GetTransform()->SetParent(GetTransform());
+	pelvis->SetParent(this);
 
 	////LeftThigh‚Ì¶¬
 	auto leftThigh = GetScene()->AddActor<BossEnemyLeftThigh>(GetScene());
-	leftThigh->GetTransform()->SetParent(GetTransform());
+	leftThigh->SetParent(this);
 
 	////RightThigh‚Ì¶¬
 	auto rightThigh = GetScene()->AddActor<BossEnemyRightThigh>(GetScene());
-	rightThigh->GetTransform()->SetParent(GetTransform());
+	rightThigh->SetParent(this);
 
 		//ˆÊ’uî•ñ
 	GetTransform()->Translate(Params::BOSSENEMY_BODY_POSITION);

@@ -2,6 +2,7 @@
 #include "GameBase/Component/Components.h"
 
 class Camera;
+class ParticleSystem;
 
 class RenderManager
 {
@@ -27,12 +28,15 @@ public:
 	//コライダーの追加　デバッグ　
 	void AddCollider(ColliderComponent* comp);
 
+	void AddParticle(ParticleSystem* system);
+
 private:
 	//モデルコンポーネント
 	std::vector<ModelComponent*> m_models;
 	//UIコンポーネント
 	std::vector<ImageComponent*> m_uis;
-
+	//
+	std::vector<ParticleSystem*> m_particle;
 
 
 	//デバッグ　
@@ -45,5 +49,6 @@ private:
 	//プリミティブバッチ
 	std::unique_ptr<DirectX::PrimitiveBatch<DirectX::VertexPositionColor>> m_batch;
 
+	
 
 };

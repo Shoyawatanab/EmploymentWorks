@@ -28,7 +28,7 @@ public:
 	//重力フラグのセット
 	void SetIsGravity(bool isGravity) { m_isGravity = isGravity; }
 	//重力のリセット
-	void ResetGravity() { m_velocity.y = 0.0f; }
+	void ResetGravity() { m_addforce.y = 0.0f; }
 public:
 	//コンストラクタ
 	RigidbodyComponent(Actor* actor);

@@ -7,9 +7,8 @@ class ColliderComponent;
 
 class Actor
 {
-//オブジェクトタグ
 public:
-
+	//オブジェクトタグ
 	enum class ObjectTag
 	{
 		NONE                               //通常
@@ -44,6 +43,7 @@ public:
 	virtual ObjectTag GetObjectTag() { return ObjectTag::NONE; }
 
 
+
 public:
 	// コンストラクタ
 	Actor(Scene* scene);
@@ -59,6 +59,10 @@ public:
 	virtual void UpdateActor(const float& deltaTime) { UNREFERENCED_PARAMETER(deltaTime); };
 	// 終了処理
 	virtual void Finalize() {};
+	//アクティブになった時に呼ばれる関数
+	virtual void OnEnable() {};
+	//非アクティブになった時に呼ばれる関数
+	virtual void OnDisable() {}
 	// 削除
 	void Destroy();
 	// コンポーネント追加
@@ -77,7 +81,6 @@ public:
 	virtual void OnCollisionStay(ColliderComponent* collider) { UNREFERENCED_PARAMETER(collider); };
 	//衝突が終了したときに呼び出される
 	virtual void OnCollisionExit(ColliderComponent* collider) { UNREFERENCED_PARAMETER(collider); };
-
 
 
 private:

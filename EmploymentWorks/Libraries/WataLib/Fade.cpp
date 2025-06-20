@@ -8,7 +8,7 @@
 #include "pch.h"
 #include "Fade.h"
 #include "Libraries/MyLib/BinaryFile.h"
-#include "DeviceResources.h"
+#include "GameBase/Common/Commons.h"
 #include <SimpleMath.h>
 #include <Effects.h>
 #include <PrimitiveBatch.h>

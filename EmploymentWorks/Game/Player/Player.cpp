@@ -1,44 +1,105 @@
 #include "pch.h"
 #include "Player.h"
-#include "Game/CommonResources.h"
-#include "DeviceResources.h"
-#include "Libraries/MyLib/InputManager.h"
-#include "Game/Player/PlayerParts/PlayerBody.h"
-
-#include "Libraries/WataLib/Json.h"
-#include "Libraries/WataLib/Bounding.h"
-
-#include "Game/Player/PlayerUsually.h"
-#include "GameBase/Manager/CollisiionManager.h"
-#include "Game/Player/State/PlayerStateMachine.h"
-#include "Game/Observer/Messenger.h"
-
+#include "GameBase/Managers.h"
+#include "GameBase/Scene/Scene.h"
 #include "Game/Params.h"
-#include "Game/InstanceRegistry.h"
+#include "Game/Player/State/PlayerStateMachine.h"
+#include "GameBase/Component/Components.h"
+#include "Game/Player/Model/PlayerModel.h"
+#include "Game/Player/Animation/PlayerAnimationController.h"
+#include "GameBase/Common/Commons.h"
+#include "Libraries/MyLib/InputManager.h"
+#include "Libraries/MyLib/MemoryLeakDetector.h"
+#include "Game/Weapon/Boomerang/Boomerang.h"
+#include "GameBase/Messenger/Messenger.h"
+#include "Game/Player/PlayerUsually.h"
 
+#include "Game/Particle/PlayerDust.h"
+
+#include "Libraries/MyLib/DebugString.h"
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
-/// <param name="resources">共通リソース</param>
-Player::Player(CommonResources* resources)
+/// <param name="scene">シーン</param>
+Player::Player(Scene* scene)
 	:
-	m_stateMachine{}
-	,m_animationDatas{}
+	Actor(scene)
+	,m_playSceneCamera{}
+	,m_rigidBody{}
 	,m_usually{}
-	,m_boomerangs{}
-	,m_hp{Params::PLAYER_HP}
-	,CompositeEntity(resources, Params::PLAYER_SCALE,Params::PLAYER_POSITION,Params::PLAYER_ROTATION)
+	,m_isGround{}
+	,m_targetMarker{}
 {
 
-	InstanceRegistry::GetInstance()->Register<Player>("Player", this);
+	m_dust = GetScene()->AddActor<PlayerDust>(GetScene());
+	m_dust->GetTransform()->SetParent(GetTransform());
+	m_rigidBody = AddComponent<RigidbodyComponent>(this);
+	//当たり判定の作成
+	auto aABBCollider = AddComponent<AABB>(this, ColliderComponent::ColliderTag::AABB, CollisionType::COLLISION
+	, Params::PLAYER_BOX_COLLIDER_SIZE
+	, Params::PLAYER_SPHERE_COLLIDER_SIZE);
+	//初期情報の適用
+	GetTransform()->SetScale(Params::PLAYER_SCALE);
+	GetTransform()->Translate(Params::PLAYER_POSITION);
+	GetTransform()->SetRotate(Params::PLAYER_ROTATION);
 
-	m_usually = std::make_unique<PlayerUsually>();
-	//m_stateMachine = std::make_unique<PlayerStateMachine>(this);
+	//モデルの作成
+	m_model =  GetScene()->AddActor<PlayerModel>(GetScene());
+	//モデルの大きさをプレイヤの設定に
+	m_model->GetTransform()->SetScale(Params::PLAYER_SCALE);
+	m_model->GetTransform()->Translate(Params::PLAYER_POSITION);
+	m_model->GetTransform()->SetRotate(Params::PLAYER_ROTATION);
+	//親子関係をセット
+	m_model->GetTransform()->SetParent(GetTransform());
 
 
+	//ステートの作成
+	m_stateMachine = std::make_unique<PlayerStateMachine>(this);
+
+	//アニメーションコンポーネントの追加
+	m_animation  = AddComponent<AnimatorComponent>(this, std::make_unique<PlayerAnimationController>(this));
 	
-	m_shadow = std::make_unique<WataLib::Shadow>();
+	m_usually = std::make_unique<PlayerUsually>(this);
+	
+	//初期状態を
+	m_lastPosition = GetTransform()->GetPosition();
+
+
+
+
+	//auto a = AddComponent<ParticleSystem>(this);
+
+	//ParticleSystem::MainModule setting;
+	//setting.LifeTime = { 2 };
+	//setting.StartSpeed = 3;
+	//setting.MinSize = { DirectX::SimpleMath::Vector3(0.1f,0.1f,0.1f) };
+	//setting.MaxSize = { DirectX::SimpleMath::Vector3(0.8f,0.8f,0.8f) };
+	//setting.MaxParticles = 10000;
+	//setting.Duration = 0.1f;
+	//auto box = std::make_shared<ShapeBox>(DirectX::SimpleMath::Vector3(1.0f, 1.0f, 1.0f) , 1);
+	//auto cone = std::make_shared<ShapeCone>(3, 30, DirectX::SimpleMath::Vector3::Up);
+
+	//ParticleSystem::Burst burst;
+	//ParticleSystem::EasingOverLifeTime lifeEas;
+
+	//lifeEas.SizeEasing = NakashiLib::Easing::EasingType::OutBounce;
+
+	//ParticleSystem::EmissionModule emitter;
+	//emitter.RateOverTime = 30;
+
+	//ParticleSystem::ForceOverLifeTimeSpeed force;
+	//force.ForcePower.Set(DirectX::SimpleMath::Vector3::Right);
+
+	//a->SetMainModule(setting)
+	//	->SetEasing(lifeEas);
+	//a->SetEmission(emitter);
+	//a->SetForce(force);
+	//a->SetShape(cone);
+	////a->AddBurst(0, 100);
+
+
+
 
 }
 
@@ -49,260 +110,102 @@ Player::~Player()
 {
 }
 
-
-
-
 /// <summary>
-/// 初期化
+/// 更新処理
 /// </summary>
-void Player::Initialize()
+/// <param name="deltaTime"></param>
+void Player::UpdateActor(const float& deltaTime)
 {
+	using namespace DirectX::SimpleMath;
 
-	CompositeEntity::Initialize();
+	m_stateMachine->Update(deltaTime);
+	m_usually->Update(deltaTime);
+	//移動量の計算
+	Vector3 movement = GetTransform()->GetPosition() - m_lastPosition;
+	//移動量からスピードを求める
+	float speed = movement.Length() / deltaTime;
 
-	//「Body」を生成する
-	//AddChild(std::make_unique<PlayerBody>(
-	//	BaseEntity::GetCommonResources(),
-	//	this,
-	//	Params::PLAYER_BODY_SCALE , 
-	//	Params::PLAYER_BODY_POSITION,
-	//	Params::PLAYER_BODY_ROTATION)
-	//);
+	m_animation->SetFloat("Move", speed);
 
-	//アニメーションデータの読み込み
-	std::unique_ptr<WataLib::Json> json = std::make_unique<WataLib::Json>();
-
-	m_animationDatas["Idle"] = json->LoadAnimationData(L"Player/Idle");
-	m_animationDatas["Move"] = json->LoadAnimationData(L"Player/Move");
-	m_animationDatas["GetReady"] = json->LoadAnimationData(L"Player/GetReady");
-	m_animationDatas["Throw"] = json->LoadAnimationData(L"Player/Throw");
-
-
-	//各パーツにアニメーションを登録
-	SetAnimationData("Idle", m_animationDatas,"", true);
-	this->SetAnimationData("Move", m_animationDatas);
-	SetAnimationData("GetReady", m_animationDatas);
-	SetAnimationData("Throw", m_animationDatas);
-
-	//初期化
-	m_usually->Initialize(BaseEntity::GetCommonResources());
-
-
-	for (int i = 0; i < Params::BOOMERANG_MAX_COUNT; i++)
+	if (speed > 3)
 	{
+		//パーティクルの生成開始
+		m_dust->GetComponent<ParticleSystem>()->PlayParticle();
+	}
+	else
+	{
+		//パーティクルの生成のストップ
+		m_dust->GetComponent<ParticleSystem>()->StopParticle();
 
-		auto boomerang = std::make_unique<Boomerang>(BaseEntity::GetCommonResources(), this, Params::BOOMERANG_SCALE, Params::BOOMERANG_POSITION, Params::BOOMERANG_ROTATION);
-		boomerang->Initialize();
-		m_boomerangs.push_back(std::move(boomerang));
 	}
 
+	//座標の保存
+	m_lastPosition = GetTransform()->GetPosition();
 
-	//当たり判定の作成
-	CollisionEntity::GetBounding()->CreateBoundingSphere(BaseEntity::GetPosition(), Params::PLAYER_SPHERE_COLLIDER_SIZE);
-	CollisionEntity::GetBounding()->CreateBoundingBox(BaseEntity::GetPosition(), Params::PLAYER_BOX_COLLIDER_SIZE);
+	//// デバッグ情報を表示する
+	auto debugString = CommonResources::GetInstance()->GetDebugString();
+	debugString->AddString("X %f", speed);
 
-
-	auto device = BaseEntity::GetCommonResources()->GetDeviceResources()->GetD3DDevice();
-	auto context = BaseEntity::GetCommonResources()->GetDeviceResources()->GetD3DDeviceContext();
-	auto states = BaseEntity::GetCommonResources()->GetCommonStates();
-
-
-	m_shadow->Initialize(device, context, states);
-
-
-	BaseEntity::SetIsGravity(false);
-}
-
-
-
-
-/// <summary>
-/// 描画
-/// </summary>
-/// <param name="view">ビュー行列</param>
-/// <param name="projection">射影行列</param>
-void Player::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
-{
-	//オブジェクトか描画が無効なら
-	if (!BaseEntity::GetIsEntityActive() || !BaseEntity::GetIsRenderActive())
-	{
-		return;
-	}
-
-	CompositeEntity::Render(view, projection);
-
-
-	//パーツの描画
-	for (auto& part : CompositeEntity::GetParts())
-	{
-		part->Render(view,projection);
-	}
-
-	for (auto& boomerang : m_boomerangs)
-	{
-		boomerang->Render(view, projection);
-	}
-
-
-	DirectX::SimpleMath::Vector3 shadowPos = BaseEntity::GetPosition();
-	shadowPos.y = Params::SHADOW_POSITION_Y;
-
-	auto context = BaseEntity::GetCommonResources()->GetDeviceResources()->GetD3DDeviceContext();
-	auto states = BaseEntity::GetCommonResources()->GetCommonStates();
-
-
-
-	// 自機の影を描画する
-	m_shadow->Render(context, states, view, projection, shadowPos, Params::PLAYER_SHADOW_RADIUS);
-
+	
 
 }
 
 /// <summary>
-/// 当たり判定クラスに追加
+/// 当たった時に呼ばれる関数
 /// </summary>
-/// <param name="collsionManager">当たり判定クラス</param>
-void Player::AddCollision(CollisionManager* collsionManager)
+/// <param name="collider">相手のコライダー</param>
+void Player::OnCollisionEnter(ColliderComponent* collider)
 {
-	CollisionEntity::AddCollision(collsionManager);
-
-
-	for (auto& boomerang : m_boomerangs)
+	switch (collider->GetActor()->GetObjectTag())
 	{
-		boomerang->AddCollision(collsionManager);
-	}
-
-}
-
-/// <summary>
-/// 当たった時に呼び出される関数
-/// </summary>
-/// <param name="object">相手のオブジェクト</param>
-/// <param name="tag">相手のタグ</param>
-void Player::OnCollisionEnter(CollisionEntity* object, CollisionTag tag)
-{
-	UNREFERENCED_PARAMETER(object);
-
-	switch (tag)
-	{
-		case CollisionEntity::CollisionTag::BEAM:
-		case CollisionEntity::CollisionTag::ENEYPARTS:
-			m_hp--;
-			//Subject::Notify(EventManager::EventTypeName::PlayerDamage);
-
-
-			//プレイヤのダメージの通知
-			Messenger::GetInstance()->Notify(::GamePlayMessageType::PLAYER_DAMAGE);
-			
-
-			if (m_hp <= 0)
-			{
-				//Subject::Notify(EventManager::EventTypeName::GameOver);
-				Messenger::GetInstance()->Notify(::GamePlayMessageType::GAME_OVER);
-			}
+		case Actor::ObjectTag::STAGE:
+			Landing();
 			break;
 		default:
 			break;
 	}
 
-
-
 }
 
-
-void Player::OnCollisionStay(CollisionEntity* object, CollisionTag tag)
+/// <summary>
+/// 当たっているときに呼び出される関数
+/// </summary>
+/// <param name="collider">相手のコライダー</param>
+void Player::OnCollisionStay(ColliderComponent* collider)
 {
-	UNREFERENCED_PARAMETER(object);
-
-	switch (tag)
+	switch (collider->GetActor()->GetObjectTag())
 	{
-		case CollisionEntity::CollisionTag::STAGE:
-		{
-			Vector3 velocity = BaseEntity::GetVelocity();
-
-			velocity.y = 0.0f;
-
-			BaseEntity::SetVelocity(velocity);
-		}
+		case Actor::ObjectTag::STAGE:
+			Landing();
 		break;
 		default:
 			break;
 	}
-
-
-
 }
 
 /// <summary>
-/// 更新処理
+/// 離れた時に呼び出される関数
 /// </summary>
-/// <param name="elapsedTime">経過時間</param>
-void Player::Update(const float& elapsedTime)
+/// <param name="collider"></param>
+void Player::OnCollisionExit(ColliderComponent* collider)
 {
 
-	//オブジェクトか更新が無効なら
-	if (!BaseEntity::GetIsEntityActive() || !BaseEntity::GetIsUpdateActive())
+	switch (collider->GetActor()->GetObjectTag())
 	{
-		return;
-	}
-
-	m_stateMachine->Update(elapsedTime);
-
-	m_usually->Update(elapsedTime);
-
-	CompositeEntity::Update(elapsedTime);
-
-
-	//パーツの更新
-	for (auto& part : CompositeEntity::GetParts())
-	{
-		part->Update(elapsedTime);
-	}
-
-	for (auto& boomerang : m_boomerangs)
-	{
-		boomerang->Update(elapsedTime);
-	}
-
-}
-
-
-
-/// <summary>
-/// アニメーションの登録
-/// </summary>
-/// <param name="animationType">アニメーションの種類</param>
-/// <param name="datas">アニメーションデータ</param>
-/// <param name="isNormalAnimation">通常アニメーションかどうか</param>
-void Player::SetAnimationData(const std::string& animationType
-	, std::unordered_map<std::string, std::unordered_map<std::string, WataLib::Json::AnimationData>> datas
-	, const std::string& partsName
-	, bool isNormalAnimation )
-{
-	CharacterEntity::SetAnimationData(animationType, datas, partsName , isNormalAnimation);
-
-	//パーツにアニメーションを登録
-	for (auto& part : CompositeEntity::GetParts())
-	{
-		part->SetAnimationData(animationType, datas,partsName , isNormalAnimation);
+		case Actor::ObjectTag::STAGE:
+			m_isGround = false;
+			break;
+		default:
+			break;
 	}
 }
 
 /// <summary>
-/// アニメーションの変更
+/// 着地したとき
 /// </summary>
-/// <param name="animationType">アニメーションの種類</param>
-void Player::ChangeAnimation(const std::string& animationType)
+void Player::Landing()
 {
-	CharacterEntity::ChangeAnimation(animationType);
-	//パーツのアニメーションを変更
-	for (auto& part : CompositeEntity::GetParts())
-	{
-		part->ChangeAnimation(animationType);
-	}
-
+	m_rigidBody->ResetGravity();
+	m_isGround = true;
 }
-
-
-
 

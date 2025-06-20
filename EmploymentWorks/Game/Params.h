@@ -117,6 +117,8 @@ public:
 	static const DirectX::SimpleMath::Vector3 BOOMERANG_IDLE_POSITION;
 	//ブーメランのIDLE状態の回転
 	static const DirectX::SimpleMath::Quaternion BOOMERANG_IDLE_ROTATION;
+	//ブーメランのIDLE状態の大きさ
+	static const DirectX::SimpleMath::Vector3 BOOMERANG_IDLE_SCALE;
 
 	//ブーメランのGETREADY状態の座標
 	static const DirectX::SimpleMath::Vector3 BOOMERANG_GETREADY_POSITION;
@@ -128,6 +130,9 @@ public:
 	static const DirectX::SimpleMath::Vector3 BOOMERANG_THROW_POSITION;
 	//ブーメランのTHROW状態の回転
 	static const DirectX::SimpleMath::Quaternion BOOMERANG_THROW_ROTATION;
+	//ブーメランの基準点の回転
+	static const DirectX::SimpleMath::Quaternion BOOMERANG_THROW_POINT_ROTATE;
+
 
 	//敵の回転の許容範囲
 	static const float ENEMY_PERMISSIBLE_ANGLE;

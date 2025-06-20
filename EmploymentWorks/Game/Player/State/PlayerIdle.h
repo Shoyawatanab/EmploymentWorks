@@ -2,21 +2,22 @@
 * プレイヤの通常状態クラス
 */
 #pragma once
-#include "Game/Interface/IState.h"
+#include "GameBase/Interface/IState.h"
 
 class PlayerStateMachine;
-class Player2;
+class Player;
+class CommonResources;
 
 class PlayerIdle : public IState 
 {
 public:
 	//コンストラクタ
-	PlayerIdle(PlayerStateMachine* stateMachine,Player2* player) ;
+	PlayerIdle(PlayerStateMachine* stateMachine,Player* player) ;
 	//デストラクタ
 	~PlayerIdle() override;
 
 	// 更新する
-	void Update(const float& elapsedTime) override;
+	void Update(const float& deltaTime) override;
 	//状態に入った時
 	void Enter() override;
 	//状態を抜けた時
@@ -25,7 +26,7 @@ public:
 
 private:
 	//プレイヤ
-	Player2* m_player;
+	Player* m_player;
 
 	PlayerStateMachine* m_stateMahine;
 	

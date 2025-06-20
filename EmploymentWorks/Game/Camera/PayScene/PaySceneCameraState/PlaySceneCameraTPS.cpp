@@ -1,8 +1,9 @@
 #include "pch.h"
 #include "PlaySceneCameraTPS.h"
 #include "Game/Camera/PayScene/PlaySceneCamera.h"
-#include "Game/Player/Player2.h"
+#include "Game/Player/Player.h"
 #include "GameBase/Component/Components.h"
+#include "GameBase/Messenger/Messenger.h"
 
 /// <summary>
 /// コンストラクタ
@@ -15,8 +16,19 @@ PlaySceneCameraTPS::PlaySceneCameraTPS(PlaySceneCameraStateMachine* stateMachine
 	,m_stateMAchine{stateMachine}
 	,m_rotationX{}
 	,m_rotationY{}
-	,m_forward{DirectX::SimpleMath::Vector3::Forward}
+	,m_zoomState{}
+	,m_zoomMovement{}
+	,m_zoomTime{}
 {
+
+
+	Messenger::GetInstance()->Rigister(
+		{
+			MessageType::PLAYER_GET_REDAY
+			,MessageType::PLAYER_GET_REDAY_END
+		}
+		, this
+	);
 
 }
 
@@ -27,13 +39,19 @@ PlaySceneCameraTPS::~PlaySceneCameraTPS()
 {
 }
 
-void PlaySceneCameraTPS::Update(const float& elapsedTime)
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="deltaTime">経過時間</param>
+void PlaySceneCameraTPS::Update(const float& deltaTime)
 {
 	using namespace DirectX;;
 	using namespace DirectX::SimpleMath;
 
 	//マウス操作
 	MouseOperation();
+
+	ZoomUpdate(deltaTime);
 	
 	Vector3 target = m_camera->GetPlayer()->GetTransform()->GetWorldPosition() +  Vector3(0, 1, 0);
 
@@ -45,23 +63,65 @@ void PlaySceneCameraTPS::Update(const float& elapsedTime)
 	Vector3 eye = Vector3::UnitZ * CAMERA_DISTANCE;
 	//視点の回転
 	eye = Vector3::Transform(eye, rotate);
-
 	eye += target;
 
-	m_camera->SetEyePosition(eye);
+	//ズーム時の回転
+	Vector3 movemement = Vector3::Transform(m_zoomMovement, rotate);
+
+	m_camera->SetEyePosition(eye + movemement);
 	m_camera->SetTargetPosition(target);
+
+	//正面ベクトル
+	Vector3 forward = target - eye;
+	forward.Normalize();
+	m_camera->SetForwardVector(forward);
 
 }
 
+/// <summary>
+/// 状態にはいいた時
+/// </summary>
 void PlaySceneCameraTPS::Enter()
 {
 	//初期値設定
 	SetCursorPos(MOUSE_POSITION.x,MOUSE_POSITION.y);
-
+	m_rotationX = 0.0f;
+	m_rotationY = 0.0f;
+	m_zoomTime = 0.0f;
+	m_zoomState = ZoomState::NONE;
 }
 
+/// <summary>
+/// 状態を抜けた時
+/// </summary>
 void PlaySceneCameraTPS::Exit()
 {
+}
+
+/// <summary>
+/// 通知を受け取る関数
+/// </summary>
+/// <param name="type">通知の種類</param>
+/// <param name="datas">追加データ</param>
+void PlaySceneCameraTPS::Notify(MessageType type, void* datas)
+{
+	switch (type)
+	{
+		case MessageType::PLAYER_GET_REDAY:
+			m_zoomState = ZoomState::ZOOM_IN;
+			m_zoomTime = 0.0f;
+			break;
+		case MessageType::PLAYER_GET_REDAY_END:
+			m_zoomState = ZoomState::ZOOM_OUT;
+			m_zoomMovement = DirectX::SimpleMath::Vector3::Zero;
+			m_zoomTime = 0.0f;
+
+			break;
+
+		default:
+			break;
+	}
+
 }
 
 /// <summary>
@@ -99,5 +159,52 @@ void PlaySceneCameraTPS::MouseOperation()
 
 	//プレイカメラにセット
 	m_camera->SetRotationX(m_rotationX);
-	m_camera->SetRotationY(m_rotationY);
+	m_camera->SetRotationY(m_rotationY );
+}
+
+/// <summary>
+/// ズームの更新
+/// </summary>
+/// <param name="deltaTime">経過時間</param>
+void PlaySceneCameraTPS::ZoomUpdate(const float& deltaTime)
+{
+	using namespace DirectX::SimpleMath;
+
+	if (m_zoomState == ZoomState::NONE)
+	{
+		return;
+	}
+
+	//初期化
+	m_zoomMovement = Vector3::Zero;
+
+	//進行割合
+	float ratio = m_zoomTime / ZOOME_MAX_TIME;
+
+	ratio = std::min(ratio, 1.0f);
+
+	switch (m_zoomState)
+	{
+		case PlaySceneCameraTPS::ZoomState::NONE:
+			break;
+		case PlaySceneCameraTPS::ZoomState::ZOOM_IN:
+
+			m_zoomMovement = Vector3::Lerp(
+				Vector3::Zero, ZOOM_DIRECTION
+				,ratio
+				);
+
+			break;
+		case PlaySceneCameraTPS::ZoomState::ZOOM_OUT:
+			m_zoomMovement = Vector3::Lerp(
+				ZOOM_DIRECTION,Vector3::Zero
+				, ratio
+			);
+			break;
+		default:
+			break;
+	}
+
+
+	m_zoomTime += deltaTime;
 }

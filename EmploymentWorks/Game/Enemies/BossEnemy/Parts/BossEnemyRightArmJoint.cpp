@@ -12,7 +12,7 @@ BossEnemyRightArmJoint::BossEnemyRightArmJoint(Scene* scene)
 	//ˆÈ‰º’Ç‰Á•”ˆÊ‚Ìì¬
 //RightArm‚Ì¶¬
 	auto rightArm = GetScene()->AddActor<BossEnemyRightArm>(GetScene());
-	rightArm->GetTransform()->SetParent(GetTransform());
+	rightArm->SetParent(this);
 
 	//ˆÊ’uî•ñ
 	GetTransform()->Translate(Params::BOSSENEMY_RIGHTARMJOINT_POSITION);

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Game/Interface/IState.h"
+#include "GameBase/Interface/IState.h"
 #include <unordered_map>
 
 //ステートクラスとステートの列挙型の種類
@@ -58,17 +58,20 @@ public:
 	void ChangeState(StateEnumType enumType)
 	{
 		//ステートがなければ
-		if (m_currentState == nullptr)
+		if (m_currentState.second == nullptr)
 		{
 			return;
 		}
 		//ステートの終了処理
-		m_currentState->second->Exit();
+		m_currentState.second->Exit();
 		//実行ステートの情報の変更
 		m_currentState.first = enumType;
 		m_currentState.second = m_stateList[enumType].get();
 		//ステートの開始処理
-		m_currentState->second->Enter();
+		m_currentState.second->Enter();
+
+
+
 	}
 
 	//初期ステートのセット

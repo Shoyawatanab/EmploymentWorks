@@ -5,7 +5,7 @@
 #include <fstream>
 #include <nlohmann/json.hpp>
 #include "GameBase/Component/Components.h"
-#include "GameBase/Animation/Animation2.h"
+#include "GameBase/Animation/Animation.h"
 
 /// <summary>
 /// コンストラクタ
@@ -24,12 +24,13 @@ Animator::Animator(Actor* owner
 	, m_animationTotalTime{}
 	,m_partsData{}
 	, m_animationTime{}
+	,m_isEnd{false}
 {
 
 	//Animationの作成
 	for (auto& [name, actor] : actors) 
 	{
-		m_partsData[name] = std::make_unique<Animation2>(actor);
+		m_partsData[name] = std::make_unique<Animation>(actor);
 	}
 
 	//アニメーションの読み込み　Jsonファイルから
@@ -74,7 +75,8 @@ bool Animator::Update(const float& deltaTime)
 	
 	//アニメーションが一通り終わったら
 	if (m_animationTime >= m_animationTotalTime)
-	{
+	{ 
+		m_isEnd = true;
 		//アニメーション終了
 		return true;
 	}
@@ -99,7 +101,7 @@ void Animator::Rerun()
 {
 	//経過時間のリセット
 	m_animationTime = 0.0f;
-
+	m_isEnd = false;
 
 	for (auto& parts : m_partsData)
 	{

@@ -13,7 +13,7 @@ BossEnemyPelvis::BossEnemyPelvis(Scene* scene)
 	//ˆÈ‰º’Ç‰Á•”ˆÊ‚Ìì¬
 //Torso‚Ì¶¬
 	auto torso = GetScene()->AddActor<BossEnemyTorso>(GetScene());
-	torso->GetTransform()->SetParent(GetTransform());
+	torso->SetParent(this);
 
 	//ˆÊ’uî•ñ
 	GetTransform()->Translate(Params::BOSSENEMY_PELVIS_POSITION);

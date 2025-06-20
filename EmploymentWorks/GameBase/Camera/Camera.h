@@ -23,7 +23,10 @@ public:
 	const DirectX::SimpleMath::Matrix& GetViewMatrix() const  { return m_view; }
 	//射影行列の取得
 	const DirectX::SimpleMath::Matrix& GetProjectionMatrix() const { return m_projection; }
-
+	//正面ベクトルの取得
+	const DirectX::SimpleMath::Vector3& GetForwardVector() { return m_forwardVector; }
+	//正面ベクトルのセット
+	void SetForwardVector(const DirectX::SimpleMath::Vector3& forwardVector) { m_forwardVector = forwardVector; }
 
 public:
 	//コンストラクタ
@@ -52,6 +55,9 @@ private:
 	DirectX::SimpleMath::Matrix m_view;
 	//射影行列
 	DirectX::SimpleMath::Matrix m_projection;
+
+	//カメラの正面ベクトル
+	DirectX::SimpleMath::Vector3 m_forwardVector;
 
 };
 

@@ -1,18 +1,18 @@
 {
 	"AnimationType" : "Move",
-	"AnimationTime"  : 4.0,
+	"AnimationTime"  : 1.0,
 	"AnimationSpeed" : 1.0,
 	"Loop": false,
 	"KeyFrame" :
 	[
 		{
-			"FreamTime" : 1.0 ,
+			"FreamTime" : 0.25 ,
 			"Parts" : 
 			[
 				{
 					"PartName" : "LeftArm",
 					"Rotation" :{ 
-						"x" : 45.0,
+						"x" : 30.0,
 						"y" : 0.0,
 						"z" : 0.0
 					}
@@ -20,7 +20,7 @@
 				{
 					"PartName" : "RightArm",
 					"Rotation" :{ 
-						"x" : -45.0,
+						"x" : -30.0,
 						"y" : 0.0,
 						"z" : 0.0
 					}
@@ -28,7 +28,7 @@
 				{
 					"PartName" : "RightFeet",
 					"Rotation" :{ 
-						"x" : 45.0,
+						"x" : 30.0,
 						"y" : 0.0,
 						"z" : 0.0
 					}
@@ -36,7 +36,7 @@
 				{
 					"PartName" : "LeftFeet",
 					"Rotation" :{ 
-						"x" : -45.0,
+						"x" : -30.0,
 						"y" : 0.0,
 						"z" : 0.0
 					}
@@ -44,13 +44,13 @@
 			]
 		},
 		{
-			"FreamTime" : 3.0 ,
+			"FreamTime" : 0.75 ,
 			"Parts" : 
 			[
 				{
 					"PartName" : "LeftArm",
 					"Rotation" :{ 
-						"x" : -45.0,
+						"x" : -30.0,
 						"y" : 0.0,
 						"z" : 0.0
 					}
@@ -58,7 +58,7 @@
 				{
 					"PartName" : "RightArm",
 					"Rotation" :{ 
-						"x" : 45.0,
+						"x" : 30.0,
 						"y" : 0.0,
 						"z" : 0.0
 					}
@@ -66,7 +66,7 @@
 				{
 					"PartName" : "RightFeet",
 					"Rotation" :{ 
-						"x" : -45.0,
+						"x" : -30.0,
 						"y" : 0.0,
 						"z" : 0.0
 					}
@@ -74,7 +74,7 @@
 				{
 					"PartName" : "LeftFeet",
 					"Rotation" :{ 
-						"x" : 45.0,
+						"x" : 30.0,
 						"y" : 0.0,
 						"z" : 0.0
 					}

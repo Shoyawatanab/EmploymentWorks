@@ -5,15 +5,12 @@
 #include "pch.h"
 #include "ResultScene.h"
 #include "GameBase/Screen.h"
-#include "Game/CommonResources.h"
-#include "DeviceResources.h"
+#include "GameBase/Common/Commons.h"
 #include "Libraries/MyLib/MemoryLeakDetector.h"
 #include "Libraries/MyLib/InputManager.h"
 #include <cassert>
 
 #include "Libraries/WataLib/Fade.h"
-#include "Game/Score.h"
-
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
 
@@ -44,14 +41,7 @@ void ResultScene::Initialize()
 
 
 
-	// シーン変更フラグを初期化する
-	m_isChangeScene = false;
 
-
-	//フェードアウトの開始
-	CommonResources::GetInstance()->GetFade()->StartNormalFadeOut();
-
-	CommonResources::GetInstance()->GetScore()->Reset();
 
 }
 
@@ -60,17 +50,7 @@ void ResultScene::Initialize()
 //---------------------------------------------------------
 void ResultScene::SceneUpdate(float elapsedTime)
 {
-	// 宣言をしたが、実際は使用していない変数
-	UNREFERENCED_PARAMETER(elapsedTime);
 
-	//フェードが終わるまで
-	if (CommonResources::GetInstance()->GetFade()->GetFadeState() != Fade::FadeState::NONE)
-	{
-		return;
-	}
-
-
-	CommonResources::GetInstance()->GetScore()->Update(elapsedTime);
 
 }
 
@@ -80,7 +60,6 @@ void ResultScene::SceneUpdate(float elapsedTime)
 void ResultScene::SceneRender()
 {
 
-	CommonResources::GetInstance()->GetScore()->Render();
 
 }
 

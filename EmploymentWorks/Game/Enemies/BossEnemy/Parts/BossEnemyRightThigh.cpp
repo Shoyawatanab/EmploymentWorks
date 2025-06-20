@@ -13,7 +13,7 @@ BossEnemyRightThigh::BossEnemyRightThigh(Scene* scene)
 	//ˆÈ‰º’Ç‰Á•”ˆÊ‚Ìì¬
 //RightLeg‚Ì¶¬
 	auto rightLeg = GetScene()->AddActor<BossEnemyRightLeg>(GetScene());
-	rightLeg->GetTransform()->SetParent(GetTransform());
+	rightLeg->SetParent(this);
 
 	//ˆÊ’uî•ñ
 	GetTransform()->Translate(Params::BOSSENEMY_RIGHTTHIGH_POSITION);

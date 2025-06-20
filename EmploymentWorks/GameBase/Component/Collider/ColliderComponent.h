@@ -92,9 +92,9 @@ class AABB : public ColliderComponent
 {
 public:
 	//バウンディングボックスの取得
-	DirectX::BoundingBox* GetBoundingBox() { return m_boundingBox.get(); }
+	DirectX::BoundingBox* GetBoundingBox();
 	//バウンディングスフィアの取得
-	DirectX::BoundingSphere* GetBoundingSphere() { return m_boundingSphere.get(); }
+	DirectX::BoundingSphere* GetBoundingSphere();
 	//DirectX::BoundingOrientedBox* GetOrientedBox() { return m_orientexBox.get(); }
 
 public:

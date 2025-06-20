@@ -15,15 +15,15 @@ BossEnemyTorso::BossEnemyTorso(Scene* scene)
 	//ˆÈ‰º’Ç‰Á•”ˆÊ‚Ìì¬
 	//Head1‚Ì¶¬
 	auto head = GetScene()->AddActor<BossEnemyHead>(GetScene());
-	head->GetTransform()->SetParent(GetTransform());
+	head->SetParent(this);
 
 	//LeftShouder‚Ì¶¬
 	auto leftShouder = GetScene()->AddActor<BossEnemyLeftShoulder>(GetScene());
-	leftShouder->GetTransform()->SetParent(GetTransform());
+	leftShouder->SetParent(this);
 
 	//RightShouder‚Ì¶¬
 	auto rightShouder = GetScene()->AddActor<BossEnemyRightShoulder>(GetScene());
-	rightShouder->GetTransform()->SetParent(GetTransform());
+	rightShouder->SetParent(this);
 
 	//ˆÊ’uî•ñ
 	GetTransform()->Translate(Params::BOSSENEMY_TORSO_POSITION);

@@ -7,7 +7,7 @@ const float            Params::MOUSE_RADIUS = 1.0f;
 
 
 //重力
-const float            Params::GRAVITY = 0.5f;
+const float            Params::GRAVITY = -9.5;
 
 const float            Params::SHADOW_POSITION_Y = 0.1f;
 
@@ -19,9 +19,10 @@ const Vector3          Params::PLAYER_SCALE = Vector3(0.2f, 0.2f, 0.2f);
 //プレイヤの座標
 const Vector3          Params::PLAYER_POSITION = Vector3(0.0f,0.55f,5.0f);
 //プレイヤの回転
-const Quaternion       Params::PLAYER_ROTATION = Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(180)
+const Quaternion       Params::PLAYER_ROTATION = Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0)
 																			 ,DirectX::XMConvertToRadians(0)
 																			 ,DirectX::XMConvertToRadians(0));
+
 //プレイヤの影の大きさ
 const float            Params::PLAYER_SHADOW_RADIUS = 0.5f;
 
@@ -120,17 +121,19 @@ int Params::BOOMERANG_MAX_COUNT = 3;
  const float Params::BOOMERANG_SHADOW_RADIUS = 0.5f ;
 
 //ブーメランのIDLE状態の座標
- const  Vector3 Params::BOOMERANG_IDLE_POSITION = Vector3(0.0f,0.5f,1.0f);
+ const  Vector3 Params::BOOMERANG_IDLE_POSITION = Vector3(0.0f,0.5f,-1.1f);
 //ブーメランのIDLE状態の回転
- const  Quaternion Params::BOOMERANG_IDLE_ROTATION = Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0.0f)
+ const  Quaternion Params::BOOMERANG_IDLE_ROTATION = Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(180.0f)
 																						 , DirectX::XMConvertToRadians(90.0f)
 																						 , DirectX::XMConvertToRadians(0.0f));
- ;
+ //ブーメランのIDLE状態の大きさ
+ const  Vector3 Params::BOOMERANG_IDLE_SCALE = Vector3(10.0f, 10.0f, 10.0f);
+
 
 //ブーメランのGETREADY状態の座標
- const  Vector3 Params::BOOMERANG_GETREADY_POSITION = Vector3(1.5f,3.5f,-0.5f);
+ const  Vector3 Params::BOOMERANG_GETREADY_POSITION = Vector3(-1.5f,3.5f,0.5f);
 //ブーメランのGETREADY状態の回転
- const  Quaternion Params::BOOMERANG_GETREADY_ROTATION = Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(90.0f)
+ const  Quaternion Params::BOOMERANG_GETREADY_ROTATION = Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(-90.0f)
 																							 , DirectX::XMConvertToRadians(90.0f)
 																							 , DirectX::XMConvertToRadians(0.0f));
 
@@ -138,6 +141,10 @@ int Params::BOOMERANG_MAX_COUNT = 3;
  const  Vector3 Params::BOOMERANG_THROW_POSITION;
 //ブーメランのTHROW状態の回転
  const  Quaternion Params::BOOMERANG_THROW_ROTATION;
+ //ブーメランの基準点の回転
+ const Quaternion Params::BOOMERANG_THROW_POINT_ROTATE = Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(180.0f)
+																				 , DirectX::XMConvertToRadians(0.0f)
+																				 , DirectX::XMConvertToRadians(0.0f));
 
 
  //敵の回転の許容範囲
