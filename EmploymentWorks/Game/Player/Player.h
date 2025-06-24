@@ -27,6 +27,10 @@ public:
 	TargetMarker* GetTargetMarker() { return m_targetMarker; }
 
 	void SetTargetMarker(TargetMarker* targetMarker) { m_targetMarker = targetMarker; }
+
+	//オブジェクトタグの取得
+	ObjectTag GetObjectTag() { return ObjectTag::PLAYER; }
+
 public:
 	//コンストラクタ
 	Player(Scene* scene);

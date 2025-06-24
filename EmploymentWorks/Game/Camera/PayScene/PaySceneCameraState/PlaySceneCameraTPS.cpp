@@ -3,7 +3,7 @@
 #include "Game/Camera/PayScene/PlaySceneCamera.h"
 #include "Game/Player/Player.h"
 #include "GameBase/Component/Components.h"
-#include "GameBase/Messenger/Messenger.h"
+#include "Game/Messenger/Messenger.h"
 
 /// <summary>
 /// コンストラクタ
@@ -53,7 +53,7 @@ void PlaySceneCameraTPS::Update(const float& deltaTime)
 
 	ZoomUpdate(deltaTime);
 	
-	Vector3 target = m_camera->GetPlayer()->GetTransform()->GetWorldPosition() +  Vector3(0, 1, 0);
+	Vector3 target = m_camera->GetTarget()->GetTransform()->GetWorldPosition() +  Vector3(0, 1, 0);
 
 	//X軸回転の計算
 	Quaternion rotateX = Quaternion::CreateFromAxisAngle(Vector3::UnitY, XMConvertToRadians(m_rotationX));

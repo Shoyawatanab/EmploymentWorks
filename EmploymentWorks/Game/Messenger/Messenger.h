@@ -19,6 +19,8 @@ public:
 	void Rigister(std::vector<MessageType> types,IObserver* observer);
 	//’Ê’m
 	void Notify(MessageType type, void* = nullptr);
+	//ƒNƒŠƒA
+	void Clear();
 
 private:
 

@@ -13,11 +13,17 @@ NumberUI::NumberUI(Canvas* canvas)
 	using namespace DirectX::SimpleMath;
 
 	m_number = GetScene()->AddActor<Image>(canvas, "Number");
-	m_number->GetTransform()->SetScale(Vector3(50, 50, 0));
+	m_number->GetTransform()->SetScale(Vector3(0.01f, 0.01f, 0));
 	//eqŠÖŒW
 	m_number->GetTransform()->SetParent(GetTransform());
+
+	auto comp = m_number->GetComponent<ImageComponent>();
+	//•\¦”ÍˆÍ‚Ìİ’è
+	comp->SetViewRange(Vector2(0.1f,1.0f));
+
 	//‰Šú‰»
 	SetNumber(0);
+
 }
 
 /// <summary>
@@ -34,6 +40,7 @@ NumberUI::~NumberUI()
 void NumberUI::SetNumber(int number)
 {
 	using namespace DirectX::SimpleMath;
+
 	//”š‚Ì‰‚¶‚½Ø‚èæ‚è
 	m_number->SetCutRange(Vector4(0.1f * number, 0, DIGITWIDTH, 1.0f));
 

@@ -33,7 +33,7 @@ private:
 public:
 
 	//コンストラクタ
-	ModelPartsBase(Scene* scene, std::string partsName, std::string modelName);
+	ModelPartsBase(Scene* scene, const std::string& partsName, const std::string& modelName);
 	//デストラクタ
 	~ModelPartsBase();
 

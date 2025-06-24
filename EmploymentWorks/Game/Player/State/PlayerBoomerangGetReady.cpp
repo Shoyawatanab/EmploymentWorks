@@ -2,7 +2,7 @@
 #include "PlayerBoomerangAttack.h"
 #include "PlayerBoomerangGetReady.h"
 #include "GameBase/Common/Commons.h"
-#include "GameBase/Messenger/Messenger.h"
+#include "Game/Messenger/Messenger.h"
 
 /// <summary>
 /// コンストラクタ

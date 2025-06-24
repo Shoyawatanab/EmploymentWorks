@@ -18,6 +18,7 @@ public:
 		,BOOMERANG						   //ブーメラン
 		,BOSS_ENEMY						   //ボス敵
 		,BOSS_ENEMY_PARTS				   //ボス敵パーツ
+		,BIRD_ENEMY                     //鳥の敵
 		,ENEMY							   //敵
 		,BEAM							   //ビーム
 		,								   

@@ -44,9 +44,9 @@ void main(
 		
 		//サイズを計算
         float2 relativeSize = size.xy / window;
-				
+		
 		//最終位置を計算
-        element.pos.xy = Position + offset_array[i].xy * relativeSize;
+        element.pos.xy = Position + offset_array[i].xy * relativeSize * viewRange.xy;
 		
 		
         element.pos.z = 0.0f;

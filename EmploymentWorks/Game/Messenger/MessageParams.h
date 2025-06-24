@@ -9,10 +9,20 @@
 enum class MessageType : int
 {
 	NONE = -1
-	//ゲームの活動
+	//シーン切り替え
+	,CHANGE_TITLE_SCENE                           //tタイトルシーンに切り替え
+	,CHANGE_SELECT_SCENE						  //セレクトシーンに切り替え
+	,CHANGE_PLAY_SCENE							  //プレイシーンに切り替え
 
-	
+
+	//ゲームの活動
+	,GAME_CLEAR                                    //ゲームクリア
+	,GAME_OVER									   //ゲームオーバー
+	,ENEMY_DAMAGE                                  //敵のダメージ
+
 	//ゲームの状態
+
+
 
 	//プレイヤの活動
 	,PLAYER_GET_REDAY                              //プレイヤの構えの活動
@@ -36,6 +46,7 @@ enum class MessageType : int
 
 	//ボス敵の活動
 	,BOSS_DAMAGE                                 //ボスがダメージを受けた活動
+	,BOSS_DEFEATED                               //ボスを倒した活動
 
 	//ボステキの状態
 	,BOSS_IDLE_STATE                              //ボス敵の通常状態
@@ -43,6 +54,26 @@ enum class MessageType : int
 	,BOSS_JUMP_ATTACK_STATE                       //ボス敵のジャンプ攻撃状態
 	,BOSS_WAKING_STATE	                          //ボス敵の歩き状態
 	,BOSS_SWING_DOWN_STATE	                      //ボス敵の振り下ろし攻撃状態
+
+
+	//鳥敵の活動
+
+
+
+	//鳥敵の状態
+	,BIRD_IDLE_STATE                              //鳥敵の通常状態
+	,BIRD_MOVE_STATE							  //鳥敵の動き状態
+	,BIRD_BEAM_ATTACK_STATE						  //鳥敵のビーム攻撃状態
+
+	//鳥敵の弾の活動
+
+
+
+	//鳥敵の弾の状態
+	, BIRD_BULLET_IDLE_STATE                              //鳥敵の弾の通常状態
+	, BIRD_BULLET_CHAGE_STATE							  //鳥敵の弾のチャージ状態
+	, BIRD_BULLET_SHOT_STATE						      //鳥敵の弾のショット状態
+
 };
 
 

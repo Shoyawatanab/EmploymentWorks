@@ -10,7 +10,7 @@ class TargetMarker : public Actor, public IObserver
 {
 public:
 	//大きさ
-	static constexpr DirectX::SimpleMath::Vector3 SCALE {200.3f, 200.3f, 200.0f};
+	static constexpr DirectX::SimpleMath::Vector3 SCALE {0.3f, 0.3f, 200.0f};
 	//ターゲットの中心からの距離
 	static constexpr float RANGE{ 200.0f };
 public:

@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "BossEnemyActionManager.h"
 #include "Game/Enemies/BossEnemy/Action/BossEnemyActions.h"
-#include "GameBase/Messenger/Messenger.h"
+#include "Game/Messenger/Messenger.h"
 #include "Game/Player/Player.h"
 #include "Game/Enemies/BossEnemy/BossEnemy.h"
 
@@ -68,6 +68,7 @@ void BossEnemyActionManager::Notify(MessageType type, void* datas)
 		case MessageType::BOSS_SWING_DOWN_STATE:
 			ChangeAction("SwingDown");
 			break;
+
 		default:
 			break;
 	}

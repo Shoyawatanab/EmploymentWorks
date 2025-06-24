@@ -226,6 +226,7 @@ void Animation::PositionUpdate(const float& animationTime)
 	Vector3 endData = m_positoinData.second[index + 1].Data;
 
 
+
 	//Š„‡
 	float ratio = 0;
 	//‚O“¯‚Å‚ÍŒvZ‚ğ‚µ‚È‚¢‚½‚ß

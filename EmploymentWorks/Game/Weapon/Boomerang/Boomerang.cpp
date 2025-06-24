@@ -40,6 +40,7 @@ void Boomerang::UpdateActor(const float& deltaTime)
 
 void Boomerang::OnCollisionEnter(ColliderComponent* collider)
 {
+
 }
 
 /// <summary>

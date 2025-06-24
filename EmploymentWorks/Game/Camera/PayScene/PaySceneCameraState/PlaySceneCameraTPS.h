@@ -37,7 +37,7 @@ public:
 	//コンストラクタ
 	PlaySceneCameraTPS(PlaySceneCameraStateMachine* stateMachine,PlaySceneCamera* camera);
 	//デストラクタ
-	~PlaySceneCameraTPS();
+	~PlaySceneCameraTPS() override;
 
 	// 更新する
 	void Update(const float& deltaTime) override;

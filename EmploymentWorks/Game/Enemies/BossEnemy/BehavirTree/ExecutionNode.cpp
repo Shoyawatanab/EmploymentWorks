@@ -4,7 +4,7 @@
 #include "Game/Player/Player.h"
 #include "Game/Enemies/BossEnemy/BossEnemy.h"
 
-#include "GameBase/Messenger/Messenger.h"
+#include "Game/Messenger/Messenger.h"
 
 
 

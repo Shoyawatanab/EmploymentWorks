@@ -4,7 +4,7 @@
 #include "GameBase/UI/Image.h"
 #include "GameBase/Scene/Scene.h"
 #include "GameBase/Component/Components.h"
-#include "GameBase/Messenger/Messenger.h"
+#include "Game/Messenger/Messenger.h"
 
 BossHp::BossHp(Canvas* canvas)
 	:
@@ -15,12 +15,12 @@ BossHp::BossHp(Canvas* canvas)
 	//”wŒi
 	m_backGraund = GetScene()->AddActor<Image>(canvas, "BossHPBase");
 	m_backGraund->GetTransform()->SetPosition(Vector3( 640, 50,0));
-	m_backGraund->GetTransform()->SetScale(Vector3( 400, 70,0));
+	m_backGraund->GetTransform()->SetScale(Vector3( 1, 0.9,0));
 
 	//Hpƒo[
 	m_hpBar = GetScene()->AddActor<Image>(canvas, "EnemyHP");
-	m_hpBar->GetTransform()->SetPosition(Vector3(640, 51.5, 0));
-	m_hpBar->GetTransform()->SetScale(Vector3(380, 25, 0));
+	m_hpBar->GetTransform()->SetPosition(Vector3(640, 50.5, 0));
+	m_hpBar->GetTransform()->SetScale(Vector3(1, 0.85, 0));
 
 
 

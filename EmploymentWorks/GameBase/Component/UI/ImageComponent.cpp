@@ -20,6 +20,8 @@ const std::vector<D3D11_INPUT_ELEMENT_DESC> ImageComponent::INPUT_LAYOUT =
 };
 
 
+
+
 ImageComponent::ImageComponent(Actor* owner, std::string textureName)
 	:
 	Component(owner)
@@ -33,6 +35,7 @@ ImageComponent::ImageComponent(Actor* owner, std::string textureName)
 	,m_textureWidth{}
 	,m_color{DirectX::SimpleMath::Vector4(1.0f,1.0f,1.0f,1.0f)}
 	,m_cutRange{DirectX::SimpleMath::Vector4(0.0f,0.0f,1.0f,1.0f)}
+	,m_viewRange{DirectX::SimpleMath::Vector4::One}
 	,m_fillAmount{DirectX::SimpleMath::Vector4::One}
 {
 
@@ -95,18 +98,14 @@ void ImageComponent::Render()
 
 	VertexPositionTexture vertex{};
 
-	Vector3 pos = GetActor()->GetTransform()->GetWorldPosition();
-	Vector3 sca = GetActor()->GetTransform()->GetWorldScale();
-
 	//シェーダーに渡す追加のバッファを作成する。(ConstBuffer）
 	ConstBuffer cbuff;
 	cbuff.windowSize = SimpleMath::Vector4(Screen::WIDTH, Screen::HEIGHT, 0, 0);
 	cbuff.Position = Vector4(GetActor()->GetTransform()->GetWorldPosition().x, GetActor()->GetTransform()->GetWorldPosition().y,0,0);
-	//cbuff.Position = Vector4(100,100,0,0);
-	cbuff.Size = Vector4(GetActor()->GetTransform()->GetWorldScale().x,GetActor()->GetTransform()->GetWorldScale().y,0,0);
-	//cbuff.Size = Vector4(100,100,0,0);
+	cbuff.Size = Vector4(GetWidth(),GetHeight(), 0, 0);
 	cbuff.Color = m_color;
 	cbuff.CutRange = m_cutRange;
+	cbuff.ViewRange = m_viewRange;
 	cbuff.FillAmount = m_fillAmount;
 
 	//	受け渡し用バッファの内容更新(ConstBufferからID3D11Bufferへの変換）
@@ -163,21 +162,29 @@ void ImageComponent::LoadTexture(std::string textureName)
 	//画像の読み込み
 	m_texture = GameResources::GetInstance()->GetTexture(textureName);
 
-	////シェーダーリソースビューから画像情報の取得
-	//Microsoft::WRL::ComPtr<ID3D11Resource> resource;
-	//m_texture->GetResource(&resource);
+	//シェーダーリソースビューから画像情報の取得
+	Microsoft::WRL::ComPtr<ID3D11Resource> resource;
+	m_texture->GetResource(&resource);
 
-	////リソースをTexture2Dにキャスト
-	//Microsoft::WRL::ComPtr<ID3D11Texture2D> tex;
-	//DX::ThrowIfFailed(resource.As(&tex));
+	//リソースをTexture2Dにキャスト
+	Microsoft::WRL::ComPtr<ID3D11Texture2D> tex;
+	DX::ThrowIfFailed(resource.As(&tex));
 
-	////画像情報を取得
-	//D3D11_TEXTURE2D_DESC desc;
-	//tex->GetDesc(&desc);
+	//画像情報を取得
+	D3D11_TEXTURE2D_DESC desc;
+	tex->GetDesc(&desc);
 
-	////画像のサイズを取得
-	//m_textureWidth = desc.Width;
-	//m_textureHeight = desc.Height;
+	//画像のサイズを取得
+	m_textureWidth = desc.Width;
+	m_textureHeight = desc.Height;
 }
 
+float ImageComponent::GetWidth() const
+{
+	return m_textureWidth * GetActor()->GetTransform()->GetWorldScale().x;
+}
 
+float ImageComponent::GetHeight() const
+{
+	return m_textureHeight * GetActor()->GetTransform()->GetWorldScale().y;
+}

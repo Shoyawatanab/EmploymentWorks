@@ -33,7 +33,6 @@ public:
     void SceneRender() override;
     void Finalize() override;
 
-	SceneID GetSceneID() const override { return SceneID::RESULT; }
 private:
 
 

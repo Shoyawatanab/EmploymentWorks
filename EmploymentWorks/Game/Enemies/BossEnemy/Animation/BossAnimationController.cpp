@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "BossAnimationController.h"
 #include "GameBase/Component/Components.h"
-#include "GameBase/Messenger/Messenger.h"
+#include "Game/Messenger/Messenger.h"
 #include "Game/Enemies/BossEnemy/BossEnemy.h"
 #include "Game/Enemies/BossEnemy/Model/BossEnemyModel.h"
 
@@ -62,6 +62,7 @@ BossAnimationController::BossAnimationController(BossEnemy* bossEnemy)
 			,MessageType::BOSS_JUMP_ATTACK_STATE
 			,MessageType::BOSS_SWING_DOWN_STATE
 			,MessageType::BOSS_WAKING_STATE
+			,MessageType::BOSS_DEFEATED
 		}
 		, this
 	);
@@ -97,6 +98,9 @@ void BossAnimationController::Notify(MessageType type, void* datas)
 			break;
 		case MessageType::BOSS_SWING_DOWN_STATE:
 			SetTrigger("SwingDown");
+			break;
+		case MessageType::BOSS_DEFEATED:  // ƒ{ƒX‚ð“|‚µ‚½‚Æ‚«
+			Play("BossFallDown");
 			break;
 		default:
 			break;

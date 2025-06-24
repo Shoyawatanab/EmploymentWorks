@@ -1,23 +1,8 @@
 #pragma once
 #include "GameBase/Component.h"
+#include "GameBase/Component/Components.h"
 
 
-//UIのアンカーポイントの列挙数
-enum ANCHOR
-{
-	TOP_LEFT = 0,
-	TOP_CENTER,
-	TOP_RIGHT,
-
-	MIDDLE_LEFT,
-	MIDDLE_CENTER,
-	MIDDLE_RIGHT,
-
-	BOTTOM_LEFT,
-	BOTTOM_CENTER,
-	BOTTOM_RIGHT
-
-};
 
 class ImageComponent : public Component
 {
@@ -35,6 +20,7 @@ public:
 		DirectX::SimpleMath::Vector4	Size;					//大きさ
 		DirectX::SimpleMath::Vector4    Color;					//色
 		DirectX::SimpleMath::Vector4    CutRange;				//切り取り範囲
+		DirectX::SimpleMath::Vector4    ViewRange;              //表示範囲
 		DirectX::SimpleMath::Vector4    FillAmount;				//塗りつぶし量  x 横　y 縦
 	};
 
@@ -49,6 +35,13 @@ public:
 	void SetColor(DirectX::SimpleMath::Vector4 color) { m_color = color; }
 	//横の塗りつぶし量　０～１までの範囲
 	void SetHorizontalFillAmount(float fillAmount) { m_fillAmount.x = fillAmount; }
+	//表示範囲のセット
+	void SetViewRange(DirectX::SimpleMath::Vector2 range) { m_viewRange.x = range.x; m_viewRange.y = range.y; }
+
+	//横幅の取得
+	float GetWidth() const;
+	//縦幅の取得
+	float GetHeight() const;
 
 public:
 	//コンストラクタ
@@ -83,15 +76,16 @@ private:
 
 
 	//画像の大きさ
-	int m_textureWidth, m_textureHeight;
+	int m_textureWidth;
+	int	m_textureHeight;
 	//色
 	DirectX::SimpleMath::Vector4 m_color;
 	//切り取り範囲
 	DirectX::SimpleMath::Vector4 m_cutRange;
 	//塗りつぶし量　x: 横　y :縦
 	DirectX::SimpleMath::Vector4 m_fillAmount;
-	//
-
+	//表示範囲
+	DirectX::SimpleMath::Vector4 m_viewRange;
 
 
 

@@ -458,9 +458,9 @@ int Params::BOOMERANG_MAX_COUNT = 3;
 	const float Params::BIRDENEMY_BEAM_BALL_ACCUMULATIONTIME = 2.0f;
 
 	///鳥の敵のビーム弾の初速度
-	const float Params::BIRDENEMY_BEAM_BALL_INITIAL_SPEED = 10.0f;
+	const float Params::BIRDENEMY_BEAM_BALL_INITIAL_SPEED = 4.0f;
 	///鳥の敵のビーム弾の最終速度
-	const float Params::BIRDENEMY_BEAM_BALL_FAINAL_SPEED = 5.0f;
+	const float Params::BIRDENEMY_BEAM_BALL_FAINAL_SPEED = 1.5f;
 	//鳥の敵のエネルギー弾の減速率
 	const float Params::BIRDENEMY_BEAM_BALL_DECELERATION_TIME = 0.3f;
 

@@ -14,6 +14,7 @@ BossEnemyParts::BossEnemyParts(Scene* scene, std::string partsName, std::string 
 {
 
 
+
 }
 
 /// <summary>

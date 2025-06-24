@@ -5,7 +5,7 @@
 
 
 
-ModelPartsBase::ModelPartsBase(Scene* scene, std::string partsName, std::string modelName)
+ModelPartsBase::ModelPartsBase(Scene* scene, const std::string& partsName, const std::string& modelName)
 	:
 	Actor(scene)
 	, m_partsName{ partsName }

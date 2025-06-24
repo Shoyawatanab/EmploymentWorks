@@ -15,20 +15,20 @@
 #include "Game/UI/PlayScene/Canvas/PlaySceneScreenSpaceOverlayCanvas.h"
 #include "Game/Weapon/WeaponManager.h"
 #include "Game/Enemies/EnemyManager.h"
+#include "Game/Fade/FadeManager.h"
 
 
 //---------------------------------------------------------
 // コンストラクタ
 //---------------------------------------------------------
-PlayScene::PlayScene(SceneManager::StageID stageID)
+PlayScene::PlayScene()
 	:
 	m_camera{}
 	,m_isChangeScene{}
-	,m_nextScene{}
 {
 	//Messenger::GetInstance()->Clear();
 
-
+	FadeManager::GetInstance()->StartFadeOut();
 	
 	
 
@@ -73,9 +73,7 @@ void PlayScene::Initialize()
 
 
 	//プレイヤの登録
-	auto camera = static_cast<PlaySceneCamera*>(m_camera)->SetPlayer(player);
-	
-
+	auto camera = static_cast<PlaySceneCamera*>(m_camera)->SetTarget(player);
 
 	player->SetPlaySceneCamera(camera);
 	player->SetTargetMarker(ui->GetTargetMarker());

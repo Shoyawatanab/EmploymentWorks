@@ -15,6 +15,7 @@ PlaySceneCamera::PlaySceneCamera(Scene* scene)
 	, m_rotationY{}
 {
 
+
 	SetEyePosition(DirectX::SimpleMath::Vector3(0,5,20));
 
 	m_stateMachine = std::make_unique<PlaySceneCameraStateMachine>(this);

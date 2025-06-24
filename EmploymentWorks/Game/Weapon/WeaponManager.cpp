@@ -2,7 +2,7 @@
 #include "WeaponManager.h"
 #include "GameBase/Scene/Scene.h"
 #include "Game/Weapon/Boomerang/Boomerang.h"
-#include "GameBase/Messenger/Messenger.h"
+#include "Game/Messenger/Messenger.h"
 
 
 

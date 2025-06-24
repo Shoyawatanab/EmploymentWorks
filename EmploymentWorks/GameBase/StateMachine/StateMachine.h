@@ -24,7 +24,7 @@ public:
 	};
 
 	//デストラクタ
-	~StateMachine() {};
+	virtual ~StateMachine() {};
 
 	/// <summary>
 	/// ステートの追加

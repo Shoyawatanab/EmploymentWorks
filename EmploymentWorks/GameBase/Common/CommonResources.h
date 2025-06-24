@@ -5,7 +5,6 @@
 #pragma once
 #include "Libraries/WataLib/Singleton.h"
 
-class Fade;
 
 // ‘O•ûéŒ¾
 namespace DX
@@ -37,10 +36,6 @@ private:
 
 	mylib::InputManager* m_inputManager;
 
-	Fade* m_fade;
-
-
-
 public:
 	CommonResources();
 	~CommonResources() = default;
@@ -50,8 +45,7 @@ public:
 		DX::DeviceResources* dr,
 		DirectX::CommonStates* commonStates,
 		mylib::DebugString* debugString,
-		mylib::InputManager* inputManager,
-		Fade* fade
+		mylib::InputManager* inputManager
 	);
 
 	// getter
@@ -80,10 +74,6 @@ public:
 		return m_inputManager;
 	}
 
-	Fade* GetFade() const
-	{
-		return m_fade;
-	}
 
 
 };
