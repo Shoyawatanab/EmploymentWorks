@@ -10,12 +10,11 @@
 /// </summary>
 Scene::Scene()
 	:
-	m_nextSceneID{SceneID::NONE},
 	m_actors{},
 	m_holdActors{},
 	m_updateNow{false},
 	m_isChangeScene{},
-	m_isActorDestroy{false}
+	m_isActorDestroy{false}	
 {
 
 	m_renderMangaer = std::make_unique<RenderManager>();
@@ -23,6 +22,9 @@ Scene::Scene()
 	m_collisionManager = std::make_unique<CollisionManager>();
 
 	m_rigidbodyManager = std::make_unique<RigidbodyManager> ();
+
+	m_uiManager = std::make_unique<UIManager>();
+
 
 }
 
@@ -80,7 +82,8 @@ void Scene::Update(float deltaTime)
 
 	GetCamera()->Update(deltaTime);
 
-	
+	m_uiManager->Update(deltaTime);
+
 	// 保留オブジェクトを更新オブジェクトに
 	std::move(m_holdActors.begin(), m_holdActors.end(), std::back_inserter(m_actors));
 	m_holdActors.clear();
@@ -99,8 +102,6 @@ void Scene::Render()
 	
 	// シーンの描画
 	SceneRender();
-
-	
 
 }
 

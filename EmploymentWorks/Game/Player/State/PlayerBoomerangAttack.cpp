@@ -5,7 +5,7 @@
 
 #include "Game/Player/Player.h"
 #include "Game/Player/State/PlayerStateMachine.h"
-#include "GameBase/Messenger/Messenger.h"
+#include "Game/Messenger/Messenger.h"
 
 
 /// <summary>

@@ -2,7 +2,7 @@
 #include "PlayerStateMachine.h"
 #include "Game/Player/Player.h"
 #include "Game/Player//State/PlayerStates.h"
-#include "GameBase/Messenger/Messenger.h"
+#include "Game/Messenger/Messenger.h"
 
 /// <summary>
 /// コンストラクタ

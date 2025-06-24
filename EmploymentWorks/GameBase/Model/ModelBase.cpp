@@ -10,6 +10,7 @@ ModelBase::ModelBase(Scene* scene)
 	Actor(scene)
 	,m_parts{}
 {
+
 }
 
 /// <summary>

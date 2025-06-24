@@ -26,7 +26,7 @@ BossEnemyBottom::BossEnemyBottom(Scene* scene)
 	auto rightThigh = GetScene()->AddActor<BossEnemyRightThigh>(GetScene());
 	rightThigh->SetParent(this);
 
-		//ˆÊ’uî•ñ
+	//ˆÊ’uî•ñ
 	GetTransform()->Translate(Params::BOSSENEMY_BODY_POSITION);
 	//‘å‚«‚³
 	GetTransform()->SetScale(Params::BOSSENEMY_BODY_SCALE);

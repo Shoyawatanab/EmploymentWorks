@@ -5,7 +5,8 @@ cbuffer ConstBuffer	: register(b0)
     float4 size;
     float4 color;
     float4 clipRange;
-    float4 FillAmount;  //x:‰¡@y:c
+    float4 viewRange;    //•\¦”ÍˆÍ
+	float4 FillAmount;  //x:‰¡@y:c
 	
 
 };

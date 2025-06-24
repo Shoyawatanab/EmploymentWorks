@@ -10,7 +10,6 @@
 #include "Libraries/MyLib/InputManager.h"
 #include <cassert>
 
-#include "Libraries/WataLib/Fade.h"
 #include "Game/Params.h"
 #include "Libraries/MyLib/DebugString.h"
 
@@ -65,13 +64,10 @@ void StageSelectScene::Initialize()
 
 	m_textures.push_back(std::move(texture));
 
-	m_sceneManager->SetStageID(SceneManager::STAGE1);
 
 	// シーン変更フラグを初期化する
 	m_isChangeScene = false;
 
-	//フェードアウトの開始
-	m_commonResources->GetFade()->StartNormalFadeOut();
 
 	ShowCursor(true);
 
@@ -128,10 +124,10 @@ void StageSelectScene::SceneUpdate(float elapsedTime)
 			switch (m_selectButtomId)
 			{
 				case 0:
-					m_sceneManager->SetStageID(SceneManager::STAGE1);
+					//m_sceneManager->SetStageID(SceneManager::STAGE1);
 					break;
 				case 1:
-					m_sceneManager->SetStageID(SceneManager::STAGE2);
+					//m_sceneManager->SetStageID(SceneManager::STAGE2);
 					break;
 				default:
 					break;

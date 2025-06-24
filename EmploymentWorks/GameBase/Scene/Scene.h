@@ -6,19 +6,12 @@ class RenderManager;
 class CollisionManager;
 class RigidbodyManager;
 class Camera;
+class UIManager;
 
 class Scene
 {
 public:
-	// シーンID
-	enum class SceneID : unsigned int
-	{
-		NONE,
-		TITLE,
-		PLAY,
-		STAGESELECT,
-		RESULT
-	};
+
 
 public:
 
@@ -26,6 +19,7 @@ public:
 	RenderManager* GetRenderMangaer() { return m_renderMangaer.get(); }
 	CollisionManager* GetCollisionManager() { return m_collisionManager.get(); }
 	RigidbodyManager* GetRigidbodyManager() { return m_rigidbodyManager.get(); }
+	UIManager* GetUIManager() { return m_uiManager.get(); }
 
 	//カメラの取得
 	virtual Camera* GetCamera() const = 0;
@@ -46,12 +40,7 @@ public:
 	// 終了処理
 	virtual void Finalize() = 0;
 	
-	// シーンIDを取得
-	virtual SceneID GetSceneID() const = 0;
-	// シーン切り替え
-	void ChangeScene(SceneID nextScene) { m_nextSceneID = nextScene; }
-	// 次シーンID取得
-	SceneID GetNextSceneID() { return m_nextSceneID; }
+
 	// アクター削除フラグをオンにする
 	void ActorDestroyOn() { m_isActorDestroy = true; }
 
@@ -64,8 +53,6 @@ public:
 
 
 private:
-	// 次シーンID
-	SceneID m_nextSceneID;
 	// チェンジフラグ
 	bool m_isChangeScene;
 	// 管理アクター
@@ -83,9 +70,8 @@ private:
 	std::unique_ptr<CollisionManager> m_collisionManager;
 	//リジットボディーマネージャー
 	std::unique_ptr<RigidbodyManager> m_rigidbodyManager;
-
-
-
+	//UIマネージャー
+	std::unique_ptr<UIManager> m_uiManager;
 
 };
 

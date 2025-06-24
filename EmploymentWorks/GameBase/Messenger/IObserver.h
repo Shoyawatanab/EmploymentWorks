@@ -1,6 +1,4 @@
 #pragma once
-#ifndef IOBSERVER_DEFINED
-#define IOBSERVER_DEFINED
 #include "Game/Messenger/MessageParams.h"
 
 // IObserverインターフェースを定義する
@@ -12,4 +10,3 @@ public:
 
 };
 
-#endif	

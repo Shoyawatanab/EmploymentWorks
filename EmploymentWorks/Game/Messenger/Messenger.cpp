@@ -53,6 +53,14 @@ void Messenger::Notify(MessageType type, void* datas)
 
 }
 
+/// <summary>
+/// ƒNƒŠƒA
+/// </summary>
+void Messenger::Clear()
+{
+	m_list.clear();
+}
+
 
 
 

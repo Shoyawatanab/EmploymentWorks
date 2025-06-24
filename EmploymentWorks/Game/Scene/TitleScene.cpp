@@ -6,27 +6,16 @@
 #include "TitleScene.h"
 #include "GameBase/Screen.h"
 #include "GameBase/Common/Commons.h"
-#include "Libraries/MyLib/MemoryLeakDetector.h"
-#include "Libraries/MyLib/InputManager.h"
-#include "Libraries/WataLib/Fade.h"
-#include <cassert>
-#include "Libraries/WataLib/Json.h"
-#include "Game/Stage/StageObjects.h"
-#include "Game/Params.h"
-
-
-#include "Libraries/MyLib/DebugString.h"
-
-
-
 #include "Game/Camera/TitleScene/TitleSceneCamera.h"
+#include "Game/UI/TitleScene/Canvas/TitleSceneScreenSpaceOverlayCanvas.h"
+#include "Game/Stage/StageFactory.h"
+#include "Game/Player/Model/PlayerModel.h"
+#include "Game/Params.h"
+#include "GameBase/Component/Components.h"
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
-
-//---------------------------------------------------------
-// コンストラクタ
-//---------------------------------------------------------
+/// <summary>
+/// コンストラクタ
+/// </summary>
 TitleScene::TitleScene()
 	:
 	m_projection{}
@@ -35,17 +24,17 @@ TitleScene::TitleScene()
 
 }
 
-//---------------------------------------------------------
-// デストラクタ
-//---------------------------------------------------------
+/// <summary>
+/// デストラクタ
+/// </summary>
 TitleScene::~TitleScene()
 {
 	// do nothing.
 }
 
-//---------------------------------------------------------
-// 初期化する
-//---------------------------------------------------------
+/// <summary>
+/// 初期化
+/// </summary>
 void TitleScene::Initialize()
 {
 
@@ -53,42 +42,32 @@ void TitleScene::Initialize()
 	//カメラの作成
 	m_camera = AddActor<TitleSceneCamera>(this);
 
+	//ステージファクトリー作成
+	AddActor<StageFactory>(this);
 
 
-	//WataLib::Json::StageData stageParameters;
+	//モデルの作成
+	auto model = AddActor<PlayerModel>(this);
+	//モデルの大きさをプレイヤの設定に
+	model->GetTransform()->SetScale(Params::PLAYER_SCALE);
+	model->GetTransform()->Translate(PLAYER_POSITION);
+	model->GetTransform()->SetRotate(Params::PLAYER_ROTATION);
 
-	//std::unique_ptr<WataLib::Json> json = std::make_unique<WataLib::Json>();
+	auto ui = AddActor<TitleSceneScreenSpaceOverlayCanvas>(this);
+
+	//カメラのターゲットのセット
+	m_camera->SetTargetPosition(model->GetTransform()->GetPosition() );
 
 
-	//stageParameters = json->LoadStageDatas(L"Stage");
 
 
+	//// シーン変更フラグを初期化する
+	//m_isChangeScene = false;
 
-	////auto model = std::make_unique<WataLib::Model3D>();
-	////model->Initialize(m_commonResources, L"Resources/Models/Player.cmo",
-	////	PLAYERPOSITION, PLAYERSCALE);
+	////フェードアウトの開始
+	//CommonResources::GetInstance()->GetFade()->StartNormalFadeOut();
 
-	////m_objects.push_back(std::move(model));
-
-	//m_player = std::make_unique<Player>(m_commonResources);
-	////m_player->Initialize();
-
-	//m_player->SetPosition(PLAYERPOSITION);
-	//m_player->SetScale(PLAYERSCALE);
-	//m_player->SetRotation(DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(
-	//	DirectX::XMConvertToRadians(PLAYERROTATION.y),
-	//	DirectX::XMConvertToRadians(PLAYERROTATION.x),
-	//	DirectX::XMConvertToRadians(PLAYERROTATION.z)));
-
-	//CreateTextures();
-
-	// シーン変更フラグを初期化する
-	m_isChangeScene = false;
-
-	//フェードアウトの開始
-	CommonResources::GetInstance()->GetFade()->StartNormalFadeOut();
-
-	ShowCursor(true);
+	//ShowCursor(true);
 
 
 
@@ -135,27 +114,27 @@ void TitleScene::SceneUpdate(float elapsedTime)
 	//}
 
 	//
-	if (tracker->leftButton == Mouse::ButtonStateTracker::ButtonState::PRESSED)
-	{
-		ChangeScene(SceneID::PLAY);
+	//if (tracker->leftButton == Mouse::ButtonStateTracker::ButtonState::PRESSED)
+	//{
+	//	ChangeScene(SceneID::PLAY);
 
-		//if (m_selectButtomId != BUTTOM_INIAL_ID)
-		//{
+	//	//if (m_selectButtomId != BUTTOM_INIAL_ID)
+	//	//{
 
-		//	switch (m_selectButtomId)
-		//	{
-		//		case 0:
-		//			m_isChangeScene = true;
-		//			ChangeScene(SceneID::PLAY);
-		//			break;
-		//		case 1:
-		//			PostQuitMessage(0);
-		//			break;
-		//		default:
-		//			break;
-		//	}
-		//}
-	}
+	//	//	switch (m_selectButtomId)
+	//	//	{
+	//	//		case 0:
+	//	//			m_isChangeScene = true;
+	//	//			ChangeScene(SceneID::PLAY);
+	//	//			break;
+	//	//		case 1:
+	//	//			PostQuitMessage(0);
+	//	//			break;
+	//	//		default:
+	//	//			break;
+	//	//	}
+	//	//}
+	//}
 
 
 

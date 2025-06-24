@@ -3,7 +3,7 @@
 #include "Game/Player/Player.h"
 #include "Game/Player/Model/PlayerModel.h"
 #include "GameBase/Component/Components.h"
-#include "GameBase/Messenger/Messenger.h"
+#include "Game/Messenger/Messenger.h"
 
 
 /// <summary>

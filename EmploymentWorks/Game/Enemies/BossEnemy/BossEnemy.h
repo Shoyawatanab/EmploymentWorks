@@ -3,7 +3,7 @@
 */
 
 #pragma once
-#include"GameBase/Actor.h"
+#include"GameBase/Enemy/EnemyBase.h"
 #include "GameBase/Messenger/IObserver.h"
 
 class BossBehaviorTree;
@@ -15,16 +15,19 @@ class BossEnemyActionManager;
 
 
 
-class BossEnemy : public Actor , public IObserver
+class BossEnemy : public EnemyBase , public IObserver
 {
 public:
-	//モデルの取得
-	BossEnemyModel* GetModel() { return m_model; }
 
 	//着地しているか　true　着地してる　false　してない
 	bool GetIsGround() const { return m_isGround; }
 
+
+	//オブジェクトタグの取得
+	ObjectTag GetObjectTag() override { return ObjectTag::BOSS_ENEMY; }
+
 public:
+
 	//コンストラクタ
 	BossEnemy(Scene* scene , Player* player);
 	//デストラクタ
@@ -34,30 +37,26 @@ public:
 	void UpdateActor(const float& deltaTime) override;
 
 	//当たった時に呼び出される
-	void OnCollisionEnter(ColliderComponent* collider);
+	void OnCollisionEnter(ColliderComponent* collider) override;
 
 	//当たり続けているときの呼び出される
-	void OnCollisionStay(ColliderComponent* collider);
+	void OnCollisionStay(ColliderComponent* collider) override;
 
 	//衝突が終了したときに呼び出される
-	void OnCollisionExit(ColliderComponent* collider);
-
-
+	void OnCollisionExit(ColliderComponent* collider) override;
 
 	//通知時に呼ばれる関数
 	void Notify(MessageType type,void* datas)  override;
 
 private:
+	
 	//着地したとき
 	void Landing();
-
 
 private:
 
 	//ビヘイビアツリー
 	std::unique_ptr<BossBehaviorTree> m_behavior;
-	//ボス敵モデル
-	BossEnemyModel* m_model;
 
 
 	//重力

@@ -4,8 +4,7 @@
 */
 #include "pch.h"
 #include "SoundManager.h"
-#include "Game/CommonResources.h"
-#include "DeviceResources.h"
+#include "GameBase/Common/Commons.h"
 #include <cassert>
 #include "Libraries/FMOD/inc/fmod.hpp"
 #include "Libraries/FMOD/inc/fmod_errors.h"

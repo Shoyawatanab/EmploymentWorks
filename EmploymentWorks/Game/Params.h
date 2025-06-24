@@ -423,6 +423,7 @@ public:
 	//鳥の敵のRIGHTFEATHERの回転						
 	static const DirectX::SimpleMath::Quaternion BIRDENEMY_RIGHTFEATHER_ROTATION;
 
+
 	//鳥の敵のエネルギー弾の最大の大きさ
 	static const DirectX::SimpleMath::Vector3 BIRDENEMY_BEAM_BALL_MAX_SIZE;
 	//鳥の敵のエネルギー弾の溜め時間

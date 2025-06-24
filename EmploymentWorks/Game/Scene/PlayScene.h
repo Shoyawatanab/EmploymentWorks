@@ -28,7 +28,7 @@ public:
 
 public:
 	//コンストラクタ
-	PlayScene(SceneManager::StageID stageID);
+	PlayScene();
 	//デストラクタ
 	~PlayScene() override;
 
@@ -44,14 +44,13 @@ private:
 public:
 
 	void Initialize() override;
+
 	void SceneUpdate(float elapsedTime)override;
+
 	void SceneRender() override;
 
 	void Finalize() override;
 	
-	SceneID GetSceneID() const override { return SceneID::PLAY; }
-
-	void SetNextSceneID(SceneID ID) { m_nextScene = ID; }
 
 private:
 
@@ -65,8 +64,6 @@ private:
 
 	// シーンチェンジフラグ
 	bool m_isChangeScene;
-	//次のシーン
-	SceneID m_nextScene;
 
 
 

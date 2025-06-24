@@ -4,45 +4,71 @@
 */
 #pragma once
 #include "GameBase/Scene/Scene.h"
+#include "GameBase/Messenger/IObserver.h"
 
 // 前方宣言
 class CommonResources;
+class FadeManager;
 
-class SceneManager
+class SceneManager : public IObserver
 {
 public:
+
+	// シーンID
+	enum class SceneID : unsigned int
+	{
+		NONE,
+		TITLE,
+		PLAY,
+		STAGESELECT,
+		RESULT
+	};
+
 	enum StageID
 	{
 		STAGE1 = 0,
 		STAGE2
 
 	};
+public:
+
+	//次のシーンのIDのセット
+	void SetNextSceneID(SceneID sceneID) { m_nextSceneID =  sceneID; }
 
 public:
-	void  SetStageID(StageID stageID) { m_stageID = stageID; }
-
-
-
-public:
+	//コンストラク
 	SceneManager();
+	//デストラクタ
 	~SceneManager();
-
+	//初期化
 	void Initialize(CommonResources* resources);
+	//更新処理
 	void Update(float elapsedTime);
+	//描画
 	void Render();
+	//
 	void Finalize();
+
+	//通知時に呼び出される
+	void Notify(MessageType type, void* datas) override;
 
 
 
 private:
-	void ChangeScene(Scene::SceneID sceneID);
-	void CreateScene(Scene::SceneID sceneID);
+	//シーン切り替え
+	void ChangeScene(SceneID sceneID);
+	//シーンの作成
+	void CreateScene(SceneID sceneID);
+	//シーンの削除
 	void DeleteScene();
 
 private:
+	//実行シーン
 	std::unique_ptr<Scene> m_currentScene;
-	CommonResources* m_commonResources;
+	//次のシーン
+	SceneID m_nextSceneID;
 
-	StageID m_stageID;
+	//フェードマネージャー
+	FadeManager* m_fadeManager;
 
 };

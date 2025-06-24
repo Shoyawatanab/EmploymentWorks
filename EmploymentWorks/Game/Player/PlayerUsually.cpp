@@ -10,7 +10,7 @@
 #include "Game/Params.h"
 #include "Game/Camera/PayScene/PlaySceneCamera.h"
 #include "Game/Params.h"
-#include "GameBase/Messenger/Messenger.h"
+#include "Game/Messenger/Messenger.h"
 
 /// <summary>
 /// コンストラクタ

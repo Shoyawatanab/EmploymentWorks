@@ -3,7 +3,7 @@
 #include "GameBase/Scene/Scene.h"
 #include "GameBase/Component/Components.h"
 #include "Game/Enemies/BossEnemy/BossEnemyParts.h"
-#include "GameBase/Messenger/Messenger.h"
+#include "Game/Messenger/Messenger.h"
 #include "Game/Enemies/BossEnemy/BehavirTree/BossBehaviorTree.h"
 #include "Game/Params.h"
 #include "Game/Enemies/BossEnemy/Model/BossEnemyModel.h"
@@ -11,16 +11,16 @@
 #include "Game/Enemies/BossEnemy/Action/BossEnemyActionManager.h"
 #include "Game/Player/Player.h"
 
+#include "Game/Camera/PayScene/PlaySceneCamera.h"
+
 /// <summary>
-/// コンストラクタ
+/// コンストラク
 /// </summary>
-/// <param name="resources">共通リソース</param>
-/// <param name="scale">大きさ</param>
-/// <param name="position">座標</param>
-/// <param name="rotation">回転</param>
+/// <param name="scene">シーン</param>
+/// <param name="player">プレイヤ</param>
 BossEnemy::BossEnemy(Scene* scene, Player* player)
 	:
-	Actor(scene)
+	EnemyBase(scene,Params::BOSSENEMY_MAX_HP)
 	,m_behavior{}
 	,m_actionManager{}
 	,m_animation{}
@@ -28,6 +28,7 @@ BossEnemy::BossEnemy(Scene* scene, Player* player)
 {
 
 	using namespace DirectX::SimpleMath;
+
 
 	m_rigidBody = AddComponent<RigidbodyComponent>(this);
 	//当たり判定の作成
@@ -43,13 +44,15 @@ BossEnemy::BossEnemy(Scene* scene, Player* player)
 	GetTransform()->SetRotate(Quaternion::Identity);
 
 	//モデルの作成
-	m_model = GetScene()->AddActor<BossEnemyModel>(GetScene());
+	auto model = GetScene()->AddActor<BossEnemyModel>(GetScene());
 	//モデルの大きさをプレイヤの設定に
-	m_model->GetTransform()->SetScale(Vector3::One);
-	m_model->GetTransform()->Translate(position);
-	m_model->GetTransform()->SetRotate(Quaternion::Identity);
+	model->GetTransform()->SetScale(Vector3::One);
+	model->GetTransform()->Translate(position);
+	model->GetTransform()->SetRotate(Quaternion::Identity);
 	//親子関係をセット
-	m_model->GetTransform()->SetParent(GetTransform());
+	model->GetTransform()->SetParent(GetTransform());
+
+	SetModel(model);
 
 	//ビヘイビアツリー
 	m_behavior = std::make_unique<BossBehaviorTree>(player,this);
@@ -59,15 +62,7 @@ BossEnemy::BossEnemy(Scene* scene, Player* player)
 
 	m_actionManager = std::make_unique<BossEnemyActionManager>(this, player);
 
-	Messenger::GetInstance()->Rigister(
-		{
-			MessageType::BOSS_BEAM_ATTACK_STATE
-			,MessageType::BOSS_JUMP_ATTACK_STATE
-			,MessageType::BOSS_SWING_DOWN_STATE
-			,MessageType::BOSS_WAKING_STATE
-		}
-		, this
-	);
+
 
 }
 
@@ -79,6 +74,10 @@ BossEnemy::~BossEnemy()
 
 }
 
+/// <summary>
+/// 個別アップデート
+/// </summary>
+/// <param name="deltaTime"></param>
 void BossEnemy::UpdateActor(const float& deltaTime)
 {
 	
@@ -91,9 +90,6 @@ void BossEnemy::UpdateActor(const float& deltaTime)
 
 	//}
 
-	float ratio = 0.5f;
-
-	Messenger::GetInstance()->Notify(MessageType::BOSS_DAMAGE, &ratio);
 
 }
 
@@ -107,6 +103,33 @@ void BossEnemy::OnCollisionEnter(ColliderComponent* collider)
 	{
 		case Actor::ObjectTag::STAGE:
 			Landing();
+			break;
+		case Actor::ObjectTag::BOOMERANG:
+			{
+				int damage = Params::BOOMERANG_DAMAGE;
+
+				HpDecrease(damage);
+				Messenger::GetInstance()->Notify(MessageType::ENEMY_DAMAGE, &damage);
+			
+
+				float ratio = GetHpRatio();
+				Messenger::GetInstance()->Notify(MessageType::BOSS_DAMAGE, &ratio);
+
+			}
+
+			//Hpが０になれば
+			if (GetHp() <= 0)
+			{
+
+				auto camera = GetScene()->GetCamera();
+
+				auto* playCamera = static_cast<PlaySceneCamera*>(camera);
+				playCamera->SetTarget(this);
+
+				Messenger::GetInstance()->Notify(MessageType::BOSS_DEFEATED);
+
+			}
+
 			break;
 		default:
 			break;
@@ -163,19 +186,7 @@ void BossEnemy::Landing()
 void BossEnemy::Notify(MessageType type, void* datas)
 {
 
-	switch (type)
-	{
-		case MessageType::BOSS_BEAM_ATTACK_STATE:
-			break;
-		case MessageType::BOSS_JUMP_ATTACK_STATE:
-			break;
-		case MessageType::BOSS_WAKING_STATE:
-			break;
-		case MessageType::BOSS_SWING_DOWN_STATE:
-			break;
-		default:
-			break;
-	}
+	
 
 }
 

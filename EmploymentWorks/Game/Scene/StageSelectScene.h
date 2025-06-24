@@ -36,7 +36,6 @@ public:
     void SceneRender() override;
     void Finalize() override;
 
-	SceneID GetSceneID() const override { return SceneID::STAGESELECT; }
 
 private:
 	// ã§í ÉäÉ\Å[ÉX

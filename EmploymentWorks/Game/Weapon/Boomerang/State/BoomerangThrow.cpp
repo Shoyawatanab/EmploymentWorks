@@ -8,7 +8,7 @@
 #include "Libraries/WataLib/CSV.h"
 #include "GameBase/Scene/Scene.h"
 #include "GameBase/Camera/Camera.h"
-#include "GameBase/Messenger/Messenger.h"
+#include "Game/Messenger/Messenger.h"
 #include "Game/Weapon/Boomerang/State/BoomerangStateMachine.h"
 #include "Game/UI/PlayScene/TargetMarker/TargetMarker.h"
 

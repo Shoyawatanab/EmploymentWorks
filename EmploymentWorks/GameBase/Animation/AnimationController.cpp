@@ -281,6 +281,7 @@ void AnimationController::SetTrigger(const std::string& connectionName)
 	m_state = ExecutionState::TRIIGER;
 	//実行アニメーションの変更
 	ChangeAnimation(m_animations[m_triggerTransitionList[connectionName].second].get());
+
 }
 
 /// <summary>
@@ -323,6 +324,7 @@ void AnimationController::SetFloat(const std::string& connectionName, const floa
 			return;
 		}
 	}
+
 
 
 	//すでにアニメーションに切り替わっている場合

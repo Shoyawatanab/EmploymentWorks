@@ -6,6 +6,10 @@ class Player;
 
 class Boomerang : public WeaponBase
 {
+public:
+
+	//オブジェクトタグの取得
+	ObjectTag GetObjectTag() { return ObjectTag::BOOMERANG; }
 
 
 public:

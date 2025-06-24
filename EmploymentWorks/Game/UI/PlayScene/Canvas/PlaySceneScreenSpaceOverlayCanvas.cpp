@@ -13,7 +13,7 @@ PlaySceneScreenSpaceOverlayCanvas::PlaySceneScreenSpaceOverlayCanvas(Scene* scen
 	,m_targetMarker{}
 {
 
-	////PlyerHp�̍쐬
+	//PlyerHp�̍쐬
 	auto playerHp = GetScene()->AddActor<PlayerHp>(this);
 
 	m_targetMarker = GetScene()->AddActor<TargetMarker>(this,targets);

@@ -43,7 +43,14 @@ void RigidbodyManager::Update(const float& deltaTime)
 /// <param name="rigidbody"></param>
 void RigidbodyManager::AddRigidbody(RigidbodyComponent* comp)
 {
-	m_rigidbody.push_back(std::move(comp));
+
+	auto rigidbody = std::find(m_rigidbody.begin(), m_rigidbody.end(), comp);
+
+	if (rigidbody == m_rigidbody.end())
+	{
+		m_rigidbody.push_back(std::move(comp));
+
+	}
 }
 
 /// <summary>

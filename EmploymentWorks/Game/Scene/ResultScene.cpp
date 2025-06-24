@@ -10,7 +10,6 @@
 #include "Libraries/MyLib/InputManager.h"
 #include <cassert>
 
-#include "Libraries/WataLib/Fade.h"
 using namespace DirectX;
 using namespace DirectX::SimpleMath;
 

@@ -10,11 +10,11 @@ class DamageCount : public Actor
 public:
 
 	//îwåiÇÃëÂÇ´Ç≥
-	static constexpr DirectX::SimpleMath::Vector3 BACKGROUND_SCALE = { 100.0f,100.0f,0.0f };
+	static constexpr DirectX::SimpleMath::Vector3 BACKGROUND_SCALE = { 0.1f,0.1f,0.0f };
 	//ï\é¶ä‘äu
-	static constexpr float SPACING = 35.0f;
+	static constexpr float SPACING = 20.0f;
 	//ç≈ëÂï\é¶åÖ
-	static constexpr int MAXDIGITS = 5;
+	static constexpr int MAXDIGITS = 3;
 
 	//ï\é¶éûä‘
 	static constexpr float DISPLAYTIME = 2.0f;

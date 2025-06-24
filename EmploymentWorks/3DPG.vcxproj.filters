@@ -261,9 +261,6 @@
     <ClInclude Include="Game\Stage\StageObject\Wall.h">
       <Filter>Game\StageObject</Filter>
     </ClInclude>
-    <ClInclude Include="Libraries\WataLib\Fade.h">
-      <Filter>Libraries\WataLib</Filter>
-    </ClInclude>
     <ClInclude Include="GameBase\Interface\IState.h">
       <Filter>Game\Interface</Filter>
     </ClInclude>
@@ -457,7 +454,7 @@
     <ClInclude Include="Game\Weapon\Boomerang\State\BoomerangStates.h" />
     <ClInclude Include="Game\Weapon\Boomerang\State\BoomerangThrow.h" />
     <ClInclude Include="Game\Weapon\Boomerang\State\BoomerangGetReady.h" />
-    <ClInclude Include="GameBase\Messenger\Messenger.h" />
+    <ClInclude Include="Game\Messenger\Messenger.h" />
     <ClInclude Include="Game\Player\State\PlayerBoomerangGetReady.h" />
     <ClInclude Include="GameBase\Common\Commons.h" />
     <ClInclude Include="GameBase\BehaviorTree\ActionNode.h" />
@@ -519,6 +516,34 @@
     <ClInclude Include="GameBase\Manager\ShaderManager2.h" />
     <ClInclude Include="Game\Particle\PlayerDust.h" />
     <ClInclude Include="Game\UI\PlayScene\BossHp\BossHp.h" />
+    <ClInclude Include="Game\Camera\PayScene\PaySceneCameraState\PlaySceneEnemyTargetCamera.h" />
+    <ClInclude Include="Game\UI\TitleScene\TitleSceneUIs.h" />
+    <ClInclude Include="Game\UI\TitleScene\Canvas\TitleSceneScreenSpaceOverlayCanvas.h" />
+    <ClInclude Include="Game\UI\TitleScene\ExitButtom\ExitButtom.h" />
+    <ClInclude Include="GameBase\Manager\UIManager.h" />
+    <ClInclude Include="Game\Fade\FadeManager.h" />
+    <ClInclude Include="Game\Fade\IFade.h" />
+    <ClInclude Include="Game\Fade\FadeIn\NormalFadeIn.h" />
+    <ClInclude Include="Game\Fade\FadeKindss.h" />
+    <ClInclude Include="Game\Fade\FadeOut\NormalFadeOut.h" />
+    <ClInclude Include="Game\Enemies\BirdEnemy\BirdEnemy.h" />
+    <ClInclude Include="Game\Enemies\BirdEnemy\Model\BirdEnemyModel.h" />
+    <ClInclude Include="Game\Enemies\BirdEnemy\BirdEnemyParts.h" />
+    <ClInclude Include="Game\Enemies\BirdEnemy\Parts\BirdEnemyBody.h" />
+    <ClInclude Include="Game\Enemies\BirdEnemy\BirdEnemyPartss.h" />
+    <ClInclude Include="Game\Enemies\BirdEnemy\Parts\BirdEnemyLeftFeather.h" />
+    <ClInclude Include="Game\Enemies\BirdEnemy\Parts\BirdEnemyRightFeather.h" />
+    <ClInclude Include="Game\Enemies\BirdEnemy\State\BirdEnemyStateMachine.h" />
+    <ClInclude Include="Game\Enemies\BirdEnemy\State\BirdEnemyStates.h" />
+    <ClInclude Include="Game\Enemies\BirdEnemy\State\BirdEnemyIdle.h" />
+    <ClInclude Include="Game\Enemies\BirdEnemy\State\BirdEnemyMove.h" />
+    <ClInclude Include="Game\Enemies\BirdEnemy\State\BirdEnemyBeamAttack.h" />
+    <ClInclude Include="Game\Enemies\BirdEnemy\Bullet\BirdEnemyBullet.h" />
+    <ClInclude Include="Game\Enemies\BirdEnemy\Bullet\State\BirdEnemyBulletStateMachine.h" />
+    <ClInclude Include="Game\Enemies\BirdEnemy\Bullet\State\BirdEnemyBulletIdle.h" />
+    <ClInclude Include="Game\Enemies\BirdEnemy\Bullet\State\BirdEnemyBulletStates.h" />
+    <ClInclude Include="Game\Enemies\BirdEnemy\Bullet\State\BirdEnemyBulletCharge.h" />
+    <ClInclude Include="Game\Enemies\BirdEnemy\Bullet\State\BirdEnemyBulletShot.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -583,9 +608,6 @@
     </ClCompile>
     <ClCompile Include="Game\Stage\StageObject\Wall.cpp">
       <Filter>Game\StageObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Libraries\WataLib\Fade.cpp">
-      <Filter>Libraries\WataLib</Filter>
     </ClCompile>
     <ClCompile Include="Libraries\WataLib\Mouse.cpp">
       <Filter>Libraries\WataLib</Filter>
@@ -726,7 +748,7 @@
     <ClCompile Include="Game\Weapon\Boomerang\State\Boomerangidle.cpp" />
     <ClCompile Include="Game\Weapon\Boomerang\State\BoomerangThrow.cpp" />
     <ClCompile Include="Game\Weapon\Boomerang\State\BoomerangGetReady.cpp" />
-    <ClCompile Include="GameBase\Messenger\Messenger.cpp" />
+    <ClCompile Include="Game\Messenger\Messenger.cpp" />
     <ClCompile Include="Game\Player\State\PlayerBoomerangGetReady.cpp" />
     <ClCompile Include="GameBase\BehaviorTree\ActionNode.cpp" />
     <ClCompile Include="Game\Enemies\BossEnemy\BehavirTree\BossBehaviorTree.cpp" />
@@ -779,6 +801,28 @@
     <ClCompile Include="Libraries\Easing.cpp" />
     <ClCompile Include="Game\Particle\PlayerDust.cpp" />
     <ClCompile Include="Game\UI\PlayScene\BossHp\BossHp.cpp" />
+    <ClCompile Include="Game\Camera\PayScene\PaySceneCameraState\PlaySceneEnemyTargetCamera.cpp" />
+    <ClCompile Include="Game\UI\TitleScene\Canvas\TitleSceneScreenSpaceOverlayCanvas.cpp" />
+    <ClCompile Include="Game\UI\TitleScene\ExitButtom\ExitButtom.cpp" />
+    <ClCompile Include="GameBase\Manager\UIManager.cpp" />
+    <ClCompile Include="Game\Fade\FadeManager.cpp" />
+    <ClCompile Include="Game\Fade\FadeIn\NormalFadeIn.cpp" />
+    <ClCompile Include="Game\Fade\FadeOut\NormalFadeInOut.cpp" />
+    <ClCompile Include="Game\Enemies\BirdEnemy\BirdEnemy.cpp" />
+    <ClCompile Include="Game\Enemies\BirdEnemy\Model\BirdEnemyModel.cpp" />
+    <ClCompile Include="Game\Enemies\BirdEnemy\BirdEnemyParts.cpp" />
+    <ClCompile Include="Game\Enemies\BirdEnemy\Parts\BirdEnemyBody.cpp" />
+    <ClCompile Include="Game\Enemies\BirdEnemy\Parts\BirdEnemyLeftFeather.cpp" />
+    <ClCompile Include="Game\Enemies\BirdEnemy\Parts\BirdEnemyRightFeather.cpp" />
+    <ClCompile Include="Game\Enemies\BirdEnemy\State\BirdEnemyStateMachine.cpp" />
+    <ClCompile Include="Game\Enemies\BirdEnemy\State\BirdEnemyIdle.cpp" />
+    <ClCompile Include="Game\Enemies\BirdEnemy\State\BirdEnemyMove.cpp" />
+    <ClCompile Include="Game\Enemies\BirdEnemy\State\BirdEnemyBeamAttack.cpp" />
+    <ClCompile Include="Game\Enemies\BirdEnemy\Bullet\BirdEnemyBullet.cpp" />
+    <ClCompile Include="Game\Enemies\BirdEnemy\Bullet\State\BirdEnemyBulletStateMachine.cpp" />
+    <ClCompile Include="Game\Enemies\BirdEnemy\Bullet\State\BirdEnemyBulletIdle.cpp" />
+    <ClCompile Include="Game\Enemies\BirdEnemy\Bullet\State\BirdEnemyBulletCharge.cpp" />
+    <ClCompile Include="Game\Enemies\BirdEnemy\Bullet\State\BirdEnemyBulletShot.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />

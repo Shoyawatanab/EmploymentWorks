@@ -17,26 +17,27 @@ DamageCount::DamageCount(Canvas* canvas)
 	using namespace DirectX::SimpleMath;
 
 
-	//背景画像
+	////背景画像
 	m_backGraund = GetScene()->AddActor<Image>(canvas,"DamageBackGraund");
 	m_backGraund->GetTransform()->SetScale(BACKGROUND_SCALE);
 	m_backGraund->GetTransform()->SetParent(GetTransform());
+
 	//桁数
 	for (int i = 0; i < MAXDIGITS; i++)
 	{
 		auto number = GetScene()->AddActor<NumberUI>(canvas);
+		number->GetTransform()->SetScale(Vector3(0.1f, 0.1f,0));
 		number->GetTransform()->SetParent(GetTransform());
 		number->SetActive(false);
 		m_numbers.push_back(number);
 	}
 
-
-	GetTransform()->SetPosition(Vector3(640,360,0));
-
-	GetTransform()->SetScale(Vector3(1, 1, 1));
+	GetTransform()->SetScale(Vector3(0.1, 0.1, 0));
+	GetTransform()->SetPosition(Vector3(640, 360, 0));
 
 	//初期化で非アクティブに
 	SetActive(false);
+
 
 }
 
@@ -69,6 +70,13 @@ void DamageCount::UpdateActor(const float& deltaTime)
 /// </summary>
 void DamageCount::OnEnable()
 {
+
+	//番号をすべて非アクティブに
+	for (auto& number : m_numbers)
+	{
+		number->SetActive(false);
+	}
+
 }
 
 /// <summary>
@@ -79,6 +87,9 @@ void DamageCount::OnDisable()
 
 	//初期化
 	m_usedNumbers.clear();
+
+
+
 }
 
 
@@ -94,6 +105,9 @@ void DamageCount::SetDamage(int damage)
 	{
 		return;
 	}
+
+	
+
 
 	//桁数だけ回す
 	for (int i = digits - 1; i >= 0; --i)

@@ -11,7 +11,7 @@
 #include "Libraries/MyLib/InputManager.h"
 #include "Libraries/MyLib/MemoryLeakDetector.h"
 #include "Game/Weapon/Boomerang/Boomerang.h"
-#include "GameBase/Messenger/Messenger.h"
+#include "Game/Messenger/Messenger.h"
 #include "Game/Player/PlayerUsually.h"
 
 #include "Game/Particle/PlayerDust.h"

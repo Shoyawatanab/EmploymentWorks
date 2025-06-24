@@ -44,6 +44,15 @@ void CollisionManager::Update(const float& deltaTime)
 			//固定オブジェクト同士なら
 			if (m_colliderList[i]->GetCollisionType() == CollisionType::FIXED && m_colliderList[j]->GetCollisionType() == CollisionType::FIXED) { continue; }
 
+
+			if (m_colliderList[i]->GetActor()->GetObjectTag() == Actor::ObjectTag::BOOMERANG &&
+			m_colliderList[j]->GetActor()->GetObjectTag() == Actor::ObjectTag::BOSS_ENEMY ||
+				m_colliderList[j]->GetActor()->GetObjectTag() == Actor::ObjectTag::BOOMERANG &&
+				m_colliderList[i]->GetActor()->GetObjectTag() == Actor::ObjectTag::BOSS_ENEMY)
+			{
+				int a = 0;
+			}
+
 			//移動オブジェクト同士
 			if (m_colliderList[i]->GetCollisionType() == CollisionType::COLLISION && m_colliderList[j]->GetCollisionType() == CollisionType::COLLISION)
 			{
@@ -130,6 +139,12 @@ void CollisionManager::RemoveCollider(ColliderComponent* collider)
 
 void CollisionManager::Collision_Collision(ColliderComponent* collider1, ColliderComponent* collider2)
 {
+	//当たり判定フラグ
+	bool isHit = DetectionCollision2::ChecOnCollision(collider1, collider2);
+
+	//通知を送る
+	SendNotification(collider1, collider2,isHit);
+
 }
 
 void CollisionManager::Fixed_Fixed(ColliderComponent* collider1, ColliderComponent* collider2)

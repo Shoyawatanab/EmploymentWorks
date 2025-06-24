@@ -12,9 +12,9 @@
 #include "GameBase/Common/Commons.h"
 #include "Libraries/MyLib/MemoryLeakDetector.h"
 #include "Libraries/MyLib/InputManager.h"
-#include "Libraries/WataLib/Fade.h"
 #include <cassert>
-
+#include "Game/Messenger/Messenger.h"
+#include "Game/Fade/FadeManager.h"
 
 
 //---------------------------------------------------------
@@ -22,10 +22,21 @@
 //---------------------------------------------------------
 SceneManager::SceneManager()
 	:
-	m_currentScene{},
-	m_commonResources{}
-	,m_stageID{}
+	m_currentScene{}
+	,m_nextSceneID{}
+	,m_fadeManager{}
 {
+
+	m_fadeManager = FadeManager::GetInstance();
+
+	Messenger::GetInstance()->Rigister(
+		{
+			MessageType::CHANGE_TITLE_SCENE
+			,MessageType::CHANGE_SELECT_SCENE
+			,MessageType::CHANGE_PLAY_SCENE
+		}, this
+	);
+
 }
 
 //---------------------------------------------------------
@@ -42,11 +53,11 @@ SceneManager::~SceneManager()
 void SceneManager::Initialize(CommonResources* resources)
 {
 	assert(resources);
-	m_commonResources = resources;
 
-	m_stageID = STAGE1;
 
-	ChangeScene(Scene::SceneID::PLAY);
+
+	//初期シーン
+	ChangeScene(SceneID::TITLE);
 
 
 }
@@ -59,21 +70,21 @@ void SceneManager::Update(float elapsedTime)
 {
 	m_currentScene->Update(elapsedTime);
 
-	// 説明用変数：次のシーン
-	const Scene::SceneID nextSceneID = m_currentScene->GetNextSceneID();
 
 	// シーンを変更しないとき
-	if (nextSceneID == Scene::SceneID::NONE) return;
+	if (m_nextSceneID == SceneID::NONE) return;
 
-	ChangeScene(nextSceneID);
-	return;
-
-	//フェードクラスのシーン切り替えフラグがtrueなら
-	if (m_commonResources->GetFade()->GetIsSceneChange())
+	//フェード
+	if (m_fadeManager->GetFadeState() != FadeManager::FadeState::FADE_IN_END)
 	{
-		// シーンを変更する
-		ChangeScene(nextSceneID);
+		return;
 	}
+
+	//シーン切り替え
+	ChangeScene(m_nextSceneID);
+	//初期化
+	m_nextSceneID = SceneID::NONE;
+	
 }
 
 //---------------------------------------------------------
@@ -84,6 +95,7 @@ void SceneManager::Render()
 	m_currentScene->Render();
 }
 
+
 //---------------------------------------------------------
 // 後始末する
 //---------------------------------------------------------
@@ -92,10 +104,11 @@ void SceneManager::Finalize()
 	DeleteScene();
 }
 
+
 //---------------------------------------------------------
 // シーンを変更する
 //---------------------------------------------------------
-void SceneManager::ChangeScene(Scene::SceneID sceneID)
+void SceneManager::ChangeScene(SceneID sceneID)
 {
 	DeleteScene();
 	CreateScene(sceneID);
@@ -104,22 +117,22 @@ void SceneManager::ChangeScene(Scene::SceneID sceneID)
 //---------------------------------------------------------
 // シーンを作成する
 //---------------------------------------------------------
-void SceneManager::CreateScene(Scene::SceneID sceneID)
+void SceneManager::CreateScene(SceneID sceneID)
 {
 	assert(m_currentScene == nullptr);
 
 	switch (sceneID)
 	{
-		case Scene::SceneID::TITLE:
+		case SceneID::TITLE:
 			m_currentScene = std::make_unique<TitleScene>();
 			break;
-		case Scene::SceneID::PLAY:
-			m_currentScene = std::make_unique<PlayScene>(m_stageID);
+		case SceneID::PLAY:
+			m_currentScene = std::make_unique<PlayScene>();
 			break;
-		case Scene::SceneID::STAGESELECT:
+		case SceneID::STAGESELECT:
 			m_currentScene = std::make_unique<StageSelectScene>(this);
 			break;
-		case Scene::SceneID::RESULT:
+		case SceneID::RESULT:
 			m_currentScene = std::make_unique<ResultScene>();
 			break;
 		default:
@@ -129,6 +142,7 @@ void SceneManager::CreateScene(Scene::SceneID sceneID)
 
 	assert(m_currentScene && "SceneManager::CreateScene::次のシーンが生成されませんでした！");
 	m_currentScene->Initialize();
+
 }
 
 //---------------------------------------------------------
@@ -139,5 +153,37 @@ void SceneManager::DeleteScene()
 	if (m_currentScene)
 	{
 		m_currentScene.reset();
+		//メッセンジャーもクリア
+		Messenger::GetInstance()->Clear();
+
+	}
+
+}
+
+
+
+/// <summary>
+/// 通知を受け取る関数
+/// </summary>
+/// <param name="type">通知の種類</param>
+/// <param name="datas">追加データ</param>
+void SceneManager::Notify(MessageType type, void* datas)
+{
+	switch (type)
+	{
+		case MessageType::CHANGE_TITLE_SCENE:
+			SetNextSceneID(SceneID::TITLE);
+			break;
+		case MessageType::CHANGE_SELECT_SCENE:
+			SetNextSceneID(SceneID::STAGESELECT);
+			break;
+		case MessageType::CHANGE_PLAY_SCENE:
+			SetNextSceneID(SceneID::PLAY);
+			break;
+		default:
+			break;
 	}
 }
+
+
+

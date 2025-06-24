@@ -14,7 +14,7 @@ public:
 	//注視点の取得
 	const DirectX::SimpleMath::Vector3& GetTargetPosition() { return m_target; }
 	//注視点のセット
-	void SetTargetPosition(const DirectX::SimpleMath::Vector3& target) { m_target = target;; }
+	void SetTargetPosition(const DirectX::SimpleMath::Vector3& target) { m_target = target; }
 	//頭の方向の取得
 	const DirectX::SimpleMath::Vector3& GetUpPosition() { return m_up; }
 	//頭の方向のセット
