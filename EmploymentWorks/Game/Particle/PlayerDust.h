@@ -7,5 +7,5 @@ public:
 	//コンストラクタ
 	PlayerDust(Scene* scene);
 	//
-	~PlayerDust();
+	~PlayerDust() override;
 };

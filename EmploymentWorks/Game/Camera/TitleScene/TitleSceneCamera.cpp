@@ -28,7 +28,7 @@ void TitleSceneCamera::UpdateCamera(const float& deltaTime)
 {
 	using namespace DirectX::SimpleMath;
 
-
+	//‰ñ“]
 	m_angle += ROTATION_SPEED * deltaTime;
 	
 	float x = DISTANCE_TO_TARGET.x * cosf(m_angle);

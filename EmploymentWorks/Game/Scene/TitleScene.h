@@ -30,7 +30,6 @@ public:
 
 
 private:
-    Camera* m_camera;
 
 
 
@@ -43,6 +42,10 @@ public:
     void CreateTextures();
 
 private:
+
+    Camera* m_camera;
+
+
     // Ë‰es—ñ
     DirectX::SimpleMath::Matrix m_projection;
 

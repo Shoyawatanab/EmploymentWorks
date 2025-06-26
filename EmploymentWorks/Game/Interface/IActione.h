@@ -24,7 +24,7 @@ public:
 	//デストラクタ
 	virtual ~IAction() = default;
 	//初期化
-	virtual void Initialize() = 0;
+	//virtual void Initialize() = 0;
 	//更新処理
 	virtual ActionState Update(const float& elapsedTime) = 0;
 	//状態に入った時

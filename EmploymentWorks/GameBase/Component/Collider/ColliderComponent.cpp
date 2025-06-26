@@ -101,6 +101,8 @@ AABB::AABB(Actor* owner, ColliderTag tag, CollisionType type
 	, const float& radius)
 	:
 	ColliderComponent(owner,tag,type)
+	,m_initialExtents{extents}
+	,m_initialRadius{radius}
 {
 	
 	using namespace DirectX;
@@ -176,9 +178,18 @@ void AABB::RenderCollider(const DirectX::SimpleMath::Matrix& view, const DirectX
 
 void AABB::PositionUpdate()
 {
+
+	auto scale = GetActor()->GetTransform()->GetWorldScale();
+
+
 	//座標の更新
-	m_boundingBox->Center = GetActor()->GetTransform()->GetPosition();
-	m_boundingSphere->Center = GetActor()->GetTransform()->GetPosition();
+	m_boundingBox->Center = GetActor()->GetTransform()->GetRotatePosition();
+	//大きさの更新
+	m_boundingBox->Extents = GetInitialExtents() * scale;
+	//座標の更新
+	m_boundingSphere->Center = GetActor()->GetTransform()->GetRotatePosition();
+	//大きさの更新
+	m_boundingSphere->Radius = GetInitialRaduis() * std::max({ scale.x,scale.y,scale.z });
 
 }
 
@@ -186,7 +197,7 @@ void AABB::PositionUpdate()
 DirectX::BoundingBox* AABB::GetBoundingBox()
 {
 	//座標の更新
-	m_boundingBox->Center = GetActor()->GetTransform()->GetPosition();
+	m_boundingBox->Center = GetActor()->GetTransform()->GetRotatePosition();
 	return m_boundingBox.get();
 }
 
@@ -196,7 +207,7 @@ DirectX::BoundingBox* AABB::GetBoundingBox()
 /// <returns></returns>
 DirectX::BoundingSphere* AABB::GetBoundingSphere()
 {
-	m_boundingSphere->Center = GetActor()->GetTransform()->GetPosition();
+	m_boundingSphere->Center = GetActor()->GetTransform()->GetRotatePosition();
 	return m_boundingSphere.get();
 }
 

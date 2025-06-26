@@ -5,12 +5,12 @@
 #pragma once
 #include "GameBase/Scene/Scene.h"
 #include "GameBase/Messenger/IObserver.h"
+#include "Game/Messenger/Global/GlobalMeesageType.h"
 
 // 前方宣言
-class CommonResources;
 class FadeManager;
 
-class SceneManager : public IObserver
+class SceneManager : public IObserver<GlobalMessageType>
 {
 public:
 
@@ -41,7 +41,7 @@ public:
 	//デストラクタ
 	~SceneManager();
 	//初期化
-	void Initialize(CommonResources* resources);
+	void Initialize();
 	//更新処理
 	void Update(float elapsedTime);
 	//描画
@@ -50,7 +50,7 @@ public:
 	void Finalize();
 
 	//通知時に呼び出される
-	void Notify(MessageType type, void* datas) override;
+	void Notify(GlobalMessageType type, void* datas) override;
 
 
 

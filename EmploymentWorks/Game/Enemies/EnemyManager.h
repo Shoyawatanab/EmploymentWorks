@@ -13,11 +13,18 @@ public:
 	//コンストラクタ
 	EnemyManager(Scene* scene, Player* player);
 	//デストラクタ
-	~EnemyManager();
+	~EnemyManager() override;
+
+private:
+
+	//データの読み込み
+	void LoadData();
+
 
 private:
 
 	std::vector<Actor*> m_enemys;
 
+	Player* m_player;
 
 };

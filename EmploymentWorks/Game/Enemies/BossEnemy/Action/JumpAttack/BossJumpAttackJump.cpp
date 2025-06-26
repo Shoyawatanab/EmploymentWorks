@@ -43,17 +43,6 @@ BossJumpAttackJump::~BossJumpAttackJump()
 	// do nothing.
 }
 
-/// <summary>
-/// ‰Šú‰»
-/// </summary>
-void BossJumpAttackJump::Initialize()
-{
-
-
-
-}
-
-
 
 /// <summary>
 /// XVˆ—

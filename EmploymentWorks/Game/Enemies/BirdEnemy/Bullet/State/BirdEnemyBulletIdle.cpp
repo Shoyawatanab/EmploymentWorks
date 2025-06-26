@@ -2,7 +2,7 @@
 #include "BirdEnemyBulletIdle.h"
 #include <random>
 #include "Game/Params.h"
-#include "Game/Messenger/Messenger.h"
+#include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/Enemies/BirdEnemy/Bullet/BirdEnemyBullet.h"
 #include "GameBase/Component/Components.h"
 #include "Game/Enemies/BirdEnemy/BirdEnemy.h"
@@ -20,28 +20,43 @@ BirdEnemyBulletIdle::BirdEnemyBulletIdle(BirdEnemyBulletStateMachine* stateMachi
 {
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 BirdEnemyBulletIdle::~BirdEnemyBulletIdle()
 {
 }
 
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="deltaTime">経過時間</param>
 void BirdEnemyBulletIdle::Update(const float& deltaTime)
 {
 
+	UNREFERENCED_PARAMETER(deltaTime);
 
 }
 
+/// <summary>
+/// 状態に入った時
+/// </summary>
 void BirdEnemyBulletIdle::Enter()
 {
 	using namespace DirectX::SimpleMath;
-
-	m_bullet->GetTransform()->SetScale(Vector3(0.3f, 0.3f, 0.3f));
-	m_bullet->GetTransform()->SetPosition(Vector3(0, 0, 1));
+	//親子関係を結ぶ
 	m_bullet->GetTransform()->SetParent(m_birdEnemy->GetTransform());
+	//親との相対位置のセット
+	m_bullet->GetTransform()->SetPosition(Vector3(0, 0, 1));
+	
 	//非アクティブに
-	//m_bullet->SetActive(false);
+	m_bullet->SetActive(false);
 
 }
 
+/// <summary>
+/// 状態を抜けた時
+/// </summary>
 void BirdEnemyBulletIdle::Exit()
 {
 }

@@ -3,7 +3,10 @@
 #include <random>
 #include "Game/Params.h"
 
-#include "Game/Messenger/Messenger.h"
+#include "Game/Messenger/Scene/SceneMessages.h"
+#include "Game/Enemies/BirdEnemy/BirdEnemy.h"
+#include "Game/Enemies/BirdEnemy/State/BirdEnemyStateMachine.h"
+#include "Game/MathUtil.h"
 
 /// <summary>
 /// コンストラク
@@ -19,37 +22,36 @@ BirdEnemyIdle::BirdEnemyIdle(BirdEnemyStateMachine* stateMachine, BirdEnemy* bir
 {
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 BirdEnemyIdle::~BirdEnemyIdle()
 {
 }
 
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="deltaTime">経過時間</param>
 void BirdEnemyIdle::Update(const float& deltaTime)
 {
-
+	//インターバルを超えたら
 	if (m_time >= m_attackInterval)
 	{
 
-		//	完全なランダムをハードウェア的に生成するためのクラスの変数
-		std::random_device seed;
-		//	上記の完全なランダムは動作が遅いため、seed値の決定のみに使用する
-		//	※「default_random_engine」はusingで「mt19937」となっている
-		std::default_random_engine engine(seed());
-		//	生成して欲しいランダムの範囲をDistributionに任せる。今回は0～2PI
-		std::uniform_real_distribution<> dist(0, 100);
+		//確率
+		float ratio = MathUtil::GetRandom<float>(0, 100);
 
-		float ratio = static_cast<float>(dist(engine));
 
 		if (ratio < Params::BIRDENEMY_ATTACK_RATIO)
 		{
-
-
-			Messenger::GetInstance()->Notify(MessageType::BIRD_MOVE_STATE);
-
+			//動き状態に
+			m_birdEnemy->GetStateMachine()->ChangeState(BirdEnemyState::MOVE);
 		}
 		else
 		{
-
-			Messenger::GetInstance()->Notify(MessageType::BIRD_BEAM_ATTACK_STATE);
+			//弾攻撃に
+			m_birdEnemy->GetStateMachine()->ChangeState(BirdEnemyState::BULLET_ATTACK);
 
 		}
 	}
@@ -59,6 +61,9 @@ void BirdEnemyIdle::Update(const float& deltaTime)
 
 }
 
+/// <summary>
+/// 状態に入った時
+/// </summary>
 void BirdEnemyIdle::Enter()
 {
 	//初期化
@@ -73,6 +78,9 @@ void BirdEnemyIdle::Enter()
 
 }
 
+/// <summary>
+/// 状態を抜けた時
+/// </summary>
 void BirdEnemyIdle::Exit()
 {
 }

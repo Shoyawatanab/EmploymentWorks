@@ -12,7 +12,6 @@ class Scene
 {
 public:
 
-
 public:
 
 	//マネージャーの取得
@@ -21,10 +20,12 @@ public:
 	RigidbodyManager* GetRigidbodyManager() { return m_rigidbodyManager.get(); }
 	UIManager* GetUIManager() { return m_uiManager.get(); }
 
+
 	//カメラの取得
 	virtual Camera* GetCamera() const = 0;
 
 public:
+
 	// コンストラクタ、デストラクタ
 	Scene();
 	virtual ~Scene();
@@ -40,7 +41,6 @@ public:
 	// 終了処理
 	virtual void Finalize() = 0;
 	
-
 	// アクター削除フラグをオンにする
 	void ActorDestroyOn() { m_isActorDestroy = true; }
 

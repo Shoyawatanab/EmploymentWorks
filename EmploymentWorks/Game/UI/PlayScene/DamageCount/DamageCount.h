@@ -28,9 +28,9 @@ public:
 	void UpdateActor(const float& deltaTime);
 
 	//アクティブになった時に呼ばれる関数
-	void OnEnable();
+	void OnEnable() override;
 	//非アクティブになった時に呼ばれる関数
-	void OnDisable();
+	void OnDisable() override;
 
 	//ダメージのセット
 	void SetDamage(int damage);

@@ -3,7 +3,7 @@
 #include "Game/Camera/PayScene/PlaySceneCamera.h"
 #include "Game/Player/Player.h"
 #include "GameBase/Component/Components.h"
-#include "Game/Messenger/Messenger.h"
+#include "Game/Messenger/Scene/SceneMessages.h"
 
 /// <summary>
 /// コンストラクタ
@@ -21,14 +21,15 @@ PlaySceneCameraTPS::PlaySceneCameraTPS(PlaySceneCameraStateMachine* stateMachine
 	,m_zoomTime{}
 {
 
-
-	Messenger::GetInstance()->Rigister(
+	//メッセンジャーに登録
+	SceneMessenger::GetInstance()->Rigister(
 		{
-			MessageType::PLAYER_GET_REDAY
-			,MessageType::PLAYER_GET_REDAY_END
+			SceneMessageType::PLAYER_GET_REDAY
+			,SceneMessageType::PLAYER_GET_REDAY_END
 		}
 		, this
 	);
+
 
 }
 
@@ -50,11 +51,10 @@ void PlaySceneCameraTPS::Update(const float& deltaTime)
 
 	//マウス操作
 	MouseOperation();
-
+	//ズームの更新
 	ZoomUpdate(deltaTime);
-	
+	//ターゲット
 	Vector3 target = m_camera->GetTarget()->GetTransform()->GetWorldPosition() +  Vector3(0, 1, 0);
-
 	//X軸回転の計算
 	Quaternion rotateX = Quaternion::CreateFromAxisAngle(Vector3::UnitY, XMConvertToRadians(m_rotationX));
 	//回転の計算
@@ -68,6 +68,7 @@ void PlaySceneCameraTPS::Update(const float& deltaTime)
 	//ズーム時の回転
 	Vector3 movemement = Vector3::Transform(m_zoomMovement, rotate);
 
+	//カメラにセット
 	m_camera->SetEyePosition(eye + movemement);
 	m_camera->SetTargetPosition(target);
 
@@ -103,15 +104,15 @@ void PlaySceneCameraTPS::Exit()
 /// </summary>
 /// <param name="type">通知の種類</param>
 /// <param name="datas">追加データ</param>
-void PlaySceneCameraTPS::Notify(MessageType type, void* datas)
+void PlaySceneCameraTPS::Notify(SceneMessageType type, void* datas)
 {
 	switch (type)
 	{
-		case MessageType::PLAYER_GET_REDAY:
+		case SceneMessageType::PLAYER_GET_REDAY:
 			m_zoomState = ZoomState::ZOOM_IN;
 			m_zoomTime = 0.0f;
 			break;
-		case MessageType::PLAYER_GET_REDAY_END:
+		case SceneMessageType::PLAYER_GET_REDAY_END:
 			m_zoomState = ZoomState::ZOOM_OUT;
 			m_zoomMovement = DirectX::SimpleMath::Vector3::Zero;
 			m_zoomTime = 0.0f;
@@ -207,4 +208,48 @@ void PlaySceneCameraTPS::ZoomUpdate(const float& deltaTime)
 
 
 	m_zoomTime += deltaTime;
+}
+
+/// <summary>
+/// 画面の揺れ
+/// </summary>
+/// <param name="deltaTime">経過時間</param>
+void PlaySceneCameraTPS::Shake(const float& deltaTime)
+{
+
+	//using namespace DirectX::SimpleMath;
+	//
+	//if (!m_isShake)
+	//{
+	//	return;
+	//}
+
+
+	//m_shaleTime -= deltaTime;
+
+
+	//if (m_shaleTime <= 0.0f)
+	//{
+	//	m_isShake = false;
+	//	m_shakePosition = Vector3::Zero;
+	//	return;
+	//}
+
+	//float power = (m_shaleTime / SHAKETIME) * m_shakePower;
+
+	////	完全なランダムをハードウェア的に生成するためのクラスの変数
+	//std::random_device seed;
+	////	上記の完全なランダムは動作が遅いため、seed値の決定のみに使用する
+	////	※「default_random_engine」はusingで「mt19937」となっている
+	//std::default_random_engine engine(seed());
+	////	生成して欲しいランダムの範囲をDistributionに任せる。今回は0～2PI
+	//std::uniform_real_distribution<> dist(-power, power);
+
+	//float x = static_cast<float>(dist(engine));
+	//float y = static_cast<float>(dist(engine));
+	//float z = static_cast<float>(dist(engine));
+
+	//m_shakePosition = Vector3(x, y, z);
+
+
 }

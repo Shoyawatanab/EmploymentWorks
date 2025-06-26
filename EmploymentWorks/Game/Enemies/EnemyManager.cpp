@@ -3,22 +3,152 @@
 #include "Game/Enemies/Enemys.h"
 #include "GameBase/Scene/Scene.h"
 #include "GameBase/Component/Components.h"
+#include "Game/GlobalGameData.h"
+#include <iostream>
+#include <fstream>
+#include <nlohmann/json.hpp>
 
+/// <summary>
+/// コンストラク
+/// </summary>
+/// <param name="scene">シーン</param>
+/// <param name="player">プレイヤ</param>
 EnemyManager::EnemyManager(Scene* scene,Player* player)
 	:
 	Actor(scene)
+	,m_player{player}
 {
+	using namespace DirectX::SimpleMath;
 
-	////ボス敵の作成
-	//auto bossEnemy = GetScene()->AddActor<BossEnemy>(GetScene(), player);
+	//ステージデータの読み込み
+	LoadData();
 
-	//m_enemys.push_back(bossEnemy);
-
-
-	auto bird = GetScene()->AddActor<BirdEnemy>(GetScene(), player);
-	m_enemys.push_back(bird);
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 EnemyManager::~EnemyManager()
 {
+}
+
+
+/// <summary>
+/// ステージデータの読み込み
+/// </summary>
+void EnemyManager::LoadData()
+{
+
+	using namespace DirectX::SimpleMath;
+
+	using json = nlohmann::json;
+
+
+	//ステージ番号の取得
+	int stageNumber = GlobalGameData::GetInstance()->GetSelectStateNumber();
+
+
+	std::ifstream file(L"Resources/Json/Stage/Stage" + std::to_wstring(stageNumber) + L"/Enemy.json");
+
+	//ファイルが開けないとき
+	if (!file.is_open())
+	{
+		throw std::runtime_error("jsonファイルが開けません");
+	}
+
+	//ファイルの内容をJSONオブジェックとしてパース
+	json data = json::parse(file);
+
+	//StageObject[](ピンク色)内のデータの{}(青色)の要素だけ回す
+	for (const auto& item : data["StageObject"])
+	{
+
+		//kindsの要素の値を代入
+		std::string kinds = item["kinds"];
+
+		if (kinds == "BossEnemy")
+		{
+			int a = 0;
+		}
+
+		//Positionの要素を代入
+		Vector3 position;
+
+		//Positionがあるか
+		if (item.contains("Position"))
+		{
+			//Positionの要素を代入
+			position = Vector3(
+				item["Position"]["x"],           //Positionの要素のxの要素を代入x値
+				item["Position"]["y"],           //Positionの要素のxの要素を代入y値
+				item["Position"]["z"]            //Positionの要素のxの要素を代入z値
+			);
+		}
+		//なければ
+		else
+		{
+			position = DirectX::SimpleMath::Vector3::Zero;
+		}
+
+		Vector3 scale;
+
+		//Scaleがあるか
+		if (item.contains("Scale"))
+		{
+			//Scaleの要素を代入
+			scale = Vector3(
+				item["Scale"]["x"],             //Scaleの要素のxの要素を代入
+				item["Scale"]["y"],             //Scaleの要素のyの要素を代入
+				item["Scale"]["z"]              //Scaleの要素のzの要素を代入
+			);
+		}
+		//なければ
+		else
+		{
+			scale = Vector3::Zero;
+		}
+
+		Quaternion rotation;
+
+		//Rotationがあるか
+		if (item.contains("Rotation"))
+		{
+			//Rotationの要素を代入
+			rotation = Quaternion::CreateFromYawPitchRoll(
+				item["Rotation"]["y"],          
+				item["Rotation"]["x"],          
+				item["Rotation"]["z"]           
+			);
+		}
+		//なければ
+		else
+		{
+			rotation = Quaternion::Identity;
+		}
+
+
+
+		if (kinds == "BossEnemy")
+		{
+			//ボス敵の作成
+			auto boss = GetScene()->AddActor<BossEnemy>(GetScene(),  scale, position, rotation, m_player);
+			m_enemys.push_back(boss);
+
+
+		}
+		else if (kinds == "BirdEnemy")
+		{
+			//鳥敵の作成
+			auto bird = GetScene()->AddActor<BirdEnemy>(GetScene(), scale, position, rotation, m_player);
+
+			m_enemys.push_back(bird);
+
+
+		}
+
+
+	}
+
+
+
 }

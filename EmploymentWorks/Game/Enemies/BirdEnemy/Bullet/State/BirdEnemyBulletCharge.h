@@ -11,7 +11,7 @@ class BirdEnemyBullet;
 class BirdEnemyBulletCharge :public IState
 {
 public:
-
+	//ƒ`ƒƒ[ƒWŠÔ
 	static constexpr float CHARGE_TIME = { 3.0f };
 
 public:

@@ -2,7 +2,7 @@
 #include "BirdEnemyBulletCharge.h"
 #include <random>
 #include "Game/Params.h"
-#include "Game/Messenger/Messenger.h"
+#include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/Enemies/BirdEnemy/Bullet/BirdEnemyBullet.h"
 #include "GameBase/Component/Components.h"
 
@@ -20,10 +20,17 @@ BirdEnemyBulletCharge::BirdEnemyBulletCharge(BirdEnemyBulletStateMachine* stateM
 {
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 BirdEnemyBulletCharge::~BirdEnemyBulletCharge()
 {
 }
 
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="deltaTime">経過時間</param>
 void BirdEnemyBulletCharge::Update(const float& deltaTime)
 {
 	using namespace DirectX::SimpleMath;
@@ -40,7 +47,7 @@ void BirdEnemyBulletCharge::Update(const float& deltaTime)
 	//最大の大きさになったら
 	if (m_time >= CHARGE_TIME)
 	{
-		Messenger::GetInstance()->Notify(MessageType::BIRD_BULLET_SHOT_STATE);
+		m_stateMahine->ChangeState(BirdEnemyBulletState::SHOT);
 		return;
 	}
 
@@ -48,6 +55,9 @@ void BirdEnemyBulletCharge::Update(const float& deltaTime)
 	m_time += deltaTime;
 }
 
+/// <summary>
+/// 状態に入った時
+/// </summary>
 void BirdEnemyBulletCharge::Enter()
 {
 	using namespace DirectX::SimpleMath;
@@ -59,6 +69,9 @@ void BirdEnemyBulletCharge::Enter()
 	m_bullet->SetActive(true);
 }
 
+/// <summary>
+/// 状態を抜けた時
+/// </summary>
 void BirdEnemyBulletCharge::Exit()
 {
 }

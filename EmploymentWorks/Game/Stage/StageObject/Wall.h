@@ -13,7 +13,7 @@ class Wall : public Actor
 {
 public:
 	//オブジェクトタグの取得
-	ObjectTag GetObjectTag() { return ObjectTag::STAGE; }
+	ObjectTag GetObjectTag() override { return ObjectTag::STAGE; }
 
 public:
 	//コンストラクタ

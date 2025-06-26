@@ -8,7 +8,7 @@
 #include "Libraries/WataLib/CSV.h"
 #include "GameBase/Scene/Scene.h"
 #include "GameBase/Camera/Camera.h"
-#include "Game/Messenger/Messenger.h"
+#include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/Weapon/Boomerang/State/BoomerangStateMachine.h"
 #include "Game/UI/PlayScene/TargetMarker/TargetMarker.h"
 
@@ -284,10 +284,9 @@ void BoomerangThrow::ChaseToPlayer(const float& deltaTime)
 	if (distance <= 0.3f)
 	{
 		//ブーメランの状態を通常に
-		Messenger::GetInstance()->Notify(MessageType::BOOMERANG_IDEL_STATE,m_boomerang);
-		//m_stateMahine->ChangeState(BoomerangState::IDEL);
+		m_boomerang->GetStateMAchine()->ChangeState(BoomerangState::IDEL);
 		//ブーメランのキャッチの活動
-		Messenger::GetInstance()->Notify(MessageType::BOOMERANG_CATCH);
+		SceneMessenger::GetInstance()->Notify(SceneMessageType::BOOMERANG_CATCH);
 
 	}
 

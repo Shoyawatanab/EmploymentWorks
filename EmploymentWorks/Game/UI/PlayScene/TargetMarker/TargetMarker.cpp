@@ -7,7 +7,7 @@
 #include "GameBase/Screen.h"
 #include "GameBase/Camera/Camera.h"
 #include "GameBase/Actor.h"
-#include "Game/Messenger/Messenger.h"
+#include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/MathUtil.h"
 
 /// <summary>
@@ -33,10 +33,10 @@ TargetMarker::TargetMarker(Canvas* canvas, std::vector<Actor*> targets)
 	m_marker->GetTransform()->SetPosition(Vector3::Zero);
 	m_marker->SetActive(false);
 
-	Messenger::GetInstance()->Rigister(
+	SceneMessenger::GetInstance()->Rigister(
 		{
-			MessageType::PLAYER_GET_REDAY
-			,MessageType::PLAYER_GET_REDAY_END
+			SceneMessageType::PLAYER_GET_REDAY
+			,SceneMessageType::PLAYER_GET_REDAY_END
 		}
 		, this
 	);
@@ -69,16 +69,16 @@ void TargetMarker::UpdateActor(const float& deltaTime)
 }
 
 
-void TargetMarker::Notify(MessageType type, void* datas)
+void TargetMarker::Notify(SceneMessageType type, void* datas)
 {
 	switch (type)
 	{
-		case MessageType::NONE:
+		case SceneMessageType::NONE:
 			break;
-		case MessageType::PLAYER_GET_REDAY:
+		case SceneMessageType::PLAYER_GET_REDAY:
 			m_isGetReady = true;
 			break;
-		case MessageType::PLAYER_GET_REDAY_END:
+		case SceneMessageType::PLAYER_GET_REDAY_END:
 			m_isGetReady = false;
 			m_marker->SetActive(false);
 			break;
@@ -87,6 +87,10 @@ void TargetMarker::Notify(MessageType type, void* datas)
 	}
 }
 
+/// <summary>
+/// ”ÍˆÍ“à‚©‚Ç‚¤‚©‚³‚ª‚·
+/// </summary>
+/// <returns></returns>
 DirectX::SimpleMath::Vector2 TargetMarker::FilterWithinRange()
 {
 

@@ -8,7 +8,7 @@ class PlayerParts  :public ModelPartsBase
 public:
 
 	//オブジェクトタグの取得
-	ObjectTag GetObjectTag() { return ObjectTag::PLAYER_PARTS; }
+	ObjectTag GetObjectTag() override { return ObjectTag::PLAYER_PARTS; }
 
 public:
 

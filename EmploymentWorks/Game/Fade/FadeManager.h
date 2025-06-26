@@ -40,7 +40,8 @@ public:
 
 	//フェード状態の取得
 	FadeState GetFadeState() { return m_fadeState; }
-
+	//フェード実行中かの取得　true：実行中　false：未実行
+	bool GetIsFade() const { return m_isFade; }
 
 public:
 	//コンストラク
@@ -66,7 +67,8 @@ private:
 	void AddFadeIn(FadeInKinds kinds, std::unique_ptr<IFade> fade);
 	//フェードアウトの追加
 	void AddFadeOut(FadeOutKinds kinds, std::unique_ptr<IFade> fade);
-
+	//フェードの切り替え
+	void ChangeFade(IFade* fade);
 private:
 	//実行フェーズ
 	IFade* m_currentFade;
@@ -77,7 +79,8 @@ private:
 	std::unordered_map<FadeInKinds, std::unique_ptr<IFade>> m_fadeInList;
 	//フェードアウト配列
 	std::unordered_map<FadeOutKinds, std::unique_ptr<IFade>> m_fadeOutList;
-
+	//フェード実行中か　true：実行中　false：未実行
+	bool m_isFade;
 
 };
 

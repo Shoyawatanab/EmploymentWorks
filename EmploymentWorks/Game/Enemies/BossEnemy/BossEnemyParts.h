@@ -9,7 +9,7 @@ public:
 
 
 	//オブジェクトタグの取得
-	ObjectTag GetObjectTag() { return ObjectTag::BOSS_ENEMY_PARTS; }
+	ObjectTag GetObjectTag() override { return ObjectTag::BOSS_ENEMY_PARTS; }
 
 public:
 	//コンストラクタ

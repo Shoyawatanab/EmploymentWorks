@@ -6,8 +6,10 @@
 #include "Game/Params.h"
 
 
-
-
+/// <summary>
+/// コンストラク
+/// </summary>
+/// <param name="scene">シーン</param>
 PlayerRightFeet::PlayerRightFeet(Scene* scene)
 	:
 	PlayerParts(scene, PARTS_NAME, "PlayerFeet")

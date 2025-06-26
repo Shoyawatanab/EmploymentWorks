@@ -4,8 +4,12 @@
 #include "GameBase/UI/Image.h"
 #include "GameBase/Scene/Scene.h"
 #include "GameBase/Component/Components.h"
-#include "Game/Messenger/Messenger.h"
+#include "Game/Messenger/Scene/SceneMessages.h"
 
+/// <summary>
+/// コンストラク
+/// </summary>
+/// <param name="canvas">キャンバス</param>
 BossHp::BossHp(Canvas* canvas)
 	:
 	Actor(canvas->GetScene())
@@ -24,9 +28,9 @@ BossHp::BossHp(Canvas* canvas)
 
 
 
-	Messenger::GetInstance()->Rigister(
+	SceneMessenger::GetInstance()->Rigister(
 		{
-			MessageType::BOSS_DAMAGE
+			SceneMessageType::BOSS_DAMAGE
 		}, this
 	);
 
@@ -44,11 +48,11 @@ BossHp::~BossHp()
 /// </summary>
 /// <param name="type">通知の種類</param>
 /// <param name="datas">追加データ</param>
-void BossHp::Notify(MessageType type, void* datas)
+void BossHp::Notify(SceneMessageType type, void* datas)
 {
 	switch (type)
 	{
-		case MessageType::BOSS_DAMAGE:
+		case SceneMessageType::BOSS_DAMAGE:
 		{
 			//キャストして割合を求める
 			float* ratio = static_cast<float*>(datas);

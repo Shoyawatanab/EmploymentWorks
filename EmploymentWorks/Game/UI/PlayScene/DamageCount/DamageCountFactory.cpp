@@ -3,7 +3,7 @@
 #include "GameBase/UI/Canvas/Canvas.h"
 #include "Game/UI/PlayScene/DamageCount/DamageCount.h"
 #include "GameBase/Scene/Scene.h"
-#include "Game/Messenger/Messenger.h"
+#include "Game/Messenger/Scene/SceneMessages.h"
 
 /// <summary>
 /// コンストラク
@@ -21,9 +21,9 @@ DamageCountFactory::DamageCountFactory(Canvas* canvas)
 		m_damageCount.push_back(damageCount);
 	}
 
-	Messenger::GetInstance()->Rigister(
+	SceneMessenger::GetInstance()->Rigister(
 		{
-			MessageType::ENEMY_DAMAGE
+			SceneMessageType::ENEMY_DAMAGE
 		}, this
 	);
 
@@ -41,12 +41,12 @@ DamageCountFactory::~DamageCountFactory()
 /// </summary>
 /// <param name="type">通知の種類</param>
 /// <param name="datas">追加データ</param>
-void DamageCountFactory::Notify(MessageType type, void* datas)
+void DamageCountFactory::Notify(SceneMessageType type, void* datas)
 {
 
 	switch (type)
 	{
-		case MessageType::ENEMY_DAMAGE:
+		case SceneMessageType::ENEMY_DAMAGE:
 			
 			for (auto& ui : m_damageCount)
 			{

@@ -43,12 +43,7 @@ SwingDownAttackSwingPhase::~SwingDownAttackSwingPhase()
 	// do nothing.
 }
 
-void SwingDownAttackSwingPhase::Initialize()
-{
 
-
-
-}
 
 SwingDownAttackSwingPhase::ActionState SwingDownAttackSwingPhase::Update(const float& elapsedTime)
 {

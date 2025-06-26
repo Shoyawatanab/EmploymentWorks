@@ -1,12 +1,14 @@
 #pragma once
 #include "GameBase/Actor.h"
 #include "GameBase/Messenger/IObserver.h"
+#include "Game/Messenger/Scene/SceneMessageType.h"
 #include "Game/Weapon/WeaponBase.h"
+
 
 class Boomerang;
 class Player;
 
-class WeaponManager : public Actor,  public IObserver
+class WeaponManager : public Actor,  public IObserver<SceneMessageType>
 {
 public:
 	
@@ -23,7 +25,7 @@ public:
 	// ’P‘ÌXV
 	void UpdateActor(const float& deltaTime) override;
 
-	void Notify(MessageType type, void*) override;
+	void Notify(SceneMessageType type, void*) override;
 
 private:
 

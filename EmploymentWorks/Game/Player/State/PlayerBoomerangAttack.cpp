@@ -5,7 +5,7 @@
 
 #include "Game/Player/Player.h"
 #include "Game/Player/State/PlayerStateMachine.h"
-#include "Game/Messenger/Messenger.h"
+#include "Game/Messenger/Scene/SceneMessages.h"
 
 
 /// <summary>
@@ -52,7 +52,7 @@ void PlayerBoomerangAttack::Update(const float& deltaTime)
 void PlayerBoomerangAttack::Enter()
 {
 	//ƒvƒŒƒCƒ„‚Ìó‘Ô‚ð’Êí‚É
-	Messenger::GetInstance()->Notify(MessageType::PLAYER_IDLE_STATE);
+	SceneMessenger::GetInstance()->Notify(SceneMessageType::PLAYER_IDLE_STATE);
 
 }
 

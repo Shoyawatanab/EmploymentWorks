@@ -2,7 +2,7 @@
 #include "PlayerBoomerangAttack.h"
 #include "PlayerBoomerangGetReady.h"
 #include "GameBase/Common/Commons.h"
-#include "Game/Messenger/Messenger.h"
+#include "Game/Messenger/Scene/SceneMessages.h"
 
 /// <summary>
 /// コンストラクタ
@@ -40,22 +40,24 @@ void PlayerBoomerangGetReady::Update(const float& deltaTime)
 	if (tracker->rightButton == Mouse::ButtonStateTracker::ButtonState::PRESSED)
 	{
 		//プレイヤの状態をIDELに
-		Messenger::GetInstance()->Notify(MessageType::PLAYER_IDLE_STATE);
+		SceneMessenger::GetInstance()->Notify(SceneMessageType::PLAYER_IDLE_STATE);
 		//プレイヤの構え終了の通知
-		Messenger::GetInstance()->Notify(MessageType::PLAYER_GET_REDAY_END);
+		SceneMessenger::GetInstance()->Notify(SceneMessageType::PLAYER_GET_REDAY_END);
 		//ブーメランの状態を通常に
-		Messenger::GetInstance()->Notify(MessageType::BOOMERANG_IDEL_STATE);
+		SceneMessenger::GetInstance()->Notify(SceneMessageType::BOOMERANG_IDEL_STATE);
 
 	}
 	//投げる
 	else if (tracker->leftButton == Mouse::ButtonStateTracker::ButtonState::PRESSED)
 	{
 		//ブーメランの状態をTHROWに
-		Messenger::GetInstance()->Notify(MessageType::BOOMERANG_THROW_STATE);
+		SceneMessenger::GetInstance()->Notify(SceneMessageType::BOOMERANG_THROW_STATE);
 		//プレイヤの状態とATTACKに
-		Messenger::GetInstance()->Notify(MessageType::PLAYER_BOOMERANG_ATTACK_STATE);
+		SceneMessenger::GetInstance()->Notify(SceneMessageType::PLAYER_BOOMERANG_ATTACK_STATE);
 		//プレイヤの構えの終了の通知
-		Messenger::GetInstance()->Notify(MessageType::PLAYER_GET_REDAY_END);
+		SceneMessenger::GetInstance()->Notify(SceneMessageType::PLAYER_GET_REDAY_END);
+		//ブーメランを投げた活動
+		SceneMessenger::GetInstance()->Notify(SceneMessageType::BOOMERANG_THROW);
 
 
 	}

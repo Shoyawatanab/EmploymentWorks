@@ -13,7 +13,8 @@
 #include "Libraries/MyLib/MemoryLeakDetector.h"
 #include "Libraries/MyLib/InputManager.h"
 #include <cassert>
-#include "Game/Messenger/Messenger.h"
+#include "Game/Messenger/Global/GlobalMessages.h"
+#include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/Fade/FadeManager.h"
 
 
@@ -29,11 +30,11 @@ SceneManager::SceneManager()
 
 	m_fadeManager = FadeManager::GetInstance();
 
-	Messenger::GetInstance()->Rigister(
+	GlobalMessenger::GetInstance()->Rigister(
 		{
-			MessageType::CHANGE_TITLE_SCENE
-			,MessageType::CHANGE_SELECT_SCENE
-			,MessageType::CHANGE_PLAY_SCENE
+			GlobalMessageType::CHANGE_TITLE_SCENE
+			,GlobalMessageType::CHANGE_SELECT_SCENE
+			,GlobalMessageType::CHANGE_PLAY_SCENE
 		}, this
 	);
 
@@ -50,14 +51,11 @@ SceneManager::~SceneManager()
 //---------------------------------------------------------
 // 初期化する
 //---------------------------------------------------------
-void SceneManager::Initialize(CommonResources* resources)
+void SceneManager::Initialize()
 {
-	assert(resources);
-
-
 
 	//初期シーン
-	ChangeScene(SceneID::TITLE);
+	ChangeScene(SceneID::STAGESELECT);
 
 
 }
@@ -69,7 +67,6 @@ void SceneManager::Initialize(CommonResources* resources)
 void SceneManager::Update(float elapsedTime)
 {
 	m_currentScene->Update(elapsedTime);
-
 
 	// シーンを変更しないとき
 	if (m_nextSceneID == SceneID::NONE) return;
@@ -154,7 +151,7 @@ void SceneManager::DeleteScene()
 	{
 		m_currentScene.reset();
 		//メッセンジャーもクリア
-		Messenger::GetInstance()->Clear();
+		SceneMessenger::GetInstance()->Clear();
 
 	}
 
@@ -167,17 +164,17 @@ void SceneManager::DeleteScene()
 /// </summary>
 /// <param name="type">通知の種類</param>
 /// <param name="datas">追加データ</param>
-void SceneManager::Notify(MessageType type, void* datas)
+void SceneManager::Notify(GlobalMessageType type, void* datas)
 {
 	switch (type)
 	{
-		case MessageType::CHANGE_TITLE_SCENE:
+		case GlobalMessageType::CHANGE_TITLE_SCENE:
 			SetNextSceneID(SceneID::TITLE);
 			break;
-		case MessageType::CHANGE_SELECT_SCENE:
+		case GlobalMessageType::CHANGE_SELECT_SCENE:
 			SetNextSceneID(SceneID::STAGESELECT);
 			break;
-		case MessageType::CHANGE_PLAY_SCENE:
+		case GlobalMessageType::CHANGE_PLAY_SCENE:
 			SetNextSceneID(SceneID::PLAY);
 			break;
 		default:

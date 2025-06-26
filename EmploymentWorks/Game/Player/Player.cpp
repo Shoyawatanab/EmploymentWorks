@@ -11,10 +11,11 @@
 #include "Libraries/MyLib/InputManager.h"
 #include "Libraries/MyLib/MemoryLeakDetector.h"
 #include "Game/Weapon/Boomerang/Boomerang.h"
-#include "Game/Messenger/Messenger.h"
+#include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/Player/PlayerUsually.h"
-
 #include "Game/Particle/PlayerDust.h"
+
+#include "Game/Fade/FadeManager.h"
 
 #include "Libraries/MyLib/DebugString.h"
 
@@ -39,20 +40,18 @@ Player::Player(Scene* scene)
 	auto aABBCollider = AddComponent<AABB>(this, ColliderComponent::ColliderTag::AABB, CollisionType::COLLISION
 	, Params::PLAYER_BOX_COLLIDER_SIZE
 	, Params::PLAYER_SPHERE_COLLIDER_SIZE);
+
+
+	//モデルの作成
+	m_model =  GetScene()->AddActor<PlayerModel>(GetScene());
+	//親子関係をセット
+	m_model->GetTransform()->SetParent(GetTransform());
+
+
 	//初期情報の適用
 	GetTransform()->SetScale(Params::PLAYER_SCALE);
 	GetTransform()->Translate(Params::PLAYER_POSITION);
 	GetTransform()->SetRotate(Params::PLAYER_ROTATION);
-
-	//モデルの作成
-	m_model =  GetScene()->AddActor<PlayerModel>(GetScene());
-	//モデルの大きさをプレイヤの設定に
-	m_model->GetTransform()->SetScale(Params::PLAYER_SCALE);
-	m_model->GetTransform()->Translate(Params::PLAYER_POSITION);
-	m_model->GetTransform()->SetRotate(Params::PLAYER_ROTATION);
-	//親子関係をセット
-	m_model->GetTransform()->SetParent(GetTransform());
-
 
 	//ステートの作成
 	m_stateMachine = std::make_unique<PlayerStateMachine>(this);
@@ -118,6 +117,11 @@ void Player::UpdateActor(const float& deltaTime)
 {
 	using namespace DirectX::SimpleMath;
 
+	if (FadeManager::GetInstance()->GetIsFade())
+	{
+		return;
+	}
+
 	m_stateMachine->Update(deltaTime);
 	m_usually->Update(deltaTime);
 	//移動量の計算
@@ -160,6 +164,15 @@ void Player::OnCollisionEnter(ColliderComponent* collider)
 	{
 		case Actor::ObjectTag::STAGE:
 			Landing();
+			break;
+		case Actor::ObjectTag::BIRD_BULLET:
+		{
+			//ダメージエフェクト
+
+			//通知
+			SceneMessenger::GetInstance()->Notify(SceneMessageType::PLAYER_DAMAGE);
+
+		}
 			break;
 		default:
 			break;

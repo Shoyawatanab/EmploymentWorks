@@ -342,7 +342,7 @@
     <ClInclude Include="Game\Enemies\BossEnemy\Parts\BossEnemyTorso.h">
       <Filter>Game\Enemys\BossEnemy\Parts</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Messenger\MessageParams.h">
+    <ClInclude Include="Game\Messenger\Scene\SceneMessageType.h">
       <Filter>Game\Observer</Filter>
     </ClInclude>
     <ClInclude Include="Libraries\WataLib\Shadow.h">
@@ -392,9 +392,6 @@
     </ClInclude>
     <ClInclude Include="Game\Enemies\BossEnemy\BossEnemy.h">
       <Filter>Game\Enemys\BossEnemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Game\InstanceRegistry.h">
-      <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Game\Interface\IBaseObserver.h">
       <Filter>Game\Interface</Filter>
@@ -454,7 +451,7 @@
     <ClInclude Include="Game\Weapon\Boomerang\State\BoomerangStates.h" />
     <ClInclude Include="Game\Weapon\Boomerang\State\BoomerangThrow.h" />
     <ClInclude Include="Game\Weapon\Boomerang\State\BoomerangGetReady.h" />
-    <ClInclude Include="Game\Messenger\Messenger.h" />
+    <ClInclude Include="Game\Messenger\Scene\SceneMessenger.h" />
     <ClInclude Include="Game\Player\State\PlayerBoomerangGetReady.h" />
     <ClInclude Include="GameBase\Common\Commons.h" />
     <ClInclude Include="GameBase\BehaviorTree\ActionNode.h" />
@@ -544,6 +541,22 @@
     <ClInclude Include="Game\Enemies\BirdEnemy\Bullet\State\BirdEnemyBulletStates.h" />
     <ClInclude Include="Game\Enemies\BirdEnemy\Bullet\State\BirdEnemyBulletCharge.h" />
     <ClInclude Include="Game\Enemies\BirdEnemy\Bullet\State\BirdEnemyBulletShot.h" />
+    <ClInclude Include="Game\UI\PlayScene\PlayerDamageEffect\PlayerDamageEffect.h" />
+    <ClInclude Include="Game\Messenger\Global\GlobalMessenger.h" />
+    <ClInclude Include="Game\Messenger\Global\GlobalMeesageType.h" />
+    <ClInclude Include="Game\Messenger\Global\GlobalMessages.h" />
+    <ClInclude Include="Game\Messenger\Scene\SceneMessages.h" />
+    <ClInclude Include="Game\GlobalGameData.h" />
+    <ClInclude Include="Game\UI\SelectScene\Canvas\SelectSceneScreenSpaceOverlayCanvas.h" />
+    <ClInclude Include="Game\UI\SelectScene\SelectSceneUIs.h" />
+    <ClInclude Include="Game\Camera\SelectScene\SelectSceneCamera.h" />
+    <ClInclude Include="Game\UI\SelectScene\BackGraund\SelectSceneBackGraund.h" />
+    <ClInclude Include="Game\UI\SelectScene\StageOneButtom\StageOneButtom.h" />
+    <ClInclude Include="Game\UI\SelectScene\StageTwoButtom\StageTwoButtom.h" />
+    <ClInclude Include="Game\UI\TitleScene\PlayButtom\PlayButtom.h" />
+    <ClInclude Include="Game\Enemies\BossEnemy\Beam\BossEnemyBeam.h" />
+    <ClInclude Include="Game\Enemies\BossEnemy\Beam\Rays\BossEnemyBeamRays.h" />
+    <ClInclude Include="Game\Enemies\BossEnemy\Beam\EnergyBall\BossEnemyBeamEnergyBall.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -702,9 +715,6 @@
     <ClCompile Include="Game\Sound\SoundManager.cpp">
       <Filter>Game\Sound</Filter>
     </ClCompile>
-    <ClCompile Include="Game\InstanceRegistry.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
     <ClCompile Include="GameBase\Actor.cpp" />
     <ClCompile Include="GameBase\Component.cpp" />
     <ClCompile Include="GameBase\Component\Transform\Transform.cpp" />
@@ -748,7 +758,7 @@
     <ClCompile Include="Game\Weapon\Boomerang\State\Boomerangidle.cpp" />
     <ClCompile Include="Game\Weapon\Boomerang\State\BoomerangThrow.cpp" />
     <ClCompile Include="Game\Weapon\Boomerang\State\BoomerangGetReady.cpp" />
-    <ClCompile Include="Game\Messenger\Messenger.cpp" />
+    <ClCompile Include="Game\Messenger\Scene\SceneMessenger.cpp" />
     <ClCompile Include="Game\Player\State\PlayerBoomerangGetReady.cpp" />
     <ClCompile Include="GameBase\BehaviorTree\ActionNode.cpp" />
     <ClCompile Include="Game\Enemies\BossEnemy\BehavirTree\BossBehaviorTree.cpp" />
@@ -823,6 +833,18 @@
     <ClCompile Include="Game\Enemies\BirdEnemy\Bullet\State\BirdEnemyBulletIdle.cpp" />
     <ClCompile Include="Game\Enemies\BirdEnemy\Bullet\State\BirdEnemyBulletCharge.cpp" />
     <ClCompile Include="Game\Enemies\BirdEnemy\Bullet\State\BirdEnemyBulletShot.cpp" />
+    <ClCompile Include="Game\UI\PlayScene\PlayerDamageEffect\PlayerDamageEffect.cpp" />
+    <ClCompile Include="Game\Messenger\Global\GlobalMessenger.cpp" />
+    <ClCompile Include="Game\GlobalGameData.cpp" />
+    <ClCompile Include="Game\UI\SelectScene\Canvas\SelectSceneScreenSpaceOverlayCanvas.cpp" />
+    <ClCompile Include="Game\Camera\SelectScene\SelectSceneCamera.cpp" />
+    <ClCompile Include="Game\UI\SelectScene\BackGraund\SelectSceneBackGraund.cpp" />
+    <ClCompile Include="Game\UI\SelectScene\StageOneButtom\StageOneButtom.cpp" />
+    <ClCompile Include="Game\UI\SelectScene\StageTwoButtom\StageTwoButtom.cpp" />
+    <ClCompile Include="Game\UI\TitleScene\PlayButtom\PlayButtom.cpp" />
+    <ClCompile Include="Game\Enemies\BossEnemy\Beam\BossEnemyBeam.cpp" />
+    <ClCompile Include="Game\Enemies\BossEnemy\Beam\Rays\BossEnemyBeamRays.cpp" />
+    <ClCompile Include="Game\Enemies\BossEnemy\Beam\EnergyBall\BossEnemyBeamEnergyBall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />

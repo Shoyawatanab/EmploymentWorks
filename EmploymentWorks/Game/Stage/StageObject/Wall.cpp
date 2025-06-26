@@ -6,8 +6,11 @@
 #include "Wall.h"
 #include "GameBase/Component/Components.h"
 
-
-
+/// <summary>
+/// コンストラク
+/// </summary>
+/// <param name="scene">シーン</param>
+/// <param name="parameter">パラメーター</param>
 Wall::Wall(Scene* scene, StageFactory::StageParameter parameter)
 	:
 	Actor(scene)

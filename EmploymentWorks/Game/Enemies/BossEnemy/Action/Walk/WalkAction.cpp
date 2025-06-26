@@ -37,13 +37,6 @@ WalkAction::~WalkAction()
 	// do nothing.
 }
 
-/// <summary>
-/// ‰Šú‰»
-/// </summary>
-void WalkAction::Initialize()
-{
-
-}
 
 /// <summary>
 /// XVˆ—

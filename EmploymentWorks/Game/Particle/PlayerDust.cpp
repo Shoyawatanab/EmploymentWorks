@@ -2,6 +2,10 @@
 #include "PlayerDust.h"
 #include "GameBase/Component/Components.h"
 
+/// <summary>
+/// コンストラク
+/// </summary>
+/// <param name="scene">シーン</param>
 PlayerDust::PlayerDust(Scene* scene)
 	:
 	Actor(scene)
@@ -33,6 +37,9 @@ PlayerDust::PlayerDust(Scene* scene)
 
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 PlayerDust::~PlayerDust()
 {
 }

@@ -4,6 +4,11 @@
 #include "Game/Params.h"
 #include "Game/Weapon/Boomerang/State/BoomerangStateMachine.h"
 
+/// <summary>
+/// コンストラク
+/// </summary>
+/// <param name="scene">シーン</param>
+/// <param name="player">プレイヤ</param>
 Boomerang::Boomerang(Scene* scene,Player* player)
 	:
 	WeaponBase(scene)
@@ -29,15 +34,26 @@ Boomerang::Boomerang(Scene* scene,Player* player)
 
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 Boomerang::~Boomerang()
 {
 }
 
+/// <summary>
+/// 個別アップデート
+/// </summary>
+/// <param name="deltaTime"></param>
 void Boomerang::UpdateActor(const float& deltaTime)
 {
 	m_stateMachine->Update(deltaTime);
 }
 
+/// <summary>
+/// 当たった時の関数
+/// </summary>
+/// <param name="collider"></param>
 void Boomerang::OnCollisionEnter(ColliderComponent* collider)
 {
 

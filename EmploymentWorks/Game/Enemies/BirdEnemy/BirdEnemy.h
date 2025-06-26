@@ -1,10 +1,10 @@
 #pragma once
 #include "GameBase/Enemy/EnemyBase.h"
 
-
 class Player;
 class BirdEnemyStateMachine;
 class BirdEnemyBullet;
+
 
 class BirdEnemy : public EnemyBase
 {
@@ -17,9 +17,16 @@ public:
 	//ターゲットの取得
 	Actor* GetTarget() { return m_target; }
 
+	//非アクティブの弾の取得
+	BirdEnemyBullet* GetInactiveBullet();
+
+	//ステートマシーンの取得
+	BirdEnemyStateMachine* GetStateMachine() { return m_stateMachine.get(); }
+
 public:
 	//コンストラク
-	BirdEnemy(Scene* scene, Player* player);
+	BirdEnemy(Scene* scene, DirectX::SimpleMath::Vector3 scale
+		, DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Quaternion rotation, Player* player);
 	//デストラクタ
 	~BirdEnemy() override;
 
@@ -29,11 +36,6 @@ public:
 	//当たった時に呼び出される
 	void OnCollisionEnter(ColliderComponent* collider) override;
 
-	//当たり続けているときの呼び出される
-	void OnCollisionStay(ColliderComponent* collider) override;
-
-	//衝突が終了したときに呼び出される
-	void OnCollisionExit(ColliderComponent* collider) override;
 
 private:
 	//ターゲットに対して回転

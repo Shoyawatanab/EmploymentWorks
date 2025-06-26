@@ -8,7 +8,7 @@
 
 // 前方宣言
 class CommonResources;
-class Beam;
+class BossEnemyBeam;
 class BossBeamAttackActionController;
 
 
@@ -20,14 +20,12 @@ class BossBeamAttackCharge : public IAction
 public:
 	//コンストラクタ
 	BossBeamAttackCharge(Actor* bossEnemy
-		, Beam* beam
+		, BossEnemyBeam* beam
 		, BossBeamAttackActionController* beamAttack);
 
 
 	//デストラクタ
 	~BossBeamAttackCharge() override;
-	//初期化
-	void Initialize() override;
 	// 更新処理
 	ActionState Update(const float& elapsedTime) override;
 
@@ -41,7 +39,7 @@ private:
 	//ボステキ
 	Actor* m_bossEnemy;
 	//ビーム
-	Beam* m_beam;
+	BossEnemyBeam* m_beam;
 	//時間
 	float m_time;
 	//パーティクル生成時間

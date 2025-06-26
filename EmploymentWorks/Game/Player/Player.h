@@ -14,6 +14,9 @@ class Player : public Actor
 {
 public:
 
+	//オブジェクトタグの取得
+	ObjectTag GetObjectTag() override { return ObjectTag::PLAYER; }
+
 	//モデルの取得
 	PlayerModel* GetPlayerModel() { return m_model; }
 	//着地しているか　true　着地してる　false　してない
@@ -28,8 +31,7 @@ public:
 
 	void SetTargetMarker(TargetMarker* targetMarker) { m_targetMarker = targetMarker; }
 
-	//オブジェクトタグの取得
-	ObjectTag GetObjectTag() { return ObjectTag::PLAYER; }
+
 
 public:
 	//コンストラクタ

@@ -18,7 +18,7 @@ public:
 	//コンストラクタ
 	BoomerangStateMachine(Boomerang* boomrang, Player* player);
 	//デストラクタ
-	~BoomerangStateMachine();
+	~BoomerangStateMachine() override;
 
 
 

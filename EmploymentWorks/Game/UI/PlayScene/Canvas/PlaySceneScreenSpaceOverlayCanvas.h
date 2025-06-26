@@ -16,7 +16,7 @@ public:
 	//コンストラクタ
 	PlaySceneScreenSpaceOverlayCanvas(Scene* scene,std::vector<Actor*> targets);
 	//デストラクタ
-	~PlaySceneScreenSpaceOverlayCanvas();
+	~PlaySceneScreenSpaceOverlayCanvas() override;
 
 
 	

@@ -1,11 +1,13 @@
 #pragma once
 #include "GameBase/Actor.h"
+#include "GameBase//Messenger/IObserver.h"
+#include "Game/Messenger/Scene/SceneMessageType.h"
 
 class Canvas;
 class Image;
 
 
-class BoomerangCount : public Actor
+class BoomerangCount : public Actor , public IObserver<SceneMessageType>
 {
 
 	//UI全体の大きさ
@@ -23,5 +25,13 @@ public:
 	//コンストラクタ
 	BoomerangCount(Canvas* canvas);
 	//デストラクタ
-	~BoomerangCount();
+	~BoomerangCount() override;
+
+	//通知時に呼び出される
+	void Notify(SceneMessageType type, void* datas)  override;
+
+private:
+
+	std::vector<Image*> m_boomerangUI;
+
 };

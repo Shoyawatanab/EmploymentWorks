@@ -4,7 +4,6 @@
 
 #pragma once
 #include"GameBase/Enemy/EnemyBase.h"
-#include "GameBase/Messenger/IObserver.h"
 
 class BossBehaviorTree;
 class Player;
@@ -15,7 +14,7 @@ class BossEnemyActionManager;
 
 
 
-class BossEnemy : public EnemyBase , public IObserver
+class BossEnemy : public EnemyBase 
 {
 public:
 
@@ -29,7 +28,9 @@ public:
 public:
 
 	//コンストラクタ
-	BossEnemy(Scene* scene , Player* player);
+	BossEnemy(Scene* scene , DirectX::SimpleMath::Vector3 scale
+		,DirectX::SimpleMath::Vector3 position,DirectX::SimpleMath::Quaternion rotation
+		,Player* player);
 	//デストラクタ
 	~BossEnemy() override;
 
@@ -45,8 +46,6 @@ public:
 	//衝突が終了したときに呼び出される
 	void OnCollisionExit(ColliderComponent* collider) override;
 
-	//通知時に呼ばれる関数
-	void Notify(MessageType type,void* datas)  override;
 
 private:
 	

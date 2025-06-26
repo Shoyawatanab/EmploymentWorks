@@ -48,9 +48,9 @@ bool NormalFadeOut::Update(const float& deltaTime)
 {
 
 	//ŽžŠÔ‚Ì‰ÁŽZ
-	m_time  += deltaTime;
+	m_time += deltaTime;
 	
-	return false;
+	return m_time >= MAX_TIME;
 }
 
 /// <summary>

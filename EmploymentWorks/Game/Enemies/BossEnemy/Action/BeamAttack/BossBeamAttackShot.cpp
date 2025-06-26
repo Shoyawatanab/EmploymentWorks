@@ -22,7 +22,7 @@
 /// <param name="beamAttack">ビーム攻撃</param>
 /// <param name="player">プレイヤ</param>
 BossBeamAttackShot::BossBeamAttackShot(Actor* bossEnemy
-	, Beam* beam
+	, BossEnemyBeam* beam
 	, BossBeamAttackActionController* beamAttack
 	, Actor* player)
 	:
@@ -43,15 +43,6 @@ BossBeamAttackShot::~BossBeamAttackShot()
 	// do nothing.
 }
 
-/// <summary>
-/// 初期化
-/// </summary>
-void BossBeamAttackShot::Initialize()
-{
-
-
-
-}
 
 /// <summary>
 /// 更新処理

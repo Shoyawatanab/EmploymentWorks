@@ -21,6 +21,9 @@ BirdEnemyLeftFeather::BirdEnemyLeftFeather(Scene* scene)
 	GetTransform()->SetRotate(Params::BIRDENEMY_LEFTFEATHER_ROTATION);
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 BirdEnemyLeftFeather::~BirdEnemyLeftFeather()
 {
 }

@@ -24,7 +24,7 @@
 /// <param name="beam">ビーム</param>
 /// <param name="beamAttack">ビーム攻撃</param>
 BossBeamAttackPreliminaryAction::BossBeamAttackPreliminaryAction(Actor* bossEnemy
-	, Beam* beam
+	, BossEnemyBeam* beam
 	, BossBeamAttackActionController* beamAttack)
 	:
 	m_commonResources{}
@@ -43,12 +43,7 @@ BossBeamAttackPreliminaryAction::~BossBeamAttackPreliminaryAction()
 	// do nothing.
 }
 
-/// <summary>
-/// 初期化
-/// </summary>
-void BossBeamAttackPreliminaryAction::Initialize()
-{
-}
+
 
 /// <summary>
 /// 更新処理

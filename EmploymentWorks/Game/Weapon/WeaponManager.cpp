@@ -2,7 +2,7 @@
 #include "WeaponManager.h"
 #include "GameBase/Scene/Scene.h"
 #include "Game/Weapon/Boomerang/Boomerang.h"
-#include "Game/Messenger/Messenger.h"
+#include "Game/Messenger/Scene/SceneMessages.h"
 
 
 
@@ -21,11 +21,11 @@ WeaponManager::WeaponManager(Scene* scene, Player* player)
 	}
 
 	//メッセンジャーに登録
-	Messenger::GetInstance()->Rigister(
+	SceneMessenger::GetInstance()->Rigister(
 		{
-			MessageType::BOOMERANG_IDEL_STATE
-			,MessageType::BOOMERANG_GET_READY_STATE
-			,MessageType::BOOMERANG_THROW_STATE
+			SceneMessageType::BOOMERANG_IDEL_STATE
+			,SceneMessageType::BOOMERANG_GET_READY_STATE
+			,SceneMessageType::BOOMERANG_THROW_STATE
 		}
 		, this
 	);
@@ -53,14 +53,12 @@ void WeaponManager::UpdateActor(const float& deltaTime)
 /// </summary>
 /// <param name="type"></param>
 /// <param name="datas"></param>
-void WeaponManager::Notify(MessageType type, void* datas)
+void WeaponManager::Notify(SceneMessageType type, void* datas)
 {
 
 	switch (type)
 	{
-		case MessageType::BOOMERANG_IDEL_STATE:
-		{
-
+		case SceneMessageType::BOOMERANG_IDEL_STATE:
 			//手に持っていたら　　構えているときのIDEL変更
 			if (m_holdWeapon)
 			{
@@ -68,31 +66,19 @@ void WeaponManager::Notify(MessageType type, void* datas)
 				m_holdWeapon->ChangeState(WeaponBase::WeaponState::BOOMERANG_IDLE);
 				m_holdWeapon = nullptr;
 			}
-			//データがあるか　　　　　　THROWからのIDEL変更
-			if (datas != nullptr)
-			{
-				//データのキャスト
-				auto boomerang = static_cast<Boomerang*>(datas);
-				//正しくキャストできているか
-				if (typeid(*boomerang) == typeid(Boomerang))
-				{
-					boomerang->ChangeState(WeaponBase::WeaponState::BOOMERANG_IDLE);
-				}
-			}
-
-		}
 			break;
-		case MessageType::BOOMERANG_GET_READY_STATE:
+		case SceneMessageType::BOOMERANG_GET_READY_STATE:
 			//通常状態のブーメランを探す
 			m_holdWeapon = GetBoomerang(WeaponBase::WeaponState::BOOMERANG_IDLE);
+			//ヌルでない場合
 			if (m_holdWeapon)
 			{
 				//状態の変更
 				m_holdWeapon->ChangeState(WeaponBase::WeaponState::BOOMERANG_GET_READY);
-
 			}
 			break;
-		case MessageType::BOOMERANG_THROW_STATE:
+		case SceneMessageType::BOOMERANG_THROW_STATE:
+			//構えている場合
 			if (!m_holdWeapon) { return; }
 			//状態の変更
 			m_holdWeapon->ChangeState(WeaponBase::WeaponState::BOOMERANG_THROW);

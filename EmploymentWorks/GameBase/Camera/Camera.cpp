@@ -35,6 +35,8 @@ Camera::Camera(Scene* scene)
 		0.1f, 150.0f
 	);
 
+
+
 }
 
 /// <summary>

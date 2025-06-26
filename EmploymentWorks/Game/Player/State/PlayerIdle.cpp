@@ -4,8 +4,7 @@
 #include "Libraries/MyLib/InputManager.h"
 #include "Game/Player/Player.h"
 #include "Game/Player/State/PlayerStateMachine.h"
-#include "Game/Messenger/Messenger.h"
-#include "Game/Messenger/MessageParams.h"
+#include "Game/Messenger/Scene/SceneMessages.h"
 
 
 /// <summary>
@@ -49,11 +48,11 @@ void PlayerIdle::Update(const float& deltaTime)
 	{
 		//通知
 		//プレイヤの状態についての通知
-		Messenger::GetInstance()->Notify(MessageType::PLAYER_BOOMERANG_GET_READY_STATE);
+		SceneMessenger::GetInstance()->Notify(SceneMessageType::PLAYER_BOOMERANG_GET_READY_STATE);
 		//プレイヤの構えた活動に対しての通知
-		Messenger::GetInstance()->Notify(MessageType::PLAYER_GET_REDAY);
+		SceneMessenger::GetInstance()->Notify(SceneMessageType::PLAYER_GET_REDAY);
 		//ブーメランの状態を構えに
-		Messenger::GetInstance()->Notify(MessageType::BOOMERANG_GET_READY_STATE);
+		SceneMessenger::GetInstance()->Notify(SceneMessageType::BOOMERANG_GET_READY_STATE);
 
 
 	}

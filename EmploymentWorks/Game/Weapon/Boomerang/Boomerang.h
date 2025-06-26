@@ -9,9 +9,9 @@ class Boomerang : public WeaponBase
 public:
 
 	//オブジェクトタグの取得
-	ObjectTag GetObjectTag() { return ObjectTag::BOOMERANG; }
-
-
+	ObjectTag GetObjectTag() override { return ObjectTag::BOOMERANG; }
+	//ステートマシーンの取得
+	BoomerangStateMachine* GetStateMAchine() { return m_stateMachine.get(); }
 public:
 	//コンストラクタ
 	Boomerang(Scene* scene, Player* player);

@@ -24,6 +24,13 @@ public:
 		DirectX::SimpleMath::Vector4    FillAmount;				//塗りつぶし量  x 横　y 縦
 	};
 
+	//描画種類
+	enum class RenderKinds
+	{
+		NORMAL    //通常
+		,CUSTOM	  //カスタム
+	};
+
 public:
 
 	//画像の取得
@@ -42,6 +49,8 @@ public:
 	float GetWidth() const;
 	//縦幅の取得
 	float GetHeight() const;
+	//カスタム描画関数の登録
+	void SetCustomRenderFunction(std::function<void()> customRender);
 
 public:
 	//コンストラクタ
@@ -56,7 +65,10 @@ private:
 
 	//画像の読み込み
 	void LoadTexture(std::string textureName);
-
+	//通常描画
+	void NormalRender();
+	//カスタム描画
+	void CustomRender();
 private:
 	//画像
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_texture;
@@ -87,6 +99,10 @@ private:
 	//表示範囲
 	DirectX::SimpleMath::Vector4 m_viewRange;
 
+	//描画の種類
+	RenderKinds m_renderKinds;
 
+	//個別描画
+	std::function<void()> m_customRender;
 
 };

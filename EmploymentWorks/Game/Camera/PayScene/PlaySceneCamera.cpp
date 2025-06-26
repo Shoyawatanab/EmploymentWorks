@@ -16,9 +16,9 @@ PlaySceneCamera::PlaySceneCamera(Scene* scene)
 {
 
 
-	SetEyePosition(DirectX::SimpleMath::Vector3(0,5,20));
-
+	//ステートマシーンの作成
 	m_stateMachine = std::make_unique<PlaySceneCameraStateMachine>(this);
+
 
 }
 
@@ -31,13 +31,14 @@ PlaySceneCamera::~PlaySceneCamera()
 }
 
 
+
 /// <summary>
 /// カメラの個別更新処理
 /// </summary>
 /// <param name="deltaTime"></param>
 void PlaySceneCamera::UpdateCamera(const float& deltaTime)
 {
-
+	//ステートマシーンの更新
 	m_stateMachine->Update(deltaTime);
 
 }

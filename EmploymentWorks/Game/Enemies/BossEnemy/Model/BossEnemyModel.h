@@ -7,7 +7,7 @@ public:
 	//コンストラクタ
 	BossEnemyModel(Scene* scene);
 	//デストラクタ
-	~BossEnemyModel();
+	~BossEnemyModel() override;
 	
 
 };

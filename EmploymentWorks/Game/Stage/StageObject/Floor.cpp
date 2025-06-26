@@ -6,6 +6,11 @@
 #include "Floor.h"
 #include "GameBase/Component/Components.h"
 
+/// <summary>
+/// コンストラク
+/// </summary>
+/// <param name="scene">シーン</param>
+/// <param name="parameter">パラメーター</param>
 Floor::Floor(Scene* scene, StageFactory::StageParameter parameter)
 	:
 	Actor(scene)
@@ -24,6 +29,9 @@ Floor::Floor(Scene* scene, StageFactory::StageParameter parameter)
 	
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 Floor::~Floor()
 {
 }

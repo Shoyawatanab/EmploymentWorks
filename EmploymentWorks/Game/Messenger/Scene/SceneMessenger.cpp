@@ -1,10 +1,10 @@
 #include "pch.h"
-#include "Messenger.h"
+#include "SceneMessenger.h"
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
-Messenger::Messenger()
+SceneMessenger::SceneMessenger()
 	:
 	m_list{}
 {
@@ -13,8 +13,9 @@ Messenger::Messenger()
 /// <summary>
 /// デストラクタ
 /// </summary>
-Messenger::~Messenger()
+SceneMessenger::~SceneMessenger()
 {
+	m_list.clear();
 }
 
 /// <summary>
@@ -22,7 +23,7 @@ Messenger::~Messenger()
 /// </summary>
 /// <param name="types">登録するタイプ配列</param>
 /// <param name="observer">オブザーバー</param>
-void Messenger::Rigister(std::vector<MessageType> types, IObserver* observer)
+void SceneMessenger::Rigister(std::vector<SceneMessageType> types, IObserver<SceneMessageType>* observer)
 {
 	//タイプだけ回す
 	for (auto& type : types)
@@ -31,10 +32,15 @@ void Messenger::Rigister(std::vector<MessageType> types, IObserver* observer)
 		m_list[type].push_back(observer);
 
 	}
-	
 }
 
-void Messenger::Notify(MessageType type, void* datas)
+
+/// <summary>
+/// 通知する
+/// </summary>
+/// <param name="type">通知の種類</param>
+/// <param name="datas">追加データ</param>
+void SceneMessenger::Notify(SceneMessageType type, void* datas)
 {
 	//探す
 	auto it = m_list.find(type);
@@ -56,7 +62,7 @@ void Messenger::Notify(MessageType type, void* datas)
 /// <summary>
 /// クリア
 /// </summary>
-void Messenger::Clear()
+void SceneMessenger::Clear()
 {
 	m_list.clear();
 }

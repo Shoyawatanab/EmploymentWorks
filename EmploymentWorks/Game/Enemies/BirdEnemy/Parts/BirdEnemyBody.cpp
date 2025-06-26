@@ -5,16 +5,21 @@
 #include "GameBase/Scene/Scene.h"
 #include "Game/Enemies/BirdEnemy/BirdEnemyPartss.h"
 
-
+/// <summary>
+/// コンストラク
+/// </summary>
+/// <param name="scene">シーン</param>
 BirdEnemyBody::BirdEnemyBody(Scene* scene)
 	:
 	BirdEnemyPars(scene,PARTS_NAME,"BirdEnemyBody")
 {
-
+	//左羽の作成
 	auto leftFeather = GetScene()->AddActor<BirdEnemyLeftFeather>(GetScene());
+	//親子関係を結ぶ　
 	leftFeather->SetParent(this);
-
+	//右羽の作成
 	auto rightFeather = GetScene()->AddActor<BirdEnemyRightFeather>(GetScene());
+	//親子関係を結ぶ
 	rightFeather->SetParent(this);
 
 	//位置情報
@@ -26,6 +31,9 @@ BirdEnemyBody::BirdEnemyBody(Scene* scene)
 
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 BirdEnemyBody::~BirdEnemyBody()
 {
 }

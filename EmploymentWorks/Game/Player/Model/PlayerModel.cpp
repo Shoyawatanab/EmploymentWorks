@@ -5,6 +5,10 @@
 #include "GameBase/Component/Transform/Transform.h"
 #include "Game/Params.h"
 
+/// <summary>
+/// コンストラク
+/// </summary>
+/// <param name="scene">シーン</param>
 PlayerModel::PlayerModel(Scene* scene)
 	:
 	ModelBase(scene)
@@ -12,6 +16,7 @@ PlayerModel::PlayerModel(Scene* scene)
 
 	//Bodyの作成
 	auto body = GetScene()->AddActor<PlayerBody>(GetScene());
+	body->GetTransform()->SetPosition(DirectX::SimpleMath::Vector3(0, -0.6f, 0));
 	//親の登録
 	body->GetTransform()->SetParent(GetTransform());
 	//子孫モデルを取得

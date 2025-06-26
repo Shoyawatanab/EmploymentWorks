@@ -8,7 +8,7 @@ class ExitButtom : public Actor
 {
 public:
 	//座標
-	static constexpr DirectX::SimpleMath::Vector3 POSITOIN{640, 360, 0};
+	static constexpr DirectX::SimpleMath::Vector3 POSITOIN{1100, 600, 0};
 	//大きさ
 	static constexpr DirectX::SimpleMath::Vector3 SCALE{1.0f, 1.0f, 0};
 	//拡大率
@@ -18,7 +18,7 @@ public:
 	//コンストラク
 	ExitButtom(Canvas* canvas);
 	//デストラクタ
-	~ExitButtom();
+	~ExitButtom() override;
 
 private:
 	//クリック時

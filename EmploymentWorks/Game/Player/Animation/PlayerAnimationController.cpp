@@ -3,7 +3,7 @@
 #include "Game/Player/Player.h"
 #include "Game/Player/Model/PlayerModel.h"
 #include "GameBase/Component/Components.h"
-#include "Game/Messenger/Messenger.h"
+#include "Game/Messenger/Scene/SceneMessages.h"
 
 
 /// <summary>
@@ -55,11 +55,11 @@ PlayerAnimationController::PlayerAnimationController(Player* player)
 	CreateFloatTransition("PlayerIdle", "PlayerMove", "Move",speed, FloatState::Greater);
 
 	//メッセージの登録
-	Messenger::GetInstance()->Rigister(
+	SceneMessenger::GetInstance()->Rigister(
 		{ 
-		MessageType::PLAYER_IDLE_STATE
-		,MessageType::PLAYER_BOOMERANG_GET_READY_STATE
-		,MessageType::PLAYER_BOOMERANG_ATTACK_STATE
+		SceneMessageType::PLAYER_IDLE_STATE
+		,SceneMessageType::PLAYER_BOOMERANG_GET_READY_STATE
+		,SceneMessageType::PLAYER_BOOMERANG_ATTACK_STATE
 		}
 		, this
 	);
@@ -81,18 +81,18 @@ PlayerAnimationController::~PlayerAnimationController()
 /// </summary>
 /// <param name="type">通知の種類</param>
 /// <param name="datas">追加データ</param>
-void PlayerAnimationController::Notify(MessageType type, void* datas)
+void PlayerAnimationController::Notify(SceneMessageType type, void* datas)
 {
 
 	switch (type)
 	{
-		case MessageType::PLAYER_IDLE_STATE:
+		case SceneMessageType::PLAYER_IDLE_STATE:
 			Play("PlayerIdle");
 			break;
-		case MessageType::PLAYER_BOOMERANG_GET_READY_STATE:
+		case SceneMessageType::PLAYER_BOOMERANG_GET_READY_STATE:
 			Play("PlayerGetReady");
 			break;
-		case MessageType::PLAYER_BOOMERANG_ATTACK_STATE:
+		case SceneMessageType::PLAYER_BOOMERANG_ATTACK_STATE:
 			SetTrigger("Throw");
 			break;
 		default:

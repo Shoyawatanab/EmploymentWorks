@@ -19,7 +19,9 @@ TitleSceneScreenSpaceOverlayCanvas::TitleSceneScreenSpaceOverlayCanvas(Scene* sc
 	logo->GetTransform()->SetPosition(Vector3(390,120,0));
 	logo->GetTransform()->SetScale(Vector3(0.25,0.25,0));
 
+	//
 	GetScene()->AddActor<ExitButtom>(this);
+	GetScene()->AddActor<PlayButtom>(this);
 
 }
 

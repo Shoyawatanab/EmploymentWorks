@@ -2,10 +2,11 @@
 #include "BirdEnemyBulletShot.h"
 #include <random>
 #include "Game/Params.h"
-#include "Game/Messenger/Messenger.h"
+#include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/Enemies/BirdEnemy/Bullet/BirdEnemyBullet.h"
 #include "GameBase/Component/Components.h"
 #include "Game/Enemies/BirdEnemy/BirdEnemy.h"
+#include "Game/Enemies/BirdEnemy/State/BirdEnemyStateMachine.h"
 #include "Game/MathUtil.h"
 
 /// <summary>
@@ -23,10 +24,17 @@ BirdEnemyBulletShot::BirdEnemyBulletShot(BirdEnemyBulletStateMachine* stateMachi
 {
 }
 
+/// <summary>
+/// デストラクタ
+/// </summary>
 BirdEnemyBulletShot::~BirdEnemyBulletShot()
 {
 }
 
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="deltaTime">経過時間</param>
 void BirdEnemyBulletShot::Update(const float& deltaTime)
 {
 	//補間のための時間を求める　　経過時間が減速時間になるまでは０～１の間　経過時間が減速時間を超えると１
@@ -43,23 +51,27 @@ void BirdEnemyBulletShot::Update(const float& deltaTime)
 	m_time += deltaTime;
 }
 
+/// <summary>
+/// 状態に入った時
+/// </summary>
 void BirdEnemyBulletShot::Enter()
 {
 
-	auto a = m_bullet->GetTransform()->GetWorldPosition();
-	auto b = m_birdEnemy->GetTransform()->GetWorldPosition();
 
 	//発射方向を計算
-	m_moveDirection = m_birdEnemy->GetTarget()->GetTransform()->GetWorldPosition() - m_bullet->GetTransform()->GetWorldPosition() ;
+	m_moveDirection = m_birdEnemy->GetTarget()->GetTransform()->GetRotatePosition() - m_bullet->GetTransform()->GetRotatePosition() ;
 	//m_moveDirection.Normalize();
 	m_time = 0.0f;
 
 	m_bullet->GetTransform()->SetParent(nullptr);
-
-	Messenger::GetInstance()->Notify(MessageType::BIRD_IDLE_STATE);
+	//所有者の状態を変更
+	m_birdEnemy->GetStateMachine()->ChangeState(BirdEnemyState::IDEL);
 
 }
 
+/// <summary>
+/// 状態を抜けた時
+/// </summary>
 void BirdEnemyBulletShot::Exit()
 {
 }
