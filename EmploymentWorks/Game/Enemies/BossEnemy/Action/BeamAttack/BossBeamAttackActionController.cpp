@@ -15,7 +15,7 @@
 /// </summary>
 /// <param name="resources">ã§í ÉäÉ\Å[ÉX</param>
 BossBeamAttackActionController::BossBeamAttackActionController(Actor* bossenemy
-	,Beam* beam
+	, BossEnemyBeam* beam
 	, Actor* player)
 	:
 	m_commonResources{}

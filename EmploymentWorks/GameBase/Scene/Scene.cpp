@@ -10,11 +10,11 @@
 /// </summary>
 Scene::Scene()
 	:
-	m_actors{},
-	m_holdActors{},
-	m_updateNow{false},
-	m_isChangeScene{},
-	m_isActorDestroy{false}	
+	m_actors{}
+	,m_holdActors{}
+	,m_updateNow{false}
+	,m_isChangeScene{}
+	,m_isActorDestroy{false}
 {
 
 	m_renderMangaer = std::make_unique<RenderManager>();
@@ -61,7 +61,11 @@ void Scene::Initialize()
 /// <param name="deltaTime"></param>
 void Scene::Update(float deltaTime)
 {
-	// 更新フラグをtrueに変更
+	
+
+
+
+	//更新フラグをtrueに変更
 	m_updateNow = true;
 	// アクターの更新をする
 	for (auto& actor : m_actors)

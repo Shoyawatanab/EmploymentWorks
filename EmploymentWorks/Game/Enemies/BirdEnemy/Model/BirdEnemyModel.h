@@ -5,10 +5,10 @@
 class BirdEnemyModel : public ModelBase
 {
 public:
-	//
+	//コンストラク
 	BirdEnemyModel(Scene* scene);
-	//
-	~BirdEnemyModel();
+	//デストラクタ
+	~BirdEnemyModel() override;
 
 
 };

@@ -17,14 +17,16 @@ public:
 
 public:
 
+	
 	//状態の取得
 	WeaponState GetWeaponState() { return m_state; }
+
 
 public:
 	//コンストラクタ
 	WeaponBase(Scene* scene);
 	//デストラクタ
-	~WeaponBase();
+	~WeaponBase() override;
 
 	//ステートの変更  Factoryからの状態変化の通知用
 	void ChangeState(WeaponState nextState);

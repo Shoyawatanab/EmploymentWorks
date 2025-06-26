@@ -13,6 +13,7 @@ FadeManager::FadeManager()
 	,m_fadeState{FadeState::NONE}
 	, m_fadeInList{}
 	,m_fadeOutList{}
+	, m_isFade{ false }
 {
 	
 	//フェードインの作成
@@ -60,6 +61,7 @@ void FadeManager::Update(const float& deltaTime)
 				m_fadeState = FadeState::FADE_IN_END;
 				break;
 			case FadeManager::FadeState::FADE_OUT:
+				m_isFade = false;
 				m_fadeState = FadeState::NONE;
 				break;
 			default:
@@ -108,10 +110,10 @@ void FadeManager::StartFadeIn(FadeInKinds kinds)
 	}
 
 	//実行フェードの切り替え
-	m_currentFade = m_fadeInList[kinds].get();
+	ChangeFade(m_fadeInList[kinds].get());
 	//状態の変更
 	m_fadeState = FadeState::FADE_IN;
-
+	m_isFade = true;
 }
 
 /// <summary>
@@ -126,10 +128,11 @@ void FadeManager::StartFadeIn()
 	}
 
 	//実行フェードの切り替え
-	m_currentFade = m_fadeInList[FadeInKinds::NORMAL_FADE_IN].get();
+	ChangeFade(m_fadeInList[FadeInKinds::NORMAL_FADE_IN].get());
 	//
 	m_fadeState = FadeState::FADE_IN;
 
+	m_isFade = true;
 
 }
 
@@ -151,9 +154,9 @@ void FadeManager::StartFadeOut(FadeOutKinds kinds)
 	}
 
 	//実行フェードの切り替え
-	m_currentFade = m_fadeOutList[kinds].get();
+	ChangeFade(m_fadeOutList[kinds].get());
 	//状態の変更
-	m_fadeState = FadeState::FADE_IN;
+	m_fadeState = FadeState::FADE_OUT;
 
 }
 
@@ -167,9 +170,10 @@ void FadeManager::StartFadeOut()
 	}
 
 	//実行フェードの切り替え
-	m_currentFade = m_fadeOutList[FadeOutKinds::NORMAL_FADE_OUT].get();
+	ChangeFade(m_fadeOutList[FadeOutKinds::NORMAL_FADE_OUT].get());
+
 	//
-	m_fadeState = FadeState::FADE_IN;
+	m_fadeState = FadeState::FADE_OUT;
 }
 
 /// <summary>
@@ -195,5 +199,24 @@ void FadeManager::AddFadeOut(FadeOutKinds kinds, std::unique_ptr<IFade> fade)
 	m_fadeOutList[kinds] = std::move(fade);
 
 }
+
+
+
+/// <summary>
+/// フェードの切り替え
+/// </summary>
+/// <param name="fade">切り替え先フェード</param>
+void FadeManager::ChangeFade(IFade* fade)
+{
+	if (m_currentFade)
+	{
+		m_currentFade->Exit();
+	}
+	m_currentFade = fade;
+	m_currentFade->Enter();
+}
+
+
+
 
 

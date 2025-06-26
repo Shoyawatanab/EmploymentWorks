@@ -1,10 +1,11 @@
 #pragma once
 #include "GameBase/Animation/AnimationController.h"
 #include "GameBase/Messenger/IObserver.h"
+#include "Game/Messenger/Scene/SceneMessageType.h"
 
 class BossEnemy;
 
-class BossAnimationController : public AnimationController , public IObserver
+class BossAnimationController : public AnimationController , public IObserver<SceneMessageType>
 {
 public:
 	//コンストラクタ
@@ -13,7 +14,7 @@ public:
 	~BossAnimationController() override ;
 
 	//通知時に呼び出される
-	void Notify(MessageType type, void* datas) override ;
+	void Notify(SceneMessageType type, void* datas) override ;
 
 
 private:

@@ -6,6 +6,7 @@
 class BirdEnemyBullet;
 class BirdEnemy;
 
+//状態
 enum class BirdEnemyBulletState
 {
 	IDEL                                  //通常
@@ -14,7 +15,7 @@ enum class BirdEnemyBulletState
 };
 
 
-class BirdEnemyBulletStateMachine : public StateMachine<IState, BirdEnemyBulletState> , public IObserver
+class BirdEnemyBulletStateMachine : public StateMachine<IState, BirdEnemyBulletState> 
 {
 public:
 	//コンストラク
@@ -22,8 +23,6 @@ public:
 	//デストラクタ
 	~BirdEnemyBulletStateMachine() override ;
 
-	//通知時に呼び出される
-	void Notify(MessageType type, void* datas) override;
 
 
 };

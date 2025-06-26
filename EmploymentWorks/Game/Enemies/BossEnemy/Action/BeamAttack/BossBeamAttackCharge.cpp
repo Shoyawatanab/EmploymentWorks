@@ -5,23 +5,17 @@
 #include "pch.h"
 #include "BossBeamAttackCharge.h"
 #include "GameBase/Common/Commons.h"
-#include "Libraries/MyLib/DebugCamera.h"
-#include "Libraries/MyLib/DebugString.h"
-#include "Libraries/MyLib/GridFloor.h"
-#include "Libraries/MyLib/InputManager.h"
-#include "Libraries/MyLib/MemoryLeakDetector.h"
-#include <cassert>
-
 #include "Game/Params.h"
-
-
+#include "Game/Enemies/BossEnemy/Beam/BossEnemyBeam.h"
+#include "Game/Enemies/BossEnemy/Beam/EnergyBall/BossEnemyBeamEnergyBall.h"
+#include "GameBase/Component/Components.h"
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
 /// <param name="resources">共通リソース</param>
 BossBeamAttackCharge::BossBeamAttackCharge(Actor* bossenemy
-	, Beam* beam
+	, BossEnemyBeam* beam
 	, BossBeamAttackActionController* beamAttack)
 	:
 	m_commonResources{}
@@ -41,15 +35,7 @@ BossBeamAttackCharge::~BossBeamAttackCharge()
 	// do nothing.
 }
 
-/// <summary>
-/// 初期化
-/// </summary>
-void BossBeamAttackCharge::Initialize()
-{
 
-
-
-}
 
 /// <summary>
 /// 更新処理
@@ -60,26 +46,15 @@ BossBeamAttackCharge::ActionState BossBeamAttackCharge::Update(const float& elap
 {
 	using namespace DirectX::SimpleMath;
 
-	//Vector3 beamPosition = Params::BOSSENEMY_BEAM_SHOT_POSITION;
+	//進行割合を求める
+	float ratio = m_time / Params::BOSSENEMY_BEAM_BALL_ACCUMULATIONTIME;
 
-	//beamPosition = Vector3::Transform(beamPosition, m_bossEnemy->GetRotation());
-
-	//m_beam->SetPosition(beamPosition + m_bossEnemy->GetPosition());
-
-
-
-	////進行割合を求める
-	//float t = m_time / Params::BOSSENEMY_BEAM_BALL_ACCUMULATIONTIME;
-
-	//t = std::min(t, 1.0f);
+	ratio = std::min(ratio, 1.0f);
 
 	////サイズの補間
-	//Vector3 scale = Vector3::Lerp(Vector3::Zero, Params::BOSSENEMY_BEAM_BALL_MAX_SCALE, t);
+	Vector3 scale = Vector3::Lerp(Vector3::Zero, Params::BOSSENEMY_BEAM_BALL_MAX_SCALE, ratio);
 
-	//m_beam->GetBeamEnergyBall()->SetLocalScale(scale);
-
-	//m_beam->GetBeamEnergyBall()->Update(elapsedTime);
-
+	m_beam->GetEnergyBall()->GetTransform()->SetScale(scale);
 
 	//std::vector<std::unique_ptr<BeamChargeEffect>>& effect = m_beam->GetBeamChargeEffect();
 
@@ -96,13 +71,13 @@ BossBeamAttackCharge::ActionState BossBeamAttackCharge::Update(const float& elap
 	//}
 
 
-	//if (m_time > Params::BOSSENEMY_BEAM_BALL_ACCUMULATIONTIME)
-	//{
-	//	return ActionState::END;
+	if (m_time > Params::BOSSENEMY_BEAM_BALL_ACCUMULATIONTIME)
+	{
+		return ActionState::END;
 
-	//}
+	}
 
-	//m_time += elapsedTime;
+	m_time += elapsedTime;
 	//m_particleCreateTime += elapsedTime;
 
 	return ActionState::RUNNING;
@@ -112,34 +87,13 @@ BossBeamAttackCharge::ActionState BossBeamAttackCharge::Update(const float& elap
 
 void BossBeamAttackCharge::Enter()
 {
-	//m_time = 0;
+	using namespace DirectX::SimpleMath;
 
-	//m_particleCreateTime = 0;
+	m_time = 0;
 
-	////ビームの座標の設定
+	m_beam->GetEnergyBall()->SetActive(true);
 
-	//Vector3 beamPosition = Params::BOSSENEMY_BEAM_SHOT_POSITION;
-
-	//beamPosition = Vector3::Transform(beamPosition, m_bossEnemy->GetRotation());
-
-	//m_beam->SetPosition(beamPosition + m_bossEnemy->GetPosition());
-
-	//m_beam->CreateParticle();
-
-	//m_beam->GetBeamEnergyBall()->SetLocalPosition(Vector3::Zero);
-
-	//m_beam->GetBeamRays()->SetLocalPosition(Vector3::Zero);
-
-	//m_beam->SetIsEntityActive(true);
-	//m_beam->GetBeamEnergyBall()->SetIsEntityActive(true);
-
-	////エフェクトの取得
-	//auto& effects = m_beam->GetBeamChargeEffect();
-	////全て有効に
-	//for (auto& effect : effects)
-	//{
-	//	effect->SetIsEntityActive(true);
-	//}
+	m_beam->GetEnergyBall()->GetTransform()->SetScale(Vector3::Zero);
 
 
 }

@@ -15,6 +15,9 @@
 ModelComponent::ModelComponent(Actor* owner, std::string modelMame)
 	:
 	Component(owner)
+	,m_commonResources{}
+	,m_customRender{}
+	,m_renderKinds{RenderKinds::NORMAL}
 {
 
 	m_commonResources = CommonResources::GetInstance();
@@ -43,11 +46,57 @@ ModelComponent::~ModelComponent()
 void ModelComponent::Render(const Camera& camera)
 {
 
+	switch (m_renderKinds)
+	{
+		case ModelComponent::RenderKinds::NORMAL:
+			NormalRender(camera);
+			break;
+		case ModelComponent::RenderKinds::CUSTOM:
+			CustomRender(camera);
+			break;
+		default:
+			break;
+	}
+
+}
+
+/// <summary>
+/// 通常描画
+/// </summary>
+/// <param name="camera">カメラ</param>
+void ModelComponent::NormalRender(const Camera& camera)
+{
 	//モデル描画
 	m_model->Draw(m_commonResources->GetDeviceResources()->GetD3DDeviceContext()
 		, *m_commonResources->GetCommonStates()
 		, GetActor()->GetTransform()->GetWorldMatrix()
 		, camera.GetViewMatrix()
 		, camera.GetProjectionMatrix());
+}
+
+/// <summary>
+/// カスタム描画
+/// </summary>
+/// <param name="camera">カメラ</param>
+void ModelComponent::CustomRender(const Camera& camera)
+{
+
+	m_customRender(camera);
 
 }
+
+
+/// <summary>
+/// カスタム描画関数の登録
+/// </summary>
+/// <param name="customRender">関数</param>
+void ModelComponent::SetCustomRenderFunction(std::function<void(const Camera& camera)> customRender)
+{
+	m_customRender = customRender;
+	//状態の変更
+	m_renderKinds = RenderKinds::CUSTOM;
+
+}
+
+
+

@@ -5,8 +5,10 @@
 #include "GameBase/Scene/Scene.h"
 #include "GameBase/Component/Components.h"
 #include "Game/Params.h"
-#include "Game/Messenger/Messenger.h"
+#include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/Enemies/BirdEnemy/BirdEnemy.h"
+#include "Game/Enemies/BirdEnemy/State/BirdEnemyStateMachine.h"
+#include "Game/MathUtil.h"
 
 /// <summary>
 /// コンストラク
@@ -17,6 +19,7 @@ BirdEnemyMove::BirdEnemyMove(BirdEnemyStateMachine* stateMachine, BirdEnemy* bir
 	:
 	m_stateMahine{ stateMachine }
 	, m_birdEnemy{ birdEnemy }
+	,m_time{}
 {
 }
 
@@ -56,12 +59,15 @@ void BirdEnemyMove::Update(const float& deltaTime)
 	if (ratio == 1.0f)
 	{
 
-		Messenger::GetInstance()->Notify(MessageType::BIRD_IDLE_STATE);
+		m_birdEnemy->GetStateMachine()->ChangeState(BirdEnemyState::IDEL);
 
 	}
 
 }
 
+/// <summary>
+/// 状態に入った時
+/// </summary>
 void BirdEnemyMove::Enter()
 {
 
@@ -69,14 +75,8 @@ void BirdEnemyMove::Enter()
 	m_startPosition = m_birdEnemy->GetTransform()->GetWorldPosition();
 	m_time = 0;
 
-	//シード値を生成
-	std::random_device rd;
-	std::mt19937 gen(rd());
-	//等確率に実数を生成
-	std::uniform_real_distribution<float> angleDist(0.0f, DirectX::XM_2PI); // 0 ~ 2πの角度を生成
-
 	// ランダムな角度を生成
-	float angle = angleDist(gen);
+	float angle = MathUtil::GetRandom(0.0f, DirectX::XM_2PI);
 
 	//移動変数
 	DirectX::SimpleMath::Vector3 offsetPosition;
@@ -90,6 +90,9 @@ void BirdEnemyMove::Enter()
 
 }
 
+/// <summary>
+/// 状態を抜けた時
+/// </summary>
 void BirdEnemyMove::Exit()
 {
 }

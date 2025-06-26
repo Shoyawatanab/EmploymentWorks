@@ -8,6 +8,6 @@ public:
 	//コンストラクタ
 	PlayerModel(Scene* scene);
 	//でストリング
-	~PlayerModel();
+	~PlayerModel() override;
 
 };

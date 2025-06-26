@@ -24,6 +24,8 @@ PlaySceneScreenSpaceOverlayCanvas::PlaySceneScreenSpaceOverlayCanvas(Scene* scen
 
 	GetScene()->AddActor<BossHp>(this);
 
+	GetScene()->AddActor<PlayerDamageEffect>(this);
+
 }
 
 /// <summary>

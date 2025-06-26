@@ -1,6 +1,7 @@
 #pragma once
 #include "pch.h"
 #include "GameBase/Screen.h"
+#include <random>
 
 
 namespace MathUtil
@@ -64,6 +65,20 @@ namespace MathUtil
         return Vector2(x, y);
     }
 
+    template<typename T>
+    inline T GetRandom(const T minValue,const T maxValue)
+    {
+        //	完全なランダムをハードウェア的に生成するためのクラスの変数
+        std::random_device seed;
+        //	上記の完全なランダムは動作が遅いため、seed値の決定のみに使用する
+        //	※「default_random_engine」はusingで「mt19937」となっている
+        std::default_random_engine engine(seed());
+        //	生成して欲しいランダムの範囲をDistributionに任せる。今回は0～2PI
+        std::uniform_real_distribution<> dist(minValue,maxValue);
+
+        return dist(engine);
+
+    }
 
 
 }

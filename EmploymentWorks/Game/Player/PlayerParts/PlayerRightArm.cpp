@@ -7,9 +7,10 @@
 
 
 
-
-
-
+/// <summary>
+/// コンストラク
+/// </summary>
+/// <param name="scene">シーン</param>
 PlayerRightArm::PlayerRightArm(Scene* scene)
 	:
 	PlayerParts(scene, PARTS_NAME, "PlayerArm")

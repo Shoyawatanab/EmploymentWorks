@@ -1,7 +1,9 @@
 #include "pch.h"
 #include "BirdEnemyBeamAttack.h"
-#include "Game/Messenger/Messenger.h"
-
+#include "Game/Messenger/Scene/SceneMessages.h"
+#include "Game/Enemies/BirdEnemy/BirdEnemy.h"
+#include "Game/Enemies/BirdEnemy/Bullet/BirdEnemyBullet.h"
+#include "Game/Enemies/BirdEnemy/Bullet/State/BirdEnemyBulletStateMachine.h"
 
 /// <summary>
 /// コンストラク
@@ -28,7 +30,7 @@ BirdEnemyBeamAttack::~BirdEnemyBeamAttack()
 /// <param name="deltaTime">経過時間</param>
 void BirdEnemyBeamAttack::Update(const float& deltaTime)
 {
-	
+	UNREFERENCED_PARAMETER(deltaTime);
 	//弾が発射されたらステートを切り替える
 
 
@@ -40,8 +42,16 @@ void BirdEnemyBeamAttack::Update(const float& deltaTime)
 /// </summary>
 void BirdEnemyBeamAttack::Enter()
 {
-	//弾をチャージに
-	Messenger::GetInstance()->Notify(MessageType::BIRD_BULLET_CHAGE_STATE);
+
+	//非アクティブの弾の取得
+	auto bullet = m_birdEnemy->GetInactiveBullet();
+	//弾があれば
+	if (bullet)
+	{
+		//状態の変更
+		bullet->GetStateMachine()->ChangeState(BirdEnemyBulletState::CHAGE);
+	}
+
 }
 
 /// <summary>

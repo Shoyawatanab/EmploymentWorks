@@ -1,12 +1,12 @@
 #pragma once
 #include "GameBase/Interface/IState.h"
 #include "GameBase/Messenger/IObserver.h"
-
+#include "Game/Messenger/Scene/SceneMessageType.h"
 
 class PlaySceneCamera;
 class PlaySceneCameraStateMachine;
 
-class PlaySceneCameraTPS : public IState , public IObserver
+class PlaySceneCameraTPS : public IState , public IObserver<SceneMessageType>
 {
 public:
 	//ズーム状態
@@ -47,7 +47,7 @@ public:
 	void Exit() override;
 
 	//通知を受け取る関数
-	void Notify(MessageType type, void* datas) override;
+	void Notify(SceneMessageType type, void* datas) override;
 
 
 private:
@@ -56,6 +56,9 @@ private:
 	void MouseOperation();
 	//ズームの更新
 	void ZoomUpdate(const float& deltaTime);
+
+	//揺れ
+	void Shake(const float& deltaTime);
 
 private:
 	//カメラ
@@ -70,7 +73,7 @@ private:
 	ZoomState m_zoomState;
 	//ズームの移動量
 	DirectX::SimpleMath::Vector3 m_zoomMovement;
-	//
+	//ズーム時間
 	float m_zoomTime;
 
 };

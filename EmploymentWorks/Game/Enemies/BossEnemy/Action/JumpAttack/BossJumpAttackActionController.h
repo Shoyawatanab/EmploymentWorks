@@ -22,9 +22,9 @@ class BossJumpAttackActionController : public ActionController
 {
 
 public:
-
+	//ジャンプ力
 	static  constexpr float JUMPPOWER = 0.3f;
-
+	//動きのスピード
 	static  constexpr float MOVESPEED = 9.0f;
 
 public:

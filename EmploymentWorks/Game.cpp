@@ -75,7 +75,7 @@ void Game::Initialize(HWND window, int width, int height)
 
     // シーンマネージャを初期化する
     m_sceneManager = std::make_unique<SceneManager>();
-    m_sceneManager->Initialize(CommonResources::GetInstance());
+    m_sceneManager->Initialize();
 
     m_soundManager = SoundManager::GetInstance();
     m_soundManager->Initialize();

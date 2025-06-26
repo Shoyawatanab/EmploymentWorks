@@ -24,7 +24,7 @@
 /// <param name="beam">ビーム</param>
 /// <param name="beamAttack">ビーム攻撃</param>
 BossBeamAttackEnd::BossBeamAttackEnd(Actor* bossenemy
-	, Beam* beam
+	, BossEnemyBeam* beam
 	, BossBeamAttackActionController* beamAttack)
 	:
 	m_commonResources{}
@@ -44,12 +44,7 @@ BossBeamAttackEnd::~BossBeamAttackEnd()
 	// do nothing.
 }
 
-/// <summary>
-/// 初期化
-/// </summary>
-void BossBeamAttackEnd::Initialize()
-{
-}
+
 
 /// <summary>
 /// 更新処理

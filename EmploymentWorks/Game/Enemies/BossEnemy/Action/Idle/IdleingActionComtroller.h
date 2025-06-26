@@ -17,6 +17,7 @@ public:
 	~IdleingActionComtroller()override;
 
 private:
+	//’Êí
 	std::unique_ptr<IdleingAction> m_idle;
 
 };

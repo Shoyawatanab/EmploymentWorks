@@ -10,7 +10,7 @@
 #include "Game/Params.h"
 #include "Game/Camera/PayScene/PlaySceneCamera.h"
 #include "Game/Params.h"
-#include "Game/Messenger/Messenger.h"
+#include "Game/Messenger/Scene/SceneMessages.h"
 
 /// <summary>
 /// コンストラクタ
@@ -27,10 +27,10 @@ PlayerUsually::PlayerUsually(Player* player)
 	m_rigidbody->SetDeceleration(Params::GRAUND_FRICTION);
 
 
-	Messenger::GetInstance()->Rigister(
+	SceneMessenger::GetInstance()->Rigister(
 		{
-			MessageType::PLAYER_GET_REDAY
-			,MessageType::PLAYER_GET_REDAY_END
+			SceneMessageType::PLAYER_GET_REDAY
+			,SceneMessageType::PLAYER_GET_REDAY_END
 		}
 		, this);
 }
@@ -70,14 +70,14 @@ void PlayerUsually::Update(const float& deltatime)
 /// </summary>
 /// <param name="type">通知の種類</param>
 /// <param name="datas">追加データ</param>
-void PlayerUsually::Notify(MessageType type, void* datas)
+void PlayerUsually::Notify(SceneMessageType type, void* datas)
 {
 	switch (type)
 	{
-		case MessageType::PLAYER_GET_REDAY:
+		case SceneMessageType::PLAYER_GET_REDAY:
 			m_isGetReady = true;
 			break;
-		case MessageType::PLAYER_GET_REDAY_END:
+		case SceneMessageType::PLAYER_GET_REDAY_END:
 			m_isGetReady = false;
 			break;
 		default:

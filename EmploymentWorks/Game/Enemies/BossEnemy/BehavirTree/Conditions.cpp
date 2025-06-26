@@ -5,8 +5,7 @@
 #include "Game/Enemies/BossEnemy/BossEnemy.h"
 #include "Game/Params.h"
 #include "GameBase/Component/Components.h"
-#include <random>
-
+#include "Game/MathUtil.h"
 
 /// <summary>
 /// コンストラクタ
@@ -194,15 +193,7 @@ bool Conditions::IsHPMoreThanHalf()
 bool Conditions::IsAttack()
 {
 
-	//	完全なランダムをハードウェア的に生成するためのクラスの変数
-	std::random_device seed;
-	//	上記の完全なランダムは動作が遅いため、seed値の決定のみに使用する
-	//	※「default_random_engine」はusingで「mt19937」となっている
-	std::default_random_engine engine(seed());
-	//	生成して欲しいランダムの範囲をDistributionに任せる。今回は0～2PI
-	std::uniform_real_distribution<> dist(0, 100);
-
-	float ratio = static_cast<float>(dist(engine));
+	float ratio =MathUtil::GetRandom(0,100);
 
 	if (ratio >= 30)
 	{

@@ -3,6 +3,11 @@
 #include "Game/Camera/PayScene/PlaySceneCamera.h"
 #include "GameBase/Component/Components.h"
 
+/// <summary>
+/// コンストラク
+/// </summary>
+/// <param name="stateMachine">ステートマシーン</param>
+/// <param name="camera">カメラ</param>
 PlaySceneEnemyTargetCamera::PlaySceneEnemyTargetCamera(PlaySceneCameraStateMachine* stateMachine, PlaySceneCamera* camera)
 	:
 	m_stateMAchine{stateMachine}
@@ -30,7 +35,7 @@ PlaySceneEnemyTargetCamera::~PlaySceneEnemyTargetCamera()
 void PlaySceneEnemyTargetCamera::Update(const float& deltaTime)
 {
 
-
+	UNREFERENCED_PARAMETER(deltaTime);
 
 }
 

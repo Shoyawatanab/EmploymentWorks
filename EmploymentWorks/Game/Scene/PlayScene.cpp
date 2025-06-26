@@ -5,8 +5,6 @@
 #include "pch.h"
 #include "PlayScene.h"
 #include <cassert>
-
-
 #include "GameBase/Component/Components.h"
 #include "Game/Stage/StageFactory.h"
 #include "Game/Player/Player.h"
@@ -18,15 +16,15 @@
 #include "Game/Fade/FadeManager.h"
 
 
-//---------------------------------------------------------
-// コンストラクタ
-//---------------------------------------------------------
+/// <summary>
+/// コンストラク
+/// </summary>
 PlayScene::PlayScene()
 	:
 	m_camera{}
 	,m_isChangeScene{}
 {
-	//Messenger::GetInstance()->Clear();
+	
 
 	FadeManager::GetInstance()->StartFadeOut();
 	
@@ -47,9 +45,9 @@ PlayScene::~PlayScene()
 
 }
 
-//---------------------------------------------------------
-// 初期化する
-//---------------------------------------------------------
+/// <summary>
+/// 初期化
+/// </summary>
 void PlayScene::Initialize()
 {
 

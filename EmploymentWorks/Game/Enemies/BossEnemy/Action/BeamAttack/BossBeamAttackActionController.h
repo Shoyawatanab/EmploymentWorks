@@ -12,22 +12,16 @@
 
 // 前方宣言
 class CommonResources;
-
-
-
-
-
+class BossEnemyBeam;
 class BossBeamAttackActionController : public ActionController
 {
 public:
 	//コンストラクタ
 	BossBeamAttackActionController(Actor* bossEnemy
-		, Beam* beam
+		, BossEnemyBeam* beam
 		, Actor* player);
 	//デストラクタ
 	~BossBeamAttackActionController() override;
-
-
 
 
 private:

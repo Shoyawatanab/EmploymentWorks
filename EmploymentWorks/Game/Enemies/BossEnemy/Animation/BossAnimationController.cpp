@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "BossAnimationController.h"
 #include "GameBase/Component/Components.h"
-#include "Game/Messenger/Messenger.h"
+#include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/Enemies/BossEnemy/BossEnemy.h"
 #include "Game/Enemies/BossEnemy/Model/BossEnemyModel.h"
 
@@ -55,14 +55,14 @@ BossAnimationController::BossAnimationController(BossEnemy* bossEnemy)
 	CreateFloatTransition("BossIdle", "BossMove", "Move",speed, FloatState::Greater);
 
 	//メッセージの登録
-	Messenger::GetInstance()->Rigister(
+	SceneMessenger::GetInstance()->Rigister(
 		{ 
-			MessageType::BOSS_IDLE_STATE
-			,MessageType::BOSS_BEAM_ATTACK_STATE
-			,MessageType::BOSS_JUMP_ATTACK_STATE
-			,MessageType::BOSS_SWING_DOWN_STATE
-			,MessageType::BOSS_WAKING_STATE
-			,MessageType::BOSS_DEFEATED
+			SceneMessageType::BOSS_IDLE_STATE
+			,SceneMessageType::BOSS_BEAM_ATTACK_STATE
+			,SceneMessageType::BOSS_JUMP_ATTACK_STATE
+			,SceneMessageType::BOSS_SWING_DOWN_STATE
+			,SceneMessageType::BOSS_WAKING_STATE
+			,SceneMessageType::BOSS_DEFEATED
 		}
 		, this
 	);
@@ -81,25 +81,25 @@ BossAnimationController::~BossAnimationController()
 /// </summary>
 /// <param name="type">通知の種類</param>
 /// <param name="datas">追加データ</param>
-void BossAnimationController::Notify(MessageType type, void* datas)
+void BossAnimationController::Notify(SceneMessageType type, void* datas)
 {
 
 	switch (type)
 	{
-		case MessageType::BOSS_IDLE_STATE:
+		case SceneMessageType::BOSS_IDLE_STATE:
 			Play("BossIdle");
 			break;
-		case MessageType::BOSS_BEAM_ATTACK_STATE:
+		case SceneMessageType::BOSS_BEAM_ATTACK_STATE:
 			break;
-		case MessageType::BOSS_JUMP_ATTACK_STATE:
+		case SceneMessageType::BOSS_JUMP_ATTACK_STATE:
 			SetTrigger("JumpCharge");
 			break;
-		case MessageType::BOSS_WAKING_STATE:
+		case SceneMessageType::BOSS_WAKING_STATE:
 			break;
-		case MessageType::BOSS_SWING_DOWN_STATE:
+		case SceneMessageType::BOSS_SWING_DOWN_STATE:
 			SetTrigger("SwingDown");
 			break;
-		case MessageType::BOSS_DEFEATED:  // ボスを倒したとき
+		case SceneMessageType::BOSS_DEFEATED:  // ボスを倒したとき
 			Play("BossFallDown");
 			break;
 		default:

@@ -28,9 +28,9 @@ const float            Params::PLAYER_SHADOW_RADIUS = 0.5f;
 
 
 //プレイヤのボックスの当たり判定の大きさ
-const Vector3          Params::PLAYER_BOX_COLLIDER_SIZE = Vector3(0.35f,0.55f,0.35f);
+const Vector3          Params::PLAYER_BOX_COLLIDER_SIZE = Vector3(2.0f,3.0f,2.0f);
 //プレイヤのスフィアの当たり判定の大きさ
-const float            Params::PLAYER_SPHERE_COLLIDER_SIZE = 0.9f;
+const float            Params::PLAYER_SPHERE_COLLIDER_SIZE = 4.0f;
 //プレイヤのHP
 const int              Params::PLAYER_HP = 3;
 //プレイヤの動くスピード
@@ -223,7 +223,7 @@ int Params::BOOMERANG_MAX_COUNT = 3;
  //ボスビームの縮小時間
  const float Params::BOSSENEMY_BEAM_SHRINK_TIME = 0.8f;
  //ボスビームのエネルギー弾の最大の大きさ
- const Vector3 Params::BOSSENEMY_BEAM_BALL_MAX_SCALE = Vector3(2.0f,2.0f,2.0f);
+ const Vector3 Params::BOSSENEMY_BEAM_BALL_MAX_SCALE = Vector3(1.5f,1.5f,1.5f);
  //ボスビームのエネルギー弾の予備動作の時間
  const float Params::BOSSENEMY_BEAM_BALL_PRELIMINARY_ACTION_TIME = 2.0f;
  //ボスビームのエネルギー弾の溜めの時間

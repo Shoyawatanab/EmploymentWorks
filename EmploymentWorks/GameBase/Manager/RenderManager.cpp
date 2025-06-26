@@ -60,9 +60,11 @@ void RenderManager::Render(const Camera& camera)
 		model->Render(camera);
 	}
 
-	for (auto& a : m_particle)
+	for (auto& particle : m_particle)
 	{
-		a->Render(camera.GetViewMatrix(), camera.GetProjectionMatrix());
+		if (!particle->GetActive()) { continue; }
+
+		particle->Render(camera.GetViewMatrix(), camera.GetProjectionMatrix());
 	
 	}
 

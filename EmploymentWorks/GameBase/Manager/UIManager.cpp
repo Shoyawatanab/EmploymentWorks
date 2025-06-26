@@ -26,6 +26,7 @@ UIManager::~UIManager()
 /// <param name="deltaTime">XVˆ—</param>
 void UIManager::Update(const float& deltaTime)
 {
+	UNREFERENCED_PARAMETER(deltaTime);
 	using namespace DirectX;
 	using namespace DirectX::SimpleMath;
 
@@ -61,7 +62,7 @@ void UIManager::Update(const float& deltaTime)
 				buttom->OnClick();
 
 			}
-
+			break;
 		}
 		else
 		{

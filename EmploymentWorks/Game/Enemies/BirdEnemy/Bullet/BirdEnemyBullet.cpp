@@ -19,6 +19,11 @@ BirdEnemyBullet::BirdEnemyBullet(Scene* scene, BirdEnemy* birdEnemy)
 	//コンポーネントの追加
 	AddComponent<ModelComponent>(this, "BeamEnergyBall");
 
+	//当たり判定の作成
+	AddComponent<AABB>(this, ColliderComponent::ColliderTag::AABB, CollisionType::COLLISION
+		, BOX_COLLIDER_SIZE
+		, SPHERE_COLLIDER_SIZE);
+
 
 
 	GetTransform()->SetScale(Vector3(0.3f,0.3f,0.3f));
@@ -28,7 +33,6 @@ BirdEnemyBullet::BirdEnemyBullet(Scene* scene, BirdEnemy* birdEnemy)
 	GetTransform()->SetParent(birdEnemy->GetTransform());
 
 	m_stateMachine = std::make_unique<BirdEnemyBulletStateMachine>(this,birdEnemy);
-
 
 }
 
@@ -60,9 +64,12 @@ void BirdEnemyBullet::OnCollisionEnter(ColliderComponent* collider)
 	{
 		case Actor::ObjectTag::STAGE:
 			m_stateMachine->ChangeState(BirdEnemyBulletState::IDEL);
+			break;
 		default:
 			break;
 	}
 
 
 }
+
+

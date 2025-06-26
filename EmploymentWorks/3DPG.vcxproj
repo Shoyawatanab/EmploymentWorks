@@ -202,6 +202,7 @@
     <ClInclude Include="GameBase\Manager\UIManager.h" />
     <ClInclude Include="GameBase\Model\ModelBase.h" />
     <ClInclude Include="Game\Camera\PayScene\PaySceneCameraState\PlaySceneEnemyTargetCamera.h" />
+    <ClInclude Include="Game\Camera\SelectScene\SelectSceneCamera.h" />
     <ClInclude Include="Game\Enemies\BirdEnemy\BirdEnemy.h" />
     <ClInclude Include="Game\Enemies\BirdEnemy\BirdEnemyParts.h" />
     <ClInclude Include="Game\Enemies\BirdEnemy\BirdEnemyPartss.h" />
@@ -240,6 +241,9 @@
     <ClInclude Include="Game\Enemies\BossEnemy\Action\Walk\WalkAction.h" />
     <ClInclude Include="Game\Enemies\BossEnemy\Action\Walk\WalkActionComtroller.h" />
     <ClInclude Include="Game\Enemies\BossEnemy\Animation\BossAnimationController.h" />
+    <ClInclude Include="Game\Enemies\BossEnemy\Beam\BossEnemyBeam.h" />
+    <ClInclude Include="Game\Enemies\BossEnemy\Beam\EnergyBall\BossEnemyBeamEnergyBall.h" />
+    <ClInclude Include="Game\Enemies\BossEnemy\Beam\Rays\BossEnemyBeamRays.h" />
     <ClInclude Include="Game\Enemies\BossEnemy\BossBeam\BossBeam.h" />
     <ClInclude Include="Game\Enemies\BossEnemy\BossBeam\BossBeamEnergyBall.h" />
     <ClInclude Include="Game\Enemies\BossEnemy\BossBeam\BossBeamRays.h" />
@@ -251,16 +255,28 @@
     <ClInclude Include="Game\Fade\FadeOut\NormalFadeOut.h" />
     <ClInclude Include="Game\Fade\IFade.h" />
     <ClInclude Include="Game\Fade\FadeIn\NormalFadeIn.h" />
+    <ClInclude Include="Game\GlobalGameData.h" />
+    <ClInclude Include="Game\Messenger\Global\GlobalMeesageType.h" />
+    <ClInclude Include="Game\Messenger\Global\GlobalMessages.h" />
+    <ClInclude Include="Game\Messenger\Global\GlobalMessenger.h" />
+    <ClInclude Include="Game\Messenger\Scene\SceneMessages.h" />
     <ClInclude Include="Game\Particle\PlayerDust.h" />
     <ClInclude Include="Game\UI\NumberUI.h" />
     <ClInclude Include="Game\UI\PlayScene\BoomerangCount\BoomerangCount.h" />
     <ClInclude Include="Game\UI\PlayScene\BossHp\BossHp.h" />
     <ClInclude Include="Game\UI\PlayScene\DamageCount\DamageCount.h" />
     <ClInclude Include="Game\UI\PlayScene\DamageCount\DamageCountFactory.h" />
+    <ClInclude Include="Game\UI\PlayScene\PlayerDamageEffect\PlayerDamageEffect.h" />
     <ClInclude Include="Game\UI\PlayScene\PlaySceneUIs.h" />
     <ClInclude Include="Game\UI\PlayScene\TargetMarker\TargetMarker.h" />
+    <ClInclude Include="Game\UI\SelectScene\BackGraund\SelectSceneBackGraund.h" />
+    <ClInclude Include="Game\UI\SelectScene\Canvas\SelectSceneScreenSpaceOverlayCanvas.h" />
+    <ClInclude Include="Game\UI\SelectScene\SelectSceneUIs.h" />
+    <ClInclude Include="Game\UI\SelectScene\StageOneButtom\StageOneButtom.h" />
+    <ClInclude Include="Game\UI\SelectScene\StageTwoButtom\StageTwoButtom.h" />
     <ClInclude Include="Game\UI\TitleScene\Canvas\TitleSceneScreenSpaceOverlayCanvas.h" />
     <ClInclude Include="Game\UI\TitleScene\ExitButtom\ExitButtom.h" />
+    <ClInclude Include="Game\UI\TitleScene\PlayButtom\PlayButtom.h" />
     <ClInclude Include="Game\UI\TitleScene\TitleSceneUIs.h" />
     <ClInclude Include="Game\Weapon\WeaponBase.h" />
     <ClInclude Include="Game\Enemies\BossEnemy\BehavirTree\BossBehaviorTree.h" />
@@ -290,7 +306,7 @@
     <ClInclude Include="GameBase\Component\UI\ImageComponent.h" />
     <ClInclude Include="GameBase\Managers.h" />
     <ClInclude Include="GameBase\Manager\CollisionManager.h" />
-    <ClInclude Include="Game\Messenger\Messenger.h" />
+    <ClInclude Include="Game\Messenger\Scene\SceneMessenger.h" />
     <ClInclude Include="GameBase\Manager\RenderManager.h" />
     <ClInclude Include="GameBase\Manager\RigidbodyManager.h" />
     <ClInclude Include="GameBase\Model\ModelPartsBase.h" />
@@ -325,7 +341,6 @@
     <ClInclude Include="Game\Enemies\BossEnemy\Parts\BossEnemyRightShoulder.h" />
     <ClInclude Include="Game\Enemies\BossEnemy\Parts\BossEnemyRightThigh.h" />
     <ClInclude Include="Game\Enemies\BossEnemy\Parts\BossEnemyTorso.h" />
-    <ClInclude Include="Game\InstanceRegistry.h" />
     <ClInclude Include="Game\Interface\IActione.h" />
     <ClInclude Include="Game\Interface\IBaseObserver.h" />
     <ClInclude Include="Game\Interface\IBehaviorNode.h" />
@@ -339,7 +354,7 @@
     <ClInclude Include="Game\Interface\IStateMachine.h" />
     <ClInclude Include="Game\Interface\IUIState.h" />
     <ClInclude Include="Game\MathUtil.h" />
-    <ClInclude Include="Game\Messenger\MessageParams.h" />
+    <ClInclude Include="Game\Messenger\Scene\SceneMessageType.h" />
     <ClInclude Include="Game\Params.h" />
     <ClInclude Include="Game\Player\Animation\PlayerAnimationController.h" />
     <ClInclude Include="Game\Player\Model\PlayerModel.h" />
@@ -412,6 +427,7 @@
     <ClCompile Include="GameBase\Manager\UIManager.cpp" />
     <ClCompile Include="GameBase\Model\ModelBase.cpp" />
     <ClCompile Include="Game\Camera\PayScene\PaySceneCameraState\PlaySceneEnemyTargetCamera.cpp" />
+    <ClCompile Include="Game\Camera\SelectScene\SelectSceneCamera.cpp" />
     <ClCompile Include="Game\Enemies\BirdEnemy\BirdEnemy.cpp" />
     <ClCompile Include="Game\Enemies\BirdEnemy\BirdEnemyParts.cpp" />
     <ClCompile Include="Game\Enemies\BirdEnemy\Bullet\BirdEnemyBullet.cpp" />
@@ -446,6 +462,9 @@
     <ClCompile Include="Game\Enemies\BossEnemy\Action\Walk\WalkAction.cpp" />
     <ClCompile Include="Game\Enemies\BossEnemy\Action\Walk\WalkActionComtroller.cpp" />
     <ClCompile Include="Game\Enemies\BossEnemy\Animation\BossAnimationController.cpp" />
+    <ClCompile Include="Game\Enemies\BossEnemy\Beam\BossEnemyBeam.cpp" />
+    <ClCompile Include="Game\Enemies\BossEnemy\Beam\EnergyBall\BossEnemyBeamEnergyBall.cpp" />
+    <ClCompile Include="Game\Enemies\BossEnemy\Beam\Rays\BossEnemyBeamRays.cpp" />
     <ClCompile Include="Game\Enemies\BossEnemy\BossBeam\BossBeam.cpp" />
     <ClCompile Include="Game\Enemies\BossEnemy\BossBeam\BossBeamEnergyBall.cpp" />
     <ClCompile Include="Game\Enemies\BossEnemy\BossBeam\BossBeamRays.cpp" />
@@ -454,15 +473,23 @@
     <ClCompile Include="Game\Fade\FadeManager.cpp" />
     <ClCompile Include="Game\Fade\FadeIn\NormalFadeIn.cpp" />
     <ClCompile Include="Game\Fade\FadeOut\NormalFadeInOut.cpp" />
+    <ClCompile Include="Game\GlobalGameData.cpp" />
+    <ClCompile Include="Game\Messenger\Global\GlobalMessenger.cpp" />
     <ClCompile Include="Game\Particle\PlayerDust.cpp" />
     <ClCompile Include="Game\UI\NumberUI.cpp" />
     <ClCompile Include="Game\UI\PlayScene\BoomerangCount\BoomerangCount.cpp" />
     <ClCompile Include="Game\UI\PlayScene\BossHp\BossHp.cpp" />
     <ClCompile Include="Game\UI\PlayScene\DamageCount\DamageCount.cpp" />
     <ClCompile Include="Game\UI\PlayScene\DamageCount\DamageCountFactory.cpp" />
+    <ClCompile Include="Game\UI\PlayScene\PlayerDamageEffect\PlayerDamageEffect.cpp" />
     <ClCompile Include="Game\UI\PlayScene\TargetMarker\TargetMarker.cpp" />
+    <ClCompile Include="Game\UI\SelectScene\BackGraund\SelectSceneBackGraund.cpp" />
+    <ClCompile Include="Game\UI\SelectScene\Canvas\SelectSceneScreenSpaceOverlayCanvas.cpp" />
+    <ClCompile Include="Game\UI\SelectScene\StageOneButtom\StageOneButtom.cpp" />
+    <ClCompile Include="Game\UI\SelectScene\StageTwoButtom\StageTwoButtom.cpp" />
     <ClCompile Include="Game\UI\TitleScene\Canvas\TitleSceneScreenSpaceOverlayCanvas.cpp" />
     <ClCompile Include="Game\UI\TitleScene\ExitButtom\ExitButtom.cpp" />
+    <ClCompile Include="Game\UI\TitleScene\PlayButtom\PlayButtom.cpp" />
     <ClCompile Include="Game\Weapon\WeaponBase.cpp" />
     <ClCompile Include="Game\Enemies\BossEnemy\BehavirTree\BossBehaviorTree.cpp" />
     <ClCompile Include="Game\Enemies\BossEnemy\BehavirTree\Conditions.cpp" />
@@ -488,7 +515,7 @@
     <ClCompile Include="GameBase\Component\UI\ButtonComponent.cpp" />
     <ClCompile Include="GameBase\Component\UI\ImageComponent.cpp" />
     <ClCompile Include="GameBase\Manager\CollisionManager.cpp" />
-    <ClCompile Include="Game\Messenger\Messenger.cpp" />
+    <ClCompile Include="Game\Messenger\Scene\SceneMessenger.cpp" />
     <ClCompile Include="GameBase\Manager\RenderManager.cpp" />
     <ClCompile Include="GameBase\Manager\RigidbodyManager.cpp" />
     <ClCompile Include="GameBase\Model\ModelPartsBase.cpp" />
@@ -520,7 +547,6 @@
     <ClCompile Include="Game\Enemies\BossEnemy\Parts\BossEnemyRightShoulder.cpp" />
     <ClCompile Include="Game\Enemies\BossEnemy\Parts\BossEnemyRightThigh.cpp" />
     <ClCompile Include="Game\Enemies\BossEnemy\Parts\BossEnemyTorso.cpp" />
-    <ClCompile Include="Game\InstanceRegistry.cpp" />
     <ClCompile Include="Game\Params.cpp" />
     <ClCompile Include="Game\Player\Animation\PlayerAnimationController.cpp" />
     <ClCompile Include="Game\Player\Model\PlayerModel.cpp" />
@@ -734,6 +760,9 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compute</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Game\Shaders\Particle\ParticleGS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
@@ -759,11 +788,17 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Game\Shaders\SpriteVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
     </FxCompile>
     <FxCompile Include="Game\Shaders\UI\UIGS.hlsl">
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>

@@ -4,12 +4,13 @@
 #pragma once
 #include "GameBase/Interface/IState.h"
 #include "GameBase/Messenger/IObserver.h"
+#include "Game/Messenger/Scene/SceneMessageType.h"
 
 class Player;
 class RigidbodyComponent;
 
 
-class PlayerUsually : public IObserver
+class PlayerUsually : public IObserver<SceneMessageType>
 {
 
 
@@ -23,7 +24,7 @@ public:
 
 
 	//’Ê’m‚ÉŒÄ‚Ño‚³‚ê‚é
-	void Notify(MessageType type, void* datas) override;
+	void Notify(SceneMessageType type, void* datas) override;
 
 
 private:

@@ -2,7 +2,7 @@
 #include "PlayerStateMachine.h"
 #include "Game/Player/Player.h"
 #include "Game/Player//State/PlayerStates.h"
-#include "Game/Messenger/Messenger.h"
+#include "Game/Messenger/Scene/SceneMessages.h"
 
 /// <summary>
 /// コンストラクタ
@@ -21,11 +21,11 @@ PlayerStateMachine::PlayerStateMachine(Player* player)
 	SetStartState(PlayerState::IDEL);
 
 	//メッセージの登録
-	Messenger::GetInstance()->Rigister(
+	SceneMessenger::GetInstance()->Rigister(
 		{
-		 MessageType::PLAYER_IDLE_STATE
-		,MessageType::PLAYER_BOOMERANG_ATTACK_STATE
-		,MessageType::PLAYER_BOOMERANG_GET_READY_STATE
+		 SceneMessageType::PLAYER_IDLE_STATE
+		,SceneMessageType::PLAYER_BOOMERANG_ATTACK_STATE
+		,SceneMessageType::PLAYER_BOOMERANG_GET_READY_STATE
 		}
 		, this
 	);
@@ -44,18 +44,18 @@ PlayerStateMachine::~PlayerStateMachine()
 /// </summary>
 /// <param name="type">通知の種類</param>
 /// <param name="datas">追加データ</param>
-void PlayerStateMachine::Notify(MessageType type, void* datas)
+void PlayerStateMachine::Notify(SceneMessageType type, void* datas)
 {
 
 	switch (type)
 	{
-		case MessageType::PLAYER_IDLE_STATE:
+		case SceneMessageType::PLAYER_IDLE_STATE:
 			ChangeState(PlayerState::IDEL);
 			break;
-		case MessageType::PLAYER_BOOMERANG_GET_READY_STATE:
+		case SceneMessageType::PLAYER_BOOMERANG_GET_READY_STATE:
 			ChangeState(PlayerState::BOOMERANG_GET_READY);
 			break;
-		case MessageType::PLAYER_BOOMERANG_ATTACK_STATE:
+		case SceneMessageType::PLAYER_BOOMERANG_ATTACK_STATE:
 			ChangeState(PlayerState::BOOMERANG_ATTACK);
 			break;
 		default:

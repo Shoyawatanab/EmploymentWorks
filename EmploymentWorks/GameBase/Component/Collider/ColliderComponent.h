@@ -95,7 +95,11 @@ public:
 	DirectX::BoundingBox* GetBoundingBox();
 	//バウンディングスフィアの取得
 	DirectX::BoundingSphere* GetBoundingSphere();
-	//DirectX::BoundingOrientedBox* GetOrientedBox() { return m_orientexBox.get(); }
+
+	//初期Extentsの取得
+	DirectX::SimpleMath::Vector3 GetInitialExtents() { return m_initialExtents; }
+	//初期半径の取得
+	float GetInitialRaduis() { return m_initialRadius; }
 
 public:
 	//コンストラクタ
@@ -123,5 +127,9 @@ private:
 	//バウンディングスフィア
 	std::unique_ptr<DirectX::BoundingSphere> m_boundingSphere;
 
+	//初期Extents
+	DirectX::SimpleMath::Vector3 m_initialExtents;
+	//初期半径
+	float m_initialRadius;
 
 };

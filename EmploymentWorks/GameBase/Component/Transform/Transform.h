@@ -51,6 +51,9 @@ public:
 
 	// 親をセットする
 	void SetParent(Transform* parent);
+	//親を取得
+	Transform* GetParent() { return m_parent; }
+
 	// 子の取得
 	Transform* GetChild(int num);
 	// 全ての子供を返す

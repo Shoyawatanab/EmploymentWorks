@@ -21,13 +21,6 @@ IdleingAction::~IdleingAction()
 	// do nothing.
 }
 
-/// <summary>
-/// ‰Šú‰»
-/// </summary>
-void IdleingAction::Initialize()
-{
-
-}
 
 /// <summary>
 /// XVˆ—

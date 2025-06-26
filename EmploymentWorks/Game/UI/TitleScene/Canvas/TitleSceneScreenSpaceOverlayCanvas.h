@@ -8,6 +8,6 @@ public:
 	//コンストラクタ
 	TitleSceneScreenSpaceOverlayCanvas(Scene* scene);
 	//デストラクタ
-	~TitleSceneScreenSpaceOverlayCanvas();
+	~TitleSceneScreenSpaceOverlayCanvas() override;
 
 };

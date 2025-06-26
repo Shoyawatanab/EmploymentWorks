@@ -32,11 +32,6 @@ BossJumpAttackCharge::~BossJumpAttackCharge()
 	// do nothing.
 }
 
-void BossJumpAttackCharge::Initialize()
-{
-
-
-}
 
 BossJumpAttackCharge::ActionState BossJumpAttackCharge::Update(const float& elapsedTime)
 {

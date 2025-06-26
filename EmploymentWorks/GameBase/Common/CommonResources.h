@@ -1,7 +1,8 @@
 /*
 	@file	CommonResources.h
-	@brief	シーンへ渡す、ゲーム内で使用する共通リソース
+	@brief  ゲーム内で使用する共通リソース
 */
+
 #pragma once
 #include "Libraries/WataLib/Singleton.h"
 
@@ -37,6 +38,7 @@ private:
 	mylib::InputManager* m_inputManager;
 
 public:
+	
 	CommonResources();
 	~CommonResources() = default;
 

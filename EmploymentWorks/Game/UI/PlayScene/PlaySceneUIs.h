@@ -4,5 +4,6 @@
 #include "Game/UI/PlayScene/BoomerangCount/BoomerangCount.h"
 #include"Game/UI/PlayScene/DamageCount/DamageCountFactory.h"
 #include "Game/UI/PlayScene/BossHp/BossHp.h"
+#include "Game/UI/PlayScene/PlayerDamageEffect/PlayerDamageEffect.h"
 
 

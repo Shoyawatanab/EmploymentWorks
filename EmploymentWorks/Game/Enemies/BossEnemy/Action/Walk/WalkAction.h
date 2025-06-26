@@ -28,8 +28,6 @@ public:
 		, Actor* target);
 	//デストラクタ
 	~WalkAction() override ;
-	//初期化
-	void Initialize() override;
 	//更新処理
 	ActionState Update(const float& elapsedTime)  override ;
 	//状態に入った時

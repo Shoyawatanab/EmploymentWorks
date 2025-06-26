@@ -14,7 +14,7 @@ public:
 	//コンストラクタ
 	NumberUI(Canvas* canvas);
 	//デストラクタ
-	~NumberUI();
+	~NumberUI() override;
 	//数字の登録
 	void SetNumber(int number);
 

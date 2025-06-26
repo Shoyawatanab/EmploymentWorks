@@ -1,10 +1,12 @@
 #pragma once
 #include "GameBase/Actor.h"
+#include "GameBase/Messenger/IObserver.h"
+#include "Game/Messenger/Scene/SceneMessageType.h"
 
 class Canvas;
 class Image;
 
-class PlayerHp : public Actor
+class PlayerHp : public Actor , public IObserver<SceneMessageType>
 {
 public:
 
@@ -21,7 +23,11 @@ public:
 	//コンストラクタ
 	PlayerHp(Canvas* canvas);
 	//デストラクタ
-	~PlayerHp();
+	~PlayerHp() override;
+
+	//通知時に呼び出される
+	void Notify(SceneMessageType type, void* datas) override;
+
 
 private:
 

@@ -12,7 +12,6 @@
 /// コンストラクタ
 /// </summary>
 /// <param name="scene">シーン</param>
-
 PlayerLeftArm::PlayerLeftArm(Scene* scene)
 	:
 	PlayerParts(scene, PARTS_NAME, "PlayerArm")

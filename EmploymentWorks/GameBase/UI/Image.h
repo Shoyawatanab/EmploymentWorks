@@ -16,6 +16,8 @@ public:
 
 	//‰¡‚Ì“h‚è‚Â‚Ô‚µ—Ê@‚O`‚P‚Ü‚Å‚Ì”ÍˆÍ
 	void SetHorizontalFillAmount(float fillAmount) { m_imageComponent->SetHorizontalFillAmount(fillAmount); }
+	//ƒJƒXƒ^ƒ€•`‰æŠÖ”‚Ì“o˜^
+	void SetCustomRenderFunction(std::function<void()> customRender) { m_imageComponent->SetCustomRenderFunction(customRender); }
 
 public:
 

@@ -47,17 +47,10 @@ NormalFadeIn::~NormalFadeIn()
 bool NormalFadeIn::Update(const float& deltaTime)
 {
 
-	if (m_time >= MAX_TIME)
-	{
-		m_time = std::min(m_time,MAX_TIME);
-
-		return true;
-	}
-
 	//ŽžŠÔ‚Ì‰ÁŽZ
-	m_time  += deltaTime;
-	
-	return false;
+	m_time += deltaTime;
+
+	return m_time >= MAX_TIME;
 }
 
 /// <summary>

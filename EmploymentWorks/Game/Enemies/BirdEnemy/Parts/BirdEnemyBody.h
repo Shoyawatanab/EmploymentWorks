@@ -4,7 +4,6 @@
 
 class BirdEnemyBody : public BirdEnemyPars
 {
-
 public:
 
 	//ƒp[ƒc–¼

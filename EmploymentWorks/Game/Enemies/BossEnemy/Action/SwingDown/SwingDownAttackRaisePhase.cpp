@@ -43,14 +43,6 @@ SwingDownAttackRaisePhase::~SwingDownAttackRaisePhase()
 	// do nothing.
 }
 
-/// <summary>
-/// ‰Šú‰»
-/// </summary>
-void SwingDownAttackRaisePhase::Initialize()
-{
-
-
-}
 
 /// <summary>
 /// XVˆ—

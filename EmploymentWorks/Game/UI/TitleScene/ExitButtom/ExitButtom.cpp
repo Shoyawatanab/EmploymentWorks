@@ -4,10 +4,14 @@
 #include "GameBase/UI/Button.h"
 #include "GameBase/Scene/Scene.h"
 #include "GameBase/Component/Components.h"
-#include "Game/Messenger/Messenger.h"
-
+#include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/Fade/FadeManager.h"
+#include "Game/Messenger/Global/GlobalMessages.h"
 
+/// <summary>
+/// コンストラク
+/// </summary>
+/// <param name="canvas">キャンバス</param>
 ExitButtom::ExitButtom(Canvas* canvas)
 	:
 	Actor(canvas->GetScene())
@@ -15,12 +19,11 @@ ExitButtom::ExitButtom(Canvas* canvas)
 {
 	using namespace DirectX::SimpleMath;
 
-	m_exitButton = GetScene()->AddActor<Button>(canvas, "PLAY");
+	m_exitButton = GetScene()->AddActor<Button>(canvas, "EXIT");
 	m_exitButton->GetTransform()->SetScale(SCALE);
 	m_exitButton->GetTransform()->SetPosition(POSITOIN);
 
 	auto comp = m_exitButton->GetComponent<ButtonComponent>();
-
 
 	comp->SetClickFunction(std::bind(&ExitButtom::OnClick, this));
 	comp->SetInRangeFunction(std::bind(&ExitButtom::InRange,this));
@@ -40,10 +43,9 @@ ExitButtom::~ExitButtom()
 /// </summary>
 void ExitButtom::OnClick()
 {
+	
+	PostQuitMessage(0);
 
-	Messenger::GetInstance()->Notify(MessageType::CHANGE_PLAY_SCENE);
-
-	FadeManager::GetInstance()->StartFadeIn();
 }
 
 /// <summary>

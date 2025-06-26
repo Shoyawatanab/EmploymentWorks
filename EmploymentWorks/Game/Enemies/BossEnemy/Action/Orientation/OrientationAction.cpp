@@ -42,14 +42,6 @@ OrientationAction::~OrientationAction()
 	// do nothing.
 }
 
-/// <summary>
-/// ‰Šú‰»
-/// </summary>
-void OrientationAction::Initialize()
-{
-
-}
-
 
 /// <summary>
 /// XVˆ—

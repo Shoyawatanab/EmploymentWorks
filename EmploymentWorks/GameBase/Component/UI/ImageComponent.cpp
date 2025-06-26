@@ -37,6 +37,7 @@ ImageComponent::ImageComponent(Actor* owner, std::string textureName)
 	,m_cutRange{DirectX::SimpleMath::Vector4(0.0f,0.0f,1.0f,1.0f)}
 	,m_viewRange{DirectX::SimpleMath::Vector4::One}
 	,m_fillAmount{DirectX::SimpleMath::Vector4::One}
+	,m_renderKinds{RenderKinds::NORMAL}
 {
 
 	using namespace DirectX;
@@ -87,11 +88,53 @@ ImageComponent::~ImageComponent()
 
 void ImageComponent::Render()
 {
+
+	switch (m_renderKinds)
+	{
+		case ImageComponent::RenderKinds::NORMAL:
+			NormalRender();
+			break;
+		case ImageComponent::RenderKinds::CUSTOM:
+			CustomRender();
+			break;
+		default:
+			break;
+	}
+
+}
+
+
+
+void ImageComponent::LoadTexture(std::string textureName)
+{
+
+	//画像の読み込み
+	m_texture = GameResources::GetInstance()->GetTexture(textureName);
+
+	//シェーダーリソースビューから画像情報の取得
+	Microsoft::WRL::ComPtr<ID3D11Resource> resource;
+	m_texture->GetResource(&resource);
+
+	//リソースをTexture2Dにキャスト
+	Microsoft::WRL::ComPtr<ID3D11Texture2D> tex;
+	DX::ThrowIfFailed(resource.As(&tex));
+
+	//画像情報を取得
+	D3D11_TEXTURE2D_DESC desc;
+	tex->GetDesc(&desc);
+
+	//画像のサイズを取得
+	m_textureWidth = desc.Width;
+	m_textureHeight = desc.Height;
+}
+
+void ImageComponent::NormalRender()
+{
 	using namespace DirectX;
 	using namespace DirectX::SimpleMath;
 
 	auto context = CommonResources::GetInstance()->GetDeviceResources()->GetD3DDeviceContext();
-	
+
 	auto states = CommonResources::GetInstance()->GetCommonStates();
 
 
@@ -101,8 +144,8 @@ void ImageComponent::Render()
 	//シェーダーに渡す追加のバッファを作成する。(ConstBuffer）
 	ConstBuffer cbuff;
 	cbuff.windowSize = SimpleMath::Vector4(Screen::WIDTH, Screen::HEIGHT, 0, 0);
-	cbuff.Position = Vector4(GetActor()->GetTransform()->GetWorldPosition().x, GetActor()->GetTransform()->GetWorldPosition().y,0,0);
-	cbuff.Size = Vector4(GetWidth(),GetHeight(), 0, 0);
+	cbuff.Position = Vector4(GetActor()->GetTransform()->GetWorldPosition().x, GetActor()->GetTransform()->GetWorldPosition().y, 0, 0);
+	cbuff.Size = Vector4(GetWidth(), GetHeight(), 0, 0);
 	cbuff.Color = m_color;
 	cbuff.CutRange = m_cutRange;
 	cbuff.ViewRange = m_viewRange;
@@ -156,35 +199,41 @@ void ImageComponent::Render()
 
 }
 
-void ImageComponent::LoadTexture(std::string textureName)
+/// <summary>
+/// カスタム描画
+/// </summary>
+void ImageComponent::CustomRender()
 {
-
-	//画像の読み込み
-	m_texture = GameResources::GetInstance()->GetTexture(textureName);
-
-	//シェーダーリソースビューから画像情報の取得
-	Microsoft::WRL::ComPtr<ID3D11Resource> resource;
-	m_texture->GetResource(&resource);
-
-	//リソースをTexture2Dにキャスト
-	Microsoft::WRL::ComPtr<ID3D11Texture2D> tex;
-	DX::ThrowIfFailed(resource.As(&tex));
-
-	//画像情報を取得
-	D3D11_TEXTURE2D_DESC desc;
-	tex->GetDesc(&desc);
-
-	//画像のサイズを取得
-	m_textureWidth = desc.Width;
-	m_textureHeight = desc.Height;
+	m_customRender();
 }
 
+/// <summary>
+/// 横幅の取得
+/// </summary>
+/// <returns></returns>
 float ImageComponent::GetWidth() const
 {
 	return m_textureWidth * GetActor()->GetTransform()->GetWorldScale().x;
 }
 
+/// <summary>
+/// 縦幅の取得
+/// </summary>
+/// <returns></returns>
 float ImageComponent::GetHeight() const
 {
 	return m_textureHeight * GetActor()->GetTransform()->GetWorldScale().y;
+}
+
+
+/// <summary>
+/// カスタム描画関数の登録
+/// </summary>
+/// <param name="customRender">関数</param>
+void ImageComponent::SetCustomRenderFunction(std::function<void()> customRender)
+{
+
+	m_customRender = customRender;
+	//状態の変更
+	m_renderKinds = RenderKinds::CUSTOM;
 }

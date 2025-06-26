@@ -48,6 +48,7 @@ private:
 	void LoadTexture(ID3D11Device1* device);
 
 
+
 private:
 
 
