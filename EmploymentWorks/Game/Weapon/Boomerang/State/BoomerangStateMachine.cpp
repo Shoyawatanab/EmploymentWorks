@@ -1,12 +1,15 @@
 #include "pch.h"
 #include "BoomerangStateMachine.h"
 #include "Game/Weapon/Boomerang/State/BoomerangStates.h"
+#include "Game/Weapon/Boomerang/Boomerang.h"
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
 /// <param name="boomerang">ブーメラン</param>
 BoomerangStateMachine::BoomerangStateMachine(Boomerang* boomerang, Player* player)
+	:
+	m_boomerang{boomerang}
 {
 
 	//IDLE
@@ -28,6 +31,30 @@ BoomerangStateMachine::BoomerangStateMachine(Boomerang* boomerang, Player* playe
 /// </summary>
 BoomerangStateMachine::~BoomerangStateMachine()
 {
+}
+
+
+/// <summary>
+/// 派生先のChangeState時の処理
+/// </summary>
+/// <param name="state"></param>
+void BoomerangStateMachine::DerivationChangeState(BoomerangState state)
+{
+	switch (state)
+	{
+		case BoomerangState::IDEL:
+			m_boomerang->SetWeaponState(WeaponBase::WeaponState::BOOMERANG_IDLE);
+			break;
+		case BoomerangState::THROW:
+			m_boomerang->SetWeaponState(WeaponBase::WeaponState::BOOMERANG_THROW);
+			break;
+		case BoomerangState::GET_READY:
+			m_boomerang->SetWeaponState(WeaponBase::WeaponState::BOOMERANG_GET_READY);
+
+			break;
+		default:
+			break;
+	}
 }
 
 ///// <summary>

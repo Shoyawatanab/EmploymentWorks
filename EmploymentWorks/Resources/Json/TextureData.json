@@ -25,7 +25,11 @@
 	"FrontThrow"         : "FrontThrow.png",
 	"LeftThrow"          : "LeftThrow.png",
 	"da"                 : "da.png",
-	"Number"             :"Number.png"
+	"Number"             :"Number.png",
+	"ResultRetry"        :"ResultRetry.png",
+	"ResultTitle"        :"ResultTitle.png",
+	"Ten"                : "Ten.png"
+
 
 	
 

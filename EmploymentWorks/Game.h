@@ -13,8 +13,8 @@
 #include "Game/Scene/SceneManager.h"
 #include "Libraries/MyLib/DebugString.h"
 #include "Libraries/MyLib/InputManager.h"
-#include "Game/Sound/SoundManager.h"
 #include "Game/Fade/FadeManager.h"
+#include "GameBase/Manager/SoundManager.h"
 
 // A basic game implementation that creates a D3D11 device and
 // provides a game loop.
@@ -86,9 +86,10 @@ private:
     std::unique_ptr<SceneManager>           m_sceneManager;
 
 
-    SoundManager* m_soundManager;
-
+    //フェードマネージャー
     FadeManager* m_fadeManager;
+    //サウンドマネージャー
+    SoundManager* m_soundManager;
 
     // ★追記ココまで↑↑↑★
 

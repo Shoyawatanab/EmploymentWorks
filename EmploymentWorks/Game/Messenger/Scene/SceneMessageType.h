@@ -13,6 +13,9 @@ enum class SceneMessageType : int
 	,GAME_CLEAR                                    //ゲームクリア
 	,GAME_OVER									   //ゲームオーバー
 	,ENEMY_DAMAGE                                  //敵のダメージ
+	,EXPLOSITION_EFFECT                            //爆発エフェクト
+	,CREATE_CHARGE_EFFECT                          //チャージエフェクトの作成
+	,CREATE_PARTICLE_EFFECT                        //パーティクルの作成
 
 	//ゲームの状態
 
@@ -43,6 +46,9 @@ enum class SceneMessageType : int
 	//ボス敵の活動
 	,BOSS_DAMAGE                                 //ボスがダメージを受けた活動
 	,BOSS_DEFEATED                               //ボスを倒した活動
+	,BOSS_BEAM_IMPACT                            //ボスビームの着弾
+
+	,BOSS_JUMP_ANIMATION_START                   //ボスのジャンプアニメーションのスタート
 
 	//ボステキの状態
 	,BOSS_IDLE_STATE                              //ボス敵の通常状態
@@ -51,18 +57,44 @@ enum class SceneMessageType : int
 	,BOSS_WAKING_STATE	                          //ボス敵の歩き状態
 	,BOSS_SWING_DOWN_STATE	                      //ボス敵の振り下ろし攻撃状態
 
+
+
 };
 
+//敵のダメージ時の構造体
+struct EnemyDamageDatas
+{
+	float Damage;
+	DirectX::SimpleMath::Vector3 Position;
+};
 
+//爆発エフェクト時の追加データ用構造体
+struct  ExplosionEffectDatas
+{
+	DirectX::SimpleMath::Vector3 Scale;      //大きさ
+	DirectX::SimpleMath::Vector3 Position;	 //座標
+};
 
+//チャージエフェクトの追加データ構造体
+struct CreateChargeEffectDatas
+{
+	DirectX::SimpleMath::Vector3 Scale;      //大きさ
+	DirectX::SimpleMath::Vector3 Position;	 //座標
 
+};
 
 /*
 	名前　　　　　　　　　　　　　　　　　　追加データ (型名・用途,型名・用途　・・・・)
 	BOOMERANG_IDEL_STATE 　　　　　　　　　Boomerang  どのブーメランのステートを切り替えるのか
 
+	ENEMY_DAMAGE　　　　　　　　　　　　　 EnemyDamageDatas　構造体
+
 	BOSS_DAMAGE　　　　　　　　　　　　　　float  残りHP割合　
 	
+	EXPLOSITION_EFFECT　　　　　　　　　　 ExplosionEffectDatas　構造体
+
+	CREATE＿CHARGE_EFFECT                  CrateChargeEffectDtas 構造体
+	　
 */
 
 

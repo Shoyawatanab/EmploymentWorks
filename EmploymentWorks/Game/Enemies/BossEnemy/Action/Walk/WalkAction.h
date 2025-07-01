@@ -7,9 +7,8 @@
 #include "GameBase/Actor.h"
 
 // 前方宣言
+class BossEnemy;
 class CommonResources;
-
-
 
 class WalkAction : public IAction
 {
@@ -24,7 +23,7 @@ public:
 
 public:
 	//コンストラクタ
-	WalkAction(Actor* own
+	WalkAction(BossEnemy* own
 		, Actor* target);
 	//デストラクタ
 	~WalkAction() override ;
@@ -43,7 +42,7 @@ private:
 	//ターゲット
 	Actor* m_target;
 	//所有者
-	Actor* m_own;
+	BossEnemy* m_own;
 	//時間
 	float m_time;
 };

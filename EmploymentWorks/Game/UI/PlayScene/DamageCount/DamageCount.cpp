@@ -33,7 +33,7 @@ DamageCount::DamageCount(Canvas* canvas)
 	}
 
 	GetTransform()->SetScale(Vector3(0.1, 0.1, 0));
-	GetTransform()->SetPosition(Vector3(640, 360, 0));
+	//GetTransform()->SetPosition(Vector3(640, 360, 0));
 
 	//初期化で非アクティブに
 	SetActive(false);
@@ -106,7 +106,6 @@ void DamageCount::SetDamage(int damage)
 		return;
 	}
 
-	
 
 
 	//桁数だけ回す

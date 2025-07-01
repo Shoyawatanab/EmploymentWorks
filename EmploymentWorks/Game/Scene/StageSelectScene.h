@@ -24,7 +24,7 @@ public:
     
     void Initialize() override;
     
-    void SceneUpdate(float elapsedTime)override;
+    void SceneUpdate(const float& deltaTime)override;
     
     void SceneRender() override;
     

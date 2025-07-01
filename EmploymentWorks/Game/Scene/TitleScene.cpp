@@ -12,6 +12,8 @@
 #include "Game/Player/Model/PlayerModel.h"
 #include "Game/Params.h"
 #include "GameBase/Component/Components.h"
+#include "Game/Fade/FadeManager.h"
+
 
 /// <summary>
 /// コンストラクタ
@@ -19,8 +21,11 @@
 TitleScene::TitleScene()
 	:
 	m_projection{}
-
 {
+
+	FadeManager::GetInstance()->StartFadeOut();
+
+
 
 }
 
@@ -76,65 +81,13 @@ void TitleScene::Initialize()
 //---------------------------------------------------------
 // 更新する
 //---------------------------------------------------------
-void TitleScene::SceneUpdate(float elapsedTime)
+void TitleScene::SceneUpdate(const float& deltaTime)
 {
 	// 宣言をしたが、実際は使用していない変数
-	UNREFERENCED_PARAMETER(elapsedTime);
+	UNREFERENCED_PARAMETER(deltaTime);
 
 
-	//const auto& state = m_commonResources->GetInputManager()->GetMouseState();
 
-	const auto& tracker = CommonResources::GetInstance()->GetInputManager()->GetMouseTracker();
-
-	//RECT rect{ m_commonResources->GetDeviceResources()->GetOutputSize() };
-
-	////画面サイズの取得
-	//float widht = static_cast<float>(m_commonResources->GetDeviceResources()->GetOutputSize().right);
-	//float height = static_cast<float>(m_commonResources->GetDeviceResources()->GetOutputSize().bottom);
-
-	//Vector2 mousePosition = Vector2(state.x * Screen::WIDTH / widht, state.y * Screen::HEIGHT / height) ;
-	////Vector2 mousePosition = Vector2(state.x , state.y) ;
-	//
-	////初期化
-	//m_selectButtomId = BUTTOM_INIAL_ID;
-	//
-	//for (auto& buttom : m_buttom)
-	//{
-	//	buttom.second->SetScale(buttom.second->GetInialScale());
-
-	//	if (WataLib::DetectionCollision::Circle_RectCheckHit(Vector2(mousePosition.x,mousePosition.y), Params::MOUSE_RADIUS,
-	//		buttom.second->GetPosition(), static_cast<float>(buttom.second->GetWidth()), static_cast<float>(buttom.second->GetHeight())))
-	//	{
-	//		buttom.second->SetScale(buttom.second->GetInialScale() * 1.4f);
-
-	//		m_selectButtomId = buttom.first;
-	//		break;
-
-	//	}
-	//}
-
-	//
-	//if (tracker->leftButton == Mouse::ButtonStateTracker::ButtonState::PRESSED)
-	//{
-	//	ChangeScene(SceneID::PLAY);
-
-	//	//if (m_selectButtomId != BUTTOM_INIAL_ID)
-	//	//{
-
-	//	//	switch (m_selectButtomId)
-	//	//	{
-	//	//		case 0:
-	//	//			m_isChangeScene = true;
-	//	//			ChangeScene(SceneID::PLAY);
-	//	//			break;
-	//	//		case 1:
-	//	//			PostQuitMessage(0);
-	//	//			break;
-	//	//		default:
-	//	//			break;
-	//	//	}
-	//	//}
-	//}
 
 
 

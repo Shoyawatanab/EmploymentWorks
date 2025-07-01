@@ -1,6 +1,7 @@
 #pragma once
 #include "GameBase/Component.h"
 #include "GameBase/Component/Transform/Transform.h"
+#include "GameBase/Actor.h"
 
 class CommonResources;
 
@@ -39,6 +40,14 @@ public:
 	void SetHitObject(ColliderComponent* ColliderComponent) { m_hitCollider.push_back(ColliderComponent); };
 	//押し出し
 	void SetPushBack(DirectX::SimpleMath::Vector3 puchBackVector);
+	//補正座標の取得
+	const DirectX::SimpleMath::Vector3& OffsetPosition() { return m_offsetPosition; }
+	//補正座標のセット
+	void SetOffsetPosition(DirectX::SimpleMath::Vector3 offset) {m_offsetPosition = offset; }
+	//当たり判定を行わないオブジェクトタグのセット
+	void SetNotHitObjectTag(std::vector<Actor::ObjectTag> tags) { m_notHitTag = tags; }
+	//当たり判定を行わないオブジェクトタグの取得
+	std::vector<Actor::ObjectTag> GetNotHitObjectTag() { return m_notHitTag; }
 
 public:
 	//コンストラクタ
@@ -72,9 +81,6 @@ public:
 	//当たったコライダーの削除
 	bool DleteHitObject(ColliderComponent* object);
 
-	//座標の更新
-	virtual void PositionUpdate() = 0;
-
 private:
 
 	//当たり判定の種類
@@ -83,7 +89,10 @@ private:
 	CollisionType m_collisionType;
 	//当たったオブジェクトの格納変数
 	std::vector<ColliderComponent*> m_hitCollider;
-
+	//補正座標
+	DirectX::SimpleMath::Vector3 m_offsetPosition;
+	//当たり判定を行わないTag
+	std::vector<Actor::ObjectTag> m_notHitTag;
 
 };
 
@@ -117,13 +126,64 @@ public:
 		, DirectX::BasicEffect* effect
 		, ID3D11InputLayout* inputlayout) override;
 
-	//座標の更新
-	void PositionUpdate() override;
-
+	//ボックスの更新
+	void BoxUpdate();
+	//スフィアの更新
+	void SphereUpdate();
 
 private:
 	//バウンディングボックス
 	std::unique_ptr<DirectX::BoundingBox> m_boundingBox;
+	//バウンディングスフィア
+	std::unique_ptr<DirectX::BoundingSphere> m_boundingSphere;
+
+	//初期Extents
+	DirectX::SimpleMath::Vector3 m_initialExtents;
+	//初期半径
+	float m_initialRadius;
+
+};
+
+
+class OBB : public ColliderComponent
+{
+public:
+	//バウンディングボックスの取得
+	DirectX::BoundingOrientedBox* GetBoundingOrientedBox();
+	//バウンディングスフィアの取得
+	DirectX::BoundingSphere* GetBoundingSphere();
+
+	//初期Extentsの取得
+	DirectX::SimpleMath::Vector3 GetInitialExtents() { return m_initialExtents; }
+	//初期半径の取得
+	float GetInitialRaduis() { return m_initialRadius; }
+
+public:
+	//コンストラクタ
+	OBB(Actor* owner, ColliderTag tag, CollisionType type
+		, const DirectX::SimpleMath::Vector3& extents
+		,DirectX::SimpleMath::Quaternion rotation
+		, const float& radius);
+	//デストラクタ
+	~OBB() override;
+
+	//派生用の更新処理
+	void UpdateCollider() override;
+	//派生用の描画処理
+	void RenderCollider(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection
+		, DirectX::PrimitiveBatch<DirectX::VertexPositionColor>* batch
+		, DirectX::BasicEffect* effect
+		, ID3D11InputLayout* inputlayout) override;
+
+	//ボックスの更新
+	void BoxUpdate();
+	//スフィアの更新
+	void SphereUpdate();
+
+
+private:
+	//バウンディングボックス
+	std::unique_ptr<DirectX::BoundingOrientedBox> m_boundingOrientedBox;
 	//バウンディングスフィア
 	std::unique_ptr<DirectX::BoundingSphere> m_boundingSphere;
 

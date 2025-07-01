@@ -20,6 +20,11 @@ public:
 	//デストラクタ
 	~BoomerangStateMachine() override;
 
+	//派生先のChangeState時の処理
+	void DerivationChangeState(BoomerangState state);
 
+private:
+
+	Boomerang* m_boomerang;
 
 };

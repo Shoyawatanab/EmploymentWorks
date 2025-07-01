@@ -1,5 +1,5 @@
 #pragma once
-#include "GameBase/Component/Components.h"
+//#include "GameBase/Component/Components.h"
 
 class ColliderComponent;
 

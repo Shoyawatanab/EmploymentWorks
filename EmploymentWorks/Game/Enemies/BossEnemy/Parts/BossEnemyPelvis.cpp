@@ -5,14 +5,23 @@
 #include "Game/Params.h"
 #include "Game/Enemies/BossEnemy/BossEnemyPartss.h"
 
-BossEnemyPelvis::BossEnemyPelvis(Scene* scene)
+BossEnemyPelvis::BossEnemyPelvis(Scene* scene, BossEnemy* boss)
 	:
-	BossEnemyParts(scene, PARTS_NAME, "BossEnemyPelvis")
+	BossEnemyParts(scene
+		, PARTS_NAME
+		, "BossEnemyPelvis"
+		, Params::BOSSENEMY_PELVIS_HP
+		, Params::BOSSENEMY_PELVIS_BOX_COLLIDER_SIZE
+		, Params::BOSSENEMY_PELVIS_SPHERE_COLLIDER_SIZE
+		, boss)
 {
+
+
+
 
 	//ˆÈ‰º’Ç‰Á•”ˆÊ‚Ìì¬
 //Torso‚Ì¶¬
-	auto torso = GetScene()->AddActor<BossEnemyTorso>(GetScene());
+	auto torso = GetScene()->AddActor<BossEnemyTorso>(GetScene(), boss);
 	torso->SetParent(this);
 
 	//ˆÊ’uî•ñ

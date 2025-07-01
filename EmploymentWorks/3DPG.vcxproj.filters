@@ -384,9 +384,6 @@
     <ClInclude Include="GameBase\GameResources.h">
       <Filter>Libraries\WataLib</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Sound\SoundManager.h">
-      <Filter>Game\Sound</Filter>
-    </ClInclude>
     <ClInclude Include="Libraries\WataLib\Singleton.h">
       <Filter>Libraries\WataLib</Filter>
     </ClInclude>
@@ -421,8 +418,8 @@
     <ClInclude Include="GameBase\StateMachine\StateMachine.h" />
     <ClInclude Include="Game\Player\State\PlayerStates.h" />
     <ClInclude Include="Game\Camera\PayScene\PaySceneCameraState\PlaySceneCameraTPS.h" />
-    <ClInclude Include="Game\Camera\PayScene\PaySceneCameraState\PlaySceneCameraStateMachine.h" />
-    <ClInclude Include="Game\Camera\PayScene\PaySceneCameraState\PaySceneCameraStates.h" />
+    <ClInclude Include="Game\Camera\PayScene\PlaySceneCameraStateMachine.h" />
+    <ClInclude Include="Game\Camera\PayScene\PaySceneCameraStates.h" />
     <ClInclude Include="Game\Player\PlayerUsually.h" />
     <ClInclude Include="GameBase\Manager\CollisionManager.h" />
     <ClInclude Include="GameBase\Component\Collider\DetectionCollision2.h" />
@@ -495,28 +492,18 @@
     <ClInclude Include="Game\UI\PlayScene\TargetMarker\TargetMarker.h" />
     <ClInclude Include="Game\UI\PlayScene\PlaySceneUIs.h" />
     <ClInclude Include="Game\Enemies\EnemyManager.h" />
-    <ClInclude Include="GameBase\Enemy\EnemyBase.h" />
+    <ClInclude Include="Game\Enemies\EnemyBase.h" />
     <ClInclude Include="Game\Enemies\Enemys.h" />
     <ClInclude Include="Game\UI\PlayScene\BoomerangCount\BoomerangCount.h" />
     <ClInclude Include="Game\UI\PlayScene\DamageCount\DamageCount.h" />
     <ClInclude Include="Game\UI\PlayScene\DamageCount\DamageCountFactory.h" />
     <ClInclude Include="Game\UI\NumberUI.h" />
-    <ClInclude Include="GameBase\Component\Particle\ValueWrapper.h" />
-    <ClInclude Include="GameBase\Component\Particle\ParticleMath.h" />
-    <ClInclude Include="GameBase\Component\Particle\ParticleSystem.h" />
-    <ClInclude Include="GameBase\Component\Particle\ParticleUtility.h" />
-    <ClInclude Include="GameBase\Component\Particle\Shape\Shapes.h" />
-    <ClInclude Include="GameBase\Component\Particle\Shape\ShapeBase.h" />
-    <ClInclude Include="GameBase\Component\Particle\Instancing\SpriteInstancing.h" />
-    <ClInclude Include="GameBase\Component\Particle\Compute\ParticleComputeShader.h" />
     <ClInclude Include="Libraries\Easing.h" />
-    <ClInclude Include="GameBase\Manager\ShaderManager2.h" />
-    <ClInclude Include="Game\Particle\PlayerDust.h" />
     <ClInclude Include="Game\UI\PlayScene\BossHp\BossHp.h" />
     <ClInclude Include="Game\Camera\PayScene\PaySceneCameraState\PlaySceneEnemyTargetCamera.h" />
     <ClInclude Include="Game\UI\TitleScene\TitleSceneUIs.h" />
     <ClInclude Include="Game\UI\TitleScene\Canvas\TitleSceneScreenSpaceOverlayCanvas.h" />
-    <ClInclude Include="Game\UI\TitleScene\ExitButtom\ExitButtom.h" />
+    <ClInclude Include="Game\UI\TitleScene\ExitButton\ExitButton.h" />
     <ClInclude Include="GameBase\Manager\UIManager.h" />
     <ClInclude Include="Game\Fade\FadeManager.h" />
     <ClInclude Include="Game\Fade\IFade.h" />
@@ -551,12 +538,40 @@
     <ClInclude Include="Game\UI\SelectScene\SelectSceneUIs.h" />
     <ClInclude Include="Game\Camera\SelectScene\SelectSceneCamera.h" />
     <ClInclude Include="Game\UI\SelectScene\BackGraund\SelectSceneBackGraund.h" />
-    <ClInclude Include="Game\UI\SelectScene\StageOneButtom\StageOneButtom.h" />
-    <ClInclude Include="Game\UI\SelectScene\StageTwoButtom\StageTwoButtom.h" />
-    <ClInclude Include="Game\UI\TitleScene\PlayButtom\PlayButtom.h" />
+    <ClInclude Include="Game\UI\SelectScene\StageOneButton\StageOneButton.h" />
+    <ClInclude Include="Game\UI\SelectScene\StageTwoButton\StageTwoButton.h" />
+    <ClInclude Include="Game\UI\TitleScene\PlayButton\PlayButton.h" />
     <ClInclude Include="Game\Enemies\BossEnemy\Beam\BossEnemyBeam.h" />
     <ClInclude Include="Game\Enemies\BossEnemy\Beam\Rays\BossEnemyBeamRays.h" />
     <ClInclude Include="Game\Enemies\BossEnemy\Beam\EnergyBall\BossEnemyBeamEnergyBall.h" />
+    <ClInclude Include="Game\UI\PlayScene\GameOver\GameOverUI.h" />
+    <ClInclude Include="Game\UI\PlayScene\GameOver\BackGraund\GameOverBackGraund.h" />
+    <ClInclude Include="Game\UI\PlayScene\GameOver\RetryButton\RetryButton.h" />
+    <ClInclude Include="Game\UI\PlayScene\GameOver\TitleButton\TitleButton.h" />
+    <ClInclude Include="Game\Camera\PayScene\PaySceneCameraState\PlaySceneCameraStop.h" />
+    <ClInclude Include="Game\Effect\Explosiion\Explosiion.h" />
+    <ClInclude Include="Game\Effect\EffectFactory.h" />
+    <ClInclude Include="Game\Effect\Effects.h" />
+    <ClInclude Include="GameBase\Component\Effect\EffectComponent.h" />
+    <ClInclude Include="GameBase\Component\RoundShadow\RoundShadowComponent.h" />
+    <ClInclude Include="GameBase\Manager\SoundManager.h" />
+    <ClInclude Include="GameBase\Component\Sound\SoundComponent.h" />
+    <ClInclude Include="Game\Sound\PlayScene\PlaySceneSound.h" />
+    <ClInclude Include="Game\Camera\Normal\NormalCamera.h" />
+    <ClInclude Include="Game\Enemies\BossEnemy\Action\Death\BossDeathActionComtroller.h" />
+    <ClInclude Include="Game\Enemies\BossEnemy\Action\Death\BossDeathAction.h" />
+    <ClInclude Include="Game\Enemies\BossEnemy\Action\Death\BossDeathEndAction.h" />
+    <ClInclude Include="Game\Camera\Result\ResultCamera.h" />
+    <ClInclude Include="Game\UI\ResultScene\Canvas\ResutlSceneScreenSpaceOverlayCanvas.h" />
+    <ClInclude Include="Game\UI\ResultScene\BackGraund\ResultSceneBackGraund.h" />
+    <ClInclude Include="Game\UI\ResultScene\ResultSceneUIs.h" />
+    <ClInclude Include="Game\UI\ResultScene\RetryButton\ResultRetryButton.h" />
+    <ClInclude Include="Game\UI\ResultScene\TitleButton\ResultTitleButton.h" />
+    <ClInclude Include="Game\UI\ResultScene\Time\ResuktTime.h" />
+    <ClInclude Include="Game\UI\ResultScene\Time\TimeSeparator.h" />
+    <ClInclude Include="Game\Effect\BossChargeEffect\BossChargeEffect.h" />
+    <ClInclude Include="Game\Effect\ParticleUtility.h" />
+    <ClInclude Include="Game\Effect\Particle\Particle.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -712,9 +727,6 @@
     <ClCompile Include="GameBase\GameResources.cpp">
       <Filter>Libraries\WataLib</Filter>
     </ClCompile>
-    <ClCompile Include="Game\Sound\SoundManager.cpp">
-      <Filter>Game\Sound</Filter>
-    </ClCompile>
     <ClCompile Include="GameBase\Actor.cpp" />
     <ClCompile Include="GameBase\Component.cpp" />
     <ClCompile Include="GameBase\Component\Transform\Transform.cpp" />
@@ -731,7 +743,7 @@
     <ClCompile Include="Game\Camera\PayScene\PlaySceneCamera.cpp" />
     <ClCompile Include="GameBase\StateMachine\StateMachine.cpp" />
     <ClCompile Include="Game\Camera\PayScene\PaySceneCameraState\PlaySceneCameraTPS.cpp" />
-    <ClCompile Include="Game\Camera\PayScene\PaySceneCameraState\PlaySceneCameraStateMachine.cpp" />
+    <ClCompile Include="Game\Camera\PayScene\PlaySceneCameraStateMachine.cpp" />
     <ClCompile Include="Game\Player\PlayerUsually.cpp" />
     <ClCompile Include="GameBase\Manager\CollisionManager.cpp" />
     <ClCompile Include="GameBase\Component\Collider\DetectionCollision2.cpp" />
@@ -798,22 +810,16 @@
     <ClCompile Include="Game\Enemies\BossEnemy\Action\Orientation\OrientationActionController.cpp" />
     <ClCompile Include="Game\UI\PlayScene\TargetMarker\TargetMarker.cpp" />
     <ClCompile Include="Game\Enemies\EnemyManager.cpp" />
-    <ClCompile Include="GameBase\Enemy\EnemyBase.cpp" />
+    <ClCompile Include="Game\Enemies\EnemyBase.cpp" />
     <ClCompile Include="Game\UI\PlayScene\BoomerangCount\BoomerangCount.cpp" />
     <ClCompile Include="Game\UI\PlayScene\DamageCount\DamageCount.cpp" />
     <ClCompile Include="Game\UI\PlayScene\DamageCount\DamageCountFactory.cpp" />
     <ClCompile Include="Game\UI\NumberUI.cpp" />
-    <ClCompile Include="GameBase\Component\Particle\ParticleSystem.cpp" />
-    <ClCompile Include="GameBase\Component\Particle\ParticleUtility.cpp" />
-    <ClCompile Include="GameBase\Component\Particle\Shape\Shapes.cpp" />
-    <ClCompile Include="GameBase\Component\Particle\Instancing\SpriteInstancing.cpp" />
-    <ClCompile Include="GameBase\Component\Particle\Compute\ParticleComputeShader.cpp" />
     <ClCompile Include="Libraries\Easing.cpp" />
-    <ClCompile Include="Game\Particle\PlayerDust.cpp" />
     <ClCompile Include="Game\UI\PlayScene\BossHp\BossHp.cpp" />
     <ClCompile Include="Game\Camera\PayScene\PaySceneCameraState\PlaySceneEnemyTargetCamera.cpp" />
     <ClCompile Include="Game\UI\TitleScene\Canvas\TitleSceneScreenSpaceOverlayCanvas.cpp" />
-    <ClCompile Include="Game\UI\TitleScene\ExitButtom\ExitButtom.cpp" />
+    <ClCompile Include="Game\UI\TitleScene\ExitButton\ExitButton.cpp" />
     <ClCompile Include="GameBase\Manager\UIManager.cpp" />
     <ClCompile Include="Game\Fade\FadeManager.cpp" />
     <ClCompile Include="Game\Fade\FadeIn\NormalFadeIn.cpp" />
@@ -839,12 +845,38 @@
     <ClCompile Include="Game\UI\SelectScene\Canvas\SelectSceneScreenSpaceOverlayCanvas.cpp" />
     <ClCompile Include="Game\Camera\SelectScene\SelectSceneCamera.cpp" />
     <ClCompile Include="Game\UI\SelectScene\BackGraund\SelectSceneBackGraund.cpp" />
-    <ClCompile Include="Game\UI\SelectScene\StageOneButtom\StageOneButtom.cpp" />
-    <ClCompile Include="Game\UI\SelectScene\StageTwoButtom\StageTwoButtom.cpp" />
-    <ClCompile Include="Game\UI\TitleScene\PlayButtom\PlayButtom.cpp" />
+    <ClCompile Include="Game\UI\SelectScene\StageOneButton\StageOneButton.cpp" />
+    <ClCompile Include="Game\UI\SelectScene\StageTwoButton\StageTwoButton.cpp" />
+    <ClCompile Include="Game\UI\TitleScene\PlayButton\PlayButton.cpp" />
     <ClCompile Include="Game\Enemies\BossEnemy\Beam\BossEnemyBeam.cpp" />
     <ClCompile Include="Game\Enemies\BossEnemy\Beam\Rays\BossEnemyBeamRays.cpp" />
     <ClCompile Include="Game\Enemies\BossEnemy\Beam\EnergyBall\BossEnemyBeamEnergyBall.cpp" />
+    <ClCompile Include="Game\UI\PlayScene\GameOver\GameOverUI.cpp" />
+    <ClCompile Include="Game\UI\PlayScene\GameOver\BackGraund\GameOverBackGraund.cpp" />
+    <ClCompile Include="Game\UI\PlayScene\GameOver\RetryButton\RetryButton.cpp" />
+    <ClCompile Include="Game\UI\PlayScene\GameOver\TitleButton\TitleButton.cpp" />
+    <ClCompile Include="Game\Camera\PayScene\PaySceneCameraState\PlaySceneCameraStop.cpp" />
+    <ClCompile Include="Game\Effect\Explosiion\Explosiion.cpp" />
+    <ClCompile Include="Game\Effect\EffectFactory.cpp" />
+    <ClCompile Include="GameBase\Component\Effect\EffectComponent.cpp" />
+    <ClCompile Include="GameBase\Component\RoundShadow\RoundShadowComponent.cpp" />
+    <ClCompile Include="GameBase\Manager\SoundManager.cpp" />
+    <ClCompile Include="GameBase\Component\Sound\SoundComponent.cpp" />
+    <ClCompile Include="Game\Sound\PlayScene\PlaySceneSound.cpp" />
+    <ClCompile Include="Game\Camera\Normal\NormalCamera.cpp" />
+    <ClCompile Include="Game\Enemies\BossEnemy\Action\Death\BossDeathActionComtroller.cpp" />
+    <ClCompile Include="Game\Enemies\BossEnemy\Action\Death\BossDeathAction.cpp" />
+    <ClCompile Include="Game\Enemies\BossEnemy\Action\Death\BossDeathEndAction.cpp" />
+    <ClCompile Include="Game\Camera\Result\ResultCamera.cpp" />
+    <ClCompile Include="Game\UI\ResultScene\Canvas\ResutlSceneScreenSpaceOverlayCanvas.cpp" />
+    <ClCompile Include="Game\UI\ResultScene\BackGraund\ResultceneBackGraund.cpp" />
+    <ClCompile Include="Game\UI\ResultScene\RetryButton\ResultRetryButton.cpp" />
+    <ClCompile Include="Game\UI\ResultScene\TitleButton\ResultTitleButton.cpp" />
+    <ClCompile Include="Game\UI\ResultScene\Time\ResuktTime.cpp" />
+    <ClCompile Include="Game\UI\ResultScene\Time\TimeSeparator.cpp" />
+    <ClCompile Include="Game\Effect\BossChargeEffect\BossChargeEffect.cpp" />
+    <ClCompile Include="Game\Effect\ParticleUtility.cpp" />
+    <ClCompile Include="Game\Effect\Particle\Particle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />
@@ -892,6 +924,7 @@
     <None Include="Game\Shaders\Number\Number.hlsli">
       <Filter>Game\Shaders\Number</Filter>
     </None>
+    <None Include="Game\Shaders\GameOver\GameOver.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Game\Shaders\Fade\FadeGS.hlsl">
@@ -975,5 +1008,8 @@
     <FxCompile Include="Game\Shaders\ParticleCS.hlsl" />
     <FxCompile Include="Game\Shaders\SpritePS.hlsl" />
     <FxCompile Include="Game\Shaders\SpriteVS.hlsl" />
+    <FxCompile Include="Game\Shaders\GameOver\GameOverVS.hlsl" />
+    <FxCompile Include="Game\Shaders\GameOver\GameOverPS.hlsl" />
+    <FxCompile Include="Game\Shaders\GameOver\GameOverGS.hlsl" />
   </ItemGroup>
 </Project>

@@ -1,7 +1,4 @@
-/*
-	@file	BossBeamAttackPreliminaryAction.cpp
-	@brief	プレイシーンクラス
-*/
+
 #include "pch.h"
 #include "BossBeamAttackPreliminaryAction.h"
 #include "GameBase/Common/Commons.h"

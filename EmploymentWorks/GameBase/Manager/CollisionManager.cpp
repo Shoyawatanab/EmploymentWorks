@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "CollisionManager.h"
-#include "GameBase/Component/Components.h"
+#include "GameBase/Component/Collider/ColliderComponent.h"
 #include "GameBase/Component/Collider/DetectionCollision2.h"
 #include <algorithm> 
 
@@ -44,14 +44,20 @@ void CollisionManager::Update(const float& deltaTime)
 			//固定オブジェクト同士なら
 			if (m_colliderList[i]->GetCollisionType() == CollisionType::FIXED && m_colliderList[j]->GetCollisionType() == CollisionType::FIXED) { continue; }
 
+			//タグの取得
+			auto tag = m_colliderList[i]->GetActor()->GetObjectTag();
 
-			if (m_colliderList[i]->GetActor()->GetObjectTag() == Actor::ObjectTag::BOOMERANG &&
-			m_colliderList[j]->GetActor()->GetObjectTag() == Actor::ObjectTag::BOSS_ENEMY ||
-				m_colliderList[j]->GetActor()->GetObjectTag() == Actor::ObjectTag::BOOMERANG &&
-				m_colliderList[i]->GetActor()->GetObjectTag() == Actor::ObjectTag::BOSS_ENEMY)
+			//当たり判定を行わないタグの取得
+			auto notHitObjectTag = m_colliderList[j]->GetNotHitObjectTag();
+
+			//当たり判定を行わないタグの判定
+			if (std::find(notHitObjectTag.begin(), notHitObjectTag.end(), tag) != notHitObjectTag.end())
 			{
-				int a = 0;
+				//行わない
+				continue;
 			}
+
+
 
 			//移動オブジェクト同士
 			if (m_colliderList[i]->GetCollisionType() == CollisionType::COLLISION && m_colliderList[j]->GetCollisionType() == CollisionType::COLLISION)
@@ -186,10 +192,24 @@ void CollisionManager::Fixed_Collision(ColliderComponent* collider1, ColliderCom
 
 void CollisionManager::Fixed_Trigger(ColliderComponent* collider1, ColliderComponent* collider2)
 {
+
+	//当たり判定フラグ
+	bool isHit = DetectionCollision2::ChecOnCollision(collider1, collider2);
+	//通知を送る
+	SendNotification(collider1, collider2, isHit);
+
 }
 
 void CollisionManager::Collision_Trigger(ColliderComponent* collider1, ColliderComponent* collider2)
 {
+
+	//当たり判定フラグ
+	bool isHit = DetectionCollision2::ChecOnCollision(collider1, collider2);
+
+	//通知を送る
+	SendNotification(collider1, collider2, isHit);
+
+
 }
 
 /// <summary>

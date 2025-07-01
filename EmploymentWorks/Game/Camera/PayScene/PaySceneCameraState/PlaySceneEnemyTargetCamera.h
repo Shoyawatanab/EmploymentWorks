@@ -1,3 +1,7 @@
+/*
+敵を倒したときの敵をターゲットにしたカメラ
+*/
+
 #pragma once
 #include "GameBase/Interface/IState.h"
 

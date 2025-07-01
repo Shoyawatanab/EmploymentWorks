@@ -39,6 +39,8 @@ void BirdEnemyBulletCharge::Update(const float& deltaTime)
 	float t = m_time / CHARGE_TIME;
 	t = std::min(t, 1.0f);
 	
+
+
 	//エネルギー弾の大きさの補間
 	Vector3 scale = Vector3::Lerp(Vector3::Zero,Params::BIRDENEMY_BEAM_BALL_MAX_SIZE, t);
 	//大きさを適用

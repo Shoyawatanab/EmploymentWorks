@@ -1,7 +1,3 @@
-/*
-	@file	OrientationAction.cpp
-	@brief	プレイシーンクラス
-*/
 #include "pch.h"
 #include "OrientationAction.h"
 #include "GameBase/Common/Commons.h"

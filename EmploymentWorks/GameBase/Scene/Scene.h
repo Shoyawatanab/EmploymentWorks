@@ -34,7 +34,7 @@ public:
 	// 更新処理
 	void Update(float deltaTime);
 	// 派生クラス更新処理
-	virtual void SceneUpdate(float deltaTime) = 0;
+	virtual void SceneUpdate(const float& deltaTime) = 0;
 	// 描画処理
 	void Render();
 	virtual void SceneRender() = 0;

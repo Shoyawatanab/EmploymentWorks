@@ -17,7 +17,7 @@ public:
 	static constexpr int MAXDIGITS = 3;
 
 	//表示時間
-	static constexpr float DISPLAYTIME = 2.0f;
+	static constexpr float DISPLAYTIME = 0.5f;
 
 public:
 	//コンストラクタ

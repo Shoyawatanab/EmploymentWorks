@@ -2,7 +2,6 @@
 #include "GameBase/Component/Components.h"
 
 class Camera;
-class ParticleSystem;
 
 class RenderManager
 {
@@ -28,22 +27,27 @@ public:
 	//コライダーの追加　デバッグ　
 	void AddCollider(ColliderComponent* comp);
 
-	void AddParticle(ParticleSystem* system);
+	//エフェクトの追加
+	void AddEffect(EffectComponent* comp);
+	//丸影の追加
+	void AddRoundShadow(RoundShadowComponent* comp);
+
 
 private:
 	//モデルコンポーネント
 	std::vector<ModelComponent*> m_models;
 	//UIコンポーネント
 	std::vector<ImageComponent*> m_uis;
-	//
-	std::vector<ParticleSystem*> m_particle;
-
+	//エフェクトコンポーネント
+	std::vector<EffectComponent*> m_effects;
+	//丸影
+	std::vector<RoundShadowComponent*> m_roundShadow;
 
 	//デバッグ　
 	//当たり判定
 	std::vector<ColliderComponent*> m_colliders;
 	//ベーシックエフェクト
-	std::unique_ptr<DirectX::BasicEffect> m_effect;
+	std::unique_ptr<DirectX::BasicEffect> m_basicEffect;
 	//インプットレイアウト
 	Microsoft::WRL::ComPtr<ID3D11InputLayout> m_layout;
 	//プリミティブバッチ

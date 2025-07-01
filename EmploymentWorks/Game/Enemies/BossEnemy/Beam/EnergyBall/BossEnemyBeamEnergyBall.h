@@ -17,12 +17,24 @@ public:
 
 	};
 
+public:
+
+	//オブジェクトタグの取得
+	ObjectTag GetObjectTag() override { return ObjectTag::BEAM; }
+
+
 
 public:
 	//コンストラク
 	BossEnemyBeamEnergyBall(Scene* scene);
 	//デストラクタ
 	~BossEnemyBeamEnergyBall();
+
+	//当たった時に呼び出される
+	void OnCollisionEnter(ColliderComponent* collider) override;
+
+	//アクティブになった時に呼ばれる関数
+	void OnEnable() override;
 
 private:
 	//内枠描画

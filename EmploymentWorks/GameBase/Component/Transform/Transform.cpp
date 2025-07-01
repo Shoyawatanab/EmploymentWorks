@@ -217,6 +217,7 @@ DirectX::SimpleMath::Vector3 Transform::GetRotatePosition()
 	{ 
 		return m_position; 
 	}
+
 	Vector3 distance = m_position * m_parent->m_scale;
 	distance = Vector3::Transform(distance, m_parent->GetWorldRotate());
 	return m_parent->GetRotatePosition() + distance;

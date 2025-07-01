@@ -47,7 +47,7 @@ void BirdEnemyBulletIdle::Enter()
 	//親子関係を結ぶ
 	m_bullet->GetTransform()->SetParent(m_birdEnemy->GetTransform());
 	//親との相対位置のセット
-	m_bullet->GetTransform()->SetPosition(Vector3(0, 0, 1));
+	m_bullet->GetTransform()->SetPosition(Vector3(0, 0, 2));
 	
 	//非アクティブに
 	m_bullet->SetActive(false);

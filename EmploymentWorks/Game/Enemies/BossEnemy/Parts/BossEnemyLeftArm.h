@@ -1,6 +1,7 @@
 #pragma once
 #include "Game/Enemies/BossEnemy/BossEnemyParts.h"
 
+class BossEnemy;
 
 class BossEnemyLeftArm : public BossEnemyParts
 {
@@ -9,8 +10,13 @@ class BossEnemyLeftArm : public BossEnemyParts
 
 public:
 	//コンストラクタ
-	BossEnemyLeftArm(Scene* scene);
+	BossEnemyLeftArm(Scene* scene, BossEnemy* boss);
 	//デストラクタ
 	~BossEnemyLeftArm() override;
+
+	//個別の当たった時の関数
+	void OnCollisionEnterActor(ColliderComponent* collider);
+
+
 
 };

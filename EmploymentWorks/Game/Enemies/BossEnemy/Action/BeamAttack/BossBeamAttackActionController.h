@@ -10,18 +10,26 @@
 #include "Game/Enemies/BossEnemy/Action/BeamAttack/BossBeamAttackPreliminaryAction.h"
 #include "Game/Enemies/BossEnemy/Action/BeamAttack/BossBeamAttackShot.h"
 
+#include "GameBase/Messenger/IObserver.h"
+#include "Game/Messenger/Scene/SceneMessageType.h"
+
 // 前方宣言
 class CommonResources;
 class BossEnemyBeam;
-class BossBeamAttackActionController : public ActionController
+class BossEnemy;
+
+class BossBeamAttackActionController : public ActionController , public IObserver<SceneMessageType>
 {
 public:
 	//コンストラクタ
-	BossBeamAttackActionController(Actor* bossEnemy
+	BossBeamAttackActionController(BossEnemy* bossEnemy
 		, BossEnemyBeam* beam
 		, Actor* player);
 	//デストラクタ
 	~BossBeamAttackActionController() override;
+
+	//通知時に呼び出される
+	void Notify(SceneMessageType type, void* datas);
 
 
 private:

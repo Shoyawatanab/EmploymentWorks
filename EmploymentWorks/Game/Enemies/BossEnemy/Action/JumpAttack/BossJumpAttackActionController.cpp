@@ -1,7 +1,3 @@
-/*
-	@file	BossJumpAttackActionController.cpp
-	@brief	プレイシーンクラス
-*/
 #include "pch.h"
 #include "BossJumpAttackActionController.h"
 #include "GameBase/Common/Commons.h"
@@ -19,6 +15,7 @@ BossJumpAttackActionController::BossJumpAttackActionController(BossEnemy* bossen
 	, Player* player)
 	:
 	m_commonResources{}
+	,m_jumpDirection{}
 {
 
 	m_commonResources = CommonResources::GetInstance();

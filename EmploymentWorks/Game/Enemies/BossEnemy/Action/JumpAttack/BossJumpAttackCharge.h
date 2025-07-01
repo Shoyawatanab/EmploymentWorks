@@ -43,7 +43,7 @@ public:
 private:
 	// 共通リソース
 	CommonResources* m_commonResources;
-	//所有や
+	//所有者
 	Actor* m_bossEnemy;
 	//プレイヤ
 	Actor* m_player;

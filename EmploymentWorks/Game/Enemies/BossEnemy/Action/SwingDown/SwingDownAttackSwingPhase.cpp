@@ -1,7 +1,4 @@
-/*
-	@file	SwingDownAttackSwingPhase.cpp
-	@brief	プレイシーンクラス
-*/
+
 #include "pch.h"
 #include "SwingDownAttackSwingPhase.h"
 #include "GameBase/Common/Commons.h"
@@ -14,8 +11,6 @@
 
 #include "Game/Player/Player.h"
 
-using namespace DirectX;
-using namespace DirectX::SimpleMath;
 
 
 

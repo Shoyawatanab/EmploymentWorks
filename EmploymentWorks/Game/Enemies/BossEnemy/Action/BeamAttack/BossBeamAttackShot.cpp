@@ -1,16 +1,12 @@
-/*
-	@file	BossBeamAttackShot.cpp
-	@brief	プレイシーンクラス
-*/
 #include "pch.h"
 #include "BossBeamAttackShot.h"
 #include "GameBase/Common/Commons.h"
-
-
 #include "Game/Params.h"
 #include "Game/Player/Player.h"
-
-
+#include "GameBase/Component/Components.h"
+#include "Game/Enemies/BossEnemy/Beam/BossEnemyBeam.h"
+#include "Game/Enemies/BossEnemy/Beam/EnergyBall/BossEnemyBeamEnergyBall.h"
+#include "Game/Enemies/BossEnemy/Beam/Rays/BossEnemyBeamRays.h"
 
 
 /// <summary>
@@ -26,11 +22,11 @@ BossBeamAttackShot::BossBeamAttackShot(Actor* bossEnemy
 	, BossBeamAttackActionController* beamAttack
 	, Actor* player)
 	:
-	m_commonResources{}
-	, m_bossEnemy{ bossEnemy }
+	m_bossEnemy{ bossEnemy }
 	, m_beam{ beam }
 	,m_beamAttack{beamAttack}
 	,m_player{player}
+	,m_moveDirection{DirectX::SimpleMath::Vector3::Backward}
 {
 
 }
@@ -49,32 +45,26 @@ BossBeamAttackShot::~BossBeamAttackShot()
 /// </summary>
 /// <param name="elapsedTime">経過時間</param>
 /// <returns>継続か終了か</returns>
-BossBeamAttackShot::ActionState BossBeamAttackShot::Update(const float& elapsedTime)
+BossBeamAttackShot::ActionState BossBeamAttackShot::Update(const float& deltaTime)
 {
-	////エネルギー弾の取得
-	//Vector3 position = m_beam->GetBeamEnergyBall()->GetLocalPosition();
-	////動かす方向
-	//Vector3 moveDirection = Vector3::UnitZ;
-	////どれだけ動かすか
-	//moveDirection *= elapsedTime * Params::BOSSENEMY_BEAM_BALL_MOVE_SPPED;
-	////座標を加算
-	//position += moveDirection;
-	////座標の登録
-	//m_beam->GetBeamEnergyBall()->SetLocalPosition(position);
 
-	////ビーム光線の大きさの取得
-	//Vector3 scale = m_beam->GetBeamRays()->GetLocalScale();
+	using namespace DirectX::SimpleMath;
+	//ボールの取得
+	auto ball = m_beam->GetEnergyBall();
+	//ボールの座標を＋Z方向に移動
+	ball->GetTransform()->SetPosition(ball->GetTransform()->GetPosition() + m_moveDirection * deltaTime * SHOT_SPEED);
+	//光線の取得
+	auto rays = m_beam->GetRays();
+	//光線の大きさの取得
+	auto raysScale = rays->GetTransform()->GetScale();
+	//ビーム全体とボールの距離を求める
+	float distaance = Vector3::Distance(m_beam->GetTransform()->GetWorldPosition() , ball->GetTransform()->GetWorldPosition());
+	//ｚ座標を距離にする
+	raysScale.z = distaance;
+	//光線の大きさのセット
+	rays->GetTransform()->SetScale(raysScale);
 
-	////ビームの距離を求める
-	//float distance = Vector3::Distance(m_beam->GetPosition(), m_beam->GetBeamEnergyBall()->GetPosition());
-
-	////モデルのサイズのｚが0.5だからそのままでも大丈夫
-	////距離をサイズに
-	//scale.z = distance;
-
-	////ビーム光線の大きさを
-	//m_beam->GetBeamRays()->SetLocalScale(scale);
-
+	//実行中　　　弾が当たった時に状態を切り替える
 	return ActionState::RUNNING;
 
 }
@@ -85,29 +75,16 @@ BossBeamAttackShot::ActionState BossBeamAttackShot::Update(const float& elapsedT
 void BossBeamAttackShot::Enter()
 {
 
-	//m_beam->GetBeamRays()->SetLocalScale(Params::BOSSENEMY_BEAM_RAYS_MAX_SCALE);
 
-	//Vector3 s = m_beam->GetScale();
-	////敵の現在の座標の取得
-	//Vector3 startPosition = m_beam->GetPosition();
-	////プレイヤの現在の座標の取得　少し上を狙うようにする
-	//Vector3 endPosition = m_player->GetPosition() + TARGET_OFFSET;
-	////敵からプレイヤの方向ベクトルの計算
-	//Vector3 toPlayer = endPosition - startPosition;
-	////yawの計算　（左右回転）
-	////xz平面で敵からプレイヤの方向を求める
-	//float yaw = atan2(toPlayer.x, toPlayer.z);
-	////pitchの計算（上下回転）
-	////敵からプレイヤのウ違勅方向を求める
-	//float pitch = atan2(toPlayer.y, sqrt(toPlayer.x * toPlayer.x + toPlayer.z * toPlayer.z));
-	////yaw pitchから回転を計算 pitchは反転させる
-	//m_beam->SetRotation(Quaternion::CreateFromYawPitchRoll(yaw, -pitch, 0.0f));
+	//光線の取得
+	auto rays = m_beam->GetRays();
+	//光線の初期の大きさのセット
+	rays->GetTransform()->SetScale(Params::BOSSENEMY_BEAM_RAYS_MAX_SCALE);
+	//光線を有効
+	m_beam->GetRays()->SetActive(true);
 
-	//m_beam->GetBeamRays()->SetIsEntityActive(true);
-
-	//m_beam->GetBeamEnergyBall()->SetIsCollisionActive(true);
-
-
+	//ビーム全体をターゲット方向に回転
+	m_beam->TargetToRotation();
 }
 
 /// <summary>
@@ -115,7 +92,8 @@ void BossBeamAttackShot::Enter()
 /// </summary>
 void BossBeamAttackShot::Exit()
 {
-	//m_beam->GetBeamEnergyBall()->SetIsCollisionActive(false);
+
+	m_beam->GetEnergyBall()->GetComponent<AABB>()->SetActive(false);
 
 }
 

@@ -9,7 +9,7 @@
 #include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/Fade/FadeManager.h"
 #include "Game/Params.h"
-
+#include "Game/Enemies/EnemyManager.h"
 
 /// <summary>
 /// コンストラク
@@ -19,7 +19,7 @@
 BirdEnemy::BirdEnemy(Scene* scene, DirectX::SimpleMath::Vector3 scale
 	, DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Quaternion rotation, Player* player)
 	:
-	EnemyBase(scene,10)
+	EnemyBase(scene,Params::BIRDENEMY_HP)
 	,m_target{player}
 	,m_bullets{}
 {
@@ -28,9 +28,12 @@ BirdEnemy::BirdEnemy(Scene* scene, DirectX::SimpleMath::Vector3 scale
 
 	//当たり判定の作成
 	AddComponent<AABB>(this, ColliderComponent::ColliderTag::AABB, CollisionType::COLLISION
-		, Vector3(0.8f,0.8f,0.8f) * scale
-		, 2.0f * std::max({ scale.x, scale.y, scale.z }));
+		, Vector3(1.5f,1.5f,1.5f) * scale
+		, 3.0f * std::max({ scale.x, scale.y, scale.z }));
 
+	auto shadow = AddComponent<RoundShadowComponent>(this, Params::BIRDENEMY_SHADOW_RADIUS);
+
+	shadow->SetActive(false);
 
 	//モデルの作成
 	auto model = GetScene()->AddActor<BirdEnemyModel>(GetScene());
@@ -75,10 +78,10 @@ void BirdEnemy::UpdateActor(const float& deltaTime)
 		return;
 	}
 
-	//m_stateMachine->Update(deltaTime);
+	m_stateMachine->Update(deltaTime);
 
 	//常にターゲットに向くように
-	//Rotate(deltaTime);
+	Rotate(deltaTime);
 
 }
 
@@ -93,14 +96,10 @@ void BirdEnemy::OnCollisionEnter(ColliderComponent* collider)
 	{
 		case Actor::ObjectTag::BOOMERANG:
 		{
-			int damage = Params::BOOMERANG_DAMAGE;
 
-			HpDecrease(damage);
-			SceneMessenger::GetInstance()->Notify(SceneMessageType::ENEMY_DAMAGE, &damage);
+			HpDecrease(Params::BOOMERANG_DAMAGE);
 
 
-			float ratio = GetHpRatio();
-			SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_DAMAGE, &ratio);
 
 		}
 
@@ -108,12 +107,29 @@ void BirdEnemy::OnCollisionEnter(ColliderComponent* collider)
 		if (GetHp() <= 0)
 		{
 
+			ExplosionEffectDatas datas;
+			datas.Position = GetTransform()->GetWorldPosition();
+			datas.Scale = GetTransform()->GetWorldScale();
 
+			SceneMessenger::GetInstance()->Notify(SceneMessageType::EXPLOSITION_EFFECT, &datas);
 			
+			SetActive(false);
+			//マネージャーに死亡の通知
+			auto manager = GetEnemyManger();
+			manager->DeathEnemy(this);
+		}
+		else
+		{
+			//構造体の作成
+			EnemyDamageDatas datas;
+			//データのセット
+			datas.Damage = Params::BOOMERANG_DAMAGE;
+			datas.Position = GetTransform()->GetWorldPosition();
+
+			SceneMessenger::GetInstance()->Notify(SceneMessageType::ENEMY_DAMAGE, &datas);
 		}
 
-		break;
-
+			break;
 		default:
 			break;
 	}

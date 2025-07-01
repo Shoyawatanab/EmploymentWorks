@@ -3,7 +3,7 @@
 #include "Game/Enemies/BirdEnemy/Bullet/State/BirdEnemyBulletStateMachine.h"
 
 class BirdEnemy;
-
+class SoundComponent;
 
 
 class  BirdEnemyBullet : public Actor
@@ -41,6 +41,8 @@ private:
 	BirdEnemy* m_birdEnemy;
 	//ステートマシン
 	std::unique_ptr<BirdEnemyBulletStateMachine> m_stateMachine;
+	//爆発音
+	SoundComponent* m_explosionSE;
 
 };
 

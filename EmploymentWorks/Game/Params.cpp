@@ -48,7 +48,7 @@ const Quaternion      Params::PLAYER_BODY_ROTATION = Quaternion::CreateFromYawPi
 //プレイヤのHEADの大きさ
 const Vector3         Params::PLAYER_HEAD_SCALE = Vector3::One;
 //プレイヤのHEADの座標
-const Vector3         Params::PLAYER_HEAD_POSITION = Vector3(0.0f, 2.5f, 0.0f);
+const Vector3         Params::PLAYER_HEAD_POSITION = Vector3(0.0f, 2.4f, 0.0f);
 //プレイヤのHEADの座標
 const Quaternion      Params::PLAYER_HEAD_ROTATION = Quaternion::Identity;
 
@@ -148,12 +148,12 @@ int Params::BOOMERANG_MAX_COUNT = 3;
 
 
  //敵の回転の許容範囲
- const float Params::ENEMY_PERMISSIBLE_ANGLE = 15.0f;
+ const float Params::ENEMY_PERMISSIBLE_ANGLE = 5.0f;
 
 
  //ボス敵
 	 //ボス敵のHP
- const int Params::BOSSENEMY_MAX_HP = 100;
+ const int Params::BOSSENEMY_MAX_HP = 500;
  //ボス敵の動くスピード
  const float Params::BOSSENEMY_MOVE_SPEED = 2.0f;
  //ボス敵の回転スピード
@@ -214,9 +214,9 @@ int Params::BOOMERANG_MAX_COUNT = 3;
  //ボスビームの回転
  const Quaternion Params::BOSSENEMY_BEAM_ROTATION = Quaternion::Identity;
  //ボスビームのエネルギー弾のボックスの当たり判定の大きさ
- const Vector3  Params::BOSSENEMY_BEAM_BALL_BOX_COLLIDER_SIZE = Vector3(1.5f,1.5f,1.5f);
+ const Vector3  Params::BOSSENEMY_BEAM_BALL_BOX_COLLIDER_SIZE = Vector3(0.4f,0.4f,0.4f);
  //ボスビームのエネルギー弾のスフィアの当たり判定の大きさ
- const float  Params::BOSSENEMY_BEAM_BALL_SPHERE_COLLIDER_SIZE = 3.0f;
+ const float  Params::BOSSENEMY_BEAM_BALL_SPHERE_COLLIDER_SIZE = 0.8f;
 
 
 
@@ -231,7 +231,7 @@ int Params::BOOMERANG_MAX_COUNT = 3;
  //ボスビームのエネルギー弾の動くスピード
  const float Params::BOSSENEMY_BEAM_BALL_MOVE_SPPED = 20.f;
  //ボスビームの光線の最大の大きさ
- const Vector3 Params::BOSSENEMY_BEAM_RAYS_MAX_SCALE = Vector3(2.0f,2.0f,0.0f);
+ const Vector3 Params::BOSSENEMY_BEAM_RAYS_MAX_SCALE = Vector3(1.5f,1.5f,0);
  //ボスビームのチャージエフェクトの生成間隔
  const float Params::BOSSENEMY_BEAM_CHARGE_EFFECT_CREATE_TIME = 0.5f;
  //ボスビームのチャージエフェクトの動くスピード
@@ -245,9 +245,9 @@ int Params::BOOMERANG_MAX_COUNT = 3;
  //ボス敵のBODYの回転
   const  Quaternion Params::BOSSENEMY_BODY_ROTATION = Quaternion::Identity;
  //ボス敵のBODYのボックスの当たり判定の大きさ
-  const  Vector3 Params::BOSSENEMY_BODY_BOX_COLLIDER_SIZE = Vector3(1.65f,0.5f,1.1f);
+  const  Vector3 Params::BOSSENEMY_BODY_BOX_COLLIDER_SIZE = Vector3(0.57f,0.17f,0.37f);
  //ボス敵のBODYのスフィアの当たり判定の大きさ
-  const  float Params::BOSSENEMY_BODY_SPHERE_COLLIDER_SIZE = 2.5f;
+  const  float Params::BOSSENEMY_BODY_SPHERE_COLLIDER_SIZE = 1.0f;
 
  //ボス敵のHEADの大きさ
   const  Vector3 Params::BOSSENEMY_HEAD_SCALE = Vector3::One;
@@ -256,9 +256,9 @@ int Params::BOOMERANG_MAX_COUNT = 3;
  //ボス敵のHEADの回転								  
   const  Quaternion Params::BOSSENEMY_HEAD_ROTATION = Quaternion::Identity;
  //ボス敵のHEADのボックスの当たり判定の大きさ		  
-  const  Vector3 Params::BOSSENEMY_HEAD_BOX_COLLIDER_SIZE = Vector3( 0.7f,0.7f,0.7f);
+  const  Vector3 Params::BOSSENEMY_HEAD_BOX_COLLIDER_SIZE = Vector3(0.13f,0.13f,0.13f);
  //ボス敵のHEADのスフィアの当たり判定の大きさ		  
-  const  float Params::BOSSENEMY_HEAD_SPHERE_COLLIDER_SIZE = 1.3f;
+  const  float Params::BOSSENEMY_HEAD_SPHERE_COLLIDER_SIZE = 0.3f;
 
 
  //ボス敵のLEFTARMの大きさ
@@ -268,9 +268,9 @@ int Params::BOOMERANG_MAX_COUNT = 3;
  //ボス敵のLEFTARMの回転								 
   const  Quaternion Params::BOSSENEMY_LEFTARM_ROTATION = Quaternion::Identity;
  //ボス敵のLEFTARMのボックスの当たり判定の大きさ		 
-  const  Vector3 Params::BOSSENEMY_LEFTARM_BOX_COLLIDER_SIZE = Vector3(0.6f,0.9f,0.6f);
+  const  Vector3 Params::BOSSENEMY_LEFTARM_BOX_COLLIDER_SIZE = Vector3(0.08f,0.11f,0.08f);
  //ボス敵のLEFTARMのスフィアの当たり判定の大きさ		 
-  const  float Params::BOSSENEMY_LEFTARM_SPHERE_COLLIDER_SIZE = 1.5f;
+  const  float Params::BOSSENEMY_LEFTARM_SPHERE_COLLIDER_SIZE = 0.2f;
 
  //ボス敵のLEFTARMJOINTの大きさ
   const  Vector3 Params::BOSSENEMY_LEFTARMJOINT_SCALE = Vector3::One;
@@ -279,9 +279,9 @@ int Params::BOOMERANG_MAX_COUNT = 3;
  //ボス敵のLEFTARMJOINTの回転						 
   const  Quaternion Params::BOSSENEMY_LEFTARMJOINT_ROTATION = Quaternion::Identity;
  //ボス敵のLEFTARMJOINTのボックスの当たり判定の大きさ 
-  const  Vector3 Params::BOSSENEMY_LEFTARMJOINT_BOX_COLLIDER_SIZE = Vector3(0.4f,0.7f,0.4f);
+  const  Vector3 Params::BOSSENEMY_LEFTARMJOINT_BOX_COLLIDER_SIZE = Vector3(0.06f,0.1f,0.06f);
  //ボス敵のLEFTARMJOINTのスフィアの当たり判定の大きさ 
-  const  float Params::BOSSENEMY_LEFTARMJOINT_SPHERE_COLLIDER_SIZE = 1.0f ;
+  const  float Params::BOSSENEMY_LEFTARMJOINT_SPHERE_COLLIDER_SIZE = 0.15f ;
 
  //ボス敵のLEFTLEGの大きさ
   const  Vector3 Params::BOSSENEMY_LEFTLEG_SCALE = Vector3::One;
@@ -290,9 +290,9 @@ int Params::BOOMERANG_MAX_COUNT = 3;
  //ボス敵のLEFTLEGの回転						 		 
   const  Quaternion Params::BOSSENEMY_LEFTLEG_ROTATION = Quaternion::Identity;
  //ボス敵のLEFTLEGのボックスの当たり判定の大きさ 	 
-  const  Vector3 Params::BOSSENEMY_LEFTLEG_BOX_COLLIDER_SIZE = Vector3(0.4f,0.55f,0.4f);
+  const  Vector3 Params::BOSSENEMY_LEFTLEG_BOX_COLLIDER_SIZE = Vector3(0.09f,0.09f,0.09f);
  //ボス敵のLEFTLEGのスフィアの当たり判定の大きさ 	 
-  const  float Params::BOSSENEMY_LEFTLEG_SPHERE_COLLIDER_SIZE = 1.0f;
+  const  float Params::BOSSENEMY_LEFTLEG_SPHERE_COLLIDER_SIZE = 0.2f;
 
  //ボス敵のLEFTSHOULDERの大きさ
   const  Vector3 Params::BOSSENEMY_LEFTSHOULDER_SCALE = Vector3::One;
@@ -301,9 +301,9 @@ int Params::BOOMERANG_MAX_COUNT = 3;
  //ボス敵のLEFTSHOULDERの回転						 
   const  Quaternion Params::BOSSENEMY_LEFTSHOULDER_ROTATION = Quaternion::Identity;
  //ボス敵のLEFTSHOULDERのボックスの当たり判定の大きさ 
-  const  Vector3 Params::BOSSENEMY_LEFTSHOULDER_BOX_COLLIDER_SIZE = Vector3(0.67f,1.0f,0.67f);
+  const  Vector3 Params::BOSSENEMY_LEFTSHOULDER_BOX_COLLIDER_SIZE = Vector3(0.12f,0.2f,0.12f);
  //ボス敵のLEFTSHOULDERのスフィアの当たり判定の大きさ 
-  const  float Params::BOSSENEMY_LEFTSHOULDER_SPHERE_COLLIDER_SIZE = 1.6f;
+  const  float Params::BOSSENEMY_LEFTSHOULDER_SPHERE_COLLIDER_SIZE = 0.5f;
 
 
 
@@ -314,9 +314,9 @@ int Params::BOOMERANG_MAX_COUNT = 3;
  //ボス敵のLEFTTHIGHの回転						 	 
   const  Quaternion Params::BOSSENEMY_LEFTTHIGH_ROTATION = Quaternion::Identity;
  //ボス敵のLEFTTHIGHのボックスの当たり判定の大きさ 	 
-  const  Vector3 Params::BOSSENEMY_LEFTTHIGH_BOX_COLLIDER_SIZE= Vector3(0.4f,0.55f,0.4f);
+  const  Vector3 Params::BOSSENEMY_LEFTTHIGH_BOX_COLLIDER_SIZE= Vector3(0.1f,0.13f,0.1f);
  //ボス敵のLEFTTHIGHのスフィアの当たり判定の大きさ 	 
-  const  float Params::BOSSENEMY_LEFTTHIGH_SPHERE_COLLIDER_SIZE = 1.0f;
+  const  float Params::BOSSENEMY_LEFTTHIGH_SPHERE_COLLIDER_SIZE = 0.2f;
 
 
  //ボス敵のPELVISの大きさ
@@ -326,9 +326,9 @@ int Params::BOOMERANG_MAX_COUNT = 3;
  //ボス敵のPELVISの回転						 	 	 
   const  Quaternion Params::BOSSENEMY_PELVIS_ROTATION = Quaternion::Identity;
  //ボス敵のPELVISのボックスの当たり判定の大きさ 	 	 
-  const  Vector3 Params::BOSSENEMY_PELVIS_BOX_COLLIDER_SIZE = Vector3(1.3f,0.2f,1.0f);
+  const  Vector3 Params::BOSSENEMY_PELVIS_BOX_COLLIDER_SIZE = Vector3(0.3f,0.1f,0.25f);
  //ボス敵のPELVISのスフィアの当たり判定の大きさ 	 	 
-  const  float Params::BOSSENEMY_PELVIS_SPHERE_COLLIDER_SIZE = 2.5f;
+  const  float Params::BOSSENEMY_PELVIS_SPHERE_COLLIDER_SIZE = 0.5f;
 
 
  //ボス敵のRIGHTARMの大きさ
@@ -338,9 +338,9 @@ int Params::BOOMERANG_MAX_COUNT = 3;
  //ボス敵のRIGHTARMの回転						 	 
   const  Quaternion Params::BOSSENEMY_RIGHTARM_ROTATION = Quaternion::Identity;
  //ボス敵のRIGHTARMのボックスの当たり判定の大きさ 	 
-  const  Vector3 Params::BOSSENEMY_RIGHTARM_BOX_COLLIDER_SIZE = Vector3(0.6f,0.9f,0.6f);
+  const  Vector3 Params::BOSSENEMY_RIGHTARM_BOX_COLLIDER_SIZE = Vector3(0.08f,0.11f,0.08f);
  //ボス敵のRIGHTARMのスフィアの当たり判定の大きさ 	 
-  const  float Params::BOSSENEMY_RIGHTARM_SPHERE_COLLIDER_SIZE = 1.5f;
+  const  float Params::BOSSENEMY_RIGHTARM_SPHERE_COLLIDER_SIZE = 0.2f;
 
  //ボス敵のRIGHTARMJOINTの大きさ
   const  Vector3 Params::BOSSENEMY_RIGHTARMJOINT_SCALE = Vector3::One;
@@ -349,9 +349,9 @@ int Params::BOOMERANG_MAX_COUNT = 3;
  //ボス敵のRIGHTARMJOINTの回転						 
   const  Quaternion Params::BOSSENEMY_RIGHTARMJOINT_ROTATION = Quaternion::Identity;
  //ボス敵のRIGHTARMJOINTのボックスの当たり判定の大きさ
-  const  Vector3 Params::BOSSENEMY_RIGHTARMJOINT_BOX_COLLIDER_SIZE = Vector3(0.4f,0.7f,0.4f);
+  const  Vector3 Params::BOSSENEMY_RIGHTARMJOINT_BOX_COLLIDER_SIZE = Vector3(0.06f,0.1f,0.06f);
  //ボス敵のRIGHTARMJOINTのスフィアの当たり判定の大きさ
-  const  float Params::BOSSENEMY_RIGHTARMJOINT_SPHERE_COLLIDER_SIZE = 1.0f;
+  const  float Params::BOSSENEMY_RIGHTARMJOINT_SPHERE_COLLIDER_SIZE = 0.15f;
 
 
  //ボス敵のRIGHTLEGの大きさ
@@ -361,9 +361,9 @@ int Params::BOOMERANG_MAX_COUNT = 3;
  //ボス敵のRIGHTLEGの回転						 	 
   const  Quaternion Params::BOSSENEMY_RIGHTLEG_ROTATION = Quaternion::Identity;
  //ボス敵のRIGHTLEGのボックスの当たり判定の大きさ	 
-  const  Vector3 Params::BOSSENEMY_RIGHTLEG_BOX_COLLIDER_SIZE = Vector3(0.4f,0.55f,0.4f);
+  const  Vector3 Params::BOSSENEMY_RIGHTLEG_BOX_COLLIDER_SIZE = Vector3(0.09f,0.09f,0.09f);
  //ボス敵のRIGHTLEGのスフィアの当たり判定の大きさ	 
-  const  float Params::BOSSENEMY_RIGHTLEG_SPHERE_COLLIDER_SIZE = 1.0f;
+  const  float Params::BOSSENEMY_RIGHTLEG_SPHERE_COLLIDER_SIZE = 0.2f;
 
  //ボス敵のRIGHTSHOULDERの大きさ
   const  Vector3 Params::BOSSENEMY_RIGHTSHOULDER_SCALE = Vector3::One;
@@ -372,9 +372,9 @@ int Params::BOOMERANG_MAX_COUNT = 3;
  //ボス敵のRIGHTSHOULDERの回転						 
   const  Quaternion Params::BOSSENEMY_RIGHTSHOULDER_ROTATION = Quaternion::Identity;
  //ボス敵のRIGHTSHOULDERのボックスの当たり判定の大きさ
-  const  Vector3 Params::BOSSENEMY_RIGHTSHOULDER_BOX_COLLIDER_SIZE = Vector3(0.67f,1.0f,0.67f);
+  const  Vector3 Params::BOSSENEMY_RIGHTSHOULDER_BOX_COLLIDER_SIZE = Vector3(0.12f,0.2f,0.12f);
  //ボス敵のRIGHTSHOULDERのスフィアの当たり判定の大きさ
-  const  float Params::BOSSENEMY_RIGHTSHOULDER_SPHERE_COLLIDER_SIZE = 1.6f;
+  const  float Params::BOSSENEMY_RIGHTSHOULDER_SPHERE_COLLIDER_SIZE = 0.5f;
 
 
  //ボス敵のRIGHTTHIGHの大きさ
@@ -384,9 +384,9 @@ int Params::BOOMERANG_MAX_COUNT = 3;
  //ボス敵のRIGHTTHIGHの回転						 	 
   const  Quaternion Params::BOSSENEMY_RIGHTTHIGH_ROTATION = Quaternion::Identity;
  //ボス敵のRIGHTTHIGHのボックスの当たり判定の大きさ	 
-  const  Vector3 Params::BOSSENEMY_RIGHTTHIGH_BOX_COLLIDER_SIZE = Vector3(0.4f,0.55f,0.4f);
+  const  Vector3 Params::BOSSENEMY_RIGHTTHIGH_BOX_COLLIDER_SIZE = Vector3(0.1f,0.13f,0.1f);
  //ボス敵のRIGHTTHIGHのスフィアの当たり判定の大きさ	 
-  const  float Params::BOSSENEMY_RIGHTTHIGH_SPHERE_COLLIDER_SIZE = 1.0f;
+  const  float Params::BOSSENEMY_RIGHTTHIGH_SPHERE_COLLIDER_SIZE = 0.2f;
 
  //ボス敵のTORSOの大きさ
   const  Vector3 Params::BOSSENEMY_TORSO_SCALE = Vector3::One;
@@ -395,14 +395,14 @@ int Params::BOOMERANG_MAX_COUNT = 3;
  //ボス敵のTORSOの回転						 	 	 
   const  Quaternion Params::BOSSENEMY_TORSO_ROTATION = Quaternion::Identity;
  //ボス敵のTORSOのボックスの当たり判定の大きさ	 	 
-  const  Vector3 Params::BOSSENEMY_TORSO_BOX_COLLIDER_SIZE = Vector3(1.9f,1.6f,1.15f);
+  const  Vector3 Params::BOSSENEMY_TORSO_BOX_COLLIDER_SIZE = Vector3(0.4f,0.35f,0.2f);
  //ボス敵のTORSOのスフィアの当たり判定の大きさ	 	 
-  const  float Params::BOSSENEMY_TORSO_SPHERE_COLLIDER_SIZE = 3.0f;
+  const  float Params::BOSSENEMY_TORSO_SPHERE_COLLIDER_SIZE = 0.6f;
 
 
   //鳥の敵
 	//鳥の敵のHP
-  const int Params::BIRDENEMY_HP = 4;
+  const int Params::BIRDENEMY_HP = 40;
   //鳥の敵のボックスの当たり判定の大きさ
   const  Vector3 Params::BIRDENEMY_BOX_COLLIDER_SIZE = Vector3(0.7f,0.3f,0.7f);
   //鳥の敵のスフィアの当たり判定の大きさ
@@ -452,7 +452,7 @@ int Params::BOOMERANG_MAX_COUNT = 3;
 
 
 	//鳥の敵のエネルギー弾の最大の大きさ
-	const Vector3 Params::BIRDENEMY_BEAM_BALL_MAX_SIZE = Vector3(0.3f,0.3f,0.3f); 
+	const Vector3 Params::BIRDENEMY_BEAM_BALL_MAX_SIZE = Vector3(0.5f,0.5f,0.5f); 
 
 	//鳥の敵のエネルギー弾の溜め時間
 	const float Params::BIRDENEMY_BEAM_BALL_ACCUMULATIONTIME = 2.0f;

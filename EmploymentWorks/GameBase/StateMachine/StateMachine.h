@@ -70,7 +70,7 @@ public:
 		//ステートの開始処理
 		m_currentState.second->Enter();
 
-
+		DerivationChangeState(enumType);
 
 	}
 
@@ -89,9 +89,10 @@ public:
 		////ステートの開始処理
 		m_currentState.second->Enter();
 
-
-
 	}
+
+	//派生先のChangeState時の処理
+	virtual void DerivationChangeState(StateEnumType enumType) {};
 
 private:
 

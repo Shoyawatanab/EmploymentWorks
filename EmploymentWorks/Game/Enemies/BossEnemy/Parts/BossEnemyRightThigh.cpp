@@ -5,14 +5,21 @@
 #include "Game/Params.h"
 #include "Game/Enemies/BossEnemy/BossEnemyPartss.h"
 
-BossEnemyRightThigh::BossEnemyRightThigh(Scene* scene)
+BossEnemyRightThigh::BossEnemyRightThigh(Scene* scene, BossEnemy* boss)
 	:
-	BossEnemyParts(scene, PARTS_NAME, "BossEnemyThigh")
+	BossEnemyParts(scene
+		, PARTS_NAME
+		, "BossEnemyThigh"
+		, Params::BOSSENEMY_RIGHTTHIGH_HP
+		, Params::BOSSENEMY_RIGHTTHIGH_BOX_COLLIDER_SIZE
+		, Params::BOSSENEMY_RIGHTTHIGH_SPHERE_COLLIDER_SIZE
+		, boss)
 {
+
 
 	//ˆÈ‰º’Ç‰Á•”ˆÊ‚Ìì¬
 //RightLeg‚Ì¶¬
-	auto rightLeg = GetScene()->AddActor<BossEnemyRightLeg>(GetScene());
+	auto rightLeg = GetScene()->AddActor<BossEnemyRightLeg>(GetScene(), boss);
 	rightLeg->SetParent(this);
 
 	//ˆÊ’uî•ñ

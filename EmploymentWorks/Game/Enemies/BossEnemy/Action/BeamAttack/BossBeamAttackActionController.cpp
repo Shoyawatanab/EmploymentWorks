@@ -1,20 +1,16 @@
-/*
-	@file	BossBeamAttackActionController.cpp
-	@brief	プレイシーンクラス
-*/
 #include "pch.h"
 #include "BossBeamAttackActionController.h"
 #include "GameBase/Common/Commons.h"
 #include "Game/Params.h"
-
-
+#include "Game/Messenger/Scene/SceneMessages.h"
+#include "Game/Enemies/BossEnemy/BossEnemy.h"
 
 
 /// <summary>
 /// コンストラクタ
 /// </summary>
 /// <param name="resources">共通リソース</param>
-BossBeamAttackActionController::BossBeamAttackActionController(Actor* bossenemy
+BossBeamAttackActionController::BossBeamAttackActionController(BossEnemy* bossenemy
 	, BossEnemyBeam* beam
 	, Actor* player)
 	:
@@ -42,6 +38,13 @@ BossBeamAttackActionController::BossBeamAttackActionController(Actor* bossenemy
 		}
 	);
 
+
+	SceneMessenger::GetInstance()->Rigister(
+		{
+			SceneMessageType::BOSS_BEAM_IMPACT
+		}, this
+	);
+
 }
 
 /// <summary>
@@ -49,6 +52,26 @@ BossBeamAttackActionController::BossBeamAttackActionController(Actor* bossenemy
 /// </summary>
 BossBeamAttackActionController::~BossBeamAttackActionController()
 {
+}
+
+/// <summary>
+/// 通知時に呼び出す関数
+/// </summary>
+/// <param name="type">通知の種類</param>
+/// <param name="datas">追加データ</param>
+void BossBeamAttackActionController::Notify(SceneMessageType type, void* datas)
+{
+
+	switch (type)
+	{
+		case SceneMessageType::BOSS_BEAM_IMPACT:
+			//ステートをShotからEndに変更
+			ChangeState();
+			break;
+		default:
+			break;
+	}
+
 }
 
 

@@ -1,9 +1,9 @@
 #pragma once
-#include "GameBase/Actor.h"
+#include "GameBase/UI/Image.h"
 
 class Canvas;
 
-class SelectSceneBackGraund : public Actor
+class SelectSceneBackGraund : public Image
 {
 public:
 	//‘å‚«‚³

@@ -19,6 +19,8 @@ BossEnemyActionManager::BossEnemyActionManager(BossEnemy* ower,Player* target, B
 	AddAction("SwingDown",std::make_unique<SwingDownAttackActionController>(ower));
 	AddAction("Beam",std::make_unique<BossBeamAttackActionController>(ower,beam,target));
 	AddAction("Orientation", std::make_unique<OrientationActionController>(ower, target));
+	AddAction("Orientation", std::make_unique<OrientationActionController>(ower, target));
+	AddAction("Death", std::make_unique<BossDeathActionComtroller>(ower));
 
 	SetStartAction("Idle");
 	

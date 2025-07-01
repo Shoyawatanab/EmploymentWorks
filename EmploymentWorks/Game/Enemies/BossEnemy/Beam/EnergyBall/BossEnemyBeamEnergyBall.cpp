@@ -6,6 +6,7 @@
 #include "GameBase/Common/Commons.h"
 #include "GameBase/Shader/ShaderFactory.h"
 #include "Game/Params.h"
+#include "Game/Messenger/Scene/SceneMessages.h"
 
 //インプットレイアウト
 const std::vector<D3D11_INPUT_ELEMENT_DESC> BossEnemyBeamEnergyBall::INPUT_LAYOUT =
@@ -53,6 +54,35 @@ BossEnemyBeamEnergyBall::BossEnemyBeamEnergyBall(Scene* scene)
 /// </summary>
 BossEnemyBeamEnergyBall::~BossEnemyBeamEnergyBall()
 {
+}
+
+/// <summary>
+/// 当たった時の関数
+/// </summary>
+/// <param name="collider">相手のコライダー</param>
+void BossEnemyBeamEnergyBall::OnCollisionEnter(ColliderComponent* collider)
+{
+
+	switch (collider->GetActor()->GetObjectTag())
+	{
+		case ObjectTag::STAGE:
+		case ObjectTag::PLAYER:
+			
+			SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_BEAM_IMPACT);
+
+			break;
+		default:
+			break;
+	}
+
+}
+
+/// <summary>
+/// アクティブ状態になった時に呼ばれる関数
+/// </summary>
+void BossEnemyBeamEnergyBall::OnEnable()
+{
+	GetTransform()->SetPosition(DirectX::SimpleMath::Vector3::Zero);
 }
 
 /// <summary>

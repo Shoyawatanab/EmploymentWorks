@@ -1,10 +1,9 @@
-/*
-	@file	BossJumpAttackCharge.cpp
-	@brief	プレイシーンクラス
-*/
 #include "pch.h"
 #include "BossJumpAttackCharge.h"
 #include "GameBase/Common/Commons.h"
+#include "Game/Messenger/Scene/SceneMessages.h"
+#include "GameBase/Component/Components.h"
+#include "Game/Enemies/BossEnemy/Action/JumpAttack/BossJumpAttackActionController.h"
 
 /// <summary>
 /// コンストラクタ
@@ -49,26 +48,29 @@ BossJumpAttackCharge::ActionState BossJumpAttackCharge::Update(const float& elap
 }
 
 
-
-
-
-
 void BossJumpAttackCharge::Enter()
 {
 
-
 	m_time = 0;
 
-	//Vector3 pos = m_bossEnemy->GetPosition();
+	auto  startPosition = m_bossEnemy->GetTransform()->GetPosition();
 
-	//pos.y = 0.1f;
+	auto targetPosition = m_player->GetTransform()->GetPosition();
 
-	//Vector3 scale = EFFECTE_SCALE;
+	auto jumpDirection = targetPosition - startPosition;
 
-	//UnknownDataThree aa = {  static_cast<void*>(& pos), static_cast<void*>(&scale)};
+	m_controller->SetJumpDirection(jumpDirection);
 
-	//Messenger::GetInstance()->Notify(GameMessageType::CREATE_CHAGE_EFFECT, &aa);
+	CreateChargeEffectDatas datas;
+	datas.Position = m_bossEnemy->GetTransform()->GetWorldPosition();
+	datas.Scale = m_bossEnemy->GetTransform()->GetWorldScale();
 
+	datas.Position.y = 0.1f;
+
+	//エフェクト作成の通知
+	SceneMessenger::GetInstance()->Notify(SceneMessageType::CREATE_CHARGE_EFFECT, &datas);
+	//ジャンプアニメーションの通知
+	SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_JUMP_ANIMATION_START);
 
 }
 

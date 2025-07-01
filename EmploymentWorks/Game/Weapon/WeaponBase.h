@@ -20,7 +20,8 @@ public:
 	
 	//状態の取得
 	WeaponState GetWeaponState() { return m_state; }
-
+	//状態のセット
+	void SetWeaponState(WeaponState state) { m_state = state; }
 
 public:
 	//コンストラクタ

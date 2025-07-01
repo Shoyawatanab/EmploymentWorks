@@ -13,7 +13,11 @@ RenderManager::RenderManager()
 	:
 	m_models{}
 	,m_colliders{}
-	,m_particle{}
+	,m_basicEffect{}
+	,m_batch{}
+	,m_effects{}
+	,m_layout{}
+	,m_roundShadow{}
 {
 	
 	using namespace DirectX;
@@ -22,14 +26,14 @@ RenderManager::RenderManager()
 
 	// プリミティブバッチ、ベーシックエフェクトを準備する
 	m_batch = std::make_unique<PrimitiveBatch<VertexPositionColor>>(context);
-	m_effect = std::make_unique<BasicEffect>(device);
-	m_effect->SetVertexColorEnabled(true);
+	m_basicEffect = std::make_unique<BasicEffect>(device);
+	m_basicEffect->SetVertexColorEnabled(true);
 
 	//// 入力レイアウトを作成する
 	DX::ThrowIfFailed(
 		CreateInputLayoutFromEffect<VertexPositionColor>(
 			device,
-			m_effect.get(),
+			m_basicEffect.get(),
 			m_layout.ReleaseAndGetAddressOf()
 		)
 	);
@@ -44,6 +48,9 @@ RenderManager::~RenderManager()
 {
 	m_models.clear();
 	m_colliders.clear();
+	m_uis.clear();
+	m_effects.clear();
+	m_roundShadow.clear();
 }
 
 
@@ -60,12 +67,16 @@ void RenderManager::Render(const Camera& camera)
 		model->Render(camera);
 	}
 
-	for (auto& particle : m_particle)
+	for (auto& shadow : m_roundShadow)
 	{
-		if (!particle->GetActive()) { continue; }
+		if(!shadow->GetActive()) { continue; }
+		shadow->Render(camera);
+	}
 
-		particle->Render(camera.GetViewMatrix(), camera.GetProjectionMatrix());
-	
+	for (auto& effect : m_effects)
+	{
+		if (!effect->GetActive()) { continue; }
+		effect->Render(camera);
 	}
 
 	for (auto& ui : m_uis)
@@ -83,7 +94,7 @@ void RenderManager::Render(const Camera& camera)
 	{
 		if (collider->GetActive())
 		{
-			collider->Render(camera.GetViewMatrix(), camera.GetProjectionMatrix(), m_batch.get(), m_effect.get(), m_layout.Get());
+			collider->Render(camera.GetViewMatrix(), camera.GetProjectionMatrix(), m_batch.get(), m_basicEffect.get(), m_layout.Get());
 
 		}
 	}
@@ -183,9 +194,40 @@ void RenderManager::AddCollider(ColliderComponent* comp)
 
 }
 
-void RenderManager::AddParticle(ParticleSystem* system)
+/// <summary>
+/// エフェクトコンポーネントの追加
+/// </summary>
+/// <param name="comp">コンポーネント</param>
+void RenderManager::AddEffect(EffectComponent* comp)
 {
+	//あるかさがす
+	auto effect = std::find(m_effects.begin(), m_effects.end(), comp);
 
-	m_particle.push_back(system);
+	//なければ
+	if (effect == m_effects.end())
+	{
+		m_effects.push_back(comp);
+	}
+
 
 }
+
+/// <summary>
+/// 丸影の追加
+/// </summary>
+/// <param name="comp">コンポーネント</param>
+void RenderManager::AddRoundShadow(RoundShadowComponent* comp)
+{
+
+	auto roundShadow = std::find(m_roundShadow.begin(), m_roundShadow.end(), comp);
+
+	if (roundShadow == m_roundShadow.end())
+	{
+		m_roundShadow.push_back(comp);
+	}
+
+
+
+}
+
+

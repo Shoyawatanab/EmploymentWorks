@@ -1,7 +1,4 @@
-/*
-	@file	SwingDownAttackActionController.cpp
-	@brief	プレイシーンクラス
-*/
+
 #include "pch.h"
 #include "SwingDownAttackActionController.h"
 #include "GameBase/Common/Commons.h"

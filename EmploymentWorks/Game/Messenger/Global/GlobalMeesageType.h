@@ -10,21 +10,13 @@ enum class GlobalMessageType : int
 	, CHANGE_TITLE_SCENE                           //tタイトルシーンに切り替え
 	, CHANGE_SELECT_SCENE						  //セレクトシーンに切り替え
 	, CHANGE_PLAY_SCENE							  //プレイシーンに切り替え
+	, CHANGE_RESULT_SCENE							  //リザルトシーンに切り替え
 
 
 };
 
 
 
-
-
-/*
-	名前　　　　　　　　　　　　　　　　　　追加データ (型名・用途,型名・用途　・・・・)
-	BOOMERANG_IDEL_STATE 　　　　　　　　　Boomerang  どのブーメランのステートを切り替えるのか
-
-	BOSS_DAMAGE　　　　　　　　　　　　　　float  残りHP割合　
-
-*/
 
 
 

@@ -26,6 +26,8 @@ PlaySceneScreenSpaceOverlayCanvas::PlaySceneScreenSpaceOverlayCanvas(Scene* scen
 
 	GetScene()->AddActor<PlayerDamageEffect>(this);
 
+	GetScene()->AddActor<GameOverUI>(this);
+
 }
 
 /// <summary>
