@@ -10,6 +10,8 @@
 /// コンストラク
 /// </summary>
 UIManager::UIManager()
+	:
+	m_buttom{}
 {
 }
 

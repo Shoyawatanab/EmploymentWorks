@@ -24,8 +24,6 @@ public:
 	
 	//ビーム攻撃
 	IBehaviorNode::State BossEnemyBeamAction();
-	//バリア防御
-	IBehaviorNode::State BossEnemyBarrierDefenseAction();
 	//ジャンプ攻撃
 	IBehaviorNode::State BossEnemyJumpAttackAction();
 	//歩く

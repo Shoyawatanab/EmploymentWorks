@@ -10,7 +10,7 @@
 class CommonResources;
 class BossEnemyBeam;
 class BossBeamAttackActionController;
-
+class BossEnemy;
 
 
 
@@ -19,7 +19,7 @@ class BossBeamAttackCharge : public IAction
 {
 public:
 	//コンストラクタ
-	BossBeamAttackCharge(Actor* bossEnemy
+	BossBeamAttackCharge(BossEnemy* bossEnemy
 		, BossEnemyBeam* beam
 		, BossBeamAttackActionController* beamAttack);
 
@@ -33,11 +33,12 @@ public:
 	void Enter() override;
 	//状態を抜けた時
 	void Exit() override;
+
 private:
 	// 共通リソース
 	CommonResources* m_commonResources;
 	//ボステキ
-	Actor* m_bossEnemy;
+	BossEnemy* m_bossEnemy;
 	//ビーム
 	BossEnemyBeam* m_beam;
 	//時間

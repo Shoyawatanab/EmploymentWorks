@@ -1,7 +1,4 @@
-/*
-	@file	SwingDownAttackRaisePhase.cpp
-	@brief	プレイシーンクラス
-*/
+
 #include "pch.h"
 #include "SwingDownAttackRaisePhase.h"
 #include "GameBase/Common/Commons.h"

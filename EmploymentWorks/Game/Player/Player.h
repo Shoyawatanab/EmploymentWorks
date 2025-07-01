@@ -1,5 +1,6 @@
 #pragma once
 #include"GameBase/Actor.h"
+#include "GameBase/Messenger/IObserver.h"
 
 class PlayerStateMachine;
 class PlaySceneCamera;
@@ -8,7 +9,6 @@ class PlayerModel;
 class AnimatorComponent;
 class PlayerUsually;
 class TargetMarker;
-class PlayerDust;
 
 class Player : public Actor
 {
@@ -50,9 +50,13 @@ public:
 	//衝突が終了したときに呼び出される
 	void OnCollisionExit(ColliderComponent* collider) override;
 
+
+
 private:
 	//着地したとき
 	void Landing();
+	//ダメージを食らったとき
+	void AddDamage();
 
 private:
 	//ステートマシン
@@ -72,9 +76,10 @@ private:
 	//1フレ前の座標
 	DirectX::SimpleMath::Vector3 m_lastPosition;
 
-	//
+	//ターゲットマーカー
 	TargetMarker* m_targetMarker;
 
-	PlayerDust* m_dust;
+	//HP
+	int m_hp;
 
 };

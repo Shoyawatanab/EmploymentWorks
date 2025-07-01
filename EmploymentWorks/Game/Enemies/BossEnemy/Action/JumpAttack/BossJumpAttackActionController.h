@@ -28,6 +28,13 @@ public:
 	static  constexpr float MOVESPEED = 9.0f;
 
 public:
+
+	//ジャンプ方向の取得
+	const DirectX::SimpleMath::Vector3& GetJumpDirection() { return m_jumpDirection; }
+	//ジャンプ方向のセット
+	void SetJumpDirection(const DirectX::SimpleMath::Vector3& direction) { m_jumpDirection = direction; }
+
+public:
 	//コンストラクタ
 	BossJumpAttackActionController(BossEnemy* bossEnemy
 		, Player* player);
@@ -47,6 +54,8 @@ private:
 	std::unique_ptr<BossJumpAttackJump> m_jump;
 	//回転
 	std::unique_ptr<OrientationAction> m_orientation;
-
+	
+	//ジャンプ方向
+	DirectX::SimpleMath::Vector3 m_jumpDirection;
 
 };

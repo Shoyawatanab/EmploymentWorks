@@ -32,20 +32,9 @@ public:
 	//デストラクタ
 	~PlayScene() override;
 
-
-
-
-private:
-
-	Camera* m_camera;
-	
-
-
-public:
-
 	void Initialize() override;
 
-	void SceneUpdate(float elapsedTime)override;
+	void SceneUpdate(const float& deltaTime)override;
 
 	void SceneRender() override;
 
@@ -55,15 +44,10 @@ public:
 private:
 
 
-	//通知時に呼び出される
-	//void Notify(const Telegram<GamePlayMessageType>& telegram) override;
-
-
-private:
-
-
 	// シーンチェンジフラグ
 	bool m_isChangeScene;
+	//カメラ
+	Camera* m_camera;
 
 
 

@@ -4,9 +4,15 @@
 #include "GameBase/Component/Components.h"
 #include "Game/Params.h"
 
-BossEnemyLeftLeg::BossEnemyLeftLeg(Scene* scene)
+BossEnemyLeftLeg::BossEnemyLeftLeg(Scene* scene, BossEnemy* boss)
 	:
-	BossEnemyParts(scene, PARTS_NAME, "BossEnemyLeg")
+	BossEnemyParts(scene
+		, PARTS_NAME
+		, "BossEnemyLeg"
+		, Params::BOSSENEMY_LEFTLEG_HP
+		, Params::BOSSENEMY_LEFTLEG_BOX_COLLIDER_SIZE
+		, Params::BOSSENEMY_LEFTLEG_SPHERE_COLLIDER_SIZE
+		, boss)
 {
 
 	//à íuèÓïÒ

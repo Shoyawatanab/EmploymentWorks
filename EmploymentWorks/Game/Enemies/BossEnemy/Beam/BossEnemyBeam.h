@@ -11,11 +11,19 @@ public:
 	BossEnemyBeamEnergyBall* GetEnergyBall() { return m_energyBall; }
 	//光線の取得
 	BossEnemyBeamRays* GetRays() { return m_rays; }
+
+	void SetTarget(Actor* target) { m_target = target; }
+
 public:
 	//コンストラク
 	BossEnemyBeam(Scene* scene);
 	//デストラクタ
 	~BossEnemyBeam();
+	//オブジェクト別の更新処理
+	void UpdateActor(const float& deltaTime) override;
+
+	//ターゲットに向けて回転
+	void TargetToRotation();
 
 private:
 	//光線

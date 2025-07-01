@@ -4,10 +4,17 @@
 #include "GameBase/Component/Components.h"
 #include "Game/Params.h"
 
-BossEnemyRightLeg::BossEnemyRightLeg(Scene* scene)
+BossEnemyRightLeg::BossEnemyRightLeg(Scene* scene, BossEnemy* boss)
 	:
-	BossEnemyParts(scene, PARTS_NAME, "BossEnemyLeg")
+	BossEnemyParts(scene
+		, PARTS_NAME
+		, "BossEnemyLeg"
+		, Params::BOSSENEMY_RIGHTLEG_HP
+		, Params::BOSSENEMY_RIGHTLEG_BOX_COLLIDER_SIZE
+		, Params::BOSSENEMY_RIGHTLEG_SPHERE_COLLIDER_SIZE
+		, boss)
 {
+
 
 	//ˆÊ’uî•ñ
 	GetTransform()->Translate(Params::BOSSENEMY_RIGHTLEG_POSITION);

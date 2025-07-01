@@ -146,8 +146,32 @@ bool DetectionCollision2::SPHERE_SPHERE_CheckCollision(ColliderComponent& collid
 
 bool DetectionCollision2::AABB_OBB_CheckCollision(ColliderComponent& collider1, ColliderComponent& collider2)
 {
-	UNREFERENCED_PARAMETER(collider1);
-	UNREFERENCED_PARAMETER(collider2);
+	using namespace DirectX;
+
+
+	//AABBにキャスト
+	AABB& aabb1 = static_cast<AABB&>(collider1);
+	OBB& aabb2 = static_cast<OBB&>(collider2);
+	//スフィアの取得
+	BoundingSphere* sphere1 = aabb1.GetBoundingSphere();
+	BoundingSphere* sphere2 = aabb2.GetBoundingSphere();
+	//スフィアの判定
+	if (!sphere1->Intersects(*sphere2))
+	{
+		return false;
+	}
+
+	////データの取得
+	BoundingBox* Box1 = aabb1.GetBoundingBox();
+	BoundingOrientedBox* Box2 = aabb2.GetBoundingOrientedBox();
+
+	//判定
+	if (Box1->Intersects(*Box2))
+	{
+		//当たった
+		return true;
+	}
+
 
 	return false;
 }

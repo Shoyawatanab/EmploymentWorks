@@ -9,8 +9,7 @@
 #include "GameBase/Actor.h"
 
 // 前方宣言
-class CommonResources;
-
+class BossEnemy;
 
 
 class WalkActionComtroller : public ActionController
@@ -22,18 +21,16 @@ public:
 
 public:
 	//コンストラク
-	WalkActionComtroller(Actor* own
+	WalkActionComtroller(BossEnemy* own
 		, Actor* target);
 	//デストラクタ
 	~WalkActionComtroller() override;
 
 private:
-	// 共通リソース
-	CommonResources* m_commonResources;
 	//ターゲット
 	Actor* m_target;
 	//所有者
-	Actor* m_own;
+	BossEnemy* m_own;
 	//歩き状態
 	std::unique_ptr<WalkAction> m_walkingAction;
 	//回転状態

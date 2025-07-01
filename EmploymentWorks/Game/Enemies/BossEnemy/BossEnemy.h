@@ -3,7 +3,7 @@
 */
 
 #pragma once
-#include"GameBase/Enemy/EnemyBase.h"
+#include"Game/Enemies/EnemyBase.h"
 
 class BossBehaviorTree;
 class Player;
@@ -24,6 +24,8 @@ public:
 
 	//オブジェクトタグの取得
 	ObjectTag GetObjectTag() override { return ObjectTag::BOSS_ENEMY; }
+
+	AnimatorComponent* GetAnimation() { return m_animation; }
 
 public:
 
@@ -46,9 +48,14 @@ public:
 	//衝突が終了したときに呼び出される
 	void OnCollisionExit(ColliderComponent* collider) override;
 
+	//ダメージを食らったとき
+	void AddDamage(int damage);
+
+	//回転
+	void Rotation(const float& deltaTime);
 
 private:
-	
+
 	//着地したとき
 	void Landing();
 
@@ -66,9 +73,8 @@ private:
 	std::unique_ptr<BossEnemyActionManager> m_actionManager;
 	//着地しているか
 	bool m_isGround;
-
-
-
+	//プレイヤ
+	Player* m_player;
 };
 
 

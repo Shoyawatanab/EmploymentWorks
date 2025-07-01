@@ -1,7 +1,7 @@
 #include "pch.h"
 #include  "PlaySceneCamera.h"
 #include "GameBase/Component/Components.h"
-#include "Game/Camera/PayScene/PaySceneCameraState/PlaySceneCameraStateMachine.h"
+#include "PlaySceneCameraStateMachine.h"
 
 /// <summary>
 /// コンストラクタ
@@ -27,6 +27,7 @@ PlaySceneCamera::PlaySceneCamera(Scene* scene)
 /// </summary>
 PlaySceneCamera::~PlaySceneCamera()
 {
+	ShowCursor(true);
 
 }
 

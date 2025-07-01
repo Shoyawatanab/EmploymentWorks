@@ -14,7 +14,9 @@
 #include "Game/Weapon/WeaponManager.h"
 #include "Game/Enemies/EnemyManager.h"
 #include "Game/Fade/FadeManager.h"
-
+#include "Game/Effect/EffectFactory.h"
+#include "Game/Sound/PlayScene/PlaySceneSound.h"
+#include "Game/GlobalGameData.h"
 
 /// <summary>
 /// コンストラク
@@ -76,16 +78,24 @@ void PlayScene::Initialize()
 	player->SetPlaySceneCamera(camera);
 	player->SetTargetMarker(ui->GetTargetMarker());
 
+	AddActor<EffectFactory>(this);
+
+	AddActor<PlaySceneSound>(this);
+
+
+	//クリアタイムのリセット
+	GlobalGameData::GetInstance()->ResetClearTime();
 
 }
 
 //---------------------------------------------------------
 // 更新する
 //---------------------------------------------------------
-void PlayScene::SceneUpdate(float elapsedTime)
+void PlayScene::SceneUpdate(const float& deltaTime)
 {
-	UNREFERENCED_PARAMETER(elapsedTime);
 	
+	GlobalGameData::GetInstance()->AddClearTime(deltaTime);
+
 
 }
 

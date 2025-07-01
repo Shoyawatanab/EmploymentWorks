@@ -4,11 +4,17 @@
 #include "GameBase/Component/Components.h"
 #include "Game/Params.h"
 
-BossEnemyHead::BossEnemyHead(Scene* scene)
+BossEnemyHead::BossEnemyHead(Scene* scene, BossEnemy* boss)
 	:
-	BossEnemyParts(scene, PARTS_NAME, "BossEnemyHead")
+	BossEnemyParts(scene
+		, PARTS_NAME
+		, "BossEnemyHead"
+		, Params::BOSSENEMY_HEAD_HP
+		, Params::BOSSENEMY_HEAD_BOX_COLLIDER_SIZE
+		, Params::BOSSENEMY_HEAD_SPHERE_COLLIDER_SIZE
+		,boss)
 {
-
+	
 	//ˆÊ’uî•ñ
 	GetTransform()->Translate(Params::BOSSENEMY_HEAD_POSITION);
 	//‘å‚«‚³

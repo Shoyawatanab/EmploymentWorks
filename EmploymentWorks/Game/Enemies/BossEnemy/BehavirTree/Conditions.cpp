@@ -157,13 +157,11 @@ bool Conditions::IsEnemyInview(const DirectX::SimpleMath::Vector3& playerPos, co
 bool Conditions::IsMaxHp()
 {
 
-	return false;
 
-
-	//if (m_enemy->GetHP() == Params::BOSSENEMY_MAX_HP)
-	//{
-	//	return true;
-	//}
+	if (m_enemy->GetHp() == Params::BOSSENEMY_MAX_HP)
+	{
+		return true;
+	}
 
 	return false;
 }
@@ -175,12 +173,10 @@ bool Conditions::IsMaxHp()
 bool Conditions::IsHPMoreThanHalf()
 {
 
-	return false;
-
-	//if (m_enemy->GetHP() >= Params::BOSSENEMY_MAX_HP / 2)
-	//{
-	//	return true;
-	//}
+	if (m_enemy->GetHp() >= Params::BOSSENEMY_MAX_HP / 2)
+	{
+		return true;
+	}
 
 	
 	return false;

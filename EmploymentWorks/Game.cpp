@@ -23,8 +23,8 @@ Game::Game() noexcept(false)
     m_inputManager{},
     m_sceneManager{}
     ,m_fullScreen{false}
-    ,m_soundManager{}
     ,m_fadeManager{}
+    ,m_soundManager{}
 {
     m_deviceResources = std::make_unique<DX::DeviceResources>();
     m_deviceResources->RegisterDeviceNotify(this);
@@ -77,10 +77,10 @@ void Game::Initialize(HWND window, int width, int height)
     m_sceneManager = std::make_unique<SceneManager>();
     m_sceneManager->Initialize();
 
-    m_soundManager = SoundManager::GetInstance();
-    m_soundManager->Initialize();
 
     m_fadeManager = FadeManager::GetInstance();
+
+    m_soundManager = SoundManager::GetInstance();
 
     //画像の読み込み　コンストラクタを呼ぶ
     GameResources::GetInstance();
@@ -106,7 +106,6 @@ void Game::Update(DX::StepTimer const& timer)
 
     // TODO: Add your game logic here.
 
-
     // 入力マネージャを更新する
     m_inputManager->Update();
 
@@ -119,10 +118,11 @@ void Game::Update(DX::StepTimer const& timer)
         ExitGame();
     }
 
-    m_soundManager->Update();
 
     // シーンマネージャを更新する
     m_sceneManager->Update(elapsedTime);
+
+    m_soundManager->Update();
 
     m_fadeManager->Update(elapsedTime);
 

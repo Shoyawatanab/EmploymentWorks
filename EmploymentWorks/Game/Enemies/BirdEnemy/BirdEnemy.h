@@ -1,5 +1,5 @@
 #pragma once
-#include "GameBase/Enemy/EnemyBase.h"
+#include"Game/Enemies/EnemyBase.h"
 
 class Player;
 class BirdEnemyStateMachine;
@@ -8,6 +8,8 @@ class BirdEnemyBullet;
 
 class BirdEnemy : public EnemyBase
 {
+
+
 public:
 
 	//オブジェクトタグの取得

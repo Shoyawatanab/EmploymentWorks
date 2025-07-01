@@ -1,14 +1,10 @@
-/*
-	@file	WalkAction.cpp
-	@brief	プレイシーンクラス
-*/
 #include "pch.h"
 #include "WalkAction.h"
 #include "GameBase/Component/Components.h"
 #include "Game/Params.h"
 #include "GameBase/Common/Commons.h"
-
-
+#include "Game/Messenger/Scene/SceneMessages.h"
+#include "Game/Enemies/BossEnemy/BossEnemy.h"
 
 /// <summary>
 /// コンストラクタ
@@ -16,11 +12,10 @@
 /// <param name="resources">共通リソース</param>
 /// <param name="own">所有者</param>
 /// <param name="target">ターゲット</param>
-WalkAction::WalkAction(Actor* own
+WalkAction::WalkAction(BossEnemy* own
 	, Actor* target)
 	:
-	m_commonResources{}
-	,m_own{own}
+	m_own{own}
 	,m_target{target}
 	,m_time{}
 {
@@ -47,6 +42,9 @@ WalkAction:: ActionState WalkAction::Update(const float& elapsedTime)
 {
 	using namespace DirectX::SimpleMath;
 
+	auto animation = m_own->GetAnimation();
+
+	animation->SetFloat("Move", 1.0f);
 
 //回転
 	//向きたい方向

@@ -35,6 +35,7 @@ SceneManager::SceneManager()
 			GlobalMessageType::CHANGE_TITLE_SCENE
 			,GlobalMessageType::CHANGE_SELECT_SCENE
 			,GlobalMessageType::CHANGE_PLAY_SCENE
+			,GlobalMessageType::CHANGE_RESULT_SCENE
 		}, this
 	);
 
@@ -55,7 +56,8 @@ void SceneManager::Initialize()
 {
 
 	//èâä˙ÉVÅ[Éì
-	ChangeScene(SceneID::STAGESELECT);
+	ChangeScene(SceneID::PLAY);
+
 
 
 }
@@ -176,6 +178,9 @@ void SceneManager::Notify(GlobalMessageType type, void* datas)
 			break;
 		case GlobalMessageType::CHANGE_PLAY_SCENE:
 			SetNextSceneID(SceneID::PLAY);
+			break;
+		case GlobalMessageType::CHANGE_RESULT_SCENE:
+			SetNextSceneID(SceneID::RESULT);
 			break;
 		default:
 			break;

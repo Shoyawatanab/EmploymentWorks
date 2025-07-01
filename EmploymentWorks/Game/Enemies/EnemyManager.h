@@ -15,6 +15,9 @@ public:
 	//デストラクタ
 	~EnemyManager() override;
 
+	//敵の死亡
+	void DeathEnemy(Actor* enemy);
+
 private:
 
 	//データの読み込み

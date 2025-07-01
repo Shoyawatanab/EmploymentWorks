@@ -19,8 +19,8 @@ SelectSceneScreenSpaceOverlayCanvas::SelectSceneScreenSpaceOverlayCanvas(Scene* 
 	GetScene()->AddActor<SelectSceneBackGraund>(this);
 
 	//Šeƒ{ƒ^ƒ“
-	GetScene()->AddActor<StageOneButtom>(this);
-	GetScene()->AddActor<StageTwoButtom>(this);
+	GetScene()->AddActor<StageOneButton>(this);
+	GetScene()->AddActor<StageTwoButton>(this);
 
 }
 

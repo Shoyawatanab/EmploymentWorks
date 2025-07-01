@@ -25,6 +25,9 @@ public:
 	//ターゲットのオフセット
 	static constexpr DirectX::SimpleMath::Vector3 TARGET_OFFSET{ 0.0f,1.0f,0.0f };
 
+	//
+	static constexpr float SHOT_SPEED = 20.0f;
+
 public:
 	//コンストラクタ
 	BossBeamAttackShot(Actor* bossEnemy
@@ -35,14 +38,12 @@ public:
 	//デストラクタ
 	~BossBeamAttackShot() override;
 	// 更新処理
-	ActionState Update(const float& elapsedTime);
+	ActionState Update(const float& deltaTime);
 	//状態に入った時
 	void Enter();
 	//状態を抜けた時
 	void Exit();
 private:
-	// 共通リソース
-	CommonResources* m_commonResources;
 	//所有者
 	Actor* m_bossEnemy;
 	//ビーム
@@ -51,5 +52,7 @@ private:
 	BossBeamAttackActionController* m_beamAttack;
 	//プレイヤ
 	Actor* m_player;
+	//移動方向
+	DirectX::SimpleMath::Vector3 m_moveDirection;
 
 };

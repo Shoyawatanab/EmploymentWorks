@@ -50,18 +50,7 @@ IBehaviorNode::State ExecutionNode::BossEnemyBeamAction()
 
 }
 
-/// <summary>
-/// バリア防御
-/// </summary>
-/// <returns></returns>
-IBehaviorNode::State ExecutionNode::BossEnemyBarrierDefenseAction()
-{
 
-	//Messenger::GetInstance()->Notify<EnemyMessageType>(m_enemy->GetID(), EnemyMessageType::BARRIER_DEFENSE, nullptr);
-
-	return IBehaviorNode::State::SUCCESS;
-
-}
 
 /// <summary>
 /// ジャンプ攻撃

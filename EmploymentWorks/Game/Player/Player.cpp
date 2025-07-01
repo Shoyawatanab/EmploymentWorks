@@ -13,10 +13,7 @@
 #include "Game/Weapon/Boomerang/Boomerang.h"
 #include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/Player/PlayerUsually.h"
-#include "Game/Particle/PlayerDust.h"
-
 #include "Game/Fade/FadeManager.h"
-
 #include "Libraries/MyLib/DebugString.h"
 
 /// <summary>
@@ -31,16 +28,17 @@ Player::Player(Scene* scene)
 	,m_usually{}
 	,m_isGround{}
 	,m_targetMarker{}
+	,m_hp{Params::PLAYER_HP}
 {
 
-	m_dust = GetScene()->AddActor<PlayerDust>(GetScene());
-	m_dust->GetTransform()->SetParent(GetTransform());
 	m_rigidBody = AddComponent<RigidbodyComponent>(this);
 	//当たり判定の作成
 	auto aABBCollider = AddComponent<AABB>(this, ColliderComponent::ColliderTag::AABB, CollisionType::COLLISION
 	, Params::PLAYER_BOX_COLLIDER_SIZE
 	, Params::PLAYER_SPHERE_COLLIDER_SIZE);
 
+
+	AddComponent<RoundShadowComponent>(this, Params::PLAYER_SHADOW_RADIUS);
 
 	//モデルの作成
 	m_model =  GetScene()->AddActor<PlayerModel>(GetScene());
@@ -63,41 +61,6 @@ Player::Player(Scene* scene)
 	
 	//初期状態を
 	m_lastPosition = GetTransform()->GetPosition();
-
-
-
-
-	//auto a = AddComponent<ParticleSystem>(this);
-
-	//ParticleSystem::MainModule setting;
-	//setting.LifeTime = { 2 };
-	//setting.StartSpeed = 3;
-	//setting.MinSize = { DirectX::SimpleMath::Vector3(0.1f,0.1f,0.1f) };
-	//setting.MaxSize = { DirectX::SimpleMath::Vector3(0.8f,0.8f,0.8f) };
-	//setting.MaxParticles = 10000;
-	//setting.Duration = 0.1f;
-	//auto box = std::make_shared<ShapeBox>(DirectX::SimpleMath::Vector3(1.0f, 1.0f, 1.0f) , 1);
-	//auto cone = std::make_shared<ShapeCone>(3, 30, DirectX::SimpleMath::Vector3::Up);
-
-	//ParticleSystem::Burst burst;
-	//ParticleSystem::EasingOverLifeTime lifeEas;
-
-	//lifeEas.SizeEasing = NakashiLib::Easing::EasingType::OutBounce;
-
-	//ParticleSystem::EmissionModule emitter;
-	//emitter.RateOverTime = 30;
-
-	//ParticleSystem::ForceOverLifeTimeSpeed force;
-	//force.ForcePower.Set(DirectX::SimpleMath::Vector3::Right);
-
-	//a->SetMainModule(setting)
-	//	->SetEasing(lifeEas);
-	//a->SetEmission(emitter);
-	//a->SetForce(force);
-	//a->SetShape(cone);
-	////a->AddBurst(0, 100);
-
-
 
 
 }
@@ -131,17 +94,6 @@ void Player::UpdateActor(const float& deltaTime)
 
 	m_animation->SetFloat("Move", speed);
 
-	if (speed > 3)
-	{
-		//パーティクルの生成開始
-		m_dust->GetComponent<ParticleSystem>()->PlayParticle();
-	}
-	else
-	{
-		//パーティクルの生成のストップ
-		m_dust->GetComponent<ParticleSystem>()->StopParticle();
-
-	}
 
 	//座標の保存
 	m_lastPosition = GetTransform()->GetPosition();
@@ -165,13 +117,15 @@ void Player::OnCollisionEnter(ColliderComponent* collider)
 		case Actor::ObjectTag::STAGE:
 			Landing();
 			break;
+		case Actor::ObjectTag::BEAM:
 		case Actor::ObjectTag::BIRD_BULLET:
+		case Actor::ObjectTag::BOSS_ENEMY_PARTS:
 		{
 			//ダメージエフェクト
 
 			//通知
 			SceneMessenger::GetInstance()->Notify(SceneMessageType::PLAYER_DAMAGE);
-
+			AddDamage();
 		}
 			break;
 		default:
@@ -213,6 +167,8 @@ void Player::OnCollisionExit(ColliderComponent* collider)
 	}
 }
 
+
+
 /// <summary>
 /// 着地したとき
 /// </summary>
@@ -220,5 +176,23 @@ void Player::Landing()
 {
 	m_rigidBody->ResetGravity();
 	m_isGround = true;
+}
+
+/// <summary>
+/// ダメージを食らったとき
+/// </summary>
+void Player::AddDamage()
+{
+	//HPの減少
+	m_hp--;
+	//0以下にならないように
+	m_hp = std::max(m_hp, 0);
+
+	if (m_hp == 0)
+	{
+		//ゲームオーバーの通知
+		SceneMessenger::GetInstance()->Notify(SceneMessageType::GAME_OVER);
+	}
+
 }
 

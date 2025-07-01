@@ -8,7 +8,8 @@
 	"SE" :
 	[
 		{
-			"BoomerangHit"               : "打撃1.mp3"
+			"BoomerangHit"               : "打撃1.mp3",
+			"Explosion"                        : "打撃3.mp3"
 		}
 
 	]

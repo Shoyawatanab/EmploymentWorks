@@ -1,6 +1,7 @@
 #pragma once
 #include "Game/Enemies/BossEnemy/BossEnemyParts.h"
 
+class BossEnemy;
 
 class BossEnemyLeftShoulder : public BossEnemyParts
 {
@@ -9,7 +10,7 @@ class BossEnemyLeftShoulder : public BossEnemyParts
 
 public:
 	//コンストラクタ
-	BossEnemyLeftShoulder(Scene* scene);
+	BossEnemyLeftShoulder(Scene* scene, BossEnemy* boss);
 	//デストラクタ
 	~BossEnemyLeftShoulder() override;
 

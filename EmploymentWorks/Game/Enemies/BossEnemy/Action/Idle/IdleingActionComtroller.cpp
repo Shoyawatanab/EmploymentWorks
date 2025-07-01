@@ -1,7 +1,3 @@
-/*
-	@file	IdleingActionComtroller.cpp
-	@brief	プレイシーンクラス
-*/
 #include "pch.h"
 #include "IdleingActionComtroller.h"
 #include "GameBase/Common/Commons.h"

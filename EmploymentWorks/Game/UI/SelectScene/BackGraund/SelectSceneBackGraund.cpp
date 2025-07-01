@@ -11,12 +11,12 @@
 /// <param name="canvas">ƒLƒƒƒ“ƒoƒX</param>
 SelectSceneBackGraund::SelectSceneBackGraund(Canvas* canvas)
 	:
-	Actor(canvas->GetScene())
+	Image(canvas, "BackGraund")
 {
 
-	auto image = GetScene()->AddActor<Image>(canvas,"BackGraund");
-	image->GetTransform()->SetScale(SCALE);
-	image->GetTransform()->SetPosition(POSITION);
+	//auto image = GetScene()->AddActor<Image>(canvas,"BackGraund");
+	GetTransform()->SetScale(SCALE);
+	GetTransform()->SetPosition(POSITION);
 
 }
 

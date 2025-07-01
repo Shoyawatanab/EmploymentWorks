@@ -20,6 +20,10 @@ namespace mylib
 
 class BossBeamAttackEnd : public IAction
 {
+public:
+
+	//終了時の時間　　アニメーション終了時と合わせる
+	static constexpr float END_TIME = { 2.0f };
 
 public:
 	//コンストラクタ
@@ -47,5 +51,7 @@ private:
 	BossBeamAttackActionController* m_beamAttack;
 	//経過時間
 	float m_time;
+	//状態に張った時のスケール
+	DirectX::SimpleMath::Vector3 m_initalScale;
 
 };

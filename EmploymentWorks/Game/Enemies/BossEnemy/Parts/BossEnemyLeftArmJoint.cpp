@@ -5,16 +5,21 @@
 #include "Game/Params.h"
 #include "Game/Enemies/BossEnemy/BossEnemyPartss.h"
 
-BossEnemyLeftArmJoint::BossEnemyLeftArmJoint(Scene* scene)
+BossEnemyLeftArmJoint::BossEnemyLeftArmJoint(Scene* scene, BossEnemy* boss)
 	:
-	BossEnemyParts(scene, PARTS_NAME, "BossEnemyArmJoint")
+	BossEnemyParts(scene
+		, PARTS_NAME
+		, "BossEnemyArmJoint"
+		, Params::BOSSENEMY_LEFTARMJOINT_HP
+		, Params::BOSSENEMY_LEFTARMJOINT_BOX_COLLIDER_SIZE
+		, Params::BOSSENEMY_LEFTARMJOINT_SPHERE_COLLIDER_SIZE
+		, boss)
 {
-
 
 
 	//ˆÈ‰º’Ç‰Á•”ˆÊ‚Ìì¬
 
-	auto leftArm = GetScene()->AddActor<BossEnemyLeftArm>(GetScene());
+	auto leftArm = GetScene()->AddActor<BossEnemyLeftArm>(GetScene(), boss);
 	leftArm->SetParent(this);
 
 

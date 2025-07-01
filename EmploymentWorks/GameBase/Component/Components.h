@@ -5,8 +5,8 @@
 #include "Collider/ColliderComponent.h"
 #include "UI/ImageComponent.h"
 #include "Animation/AnimatorComponent.h"
-#include "GameBase/Component/Particle/ParticleSystem.h"
 #include "GameBase/Component/UI/ImageComponent.h"
 #include "GameBase/Component/UI/ButtonComponent.h"
-
-//影コンポーネント作りたい
+#include "GameBase/Component/Effect/EffectComponent.h"
+#include "GameBase/Component/RoundShadow/RoundShadowComponent.h"
+#include "GameBase/Component/Sound/SoundComponent.h"

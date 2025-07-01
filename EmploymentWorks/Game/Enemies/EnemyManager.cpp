@@ -7,6 +7,9 @@
 #include <iostream>
 #include <fstream>
 #include <nlohmann/json.hpp>
+#include "Game/Messenger/Scene/SceneMessages.h"
+#include "Game/Messenger/Global/GlobalMessages.h"
+#include "Game/Fade/FadeManager.h"
 
 /// <summary>
 /// ƒRƒ“ƒXƒgƒ‰ƒN
@@ -30,6 +33,38 @@ EnemyManager::EnemyManager(Scene* scene,Player* player)
 /// </summary>
 EnemyManager::~EnemyManager()
 {
+}
+
+/// <summary>
+/// “G‚Ì€–S
+/// </summary>
+/// <param name="enemy"></param>
+void EnemyManager::DeathEnemy(Actor* actor)
+{
+	//’T‚·
+	auto enemy = std::find(m_enemys.begin(), m_enemys.end(), actor);
+	
+	//‚¢‚ê‚Î
+	if (enemy != m_enemys.end())
+	{
+		//íœ
+		m_enemys.erase(enemy);
+	}
+
+
+
+	//‚·‚×‚Ä‚Ì“G‚ğ“|‚µ‚½‚ç
+	if (m_enemys.empty())
+	{
+		//ƒŠƒUƒ‹ƒgƒV[ƒ“‚É•ÏX‚Ì’Ê’m
+		GlobalMessenger::GetInstance()->Notify(GlobalMessageType::CHANGE_RESULT_SCENE);
+
+		FadeManager::GetInstance()->StartFadeIn();
+
+	}
+
+
+
 }
 
 
@@ -132,6 +167,7 @@ void EnemyManager::LoadData()
 		{
 			//ƒ{ƒX“G‚Ìì¬
 			auto boss = GetScene()->AddActor<BossEnemy>(GetScene(),  scale, position, rotation, m_player);
+			boss->SetEnemyManager(this);
 			m_enemys.push_back(boss);
 
 
@@ -140,7 +176,7 @@ void EnemyManager::LoadData()
 		{
 			//’¹“G‚Ìì¬
 			auto bird = GetScene()->AddActor<BirdEnemy>(GetScene(), scale, position, rotation, m_player);
-
+			bird->SetEnemyManager(this);
 			m_enemys.push_back(bird);
 
 

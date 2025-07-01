@@ -5,13 +5,21 @@
 #include "Game/Params.h"
 #include "Game/Enemies/BossEnemy/BossEnemyPartss.h"
 
-BossEnemyLeftShoulder::BossEnemyLeftShoulder(Scene* scene)
+BossEnemyLeftShoulder::BossEnemyLeftShoulder(Scene* scene, BossEnemy* boss)
 	:
-	BossEnemyParts(scene, PARTS_NAME, "BossEnemyShoulder")
+	BossEnemyParts(scene, PARTS_NAME
+		, "BossEnemyShoulder"
+		, Params::BOSSENEMY_LEFTSHOULDER_HP
+		, Params::BOSSENEMY_LEFTSHOULDER_BOX_COLLIDER_SIZE
+		, Params::BOSSENEMY_LEFTSHOULDER_SPHERE_COLLIDER_SIZE
+		, boss)
 {
+
+
+
 	//ˆÈ‰º’Ç‰Á•”ˆÊ‚Ìì¬
 //uLeftArmJointv‚ð¶¬‚·‚é
-	auto leftArmJoint = GetScene()->AddActor<BossEnemyLeftArmJoint>(GetScene());
+	auto leftArmJoint = GetScene()->AddActor<BossEnemyLeftArmJoint>(GetScene(), boss);
 	leftArmJoint->SetParent(this);
 
 

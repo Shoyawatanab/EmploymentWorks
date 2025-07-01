@@ -21,6 +21,14 @@ Boomerang::Boomerang(Scene* scene,Player* player)
 	//“–‚½‚è”»’è‚ð–³Œø‚É
 	aabbCollider->SetActive(false);
 
+	aabbCollider->SetNotHitObjectTag({
+		Actor::ObjectTag::PLAYER
+		,Actor::ObjectTag::PLAYER_PARTS
+		});
+
+	auto shadow = AddComponent<RoundShadowComponent>(this, Params::PLAYER_SHADOW_RADIUS);
+
+
 	//‰Šúî•ñ‚Ì“K—p
 	GetTransform()->SetScale(Params::BOOMERANG_SCALE);
 	GetTransform()->Translate(Params::Params::BOOMERANG_POSITION);
@@ -31,6 +39,8 @@ Boomerang::Boomerang(Scene* scene,Player* player)
 	auto model = AddComponent<ModelComponent>(this, "Boomerang");
 
 	m_stateMachine = std::make_unique<BoomerangStateMachine>(this, player);
+
+	shadow->SetActive(false);
 
 }
 

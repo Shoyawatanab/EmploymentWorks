@@ -28,6 +28,7 @@ BossEnemy::BossEnemy(Scene* scene, DirectX::SimpleMath::Vector3 scale
 	,m_actionManager{}
 	,m_animation{}
 	,m_isGround{}
+	,m_player{player}
 {
 
 	using namespace DirectX::SimpleMath;
@@ -35,12 +36,21 @@ BossEnemy::BossEnemy(Scene* scene, DirectX::SimpleMath::Vector3 scale
 
 	m_rigidBody = AddComponent<RigidbodyComponent>(this);
 	//当たり判定の作成
-	AddComponent<AABB>(this, ColliderComponent::ColliderTag::AABB, CollisionType::COLLISION
-		, Params::BOSSENEMY_BOX_COLLIDER_SIZE * scale
-		, Params::BOSSENEMY_SPHERE_COLLIDER_SIZE * std::max({scale.x,scale.y,scale.y}));
+	auto collider = AddComponent<AABB>(this, ColliderComponent::ColliderTag::AABB, CollisionType::COLLISION
+		, Params::BOSSENEMY_BOX_COLLIDER_SIZE
+		, Params::BOSSENEMY_SPHERE_COLLIDER_SIZE);
+
+	collider->SetNotHitObjectTag({
+		Actor::ObjectTag::BOSS_ENEMY_PARTS
+		,Actor::ObjectTag::BEAM
+		});
+
+
+	AddComponent<RoundShadowComponent>(this, Params::BOSSENEMY_SHADOW_RADIUS);
+
 
 	//モデルの作成
-	auto model = GetScene()->AddActor<BossEnemyModel>(GetScene());
+	auto model = GetScene()->AddActor<BossEnemyModel>(GetScene(),this);
 	//親子関係をセット
 	model->GetTransform()->SetParent(GetTransform());
 
@@ -55,7 +65,7 @@ BossEnemy::BossEnemy(Scene* scene, DirectX::SimpleMath::Vector3 scale
 
 	auto beam = GetScene()->AddActor<BossEnemyBeam>(GetScene());
 	beam->GetTransform()->SetParent(GetTransform());
-
+	beam->SetTarget(player);
 
 	//ビヘイビアツリー
 	m_behavior = std::make_unique<BossBehaviorTree>(player,this);
@@ -77,24 +87,32 @@ BossEnemy::~BossEnemy()
 
 }
 
+
+
 /// <summary>
 /// 個別アップデート
 /// </summary>
 /// <param name="deltaTime"></param>
 void BossEnemy::UpdateActor(const float& deltaTime)
 {
-	
+	//フェード実行中
 	if (FadeManager::GetInstance()->GetIsFade())
 	{
 		return;
 	}
+
+
 
 	if (m_actionManager->Update(deltaTime))
 	{
 		//ビヘイビアツリーの更新
 		//m_behavior->Update(deltaTime);
 
-		SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_BEAM_ATTACK_STATE);
+
+		//SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_BEAM_ATTACK_STATE);
+		SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_JUMP_ATTACK_STATE);
+		//SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_WAKING_STATE);
+		//SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_SWING_DOWN_STATE);
 
 	}
 
@@ -113,30 +131,6 @@ void BossEnemy::OnCollisionEnter(ColliderComponent* collider)
 			Landing();
 			break;
 		case Actor::ObjectTag::BOOMERANG:
-			{
-				int damage = Params::BOOMERANG_DAMAGE;
-
-				HpDecrease(damage);
-				SceneMessenger::GetInstance()->Notify(SceneMessageType::ENEMY_DAMAGE, &damage);
-			
-
-				float ratio = GetHpRatio();
-				SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_DAMAGE, &ratio);
-
-			}
-
-			//Hpが０になれば
-			if (GetHp() <= 0)
-			{
-
-				auto camera = GetScene()->GetCamera();
-
-				auto* playCamera = static_cast<PlaySceneCamera*>(camera);
-				playCamera->SetTarget(this);
-
-				SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_DEFEATED);
-
-			}
 
 			break;
 		default:
@@ -144,6 +138,8 @@ void BossEnemy::OnCollisionEnter(ColliderComponent* collider)
 	}
 
 }
+
+
 
 /// <summary>
 /// 当たっているときに呼び出される関数
@@ -176,6 +172,89 @@ void BossEnemy::OnCollisionExit(ColliderComponent* collider)
 		default:
 			break;
 	}
+}
+
+/// <summary>
+/// ダメージを食らったとき
+/// </summary>
+/// <param name="damage">ダメージ</param>
+void BossEnemy::AddDamage(int damage)
+{
+
+	HpDecrease(damage);
+	
+
+
+	float ratio = GetHpRatio();
+	SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_DAMAGE, &ratio);
+
+
+	if (GetHp() <= 0)
+	{
+		auto camera = GetScene()->GetCamera();
+
+		auto* playCamera = static_cast<PlaySceneCamera*>(camera);
+		playCamera->SetTarget(this);
+
+		m_actionManager->ChangeAction("Death");
+
+	}
+	
+
+}
+
+/// <summary>
+/// 回転
+/// </summary>
+/// <param name="deltaTime">経過時間</param>
+void BossEnemy::Rotation(const float& deltaTime)
+{
+	using namespace DirectX::SimpleMath;
+
+	auto ownerPosition = GetTransform()->GetPosition();
+
+	auto targetPosition = m_player->GetTransform()->GetPosition();
+
+	ownerPosition.y = 0.0f;
+	targetPosition.y = 0.0f;
+
+	//向きたい方向
+	Vector3 direction = targetPosition - ownerPosition;
+	direction.Normalize();
+	//今の敵の前方向
+	Vector3 forward = GetTransform()->GetForwardVector();
+	//forward.Normalize();
+	//回転軸の作成
+	Vector3 moveAxis = forward.Cross(direction);
+
+	if (moveAxis.y >= 0.0f)
+	{
+		//正なら上方向
+		moveAxis = Vector3::Up;
+	}
+	else
+	{
+		//負なら下方向
+		moveAxis = DirectX::SimpleMath::Vector3::Down;
+	}
+
+	//角度を求める
+	float moveAngle = forward.Dot(direction);
+
+	moveAngle = std::clamp(moveAngle, -1.0f, 1.0f);
+
+	//ラジアン値に変換
+	moveAngle = acosf(moveAngle);
+
+	//角度と速度の比較で小さいほうを取得
+	moveAngle = std::min(moveAngle, Params::BOSSENEMY_ROTATION_SPEED * deltaTime);
+
+	//敵の回転の取得
+	DirectX::SimpleMath::Quaternion Rotate = GetTransform()->GetRotate();
+	//Y軸に対して回転をかける
+	Rotate *= DirectX::SimpleMath::Quaternion::CreateFromAxisAngle(moveAxis, moveAngle);
+	GetTransform()->SetRotate(Rotate);
+
 }
 
 /// <summary>

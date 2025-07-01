@@ -4,6 +4,7 @@
 #include "GameBase/Component/Components.h"
 #include "GameBase/Shader/ShaderFactory.h"
 #include "GameBase/Camera/Camera.h"
+#include "GameBase/Common/Commons.h"
 
 //インプットレイアウト
 const std::vector<D3D11_INPUT_ELEMENT_DESC> BossEnemyBeamRays::INPUT_LAYOUT =
@@ -117,7 +118,13 @@ void BossEnemyBeamRays::OutSideModelRender(const Camera& camera)
 
 	//少し大きいマトリックスの作成
 	DirectX::SimpleMath::Matrix world = Matrix::CreateScale(scale);
-	world *= GetTransform()->GetWorldMatrix();
+	world *= Matrix::CreateFromQuaternion(GetTransform()->GetRotate());
+	world *= Matrix::CreateTranslation(GetTransform()->GetPosition());
+	//親があれば
+	if (GetTransform()->GetParent())
+	{
+		world *= GetTransform()->GetParent()->GetWorldMatrix();
+	}
 
 
 	Vector4 color = Vector4(1, 0, 0, 1);

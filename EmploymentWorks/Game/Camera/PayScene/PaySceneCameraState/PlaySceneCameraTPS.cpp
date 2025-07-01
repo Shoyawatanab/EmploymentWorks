@@ -90,6 +90,9 @@ void PlaySceneCameraTPS::Enter()
 	m_rotationY = 0.0f;
 	m_zoomTime = 0.0f;
 	m_zoomState = ZoomState::NONE;
+
+	ShowCursor(false);
+
 }
 
 /// <summary>
@@ -97,6 +100,8 @@ void PlaySceneCameraTPS::Enter()
 /// </summary>
 void PlaySceneCameraTPS::Exit()
 {
+	ShowCursor(true);
+
 }
 
 /// <summary>

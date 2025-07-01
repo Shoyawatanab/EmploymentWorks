@@ -43,6 +43,8 @@ public:
 	//フェード実行中かの取得　true：実行中　false：未実行
 	bool GetIsFade() const { return m_isFade; }
 
+
+
 public:
 	//コンストラク
 	FadeManager();

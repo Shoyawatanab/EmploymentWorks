@@ -7,6 +7,8 @@
 #include "GameBase/Common/Commons.h"
 
 #include "Game/Camera/SelectScene/SelectSceneCamera.h"
+#include "Game/Camera/Normal/NormalCamera.h"
+
 #include "Game/UI/SelectScene/Canvas/SelectSceneScreenSpaceOverlayCanvas.h"
 #include "Game/Fade/FadeManager.h"
 
@@ -47,7 +49,7 @@ void StageSelectScene::Initialize()
 //---------------------------------------------------------
 // çXêVÇ∑ÇÈ
 //---------------------------------------------------------
-void StageSelectScene::SceneUpdate(float elapsedTime)
+void StageSelectScene::SceneUpdate(const float& deltaTime)
 {
 
 }

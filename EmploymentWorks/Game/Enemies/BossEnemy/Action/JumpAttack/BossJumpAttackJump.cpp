@@ -1,7 +1,3 @@
-/*
-	@file	BossJumpAttackJump.cpp
-	@brief	プレイシーンクラス
-*/
 #include "pch.h"
 #include "BossJumpAttackJump.h"
 #include "GameBase/Common/Commons.h"
@@ -92,13 +88,10 @@ void BossJumpAttackJump::Enter()
 	//ジャンプ力の加算
 	rigidbody->AddForce(Vector3(0, 10, 0));
 
-	m_startPosition = m_bossEnemy->GetTransform()-> GetPosition();
-
-	m_targetPosition = m_player->GetTransform()->GetPosition();
 
 
-	//方向を求める
-	m_jumpDirection = m_targetPosition - m_startPosition;
+	//コントローラーから方向の取得
+	m_jumpDirection = m_controller->GetJumpDirection();;
 	m_jumpDirection.y = 0.0f;
 	m_jumpDirection.Normalize();
 

@@ -1,19 +1,13 @@
-/*
-	@file	BossBeamAttackEnd.cpp
-	@brief	プレイシーンクラス
-*/
+
 #include "pch.h"
 #include "BossBeamAttackEnd.h"
 #include "GameBase/Common/Commons.h"
-#include "Libraries/MyLib/DebugCamera.h"
-#include "Libraries/MyLib/DebugString.h"
-#include "Libraries/MyLib/GridFloor.h"
-#include "Libraries/MyLib/InputManager.h"
-#include "Libraries/MyLib/MemoryLeakDetector.h"
-#include <cassert>
 #include "Game/MathUtil.h"
-
 #include "Game/Params.h"
+#include "Game/Enemies/BossEnemy/Beam/BossEnemyBeam.h"
+#include "Game/Enemies/BossEnemy/Beam/EnergyBall/BossEnemyBeamEnergyBall.h"
+#include "Game/Enemies/BossEnemy/Beam/Rays/BossEnemyBeamRays.h"
+#include "GameBase/Component/Components.h"
 
 
 /// <summary>
@@ -32,6 +26,7 @@ BossBeamAttackEnd::BossBeamAttackEnd(Actor* bossenemy
 	, m_beam{ beam }
 	,m_beamAttack{beamAttack}
 	,m_time{}
+	,m_initalScale{}
 {
 
 }
@@ -51,43 +46,35 @@ BossBeamAttackEnd::~BossBeamAttackEnd()
 /// </summary>
 /// <param name="elapsedTime">経過時間</param>
 /// <returns>継続か終了か</returns>
-BossBeamAttackEnd::ActionState BossBeamAttackEnd::Update(const float& elapsedTime)
+BossBeamAttackEnd::ActionState BossBeamAttackEnd::Update(const float& deltaTime)
 {
+	using namespace DirectX::SimpleMath;
 
-	//float t = m_time / Params::BOSSENEMY_BEAM_SHRINK_TIME;
-
-	//Vector3 scale = m_beam->GetBeamRays()->GetLocalScale();
-
-	//scale.x = MathUtil::Lerp(Params::BOSSENEMY_BEAM_RAYS_MAX_SCALE.x, 0.0f, t);
-	//scale.y = MathUtil::Lerp(Params::BOSSENEMY_BEAM_RAYS_MAX_SCALE.y, 0.0f, t);
-
-	//m_beam->GetBeamRays()->SetLocalScale(scale);
-
-	//
-
-	//scale = m_beam->GetBeamEnergyBall()->GetLocalScale();
-
-	//scale = Vector3::Lerp(Params::BOSSENEMY_BEAM_BALL_MAX_SCALE, Vector3::Zero, t);
-
-	//scale.x = std::max(scale.x, 0.0f);
-	//scale.y = std::max(scale.y, 0.0f);
-	//scale.z = std::max(scale.z, 0.0f);
+	//進行割合を求める
+	float ratio = m_time / Params::BOSSENEMY_BEAM_SHRINK_TIME;
+	//1.0を超えないように
+	ratio = std::min(ratio, 1.0f);
+	//大きさの取得
+	Vector3 scale = m_beam->GetTransform()->GetScale();
+	//進行割合に応じた大きさ
+	scale.x = MathUtil::Lerp(m_initalScale.x, 0.0f, ratio);
+	scale.y = MathUtil::Lerp(m_initalScale.y, 0.0f, ratio);
+	//大きさのセット
+	m_beam->GetTransform()->SetScale(scale);
 
 
-	//m_beam->GetBeamEnergyBall()->SetLocalScale(scale);
+	m_time += deltaTime;
+
+	m_time = std::min(m_time, END_TIME);
 
 
-	//m_time += elapsedTime;
-	//m_time = std::min(m_time, Params::BOSSENEMY_BEAM_SHRINK_TIME);
+	if (m_time == END_TIME)
+	{
+		//終了
+		return ActionState::END;
+	}
 
-	//if (m_time == Params::BOSSENEMY_BEAM_SHRINK_TIME)
-	//{
-	//	return ActionState::END;
-	//}
-
-
-	//m_time += elapsedTime;
-
+	//実行中
 	return ActionState::RUNNING;
 
 }
@@ -99,6 +86,7 @@ BossBeamAttackEnd::ActionState BossBeamAttackEnd::Update(const float& elapsedTim
 void BossBeamAttackEnd::Enter()
 {
 	m_time = 0;
+	m_initalScale = m_beam->GetTransform()->GetScale();
 }
 
 /// <summary>
@@ -106,6 +94,8 @@ void BossBeamAttackEnd::Enter()
 /// </summary>
 void BossBeamAttackEnd::Exit()
 {
+	m_beam->GetTransform()->SetScale(DirectX::SimpleMath::Vector3::One);
+	m_beam->SetActive(false);
 }
 
 

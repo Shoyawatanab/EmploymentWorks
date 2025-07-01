@@ -89,11 +89,12 @@ void BoomerangThrow::Enter()
 
 	//初期回転をプレイヤの回転に
 	m_initialRotation = m_player->GetTransform()->GetRotate();
-
+	//当たり判定の有効
 	auto aabb = m_boomerang->GetComponent<AABB>();
 	aabb->SetActive(true);
-
-	Vector3 a =  m_player->GetTransform()->GetForwardVector();
+	//影の有効
+	auto shadow = m_boomerang->GetComponent<RoundShadowComponent>();
+	shadow->SetActive(true);
 
 }
 
@@ -102,9 +103,13 @@ void BoomerangThrow::Enter()
 /// </summary>
 void BoomerangThrow::Exit()
 {
-
+	//当たり判定の無効
 	auto aabb = m_boomerang->GetComponent<AABB>();
 	aabb->SetActive(false);
+	//影の無効
+	auto shadow = m_boomerang->GetComponent<RoundShadowComponent>();
+	shadow->SetActive(false);
+
 
 }
 
@@ -283,6 +288,7 @@ void BoomerangThrow::ChaseToPlayer(const float& deltaTime)
 	//近づいたら
 	if (distance <= 0.3f)
 	{
+
 		//ブーメランの状態を通常に
 		m_boomerang->GetStateMAchine()->ChangeState(BoomerangState::IDEL);
 		//ブーメランのキャッチの活動

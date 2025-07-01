@@ -1,12 +1,8 @@
-/*
-	@file	WalkActionComtroller.cpp
-	@brief	プレイシーンクラス
-*/
 #include "pch.h"
 #include "WalkActionComtroller.h"
 #include "Game/Enemies/BossEnemy/Action/Walk/WalkActionComtroller.h"
 #include "Game/Params.h"
-
+#include "Game/Enemies/BossEnemy/BossEnemy.h"
 
 
 using namespace DirectX;
@@ -20,11 +16,10 @@ using namespace DirectX::SimpleMath;
 /// <param name="resources">共通リソース</param>
 /// <param name="own">所有者</param>
 /// <param name="target">ターゲット</param>
-WalkActionComtroller::WalkActionComtroller(Actor* own
+WalkActionComtroller::WalkActionComtroller(BossEnemy* own
 	, Actor* target)
 	:
-	m_commonResources{}
-	,m_own{own}
+	m_own{own}
 	,m_target{target}
 {
 	//各状態の作成

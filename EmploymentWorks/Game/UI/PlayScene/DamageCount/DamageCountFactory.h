@@ -10,7 +10,7 @@ class DamageCountFactory : public Actor , public IObserver<SceneMessageType>
 {
 public:
 	//最大生成数
-	static constexpr int MAX = 1;
+	static constexpr int MAX = 10;
 
 public:
 	//コンストラクタ
