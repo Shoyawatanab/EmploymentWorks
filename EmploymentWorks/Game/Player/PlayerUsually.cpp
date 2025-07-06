@@ -2,11 +2,9 @@
 #include "PlayerUsually.h"
 #include "GameBase/Common/Commons.h"
 #include "Libraries/MyLib/InputManager.h"
-
-
 #include "Game/Player/Player.h"
 #include "Game/Player/State/PlayerStateMachine.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "Game/Params.h"
 #include "Game/Camera/PayScene/PlaySceneCamera.h"
 #include "Game/Params.h"

@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "RigidbodyComponent.h"
-#include "GameBase/Component/Components.h"
+#include "GameBase/Component/Transform/Transform.h"
 #include "GameBase/Scene/Scene.h"
 #include "GameBase/Managers.h"
 #include "Game/Params.h"
@@ -47,9 +47,7 @@ RigidbodyComponent::~RigidbodyComponent()
 /// <param name="deltaTime">Œo‰ßŽžŠÔ</param>
 void RigidbodyComponent::Update(const float& deltaTime)
 {
-
 	
-
 	using namespace DirectX::SimpleMath;
 
 	//ŒÅ’è‚È‚ç

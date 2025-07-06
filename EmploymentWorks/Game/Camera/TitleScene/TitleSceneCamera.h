@@ -1,3 +1,8 @@
+/*
+	クラス名     : TitleSceneCamera
+	説明         : タイトルシーンカメラ
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Camera/Camera.h"
 
@@ -14,7 +19,7 @@ public:
 	//
 	TitleSceneCamera(Scene* scene);
 	//
-	~TitleSceneCamera();
+	~TitleSceneCamera() override;
 
 	void UpdateCamera(const float& deltaTime) override;
 

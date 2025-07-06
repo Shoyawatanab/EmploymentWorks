@@ -1,3 +1,8 @@
+/*
+	クラス名     : BirdEnemyBulletShot
+	説明         : 鳥敵の弾の発射ステート
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Interface/IState.h"
 

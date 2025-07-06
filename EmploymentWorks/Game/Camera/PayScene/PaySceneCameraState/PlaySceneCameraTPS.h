@@ -1,3 +1,8 @@
+/*
+	クラス名     : PlaySceneCameraStop
+	説明         : TPSカメラ　
+	補足・注意点 : ゲームのプレイ中に使用
+*/
 #pragma once
 #include "GameBase/Interface/IState.h"
 #include "GameBase/Messenger/IObserver.h"

@@ -1,3 +1,8 @@
+/*
+	クラス名     : PlaySceneCameraStateMachine
+	説明         : プレイシーンカメラのステートマシーン
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "PlaySceneCameraStateMachine.h"
 #include "PaySceneCameraStates.h"

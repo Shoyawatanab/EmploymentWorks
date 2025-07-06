@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "BirdEnemy.h"
 #include "GameBase/Scene/Scene.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "Game/Enemies/BirdEnemy/Model/BirdEnemyModel.h"
 #include "Game/Enemies/BirdEnemy/State/BirdEnemyStateMachine.h"
 #include "Game/Player/Player.h"
@@ -78,7 +78,7 @@ void BirdEnemy::UpdateActor(const float& deltaTime)
 		return;
 	}
 
-	m_stateMachine->Update(deltaTime);
+	//m_stateMachine->Update(deltaTime);
 
 	//常にターゲットに向くように
 	Rotate(deltaTime);

@@ -16,6 +16,8 @@ enum class SceneMessageType : int
 	,EXPLOSITION_EFFECT                            //爆発エフェクト
 	,CREATE_CHARGE_EFFECT                          //チャージエフェクトの作成
 	,CREATE_PARTICLE_EFFECT                        //パーティクルの作成
+	,PLAYER_PICKUP_POSSIBLE                        //プレイヤの回収可能
+	,PLAYER_PICKUP_IMPOSSIBLE                      //プレイヤの回収不可能
 
 	//ゲームの状態
 

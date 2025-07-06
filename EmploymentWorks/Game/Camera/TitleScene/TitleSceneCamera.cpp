@@ -1,3 +1,8 @@
+/*
+	クラス名     : TitleSceneCamera
+	説明         : タイトルシーンカメラ
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "TitleSceneCamera.h"
 

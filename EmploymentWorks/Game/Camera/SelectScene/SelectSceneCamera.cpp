@@ -1,3 +1,8 @@
+/*
+	クラス名     : SelectSceneCamera
+	説明         : セレクトシーンカメラ
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "SelectSceneCamera.h"
 

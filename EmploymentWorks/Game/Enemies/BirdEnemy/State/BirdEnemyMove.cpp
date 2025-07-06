@@ -3,7 +3,7 @@
 #include <cmath>
 #include <random>
 #include "GameBase/Scene/Scene.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "Game/Params.h"
 #include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/Enemies/BirdEnemy/BirdEnemy.h"

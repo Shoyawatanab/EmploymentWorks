@@ -1,4 +1,8 @@
-#pragma once
+/*
+	クラス名     : BirdEnemyBulletCharge
+	説明         : 鳥敵の弾のチャージステート
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Interface/IState.h"
 

@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "BirdEnemyBullet.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "Game/Enemies/BirdEnemy/BirdEnemy.h"
 #include "Game/Enemies/BirdEnemy/Bullet/State/BirdEnemyBulletStateMachine.h"
 #include "Game/Messenger/Scene/SceneMessages.h"

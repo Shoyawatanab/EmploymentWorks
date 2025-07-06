@@ -111,7 +111,7 @@ int Params::BOOMERANG_MAX_COUNT = 3;
 																							 , DirectX::XMConvertToRadians(-45.0f));
 
 //ブーメランのボックスの当たり判定の大きさ
- const  Vector3 Params::BOOMERANG_BOX_COLLIDER_SIZE = Vector3(0.21f, 0.2f, 0.21f);
+ const  Vector3 Params::BOOMERANG_BOX_COLLIDER_SIZE = Vector3(0.21f, 0.05f, 0.21f);
 //ブーメランのスフィアの当たり判定の大きさ
  const float Params::BOOMERANG_SPHERE_COLLIDER_SIZE = 0.4f;
 //　ブーメランの攻撃力

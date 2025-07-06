@@ -1,9 +1,10 @@
 #include "pch.h"
 #include "Boomerangidle.h"
 #include "Game/Weapon/Boomerang/Boomerang.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "Game/Params.h"
 #include "Game/Player/Player.h"
+#include "Game/Messenger/Scene/SceneMessages.h"
 
 /// <summary>
 /// コンストラクタ
@@ -48,6 +49,18 @@ void BoomerangIdle::Enter()
 	m_boomerang->GetTransform()->SetPosition(Params::BOOMERANG_IDLE_POSITION);
 	m_boomerang->GetTransform()->SetRotate(Params::BOOMERANG_IDLE_ROTATION);
 	m_boomerang->GetTransform()->SetScale(Params::BOOMERANG_IDLE_SCALE);
+
+
+	//当たり判定の無効
+	auto aabb = m_boomerang->GetComponent<AABB>();
+	aabb->SetActive(false);
+	//影の無効
+	auto shadow = m_boomerang->GetComponent<RoundShadowComponent>();
+	shadow->SetActive(false);
+
+	//ブーメランのキャッチの活動
+	SceneMessenger::GetInstance()->Notify(SceneMessageType::BOOMERANG_CATCH);
+
 
 }
 

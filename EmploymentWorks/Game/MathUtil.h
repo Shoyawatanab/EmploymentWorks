@@ -28,7 +28,7 @@ namespace MathUtil
     /// <param name="vector3"></param>
     /// <returns></returns>
     inline DirectX::SimpleMath::Quaternion ChangeVector3ToQuaternion(
-        DirectX::SimpleMath::Vector3 vector3
+        const DirectX::SimpleMath::Vector3& vector3
     )
     {
        return DirectX::SimpleMath::Quaternion::CreateFromYawPitchRoll(

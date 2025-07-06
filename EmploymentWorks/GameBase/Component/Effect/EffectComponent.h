@@ -1,6 +1,5 @@
 #pragma once
 #include "GameBase/Component.h"
-#include "GameBase/Component/Components.h"
 
 class Camera;
 

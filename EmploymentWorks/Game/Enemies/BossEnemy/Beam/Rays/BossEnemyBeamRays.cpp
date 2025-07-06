@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "BossEnemyBeamRays.h"
 #include "GameBase/Scene/Scene.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "GameBase/Shader/ShaderFactory.h"
 #include "GameBase/Camera/Camera.h"
 #include "GameBase/Common/Commons.h"

@@ -1,3 +1,8 @@
+/*
+	クラス名     : Particle
+	説明         : ボスの振り下ろし攻撃時のエフェクト
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Actor.h"
 

@@ -62,9 +62,6 @@ void Scene::Initialize()
 void Scene::Update(float deltaTime)
 {
 	
-
-
-
 	//更新フラグをtrueに変更
 	m_updateNow = true;
 	// アクターの更新をする
@@ -75,7 +72,6 @@ void Scene::Update(float deltaTime)
 	}
 
 	SceneUpdate(deltaTime);
-
 
 	// シーン別の更新
 	m_updateNow = false;

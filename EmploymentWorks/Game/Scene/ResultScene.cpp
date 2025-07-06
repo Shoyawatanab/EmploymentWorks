@@ -6,7 +6,7 @@
 #include "ResultScene.h"
 #include "GameBase/Screen.h"
 #include "GameBase/Common/Commons.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "Game/Camera/Result/ResultCamera.h"
 #include "Game/Fade/FadeManager.h"
 #include "Game/Player/Model/PlayerModel.h"

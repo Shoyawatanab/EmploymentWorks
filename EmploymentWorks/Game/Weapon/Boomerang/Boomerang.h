@@ -1,10 +1,10 @@
 #pragma once
 #include "Game/Weapon/WeaponBase.h"
+#include "Game/Weapon/Boomerang/State/BoomerangStateMachine.h"
 
-class BoomerangStateMachine;
 class Player;
 
-class Boomerang : public WeaponBase
+class Boomerang : public WeaponBase<BoomerangState>
 {
 public:
 
@@ -12,6 +12,9 @@ public:
 	ObjectTag GetObjectTag() override { return ObjectTag::BOOMERANG; }
 	//ステートマシーンの取得
 	BoomerangStateMachine* GetStateMAchine() { return m_stateMachine.get(); }
+	//１フレ前の座標を取得
+	const DirectX::SimpleMath::Vector3& GetLastPosition() { return m_lastPosition; }
+
 public:
 	//コンストラクタ
 	Boomerang(Scene* scene, Player* player);
@@ -23,10 +26,20 @@ public:
 	//当たった時に呼び出される
 	void OnCollisionEnter(ColliderComponent* collider);
 	//ステート変更
-	void ActorChangeState(WeaponState nextState) override;
+	void ActorChangeState(BoomerangState nextState) override;
 
 private:
+
+	//回収
+	void PickUp();
+
+private:
+	//ステートマシーン
 	std::unique_ptr<BoomerangStateMachine> m_stateMachine;
+
+	//1フレ前の座標
+	DirectX::SimpleMath::Vector3 m_lastPosition;
+
 
 };
 

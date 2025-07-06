@@ -63,25 +63,25 @@ void WeaponManager::Notify(SceneMessageType type, void* datas)
 			if (m_holdWeapon)
 			{
 				//状態の変更
-				m_holdWeapon->ChangeState(WeaponBase::WeaponState::BOOMERANG_IDLE);
+				m_holdWeapon->ChangeState(BoomerangState::IDEL);
 				m_holdWeapon = nullptr;
 			}
 			break;
 		case SceneMessageType::BOOMERANG_GET_READY_STATE:
 			//通常状態のブーメランを探す
-			m_holdWeapon = GetBoomerang(WeaponBase::WeaponState::BOOMERANG_IDLE);
+			m_holdWeapon = GetBoomerang(BoomerangState::IDEL);
 			//ヌルでない場合
 			if (m_holdWeapon)
 			{
 				//状態の変更
-				m_holdWeapon->ChangeState(WeaponBase::WeaponState::BOOMERANG_GET_READY);
+				m_holdWeapon->ChangeState(BoomerangState::GET_READY);
 			}
 			break;
 		case SceneMessageType::BOOMERANG_THROW_STATE:
 			//構えている場合
 			if (!m_holdWeapon) { return; }
 			//状態の変更
-			m_holdWeapon->ChangeState(WeaponBase::WeaponState::BOOMERANG_THROW);
+			m_holdWeapon->ChangeState(BoomerangState::THROW);
 			m_holdWeapon = nullptr;
 			break;
 		default:
@@ -95,12 +95,12 @@ void WeaponManager::Notify(SceneMessageType type, void* datas)
 /// </summary>
 /// <param name="getState">欲しい状態</param>
 /// <returns>ブーメランクラス</returns>
-Boomerang* WeaponManager::GetBoomerang(WeaponBase::WeaponState getState)
+Boomerang* WeaponManager::GetBoomerang(BoomerangState getState)
 {
 
 	for (auto& boomerang : m_boomerangs)
 	{
-		if (boomerang->GetWeaponState() == getState)
+		if (boomerang->GetState() == getState)
 		{
 			return boomerang;
 		}

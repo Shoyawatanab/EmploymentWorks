@@ -37,8 +37,6 @@ private:
 	DirectX::SimpleMath::Vector2 FilterWithinRange();
 
 
-	
-
 private:
 	//マーカー
 	Image* m_marker;

@@ -20,7 +20,8 @@ StageSelectScene::StageSelectScene(SceneManager* sceneManager)
 	:
 	m_camera{}
 {
-	FadeManager::GetInstance()->StartFadeOut();
+	//FadeManager::GetInstance()->StartFadeOut();
+	FadeManager::GetInstance()->StartFadeOut(FadeManager::FadeOutKinds::BOMERANG_FADE_OUT);
 
 }
 

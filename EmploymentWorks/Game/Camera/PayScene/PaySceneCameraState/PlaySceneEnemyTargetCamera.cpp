@@ -1,7 +1,12 @@
+/*
+	クラス名     : PlaySceneEnemyTargetCamera
+	説明         : 敵を倒したときの敵をターゲットにしたカメラ
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "PlaySceneEnemyTargetCamera.h"
 #include "Game/Camera/PayScene/PlaySceneCamera.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 
 /// <summary>
 /// コンストラク

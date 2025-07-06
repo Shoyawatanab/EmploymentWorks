@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "Animation.h"
-#include "GameBase/Component/Components.h"
+#include "GameBase/Component/Transform/Transform.h"
 
 /// <summary>
 /// コンストラクタ

@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "BossEnemyLeftArm.h"
 #include "GameBase/Scene/Scene.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "Game/Params.h"
 #include "Game/Messenger/Scene/SceneMessages.h"
 

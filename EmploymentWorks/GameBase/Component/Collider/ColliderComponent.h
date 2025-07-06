@@ -49,6 +49,8 @@ public:
 	//当たり判定を行わないオブジェクトタグの取得
 	std::vector<Actor::ObjectTag> GetNotHitObjectTag() { return m_notHitTag; }
 
+
+
 public:
 	//コンストラクタ
 	ColliderComponent(Actor* owner,ColliderTag tag , CollisionType type);
@@ -93,6 +95,7 @@ private:
 	DirectX::SimpleMath::Vector3 m_offsetPosition;
 	//当たり判定を行わないTag
 	std::vector<Actor::ObjectTag> m_notHitTag;
+
 
 };
 

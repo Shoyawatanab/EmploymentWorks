@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "ModelPartsBase.h"
-#include "GameBase/Component/Components.h"
+#include "GameBase/Component/Model/ModelComponent.h"
+#include "GameBase/Component/Transform/Transform.h"
 
 
 

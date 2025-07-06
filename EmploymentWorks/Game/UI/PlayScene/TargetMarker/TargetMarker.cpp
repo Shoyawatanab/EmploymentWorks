@@ -3,7 +3,7 @@
 #include "GameBase/Scene/Scene.h"
 #include "GameBase/UI/Canvas/Canvas.h"
 #include "GameBase/UI/Image.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "GameBase/Screen.h"
 #include "GameBase/Camera/Camera.h"
 #include "GameBase/Actor.h"

@@ -1,5 +1,9 @@
 #pragma once
-#include "GameBase/Component/Components.h"
+#include "GameBase/Component/Model/ModelComponent.h"
+#include "GameBase/Component/UI/ImageComponent.h"
+#include "GameBase/Component/Effect/EffectComponent.h"
+#include "GameBase/Component/RoundShadow/RoundShadowComponent.h"
+#include "GameBase/Component/Collider/ColliderComponent.h"
 
 class Camera;
 

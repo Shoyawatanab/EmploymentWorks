@@ -1,3 +1,8 @@
+/*
+	クラス名     : BirdEnemyBulletStateMachine
+	説明         : 鳥敵の弾のステートマシーン
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/StateMachine/StateMachine.h"
 #include "GameBase/Messenger/IObserver.h"

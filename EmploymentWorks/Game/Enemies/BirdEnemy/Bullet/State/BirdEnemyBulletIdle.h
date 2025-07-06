@@ -1,3 +1,8 @@
+/*
+	クラス名     : BirdEnemyBulletIdle
+	説明         : 鳥敵の弾の通常ステート
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Interface/IState.h"
 

@@ -16,6 +16,8 @@ BoomerangStateMachine::BoomerangStateMachine(Boomerang* boomerang, Player* playe
 	AddState(BoomerangState::IDEL, std::make_unique<BoomerangIdle>(this, boomerang,player));
 	AddState(BoomerangState::THROW, std::make_unique<BoomerangThrow>(this, boomerang,player));
 	AddState(BoomerangState::GET_READY, std::make_unique<BoomerangGetReady>(this, boomerang,player));
+	AddState(BoomerangState::BOUNCE, std::make_unique<BoomerangBounce>(this, boomerang));
+	AddState(BoomerangState::DORP, std::make_unique<BoomerangDrop>(this, boomerang));
 
 	//‰Šúó‘Ô
 	SetStartState(BoomerangState::IDEL);
@@ -43,14 +45,19 @@ void BoomerangStateMachine::DerivationChangeState(BoomerangState state)
 	switch (state)
 	{
 		case BoomerangState::IDEL:
-			m_boomerang->SetWeaponState(WeaponBase::WeaponState::BOOMERANG_IDLE);
+			m_boomerang->SetState(BoomerangState::IDEL);
 			break;
 		case BoomerangState::THROW:
-			m_boomerang->SetWeaponState(WeaponBase::WeaponState::BOOMERANG_THROW);
+			m_boomerang->SetState(BoomerangState::THROW);
 			break;
 		case BoomerangState::GET_READY:
-			m_boomerang->SetWeaponState(WeaponBase::WeaponState::BOOMERANG_GET_READY);
-
+			m_boomerang->SetState(BoomerangState::GET_READY);
+			break;
+		case BoomerangState::BOUNCE:
+			m_boomerang->SetState(BoomerangState::BOUNCE);
+			break;
+		case BoomerangState::DORP:
+			m_boomerang->SetState(BoomerangState::DORP);
 			break;
 		default:
 			break;

@@ -4,7 +4,7 @@
 */
 #include "pch.h"
 #include "Floor.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 
 /// <summary>
 /// コンストラク
@@ -24,7 +24,7 @@ Floor::Floor(Scene* scene, StageFactory::StageParameter parameter)
 	AddComponent<ModelComponent>(this, "Floor");
 
 	AddComponent<AABB>(this, ColliderComponent::ColliderTag::AABB, CollisionType::FIXED
-		,GetTransform()->GetScale() + DirectX::SimpleMath::Vector3(0,0,0), 60.0f);
+		,DirectX::SimpleMath::Vector3(1,1,1), 2.0f);
 	
 	
 }

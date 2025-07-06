@@ -1,7 +1,11 @@
+/*
+	クラス名    :PlaySceneCameraStop
+	説明        :停止カメラ　
+	補足・注意点:前の状態で止める
+*/
 #include "pch.h"
 #include "PlaySceneCameraStop.h"
 #include "Game/Camera/PayScene/PlaySceneCamera.h"
-#include "GameBase/Component/Components.h"
 
 /// <summary>
 /// コンストラク

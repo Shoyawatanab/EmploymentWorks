@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "Boomerang.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "Game/Params.h"
 #include "Game/Weapon/Boomerang/State/BoomerangStateMachine.h"
 
@@ -12,12 +12,14 @@
 Boomerang::Boomerang(Scene* scene,Player* player)
 	:
 	WeaponBase(scene)
+	,m_lastPosition{}
 {
 
 	//当たり判定の作成
 	auto aabbCollider = AddComponent<AABB>(this, ColliderComponent::ColliderTag::AABB, CollisionType::COLLISION
 		, Params::BOOMERANG_BOX_COLLIDER_SIZE
 		, Params::BOOMERANG_SPHERE_COLLIDER_SIZE);
+
 	//当たり判定を無効に
 	aabbCollider->SetActive(false);
 
@@ -27,6 +29,12 @@ Boomerang::Boomerang(Scene* scene,Player* player)
 		});
 
 	auto shadow = AddComponent<RoundShadowComponent>(this, Params::PLAYER_SHADOW_RADIUS);
+
+	auto rigidbody = AddComponent<RigidbodyComponent>(this);
+	rigidbody->SetActive(false);
+
+	auto pcikable = AddComponent<PickableComponent>(this,PickUpManager::PickUpType::PLAYER_PICKUP_WEAPON);
+	pcikable->SetOnPickUpFunction(std::bind(&Boomerang::PickUp,this));
 
 
 	//初期情報の適用
@@ -49,6 +57,7 @@ Boomerang::Boomerang(Scene* scene,Player* player)
 /// </summary>
 Boomerang::~Boomerang()
 {
+
 }
 
 /// <summary>
@@ -58,7 +67,12 @@ Boomerang::~Boomerang()
 void Boomerang::UpdateActor(const float& deltaTime)
 {
 	m_stateMachine->Update(deltaTime);
+
+	//座標の保存
+	m_lastPosition = GetTransform()->GetPosition();
+
 }
+
 
 /// <summary>
 /// 当たった時の関数
@@ -67,28 +81,53 @@ void Boomerang::UpdateActor(const float& deltaTime)
 void Boomerang::OnCollisionEnter(ColliderComponent* collider)
 {
 
+	switch (collider->GetActor()->GetObjectTag())
+	{
+		case Actor::ObjectTag::STAGE:
+
+			if (m_stateMachine->GetCurrentState() == BoomerangState::THROW)
+			{
+				m_stateMachine->ChangeState(BoomerangState::BOUNCE);
+			}
+			else if (m_stateMachine->GetCurrentState() == BoomerangState::BOUNCE)
+			{
+				m_stateMachine->ChangeState(BoomerangState::DORP);
+			}
+			break;
+		default:
+			break;
+	}
+
 }
 
 /// <summary>
 /// ステートの変更
 /// </summary>
 /// <param name="state">次のステート</param>
-void Boomerang::ActorChangeState(WeaponState nextState)
+void Boomerang::ActorChangeState(BoomerangState nextState)
 {
 
 	switch (nextState)
 	{
-		case WeaponBase::WeaponState::BOOMERANG_IDLE:
+		case BoomerangState::IDEL:
 			m_stateMachine->ChangeState(BoomerangState::IDEL);
 			break;
-		case WeaponBase::WeaponState::BOOMERANG_GET_READY:
+		case BoomerangState::GET_READY:
 			m_stateMachine->ChangeState(BoomerangState::GET_READY);
 			break;
-		case WeaponBase::WeaponState::BOOMERANG_THROW:
+		case BoomerangState::THROW:
 			m_stateMachine->ChangeState(BoomerangState::THROW);
 			break;
 		default:
 			break;
 	}
 
+}
+
+/// <summary>
+/// 回収
+/// </summary>
+void Boomerang::PickUp()
+{
+	m_stateMachine->ChangeState(BoomerangState::IDEL);
 }

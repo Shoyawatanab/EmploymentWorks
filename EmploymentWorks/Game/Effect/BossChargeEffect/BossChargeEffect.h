@@ -1,3 +1,8 @@
+/*
+	クラス名     : BossChargeEffect
+	説明         : ボスのジャンプ時のチャージエフェクト
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Actor.h"
 

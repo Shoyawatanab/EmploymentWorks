@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "PlaySceneSound.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 
 /// <summary>
 /// コンストラク

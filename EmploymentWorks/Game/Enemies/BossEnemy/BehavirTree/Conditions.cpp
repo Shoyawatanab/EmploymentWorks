@@ -4,7 +4,7 @@
 #include "Game/Player/Player.h"
 #include "Game/Enemies/BossEnemy/BossEnemy.h"
 #include "Game/Params.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "Game/MathUtil.h"
 
 /// <summary>

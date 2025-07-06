@@ -5,7 +5,7 @@
 #include "pch.h"
 #include "PlayScene.h"
 #include <cassert>
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "Game/Stage/StageFactory.h"
 #include "Game/Player/Player.h"
 #include "Game/Camera/PayScene/PlaySceneCamera.h"
@@ -17,6 +17,8 @@
 #include "Game/Effect/EffectFactory.h"
 #include "Game/Sound/PlayScene/PlaySceneSound.h"
 #include "Game/GlobalGameData.h"
+#include "Game/Manager/Managers.h"
+
 
 /// <summary>
 /// コンストラク
@@ -24,13 +26,13 @@
 PlayScene::PlayScene()
 	:
 	m_camera{}
-	,m_isChangeScene{}
+	,m_pickUpManager{}
 {
 	
+	m_pickUpManager = std::make_unique<PickUpManager>();
 
+	//
 	FadeManager::GetInstance()->StartFadeOut();
-	
-	
 
 }
 
@@ -39,9 +41,6 @@ PlayScene::PlayScene()
 //---------------------------------------------------------
 PlayScene::~PlayScene()
 {
-
-	// do nothing.
-	//Messenger::GetInstance()->Clear();
 
 
 
@@ -94,7 +93,10 @@ void PlayScene::Initialize()
 void PlayScene::SceneUpdate(const float& deltaTime)
 {
 	
+	m_pickUpManager->Update(deltaTime);
+
 	GlobalGameData::GetInstance()->AddClearTime(deltaTime);
+
 
 
 }

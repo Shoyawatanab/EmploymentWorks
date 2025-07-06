@@ -1,3 +1,8 @@
+/*
+	クラス名     : ResultCamera
+	説明         : リザルトシーンカメラ
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "ResultCamera.h"
 
