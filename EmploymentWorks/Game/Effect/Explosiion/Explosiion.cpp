@@ -1,6 +1,11 @@
+/*
+	クラス名     : Explosiion
+	説明         : 爆発エフェクト
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "Explosiion.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "GameBase/Scene/Scene.h"
 #include "GameBase/Common/Commons.h"
 #include "GameBase/Camera/Camera.h"

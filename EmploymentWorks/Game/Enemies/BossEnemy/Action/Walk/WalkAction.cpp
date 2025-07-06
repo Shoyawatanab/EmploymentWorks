@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "WalkAction.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "Game/Params.h"
 #include "GameBase/Common/Commons.h"
 #include "Game/Messenger/Scene/SceneMessages.h"

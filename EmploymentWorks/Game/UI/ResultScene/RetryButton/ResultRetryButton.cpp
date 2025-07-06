@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "ResultRetryButton.h"
 #include "GameBase/Scene/Scene.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "Game/Messenger/Global/GlobalMessages.h"
 #include "Game/Fade/FadeManager.h"
 

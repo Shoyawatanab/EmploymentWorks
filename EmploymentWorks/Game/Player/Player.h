@@ -9,6 +9,7 @@ class PlayerModel;
 class AnimatorComponent;
 class PlayerUsually;
 class TargetMarker;
+class PickerComponent;
 
 class Player : public Actor
 {
@@ -50,7 +51,10 @@ public:
 	//衝突が終了したときに呼び出される
 	void OnCollisionExit(ColliderComponent* collider) override;
 
-
+	//武器が回収できるようになった
+	void WeaponRecoverable();
+	//武器が回収できなくなったとき
+	void WeaponUnrecoverable();
 
 private:
 	//着地したとき
@@ -75,11 +79,11 @@ private:
 	bool m_isGround;
 	//1フレ前の座標
 	DirectX::SimpleMath::Vector3 m_lastPosition;
-
 	//ターゲットマーカー
 	TargetMarker* m_targetMarker;
-
 	//HP
 	int m_hp;
+	//回収者コンポーネント
+	PickerComponent* m_picker;
 
 };

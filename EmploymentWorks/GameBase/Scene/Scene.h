@@ -20,7 +20,6 @@ public:
 	RigidbodyManager* GetRigidbodyManager() { return m_rigidbodyManager.get(); }
 	UIManager* GetUIManager() { return m_uiManager.get(); }
 
-
 	//カメラの取得
 	virtual Camera* GetCamera() const = 0;
 
@@ -72,6 +71,8 @@ private:
 	std::unique_ptr<RigidbodyManager> m_rigidbodyManager;
 	//UIマネージャー
 	std::unique_ptr<UIManager> m_uiManager;
+
+
 
 };
 

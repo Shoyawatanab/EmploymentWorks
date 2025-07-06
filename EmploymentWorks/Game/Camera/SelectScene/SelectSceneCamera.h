@@ -1,3 +1,8 @@
+/*
+	クラス名     : SelectSceneCamera
+	説明         : セレクトシーンカメラ
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Camera/Camera.h"
 
@@ -7,7 +12,7 @@ public:
 	//コンストラク
 	SelectSceneCamera(Scene* scene);
 	//デストラクタ
-	~SelectSceneCamera();
+	~SelectSceneCamera() override;
 
 
 

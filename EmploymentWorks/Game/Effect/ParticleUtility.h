@@ -1,5 +1,9 @@
+/*
+	クラス名     : EffectFactory
+	説明         : エフェクトの作成・管理を行うクラス
+	補足・注意点 :
+*/
 #pragma once
-
 
 class ParticleUtility
 {

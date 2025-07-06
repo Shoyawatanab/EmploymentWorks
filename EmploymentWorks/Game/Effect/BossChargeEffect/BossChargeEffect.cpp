@@ -1,11 +1,16 @@
+/*
+	クラス名     : BossChargeEffect
+	説明         : ボスのジャンプ時のチャージエフェクト
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "BossChargeEffect.h"
-#include "GameBase/Component/Components.h"
+#include "GameBase/Component/Effect/EffectComponent.h"
+#include "GameBase/Component/Transform/Transform.h"
 #include "GameBase/Scene/Scene.h"
 #include "GameBase/Common/Commons.h"
 #include "GameBase/Camera/Camera.h"
 #include "GameBase/GameResources.h"
-#include "GameBase/Component/Components.h"
 #include "Game/Effect/ParticleUtility.h"
 #include "GameBase/Shader/ShaderFactory.h"
 

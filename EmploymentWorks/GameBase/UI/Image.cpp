@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Image.h"
 #include "GameBase/UI/Canvas/Canvas.h"
-#include "GameBase/Component/Components.h"
+#include "GameBase/Component/UI/ImageComponent.h"
 
 /// <summary>
 /// コンストラクタ

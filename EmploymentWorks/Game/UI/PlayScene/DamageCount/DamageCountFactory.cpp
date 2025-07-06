@@ -4,7 +4,7 @@
 #include "Game/UI/PlayScene/DamageCount/DamageCount.h"
 #include "GameBase/Scene/Scene.h"
 #include "Game/Messenger/Scene/SceneMessages.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "Game/MathUtil.h"
 #include "GameBase/Scene/Scene.h"
 #include "GameBase/Camera/Camera.h"

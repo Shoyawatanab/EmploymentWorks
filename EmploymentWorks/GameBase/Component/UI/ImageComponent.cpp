@@ -8,7 +8,7 @@
 #include "GameBase/Shader/ShaderFactory.h"
 #include "Libraries/MyLib/BinaryFile.h"
 #include "GameBase/Screen.h"
-#include "GameBase/Component/Components.h"
+#include "GameBase/Component/Transform/Transform.h"
 
 /// <summary>
 /// インプットレイアウト

@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "BossEnemyLeftLeg.h"
 #include "GameBase/Scene/Scene.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "Game/Params.h"
 
 BossEnemyLeftLeg::BossEnemyLeftLeg(Scene* scene, BossEnemy* boss)

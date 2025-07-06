@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "BirdEnemyRightFeather.h"
 #include "GameBase/Scene/Scene.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "Game/Params.h"
 
 /// <summary>

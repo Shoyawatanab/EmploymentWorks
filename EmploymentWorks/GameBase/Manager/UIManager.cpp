@@ -3,7 +3,9 @@
 #include "GameBase/Component/UI/ButtonComponent.h"
 #include "GameBase/Common/Commons.h"
 #include "GameBase/Actor.h"
-#include "GameBase/Component/Components.h"
+#include "GameBase/Component/UI/ImageComponent.h"
+#include "GameBase/Component/UI/ButtonComponent.h"
+#include "GameBase/Component/Transform/Transform.h"
 #include "GameBase/Screen.h"
 
 /// <summary>

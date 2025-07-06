@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "PlayerBody.h"
 #include "GameBase/Scene/Scene.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "Game/Player/PlayerPartss.h"
 #include "Game/Params.h"
 

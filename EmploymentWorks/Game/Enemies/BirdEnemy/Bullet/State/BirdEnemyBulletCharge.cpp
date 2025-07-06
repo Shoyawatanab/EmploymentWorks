@@ -1,10 +1,15 @@
+/*
+	クラス名     : BirdEnemyBulletCharge
+	説明         : 鳥敵の弾のチャージステート
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "BirdEnemyBulletCharge.h"
 #include <random>
 #include "Game/Params.h"
 #include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/Enemies/BirdEnemy/Bullet/BirdEnemyBullet.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 
 /// <summary>
 /// コンストラク

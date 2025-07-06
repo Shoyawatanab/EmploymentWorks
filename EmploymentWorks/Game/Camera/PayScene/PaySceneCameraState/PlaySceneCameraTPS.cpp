@@ -1,8 +1,13 @@
+/*
+	クラス名     : PlaySceneCameraTPS
+	説明         : TPSカメラ　
+	補足・注意点 : ゲームのプレイ中に使用
+*/
 #include "pch.h"
 #include "PlaySceneCameraTPS.h"
 #include "Game/Camera/PayScene/PlaySceneCamera.h"
 #include "Game/Player/Player.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "Game/Messenger/Scene/SceneMessages.h"
 
 /// <summary>

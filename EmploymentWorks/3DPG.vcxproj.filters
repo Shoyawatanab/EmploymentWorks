@@ -399,7 +399,7 @@
     <ClInclude Include="GameBase\Actor.h" />
     <ClInclude Include="GameBase\Component.h" />
     <ClInclude Include="GameBase\Component\Transform\Transform.h" />
-    <ClInclude Include="GameBase\Component\Components.h" />
+    <ClInclude Include="GameBase\Component\BaseComponents.h" />
     <ClInclude Include="GameBase\Manager\RenderManager.h" />
     <ClInclude Include="GameBase\Component\Model\ModelComponent.h" />
     <ClInclude Include="Game\Stage\StageFactory.h" />
@@ -572,6 +572,18 @@
     <ClInclude Include="Game\Effect\BossChargeEffect\BossChargeEffect.h" />
     <ClInclude Include="Game\Effect\ParticleUtility.h" />
     <ClInclude Include="Game\Effect\Particle\Particle.h" />
+    <ClInclude Include="Game\Fade\FadeIn\BoomerangFadeIn.h" />
+    <ClInclude Include="Game\Fade\EasingFunctions.h" />
+    <ClInclude Include="Game\Fade\FadeOut\BoomerangFadeOut.h" />
+    <ClInclude Include="Game\Weapon\Boomerang\State\BoomerangBounce.h" />
+    <ClInclude Include="Game\Weapon\Boomerang\State\BoomerangDrop.h" />
+    <ClInclude Include="Game\Player\PlayerPickUp.h" />
+    <ClInclude Include="Game\Component\PickUp\PickerComponent.h" />
+    <ClInclude Include="Game\Manager\PickUp\PickUpManager.h" />
+    <ClInclude Include="Game\Component\PickUp\PickableComponent.h" />
+    <ClInclude Include="Game\Manager\Managers.h" />
+    <ClInclude Include="Game\Component\Components.h" />
+    <ClInclude Include="Game\UI\PlayScene\PickUp\PickUpUI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -877,6 +889,15 @@
     <ClCompile Include="Game\Effect\BossChargeEffect\BossChargeEffect.cpp" />
     <ClCompile Include="Game\Effect\ParticleUtility.cpp" />
     <ClCompile Include="Game\Effect\Particle\Particle.cpp" />
+    <ClCompile Include="Game\Fade\FadeIn\BoomerangFadeIn.cpp" />
+    <ClCompile Include="Game\Fade\FadeOut\BoomerangFadeOut.cpp" />
+    <ClCompile Include="Game\Weapon\Boomerang\State\BoomerangBounce.cpp" />
+    <ClCompile Include="Game\Weapon\Boomerang\State\BoomerangDrop.cpp" />
+    <ClCompile Include="Game\Player\PlayerPickUp.cpp" />
+    <ClCompile Include="Game\Component\PickUp\PickerComponent.cpp" />
+    <ClCompile Include="Game\Manager\PickUp\PickUpManager.cpp" />
+    <ClCompile Include="Game\Component\PickUp\PickableComponent.cpp" />
+    <ClCompile Include="Game\UI\PlayScene\PickUp\PickUpUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />
@@ -925,6 +946,8 @@
       <Filter>Game\Shaders\Number</Filter>
     </None>
     <None Include="Game\Shaders\GameOver\GameOver.hlsli" />
+    <None Include="Game\Shaders\Fade\DieCutting\DieCutting.hlsli" />
+    <None Include="Game\Shaders\Fade\DieCutting\Mask.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Game\Shaders\Fade\FadeGS.hlsl">
@@ -1005,11 +1028,14 @@
     <FxCompile Include="Game\Shaders\Number\NumberVS.hlsl">
       <Filter>Game\Shaders\Number</Filter>
     </FxCompile>
-    <FxCompile Include="Game\Shaders\ParticleCS.hlsl" />
-    <FxCompile Include="Game\Shaders\SpritePS.hlsl" />
-    <FxCompile Include="Game\Shaders\SpriteVS.hlsl" />
     <FxCompile Include="Game\Shaders\GameOver\GameOverVS.hlsl" />
     <FxCompile Include="Game\Shaders\GameOver\GameOverPS.hlsl" />
     <FxCompile Include="Game\Shaders\GameOver\GameOverGS.hlsl" />
+    <FxCompile Include="Game\Shaders\Fade\DieCutting\DieCuttingGS.hlsl" />
+    <FxCompile Include="Game\Shaders\Fade\DieCutting\DieCuttingPS.hlsl" />
+    <FxCompile Include="Game\Shaders\Fade\DieCutting\DieCuttingVS.hlsl" />
+    <FxCompile Include="Game\Shaders\Fade\DieCutting\MaskGS.hlsl" />
+    <FxCompile Include="Game\Shaders\Fade\DieCutting\MaskPS.hlsl" />
+    <FxCompile Include="Game\Shaders\Fade\DieCutting\MaskVS.hlsl" />
   </ItemGroup>
 </Project>

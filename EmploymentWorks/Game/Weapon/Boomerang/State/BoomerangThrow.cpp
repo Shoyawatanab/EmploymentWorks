@@ -2,7 +2,7 @@
 #include "BoomerangThrow.h"
 #include "Game/Weapon/Boomerang/Boomerang.h"
 #include "Game/Params.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "Game/Player/Player.h"
 #include "Game/MathUtil.h"
 #include "Libraries/WataLib/CSV.h"
@@ -103,12 +103,7 @@ void BoomerangThrow::Enter()
 /// </summary>
 void BoomerangThrow::Exit()
 {
-	//当たり判定の無効
-	auto aabb = m_boomerang->GetComponent<AABB>();
-	aabb->SetActive(false);
-	//影の無効
-	auto shadow = m_boomerang->GetComponent<RoundShadowComponent>();
-	shadow->SetActive(false);
+
 
 
 }
@@ -291,8 +286,6 @@ void BoomerangThrow::ChaseToPlayer(const float& deltaTime)
 
 		//ブーメランの状態を通常に
 		m_boomerang->GetStateMAchine()->ChangeState(BoomerangState::IDEL);
-		//ブーメランのキャッチの活動
-		SceneMessenger::GetInstance()->Notify(SceneMessageType::BOOMERANG_CATCH);
 
 	}
 

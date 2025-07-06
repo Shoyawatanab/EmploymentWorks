@@ -1,8 +1,13 @@
+/*
+	クラス名     : EffectFactory
+	説明         : エフェクトの作成・管理を行うクラス
+	補足・注意点 :
+*/
 #include"pch.h"
 #include "EffectFactory.h"
 #include "Effects.h"
 #include "GameBase/Scene/Scene.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "Game/Messenger/Scene/SceneMessages.h"
 
 /// <summary>

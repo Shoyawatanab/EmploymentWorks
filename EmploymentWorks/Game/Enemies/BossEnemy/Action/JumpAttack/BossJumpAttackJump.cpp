@@ -2,7 +2,7 @@
 #include "BossJumpAttackJump.h"
 #include "GameBase/Common/Commons.h"
 #include "Game/Enemies/BossEnemy/Action/JumpAttack/BossJumpAttackActionController.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "Game/Enemies/BossEnemy/BossEnemy.h"
 #include "Game/Player/Player.h"
 

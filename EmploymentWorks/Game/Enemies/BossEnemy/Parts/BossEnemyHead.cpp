@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "BossEnemyHead.h"
 #include "GameBase/Scene/Scene.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "Game/Params.h"
 
 BossEnemyHead::BossEnemyHead(Scene* scene, BossEnemy* boss)

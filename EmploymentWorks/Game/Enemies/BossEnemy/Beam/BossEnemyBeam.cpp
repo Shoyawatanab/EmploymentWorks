@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "BossEnemyBeam.h"
 #include "GameBase/Scene/Scene.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "Game/Enemies/BossEnemy/Beam/Rays/BossEnemyBeamRays.h"
 #include "Game/Enemies/BossEnemy/Beam/EnergyBall/BossEnemyBeamEnergyBall.h"
 

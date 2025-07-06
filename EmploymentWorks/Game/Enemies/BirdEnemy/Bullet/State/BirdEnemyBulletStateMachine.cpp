@@ -1,3 +1,8 @@
+/*
+	クラス名     : BirdEnemyBulletStateMachine
+	説明         : 鳥敵の弾のステートマシーン
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "BirdEnemyBulletStateMachine.h"
 #include "Game/Enemies/BirdEnemy/State/BirdEnemyStates.h"

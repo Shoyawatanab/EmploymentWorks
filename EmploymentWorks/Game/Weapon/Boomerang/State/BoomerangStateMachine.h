@@ -6,9 +6,11 @@ class Player;
 
 enum class BoomerangState
 {
-	IDEL
-	,THROW
-	,GET_READY
+	IDEL                //’Êí
+	,THROW				//“Š‚°‚ç‚ê‚Ä‚¢‚é
+	,GET_READY			//\‚¦‚Ä‚¢‚é
+	,BOUNCE				//’µ‚Ë•Ô‚è
+	,DORP               //—‚¿‚½
 };
 
 class BoomerangStateMachine : public StateMachine<IState, BoomerangState>

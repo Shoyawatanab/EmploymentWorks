@@ -1,5 +1,7 @@
 /*
-敵を倒したときの敵をターゲットにしたカメラ
+	クラス名     : PlaySceneEnemyTargetCamera
+	説明         : 敵を倒したときの敵をターゲットにしたカメラ
+	補足・注意点 : 
 */
 
 #pragma once

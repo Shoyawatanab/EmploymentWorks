@@ -6,24 +6,16 @@
 #include "GameBase/Scene/Scene.h"
 #include "SceneManager.h"
 
-// 前方宣言
+class PickUpManager;
 
-namespace mylib
-{
-	class DebugCamera;
-	class GridFloor;
-}
 
-namespace WataLib
-{
-	class CameraManager;
-}
-
-class PlayScene  :  public Scene// ,public IObserver<GamePlayMessageType>
+class PlayScene  :  public Scene
 {
 public:
-
+	//カメラの取得
 	Camera* GetCamera() const  override { return m_camera; };
+	//回収マネージャーの取得
+	PickUpManager* GetPickUpManager() { return m_pickUpManager.get(); }
 
 
 public:
@@ -44,10 +36,10 @@ public:
 private:
 
 
-	// シーンチェンジフラグ
-	bool m_isChangeScene;
 	//カメラ
 	Camera* m_camera;
+	//回収マネージャー
+	std::unique_ptr<PickUpManager> m_pickUpManager;
 
 
 

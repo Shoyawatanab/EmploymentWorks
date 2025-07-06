@@ -8,7 +8,7 @@
 #include "nlohmann/json.hpp"
 #include "Game/Stage/StageObjects.h"
 #include "GameBase/Scene/Scene.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "Game/MathUtil.h"
 #include "Game/GlobalGameData.h"
 
@@ -122,12 +122,20 @@ void StageFactory::LoadStageData()
 		}
 		else if (item["kinds"] == "Floor")
 		{
-			auto wall = GetScene()->AddActor<Floor>(GetScene(), stageParameter);
+			auto floor = GetScene()->AddActor<Floor>(GetScene(), stageParameter);
 
 		}
 	}
 
 
+	//StageParameter a;
+
+	//a.Position = Vector3(20, 1, 0);
+	//a.Scale = Vector3::One;
+	//a.Rotation = Quaternion::CreateFromYawPitchRoll(DirectX::XMConvertToRadians(0.0f)
+	//												, DirectX::XMConvertToRadians(90.0f)
+	//												, DirectX::XMConvertToRadians(0.0f));
+	//auto wall = GetScene()->AddActor<Wall>(GetScene(), a);
 
 
 }

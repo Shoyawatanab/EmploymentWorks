@@ -3,7 +3,7 @@
 #include "Game/UI/TitleScene/TitleSceneUIs.h"
 #include "GameBase/UI/Image.h"
 #include "GameBase/Scene/Scene.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 
 /// <summary>
 /// コンストラクタ

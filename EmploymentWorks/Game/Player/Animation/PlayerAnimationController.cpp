@@ -2,7 +2,7 @@
 #include "PlayerAnimationController.h"
 #include "Game/Player/Player.h"
 #include "Game/Player/Model/PlayerModel.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "Game/Messenger/Scene/SceneMessages.h"
 
 

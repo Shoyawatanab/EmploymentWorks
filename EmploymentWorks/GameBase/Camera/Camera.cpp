@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "Camera.h"
-#include "GameBase/Component/Components.h"
 #include "GameBase/Screen.h"
 
 

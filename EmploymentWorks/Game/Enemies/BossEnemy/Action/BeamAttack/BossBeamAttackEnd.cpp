@@ -7,7 +7,7 @@
 #include "Game/Enemies/BossEnemy/Beam/BossEnemyBeam.h"
 #include "Game/Enemies/BossEnemy/Beam/EnergyBall/BossEnemyBeamEnergyBall.h"
 #include "Game/Enemies/BossEnemy/Beam/Rays/BossEnemyBeamRays.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 
 
 /// <summary>

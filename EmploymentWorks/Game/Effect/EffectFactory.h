@@ -1,3 +1,8 @@
+/*
+	クラス名     : EffectFactory
+	説明         : エフェクトの作成・管理を行うクラス
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Actor.h"
 #include "GameBase/Messenger/IObserver.h"

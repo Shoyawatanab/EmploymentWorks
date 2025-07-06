@@ -4,7 +4,7 @@
 #include "GameBase/Scene/Scene.h"
 #include "Game/Params.h"
 #include "Game/Player/State/PlayerStateMachine.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "Game/Player/Model/PlayerModel.h"
 #include "Game/Player/Animation/PlayerAnimationController.h"
 #include "GameBase/Common/Commons.h"
@@ -14,7 +14,7 @@
 #include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/Player/PlayerUsually.h"
 #include "Game/Fade/FadeManager.h"
-#include "Libraries/MyLib/DebugString.h"
+
 
 /// <summary>
 /// コンストラクタ
@@ -40,6 +40,11 @@ Player::Player(Scene* scene)
 
 	AddComponent<RoundShadowComponent>(this, Params::PLAYER_SHADOW_RADIUS);
 
+	m_picker = AddComponent<PickerComponent>(this, PickUpManager::PickUpType::PLAYER_PICKUP_WEAPON);
+	m_picker->SetIsPickUp(true);
+	m_picker->SetRecoverableFunction(std::bind(&Player::WeaponRecoverable, this));
+	m_picker->SetUnrecoverableFunction(std::bind(&Player::WeaponUnrecoverable, this));
+
 	//モデルの作成
 	m_model =  GetScene()->AddActor<PlayerModel>(GetScene());
 	//親子関係をセット
@@ -49,6 +54,7 @@ Player::Player(Scene* scene)
 	//初期情報の適用
 	GetTransform()->SetScale(Params::PLAYER_SCALE);
 	GetTransform()->Translate(Params::PLAYER_POSITION);
+	GetTransform()->Translate(DirectX::SimpleMath::Vector3(25,1,0));
 	GetTransform()->SetRotate(Params::PLAYER_ROTATION);
 
 	//ステートの作成
@@ -98,11 +104,13 @@ void Player::UpdateActor(const float& deltaTime)
 	//座標の保存
 	m_lastPosition = GetTransform()->GetPosition();
 
-	//// デバッグ情報を表示する
-	auto debugString = CommonResources::GetInstance()->GetDebugString();
-	debugString->AddString("X %f", speed);
+	// キーボードステートトラッカーを取得する
+	const auto& kbTracker = CommonResources::GetInstance()->GetInputManager()->GetKeyboardTracker();
 
-	
+	if (kbTracker->released.F)
+	{
+		m_picker->TryPickUp();
+	}
 
 }
 
@@ -165,6 +173,23 @@ void Player::OnCollisionExit(ColliderComponent* collider)
 		default:
 			break;
 	}
+}
+
+/// <summary>
+/// 武器を回収できるようになった
+/// </summary>
+void Player::WeaponRecoverable()
+{
+	SceneMessenger::GetInstance()->Notify(SceneMessageType::PLAYER_PICKUP_POSSIBLE);
+}
+
+/// <summary>
+/// 武器を回収できなくなったとき
+/// </summary>
+void Player::WeaponUnrecoverable()
+{
+	SceneMessenger::GetInstance()->Notify(SceneMessageType::PLAYER_PICKUP_IMPOSSIBLE);
+
 }
 
 

@@ -11,7 +11,7 @@
 #include "Game/Stage/StageFactory.h"
 #include "Game/Player/Model/PlayerModel.h"
 #include "Game/Params.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "Game/Fade/FadeManager.h"
 
 
@@ -20,12 +20,12 @@
 /// </summary>
 TitleScene::TitleScene()
 	:
-	m_projection{}
+	m_camera{}
 {
 
-	FadeManager::GetInstance()->StartFadeOut();
+	//FadeManager::GetInstance()->StartFadeOut();
 
-
+	FadeManager::GetInstance()->StartFadeOut(FadeManager::FadeOutKinds::BOMERANG_FADE_OUT);
 
 }
 

@@ -16,25 +16,29 @@ public:
 	{
 		NONE                //通常
 		,FADE_IN    	    //フェードイン
-		,FADE_IN_END	    //フェードイン終了
+		,DELAY              //ディレイ
 		,FADE_OUT		    //フェードアウト
 	};
 
 	//フェードインの種類
 	enum  class FadeInKinds
 	{
-
 		NORMAL_FADE_IN                 //ノーマルフェードイン
-
+		,BOMERANG_FADE_IN
 	};
 	//フェードアウトの種類
 	enum  class FadeOutKinds
 	{
 
 		NORMAL_FADE_OUT			   //ノーマルフェードアウト
+		,BOMERANG_FADE_OUT
 
 	};
 
+
+
+	//ディレイ時間
+	static constexpr float DELAY_TIME = 0.5f;
 
 public:
 
@@ -64,13 +68,19 @@ public:
 	void StartFadeOut();
 
 private:
-
+	//ディレイの更新
+	bool DelayUpdate(const float& deltaTime);
+	//フェードイン状態のデータの切り替え
+	void ChangeFadeInDatas(FadeInKinds kinds);
+	//フェードイン状態のデータの切り替え
+	void ChangeFadeOutDatas(FadeOutKinds kinds);
 	//フェードインの追加
 	void AddFadeIn(FadeInKinds kinds, std::unique_ptr<IFade> fade);
 	//フェードアウトの追加
 	void AddFadeOut(FadeOutKinds kinds, std::unique_ptr<IFade> fade);
 	//フェードの切り替え
 	void ChangeFade(IFade* fade);
+
 private:
 	//実行フェーズ
 	IFade* m_currentFade;
@@ -83,6 +93,8 @@ private:
 	std::unordered_map<FadeOutKinds, std::unique_ptr<IFade>> m_fadeOutList;
 	//フェード実行中か　true：実行中　false：未実行
 	bool m_isFade;
+	//ディレイ時間
+	float m_delayTime;
 
 };
 

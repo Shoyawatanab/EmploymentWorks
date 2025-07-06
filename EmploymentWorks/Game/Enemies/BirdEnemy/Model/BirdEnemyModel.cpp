@@ -2,7 +2,7 @@
 #include "BirdEnemyModel.h"
 #include "GameBase/Scene/Scene.h"
 #include "Game/Enemies/BirdEnemy/BirdEnemyPartss.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 
 /// <summary>
 /// コンストラク

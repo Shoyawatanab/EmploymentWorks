@@ -5,7 +5,7 @@
 #include "GameBase/Common/Commons.h"
 #include "GameBase/GameResources.h"
 #include "GameBase/Camera/Camera.h"
-
+#include "GameBase/Component/Transform/Transform.h"
 
 /// <summary>
 /// コンストラクタ

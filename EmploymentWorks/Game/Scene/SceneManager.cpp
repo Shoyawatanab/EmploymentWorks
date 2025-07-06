@@ -74,7 +74,7 @@ void SceneManager::Update(float elapsedTime)
 	if (m_nextSceneID == SceneID::NONE) return;
 
 	//フェード
-	if (m_fadeManager->GetFadeState() != FadeManager::FadeState::FADE_IN_END)
+	if (m_fadeManager->GetFadeState() != FadeManager::FadeState::NONE)
 	{
 		return;
 	}

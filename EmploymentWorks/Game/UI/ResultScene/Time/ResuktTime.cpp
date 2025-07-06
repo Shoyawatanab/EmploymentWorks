@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "ResuktTime.h"
 #include "GameBase/Scene/Scene.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "GameBase/UI/Canvas/Canvas.h"
 #include "Game/UI/NumberUI.h"
 #include "Game/UI/ResultScene/Time/TimeSeparator.h"

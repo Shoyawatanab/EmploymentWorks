@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "BoomerangGetReady.h"
 #include "Game/Weapon/Boomerang/Boomerang.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "Game/Params.h"
 #include "Game/Player/Player.h"
 

@@ -1,3 +1,8 @@
+/*
+	クラス名     : PlaySceneCameraStateMachine
+	説明         : プレイシーンカメラのステートマシーン
+	補足・注意点 : 
+*/
 #pragma once
 #include "GameBase/StateMachine/StateMachine.h"
 #include "GameBase/Messenger/IObserver.h"
@@ -5,7 +10,7 @@
 
 class PlaySceneCamera;
 
-
+//ステートの状態
 enum class PlaySceneCameraState
 {
 	

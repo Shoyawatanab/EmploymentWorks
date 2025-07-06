@@ -2,7 +2,7 @@
 #include "EnemyManager.h"
 #include "Game/Enemies/Enemys.h"
 #include "GameBase/Scene/Scene.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "Game/GlobalGameData.h"
 #include <iostream>
 #include <fstream>

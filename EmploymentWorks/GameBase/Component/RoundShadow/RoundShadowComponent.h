@@ -1,7 +1,7 @@
 #pragma once
 #include "GameBase/Component.h"
-#include "GameBase/Component/Components.h"
 
+class Camera;
 
 class RoundShadowComponent : public Component
 {

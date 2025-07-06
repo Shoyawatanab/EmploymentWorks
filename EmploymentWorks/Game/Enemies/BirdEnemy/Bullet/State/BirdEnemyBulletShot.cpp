@@ -1,10 +1,15 @@
+/*
+	クラス名     : BirdEnemyBulletShot
+	説明         : 鳥敵の弾の発射ステート
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "BirdEnemyBulletShot.h"
 #include <random>
 #include "Game/Params.h"
 #include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/Enemies/BirdEnemy/Bullet/BirdEnemyBullet.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "Game/Enemies/BirdEnemy/BirdEnemy.h"
 #include "Game/Enemies/BirdEnemy/State/BirdEnemyStateMachine.h"
 #include "Game/MathUtil.h"

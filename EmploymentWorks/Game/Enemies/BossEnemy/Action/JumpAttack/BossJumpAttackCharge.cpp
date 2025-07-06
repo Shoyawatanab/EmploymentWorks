@@ -2,7 +2,7 @@
 #include "BossJumpAttackCharge.h"
 #include "GameBase/Common/Commons.h"
 #include "Game/Messenger/Scene/SceneMessages.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "Game/Enemies/BossEnemy/Action/JumpAttack/BossJumpAttackActionController.h"
 
 /// <summary>

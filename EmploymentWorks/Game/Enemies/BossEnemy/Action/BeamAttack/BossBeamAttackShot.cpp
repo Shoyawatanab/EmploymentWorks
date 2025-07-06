@@ -3,7 +3,7 @@
 #include "GameBase/Common/Commons.h"
 #include "Game/Params.h"
 #include "Game/Player/Player.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "Game/Enemies/BossEnemy/Beam/BossEnemyBeam.h"
 #include "Game/Enemies/BossEnemy/Beam/EnergyBall/BossEnemyBeamEnergyBall.h"
 #include "Game/Enemies/BossEnemy/Beam/Rays/BossEnemyBeamRays.h"

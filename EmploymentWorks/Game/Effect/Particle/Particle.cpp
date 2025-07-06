@@ -1,11 +1,16 @@
+/*
+	クラス名     : Particle
+	説明         : ボスの振り下ろし攻撃時のエフェクト
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "Particle.h"
-#include "GameBase/Component/Components.h"
+#include "GameBase/Component/Effect/EffectComponent.h"
+#include "GameBase/Component/Transform/Transform.h"
 #include "GameBase/Scene/Scene.h"
 #include "GameBase/Common/Commons.h"
 #include "GameBase/Camera/Camera.h"
 #include "GameBase/GameResources.h"
-#include "GameBase/Component/Components.h"
 #include "Game/Effect/ParticleUtility.h"
 #include "GameBase/Shader/ShaderFactory.h"
 #include "Game/MathUtil.h"

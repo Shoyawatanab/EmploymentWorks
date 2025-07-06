@@ -1,15 +1,8 @@
 #include "pch.h"
 #include "OrientationAction.h"
 #include "GameBase/Common/Commons.h"
-#include "Libraries/MyLib/DebugCamera.h"
-#include "Libraries/MyLib/DebugString.h"
-#include "Libraries/MyLib/GridFloor.h"
-#include "Libraries/MyLib/InputManager.h"
-#include "Libraries/MyLib/MemoryLeakDetector.h"
-#include <cassert>
-
 #include "Game/Params.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 
 
 /// <summary>

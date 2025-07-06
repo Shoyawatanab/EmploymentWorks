@@ -1,3 +1,8 @@
+/*
+	クラス名     : Explosiion
+	説明         : 爆発エフェクト
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Actor.h"
 

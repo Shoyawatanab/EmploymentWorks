@@ -1,7 +1,3 @@
-/*
-	@file	TitleScene.h
-	@brief	タイトルシーンクラス
-*/
 #pragma once
 #include "GameBase/Scene/Scene.h"
 #include <unordered_map>
@@ -28,12 +24,6 @@ public:
     TitleScene();
     ~TitleScene() override;
 
-
-private:
-
-
-
-public:
     void Initialize() override;
     void SceneUpdate(const float& deltaTime)override;
     void SceneRender() override;
@@ -44,14 +34,6 @@ public:
 private:
 
     Camera* m_camera;
-
-
-    // 射影行列
-    DirectX::SimpleMath::Matrix m_projection;
-
-
-    // シーンチェンジフラグ
-    bool m_isChangeScene;
 
 
 };

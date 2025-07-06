@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "BirdEnemyBody.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "Game/Params.h"
 #include "GameBase/Scene/Scene.h"
 #include "Game/Enemies/BirdEnemy/BirdEnemyPartss.h"

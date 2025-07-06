@@ -1,3 +1,8 @@
+/*
+	クラス名     : PlaySceneCamera
+	説明         : プレイシーンで使用するカメラ
+	補足・注意点 :
+*/
 #include "pch.h"
 #include  "PlaySceneCamera.h"
 #include "GameBase/Component/Components.h"

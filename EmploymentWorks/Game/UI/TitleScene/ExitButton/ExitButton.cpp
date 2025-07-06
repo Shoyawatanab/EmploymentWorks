@@ -3,7 +3,7 @@
 #include "GameBase/UI/Canvas/Canvas.h"
 #include "GameBase/UI/Button.h"
 #include "GameBase/Scene/Scene.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/Fade/FadeManager.h"
 #include "Game/Messenger/Global/GlobalMessages.h"

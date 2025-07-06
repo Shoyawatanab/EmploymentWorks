@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "BossEnemyParts.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "Game/Enemies/BossEnemy/BossEnemy.h"
 #include "Game/Params.h"
 #include "Game/Messenger/Scene/SceneMessages.h"
