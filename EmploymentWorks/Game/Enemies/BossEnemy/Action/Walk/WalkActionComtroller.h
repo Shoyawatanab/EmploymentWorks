@@ -1,6 +1,7 @@
 /*
-	@file	WalkActionComtroller.h
-	@brief	プレイシーンクラス
+	クラス名     : WalkActionComtroller
+	説明         : ボス敵の歩きのコントローラー
+	補足・注意点 :
 */
 #pragma once
 #include "GameBase/Action/ActionController.h"

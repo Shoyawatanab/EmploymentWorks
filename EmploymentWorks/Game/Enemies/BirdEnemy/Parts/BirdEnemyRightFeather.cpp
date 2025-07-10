@@ -1,3 +1,8 @@
+/*
+	クラス名     : BirdEnemyLeftFeather
+	説明         : 鳥敵の右羽
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "BirdEnemyRightFeather.h"
 #include "GameBase/Scene/Scene.h"

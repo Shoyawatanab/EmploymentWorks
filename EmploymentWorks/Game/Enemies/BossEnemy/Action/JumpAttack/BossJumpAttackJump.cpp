@@ -1,3 +1,8 @@
+/*
+	クラス名     : BossJumpAttackJump
+	説明         : ボス敵のジャンプ攻撃のジャンプ状態
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "BossJumpAttackJump.h"
 #include "GameBase/Common/Commons.h"

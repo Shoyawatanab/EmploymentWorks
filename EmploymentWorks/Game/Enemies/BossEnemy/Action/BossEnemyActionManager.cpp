@@ -1,3 +1,8 @@
+/*
+	クラス名     : BossEnemyActionManager
+	説明         : ボス敵の行動のマネージャー
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "BossEnemyActionManager.h"
 #include "Game/Enemies/BossEnemy/Action/BossEnemyActions.h"
@@ -20,7 +25,7 @@ BossEnemyActionManager::BossEnemyActionManager(BossEnemy* ower,Player* target, B
 	AddAction("Beam",std::make_unique<BossBeamAttackActionController>(ower,beam,target));
 	AddAction("Orientation", std::make_unique<OrientationActionController>(ower, target));
 	AddAction("Orientation", std::make_unique<OrientationActionController>(ower, target));
-	AddAction("Death", std::make_unique<BossDeathActionComtroller>(ower));
+	AddAction("Death", std::make_unique<BossDeathActionController>(ower));
 
 	SetStartAction("Idle");
 	

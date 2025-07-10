@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Button.h"
 #include "GameBase/UI/Canvas/Canvas.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 
 Button::Button(Canvas* canvas, const std::string& textureName)
 	:

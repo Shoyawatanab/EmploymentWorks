@@ -1,3 +1,8 @@
+/*
+	クラス名     : BossDeathAction
+	説明         : ボス敵の倒したときの動作状態
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "BossDeathAction.h"
 #include "Game/Messenger/Scene/SceneMessages.h"

@@ -1,3 +1,8 @@
+/*
+	クラス名     : BossEnemyHead
+	説明         : ボス敵の頭モデル
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "BossEnemyHead.h"
 #include "GameBase/Scene/Scene.h"

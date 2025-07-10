@@ -8,8 +8,8 @@
 #include "Game/Component/Components.h"
 #include "Game/Stage/StageFactory.h"
 #include "Game/Player/Player.h"
-#include "Game/Camera/PayScene/PlaySceneCamera.h"
-#include "Game/Camera/PayScene/PlaySceneCamera.h"
+#include "Game/Camera/PlayScene/PlaySceneCamera.h"
+#include "Game/Camera/PlayScene/PlaySceneCamera.h"
 #include "Game/UI/PlayScene/Canvas/PlaySceneScreenSpaceOverlayCanvas.h"
 #include "Game/Weapon/WeaponManager.h"
 #include "Game/Enemies/EnemyManager.h"
@@ -68,7 +68,7 @@ void PlayScene::Initialize()
 	auto enemyManger = AddActor<EnemyManager>(this, player);
 
 	
-	auto ui = AddActor<PlaySceneScreenSpaceOverlayCanvas>(this,enemyManger->GetEnemys());
+	auto ui = AddActor<PlaySceneScreenSpaceOverlayCanvas>(this,enemyManger->GetTargets());
 
 
 	//ƒvƒŒƒCƒ„‚Ì“o˜^

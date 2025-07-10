@@ -1,6 +1,7 @@
 /*
-	@file	BossBeamAttackPreliminaryAction.h
-	@brief	プレイシーンクラス
+	クラス名     : BossBeamAttackPreliminaryAction
+	説明         : ボス敵のビーム攻撃の予備動作状態
+	補足・注意点 :
 */
 #pragma once
 #include "Game/Interface/IActione.h"

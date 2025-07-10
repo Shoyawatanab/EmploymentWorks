@@ -1,3 +1,8 @@
+/*
+	クラス名     : BirdEnemyMove
+	説明         : 鳥敵の動き状態
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "BirdEnemyMove.h"
 #include <cmath>

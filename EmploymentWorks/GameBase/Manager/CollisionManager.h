@@ -1,5 +1,6 @@
 #pragma once
-//#include "GameBase/Component/Components.h"
+#include "GameBase/Actor.h"
+#include <unordered_map>
 
 class ColliderComponent;
 
@@ -19,6 +20,11 @@ public:
 	//コライダーの削除
 	void RemoveCollider(ColliderComponent* collider);
 
+
+	//Rayとの当たり判定
+	void RayCollision(DirectX::SimpleMath::Ray ray, float maxLength, Actor::ObjectTag tag, DirectX::SimpleMath::Vector3* pushBack);
+
+
 private:
 
 	//移動オブジェクト同士
@@ -34,11 +40,18 @@ private:
 	//移動オブジェクトとすり抜けオブジェクト
 	void Collision_Trigger(ColliderComponent* collider1, ColliderComponent* collider2);
 
+private:
+
 	//通知を送る
 	void SendNotification(ColliderComponent* collider1, ColliderComponent* collider2,bool isHit);
 
 private:
-
+	//コライダーリスト
 	std::vector<ColliderComponent*> m_colliderList;
+
+	//オブジェクトタグごとのリスト
+	std::unordered_map<Actor::ObjectTag, std::vector<ColliderComponent*>> m_objectTagList;
+
+
 
 };

@@ -1,6 +1,7 @@
 /*
-	@file	BossBeamAttackShot.h
-	@brief	プレイシーンクラス
+	クラス名     : BossBeamAttackShot
+	説明         : ボス敵のビーム攻撃のショット状態
+	補足・注意点 :
 */
 #pragma once
 #include "Game/Interface/IActione.h"
@@ -10,12 +11,6 @@
 class CommonResources;
 class BossEnemyBeam;
 class BossBeamAttackActionController;
-
-namespace mylib
-{
-	class DebugCamera;
-	class GridFloor;
-}
 
 
 class BossBeamAttackShot : public IAction

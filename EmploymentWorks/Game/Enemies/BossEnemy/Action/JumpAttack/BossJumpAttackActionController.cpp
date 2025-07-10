@@ -1,3 +1,8 @@
+/*
+	クラス名     : BossJumpAttackActionController
+	説明         : ボス敵のジャンプ攻撃のコントローラー
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "BossJumpAttackActionController.h"
 #include "GameBase/Common/Commons.h"

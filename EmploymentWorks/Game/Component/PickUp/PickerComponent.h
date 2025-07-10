@@ -1,3 +1,9 @@
+/*
+	クラス名    : PickerComponent
+	説明        : 拾う側コンポーネント
+	補足・注意点:　このゲームオリジナルコンポーネント
+	　　　　　　　プレイシーンにマネージャーがある
+*/
 #pragma once
 #include "GameBase/Component.h"
 #include "GameBase/Actor.h"

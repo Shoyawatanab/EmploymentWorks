@@ -34,7 +34,7 @@ BoomerangIdle::~BoomerangIdle()
 void BoomerangIdle::Update(const float& deltaTime)
 {
 
-
+	UNREFERENCED_PARAMETER(deltaTime);
 
 }
 

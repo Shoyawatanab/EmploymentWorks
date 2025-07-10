@@ -1,3 +1,8 @@
+/*
+	クラス名     : FadeManager
+	説明         : フェードマネージャー
+	補足・注意点 :
+*/
 #pragma once
 #include "Libraries/WataLib/Singleton.h"
 #include "Game/Fade/IFade.h"

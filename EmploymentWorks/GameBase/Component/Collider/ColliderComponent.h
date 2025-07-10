@@ -6,7 +6,7 @@
 class CommonResources;
 
 //判定時のタイプ
-enum class CollisionType
+enum class CollisionType : int
 {
 
 	FIXED     = 1 ,	   //固定
@@ -115,7 +115,7 @@ public:
 
 public:
 	//コンストラクタ
-	AABB(Actor* owner, ColliderTag tag, CollisionType type
+	AABB(Actor* owner, CollisionType type
 	,const DirectX::SimpleMath::Vector3& extents
 	, const float& radius);
 	//デストラクタ
@@ -163,7 +163,7 @@ public:
 
 public:
 	//コンストラクタ
-	OBB(Actor* owner, ColliderTag tag, CollisionType type
+	OBB(Actor* owner, CollisionType type
 		, const DirectX::SimpleMath::Vector3& extents
 		,DirectX::SimpleMath::Quaternion rotation
 		, const float& radius);

@@ -1,3 +1,8 @@
+/*
+	クラス名     : BossEnemyRightArmJoint
+	説明         : ボス敵の右足モデル
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "BossEnemyRightLeg.h"
 #include "GameBase/Scene/Scene.h"

@@ -1,3 +1,8 @@
+/*
+	クラス名     : BossEnemyLeftLeg
+	説明         : ボス敵の左足モデル
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "BossEnemyLeftLeg.h"
 #include "GameBase/Scene/Scene.h"

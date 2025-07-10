@@ -1,41 +1,24 @@
 #pragma once
-/*
-	@file	Sky.h.h
-	@brief	プレイシーンクラス
-*/
-#pragma once
-#include "pch.h"
+#include "GameBase/Actor.h"
 
-// 前方宣言
-class CommonResources;
+class Camera;
+class ModelComponent;
 
-
-
-
-class Sky 
+class Sky : public Actor
 {
 public:
-
-
-public:
 	//コンストラク
-	Sky(CommonResources* resources
-		, DirectX::SimpleMath::Vector3 scale,
-		DirectX::SimpleMath::Vector3 position,
-		DirectX::SimpleMath::Quaternion rotation);
+	Sky(Scene* scene);
 	//デストラクタ
-	~Sky() ;
-
-	//IObject
-		//初期化
-	void Initialize() ;
-	//描画
-	void Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection) ;
-	//更新処理
-	void  Update(const float& elapsedTime) ;
+	~Sky() override;
 
 private:
 
-	// モデル
-	DirectX::Model* m_model;
+	void Render(const Camera& camera);
+
+private:
+	//モデルコンポーネント
+	ModelComponent* m_modelComponent;
+
+
 };

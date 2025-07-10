@@ -1,3 +1,8 @@
+/*
+	クラス名     : BirdEnemyLeftFeather
+	説明         : 鳥敵の右羽
+	補足・注意点 :
+*/
 #pragma once
 #include "Game/Enemies/BirdEnemy/BirdEnemyParts.h"
 

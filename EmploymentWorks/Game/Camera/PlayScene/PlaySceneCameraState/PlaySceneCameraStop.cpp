@@ -5,7 +5,7 @@
 */
 #include "pch.h"
 #include "PlaySceneCameraStop.h"
-#include "Game/Camera/PayScene/PlaySceneCamera.h"
+#include "Game/Camera/PlayScene/PlaySceneCamera.h"
 
 /// <summary>
 /// コンストラク

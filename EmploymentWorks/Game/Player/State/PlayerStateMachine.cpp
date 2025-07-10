@@ -47,6 +47,8 @@ PlayerStateMachine::~PlayerStateMachine()
 void PlayerStateMachine::Notify(SceneMessageType type, void* datas)
 {
 
+	UNREFERENCED_PARAMETER(datas);
+
 	switch (type)
 	{
 		case SceneMessageType::PLAYER_IDLE_STATE:

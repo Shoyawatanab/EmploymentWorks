@@ -5,10 +5,12 @@
 */
 #include "pch.h"
 #include "PlaySceneCameraTPS.h"
-#include "Game/Camera/PayScene/PlaySceneCamera.h"
+#include "Game/Camera/PlayScene/PlaySceneCamera.h"
 #include "Game/Player/Player.h"
 #include "Game/Component/Components.h"
 #include "Game/Messenger/Scene/SceneMessages.h"
+#include "GameBase/Scene/Scene.h"
+#include "GameBase/Manager/CollisionManager.h"
 
 /// <summary>
 /// コンストラクタ
@@ -73,8 +75,30 @@ void PlaySceneCameraTPS::Update(const float& deltaTime)
 	//ズーム時の回転
 	Vector3 movemement = Vector3::Transform(m_zoomMovement, rotate);
 
+	//ズーム時の移動量の加算
+	eye += movemement;
+
+	//Rayの方向
+	Vector3 rayDirection = target - eye;
+	//正規化
+	rayDirection.Normalize();
+	//Rayの作成
+	Ray ray{ target, -rayDirection};
+
+	//押し出し保存変数
+	Vector3 pushBack = Vector3::Zero;
+
+	//
+	m_camera->GetScene()->GetCollisionManager()->RayCollision(ray, Vector3::Distance(eye,target), Actor::ObjectTag::STAGE, &pushBack);
+
+	//押し出しがある場合
+	if (pushBack != Vector3::Zero)
+	{
+		eye -= pushBack;
+	}
+
 	//カメラにセット
-	m_camera->SetEyePosition(eye + movemement);
+	m_camera->SetEyePosition(eye);
 	m_camera->SetTargetPosition(target);
 
 	//正面ベクトル

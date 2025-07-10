@@ -1,9 +1,8 @@
 /*
-	ExecutionNode.h
-	渡邊翔也
-	実行ノードに渡す処理の関数の管理クラス
+	クラス名     : ExecutionNode
+	説明         : ボス敵のビヘイビアツリーの実行のクラス
+	補足・注意点 : 実行ノードに渡す処理の関数の管理クラス
 */
-
 #pragma once
 #include "Game/Interface/IBehaviorNode.h"
 #include  <unordered_map>

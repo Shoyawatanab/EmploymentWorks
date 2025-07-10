@@ -1,7 +1,7 @@
 /*
-	BossBehaviorTree.h
-	渡邊翔也
-	ビヘイビアツリーのRootに当たるクラス
+	クラス名     : BossBehaviorTree
+	説明         : ボス敵のビヘイビアツリー
+	補足・注意点 : Rootにあたる
 */
 #pragma once
 #include "Game/Interface/ICompositeNode.h"

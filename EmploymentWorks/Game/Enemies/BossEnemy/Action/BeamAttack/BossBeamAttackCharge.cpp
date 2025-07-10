@@ -1,4 +1,8 @@
-
+/*
+	クラス名     : BossBeamAttackCharge
+	説明         : ボス敵のビーム攻撃のチャージ状態
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "BossBeamAttackCharge.h"
 #include "GameBase/Common/Commons.h"

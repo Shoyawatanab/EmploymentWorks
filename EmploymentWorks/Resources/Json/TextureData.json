@@ -29,8 +29,8 @@
 	"ResultRetry"        :"ResultRetry.png",
 	"ResultTitle"        :"ResultTitle.png",
 	"Ten"                : "Ten.png",
-	"mask": "mask.png",
-	"fade":  "load.png"
+	"mask"               : "mask.png",
+	"fade"               :  "load.png"
 
 	
 

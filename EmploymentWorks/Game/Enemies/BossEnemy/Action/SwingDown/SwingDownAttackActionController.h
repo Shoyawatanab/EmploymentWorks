@@ -1,6 +1,7 @@
 /*
-	@file	SwingDownAttackActionController.h
-	@brief	プレイシーンクラス
+	クラス名     : SwingDownAttackActionController
+	説明         : ボス敵の振り下ろし攻撃のコントローラー
+	補足・注意点 :
 */
 #pragma once
 #include "GameBase/Action/ActionController.h"

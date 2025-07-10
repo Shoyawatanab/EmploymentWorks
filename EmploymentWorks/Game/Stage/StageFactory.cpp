@@ -23,6 +23,11 @@ StageFactory::StageFactory(Scene* scene)
 {
 	//ステージ情報の読み込み
 	LoadStageData();
+
+	//天球の作成
+	GetScene()->AddActor<Sky>(GetScene());
+
+
 }
 
 /// <summary>

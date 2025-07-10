@@ -1,6 +1,7 @@
 /*
-	@file	IdleingAction.h
-	@brief	プレイシーンクラス
+	クラス名     : IdleingAction
+	説明         : ボス敵の通常状態
+	補足・注意点 : 
 */
 #pragma once
 #include "Game/Interface/IActione.h"

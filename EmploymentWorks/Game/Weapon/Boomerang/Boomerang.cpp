@@ -16,7 +16,7 @@ Boomerang::Boomerang(Scene* scene,Player* player)
 {
 
 	//ìñÇΩÇËîªíËÇÃçÏê¨
-	auto aabbCollider = AddComponent<AABB>(this, ColliderComponent::ColliderTag::AABB, CollisionType::COLLISION
+	auto aabbCollider = AddComponent<AABB>(this, CollisionType::COLLISION
 		, Params::BOOMERANG_BOX_COLLIDER_SIZE
 		, Params::BOOMERANG_SPHERE_COLLIDER_SIZE);
 
@@ -44,7 +44,7 @@ Boomerang::Boomerang(Scene* scene,Player* player)
 
 
 
-	auto model = AddComponent<ModelComponent>(this, "Boomerang");
+	AddComponent<ModelComponent>(this, "Boomerang");
 
 	m_stateMachine = std::make_unique<BoomerangStateMachine>(this, player);
 

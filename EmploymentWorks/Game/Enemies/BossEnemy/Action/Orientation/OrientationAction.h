@@ -1,6 +1,7 @@
 /*
-	@file	OrientationAction.h
-	@brief	プレイシーンクラス
+	クラス名     : OrientationAction
+	説明         : ボス敵の回転状態
+	補足・注意点 :
 */
 #pragma once
 #include "Game/Interface/IActione.h"

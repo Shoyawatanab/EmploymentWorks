@@ -1,3 +1,8 @@
+/*
+	クラス名     : BossEnemyBeamEnergyBall
+	説明         : ボス敵のビームの弾
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Actor.h"
 

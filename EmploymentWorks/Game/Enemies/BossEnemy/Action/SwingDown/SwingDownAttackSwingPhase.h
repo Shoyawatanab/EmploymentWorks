@@ -1,6 +1,7 @@
 /*
-	@file	SwingDownAttackSwingPhase.h
-	@brief	プレイシーンクラス
+	クラス名     : SwingDownAttackSwingPhase
+	説明         : ボス敵の振り下ろし攻撃の振り下し状態
+	補足・注意点 :
 */
 #pragma once
 #include "Game/Interface/IActione.h"

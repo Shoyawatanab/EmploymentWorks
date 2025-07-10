@@ -1,3 +1,8 @@
+/*
+	クラス名     : BossEnemyLeftArm
+	説明         : ボス敵の左腕モデル
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "BossEnemyLeftArm.h"
 #include "GameBase/Scene/Scene.h"

@@ -1,3 +1,8 @@
+/*
+	クラス名     : BoomerangFadeIn
+	説明         :　ブーメラン型のフェードイン
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "BoomerangFadeIn.h"
 #include "GameBase/Shader/ShaderFactory.h"

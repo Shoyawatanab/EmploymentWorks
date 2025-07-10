@@ -1,3 +1,8 @@
+/*
+	クラス名     : FadeManager
+	説明         : フェードマネージャー
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "FadeManager.h"
 #include "Game/Fade/FadeKindss.h"

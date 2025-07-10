@@ -1,3 +1,8 @@
+/*
+	クラス名     : BossEnemyPelvis
+	説明         : ボス敵の腰モデル
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "BossEnemyPelvis.h"
 #include "GameBase/Scene/Scene.h"

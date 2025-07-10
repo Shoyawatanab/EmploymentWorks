@@ -1,3 +1,8 @@
+/*
+	クラス名     : BirdEnemyIdle
+	説明         : 鳥敵の通常状態
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "BirdEnemyIdle.h"
 #include <random>

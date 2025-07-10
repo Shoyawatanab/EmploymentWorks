@@ -1,3 +1,8 @@
+/*
+	クラス名     : Conditions
+	説明         : ボス敵のビヘイビアツリーの判定のクラス
+	補足・注意点 : Decoratorに渡す条件関数の管理クラス
+*/
 #include "pch.h"
 #include "Conditions.h"
 #include "GameBase/Common/Commons.h"

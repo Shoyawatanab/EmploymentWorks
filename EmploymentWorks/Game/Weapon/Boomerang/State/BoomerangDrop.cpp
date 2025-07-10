@@ -30,7 +30,7 @@ BoomerangDrop::~BoomerangDrop()
 /// <param name="elapsedTime">Œo‰ßŽžŠÔ</param>
 void BoomerangDrop::Update(const float& deltaTime)
 {
-
+	UNREFERENCED_PARAMETER(deltaTime);
 }
 
 /// <summary>

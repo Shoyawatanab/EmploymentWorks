@@ -10,7 +10,11 @@ GlobalGameData::GlobalGameData()
 	,m_clearTime{}
 {
 
+	/*
+	　大手デベロッパーを狙う
+	 　
 
+	*/
 
 }
 

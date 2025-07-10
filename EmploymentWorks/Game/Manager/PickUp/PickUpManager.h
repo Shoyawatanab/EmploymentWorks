@@ -1,3 +1,8 @@
+/*
+	クラス名     : PickUpManager
+	説明         : 拾う動作マネージャー
+	補足・注意点 :
+*/
 #pragma once
 #include <unordered_map>
 #include "Libraries/WataLib/Singleton.h"

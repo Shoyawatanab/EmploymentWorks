@@ -1,3 +1,8 @@
+/*
+	クラス名     : BirdEnemyModel
+	説明         : 鳥敵のモデル
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "BirdEnemyModel.h"
 #include "GameBase/Scene/Scene.h"

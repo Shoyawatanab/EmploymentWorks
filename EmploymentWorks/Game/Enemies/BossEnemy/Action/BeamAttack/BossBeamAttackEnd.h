@@ -1,6 +1,7 @@
 /*
-	@file	BossBeamAttackEnd.h
-	@brief	プレイシーンクラス
+	クラス名     : BossBeamAttackEnd
+	説明         : ボス敵のビーム攻撃の終了状態
+	補足・注意点 :
 */
 #pragma once
 #include "Game/Interface/IActione.h"

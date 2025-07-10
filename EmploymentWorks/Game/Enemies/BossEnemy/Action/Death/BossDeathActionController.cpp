@@ -1,9 +1,10 @@
 /*
-	@file	BossDeathActionComtroller.cpp
-	@brief	プレイシーンクラス
+	クラス名     : BossDeathActionController
+	説明         : ボス敵の倒したときのコントローラー
+	補足・注意点 :
 */
 #include "pch.h"
-#include "BossDeathActionComtroller.h"
+#include "BossDeathActionController.h"
 #include "GameBase/Common/Commons.h"
 #include "Game/Enemies/BossEnemy/Action/Death/BossDeathAction.h"
 #include "Game/Enemies/BossEnemy/Action/Death/BossDeathEndAction.h"
@@ -17,7 +18,7 @@
 /// <param name="resources">共通リソース</param>
 /// <param name="own">所有者</param>
 /// <param name="target">ターゲット</param>
-BossDeathActionComtroller::BossDeathActionComtroller(BossEnemy* bossEnemy)
+BossDeathActionController::BossDeathActionController(BossEnemy* bossEnemy)
 {
 
 	m_idle = std::make_unique<BossDeathAction>();
@@ -35,7 +36,7 @@ BossDeathActionComtroller::BossDeathActionComtroller(BossEnemy* bossEnemy)
 /// <summary>
 /// デストラクタ
 /// </summary>
-BossDeathActionComtroller::~BossDeathActionComtroller()
+BossDeathActionController::~BossDeathActionController()
 {
 	// do nothing.
 }

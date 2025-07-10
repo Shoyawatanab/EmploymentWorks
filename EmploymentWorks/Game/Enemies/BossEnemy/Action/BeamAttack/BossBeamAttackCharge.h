@@ -1,6 +1,7 @@
 /*
-	@file	BossBeamAttackCharge.h
-	@brief	プレイシーンクラス
+	クラス名     : BossBeamAttackCharge
+	説明         : ボス敵のビーム攻撃のチャージ状態
+	補足・注意点 :
 */
 #pragma once
 #include "Game/Interface/IActione.h"

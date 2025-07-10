@@ -1,3 +1,8 @@
+/*
+	クラス名     : BossEnemyBeam
+	説明         : ボス敵のビームクラス
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Actor.h"
 

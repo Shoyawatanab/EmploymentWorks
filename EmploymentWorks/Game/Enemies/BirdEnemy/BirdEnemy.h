@@ -1,3 +1,8 @@
+/*
+	クラス名     : BirdEnemy
+	説明         : 鳥敵
+	補足・注意点 :
+*/
 #pragma once
 #include"Game/Enemies/EnemyBase.h"
 
@@ -8,7 +13,10 @@ class BirdEnemyBullet;
 
 class BirdEnemy : public EnemyBase
 {
+public:
 
+	//弾の最大数
+	static constexpr int MAX_BULLET = 5;
 
 public:
 
@@ -28,7 +36,8 @@ public:
 public:
 	//コンストラク
 	BirdEnemy(Scene* scene, DirectX::SimpleMath::Vector3 scale
-		, DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Quaternion rotation, Player* player);
+		, DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Quaternion rotation
+		, EnemyManager* manager, Player* player);
 	//デストラクタ
 	~BirdEnemy() override;
 

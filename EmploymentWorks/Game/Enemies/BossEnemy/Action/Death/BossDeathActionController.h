@@ -1,6 +1,7 @@
 /*
-	@file	BossDeathActionComtroller.h
-	@brief	プレイシーンクラス
+	クラス名     : BossDeathActionController
+	説明         : ボス敵の倒したときのコントローラー
+	補足・注意点 :
 */
 #pragma once
 #include "GameBase/Action/ActionController.h"
@@ -11,13 +12,13 @@ class BossDeathEndAction;
 class BossEnemy;
 
 
-class BossDeathActionComtroller : public ActionController
+class BossDeathActionController : public ActionController
 {
 public:
 	//コンストラク
-	BossDeathActionComtroller(BossEnemy* bossEnemy);
+	BossDeathActionController(BossEnemy* bossEnemy);
 	//デストラクタ
-	~BossDeathActionComtroller()override;
+	~BossDeathActionController()override;
 
 private:
 	//通常

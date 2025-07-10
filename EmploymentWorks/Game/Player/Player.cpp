@@ -33,7 +33,7 @@ Player::Player(Scene* scene)
 
 	m_rigidBody = AddComponent<RigidbodyComponent>(this);
 	//当たり判定の作成
-	auto aABBCollider = AddComponent<AABB>(this, ColliderComponent::ColliderTag::AABB, CollisionType::COLLISION
+	AddComponent<AABB>(this,  CollisionType::COLLISION
 	, Params::PLAYER_BOX_COLLIDER_SIZE
 	, Params::PLAYER_SPHERE_COLLIDER_SIZE);
 
@@ -54,7 +54,6 @@ Player::Player(Scene* scene)
 	//初期情報の適用
 	GetTransform()->SetScale(Params::PLAYER_SCALE);
 	GetTransform()->Translate(Params::PLAYER_POSITION);
-	GetTransform()->Translate(DirectX::SimpleMath::Vector3(25,1,0));
 	GetTransform()->SetRotate(Params::PLAYER_ROTATION);
 
 	//ステートの作成

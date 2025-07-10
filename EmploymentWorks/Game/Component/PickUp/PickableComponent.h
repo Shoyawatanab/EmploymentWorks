@@ -1,4 +1,8 @@
-//拾われる側
+/*
+	クラス名    : PickableComponent
+	説明        : 拾われる側コンポーネント
+	補足・注意点:
+*/
 #pragma once
 #include "GameBase/Component.h"
 #include "GameBase/Actor.h"

@@ -1,3 +1,8 @@
+/*
+	クラス名     : BossBeamAttackShot
+	説明         : ボス敵のビーム攻撃のショット状態
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "BossBeamAttackShot.h"
 #include "GameBase/Common/Commons.h"

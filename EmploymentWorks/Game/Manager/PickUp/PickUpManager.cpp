@@ -1,3 +1,8 @@
+/*
+	クラス名     : PickUpManager
+	説明         : 拾う動作マネージャー
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "PickUpManager.h"
 #include "Game/Component/PickUp/PickableComponent.h"

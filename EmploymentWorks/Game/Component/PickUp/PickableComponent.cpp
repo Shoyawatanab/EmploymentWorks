@@ -1,3 +1,8 @@
+/*
+	クラス名    : PickableComponent
+	説明        : 拾われる側コンポーネント
+	補足・注意点:
+*/
 #include "pch.h"
 #include "PickableComponent.h"
 #include "Game/Manager/PickUp/PickUpManager.h"

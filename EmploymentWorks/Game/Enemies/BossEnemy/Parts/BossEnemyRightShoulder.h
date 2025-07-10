@@ -1,3 +1,8 @@
+/*
+	クラス名     : BossEnemyRightShoulder
+	説明         : ボス敵の右肩モデル
+	補足・注意点 :
+*/
 #pragma once
 #include "Game/Enemies/BossEnemy/BossEnemyParts.h"
 class BossEnemy;

@@ -1,3 +1,8 @@
+/*
+	クラス名     : ExecutionNode
+	説明         : ボス敵のビヘイビアツリーの実行のクラス
+	補足・注意点 : 実行ノードに渡す処理の関数の管理クラス
+*/
 #include "pch.h"
 #include "ExecutionNode.h"
 #include "GameBase/Common/Commons.h"
