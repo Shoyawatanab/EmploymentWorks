@@ -1,3 +1,8 @@
+/*
+	クラス名     : BossEnemyActionManager
+	説明         : ボス敵の行動のマネージャー
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Action/ActionManager.h"
 #include "GameBase/Actor.h"

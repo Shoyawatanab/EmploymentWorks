@@ -1,3 +1,8 @@
+/*
+	クラス名     : BirdEnemyBody
+	説明         : 鳥敵の体
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "BirdEnemyBody.h"
 #include "Game/Component/Components.h"

@@ -1,3 +1,8 @@
+/*
+	クラス名     : BirdEnemyBody
+	説明         : 鳥敵の体
+	補足・注意点 :
+*/
 #pragma once
 #include "Game/Enemies/BirdEnemy/BirdEnemyParts.h"
 

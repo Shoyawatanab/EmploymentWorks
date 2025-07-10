@@ -1,6 +1,7 @@
 /*
-	@file	BossJumpAttackCharge.h
-	@brief	プレイシーンクラス
+	クラス名     : BossJumpAttackCharge
+	説明         : ボス敵のジャンプ攻撃のチャージ状態
+	補足・注意点 :
 */
 #pragma once
 #include "Game/Interface/IActione.h"

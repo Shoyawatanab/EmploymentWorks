@@ -20,11 +20,11 @@ Floor::Floor(Scene* scene, StageFactory::StageParameter parameter)
 	GetTransform()->SetScale(parameter.Scale);
 	GetTransform()->SetRotate(parameter.Rotation);
 
-
+	//モデルコンポーネントの追加
 	AddComponent<ModelComponent>(this, "Floor");
-
-	AddComponent<AABB>(this, ColliderComponent::ColliderTag::AABB, CollisionType::FIXED
-		,DirectX::SimpleMath::Vector3(1,1,1), 2.0f);
+	//当たり判定コンポーネントの追加　AABB
+	AddComponent<AABB>(this, CollisionType::FIXED
+		,BOX_COLLIDER_SIZE, SPHERE_COLLIDER_SIZE);
 	
 	
 }

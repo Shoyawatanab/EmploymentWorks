@@ -1,3 +1,8 @@
+/*
+	クラス名     : BossDeathActionController
+	説明         : ボス敵の倒したときの終了状態
+	補足・注意点 : これ以降Actionの更新無し
+*/
 #include "pch.h"
 #include "BossDeathEndAction.h"
 #include "Game/Messenger/Scene/SceneMessages.h"

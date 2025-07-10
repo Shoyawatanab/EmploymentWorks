@@ -1,3 +1,8 @@
+/*
+	クラス名     : WalkActionComtroller
+	説明         : ボス敵の歩きのコントローラー
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "WalkActionComtroller.h"
 #include "Game/Enemies/BossEnemy/Action/Walk/WalkActionComtroller.h"

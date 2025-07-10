@@ -1,3 +1,8 @@
+/*
+	クラス名     : BossEnemyBeamEnergyBall
+	説明         : ボス敵のビームの弾
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "BossEnemyBeamEnergyBall.h"
 #include "GameBase/Scene/Scene.h"
@@ -37,7 +42,7 @@ BossEnemyBeamEnergyBall::BossEnemyBeamEnergyBall(Scene* scene)
 	m_model->SetCustomRenderFunction(std::bind(&BossEnemyBeamEnergyBall::ModelRender, this, std::placeholders::_1));
 
 	//当たり判定の作成
-	auto aABBCollider = AddComponent<AABB>(this, ColliderComponent::ColliderTag::AABB, CollisionType::COLLISION
+	auto aABBCollider = AddComponent<AABB>(this,  CollisionType::COLLISION
 		, Params::BOSSENEMY_BEAM_BALL_BOX_COLLIDER_SIZE
 		, Params::BOSSENEMY_BEAM_BALL_SPHERE_COLLIDER_SIZE);
 

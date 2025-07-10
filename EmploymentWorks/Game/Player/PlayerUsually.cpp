@@ -6,7 +6,7 @@
 #include "Game/Player/State/PlayerStateMachine.h"
 #include "Game/Component/Components.h"
 #include "Game/Params.h"
-#include "Game/Camera/PayScene/PlaySceneCamera.h"
+#include "Game/Camera/PlayScene/PlaySceneCamera.h"
 #include "Game/Params.h"
 #include "Game/Messenger/Scene/SceneMessages.h"
 
@@ -70,6 +70,8 @@ void PlayerUsually::Update(const float& deltatime)
 /// <param name="datas">追加データ</param>
 void PlayerUsually::Notify(SceneMessageType type, void* datas)
 {
+	UNREFERENCED_PARAMETER(datas);
+
 	switch (type)
 	{
 		case SceneMessageType::PLAYER_GET_REDAY:
@@ -96,8 +98,6 @@ void PlayerUsually::Move(const float& deltatime)
 
 	// キーボードステートを取得する
 	DirectX::Keyboard::State key = DirectX::Keyboard::Get().GetState();
-
-	Transform* transform = m_player->GetTransform();
 
 	float moveSpeed = Params::PLAYER_MOVE_SPEED * deltatime;
 

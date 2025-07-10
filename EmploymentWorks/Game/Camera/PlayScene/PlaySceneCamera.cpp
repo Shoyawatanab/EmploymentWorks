@@ -5,7 +5,7 @@
 */
 #include "pch.h"
 #include  "PlaySceneCamera.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "PlaySceneCameraStateMachine.h"
 
 /// <summary>

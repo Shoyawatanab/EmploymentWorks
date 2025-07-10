@@ -1,3 +1,8 @@
+/*
+	クラス名     : BirdEnemy
+	説明         : 鳥敵
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "BirdEnemy.h"
 #include "GameBase/Scene/Scene.h"
@@ -17,20 +22,22 @@
 /// <param name="scene">シーン</param>
 /// <param name="player">プレイヤ</param>
 BirdEnemy::BirdEnemy(Scene* scene, DirectX::SimpleMath::Vector3 scale
-	, DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Quaternion rotation, Player* player)
+	, DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Quaternion rotation
+	, EnemyManager* manager, Player* player)
 	:
-	EnemyBase(scene,Params::BIRDENEMY_HP)
+	EnemyBase(scene,Params::BIRDENEMY_HP,manager)
 	,m_target{player}
 	,m_bullets{}
 {
 
 	using namespace DirectX::SimpleMath;
 
-	//当たり判定の作成
-	AddComponent<AABB>(this, ColliderComponent::ColliderTag::AABB, CollisionType::COLLISION
+	//当たり判定の追加
+	AddComponent<AABB>(this, CollisionType::COLLISION
 		, Vector3(1.5f,1.5f,1.5f) * scale
 		, 3.0f * std::max({ scale.x, scale.y, scale.z }));
 
+	//影の追加
 	auto shadow = AddComponent<RoundShadowComponent>(this, Params::BIRDENEMY_SHADOW_RADIUS);
 
 	shadow->SetActive(false);
@@ -39,12 +46,16 @@ BirdEnemy::BirdEnemy(Scene* scene, DirectX::SimpleMath::Vector3 scale
 	auto model = GetScene()->AddActor<BirdEnemyModel>(GetScene());
 	//親子関係をセット
 	model->GetTransform()->SetParent(GetTransform());
-
+	//モデルのセット
 	SetModel(model);
+	//自身をターゲットとして登録
+	GetEnemyManger()->AddTargets({ this });
 
-	for (int i = 0; i < 5; i++)
+	//弾の作成
+	for (int i = 0; i < MAX_BULLET; i++)
 	{
 		auto bullet = GetScene()->AddActor<BirdEnemyBullet>(GetScene(), this);
+		
 		m_bullets.push_back(bullet);
 	}
 
@@ -53,6 +64,7 @@ BirdEnemy::BirdEnemy(Scene* scene, DirectX::SimpleMath::Vector3 scale
 	GetTransform()->Translate(position);
 	GetTransform()->SetRotate(rotation);
 
+	//ステートマシーンの作成
 	m_stateMachine = std::make_unique<BirdEnemyStateMachine>(this);
 
 
@@ -78,7 +90,7 @@ void BirdEnemy::UpdateActor(const float& deltaTime)
 		return;
 	}
 
-	//m_stateMachine->Update(deltaTime);
+	m_stateMachine->Update(deltaTime);
 
 	//常にターゲットに向くように
 	Rotate(deltaTime);
@@ -96,23 +108,21 @@ void BirdEnemy::OnCollisionEnter(ColliderComponent* collider)
 	{
 		case Actor::ObjectTag::BOOMERANG:
 		{
-
+			//HPの減少
 			HpDecrease(Params::BOOMERANG_DAMAGE);
-
-
 
 		}
 
 		//Hpが０になれば
 		if (GetHp() <= 0)
 		{
-
+			//追加データの作成
 			ExplosionEffectDatas datas;
 			datas.Position = GetTransform()->GetWorldPosition();
 			datas.Scale = GetTransform()->GetWorldScale();
-
+			//爆発エフェクトの通知
 			SceneMessenger::GetInstance()->Notify(SceneMessageType::EXPLOSITION_EFFECT, &datas);
-			
+			//オブジェクトを無効に
 			SetActive(false);
 			//マネージャーに死亡の通知
 			auto manager = GetEnemyManger();
@@ -125,7 +135,7 @@ void BirdEnemy::OnCollisionEnter(ColliderComponent* collider)
 			//データのセット
 			datas.Damage = Params::BOOMERANG_DAMAGE;
 			datas.Position = GetTransform()->GetWorldPosition();
-
+			//敵ダメージのUIの通知
 			SceneMessenger::GetInstance()->Notify(SceneMessageType::ENEMY_DAMAGE, &datas);
 		}
 
@@ -135,11 +145,6 @@ void BirdEnemy::OnCollisionEnter(ColliderComponent* collider)
 	}
 
 }
-
-//修正に強い　疎結合ー＞どうやって
-
-
-
 
 
 /// <summary>
@@ -168,15 +173,12 @@ void BirdEnemy::Rotate(const float& deltaTime)
 	//yaw pitchから回転を計算 pitchは反転させる
 	GetTransform()->SetRotate(Quaternion::CreateFromYawPitchRoll(yaw, -pitch, 0.0f));
 
-
-
 }
-
-
 
 /// <summary>
 /// 非アクティブの弾の取得
 /// </summary>
+/// <returns>弾 or nullptr</returns>
 BirdEnemyBullet* BirdEnemy::GetInactiveBullet()
 {
 

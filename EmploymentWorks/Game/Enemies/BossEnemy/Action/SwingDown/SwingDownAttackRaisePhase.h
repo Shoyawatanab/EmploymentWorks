@@ -1,6 +1,7 @@
 /*
-	@file	SwingDownAttackRaisePhase.h
-	@brief	プレイシーンクラス
+	クラス名     : SwingDownAttackRaisePhase
+	説明         : ボス敵の振り下ろし攻撃の振り上げ状態
+	補足・注意点 :
 */
 #pragma once
 #include "Game/Interface/IActione.h"
@@ -9,13 +10,6 @@
 // 前方宣言
 class CommonResources;
 class SwingDownAttackActionController;
-
-namespace mylib
-{
-	class DebugCamera;
-	class GridFloor;
-}
-
 
 class SwingDownAttackRaisePhase : public IAction
 {

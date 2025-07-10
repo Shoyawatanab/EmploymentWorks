@@ -1,3 +1,8 @@
+/*
+	クラス名     : BossEnemyRightThigh
+	説明         : ボス敵の右太ももモデル
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "BossEnemyRightThigh.h"
 #include "GameBase/Scene/Scene.h"

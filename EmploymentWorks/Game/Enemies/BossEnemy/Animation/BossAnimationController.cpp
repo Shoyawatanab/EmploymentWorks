@@ -1,3 +1,8 @@
+/*
+	クラス名     : BossAnimationController
+	説明         : ボス敵のアニメーションコントローラー
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "BossAnimationController.h"
 #include "Game/Component/Components.h"

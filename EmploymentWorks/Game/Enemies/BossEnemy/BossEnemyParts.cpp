@@ -1,3 +1,8 @@
+/*
+	クラス名     : BossEnemy
+	説明         : ボス敵のパーツの基底クラス
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "BossEnemyParts.h"
 #include "Game/Component/Components.h"
@@ -22,7 +27,7 @@ BossEnemyParts::BossEnemyParts(Scene* scene, std::string partsName,std::string m
 	,m_bossEnemy{boss}
 {
 
-	auto obb = AddComponent<OBB>(this, ColliderComponent::ColliderTag::OBB, CollisionType::TRIGGER
+	auto obb = AddComponent<OBB>(this,  CollisionType::TRIGGER
 		, boxColliderExtens
 		, DirectX::SimpleMath::Quaternion::Identity
 		, sphereRadius);

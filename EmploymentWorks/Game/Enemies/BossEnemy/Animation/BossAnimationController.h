@@ -1,3 +1,8 @@
+/*
+	クラス名     : BossAnimationController
+	説明         : ボス敵のアニメーションコントローラー
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Animation/AnimationController.h"
 #include "GameBase/Messenger/IObserver.h"

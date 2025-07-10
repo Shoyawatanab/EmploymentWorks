@@ -1,3 +1,8 @@
+/*
+	ƒNƒ‰ƒX–¼     : BirdEnemyBeamAttack
+	à–¾         : ’¹“G‚Ì’e‚ÌUŒ‚ó‘Ô
+	•â‘«E’ˆÓ“_ :
+*/
 #include "pch.h"
 #include "BirdEnemyBeamAttack.h"
 #include "Game/Messenger/Scene/SceneMessages.h"

@@ -92,9 +92,9 @@ public:
 	}
 
 	//”h¶æ‚ÌChangeState‚Ìˆ—
-	virtual void DerivationChangeState(StateEnumType enumType) {};
-
+	virtual void DerivationChangeState(StateEnumType enumType) { UNREFERENCED_PARAMETER(enumType); }
 private:
+
 
 	/// <summary>
 	/// “o˜^‚³‚ê‚Ä‚¢‚é‚©

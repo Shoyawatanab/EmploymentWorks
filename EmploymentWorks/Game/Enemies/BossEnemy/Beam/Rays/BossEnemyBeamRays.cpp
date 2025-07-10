@@ -1,3 +1,8 @@
+/*
+	クラス名     : BossEnemyBeamRays
+	説明         : ボス敵のビームの光線
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "BossEnemyBeamRays.h"
 #include "GameBase/Scene/Scene.h"

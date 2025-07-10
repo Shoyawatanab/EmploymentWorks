@@ -1,3 +1,8 @@
+/*
+	クラス名     : NormalFadeOut
+	説明         : 通常フェードアウト
+	補足・注意点 :
+*/
 #pragma once
 #include "Game/Fade/IFade.h"
 

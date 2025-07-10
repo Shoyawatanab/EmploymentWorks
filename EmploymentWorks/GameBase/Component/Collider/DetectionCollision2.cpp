@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "DetectionCollision2.h"
-
+#include "GameBase/Actor.h"
 
 
 //関数の登録
@@ -85,6 +85,51 @@ const DirectX::SimpleMath::Vector3 DetectionCollision2::Extrusion(ColliderCompon
 	return Vector3::Zero;
 	
 
+}
+
+/// <summary>
+/// 線分との当たり判定
+/// </summary>
+/// <param name="ray">Ray</param>
+/// <param name="maxLength">最大距離</param>
+/// <param name="collider">コライダー</param>
+/// <returns>押し出し量</returns>
+DirectX::SimpleMath::Vector3 DetectionCollision2::CheckLineSegmentCollision(DirectX::SimpleMath::Ray ray, float maxLength, ColliderComponent& collider)
+{
+
+	auto tag = collider.GetCollisionTag();
+
+	switch (tag)
+	{
+		case ColliderComponent::ColliderTag::AABB:
+		{
+			AABB& aabb = static_cast<AABB&>(collider);
+
+			float distance;
+			//当たっているか　　　　　最大距離内か
+			if (ray.Intersects(*aabb.GetBoundingBox(), distance))
+			{
+
+				if (distance <= maxLength)
+				{
+
+					return ray.direction * (maxLength - distance);
+					//当たっている
+					return ray.direction * distance;
+
+				}
+			}
+
+		}
+			break;
+		case ColliderComponent::ColliderTag::OBB:
+			break;
+		default:
+			break;
+	}
+
+
+	return DirectX::SimpleMath::Vector3::Zero;
 }
 
 //フリースタイル　　サクシード

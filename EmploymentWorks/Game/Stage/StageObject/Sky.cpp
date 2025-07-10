@@ -4,30 +4,27 @@
 */
 #include "pch.h"
 #include "Sky.h"
+#include "Game/Component/Components.h"
 #include "GameBase/Common/Commons.h"
-#include "Libraries/MyLib/DebugCamera.h"
-#include "Libraries/MyLib/DebugString.h"
-#include "Libraries/MyLib/GridFloor.h"
-#include "Libraries/MyLib/InputManager.h"
-#include "Libraries/MyLib/MemoryLeakDetector.h"
-#include <cassert>
-
+#include "GameBase/Camera/Camera.h"
 
 
 /// <summary>
-/// コンストラク
+/// コンストラクタ
 /// </summary>
-/// <param name="resources">共通リソース</param>
-/// <param name="scale">大きさ</param>
-/// <param name="position">座標</param>
-/// <param name="rotation">回転</param>
-Sky::Sky(CommonResources* resources
-	, DirectX::SimpleMath::Vector3 scale,
-	DirectX::SimpleMath::Vector3 position,
-	DirectX::SimpleMath::Quaternion rotation)
+/// <param name="scene">シーン</param>
+Sky::Sky(Scene* scene)
 	:
-	m_model{}
+	Actor(scene)
 {
+
+	//モデルコンポーネントの追加
+	m_modelComponent =  AddComponent<ModelComponent>(this, "Sky");
+
+	m_modelComponent->SetCustomRenderFunction(std::bind(&Sky::Render, this,std::placeholders::_1));
+
+
+
 }
 
 /// <summary>
@@ -39,38 +36,50 @@ Sky::~Sky()
 }
 
 /// <summary>
-/// 初期化
-/// </summary>
-void Sky::Initialize()
-{
-
-
-
-
-}
-
-/// <summary>
 /// 描画
 /// </summary>
-/// <param name="view">ビュー行列</param>
-/// <param name="projection">射影行列</param>
-void Sky::Render(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection)
+/// <param name="camera">カメラ</param>
+void Sky::Render(const Camera& camera)
 {
 
+	using namespace DirectX::SimpleMath;
+	using namespace DirectX;
+
+	auto context = CommonResources::GetInstance()->GetDeviceResources()->GetD3DDeviceContext();
+	auto states = CommonResources::GetInstance()->GetCommonStates();
+
+	auto model = m_modelComponent->GetModel();
+
+	// モデルのエフェクト情報を更新する
+	model->UpdateEffects([](DirectX::IEffect* effect)
+		{
+			// ベーシックエフェクトを設定する
+			BasicEffect* basicEffect = dynamic_cast<BasicEffect*>(effect);
+			if (basicEffect)
+			{
+				// 個別のライトをすべて無効化する
+				basicEffect->SetLightEnabled(0, false);
+				basicEffect->SetLightEnabled(1, false);
+				basicEffect->SetLightEnabled(2, false);
+
+				// 環境光も無効化する
+				basicEffect->SetAmbientLightColor(Colors::Black);
+
+				// モデルを自発光させる
+				basicEffect->SetEmissiveColor(Colors::White);
+			}
+		}
+	);
+
+	// ワールド行列を更新する
+	Matrix world = Matrix::Identity;
+
+	// モデルを描画する
+	model->Draw(context, *states, world, camera.GetViewMatrix(), camera.GetProjectionMatrix());
 
 }
 
-/// <summary>
-/// 更新処理
-/// </summary>
-/// <param name="elapsedTime">経過時間</param>
-void Sky::Update(const float& elapsedTime)
-{
 
-
-
-
-}
 
 
 

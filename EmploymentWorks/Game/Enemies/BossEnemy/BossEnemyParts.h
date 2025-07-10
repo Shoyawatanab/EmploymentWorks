@@ -1,3 +1,8 @@
+/*
+	クラス名     : BossEnemy
+	説明         : ボス敵のパーツの基底クラス
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Model/ModelPartsBase.h"
 

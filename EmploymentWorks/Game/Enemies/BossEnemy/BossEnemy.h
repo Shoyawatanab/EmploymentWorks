@@ -1,7 +1,8 @@
 /*
-* プレイヤクラス　
+	クラス名     : BossEnemy
+	説明         : ボス敵
+	補足・注意点 :
 */
-
 #pragma once
 #include"Game/Enemies/EnemyBase.h"
 
@@ -32,7 +33,7 @@ public:
 	//コンストラクタ
 	BossEnemy(Scene* scene , DirectX::SimpleMath::Vector3 scale
 		,DirectX::SimpleMath::Vector3 position,DirectX::SimpleMath::Quaternion rotation
-		,Player* player);
+		, EnemyManager* manager,Player* player);
 	//デストラクタ
 	~BossEnemy() override;
 

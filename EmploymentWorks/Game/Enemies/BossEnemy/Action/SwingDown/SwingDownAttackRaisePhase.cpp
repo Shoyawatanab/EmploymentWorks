@@ -1,4 +1,8 @@
-
+/*
+	クラス名     : SwingDownAttackRaisePhase
+	説明         : ボス敵の振り下ろし攻撃の振り上げ状態
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "SwingDownAttackRaisePhase.h"
 #include "GameBase/Common/Commons.h"

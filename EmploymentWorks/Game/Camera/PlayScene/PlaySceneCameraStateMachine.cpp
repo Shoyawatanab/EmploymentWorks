@@ -5,7 +5,7 @@
 */
 #include "pch.h"
 #include "PlaySceneCameraStateMachine.h"
-#include "PaySceneCameraStates.h"
+#include "PlaySceneCameraStates.h"
 #include "Game/Messenger/Scene/SceneMessages.h"
 
 
@@ -47,6 +47,7 @@ PlaySceneCameraStateMachine::~PlaySceneCameraStateMachine()
 /// <param name="datas">í«â¡ÉfÅ[É^</param>
 void PlaySceneCameraStateMachine::Notify(SceneMessageType type, void* datas)
 {
+	UNREFERENCED_PARAMETER(datas);
 	switch (type)
 	{
 		case SceneMessageType::BOSS_DEFEATED:

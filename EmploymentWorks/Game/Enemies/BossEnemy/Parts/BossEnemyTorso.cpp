@@ -1,3 +1,8 @@
+/*
+	クラス名     : BossEnemyTorso
+	説明         : ボス敵の胴体モデル
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "BossEnemyTorso.h"
 #include "GameBase/Scene/Scene.h"

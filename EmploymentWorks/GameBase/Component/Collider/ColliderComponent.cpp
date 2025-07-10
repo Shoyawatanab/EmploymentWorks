@@ -118,11 +118,11 @@ void ColliderComponent::SetPushBack(DirectX::SimpleMath::Vector3 pushBackVector)
 /// <param name="position">中心座標</param>
 /// <param name="extents">バウンディングボックスの大きさ</param>
 /// <param name="radius">バウンディングスフィアの大きさ</param>
-AABB::AABB(Actor* owner, ColliderTag tag, CollisionType type
+AABB::AABB(Actor* owner, CollisionType type
 	, const DirectX::SimpleMath::Vector3& extents
 	, const float& radius)
 	:
-	ColliderComponent(owner,tag,type)
+	ColliderComponent(owner,ColliderTag::AABB,type)
 	,m_initialExtents{extents}
 	,m_initialRadius{radius}
 {
@@ -265,12 +265,12 @@ DirectX::BoundingSphere* AABB::GetBoundingSphere()
 /// <param name="extents">バウンディングボックスの大きさ</param>
 /// <param name="rotation">バウンディングボックスの回転</param>
 /// <param name="radius">バウンディングスフィアの大きさ</param>
-OBB::OBB(Actor* owner, ColliderTag tag, CollisionType type
+OBB::OBB(Actor* owner,  CollisionType type
 	, const DirectX::SimpleMath::Vector3& extents
 	, DirectX::SimpleMath::Quaternion rotation
 	, const float& radius)
 	:
-	ColliderComponent(owner,tag,type)
+	ColliderComponent(owner,ColliderTag::OBB,type)
 	, m_initialExtents{ extents }
 	, m_initialRadius{ radius }
 {

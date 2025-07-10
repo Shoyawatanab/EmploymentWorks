@@ -1,4 +1,8 @@
-
+/*
+	クラス名     : SwingDownAttackActionController
+	説明         : ボス敵の振り下ろし攻撃のコントローラー
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "SwingDownAttackActionController.h"
 #include "GameBase/Common/Commons.h"

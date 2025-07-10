@@ -1,8 +1,12 @@
+/*
+	クラス名     : BossBehaviorTree
+	説明         : ボス敵のビヘイビアツリー
+	補足・注意点 : Rootにあたる
+*/
 #include "pch.h"
 #include "BossBehaviorTree.h"
 #include "GameBase/Common/Commons.h"
 #include "GameBase/BehaviorTree/BehaviorTrees.h"
-
 #include "ExecutionNode.h"
 #include "Conditions.h"
 #include "Game/Player/Player.h"
@@ -77,20 +81,17 @@ void BossBehaviorTree::Update(const float& deltaTime)
 void BossBehaviorTree::CreateNodeTree()
 {
 
-
 	//////HP半分以下
 
-		//ジャンプ攻撃のデコレーター
+	//ジャンプ攻撃のデコレーター
 	auto jumpAttackDecorator = CreateJumpAttackDecorator();
 	jumpAttackDecorator->AddNode(CreateJumpAttackActionNode());
+
 
 	//振り下ろし攻撃のデコレーター
 	auto closeRangeAttackDecorator = CreateCloseRangeAttackDecorator();
 	//振り下ろし攻撃の追加
 	closeRangeAttackDecorator->AddNode(CreateSwingDownActionNode());
-
-
-
 	//HPが半分以下のSelector
 	auto lessThanHalfHP = std::make_unique<SelectorNode>();
 	//近距離攻撃の追加
@@ -104,7 +105,7 @@ void BossBehaviorTree::CreateNodeTree()
 
 	///////HP半分以上
 
-		//遠距離攻撃のデコレーター
+	//遠距離攻撃のデコレーター
 	auto longRangeAttackDecorator = CreateLongRangeAttackDecorator();
 	//ビーム攻撃の追加
 	longRangeAttackDecorator->AddNode(CreateBeamAttackActionNode());

@@ -1,3 +1,8 @@
+/*
+	クラス名     : EnemyBase
+	説明         : 敵の基底クラス
+	補足・注意点 : 全ての敵の基底にする
+*/
 #pragma once
 #include "GameBase/Actor.h"
 
@@ -7,8 +12,6 @@ class EnemyManager;
 class EnemyBase : public Actor
 {
 public:
-	//敵マネージャーのセット
-	void SetEnemyManager(EnemyManager* manager) { m_manger = manager; }
 	//敵マネージャーの取得
 	EnemyManager* GetEnemyManger() { return m_manger; }
 
@@ -30,7 +33,7 @@ public:
 
 public:
 	//コンストラクタ
-	EnemyBase(Scene* scene,int hp);
+	EnemyBase(Scene* scene,int hp,EnemyManager* manager);
 	//デストラクタ
 	~EnemyBase();
 

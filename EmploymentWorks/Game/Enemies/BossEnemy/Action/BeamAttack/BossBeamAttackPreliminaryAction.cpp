@@ -1,4 +1,8 @@
-
+/*
+	クラス名     : BossBeamAttackPreliminaryAction
+	説明         : ボス敵のビーム攻撃の予備動作状態
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "BossBeamAttackPreliminaryAction.h"
 #include "GameBase/Common/Commons.h"

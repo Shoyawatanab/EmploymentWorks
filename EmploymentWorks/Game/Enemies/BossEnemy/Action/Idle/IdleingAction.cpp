@@ -1,3 +1,8 @@
+/*
+	クラス名     : IdleingAction
+	説明         : ボス敵の通常状態
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "IdleingAction.h"
 

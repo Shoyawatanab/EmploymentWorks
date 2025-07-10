@@ -1,3 +1,8 @@
+/*
+	クラス名     : BirdEnemyModel
+	説明         : 鳥敵のモデル
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Model/ModelBase.h"
 

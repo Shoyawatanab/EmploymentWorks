@@ -33,7 +33,7 @@ BoomerangGetReady::~BoomerangGetReady()
 void BoomerangGetReady::Update(const float& deltaTime)
 {
 
-
+	UNREFERENCED_PARAMETER(deltaTime);
 
 }
 

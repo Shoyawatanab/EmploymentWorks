@@ -1,3 +1,8 @@
+/*
+	クラス名     : BirdEnemyBeamAttack
+	説明         : 鳥敵の弾の攻撃状態
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Interface/IState.h"
 

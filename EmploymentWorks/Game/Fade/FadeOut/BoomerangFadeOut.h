@@ -1,3 +1,8 @@
+/*
+	クラス名     : BoomerangFadeOut
+	説明         : ブーメラン型のフェードアウト
+	補足・注意点 :
+*/
 #pragma once
 #include "Game/Fade/IFade.h"
 

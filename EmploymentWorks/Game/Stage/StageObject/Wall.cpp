@@ -29,7 +29,7 @@ Wall::Wall(Scene* scene, StageFactory::StageParameter parameter)
 	extens.y = std::abs(extens.y);
 	extens.z = std::abs(extens.z);
 
-	AddComponent<AABB>(this, ColliderComponent::ColliderTag::AABB, CollisionType::FIXED
+	AddComponent<AABB>(this, CollisionType::FIXED
 		, extens, 1.5f);
 
 

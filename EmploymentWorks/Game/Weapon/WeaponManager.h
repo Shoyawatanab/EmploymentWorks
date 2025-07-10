@@ -23,8 +23,6 @@ public:
 	//デストラクタ
 	~WeaponManager() override;
 
-	// 単体更新
-	void UpdateActor(const float& deltaTime) override;
 
 	void Notify(SceneMessageType type, void*) override;
 

@@ -1,3 +1,8 @@
+/*
+	クラス名     : OrientationAction
+	説明         : ボス敵の回転状態
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "OrientationAction.h"
 #include "GameBase/Common/Commons.h"

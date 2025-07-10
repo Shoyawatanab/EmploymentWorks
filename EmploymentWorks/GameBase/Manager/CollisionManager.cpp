@@ -10,6 +10,7 @@
 CollisionManager::CollisionManager()
 	:
 	m_colliderList{}
+	,m_objectTagList{}
 {
 }
 
@@ -19,6 +20,8 @@ CollisionManager::CollisionManager()
 /// </summary>
 CollisionManager::~CollisionManager()
 {
+	m_colliderList.clear();
+	m_objectTagList.clear();
 }
 
 void CollisionManager::Update(const float& deltaTime)
@@ -113,7 +116,7 @@ void CollisionManager::AddCollider(ColliderComponent* collider)
 	//追加
 	m_colliderList.push_back(collider);
 
-	//並び替え
+	//並び替え  固定 FIXED  = 1 ,	移動 COLLISION = 2 , すり抜け TRIGGER = 3
 	std::sort(
 		m_colliderList.begin(),
 		m_colliderList.end(),
@@ -121,6 +124,9 @@ void CollisionManager::AddCollider(ColliderComponent* collider)
 			return a->GetCollisionType() < b->GetCollisionType();  // 小さい順に並べる
 		}
 	);
+
+	//オブジェクトタグごとにリストに追加
+	m_objectTagList[collider->GetActor()->GetObjectTag()].push_back(collider);
 
 }
 
@@ -179,7 +185,6 @@ void CollisionManager::Fixed_Collision(ColliderComponent* collider1, ColliderCom
 		//めり込み量の計算
 		Vector3 pushVector = DetectionCollision2::Extrusion(collider1, collider2);
 		//押し出し　並び替えてあるから２を押し出しても大丈夫
-		//collider2->GetActor()->GetTransform()->Translate(-pushVector);
 		collider2->SetPushBack(-pushVector);
 	}
 
@@ -209,6 +214,32 @@ void CollisionManager::Collision_Trigger(ColliderComponent* collider1, ColliderC
 	//通知を送る
 	SendNotification(collider1, collider2, isHit);
 
+
+}
+
+/// <summary>
+/// Rayと特定オブジェクトの当たり判定
+/// </summary>
+/// <param name="ray">Ray</param>
+/// <param name="tag">オブジェクトタグ</param>
+/// <param name="pushBack">押し出し量</param>
+void CollisionManager::RayCollision(DirectX::SimpleMath::Ray ray, float maxLength, Actor::ObjectTag tag, DirectX::SimpleMath::Vector3* pushBack)
+{
+	using namespace DirectX::SimpleMath;
+
+	//特定オブジェクト
+	for (auto& object : m_objectTagList[tag])
+	{
+
+		Vector3 push = DetectionCollision2::CheckLineSegmentCollision(ray, maxLength, *object);
+
+		if (push.Length() != 0)
+		{
+			*pushBack = push;
+			return;
+		}
+
+	}
 
 }
 

@@ -1,3 +1,8 @@
+/*
+	クラス名     : BossEnemyBottom
+	説明         : ボス敵の尻モデル
+	補足・注意点 :
+*/
 #pragma once
 #include "Game/Enemies/BossEnemy/BossEnemyParts.h"
 

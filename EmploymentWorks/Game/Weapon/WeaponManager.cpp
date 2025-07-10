@@ -39,14 +39,7 @@ WeaponManager::~WeaponManager()
 {
 }
 
-/// <summary>
-/// 単体更新処理
-/// </summary>
-/// <param name="deltaTime">経過時間</param>
-void WeaponManager::UpdateActor(const float& deltaTime)
-{
 
-}
 
 /// <summary>
 /// 通知時に呼び出される関数
@@ -55,6 +48,8 @@ void WeaponManager::UpdateActor(const float& deltaTime)
 /// <param name="datas"></param>
 void WeaponManager::Notify(SceneMessageType type, void* datas)
 {
+
+	UNREFERENCED_PARAMETER(datas);
 
 	switch (type)
 	{
@@ -71,7 +66,7 @@ void WeaponManager::Notify(SceneMessageType type, void* datas)
 			//通常状態のブーメランを探す
 			m_holdWeapon = GetBoomerang(BoomerangState::IDEL);
 			//ヌルでない場合
-			if (m_holdWeapon)
+			if(m_holdWeapon)
 			{
 				//状態の変更
 				m_holdWeapon->ChangeState(BoomerangState::GET_READY);

@@ -31,7 +31,7 @@ Camera::Camera(Scene* scene)
 	m_projection = Matrix::CreatePerspectiveFieldOfView(
 		XMConvertToRadians(45.0f),
 		static_cast<float>(rect.right) / static_cast<float>(rect.bottom),
-		0.1f, 150.0f
+		0.1f, 200.0f
 	);
 
 

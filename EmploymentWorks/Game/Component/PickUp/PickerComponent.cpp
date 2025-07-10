@@ -1,3 +1,9 @@
+/*
+	クラス名    : PickerComponent
+	説明        : 拾う側コンポーネント
+	補足・注意点:　このゲームオリジナルコンポーネント
+	　　　　　　　プレイシーンにマネージャーがある
+*/
 #include "pch.h"
 #include "PickerComponent.h"
 #include "Game/Manager/PickUp/PickUpManager.h"

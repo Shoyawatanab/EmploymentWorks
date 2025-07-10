@@ -22,12 +22,12 @@ BirdEnemyBullet::BirdEnemyBullet(Scene* scene, BirdEnemy* birdEnemy)
 	AddComponent<ModelComponent>(this, "BeamEnergyBall");
 
 	//ìñÇΩÇËîªíËÇÃçÏê¨
-	AddComponent<AABB>(this, ColliderComponent::ColliderTag::AABB, CollisionType::COLLISION
+	AddComponent<AABB>(this, CollisionType::COLLISION
 		, BOX_COLLIDER_SIZE
 		, SPHERE_COLLIDER_SIZE);
 
 	//ä€âe
-	auto shadow = AddComponent<RoundShadowComponent>(this, 0.6f);
+	AddComponent<RoundShadowComponent>(this, 0.6f);
 	//îöî≠âπÇÃçÏê¨
 	m_explosionSE = AddComponent<SoundComponent>(this, "Explosion", SoundComponent::SoundType::SE);
 

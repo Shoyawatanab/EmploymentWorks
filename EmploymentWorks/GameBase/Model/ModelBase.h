@@ -8,6 +8,7 @@ public:
 	//パーツの取得
 	std::unordered_map<std::string, ModelPartsBase*>& GetParts() { return m_parts; }
 
+
 public:
 	//コンストラクタ
 	ModelBase(Scene* scene);

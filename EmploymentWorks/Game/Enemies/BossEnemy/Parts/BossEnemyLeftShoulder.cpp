@@ -1,3 +1,8 @@
+/*
+	クラス名     : BossEnemyLeftShoulder
+	説明         : ボス敵の左肩モデル
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "BossEnemyLeftShoulder.h"
 #include "GameBase/Scene/Scene.h"

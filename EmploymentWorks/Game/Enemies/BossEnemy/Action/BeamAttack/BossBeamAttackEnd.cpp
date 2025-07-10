@@ -1,4 +1,8 @@
-
+/*
+	クラス名     : BossBeamAttackEnd
+	説明         : ボス敵のビーム攻撃の終了状態
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "BossBeamAttackEnd.h"
 #include "GameBase/Common/Commons.h"

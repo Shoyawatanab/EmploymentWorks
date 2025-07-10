@@ -1,3 +1,8 @@
+/*
+	クラス名     : EnemyManager
+	説明         : 敵のマネージャー
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "EnemyManager.h"
 #include "Game/Enemies/Enemys.h"
@@ -20,6 +25,7 @@ EnemyManager::EnemyManager(Scene* scene,Player* player)
 	:
 	Actor(scene)
 	,m_player{player}
+	,m_targets{}
 {
 	using namespace DirectX::SimpleMath;
 
@@ -45,12 +51,11 @@ void EnemyManager::DeathEnemy(Actor* actor)
 	auto enemy = std::find(m_enemys.begin(), m_enemys.end(), actor);
 	
 	//いれば
-	if (enemy != m_enemys.end())
+	if(enemy != m_enemys.end())
 	{
 		//削除
 		m_enemys.erase(enemy);
 	}
-
 
 
 	//すべての敵を倒したら
@@ -64,6 +69,29 @@ void EnemyManager::DeathEnemy(Actor* actor)
 	}
 
 
+
+}
+
+/// <summary>
+/// ターゲットの追加
+/// </summary>
+/// <param name="targets">ターゲット</param>
+void EnemyManager::AddTargets(std::vector<Actor*> targets)
+{
+
+	for (auto& target : targets)
+	{
+		//すでに登録されているか
+		auto it = std::find(m_targets.begin(), m_targets.end(), target);
+
+		//されていないなら
+		if (it == m_targets.end())
+		{
+			//追加
+			m_targets.push_back(target);
+		}
+
+	}
 
 }
 
@@ -166,8 +194,7 @@ void EnemyManager::LoadData()
 		if (kinds == "BossEnemy")
 		{
 			//ボス敵の作成
-			auto boss = GetScene()->AddActor<BossEnemy>(GetScene(),  scale, position, rotation, m_player);
-			boss->SetEnemyManager(this);
+			auto boss = GetScene()->AddActor<BossEnemy>(GetScene(),  scale, position, rotation,this, m_player);
 			m_enemys.push_back(boss);
 
 
@@ -175,13 +202,10 @@ void EnemyManager::LoadData()
 		else if (kinds == "BirdEnemy")
 		{
 			//鳥敵の作成
-			auto bird = GetScene()->AddActor<BirdEnemy>(GetScene(), scale, position, rotation, m_player);
-			bird->SetEnemyManager(this);
+			auto bird = GetScene()->AddActor<BirdEnemy>(GetScene(), scale, position, rotation,this, m_player);
 			m_enemys.push_back(bird);
 
-
 		}
-
 
 	}
 

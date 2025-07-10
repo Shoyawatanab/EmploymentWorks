@@ -1,6 +1,7 @@
 /*
-	@file	IdleingActionComtroller.h
-	@brief	プレイシーンクラス
+	クラス名     : IdleingAction
+	説明         : ボス敵の通常のコントローラー
+	補足・注意点 :
 */
 #pragma once
 #include "GameBase/Action/ActionController.h"

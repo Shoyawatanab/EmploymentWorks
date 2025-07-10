@@ -1,6 +1,7 @@
 /*
-	@file	BossJumpAttackJump.h
-	@brief	プレイシーンクラス
+	クラス名     : BossJumpAttackJump
+	説明         : ボス敵のジャンプ攻撃のジャンプ状態
+	補足・注意点 :
 */
 #pragma once
 #include "Game/Interface/IActione.h"

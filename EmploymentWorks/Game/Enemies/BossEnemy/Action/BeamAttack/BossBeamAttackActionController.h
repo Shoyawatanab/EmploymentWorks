@@ -1,6 +1,7 @@
 /*
-	@file	BossBeamAttackActionController.h
-	@brief	プレイシーンクラス
+	クラス名     : BossBeamAttackActionController
+	説明         : ボス敵のビーム攻撃のコントローラー
+	補足・注意点 :
 */
 #pragma once
 #include "GameBase/Action/ActionController.h"

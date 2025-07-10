@@ -1,6 +1,7 @@
 /*
-	@file	WalkAction.h
-	@brief	プレイシーンクラス
+	クラス名     : WalkAction
+	説明         : ボス敵の歩き状態
+	補足・注意点 :
 */
 #pragma once
 #include "Game/Interface/IActione.h"

@@ -1,7 +1,12 @@
+/*
+	クラス名     : BossEnemy
+	説明         : ボス敵
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "BossEnemy.h"
 #include "GameBase/Scene/Scene.h"
-#include "GameBase/Component/Components.h"
+#include "Game/Component/Components.h"
 #include "Game/Enemies/BossEnemy/BossEnemyParts.h"
 #include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/Enemies/BossEnemy/BehavirTree/BossBehaviorTree.h"
@@ -10,9 +15,10 @@
 #include "Game/Enemies/BossEnemy/Animation/BossAnimationController.h"
 #include "Game/Enemies/BossEnemy/Action/BossEnemyActionManager.h"
 #include "Game/Player/Player.h"
-#include "Game/Camera/PayScene/PlaySceneCamera.h"
+#include "Game/Camera/PlayScene/PlaySceneCamera.h"
 #include "Game/Fade/FadeManager.h"
 #include "Game/Enemies/BossEnemy/Beam/BossEnemyBeam.h"
+#include "Game/Enemies/EnemyManager.h"
 
 /// <summary>
 /// コンストラク
@@ -21,9 +27,9 @@
 /// <param name="player">プレイヤ</param>
 BossEnemy::BossEnemy(Scene* scene, DirectX::SimpleMath::Vector3 scale
 	, DirectX::SimpleMath::Vector3 position, DirectX::SimpleMath::Quaternion rotation
-	, Player* player)
+	, EnemyManager* manager, Player* player)
 	:
-	EnemyBase(scene,Params::BOSSENEMY_MAX_HP)
+	EnemyBase(scene,Params::BOSSENEMY_MAX_HP,manager)
 	,m_behavior{}
 	,m_actionManager{}
 	,m_animation{}
@@ -36,7 +42,7 @@ BossEnemy::BossEnemy(Scene* scene, DirectX::SimpleMath::Vector3 scale
 
 	m_rigidBody = AddComponent<RigidbodyComponent>(this);
 	//当たり判定の作成
-	auto collider = AddComponent<AABB>(this, ColliderComponent::ColliderTag::AABB, CollisionType::COLLISION
+	auto collider = AddComponent<AABB>(this,  CollisionType::COLLISION
 		, Params::BOSSENEMY_BOX_COLLIDER_SIZE
 		, Params::BOSSENEMY_SPHERE_COLLIDER_SIZE);
 
@@ -53,10 +59,22 @@ BossEnemy::BossEnemy(Scene* scene, DirectX::SimpleMath::Vector3 scale
 	auto model = GetScene()->AddActor<BossEnemyModel>(GetScene(),this);
 	//親子関係をセット
 	model->GetTransform()->SetParent(GetTransform());
-
+	
 	SetModel(model);
 
+//パーツをマネージャーにターゲットとして登録
+	//パーツの取得
+	auto partss = model->GetParts();
+	//保存配列
+	std::vector<Actor*> partssActor;
+	for (auto& part : partss)
+	{
+		//Actorだけを抽出する
+		partssActor.push_back(part.second);
+	}
+//ここまで
 
+	GetEnemyManger()->AddTargets(partssActor);
 
 	//初期状態の適用
 	GetTransform()->SetScale(scale);
@@ -103,18 +121,18 @@ void BossEnemy::UpdateActor(const float& deltaTime)
 
 
 
-	if (m_actionManager->Update(deltaTime))
-	{
-		//ビヘイビアツリーの更新
-		//m_behavior->Update(deltaTime);
+	//if (m_actionManager->Update(deltaTime))
+	//{
+	//	//ビヘイビアツリーの更新
+	//	//m_behavior->Update(deltaTime);
 
 
-		//SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_BEAM_ATTACK_STATE);
-		SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_JUMP_ATTACK_STATE);
-		//SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_WAKING_STATE);
-		//SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_SWING_DOWN_STATE);
+	//	//SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_BEAM_ATTACK_STATE);
+	//	//SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_JUMP_ATTACK_STATE);
+	//	//SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_WAKING_STATE);
+	//	//SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_SWING_DOWN_STATE);
 
-	}
+	//}
 
 
 }

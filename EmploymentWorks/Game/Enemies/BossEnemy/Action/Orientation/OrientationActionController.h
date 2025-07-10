@@ -1,3 +1,8 @@
+/*
+	クラス名     : OrientationActionController
+	説明         : ボス敵の回転のコントローラー
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Action/ActionController.h"
 #include "GameBase/Actor.h"

@@ -11,8 +11,11 @@ public:
 	~DetectionCollision2() = default;
 	//当たったかどうかのチェック true : 当たった  false : 当たってない
 	static bool ChecOnCollision(ColliderComponent* collider1, ColliderComponent* collier2);
-
+	//押し出し
 	static const DirectX::SimpleMath::Vector3 Extrusion(ColliderComponent* collider1, ColliderComponent* collider2);
+
+	//線分との当たり判定
+	static DirectX::SimpleMath::Vector3 CheckLineSegmentCollision(DirectX::SimpleMath::Ray ray, float maxLength, ColliderComponent& collider);
 
 private:
 

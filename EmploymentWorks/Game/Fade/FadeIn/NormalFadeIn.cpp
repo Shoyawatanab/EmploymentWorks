@@ -1,3 +1,8 @@
+/*
+	クラス名     : NormalFadeIn
+	説明         : 通常フェードイン
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "NormalFadeIn.h"
 #include "GameBase/Shader/ShaderFactory.h"
