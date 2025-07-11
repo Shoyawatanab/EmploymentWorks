@@ -1,6 +1,7 @@
 /*
-	@file	SceneManager.cpp
-	@brief	シーンマネージャクラス
+	クラス名     : SceneManager
+	説明         : シーンマネージャー
+	補足・注意点 :
 */
 #include "pch.h"
 #include "SceneManager.h"
@@ -18,9 +19,9 @@
 #include "Game/Fade/FadeManager.h"
 
 
-//---------------------------------------------------------
-// コンストラクタ
-//---------------------------------------------------------
+/// <summary>
+/// コンストラクタ
+/// </summary>
 SceneManager::SceneManager()
 	:
 	m_currentScene{}
@@ -41,17 +42,17 @@ SceneManager::SceneManager()
 
 }
 
-//---------------------------------------------------------
-// デストラクタ
-//---------------------------------------------------------
+/// <summary>
+/// デストラクタ
+/// </summary>
 SceneManager::~SceneManager()
 {
 	Finalize();
 }
 
-//---------------------------------------------------------
-// 初期化する
-//---------------------------------------------------------
+/// <summary>
+/// 初期化
+/// </summary>
 void SceneManager::Initialize()
 {
 
@@ -63,9 +64,10 @@ void SceneManager::Initialize()
 }
 
 
-//---------------------------------------------------------
-// 更新する
-//---------------------------------------------------------
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="elapsedTime">経過時間</param>
 void SceneManager::Update(float elapsedTime)
 {
 	m_currentScene->Update(elapsedTime);
@@ -86,36 +88,38 @@ void SceneManager::Update(float elapsedTime)
 	
 }
 
-//---------------------------------------------------------
-// 描画する
-//---------------------------------------------------------
+/// <summary>
+/// 描画
+/// </summary>
 void SceneManager::Render()
 {
 	m_currentScene->Render();
 }
 
 
-//---------------------------------------------------------
-// 後始末する
-//---------------------------------------------------------
+/// <summary>
+/// 後始末
+/// </summary>
 void SceneManager::Finalize()
 {
 	DeleteScene();
 }
 
 
-//---------------------------------------------------------
-// シーンを変更する
-//---------------------------------------------------------
+/// <summary>
+/// シーン変更
+/// </summary>
+/// <param name="sceneID"></param>
 void SceneManager::ChangeScene(SceneID sceneID)
 {
 	DeleteScene();
 	CreateScene(sceneID);
 }
 
-//---------------------------------------------------------
-// シーンを作成する
-//---------------------------------------------------------
+/// <summary>
+/// シーンの作成
+/// </summary>
+/// <param name="sceneID"></param>
 void SceneManager::CreateScene(SceneID sceneID)
 {
 	assert(m_currentScene == nullptr);
@@ -144,9 +148,9 @@ void SceneManager::CreateScene(SceneID sceneID)
 
 }
 
-//---------------------------------------------------------
-// シーンを削除する
-//---------------------------------------------------------
+/// <summary>
+/// シーンの削除
+/// </summary>
 void SceneManager::DeleteScene()
 {
 	if (m_currentScene)

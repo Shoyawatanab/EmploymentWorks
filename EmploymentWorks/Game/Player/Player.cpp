@@ -1,3 +1,8 @@
+/*
+	クラス名     : Player
+	説明         : プレイヤ
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "Player.h"
 #include "GameBase/Managers.h"

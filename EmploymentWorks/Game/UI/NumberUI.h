@@ -1,3 +1,8 @@
+/*
+	クラス名     : NumberUI
+	説明         : １桁の数字のUI
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Actor.h"
 

@@ -1,7 +1,8 @@
 /*
-	パーツモデルの基底クラス　どんなパーツモデルでも継承する
+	クラス名     : ModelPartsBase
+	説明         : パーツモデルの基底クラス　どんなパーツモデルでも継承する
+	補足・注意点 :
 */
-
 #pragma once
 #include "GameBase/Actor.h"
 

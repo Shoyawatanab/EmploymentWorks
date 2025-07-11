@@ -1,3 +1,8 @@
+/*
+	クラス名     : PlayerRightArm
+	説明         : プレイヤの右腕モデル
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "PlayerBody.h"
 #include "GameBase/Scene/Scene.h"

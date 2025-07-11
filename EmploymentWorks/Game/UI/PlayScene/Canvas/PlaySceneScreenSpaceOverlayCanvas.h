@@ -1,5 +1,7 @@
 /*
-プレイシーンのカメラの常に移るUiキャンバスクラス
+	クラス名     : PlaySceneScreenSpaceOverlayCanvas
+	説明         : プレイシーンの常に画面に移るUIキャンバス
+	補足・注意点 :
 */
 #pragma once
 #include "GameBase/UI/Canvas/ScreenSpaceOverlayCanvas.h"

@@ -1,3 +1,8 @@
+/*
+	クラス名     : TargetMarker
+	説明         : ブーメランを投げるときのターゲットマーカーUI
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "TargetMarker.h"
 #include "GameBase/Scene/Scene.h"

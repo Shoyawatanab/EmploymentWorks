@@ -1,3 +1,8 @@
+/*
+	クラス名     : ColliderComponent
+	説明         : 当たり判定コンポーネント
+	補足・注意点 : 追加するときは派生のAABBやOBBなどを使用する
+*/
 #include "pch.h"
 #include "ColliderComponent.h"
 #include "GameBase/Actor.h"

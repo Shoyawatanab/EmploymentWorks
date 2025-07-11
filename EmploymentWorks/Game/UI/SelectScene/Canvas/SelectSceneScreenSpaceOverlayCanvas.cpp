@@ -1,3 +1,8 @@
+/*
+	クラス名     : SelectSceneScreenSpaceOverlayCanvas
+	説明         : セレクトシーンの常に映り続けるUIキャンバスI
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "SelectSceneScreenSpaceOverlayCanvas.h"
 #include "Game/UI/SelectScene/SelectSceneUIs.h"

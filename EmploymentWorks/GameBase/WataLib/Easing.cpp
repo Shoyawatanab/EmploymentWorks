@@ -1,22 +1,27 @@
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// <製作者>			NakashimaYuto	
-// <製作開始日>		2023/09/03
-// <file>			Easing.cpp
-// <概要>			イージング関数を扱う
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/*
+	クラス名     : Easing
+	説明         : イージング関数を扱うクラス
+	補足・注意点 : 使いたい場所で、作って、Start(元の値、初期値、最終値)をやれば動く
+*/
 #include"pch.h"
 #include"easing.h"
 #include<math.h>
 #define M_PI        3.141592f
 
 
-NakashiLib::Easing::Easing() {
+/// <summary>
+/// コンストラク
+/// </summary>
+Easing::Easing() {
 	change = 0;
 	change_amount = 0;
 	turn = true;
 }
 
-NakashiLib::Easing::~Easing() {
+/// <summary>
+/// デストラクタ
+/// </summary>
+Easing::~Easing() {
 
 }
 
@@ -24,7 +29,7 @@ NakashiLib::Easing::~Easing() {
 /// <summary>
 /// 数値変更処理
 /// </summary>
-void NakashiLib::Easing::Start(float speed, float strNum, float endNum) {
+void Easing::Start(float speed, float strNum, float endNum) {
 	change += speed;
 	//変化量をセット
 	change_amount = endNum - strNum;
@@ -36,7 +41,7 @@ void NakashiLib::Easing::Start(float speed, float strNum, float endNum) {
 /// <summary>
 /// 終了呼び出し処理
 /// </summary>
-bool NakashiLib::Easing::EndChange() {
+bool Easing::EndChange() {
 	if (change >= 1.0f) {
 		return true;
 	}
@@ -46,14 +51,14 @@ bool NakashiLib::Easing::EndChange() {
 /// <summary>
 /// リセット処理
 /// </summary>
-void NakashiLib::Easing::Reset() {
+void Easing::Reset() {
 	change = 0;
 }
 
 /// <summary>
 /// Normal
 /// </summary>
-float NakashiLib::Easing::Normal(float speed, float strNum, float endNum) {
+float Easing::Normal(float speed, float strNum, float endNum) {
 	Start(speed, strNum, endNum);
 
 	return strNum + change_amount * change;
@@ -63,17 +68,17 @@ float NakashiLib::Easing::Normal(float speed, float strNum, float endNum) {
 /// <summary>
 /// Sine系統
 /// </summary>
-float NakashiLib::Easing::InSine(float speed, float strNum, float endNum) {
+float Easing::InSine(float speed, float strNum, float endNum) {
 	Start(speed, strNum, endNum);
 	return strNum + change_amount * static_cast<float>(1 - cos((change * M_PI) / 2));
 }
 
-float NakashiLib::Easing::OutSine(float speed, float strNum, float endNum) {
+float Easing::OutSine(float speed, float strNum, float endNum) {
 	Start(speed, strNum, endNum);
 	return strNum + change_amount * static_cast<float>(sin((change * M_PI) / 2));
 }
 
-float NakashiLib::Easing::InOutSine(float speed, float strNum, float endNum) {
+float Easing::InOutSine(float speed, float strNum, float endNum) {
 	Start(speed, strNum, endNum);
 	return strNum + change_amount * static_cast<float>(-(cos(M_PI * change) - 1) / 2);
 }
@@ -83,17 +88,17 @@ float NakashiLib::Easing::InOutSine(float speed, float strNum, float endNum) {
 /// <summary>
 /// Quad系統
 /// </summary>
-float NakashiLib::Easing::InQuad(float speed, float strNum, float endNum) {
+float Easing::InQuad(float speed, float strNum, float endNum) {
 	Start(speed, strNum, endNum);
 	return strNum + change_amount * static_cast<float>(change * change);
 }
 
-float NakashiLib::Easing::OutQuad(float speed, float strNum, float endNum) {
+float Easing::OutQuad(float speed, float strNum, float endNum) {
 	Start(speed, strNum, endNum);
 	return strNum + change_amount * static_cast<float>(1 - (1 - change) * (1 - change));
 }
 
-float NakashiLib::Easing::InOutQuad(float speed, float strNum, float endNum) {
+float Easing::InOutQuad(float speed, float strNum, float endNum) {
 	Start(speed, strNum, endNum);
 	return strNum + change_amount * static_cast<float>(change < 0.5 ? 2 * change * change :
 														1 - pow(-2 * change + 2, 2) / 2);
@@ -104,17 +109,17 @@ float NakashiLib::Easing::InOutQuad(float speed, float strNum, float endNum) {
 /// <summary>
 /// Qubic系統
 /// </summary>
-float NakashiLib::Easing::InQubic(float speed, float strNum, float endNum) {
+float Easing::InQubic(float speed, float strNum, float endNum) {
 	Start(speed, strNum, endNum);
 	return strNum + change_amount * static_cast<float>(change * change * change);
 }
 
-float NakashiLib::Easing::OutQubic(float speed, float strNum, float endNum) {
+float Easing::OutQubic(float speed, float strNum, float endNum) {
 	Start(speed, strNum, endNum);
 	return strNum + change_amount * static_cast<float>(1 - pow(1 - change, 3));
 }
 
-float NakashiLib::Easing::InOutQubic(float speed, float strNum, float endNum) {
+float Easing::InOutQubic(float speed, float strNum, float endNum) {
 	Start(speed, strNum, endNum);
 	return strNum + change_amount * static_cast<float>(change < 0.5 ? 4 * change * change * change :
 									1 - pow(-2 * change + 2, 3) / 2);
@@ -123,17 +128,17 @@ float NakashiLib::Easing::InOutQubic(float speed, float strNum, float endNum) {
 /// <summary>
 /// Quart系統
 /// </summary>
-float NakashiLib::Easing::InQuart(float speed, float strNum, float endNum) {
+float Easing::InQuart(float speed, float strNum, float endNum) {
 	Start(speed, strNum, endNum);
 	return strNum + change_amount * static_cast<float>(change * change * change * change);
 }
 
-float NakashiLib::Easing::OutQuart(float speed, float strNum, float endNum) {
+float Easing::OutQuart(float speed, float strNum, float endNum) {
 	Start(speed, strNum, endNum);
 	return strNum + change_amount * static_cast<float>(1 - pow(1 - change, 4));
 }
 
-float NakashiLib::Easing::InOutQuart(float speed, float strNum, float endNum) {
+float Easing::InOutQuart(float speed, float strNum, float endNum) {
 	Start(speed, strNum, endNum);
 	return strNum + change_amount * static_cast<float>(change < 0.5 ? 8 * change * change * change * change :
 									1 - pow(-2 * change + 2, 4) / 2);
@@ -145,17 +150,17 @@ float NakashiLib::Easing::InOutQuart(float speed, float strNum, float endNum) {
 /// <summary>
 /// Quint系統
 /// </summary>
-float NakashiLib::Easing::InQuint(float speed, float strNum, float endNum){
+float Easing::InQuint(float speed, float strNum, float endNum){
 	Start(speed, strNum, endNum);
 	return strNum + change_amount * static_cast<float>(powf(change ,5));
 }
 
-float NakashiLib::Easing::OutQuint(float speed, float strNum, float endNum) {
+float Easing::OutQuint(float speed, float strNum, float endNum) {
 	Start(speed, strNum, endNum);
 	return strNum + change_amount * static_cast<float>(1 - powf(1 - change,5));
 }
 
-float NakashiLib::Easing::InOutQuint(float speed, float strNum, float endNum) {
+float Easing::InOutQuint(float speed, float strNum, float endNum) {
 	Start(speed, strNum, endNum);
 	return strNum + change_amount * static_cast<float>(change < 0.5 ? 16 * change * change * change * change * change :
 									1 - pow(-2 * change + 2, 5) / 2);
@@ -166,17 +171,17 @@ float NakashiLib::Easing::InOutQuint(float speed, float strNum, float endNum) {
 /// <summary>
 /// Expo系統
 /// </summary>
-float NakashiLib::Easing::InExpo(float speed, float strNum, float endNum) {
+float Easing::InExpo(float speed, float strNum, float endNum) {
 	Start(speed, strNum, endNum);
 	return strNum + change_amount * static_cast<float>(change == 0 ? 0 : pow(2, 10 * change - 10));
 }
 
-float NakashiLib::Easing::OutExpo(float speed, float strNum, float endNum) {
+float Easing::OutExpo(float speed, float strNum, float endNum) {
 	Start(speed, strNum, endNum);
 	return strNum + change_amount * static_cast<float>(change == 1 ? 1 : 1 - pow(2, -10 * change));
 }
 
-float NakashiLib::Easing::InOutExpo(float speed, float strNum, float endNum) {
+float Easing::InOutExpo(float speed, float strNum, float endNum) {
 	Start(speed, strNum, endNum);
 	return strNum + change_amount * static_cast<float>(change == 0
 		? 0
@@ -191,17 +196,17 @@ float NakashiLib::Easing::InOutExpo(float speed, float strNum, float endNum) {
 /// <summary>
 /// Circ系統
 /// </summary>
-float NakashiLib::Easing::InCirc(float speed, float strNum, float endNum) {
+float Easing::InCirc(float speed, float strNum, float endNum) {
 	Start(speed, strNum, endNum);
 	return strNum + change_amount * static_cast<float>(1 - sqrt(1 - pow(change, 2)));
 }
 
-float NakashiLib::Easing::OutCirc(float speed, float strNum, float endNum) {
+float Easing::OutCirc(float speed, float strNum, float endNum) {
 	Start(speed, strNum, endNum);
 	return strNum + change_amount * static_cast<float>(sqrt(1 - pow(change - 1, 2)));
 }
 
-float NakashiLib::Easing::InOutCirc(float speed, float strNum, float endNum) {
+float Easing::InOutCirc(float speed, float strNum, float endNum) {
 	Start(speed, strNum, endNum);
 	return strNum + change_amount * static_cast<float>(change < 0.5
 		? (1 - sqrt(1 - pow(2 * change, 2))) / 2
@@ -212,7 +217,7 @@ float NakashiLib::Easing::InOutCirc(float speed, float strNum, float endNum) {
 /// <summary>
 /// Back系統
 /// </summary>
-float NakashiLib::Easing::InBack(float speed, float strNum, float endNum){
+float Easing::InBack(float speed, float strNum, float endNum){
 	Start(speed, strNum, endNum);
 
 	float c1 = 1.70158f;
@@ -222,7 +227,7 @@ float NakashiLib::Easing::InBack(float speed, float strNum, float endNum){
 														- c1 * change * change);
 }
 
-float NakashiLib::Easing::OutBack(float speed, float strNum, float endNum) {
+float Easing::OutBack(float speed, float strNum, float endNum) {
 	Start(speed, strNum, endNum);
 
 	float c1 = 1.70158f;
@@ -232,7 +237,7 @@ float NakashiLib::Easing::OutBack(float speed, float strNum, float endNum) {
 														c1 * powf(change - 1, 2));
 }
 
-float NakashiLib::Easing::InOutBack(float speed, float strNum, float endNum) {
+float Easing::InOutBack(float speed, float strNum, float endNum) {
 	Start(speed, strNum, endNum);
 
 	float c1 = 1.70158f;
@@ -247,7 +252,7 @@ float NakashiLib::Easing::InOutBack(float speed, float strNum, float endNum) {
 /// <summary>
 /// Elastic系統
 /// </summary>
-float NakashiLib::Easing::InElastic(float speed, float strNum, float endNum) {
+float Easing::InElastic(float speed, float strNum, float endNum) {
 	Start(speed, strNum, endNum);
 	float c4 = static_cast<float>(2 * M_PI) / 3;
 	return strNum + change_amount * static_cast<float>(change == 0
@@ -257,7 +262,7 @@ float NakashiLib::Easing::InElastic(float speed, float strNum, float endNum) {
 		: -pow(2, 10 * change - 10) * sin((change * 10 - 10.75) * c4));
 }
 
-float NakashiLib::Easing::OutElastic(float speed, float strNum, float endNum) {
+float Easing::OutElastic(float speed, float strNum, float endNum) {
 	Start(speed, strNum, endNum);
 	float c4 = static_cast<float>(2 * M_PI) / 3;
 	return strNum + change_amount * static_cast<float>(change == 0
@@ -267,7 +272,7 @@ float NakashiLib::Easing::OutElastic(float speed, float strNum, float endNum) {
 		: pow(2, -10 * change) * sin((change * 10 - 0.75) * c4) + 1);
 }
 
-float NakashiLib::Easing::InOutElastic(float speed, float strNum, float endNum) {
+float Easing::InOutElastic(float speed, float strNum, float endNum) {
 	Start(speed, strNum, endNum);
 	float c5 = static_cast<float>(2 * M_PI) / 4.5;
 	return strNum + change_amount * static_cast<float>(change == 0
@@ -286,7 +291,7 @@ float NakashiLib::Easing::InOutElastic(float speed, float strNum, float endNum) 
 /// <summary>
 /// Bounce系統
 /// </summary>
-float NakashiLib::Easing::InBounce(float speed, float strNum, float endNum) {
+float Easing::InBounce(float speed, float strNum, float endNum) {
 	Start(speed, strNum, endNum);
 	float n1 = 7.5625f;
 	float d1 = 2.75f;
@@ -307,7 +312,7 @@ float NakashiLib::Easing::InBounce(float speed, float strNum, float endNum) {
 }
 
 
-float NakashiLib::Easing::OutBounce(float speed, float strNum, float endNum) {
+float Easing::OutBounce(float speed, float strNum, float endNum) {
 	Start(speed, strNum, endNum);
 	float n1 = 7.5625f;
 	float d1 = 2.75f;
@@ -326,7 +331,7 @@ float NakashiLib::Easing::OutBounce(float speed, float strNum, float endNum) {
 	}
 }
 
-float NakashiLib::Easing::InOutBounce(float speed, float strNum, float endNum) {
+float Easing::InOutBounce(float speed, float strNum, float endNum) {
 	Start(speed, strNum, endNum);
 	float n1 = 7.5625f;
 	float d1 = 2.75f;
@@ -373,7 +378,7 @@ float NakashiLib::Easing::InOutBounce(float speed, float strNum, float endNum) {
 /// <param name="speed">速度</param>
 /// <param name="strNum">スタートの値</param>
 /// <param name="endNum">エンドの値</param>
-float NakashiLib::Easing::Selection(EasingType type, float speed, float strNum, float endNum) {
+float Easing::Selection(EasingType type, float speed, float strNum, float endNum) {
 	switch (type)
 	{
 		case Easing::EasingType::Nomal:
@@ -484,7 +489,7 @@ float NakashiLib::Easing::Selection(EasingType type, float speed, float strNum, 
 /// <param name="speed">速度</param>
 /// <param name="strNum">スタートの値</param>
 /// <param name="endNum">エンドの値</param>
-float NakashiLib::Easing::Turn(EasingType type1, EasingType type2, float speed, float strNum, float endNum)
+float Easing::Turn(EasingType type1, EasingType type2, float speed, float strNum, float endNum)
 {
 
 	if (EndChange())
@@ -503,7 +508,7 @@ float NakashiLib::Easing::Turn(EasingType type1, EasingType type2, float speed, 
 }
 
 
-float NakashiLib::Easing::Rope(EasingType type, float speed, float strNum, float endNum)
+float Easing::Rope(EasingType type, float speed, float strNum, float endNum)
 {
 	if (EndChange())
 	{

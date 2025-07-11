@@ -1,5 +1,7 @@
 /*
-* プレイヤの通常状態クラス
+	クラス名     : PlayerStateMachine
+	説明         : プレイヤのブーメランのステートマシーン
+	補足・注意点 :
 */
 #pragma once
 #include "GameBase/StateMachine/StateMachine.h"

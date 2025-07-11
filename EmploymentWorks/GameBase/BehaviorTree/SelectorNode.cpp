@@ -1,3 +1,8 @@
+/*
+	クラス名     : SelectorNode
+	説明         : ビヘイビアツリーのセレクターノード
+	補足・注意点 :　	成功する子が見つかるまで子を実行する。見つかったらSuccess、見つからないとFailureを返す
+*/
 #include "pch.h"
 #include "SelectorNode.h"
 

@@ -1,3 +1,8 @@
+/*
+	クラス名     : Scene
+	説明         : すべてのシーンの基底クラス
+	補足・注意点 :
+*/
 #pragma once
 
 class Actor;
@@ -11,9 +16,6 @@ class UIManager;
 class Scene
 {
 public:
-
-public:
-
 	//マネージャーの取得
 	RenderManager* GetRenderMangaer() { return m_renderMangaer.get(); }
 	CollisionManager* GetCollisionManager() { return m_collisionManager.get(); }
@@ -33,12 +35,12 @@ public:
 	// 更新処理
 	void Update(float deltaTime);
 	// 派生クラス更新処理
-	virtual void SceneUpdate(const float& deltaTime) = 0;
+	virtual void SceneUpdate(const float& deltaTime) { UNREFERENCED_PARAMETER(deltaTime); };
 	// 描画処理
 	void Render();
-	virtual void SceneRender() = 0;
+	virtual void SceneRender() {};
 	// 終了処理
-	virtual void Finalize() = 0;
+	virtual void Finalize() {};
 	
 	// アクター削除フラグをオンにする
 	void ActorDestroyOn() { m_isActorDestroy = true; }

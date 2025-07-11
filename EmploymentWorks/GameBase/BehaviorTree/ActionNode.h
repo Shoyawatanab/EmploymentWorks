@@ -1,10 +1,8 @@
 /*
-	ActionNode.h
-	渡邊翔也
-	ビヘイビアツリーの実行のみのノード
-	子を持たない
+	クラス名     : ActionNode
+	説明         : ビヘイビアツリーの実行ノード
+	補足・注意点 :　子ノードを持たない
 */
-
 #pragma once
 #include "Game/Interface/ILeafNode.h"
 #include <functional>

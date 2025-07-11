@@ -1,10 +1,7 @@
 /*
-	Root.h
-	渡邊翔也
-	ビヘイビアツリーのノード
-	順番に子を実行する
-	全ての子が実行できるとSuccess
-	子が失敗したらすぐにFailureを反す
+	クラス名     : Root
+	説明         : ビヘイビアツリーのルートノード
+	補足・注意点 :　順番に子を実行する。全ての子が実行できるとSuccess、子が失敗したらすぐにFailureを反す
 */
 #pragma once
 #include "Game/Interface/ICompositeNode.h"

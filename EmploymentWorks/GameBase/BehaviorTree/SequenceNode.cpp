@@ -1,3 +1,8 @@
+/*
+	クラス名     : SequenceNode
+	説明         : ビヘイビアツリーのシーケンスノード
+	補足・注意点 : 順番に子を実行する。全ての子が実行できるとSuccess、子が失敗したらすぐにFailureを反す
+*/
 #include "pch.h"
 #include "SequenceNode.h"
 

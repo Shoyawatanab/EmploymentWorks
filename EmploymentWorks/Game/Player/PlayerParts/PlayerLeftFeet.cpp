@@ -1,3 +1,8 @@
+/*
+	クラス名     : PlayerLeftFeet
+	説明         : プレイヤの左足モデル
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "PlayerLeftFeet.h"
 #include "GameBase/Scene/Scene.h"

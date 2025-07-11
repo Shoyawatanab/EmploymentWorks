@@ -1,3 +1,8 @@
+/*
+	クラス名     : ResultRetryButton
+	説明         : リザルトシーンのリトライボタンUI
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "ResultRetryButton.h"
 #include "GameBase/Scene/Scene.h"

@@ -1,3 +1,8 @@
+/*
+	クラス名     : GlobalMessenger
+	説明         : シーンをまたぐMessenger
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "GlobalMessenger.h"
 

@@ -1,3 +1,8 @@
+/*
+	クラス名     : AnimationController
+	説明         : 1キャラの全てのアニメーションの管理クラス
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "AnimationController.h"
 #include "GameBase/Animation/Animator.h"

@@ -1,3 +1,8 @@
+/*
+	クラス名     : Actor
+	説明         : オブジェクトの基底クラス
+	補足・注意点 :
+*/
 #pragma once
 #include"Component.h"
 

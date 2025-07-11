@@ -1,3 +1,8 @@
+/*
+	クラス名     : BoomerangIdle
+	説明         : ブーメランの通常状態
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Interface/IState.h"
 

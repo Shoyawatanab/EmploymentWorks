@@ -1,3 +1,8 @@
+/*
+	クラス名     : Boomerang
+	説明         : ブーメラン
+	補足・注意点 :
+*/
 #pragma once
 #include "Game/Weapon/WeaponBase.h"
 #include "Game/Weapon/Boomerang/State/BoomerangStateMachine.h"

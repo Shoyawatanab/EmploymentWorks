@@ -1,5 +1,10 @@
+/*
+	クラス名     : GlobalGameData
+	説明         : シーンをまたぐゲームデータ
+	補足・注意点 :
+*/
 #pragma once
-#include "Libraries/WataLib/Singleton.h"
+#include "GameBase/WataLib/Singleton.h"
 
 class GlobalGameData : public Singleton<GlobalGameData>
 {

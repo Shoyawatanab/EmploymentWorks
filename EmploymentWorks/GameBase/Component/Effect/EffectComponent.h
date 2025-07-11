@@ -1,3 +1,8 @@
+/*
+	クラス名     : EffectComponent
+	説明         : エフェクトコンポーネント
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Component.h"
 

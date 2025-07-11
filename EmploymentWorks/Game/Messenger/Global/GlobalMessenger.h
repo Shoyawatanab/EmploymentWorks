@@ -1,9 +1,10 @@
 /*
-ゲーム全体のメッセンジャークラス
-
+	クラス名     : GlobalMessenger
+	説明         : シーンをまたぐMessenger
+	補足・注意点 :
 */
 #pragma once
-#include "Libraries/WataLib/Singleton.h"
+#include "GameBase/WataLib/Singleton.h"
 #include "GameBase/Messenger/IObserver.h"
 #include "Game/Messenger/Global/GlobalMeesageType.h"
 #include <unordered_map>

@@ -1,3 +1,8 @@
+/*
+	クラス名     : Sky
+	説明         : 天球
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Actor.h"
 

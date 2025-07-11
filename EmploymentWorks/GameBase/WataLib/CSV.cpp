@@ -1,6 +1,7 @@
 /*
-	@file	CSV.cpp
-	@brief	タイトルシーンクラス
+	クラス名     : CSV
+	説明         : CSVの読み込みクラス
+	補足・注意点 :
 */
 #include "pch.h"
 #include "CSV.h"
@@ -9,7 +10,6 @@
 #include "Libraries/MyLib/MemoryLeakDetector.h"
 #include "Libraries/MyLib/InputManager.h"
 #include <cassert>
-
 #include <fstream>
 #include <string>
 #include <sstream>

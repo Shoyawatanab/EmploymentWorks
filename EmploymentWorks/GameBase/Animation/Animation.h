@@ -1,7 +1,8 @@
 /*
-	1つのパーツに対するアニメーションを行うクラス
+	クラス名     : Animation
+	説明         : 1オブジェクトのアニメーションクラス
+	補足・注意点 :
 */
-
 #pragma once
 #include "GameBase/Actor.h"
 

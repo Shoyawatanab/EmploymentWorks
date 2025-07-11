@@ -1,3 +1,8 @@
+/*
+	クラス名     : ShaderFactory
+	説明         : シェーダーの作成用クラス
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "ShaderFactory.h"
 #include "Libraries/MyLib/BinaryFile.h"

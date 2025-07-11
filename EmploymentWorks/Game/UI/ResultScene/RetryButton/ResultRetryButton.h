@@ -1,3 +1,8 @@
+/*
+	クラス名     : ResultRetryButton
+	説明         : リザルトシーンのリトライボタンUI
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/UI/Button.h"
 

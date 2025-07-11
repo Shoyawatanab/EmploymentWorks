@@ -1,3 +1,8 @@
+/*
+	クラス名     : ActionNode
+	説明         : ビヘイビアツリーの実行ノード
+	補足・注意点 :　子ノードを持たない
+*/
 #include "pch.h"
 #include "ActionNode.h"
 

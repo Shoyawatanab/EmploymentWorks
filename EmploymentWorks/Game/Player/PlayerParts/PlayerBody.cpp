@@ -1,3 +1,8 @@
+/*
+	クラス名     : PlayerBody
+	説明         : プレイヤの胴体モデル
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "PlayerBody.h"
 #include "GameBase/Scene/Scene.h"

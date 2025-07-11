@@ -1,3 +1,8 @@
+/*
+	クラス名     : BoomerangThrow
+	説明         : ブーメランの投げの状態
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "BoomerangThrow.h"
 #include "Game/Weapon/Boomerang/Boomerang.h"
@@ -5,7 +10,7 @@
 #include "Game/Component/Components.h"
 #include "Game/Player/Player.h"
 #include "Game/MathUtil.h"
-#include "Libraries/WataLib/CSV.h"
+#include "GameBase/WataLib/CSV.h"
 #include "GameBase/Scene/Scene.h"
 #include "GameBase/Camera/Camera.h"
 #include "Game/Messenger/Scene/SceneMessages.h"

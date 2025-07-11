@@ -1,3 +1,8 @@
+/*
+	クラス名     : Component
+	説明         : コンポーネントの基底クラス
+	補足・注意点 :
+*/
 #pragma once
 class Scene;
 class Actor;

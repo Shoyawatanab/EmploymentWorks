@@ -1,3 +1,8 @@
+/*
+	クラス名     : WeaponManager
+	説明         : 武器のマネージャー
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "WeaponManager.h"
 #include "GameBase/Scene/Scene.h"

@@ -1,3 +1,8 @@
+/*
+	クラス名     : TitleButton
+	説明         : ゲームオーバーUIのタイトルボタン
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/UI/Button.h"
 

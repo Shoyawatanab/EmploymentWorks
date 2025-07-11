@@ -1,3 +1,8 @@
+/*
+	クラス名     : PlayerAnimationController
+	説明         : プレイヤアニメーションコントローラー
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Animation/AnimationController.h"
 #include "GameBase/Messenger/IObserver.h"

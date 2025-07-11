@@ -1,5 +1,7 @@
 /*
-* プレイヤの通常状態クラス
+	クラス名     : PlayerBoomerangAttack
+	説明         : プレイヤのブーメラン攻撃状態
+	補足・注意点 :
 */
 #pragma once
 #include "GameBase/Interface/IState.h"

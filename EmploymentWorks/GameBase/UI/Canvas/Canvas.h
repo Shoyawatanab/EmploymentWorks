@@ -1,3 +1,8 @@
+/*
+	クラス名     : Canvas
+	説明         : UIキャンバスの基底クラス
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Actor.h"
 

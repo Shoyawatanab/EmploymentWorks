@@ -1,3 +1,8 @@
+/*
+	クラス名     : PlayerBoomerangGetReady
+	説明         : プレイヤのブーメラン構え状態
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "PlayerBoomerangAttack.h"
 #include "PlayerBoomerangGetReady.h"

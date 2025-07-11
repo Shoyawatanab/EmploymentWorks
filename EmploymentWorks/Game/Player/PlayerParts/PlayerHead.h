@@ -1,5 +1,7 @@
 /*
-* プレイヤの頭クラス
+	クラス名     : PlayerHead
+	説明         : プレイヤの頭モデル
+	補足・注意点 :
 */
 #pragma once
 #include "Game/Player/PlayerParts.h"

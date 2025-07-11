@@ -1,3 +1,8 @@
+/*
+	クラス名     : BoomerangStateMachine
+	説明         : ブーメランのステートマシーン
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "BoomerangStateMachine.h"
 #include "Game/Weapon/Boomerang/State/BoomerangStates.h"

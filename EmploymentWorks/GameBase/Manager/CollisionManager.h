@@ -1,3 +1,8 @@
+/*
+	クラス名     : CollisionManager
+	説明         : 当たり判定マネージャー
+	補足・注意点 : Sceneで宣言
+*/
 #pragma once
 #include "GameBase/Actor.h"
 #include <unordered_map>

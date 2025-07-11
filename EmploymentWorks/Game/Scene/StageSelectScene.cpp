@@ -1,6 +1,7 @@
 /*
-	@file	StageSelectScene.cpp
-	@brief	タイトルシーンクラス
+	クラス名     : StageSelectScene
+	説明         : セレクトシーン
+	補足・注意点 :
 */
 #include "pch.h"
 #include "StageSelectScene.h"
@@ -13,9 +14,10 @@
 #include "Game/Fade/FadeManager.h"
 
 
-//---------------------------------------------------------
-// コンストラクタ
-//---------------------------------------------------------
+/// <summary>
+/// コンストラクタ
+/// </summary>
+/// <param name="sceneManager"></param>
 StageSelectScene::StageSelectScene(SceneManager* sceneManager)
 	:
 	m_camera{}
@@ -25,17 +27,17 @@ StageSelectScene::StageSelectScene(SceneManager* sceneManager)
 
 }
 
-//---------------------------------------------------------
-// デストラクタ
-//---------------------------------------------------------
+/// <summary>
+/// デストラクタ
+/// </summary>
 StageSelectScene::~StageSelectScene()
 {
 	// do nothing.
 }
 
-//---------------------------------------------------------
-// 初期化する
-//---------------------------------------------------------
+/// <summary>
+/// 初期化
+/// </summary>
 void StageSelectScene::Initialize()
 {
 
@@ -47,27 +49,5 @@ void StageSelectScene::Initialize()
 
 }
 
-//---------------------------------------------------------
-// 更新する
-//---------------------------------------------------------
-void StageSelectScene::SceneUpdate(const float& deltaTime)
-{
 
-}
-
-//---------------------------------------------------------
-// 描画する
-//---------------------------------------------------------
-void StageSelectScene::SceneRender()
-{
-
-}
-
-//---------------------------------------------------------
-// 後始末する
-//---------------------------------------------------------
-void StageSelectScene::Finalize()
-{
-	// do nothing.
-}
 

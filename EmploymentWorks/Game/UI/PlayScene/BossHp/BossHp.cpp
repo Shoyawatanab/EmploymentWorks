@@ -1,3 +1,8 @@
+/*
+	クラス名     : BossHp
+	説明         : ボスHPのUI
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "BossHp.h"
 #include "GameBase/UI/Canvas/Canvas.h"

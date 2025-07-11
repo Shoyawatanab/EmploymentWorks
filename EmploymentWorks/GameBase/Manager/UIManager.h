@@ -1,3 +1,8 @@
+/*
+	クラス名     : UIManager
+	説明         : UIマネージャー
+	補足・注意点 : Sceneで宣言
+*/
 #pragma once
 
 class ButtonComponent;

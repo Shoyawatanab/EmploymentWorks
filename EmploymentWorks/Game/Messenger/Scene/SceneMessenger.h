@@ -1,5 +1,10 @@
+/*
+	クラス名     : GlobalMessenger
+	説明         : シーンをまたがないMessenger
+	補足・注意点 :
+*/
 #pragma once
-#include "Libraries/WataLib/Singleton.h"
+#include "GameBase/WataLib/Singleton.h"
 #include "GameBase/Messenger/IObserver.h"
 #include "SceneMessageType.h"
 #include <unordered_map>

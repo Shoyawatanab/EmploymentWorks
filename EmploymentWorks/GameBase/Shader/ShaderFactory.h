@@ -1,7 +1,10 @@
+/*
+	クラス名     : ShaderFactory
+	説明         : シェーダーの作成用クラス
+	補足・注意点 :
+*/
 #pragma once
-#include "Libraries/WataLib/Singleton.h"
-
-
+#include "GameBase/WataLib/Singleton.h"
 
 class ShaderFactory : public Singleton<ShaderFactory>
 {

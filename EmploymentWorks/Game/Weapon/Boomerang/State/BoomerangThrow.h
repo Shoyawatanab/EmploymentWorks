@@ -1,3 +1,8 @@
+/*
+	クラス名     : BoomerangThrow
+	説明         : ブーメランの投げの状態
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Interface/IState.h"
 

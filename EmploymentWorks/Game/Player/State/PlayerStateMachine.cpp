@@ -1,3 +1,8 @@
+/*
+	クラス名     : PlayerStateMachine
+	説明         : プレイヤのブーメランのステートマシーン
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "PlayerStateMachine.h"
 #include "Game/Player/Player.h"

@@ -1,3 +1,8 @@
+/*
+	クラス名     : RigidbodyComponent
+	説明         : 物理挙動コンポーネント
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Component.h"
 #include "GameBase/Actor.h"

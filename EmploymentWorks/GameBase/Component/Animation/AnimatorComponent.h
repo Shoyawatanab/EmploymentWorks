@@ -1,3 +1,8 @@
+/*
+	クラス名     : AnimatorComponent
+	説明         : アニメーションコンポーネント
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Component.h"
 

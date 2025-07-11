@@ -1,3 +1,8 @@
+/*
+	クラス名     : TitleButton
+	説明         : ゲームオーバーUI
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "GameOverUI.h"
 #include "GameBase/Scene/Scene.h"

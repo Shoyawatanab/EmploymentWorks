@@ -1,3 +1,8 @@
+/*
+	クラス名     : Image
+	説明         : 画像UIの基底クラス
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "Image.h"
 #include "GameBase/UI/Canvas/Canvas.h"

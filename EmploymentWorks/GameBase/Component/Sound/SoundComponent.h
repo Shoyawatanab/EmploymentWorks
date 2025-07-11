@@ -1,3 +1,8 @@
+/*
+	クラス名     : SoundComponent
+	説明         : 音のコンポーネント
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Component.h"
 

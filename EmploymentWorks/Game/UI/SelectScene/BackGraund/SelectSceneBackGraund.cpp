@@ -1,3 +1,8 @@
+/*
+	クラス名     : SelectSceneBackGraund
+	説明         : セレクトシーンの背景UII
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "SelectSceneBackGraund.h"
 #include "GameBase/Scene/Scene.h"

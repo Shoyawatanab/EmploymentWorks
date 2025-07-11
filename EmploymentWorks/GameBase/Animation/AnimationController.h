@@ -1,5 +1,7 @@
 /*
-複数のアニメーターを管理するクラス
+	クラス名     : AnimationController
+	説明         : 1キャラの全てのアニメーションの管理クラス
+	補足・注意点 :
 */
 #pragma once
 #include <unordered_map>

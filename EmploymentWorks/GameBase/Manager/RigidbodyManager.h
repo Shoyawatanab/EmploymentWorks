@@ -1,3 +1,8 @@
+/*
+	クラス名     : RigidbodyManager
+	説明         : 物理挙動マネージャー
+	補足・注意点 : Sceneで宣言
+*/
 #pragma once
 #include "GameBase/Component/Rigidbody/RigidbodyComponent.h"
 

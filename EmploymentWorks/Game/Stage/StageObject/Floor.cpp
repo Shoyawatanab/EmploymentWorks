@@ -1,6 +1,7 @@
 /*
-	@file	Floor.cpp
-	@brief	プレイシーンクラス
+	クラス名     : Floor
+	説明         : 床
+	補足・注意点 :
 */
 #include "pch.h"
 #include "Floor.h"

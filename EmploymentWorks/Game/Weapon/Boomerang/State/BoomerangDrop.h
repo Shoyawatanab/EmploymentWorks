@@ -1,3 +1,8 @@
+/*
+	クラス名     : BoomerangDrop
+	説明         : ブーメランのドロップの状態
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Interface/IState.h"
 

@@ -1,7 +1,7 @@
-#pragma once
 /*
-	@file	Wall.h.h
-	@brief	プレイシーンクラス
+	クラス名     : Wall
+	説明         : 壁
+	補足・注意点 :
 */
 #pragma once
 #include "GameBase/Actor.h"

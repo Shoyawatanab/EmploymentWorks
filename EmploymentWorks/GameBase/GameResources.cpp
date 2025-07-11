@@ -1,3 +1,8 @@
+/*
+	クラス名     : GameResources
+	説明         : ゲームリソースクラス
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "GameResources.h"
 #include <fstream>

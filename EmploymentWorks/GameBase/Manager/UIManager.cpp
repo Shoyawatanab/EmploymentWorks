@@ -1,3 +1,8 @@
+/*
+	クラス名     : UIManager
+	説明         : UIマネージャー
+	補足・注意点 : Sceneで宣言
+*/
 #include "pch.h"
 #include "UIManager.h"
 #include "GameBase/Component/UI/ButtonComponent.h"

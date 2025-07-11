@@ -1,3 +1,8 @@
+/*
+	クラス名     : DamageCount
+	説明         : 敵のダメージUI
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "DamageCount.h"
 #include "GameBase/UI/Canvas/Canvas.h"
@@ -6,6 +11,10 @@
 #include "GameBase/Scene/Scene.h"
 #include "Game/UI/NumberUI.h"
 
+/// <summary>
+/// コンストラク
+/// </summary>
+/// <param name="canvas"></param>
 DamageCount::DamageCount(Canvas* canvas)
 	:
 	Actor(canvas->GetScene())
@@ -92,7 +101,10 @@ void DamageCount::OnDisable()
 
 }
 
-
+/// <summary>
+/// ダメージのセット
+/// </summary>
+/// <param name="damage"></param>
 void DamageCount::SetDamage(int damage)
 {
 	using namespace DirectX::SimpleMath;

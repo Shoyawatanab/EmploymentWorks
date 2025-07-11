@@ -1,3 +1,8 @@
+/*
+	クラス名     : PlayerHp
+	説明         : プレイヤHPUI
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "PlayerHp.h"
 #include "GameBase/Scene/Scene.h"

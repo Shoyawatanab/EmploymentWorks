@@ -1,3 +1,8 @@
+/*
+	クラス名     : PlaySceneScreenSpaceOverlayCanvas
+	説明         : プレイシーンの常に画面に移るUIキャンバス
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "PlaySceneScreenSpaceOverlayCanvas.h"
 #include "GameBase/Scene/Scene.h"

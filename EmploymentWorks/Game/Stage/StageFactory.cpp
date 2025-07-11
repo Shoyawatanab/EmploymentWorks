@@ -1,10 +1,13 @@
+/*
+	クラス名     : StageFactory
+	説明         : ステージ作成クラス
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "StageFactory.h"
-
 #include <iostream>
 #include <fstream>
 #include <nlohmann/json.hpp>
-
 #include "nlohmann/json.hpp"
 #include "Game/Stage/StageObjects.h"
 #include "GameBase/Scene/Scene.h"

@@ -1,3 +1,8 @@
+/*
+	クラス名     : PlayerAnimationController
+	説明         : プレイヤアニメーションコントローラー
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "PlayerAnimationController.h"
 #include "Game/Player/Player.h"

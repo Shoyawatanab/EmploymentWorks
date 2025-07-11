@@ -1,3 +1,8 @@
+/*
+	クラス名     : WeaponBase
+	説明         : 武器のベースクラス
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Actor.h"
 

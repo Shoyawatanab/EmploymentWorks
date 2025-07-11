@@ -1,6 +1,7 @@
 /*
-	@file	Sky.cpp
-	@brief	プレイシーンクラス
+	クラス名     : Sky
+	説明         : 天球
+	補足・注意点 :
 */
 #include "pch.h"
 #include "Sky.h"

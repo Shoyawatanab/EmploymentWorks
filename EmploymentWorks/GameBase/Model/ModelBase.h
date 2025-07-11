@@ -1,3 +1,8 @@
+/*
+	クラス名     : ModelBase
+	説明         : 全てのモデルの基底クラス
+	補足・注意点 : 
+*/
 #pragma once
 #include "GameBase/Actor.h"
 #include "GameBase/Model/ModelPartsBase.h"

@@ -1,3 +1,8 @@
+/*
+	クラス名     : RenderManager
+	説明         : 描画マネージャー
+	補足・注意点 : Sceneで宣言
+*/
 #pragma once
 #include "GameBase/Component/Model/ModelComponent.h"
 #include "GameBase/Component/UI/ImageComponent.h"
@@ -9,7 +14,6 @@ class Camera;
 
 class RenderManager
 {
-	
 public:
 
 	//コンストラクタ

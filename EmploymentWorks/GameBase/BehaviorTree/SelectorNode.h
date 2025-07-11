@@ -1,11 +1,9 @@
 /*
-	SelectorNode.h
-	渡邊翔也
-	ビヘイビアツリーのノード
-	成功する子が見つかるまで子を実行する
-	見つかったらSuccessを返す
-	見つからないとFailureを返す
-*/#pragma once
+	クラス名     : SelectorNode
+	説明         : ビヘイビアツリーのセレクターノード
+	補足・注意点 :　	成功する子が見つかるまで子を実行する。見つかったらSuccess、見つからないとFailureを返す
+*/
+#pragma once
 #include "Game/Interface/ICompositeNode.h"
 
 class CommonResources;

@@ -5,7 +5,7 @@
 */
 #pragma once
 #include <unordered_map>
-#include "Libraries/WataLib/Singleton.h"
+#include "GameBase/WataLib/Singleton.h"
 
 class PickerComponent;
 class PickableComponent;

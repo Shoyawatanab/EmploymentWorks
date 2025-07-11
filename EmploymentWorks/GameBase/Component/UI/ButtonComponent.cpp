@@ -1,3 +1,8 @@
+/*
+	クラス名     : ButtonComponent
+	説明         : ボタンUIコンポーネント
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "ButtonComponent.h"
 #include "GameBase/Actor.h"

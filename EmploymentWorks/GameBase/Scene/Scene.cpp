@@ -1,3 +1,8 @@
+/*
+	クラス名     : Scene
+	説明         : すべてのシーンの基底クラス
+	補足・注意点 :
+*/
 #include"pch.h"
 #include"Scene.h"
 #include"GameBase/Actor.h"
