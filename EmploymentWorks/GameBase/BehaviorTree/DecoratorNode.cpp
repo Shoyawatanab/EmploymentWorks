@@ -1,3 +1,8 @@
+/*
+	クラス名     : DecoratorNode
+	説明         : ビヘイビアツリーの条件判定ノード
+	補足・注意点 :　条件を通れば子のステートを返す。通らなければFailureを返す
+*/
 #include "pch.h"
 #include "DecoratorNode.h"
 

@@ -1,5 +1,10 @@
+/*
+	クラス名     : SoundManager
+	説明         : サウンドマネージャー
+	補足・注意点 : Sceneで宣言
+*/
 #pragma once
-#include "Libraries/WataLib/Singleton.h"
+#include "GameBase/WataLib/Singleton.h"
 #include "GameBase/Component/Sound/SoundComponent.h"
 
 namespace FMOD

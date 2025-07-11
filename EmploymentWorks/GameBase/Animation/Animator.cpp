@@ -1,3 +1,8 @@
+/*
+	クラス名     : Animator
+	説明         : 1のアニメーションに対してのパーツの管理クラス
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "Animator.h"
 

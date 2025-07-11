@@ -1,14 +1,19 @@
+/*
+	クラス名     : DetectionCollision
+	説明         : 当たり判定を行うクラス
+	補足・注意点 : 
+*/
 #pragma once
 #include "GameBase/Component/Collider/ColliderComponent.h"
 
-class DetectionCollision2
+class DetectionCollision
 {
 
 public:
 	//コンストラクタ
-	DetectionCollision2() = default;
+	DetectionCollision() = default;
 	//デストラクタ
-	~DetectionCollision2() = default;
+	~DetectionCollision() = default;
 	//当たったかどうかのチェック true : 当たった  false : 当たってない
 	static bool ChecOnCollision(ColliderComponent* collider1, ColliderComponent* collier2);
 	//押し出し

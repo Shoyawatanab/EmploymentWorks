@@ -1,3 +1,8 @@
+/*
+	クラス名     : NumberUI
+	説明         : １桁の数字のUI
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "NumberUI.h"
 #include "GameBase/UI/Canvas/Canvas.h"

@@ -1,6 +1,7 @@
 /*
-	@file	SceneManager.h
-	@brief	シーンマネージャクラス
+	クラス名     : SceneManager
+	説明         : シーンマネージャー
+	補足・注意点 :
 */
 #pragma once
 #include "GameBase/Scene/Scene.h"

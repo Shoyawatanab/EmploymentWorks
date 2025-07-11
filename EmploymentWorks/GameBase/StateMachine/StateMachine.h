@@ -1,5 +1,9 @@
+/*
+	クラス名     : StateMachine
+	説明         : ステートマシーンの基底クラス
+	補足・注意点 :
+*/
 #pragma once
-
 #include "GameBase/Interface/IState.h"
 #include <unordered_map>
 

@@ -1,3 +1,8 @@
+/*
+	クラス名     : Boomerang
+	説明         : ブーメラン
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "Boomerang.h"
 #include "Game/Component/Components.h"

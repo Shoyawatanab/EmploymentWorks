@@ -1,3 +1,8 @@
+/*
+	クラス名     : RigidbodyComponent
+	説明         : 物理挙動コンポーネント
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "RigidbodyComponent.h"
 #include "GameBase/Component/Transform/Transform.h"

@@ -1,3 +1,8 @@
+/*
+	クラス名     : PlaySceneSound
+	説明         : プレイシーンの音
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "PlaySceneSound.h"
 #include "Game/Component/Components.h"

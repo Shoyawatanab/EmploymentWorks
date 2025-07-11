@@ -1,9 +1,11 @@
+/*
+	クラス名     : GameResources
+	説明         : ゲームリソースクラス
+	補足・注意点 :
+*/
 #pragma once
 #include <unordered_map>
-
-#include "Libraries/WataLib/Singleton.h"
-
-
+#include "GameBase/WataLib/Singleton.h"
 
 namespace FMOD
 {

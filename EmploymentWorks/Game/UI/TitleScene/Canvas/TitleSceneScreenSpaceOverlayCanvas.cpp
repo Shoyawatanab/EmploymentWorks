@@ -1,3 +1,8 @@
+/*
+	クラス名     : TitleSceneScreenSpaceOverlayCanvas
+	説明         : タイトルシーンの常に映り続けるUIキャンバス
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "TitleSceneScreenSpaceOverlayCanvas.h"
 #include "Game/UI/TitleScene/TitleSceneUIs.h"

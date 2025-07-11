@@ -1,3 +1,8 @@
+/*
+	クラス名     : PlayerIdle
+	説明         : プレイヤのブーメラン通常状態
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "PlayerIdle.h"
 #include "GameBase/Common/Commons.h"

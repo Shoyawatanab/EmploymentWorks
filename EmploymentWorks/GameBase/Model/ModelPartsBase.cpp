@@ -1,3 +1,8 @@
+/*
+	クラス名     : ModelPartsBase
+	説明         : パーツモデルの基底クラス　どんなパーツモデルでも継承する
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "ModelPartsBase.h"
 #include "GameBase/Component/Model/ModelComponent.h"

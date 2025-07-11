@@ -1,3 +1,8 @@
+/*
+	クラス名     : Button
+	説明         : ボタンUIの基底クラス
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Actor.h"
 

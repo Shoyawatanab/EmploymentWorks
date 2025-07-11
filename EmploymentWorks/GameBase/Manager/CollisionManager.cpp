@@ -1,7 +1,12 @@
+/*
+	クラス名     : CollisionManager
+	説明         : 当たり判定マネージャー
+	補足・注意点 : Sceneで宣言
+*/
 #include "pch.h"
 #include "CollisionManager.h"
 #include "GameBase/Component/Collider/ColliderComponent.h"
-#include "GameBase/Component/Collider/DetectionCollision2.h"
+#include "GameBase/Component/Collider/DetectionCollision.h"
 #include <algorithm> 
 
 /// <summary>
@@ -152,7 +157,7 @@ void CollisionManager::RemoveCollider(ColliderComponent* collider)
 void CollisionManager::Collision_Collision(ColliderComponent* collider1, ColliderComponent* collider2)
 {
 	//当たり判定フラグ
-	bool isHit = DetectionCollision2::ChecOnCollision(collider1, collider2);
+	bool isHit = DetectionCollision::ChecOnCollision(collider1, collider2);
 
 	//通知を送る
 	SendNotification(collider1, collider2,isHit);
@@ -176,14 +181,14 @@ void CollisionManager::Fixed_Collision(ColliderComponent* collider1, ColliderCom
 {
 	using namespace DirectX::SimpleMath;
 	//当たり判定フラグ
-	bool isHit = DetectionCollision2::ChecOnCollision(collider1, collider2);
+	bool isHit = DetectionCollision::ChecOnCollision(collider1, collider2);
 
 	//当たったか
 	if (isHit)
 	{
 		//当たっていたら
 		//めり込み量の計算
-		Vector3 pushVector = DetectionCollision2::Extrusion(collider1, collider2);
+		Vector3 pushVector = DetectionCollision::Extrusion(collider1, collider2);
 		//押し出し　並び替えてあるから２を押し出しても大丈夫
 		collider2->SetPushBack(-pushVector);
 	}
@@ -199,7 +204,7 @@ void CollisionManager::Fixed_Trigger(ColliderComponent* collider1, ColliderCompo
 {
 
 	//当たり判定フラグ
-	bool isHit = DetectionCollision2::ChecOnCollision(collider1, collider2);
+	bool isHit = DetectionCollision::ChecOnCollision(collider1, collider2);
 	//通知を送る
 	SendNotification(collider1, collider2, isHit);
 
@@ -209,7 +214,7 @@ void CollisionManager::Collision_Trigger(ColliderComponent* collider1, ColliderC
 {
 
 	//当たり判定フラグ
-	bool isHit = DetectionCollision2::ChecOnCollision(collider1, collider2);
+	bool isHit = DetectionCollision::ChecOnCollision(collider1, collider2);
 
 	//通知を送る
 	SendNotification(collider1, collider2, isHit);
@@ -231,7 +236,7 @@ void CollisionManager::RayCollision(DirectX::SimpleMath::Ray ray, float maxLengt
 	for (auto& object : m_objectTagList[tag])
 	{
 
-		Vector3 push = DetectionCollision2::CheckLineSegmentCollision(ray, maxLength, *object);
+		Vector3 push = DetectionCollision::CheckLineSegmentCollision(ray, maxLength, *object);
 
 		if (push.Length() != 0)
 		{

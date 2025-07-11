@@ -1,5 +1,7 @@
 /*
-* プレイヤの通常状態クラス
+	クラス名     : PlayerUsually
+	説明         : プレイヤの常に処理したもののクラス
+	補足・注意点 :
 */
 #pragma once
 #include "GameBase/Interface/IState.h"

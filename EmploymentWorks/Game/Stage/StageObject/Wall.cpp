@@ -1,6 +1,7 @@
 /*
-	@file	Wall.cpp
-	@brief	プレイシーンクラス
+	クラス名     : Wall
+	説明         : 壁
+	補足・注意点 :
 */
 #include "pch.h"
 #include "Wall.h"

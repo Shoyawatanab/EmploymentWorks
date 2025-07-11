@@ -1,3 +1,8 @@
+/*
+	クラス名     : ExitButton
+	説明         : タイトルシーンのExitボタンのUI
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "ExitButton.h"
 #include "GameBase/UI/Canvas/Canvas.h"

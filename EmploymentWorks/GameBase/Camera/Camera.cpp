@@ -1,3 +1,8 @@
+/*
+	クラス名     : Camera
+	説明         : カメラの基底クラス
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "Camera.h"
 #include "GameBase/Screen.h"

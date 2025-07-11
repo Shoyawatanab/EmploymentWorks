@@ -1,3 +1,8 @@
+/*
+	クラス名     : PlayButton
+	説明         : タイトルシーンのPlayボタンのUI
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "PlayButton.h"
 #include "GameBase/UI/Canvas/Canvas.h"

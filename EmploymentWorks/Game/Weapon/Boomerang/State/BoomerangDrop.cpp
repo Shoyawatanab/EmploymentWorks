@@ -1,3 +1,8 @@
+/*
+	クラス名     : BoomerangDrop
+	説明         : ブーメランのドロップの状態
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "BoomerangDrop.h"
 #include "Game/Weapon/Boomerang/Boomerang.h"

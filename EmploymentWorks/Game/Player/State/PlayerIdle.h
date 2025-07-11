@@ -1,5 +1,7 @@
 /*
-* プレイヤの通常状態クラス
+	クラス名     : PlayerIdle
+	説明         : プレイヤのブーメラン通常状態
+	補足・注意点 :
 */
 #pragma once
 #include "GameBase/Interface/IState.h"

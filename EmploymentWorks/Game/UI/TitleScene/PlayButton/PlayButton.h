@@ -1,3 +1,8 @@
+/*
+	クラス名     : PlayButton
+	説明         : タイトルシーンのPlayボタンのUI
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/UI/Button.h"
 

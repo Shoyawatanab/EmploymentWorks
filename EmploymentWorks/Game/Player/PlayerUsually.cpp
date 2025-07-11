@@ -1,3 +1,8 @@
+/*
+	クラス名     : PlayerUsually
+	説明         : プレイヤの常に処理したもののクラス
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "PlayerUsually.h"
 #include "GameBase/Common/Commons.h"

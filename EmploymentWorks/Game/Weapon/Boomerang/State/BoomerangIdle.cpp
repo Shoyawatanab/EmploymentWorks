@@ -1,3 +1,8 @@
+/*
+	クラス名     : BoomerangIdle
+	説明         : ブーメランの通常状態
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "Boomerangidle.h"
 #include "Game/Weapon/Boomerang/Boomerang.h"

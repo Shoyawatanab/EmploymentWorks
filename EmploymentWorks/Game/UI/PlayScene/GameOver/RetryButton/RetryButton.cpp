@@ -1,3 +1,8 @@
+/*
+	クラス名     : RetryButton
+	説明         : ゲームオーバーUIのリトライボタン
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "RetryButton.h"
 #include "GameBase/Scene/Scene.h"

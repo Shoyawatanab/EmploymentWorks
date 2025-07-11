@@ -1,3 +1,8 @@
+/*
+	クラス名     : BoomerangGetReady
+	説明         : ブーメランの構えの状態
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "BoomerangGetReady.h"
 #include "Game/Weapon/Boomerang/Boomerang.h"

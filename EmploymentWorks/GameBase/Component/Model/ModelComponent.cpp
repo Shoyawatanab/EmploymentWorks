@@ -1,3 +1,8 @@
+/*
+	クラス名     : ModelComponent
+	説明         : モデルコンポーネント
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "ModelComponent.h"
 #include "GameBase/Scene/Scene.h"

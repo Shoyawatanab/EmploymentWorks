@@ -1,3 +1,8 @@
+/*
+	クラス名     : BossHp
+	説明         : ボスHPのUI
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Actor.h"
 #include "GameBase/Messenger/IObserver.h"

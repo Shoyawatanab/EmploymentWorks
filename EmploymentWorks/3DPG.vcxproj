@@ -272,7 +272,6 @@
     <ClInclude Include="Game\Messenger\Global\GlobalMessages.h" />
     <ClInclude Include="Game\Messenger\Global\GlobalMessenger.h" />
     <ClInclude Include="Game\Messenger\Scene\SceneMessages.h" />
-    <ClInclude Include="Game\Player\PlayerPickUp.h" />
     <ClInclude Include="Game\Sound\PlayScene\PlaySceneSound.h" />
     <ClInclude Include="Game\UI\NumberUI.h" />
     <ClInclude Include="Game\UI\PlayScene\BoomerangCount\BoomerangCount.h" />
@@ -291,7 +290,7 @@
     <ClInclude Include="Game\UI\ResultScene\Canvas\ResutlSceneScreenSpaceOverlayCanvas.h" />
     <ClInclude Include="Game\UI\ResultScene\ResultSceneUIs.h" />
     <ClInclude Include="Game\UI\ResultScene\RetryButton\ResultRetryButton.h" />
-    <ClInclude Include="Game\UI\ResultScene\Time\ResuktTime.h" />
+    <ClInclude Include="Game\UI\ResultScene\Time\ResultTime.h" />
     <ClInclude Include="Game\UI\ResultScene\Time\TimeSeparator.h" />
     <ClInclude Include="Game\UI\ResultScene\TitleButton\ResultTitleButton.h" />
     <ClInclude Include="Game\UI\SelectScene\BackGraund\SelectSceneBackGraund.h" />
@@ -325,7 +324,7 @@
     <ClInclude Include="GameBase\Component\Animation\AnimatorComponent.h" />
     <ClInclude Include="GameBase\Component\BaseComponents.h" />
     <ClInclude Include="GameBase\Component\Collider\ColliderComponent.h" />
-    <ClInclude Include="GameBase\Component\Collider\DetectionCollision2.h" />
+    <ClInclude Include="GameBase\Component\Collider\DetectionCollision.h" />
     <ClInclude Include="GameBase\Component\Model\ModelComponent.h" />
     <ClInclude Include="GameBase\Component\Rigidbody\RigidbodyComponent.h" />
     <ClInclude Include="GameBase\Component\Transform\Transform.h" />
@@ -419,7 +418,7 @@
     <ClInclude Include="Game\Weapon\Boomerang\State\BoomerangStates.h" />
     <ClInclude Include="Game\Weapon\Boomerang\State\BoomerangThrow.h" />
     <ClInclude Include="Game\Weapon\WeaponManager.h" />
-    <ClInclude Include="Libraries\Easing.h" />
+    <ClInclude Include="GameBase\WataLib\Easing.h" />
     <ClInclude Include="Libraries\Microsoft\DebugDraw.h" />
     <ClInclude Include="Libraries\MyLib\BinaryFile.h" />
     <ClInclude Include="Libraries\MyLib\DebugCamera.h" />
@@ -427,15 +426,9 @@
     <ClInclude Include="Libraries\MyLib\GridFloor.h" />
     <ClInclude Include="Libraries\MyLib\InputManager.h" />
     <ClInclude Include="Libraries\MyLib\MemoryLeakDetector.h" />
-    <ClInclude Include="Libraries\WataLib\CSV.h" />
-    <ClInclude Include="Libraries\WataLib\DamageCountUI.h" />
-    <ClInclude Include="Libraries\WataLib\DrawNumber.h" />
+    <ClInclude Include="GameBase\WataLib\CSV.h" />
     <ClInclude Include="GameBase\GameResources.h" />
-    <ClInclude Include="Libraries\WataLib\Json.h" />
-    <ClInclude Include="Libraries\WataLib\Mouse.h" />
-    <ClInclude Include="Libraries\WataLib\Shadow.h" />
-    <ClInclude Include="Libraries\WataLib\Singleton.h" />
-    <ClInclude Include="Libraries\WataLib\UserInterface.h" />
+    <ClInclude Include="GameBase\WataLib\Singleton.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="GameBase\Common\StepTimer.h" />
   </ItemGroup>
@@ -513,7 +506,6 @@
     <ClCompile Include="Game\GlobalGameData.cpp" />
     <ClCompile Include="Game\Manager\PickUp\PickUpManager.cpp" />
     <ClCompile Include="Game\Messenger\Global\GlobalMessenger.cpp" />
-    <ClCompile Include="Game\Player\PlayerPickUp.cpp" />
     <ClCompile Include="Game\Sound\PlayScene\PlaySceneSound.cpp" />
     <ClCompile Include="Game\UI\NumberUI.cpp" />
     <ClCompile Include="Game\UI\PlayScene\BoomerangCount\BoomerangCount.cpp" />
@@ -530,7 +522,7 @@
     <ClCompile Include="Game\UI\ResultScene\BackGraund\ResultceneBackGraund.cpp" />
     <ClCompile Include="Game\UI\ResultScene\Canvas\ResutlSceneScreenSpaceOverlayCanvas.cpp" />
     <ClCompile Include="Game\UI\ResultScene\RetryButton\ResultRetryButton.cpp" />
-    <ClCompile Include="Game\UI\ResultScene\Time\ResuktTime.cpp" />
+    <ClCompile Include="Game\UI\ResultScene\Time\ResultTime.cpp" />
     <ClCompile Include="Game\UI\ResultScene\Time\TimeSeparator.cpp" />
     <ClCompile Include="Game\UI\ResultScene\TitleButton\ResultTitleButton.cpp" />
     <ClCompile Include="Game\UI\SelectScene\BackGraund\SelectSceneBackGraund.cpp" />
@@ -560,7 +552,7 @@
     <ClCompile Include="GameBase\Component.cpp" />
     <ClCompile Include="GameBase\Component\Animation\AnimatorComponent.cpp" />
     <ClCompile Include="GameBase\Component\Collider\ColliderComponent.cpp" />
-    <ClCompile Include="GameBase\Component\Collider\DetectionCollision2.cpp" />
+    <ClCompile Include="GameBase\Component\Collider\DetectionCollision.cpp" />
     <ClCompile Include="GameBase\Component\Model\ModelComponent.cpp" />
     <ClCompile Include="GameBase\Component\Rigidbody\RigidbodyComponent.cpp" />
     <ClCompile Include="GameBase\Component\Transform\Transform.cpp" />
@@ -632,21 +624,15 @@
     <ClCompile Include="Game\Weapon\Boomerang\State\BoomerangStateMachine.cpp" />
     <ClCompile Include="Game\Weapon\Boomerang\State\BoomerangThrow.cpp" />
     <ClCompile Include="Game\Weapon\WeaponManager.cpp" />
-    <ClCompile Include="Libraries\Easing.cpp" />
+    <ClCompile Include="GameBase\WataLib\Easing.cpp" />
     <ClCompile Include="Libraries\Microsoft\DebugDraw.cpp" />
     <ClCompile Include="Libraries\MyLib\BinaryFile.cpp" />
     <ClCompile Include="Libraries\MyLib\DebugCamera.cpp" />
     <ClCompile Include="Libraries\MyLib\DebugString.cpp" />
     <ClCompile Include="Libraries\MyLib\GridFloor.cpp" />
     <ClCompile Include="Libraries\MyLib\InputManager.cpp" />
-    <ClCompile Include="Libraries\WataLib\CSV.cpp" />
-    <ClCompile Include="Libraries\WataLib\DamageCountUI.cpp" />
-    <ClCompile Include="Libraries\WataLib\DrawNumber.cpp" />
+    <ClCompile Include="GameBase\WataLib\CSV.cpp" />
     <ClCompile Include="GameBase\GameResources.cpp" />
-    <ClCompile Include="Libraries\WataLib\Json.cpp" />
-    <ClCompile Include="Libraries\WataLib\Mouse.cpp" />
-    <ClCompile Include="Libraries\WataLib\Shadow.cpp" />
-    <ClCompile Include="Libraries\WataLib\UserInterface.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

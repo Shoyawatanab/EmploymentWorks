@@ -1,8 +1,8 @@
 /*
-ステージ作成クラス
+	クラス名     : StageFactory
+	説明         : ステージ作成クラス
+	補足・注意点 :
 */
-
-
 #pragma once
 #include "GameBase/Actor.h"
 

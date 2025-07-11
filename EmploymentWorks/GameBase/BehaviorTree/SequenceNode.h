@@ -1,10 +1,7 @@
 /*
-	SequenceNode.h
-	渡邊翔也
-	ビヘイビアツリーのノード
-	順番に子を実行する
-	全ての子が実行できるとSuccess
-	子が失敗したらすぐにFailureを反す
+	クラス名     : SequenceNode
+	説明         : ビヘイビアツリーのシーケンスノード
+	補足・注意点 : 順番に子を実行する。全ての子が実行できるとSuccess、子が失敗したらすぐにFailureを反す
 */
 #pragma once
 #include "Game/Interface/ICompositeNode.h"

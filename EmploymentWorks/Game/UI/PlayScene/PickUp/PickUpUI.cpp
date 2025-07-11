@@ -1,3 +1,8 @@
+/*
+	クラス名     : PickUpUI
+	説明         : 回収可能UI
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "PickUpUI.h"
 #include "Game/Component/Components.h"

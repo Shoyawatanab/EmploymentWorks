@@ -1,7 +1,11 @@
+/*
+    クラス名     : TitleScene
+    説明         : タイトルシーン
+    補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Scene/Scene.h"
 #include <unordered_map>
-#include "Libraries/WataLib/UserInterface.h"
 
 
 
@@ -17,22 +21,19 @@ private:
 
 
 public:
+    //カメラの取得
     Camera* GetCamera() const  override { return m_camera; };
 
 
 public:
+    //コンストラク 
     TitleScene();
+    //デストラクタ
     ~TitleScene() override;
-
-    void Initialize() override;
-    void SceneUpdate(const float& deltaTime)override;
-    void SceneRender() override;
-    void Finalize() override;
-
-    void CreateTextures();
-
+    //初期化
+    void Initialize() override;    
 private:
-
+    //カメラ
     Camera* m_camera;
 
 

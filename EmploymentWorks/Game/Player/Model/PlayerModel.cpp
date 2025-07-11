@@ -1,3 +1,8 @@
+/*
+	クラス名     : PlayerModel
+	説明         : プレイヤモデル
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "PlayerModel.h"
 #include "GameBase/Scene/Scene.h"

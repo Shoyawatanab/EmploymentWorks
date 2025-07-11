@@ -1,5 +1,7 @@
 /*
-* プレイヤの左足クラス
+	クラス名     : PlayerLeftFeet
+	説明         : プレイヤの左足モデル
+	補足・注意点 :
 */
 #pragma once
 #include "Game/Player/PlayerParts.h"

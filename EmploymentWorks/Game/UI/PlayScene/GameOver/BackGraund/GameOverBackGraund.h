@@ -1,3 +1,8 @@
+/*
+	クラス名     : GameOverBackGraund
+	説明         : ゲームオーバーUIの背景I
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/UI/Image.h"
 

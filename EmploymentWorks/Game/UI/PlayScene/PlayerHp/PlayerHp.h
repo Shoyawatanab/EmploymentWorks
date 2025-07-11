@@ -1,3 +1,8 @@
+/*
+	クラス名     : PlayerHp
+	説明         : プレイヤHPUI
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Actor.h"
 #include "GameBase/Messenger/IObserver.h"

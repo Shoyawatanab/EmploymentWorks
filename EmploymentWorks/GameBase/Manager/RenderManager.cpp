@@ -1,3 +1,8 @@
+/*
+	クラス名     : RenderManager
+	説明         : 描画マネージャー
+	補足・注意点 : Sceneで宣言
+*/
 #include "pch.h"
 #include "RenderManager.h"
 #include "GameBase/Camera/Camera.h"

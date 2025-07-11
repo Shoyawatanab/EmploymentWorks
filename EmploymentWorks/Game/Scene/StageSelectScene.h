@@ -1,11 +1,11 @@
 /*
-	@file	StageSelectScene.h
-	@brief	タイトルシーンクラス
+    クラス名     : StageSelectScene
+    説明         : セレクトシーン
+    補足・注意点 :
 */
 #pragma once
 #include "GameBase/Scene/Scene.h"
 #include "Game/Scene/SceneManager.h"
-#include "Libraries/WataLib/UserInterface.h"
 
 
 
@@ -17,20 +17,13 @@ public:
 
 
 public:
-
+    //コンストラクタ
     StageSelectScene(SceneManager* sceneManager);
-    
+    //デストラクタ
     ~StageSelectScene() override;
-    
+    //初期化
     void Initialize() override;
     
-    void SceneUpdate(const float& deltaTime)override;
-    
-    void SceneRender() override;
-    
-    void Finalize() override;
-
-
 private:
     Camera* m_camera;
 

@@ -1,3 +1,8 @@
+/*
+	クラス名     : ResutlSceneScreenSpaceOverlayCanvas
+	説明         : リザルトシーンの常に移るUIキャンバス
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "ResutlSceneScreenSpaceOverlayCanvas.h"
 #include "Game/UI/TitleScene/TitleSceneUIs.h"
@@ -26,7 +31,7 @@ ResutlSceneScreenSpaceOverlayCanvas::ResutlSceneScreenSpaceOverlayCanvas(Scene* 
 	GetScene()->AddActor<ResultTitleButton>(this);
 
 	//タイム
-	GetScene()->AddActor<ResuktTime>(this);
+	GetScene()->AddActor<ResultTime>(this);
 
 }
 

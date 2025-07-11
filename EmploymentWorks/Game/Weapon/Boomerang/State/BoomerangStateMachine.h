@@ -1,3 +1,8 @@
+/*
+	クラス名     : BoomerangStateMachine
+	説明         : ブーメランのステートマシーン
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/StateMachine/StateMachine.h"
 

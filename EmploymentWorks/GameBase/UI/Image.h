@@ -1,3 +1,8 @@
+/*
+	クラス名     : Image
+	説明         : 画像UIの基底クラス
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Actor.h"
 #include "GameBase/Component/UI/ImageComponent.h"

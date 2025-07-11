@@ -1,3 +1,8 @@
+/*
+	クラス名     : Transform
+	説明         : トランスフォームコンポーネント
+	補足・注意点 :
+*/
 #pragma once
 #include"GameBase/Component.h"
 

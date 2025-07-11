@@ -1,3 +1,8 @@
+/*
+	クラス名     : Camera
+	説明         : カメラの基底クラス
+	補足・注意点 : 順番に子を実行する。全ての子が実行できるとSuccess、子が失敗したらすぐにFailureを反す
+*/
 #pragma once
 #include "GameBase/Actor.h"
 

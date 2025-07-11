@@ -1,3 +1,8 @@
+/*
+	クラス名     : ActionController
+	説明         : アクションのコントローラーの基底クラス　今回はボス敵で使用
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "ActionController.h"
 

@@ -1,3 +1,8 @@
+/*
+	クラス名     : PlayerDamageEffect
+	説明         : プレイヤダメージUI
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Actor.h"
 #include "GameBase/Messenger/IObserver.h"

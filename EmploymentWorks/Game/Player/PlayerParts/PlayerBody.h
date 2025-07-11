@@ -1,7 +1,8 @@
 /*
-* プレイヤの体クラス
+	クラス名     : PlayerBody
+	説明         : プレイヤの胴体モデル
+	補足・注意点 :
 */
-
 #pragma once
 #include "Game/Player/PlayerParts.h"
 

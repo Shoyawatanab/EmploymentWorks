@@ -1,3 +1,8 @@
+/*
+	クラス名     : DamageCountFactory
+	説明         : ダメージUIの作成クラスI
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "DamageCountFactory.h"
 #include "GameBase/UI/Canvas/Canvas.h"

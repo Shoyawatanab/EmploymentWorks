@@ -1,6 +1,7 @@
 /*
-	@file	TitleScene.cpp
-	@brief	タイトルシーンクラス
+	クラス名     : TitleScene
+	説明         : タイトルシーン
+	補足・注意点 :
 */
 #include "pch.h"
 #include "TitleScene.h"
@@ -78,52 +79,4 @@ void TitleScene::Initialize()
 
 }
 
-//---------------------------------------------------------
-// 更新する
-//---------------------------------------------------------
-void TitleScene::SceneUpdate(const float& deltaTime)
-{
-	// 宣言をしたが、実際は使用していない変数
-	UNREFERENCED_PARAMETER(deltaTime);
 
-
-
-
-
-
-}
-
-//---------------------------------------------------------
-// 描画する
-//---------------------------------------------------------
-void TitleScene::SceneRender()
-{
-
-
-
-
-	////// デバッグ情報を表示する
-	//auto debugString = m_commonResources->GetDebugString();
-	//////debugString->AddString("Pos %f" ,m_buttom[0]->GetPosition().x);
-	//////debugString->AddString("Pos %f" ,m_buttom[0]->GetPosition().y);
-	//debugString->AddString("X %d" , m_commonResources->GetDeviceResources()->GetOutputSize().right);
-	//debugString->AddString("Y %d" , m_commonResources->GetDeviceResources()->GetOutputSize().bottom);
-
-
-}
-
-//---------------------------------------------------------
-// 後始末する
-//---------------------------------------------------------
-void TitleScene::Finalize()
-{
-	// do nothing.
-}
-
-
-
-void TitleScene::CreateTextures()
-{
-
-
-}

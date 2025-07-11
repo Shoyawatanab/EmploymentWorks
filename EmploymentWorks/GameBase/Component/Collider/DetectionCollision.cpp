@@ -1,24 +1,29 @@
+/*
+	クラス名     : DetectionCollision
+	説明         : 当たり判定を行うクラス
+	補足・注意点 :
+*/
 #include "pch.h"
-#include "DetectionCollision2.h"
+#include "DetectionCollision.h"
 #include "GameBase/Actor.h"
 
 
 //関数の登録
-std::unordered_map<int, std::function<bool(ColliderComponent& object1, ColliderComponent& object2)>> DetectionCollision2::m_checkCollisionFunction = {
-	{(int)ColliderComponent::ColliderTag::AABB | (int)ColliderComponent::ColliderTag::AABB,    DetectionCollision2::AABB_AABB_CheckCollision}
-	,{(int)ColliderComponent::ColliderTag::OBB | (int)ColliderComponent::ColliderTag::OBB,     DetectionCollision2::OBB_OBB_CheckCollision}
-	,{(int)ColliderComponent::ColliderTag::SPHERE | (int)ColliderComponent::ColliderTag::SPHERE,  DetectionCollision2::SPHERE_SPHERE_CheckCollision}
-	,{(int)ColliderComponent::ColliderTag::AABB | (int)ColliderComponent::ColliderTag::OBB,     DetectionCollision2::AABB_OBB_CheckCollision}
-	,{(int)ColliderComponent::ColliderTag::AABB | (int)ColliderComponent::ColliderTag::SPHERE,  DetectionCollision2::AABB_SPHERE_CheckCollision}
+std::unordered_map<int, std::function<bool(ColliderComponent& object1, ColliderComponent& object2)>> DetectionCollision::m_checkCollisionFunction = {
+	{(int)ColliderComponent::ColliderTag::AABB | (int)ColliderComponent::ColliderTag::AABB,    DetectionCollision::AABB_AABB_CheckCollision}
+	,{(int)ColliderComponent::ColliderTag::OBB | (int)ColliderComponent::ColliderTag::OBB,     DetectionCollision::OBB_OBB_CheckCollision}
+	,{(int)ColliderComponent::ColliderTag::SPHERE | (int)ColliderComponent::ColliderTag::SPHERE,  DetectionCollision::SPHERE_SPHERE_CheckCollision}
+	,{(int)ColliderComponent::ColliderTag::AABB | (int)ColliderComponent::ColliderTag::OBB,     DetectionCollision::AABB_OBB_CheckCollision}
+	,{(int)ColliderComponent::ColliderTag::AABB | (int)ColliderComponent::ColliderTag::SPHERE,  DetectionCollision::AABB_SPHERE_CheckCollision}
 
 };
 
-std::unordered_map<int, std::function<DirectX::SimpleMath::Vector3(ColliderComponent& Collider1, ColliderComponent& Collider2)>> DetectionCollision2::m_extrusionFunction = {
-	{(int)ColliderComponent::ColliderTag::AABB | (int)ColliderComponent::ColliderTag::AABB,    DetectionCollision2::AABB_AABB_Extrusion}
-	,{(int)ColliderComponent::ColliderTag::OBB | (int)ColliderComponent::ColliderTag::OBB,     DetectionCollision2::OBB_OBB_Extrusion}
-	,{(int)ColliderComponent::ColliderTag::SPHERE | (int)ColliderComponent::ColliderTag::SPHERE,  DetectionCollision2::SPHERE_SPHERE_Extrusion}
-	,{(int)ColliderComponent::ColliderTag::AABB | (int)ColliderComponent::ColliderTag::OBB,     DetectionCollision2::AABB_OBB_Extrusion}
-	,{(int)ColliderComponent::ColliderTag::AABB | (int)ColliderComponent::ColliderTag::SPHERE,  DetectionCollision2::AABB_SPHERE_Extrusion}
+std::unordered_map<int, std::function<DirectX::SimpleMath::Vector3(ColliderComponent& Collider1, ColliderComponent& Collider2)>> DetectionCollision::m_extrusionFunction = {
+	{(int)ColliderComponent::ColliderTag::AABB | (int)ColliderComponent::ColliderTag::AABB,    DetectionCollision::AABB_AABB_Extrusion}
+	,{(int)ColliderComponent::ColliderTag::OBB | (int)ColliderComponent::ColliderTag::OBB,     DetectionCollision::OBB_OBB_Extrusion}
+	,{(int)ColliderComponent::ColliderTag::SPHERE | (int)ColliderComponent::ColliderTag::SPHERE,  DetectionCollision::SPHERE_SPHERE_Extrusion}
+	,{(int)ColliderComponent::ColliderTag::AABB | (int)ColliderComponent::ColliderTag::OBB,     DetectionCollision::AABB_OBB_Extrusion}
+	,{(int)ColliderComponent::ColliderTag::AABB | (int)ColliderComponent::ColliderTag::SPHERE,  DetectionCollision::AABB_SPHERE_Extrusion}
 };
 
 
@@ -28,7 +33,7 @@ std::unordered_map<int, std::function<DirectX::SimpleMath::Vector3(ColliderCompo
 /// <param name="collider1">コライダー１</param>
 /// <param name="collier2">コライダー２</param>
 /// <returns>true : 当たった  false : 当たってない</returns>
-bool DetectionCollision2::ChecOnCollision(ColliderComponent* collider1, ColliderComponent* collider2)
+bool DetectionCollision::ChecOnCollision(ColliderComponent* collider1, ColliderComponent* collider2)
 {
 	bool isHit = false;
 
@@ -58,7 +63,7 @@ bool DetectionCollision2::ChecOnCollision(ColliderComponent* collider1, Collider
 
 
 
-const DirectX::SimpleMath::Vector3 DetectionCollision2::Extrusion(ColliderComponent* collider1, ColliderComponent* collider2)
+const DirectX::SimpleMath::Vector3 DetectionCollision::Extrusion(ColliderComponent* collider1, ColliderComponent* collider2)
 {
 	using namespace DirectX::SimpleMath;
 
@@ -94,7 +99,7 @@ const DirectX::SimpleMath::Vector3 DetectionCollision2::Extrusion(ColliderCompon
 /// <param name="maxLength">最大距離</param>
 /// <param name="collider">コライダー</param>
 /// <returns>押し出し量</returns>
-DirectX::SimpleMath::Vector3 DetectionCollision2::CheckLineSegmentCollision(DirectX::SimpleMath::Ray ray, float maxLength, ColliderComponent& collider)
+DirectX::SimpleMath::Vector3 DetectionCollision::CheckLineSegmentCollision(DirectX::SimpleMath::Ray ray, float maxLength, ColliderComponent& collider)
 {
 
 	auto tag = collider.GetCollisionTag();
@@ -140,7 +145,7 @@ DirectX::SimpleMath::Vector3 DetectionCollision2::CheckLineSegmentCollision(Dire
 /// <param name="collider1">コライダー１</param>
 /// <param name="collider2">コライダー２</param>
 /// <returns>true : 当たった  false : 当たってない</returns>
-bool DetectionCollision2::AABB_AABB_CheckCollision(ColliderComponent& collider1, ColliderComponent& collider2)
+bool DetectionCollision::AABB_AABB_CheckCollision(ColliderComponent& collider1, ColliderComponent& collider2)
 {
 
 	using namespace DirectX;
@@ -172,7 +177,7 @@ bool DetectionCollision2::AABB_AABB_CheckCollision(ColliderComponent& collider1,
 	return false;
 }
 
-bool DetectionCollision2::OBB_OBB_CheckCollision(ColliderComponent& collider1, ColliderComponent& collider2)
+bool DetectionCollision::OBB_OBB_CheckCollision(ColliderComponent& collider1, ColliderComponent& collider2)
 {
 
 	UNREFERENCED_PARAMETER(collider1);
@@ -181,7 +186,7 @@ bool DetectionCollision2::OBB_OBB_CheckCollision(ColliderComponent& collider1, C
 	return false;
 }
 
-bool DetectionCollision2::SPHERE_SPHERE_CheckCollision(ColliderComponent& collider1, ColliderComponent& collider2)
+bool DetectionCollision::SPHERE_SPHERE_CheckCollision(ColliderComponent& collider1, ColliderComponent& collider2)
 {
 	UNREFERENCED_PARAMETER(collider1);
 	UNREFERENCED_PARAMETER(collider2);
@@ -189,7 +194,7 @@ bool DetectionCollision2::SPHERE_SPHERE_CheckCollision(ColliderComponent& collid
 	return false;
 }
 
-bool DetectionCollision2::AABB_OBB_CheckCollision(ColliderComponent& collider1, ColliderComponent& collider2)
+bool DetectionCollision::AABB_OBB_CheckCollision(ColliderComponent& collider1, ColliderComponent& collider2)
 {
 	using namespace DirectX;
 
@@ -221,7 +226,7 @@ bool DetectionCollision2::AABB_OBB_CheckCollision(ColliderComponent& collider1, 
 	return false;
 }
 
-bool DetectionCollision2::AABB_SPHERE_CheckCollision(ColliderComponent& collider1, ColliderComponent& collider2)
+bool DetectionCollision::AABB_SPHERE_CheckCollision(ColliderComponent& collider1, ColliderComponent& collider2)
 {
 	UNREFERENCED_PARAMETER(collider1);
 	UNREFERENCED_PARAMETER(collider2);
@@ -235,7 +240,7 @@ bool DetectionCollision2::AABB_SPHERE_CheckCollision(ColliderComponent& collider
 /// <param name="collider1">コライダー１</param>
 /// <param name="collider2">コライダー２</param>
 /// <returns>押し出し量</returns>
-DirectX::SimpleMath::Vector3 DetectionCollision2::AABB_AABB_Extrusion(ColliderComponent& collider1, ColliderComponent& collider2)
+DirectX::SimpleMath::Vector3 DetectionCollision::AABB_AABB_Extrusion(ColliderComponent& collider1, ColliderComponent& collider2)
 {
 	using namespace DirectX;
 	using namespace DirectX::SimpleMath;
@@ -287,7 +292,7 @@ DirectX::SimpleMath::Vector3 DetectionCollision2::AABB_AABB_Extrusion(ColliderCo
 
 }
 
-DirectX::SimpleMath::Vector3 DetectionCollision2::OBB_OBB_Extrusion(ColliderComponent& collider1, ColliderComponent& collider2)
+DirectX::SimpleMath::Vector3 DetectionCollision::OBB_OBB_Extrusion(ColliderComponent& collider1, ColliderComponent& collider2)
 {
 	UNREFERENCED_PARAMETER(collider1);
 	UNREFERENCED_PARAMETER(collider2);
@@ -295,7 +300,7 @@ DirectX::SimpleMath::Vector3 DetectionCollision2::OBB_OBB_Extrusion(ColliderComp
 	return DirectX::SimpleMath::Vector3();
 }
 
-DirectX::SimpleMath::Vector3 DetectionCollision2::SPHERE_SPHERE_Extrusion(ColliderComponent& collider1, ColliderComponent& collider2)
+DirectX::SimpleMath::Vector3 DetectionCollision::SPHERE_SPHERE_Extrusion(ColliderComponent& collider1, ColliderComponent& collider2)
 {
 	UNREFERENCED_PARAMETER(collider1);
 	UNREFERENCED_PARAMETER(collider2);
@@ -303,7 +308,7 @@ DirectX::SimpleMath::Vector3 DetectionCollision2::SPHERE_SPHERE_Extrusion(Collid
 	return DirectX::SimpleMath::Vector3();
 }
 
-DirectX::SimpleMath::Vector3 DetectionCollision2::AABB_OBB_Extrusion(ColliderComponent& collider1, ColliderComponent& collider2)
+DirectX::SimpleMath::Vector3 DetectionCollision::AABB_OBB_Extrusion(ColliderComponent& collider1, ColliderComponent& collider2)
 {
 	UNREFERENCED_PARAMETER(collider1);
 	UNREFERENCED_PARAMETER(collider2);
@@ -311,7 +316,7 @@ DirectX::SimpleMath::Vector3 DetectionCollision2::AABB_OBB_Extrusion(ColliderCom
 	return DirectX::SimpleMath::Vector3();
 }
 
-DirectX::SimpleMath::Vector3 DetectionCollision2::AABB_SPHERE_Extrusion(ColliderComponent& collider1, ColliderComponent& collider2)
+DirectX::SimpleMath::Vector3 DetectionCollision::AABB_SPHERE_Extrusion(ColliderComponent& collider1, ColliderComponent& collider2)
 {
 	UNREFERENCED_PARAMETER(collider1);
 	UNREFERENCED_PARAMETER(collider2);

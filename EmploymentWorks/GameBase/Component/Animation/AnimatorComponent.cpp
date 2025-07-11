@@ -1,3 +1,8 @@
+/*
+	クラス名     : AnimatorComponent
+	説明         : アニメーションコンポーネント
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "AnimatorComponent.h"
 #include "GameBase/Animation/AnimationController.h"

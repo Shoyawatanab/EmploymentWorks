@@ -1,5 +1,10 @@
+/*
+	クラス名     : ResultTime
+	説明         : リザルトシーンの時間UI
+	補足・注意点 :
+*/
 #include "pch.h"
-#include "ResuktTime.h"
+#include "ResultTime.h"
 #include "GameBase/Scene/Scene.h"
 #include "Game/Component/Components.h"
 #include "GameBase/UI/Canvas/Canvas.h"
@@ -12,7 +17,7 @@
 /// コンストラク
 /// </summary>
 /// <param name="canvas">キャンバス</param>
-ResuktTime::ResuktTime(Canvas* canvas)
+ResultTime::ResultTime(Canvas* canvas)
 	:
 	Actor(canvas->GetScene())
 	,m_time{}
@@ -66,7 +71,7 @@ ResuktTime::ResuktTime(Canvas* canvas)
 /// <summary>
 /// デストラクタ
 /// </summary>
-ResuktTime::~ResuktTime()
+ResultTime::~ResultTime()
 {
 }
 
@@ -74,7 +79,7 @@ ResuktTime::~ResuktTime()
 /// 個別アップデート
 /// </summary>
 /// <param name="deltaTime">経過時間</param>
-void ResuktTime::UpdateActor(const float& deltaTime)
+void ResultTime::UpdateActor(const float& deltaTime)
 {
 	//点滅
 	Blink(deltaTime);
@@ -86,7 +91,7 @@ void ResuktTime::UpdateActor(const float& deltaTime)
 /// 時間の追加
 /// </summary>
 /// <param name="totalSecond"></param>
-void ResuktTime::AddTime(const float& totalSeconds)
+void ResultTime::AddTime(const float& totalSeconds)
 {
 
 	//分を求める
@@ -117,7 +122,7 @@ void ResuktTime::AddTime(const float& totalSeconds)
 /// 点滅
 /// </summary>
 /// <param name="deltaTime"></param>
-void ResuktTime::Blink(const float& deltaTime)
+void ResultTime::Blink(const float& deltaTime)
 {
 	
 	if (m_time >= BLINK_INTERVAL)

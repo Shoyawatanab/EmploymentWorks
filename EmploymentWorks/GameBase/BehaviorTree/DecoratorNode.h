@@ -1,9 +1,7 @@
 /*
-	DecoratorNode.h
-	渡邊翔也
-	ビヘイビアツリーの条件判定のノード
-	条件を通れば子のステートを返す
-	　　　通らなければFailureを返す
+	クラス名     : DecoratorNode
+	説明         : ビヘイビアツリーの条件判定ノード
+	補足・注意点 :　条件を通れば子のステートを返す。通らなければFailureを返す
 */
 #pragma once
 #include "Game/Interface/ICompositeNode.h"

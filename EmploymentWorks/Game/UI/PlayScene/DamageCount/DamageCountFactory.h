@@ -1,3 +1,8 @@
+/*
+	クラス名     : DamageCountFactory
+	説明         : ダメージUIの作成クラスI
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Actor.h"
 #include "GameBase/Messenger/IObserver.h"
@@ -23,6 +28,7 @@ public:
 
 private:
 
+	//ダメージUI配列
 	std::vector<DamageCount*> m_damageCount;
 
 };

@@ -1,6 +1,7 @@
 /*
-	@file	PlayScene.h
-	@brief	プレイシーンクラス
+	クラス名     : PlayScene
+	説明         : プレイシーン
+	補足・注意点 :
 */
 #pragma once
 #include "GameBase/Scene/Scene.h"
@@ -28,10 +29,6 @@ public:
 
 	void SceneUpdate(const float& deltaTime)override;
 
-	void SceneRender() override;
-
-	void Finalize() override;
-	
 
 private:
 

@@ -1,3 +1,8 @@
+/*
+	クラス名     : PlayerHead
+	説明         : プレイヤの頭モデル
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "PlayerHead.h"
 #include "GameBase/Scene/Scene.h"

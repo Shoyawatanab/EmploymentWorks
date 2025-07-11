@@ -1,3 +1,8 @@
+/*
+	クラス名     : StageTwoButton
+	説明         : セレクトシーンのステージ２のボタン
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/UI/Button.h"
 

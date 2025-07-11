@@ -1,3 +1,8 @@
+/*
+	クラス名     : StageTwoButton
+	説明         : セレクトシーンのステージ２のボタン
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "StageTwoButton.h"
 #include "GameBase/UI/Canvas/Canvas.h"

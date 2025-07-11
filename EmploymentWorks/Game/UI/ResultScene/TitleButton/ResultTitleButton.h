@@ -1,3 +1,8 @@
+/*
+	クラス名     : ResultTitleButton
+	説明         : リザルトシーンのタイトルボタンUI
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/UI/Button.h"
 

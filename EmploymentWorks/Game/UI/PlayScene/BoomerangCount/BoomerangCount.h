@@ -1,3 +1,8 @@
+/*
+	クラス名     : BoomerangCount
+	説明         : ブーメランの投げれる数のUI
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Actor.h"
 #include "GameBase//Messenger/IObserver.h"

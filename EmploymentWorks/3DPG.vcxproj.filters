@@ -255,9 +255,6 @@
     <ClInclude Include="Game\Stage\StageObject\Floor.h">
       <Filter>Game\StageObject</Filter>
     </ClInclude>
-    <ClInclude Include="Libraries\WataLib\Json.h">
-      <Filter>Libraries\WataLib</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Stage\StageObject\Wall.h">
       <Filter>Game\StageObject</Filter>
     </ClInclude>
@@ -267,20 +264,14 @@
     <ClInclude Include="Game\Interface\ICamera.h">
       <Filter>Game\Interface</Filter>
     </ClInclude>
-    <ClInclude Include="Libraries\WataLib\Mouse.h">
-      <Filter>Libraries\WataLib</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Interface\IStateMachine.h">
       <Filter>Game\Interface</Filter>
     </ClInclude>
-    <ClInclude Include="Libraries\WataLib\CSV.h">
+    <ClInclude Include="GameBase\WataLib\CSV.h">
       <Filter>Libraries\WataLib</Filter>
     </ClInclude>
     <ClInclude Include="GameBase\Messenger\IObserver.h">
       <Filter>Game\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="Libraries\WataLib\UserInterface.h">
-      <Filter>Libraries\WataLib</Filter>
     </ClInclude>
     <ClInclude Include="Game\Enemies\BossEnemy\Parts\BossEnemyBottom.h">
       <Filter>Game\Enemys\BossEnemy\Parts</Filter>
@@ -345,9 +336,6 @@
     <ClInclude Include="Game\Messenger\Scene\SceneMessageType.h">
       <Filter>Game\Observer</Filter>
     </ClInclude>
-    <ClInclude Include="Libraries\WataLib\Shadow.h">
-      <Filter>Libraries\WataLib</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Stage\StageObject\Sky.h">
       <Filter>Game\StageObject</Filter>
     </ClInclude>
@@ -375,16 +363,10 @@
     <ClInclude Include="Game\Scene\ResultScene.h">
       <Filter>Game\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Libraries\WataLib\DamageCountUI.h">
-      <Filter>Libraries\WataLib</Filter>
-    </ClInclude>
-    <ClInclude Include="Libraries\WataLib\DrawNumber.h">
-      <Filter>Libraries</Filter>
-    </ClInclude>
     <ClInclude Include="GameBase\GameResources.h">
       <Filter>Libraries\WataLib</Filter>
     </ClInclude>
-    <ClInclude Include="Libraries\WataLib\Singleton.h">
+    <ClInclude Include="GameBase\WataLib\Singleton.h">
       <Filter>Libraries\WataLib</Filter>
     </ClInclude>
     <ClInclude Include="Game\Enemies\BossEnemy\BossEnemy.h">
@@ -422,7 +404,7 @@
     <ClInclude Include="Game\Camera\PlayScene\PlaySceneCameraStates.h" />
     <ClInclude Include="Game\Player\PlayerUsually.h" />
     <ClInclude Include="GameBase\Manager\CollisionManager.h" />
-    <ClInclude Include="GameBase\Component\Collider\DetectionCollision2.h" />
+    <ClInclude Include="GameBase\Component\Collider\DetectionCollision.h" />
     <ClInclude Include="Game\Enemies\BossEnemy\BossEnemyParts.h" />
     <ClInclude Include="Game\Enemies\BossEnemy\BossEnemyPartss.h" />
     <ClInclude Include="GameBase\Component\UI\ImageComponent.h" />
@@ -495,7 +477,7 @@
     <ClInclude Include="Game\UI\PlayScene\DamageCount\DamageCount.h" />
     <ClInclude Include="Game\UI\PlayScene\DamageCount\DamageCountFactory.h" />
     <ClInclude Include="Game\UI\NumberUI.h" />
-    <ClInclude Include="Libraries\Easing.h" />
+    <ClInclude Include="GameBase\WataLib\Easing.h" />
     <ClInclude Include="Game\UI\PlayScene\BossHp\BossHp.h" />
     <ClInclude Include="Game\Camera\PlayScene\PlaySceneCameraState\PlaySceneEnemyTargetCamera.h" />
     <ClInclude Include="Game\UI\TitleScene\TitleSceneUIs.h" />
@@ -564,7 +546,7 @@
     <ClInclude Include="Game\UI\ResultScene\ResultSceneUIs.h" />
     <ClInclude Include="Game\UI\ResultScene\RetryButton\ResultRetryButton.h" />
     <ClInclude Include="Game\UI\ResultScene\TitleButton\ResultTitleButton.h" />
-    <ClInclude Include="Game\UI\ResultScene\Time\ResuktTime.h" />
+    <ClInclude Include="Game\UI\ResultScene\Time\ResultTime.h" />
     <ClInclude Include="Game\UI\ResultScene\Time\TimeSeparator.h" />
     <ClInclude Include="Game\Effect\BossChargeEffect\BossChargeEffect.h" />
     <ClInclude Include="Game\Effect\ParticleUtility.h" />
@@ -574,7 +556,6 @@
     <ClInclude Include="Game\Fade\FadeOut\BoomerangFadeOut.h" />
     <ClInclude Include="Game\Weapon\Boomerang\State\BoomerangBounce.h" />
     <ClInclude Include="Game\Weapon\Boomerang\State\BoomerangDrop.h" />
-    <ClInclude Include="Game\Player\PlayerPickUp.h" />
     <ClInclude Include="Game\Component\PickUp\PickerComponent.h" />
     <ClInclude Include="Game\Manager\PickUp\PickUpManager.h" />
     <ClInclude Include="Game\Component\PickUp\PickableComponent.h" />
@@ -640,19 +621,10 @@
     <ClCompile Include="Game\Stage\StageObject\Floor.cpp">
       <Filter>Game\StageObject</Filter>
     </ClCompile>
-    <ClCompile Include="Libraries\WataLib\Json.cpp">
-      <Filter>Libraries\WataLib</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Stage\StageObject\Wall.cpp">
       <Filter>Game\StageObject</Filter>
     </ClCompile>
-    <ClCompile Include="Libraries\WataLib\Mouse.cpp">
-      <Filter>Libraries\WataLib</Filter>
-    </ClCompile>
-    <ClCompile Include="Libraries\WataLib\CSV.cpp">
-      <Filter>Libraries\WataLib</Filter>
-    </ClCompile>
-    <ClCompile Include="Libraries\WataLib\UserInterface.cpp">
+    <ClCompile Include="GameBase\WataLib\CSV.cpp">
       <Filter>Libraries\WataLib</Filter>
     </ClCompile>
     <ClCompile Include="Game\Enemies\BossEnemy\BossEnemy.cpp">
@@ -706,9 +678,6 @@
     <ClCompile Include="Game\Scene\StageSelectScene.cpp">
       <Filter>Game\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Libraries\WataLib\Shadow.cpp">
-      <Filter>Libraries\WataLib</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Stage\StageObject\Sky.cpp">
       <Filter>Game\StageObject</Filter>
     </ClCompile>
@@ -726,12 +695,6 @@
     </ClCompile>
     <ClCompile Include="Game\Scene\ResultScene.cpp">
       <Filter>Game\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Libraries\WataLib\DamageCountUI.cpp">
-      <Filter>Libraries\WataLib</Filter>
-    </ClCompile>
-    <ClCompile Include="Libraries\WataLib\DrawNumber.cpp">
-      <Filter>Libraries</Filter>
     </ClCompile>
     <ClCompile Include="GameBase\GameResources.cpp">
       <Filter>Libraries\WataLib</Filter>
@@ -755,7 +718,7 @@
     <ClCompile Include="Game\Camera\PlayScene\PlaySceneCameraStateMachine.cpp" />
     <ClCompile Include="Game\Player\PlayerUsually.cpp" />
     <ClCompile Include="GameBase\Manager\CollisionManager.cpp" />
-    <ClCompile Include="GameBase\Component\Collider\DetectionCollision2.cpp" />
+    <ClCompile Include="GameBase\Component\Collider\DetectionCollision.cpp" />
     <ClCompile Include="Game\Enemies\BossEnemy\BossEnemyParts.cpp" />
     <ClCompile Include="GameBase\Component\UI\ImageComponent.cpp" />
     <ClCompile Include="GameBase\UI\Button.cpp" />
@@ -821,7 +784,7 @@
     <ClCompile Include="Game\UI\PlayScene\DamageCount\DamageCount.cpp" />
     <ClCompile Include="Game\UI\PlayScene\DamageCount\DamageCountFactory.cpp" />
     <ClCompile Include="Game\UI\NumberUI.cpp" />
-    <ClCompile Include="Libraries\Easing.cpp" />
+    <ClCompile Include="GameBase\WataLib\Easing.cpp" />
     <ClCompile Include="Game\UI\PlayScene\BossHp\BossHp.cpp" />
     <ClCompile Include="Game\Camera\PlayScene\PlaySceneCameraState\PlaySceneEnemyTargetCamera.cpp" />
     <ClCompile Include="Game\UI\TitleScene\Canvas\TitleSceneScreenSpaceOverlayCanvas.cpp" />
@@ -878,7 +841,7 @@
     <ClCompile Include="Game\UI\ResultScene\BackGraund\ResultceneBackGraund.cpp" />
     <ClCompile Include="Game\UI\ResultScene\RetryButton\ResultRetryButton.cpp" />
     <ClCompile Include="Game\UI\ResultScene\TitleButton\ResultTitleButton.cpp" />
-    <ClCompile Include="Game\UI\ResultScene\Time\ResuktTime.cpp" />
+    <ClCompile Include="Game\UI\ResultScene\Time\ResultTime.cpp" />
     <ClCompile Include="Game\UI\ResultScene\Time\TimeSeparator.cpp" />
     <ClCompile Include="Game\Effect\BossChargeEffect\BossChargeEffect.cpp" />
     <ClCompile Include="Game\Effect\ParticleUtility.cpp" />
@@ -887,7 +850,6 @@
     <ClCompile Include="Game\Fade\FadeOut\BoomerangFadeOut.cpp" />
     <ClCompile Include="Game\Weapon\Boomerang\State\BoomerangBounce.cpp" />
     <ClCompile Include="Game\Weapon\Boomerang\State\BoomerangDrop.cpp" />
-    <ClCompile Include="Game\Player\PlayerPickUp.cpp" />
     <ClCompile Include="Game\Component\PickUp\PickerComponent.cpp" />
     <ClCompile Include="Game\Manager\PickUp\PickUpManager.cpp" />
     <ClCompile Include="Game\Component\PickUp\PickableComponent.cpp" />

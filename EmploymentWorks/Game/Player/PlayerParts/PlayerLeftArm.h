@@ -1,5 +1,7 @@
 /*
-* プレイヤの左腕クラス
+	クラス名     : PlayerLeftArm
+	説明         : プレイヤの左腕モデル
+	補足・注意点 :
 */
 #pragma once
 #include "Game/Player/PlayerParts.h"

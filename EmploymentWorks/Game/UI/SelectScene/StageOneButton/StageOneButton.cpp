@@ -1,3 +1,8 @@
+/*
+	クラス名     : StageOneButton
+	説明         : セレクトシーンのステージ１のボタン
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "StageOneButton.h"
 #include "GameBase/UI/Canvas/Canvas.h"

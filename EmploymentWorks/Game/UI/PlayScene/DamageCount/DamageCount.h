@@ -1,3 +1,8 @@
+/*
+	クラス名     : DamageCount
+	説明         : 敵のダメージUI
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Actor.h"
 

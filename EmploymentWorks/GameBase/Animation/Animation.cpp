@@ -1,3 +1,8 @@
+/*
+	クラス名     : Animation
+	説明         : 1オブジェクトのアニメーションクラス
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "Animation.h"
 #include "GameBase/Component/Transform/Transform.h"

@@ -1,6 +1,11 @@
+/*
+	クラス名     : ButtonComponent
+	説明         : ボタンUIコンポーネント
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Component.h"
-
+#include <functional>
 
 class ButtonComponent : public Component
 {

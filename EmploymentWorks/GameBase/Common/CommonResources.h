@@ -4,7 +4,7 @@
 */
 
 #pragma once
-#include "Libraries/WataLib/Singleton.h"
+#include "GameBase/WataLib/Singleton.h"
 
 
 // ‘O•ûéŒ¾

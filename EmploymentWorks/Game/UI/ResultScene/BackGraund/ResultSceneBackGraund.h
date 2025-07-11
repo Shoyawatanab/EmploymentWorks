@@ -1,3 +1,8 @@
+/*
+	クラス名     : ResultSceneBackGraund
+	説明         : リザルトシーンの背景UI
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/UI/Image.h"
 

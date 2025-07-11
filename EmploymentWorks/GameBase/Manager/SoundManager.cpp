@@ -1,3 +1,8 @@
+/*
+	クラス名     : SoundManager
+	説明         : サウンドマネージャー
+	補足・注意点 : Sceneで宣言
+*/
 #include "pch.h"
 #include "SoundManager.h"
 #include "Libraries/FMOD/inc/fmod.hpp"

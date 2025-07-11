@@ -1,3 +1,8 @@
+/*
+	クラス名     : TitleSceneScreenSpaceOverlayCanvas
+	説明         : タイトルシーンの常に映り続けるUIキャンバス
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/UI/Canvas/ScreenSpaceOverlayCanvas.h"
 

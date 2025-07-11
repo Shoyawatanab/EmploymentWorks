@@ -1,3 +1,8 @@
+/*
+	クラス名     : ActionController
+	説明         : アクションマネージャーの基底クラス　今回はボス敵で使用
+	補足・注意点 :
+*/
 #pragma once
 
 class ActionController;

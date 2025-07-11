@@ -1,3 +1,8 @@
+/*
+	クラス名     : BoomerangBounce
+	説明         : ブーメランの跳ね返りの状態
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Interface/IState.h"
 

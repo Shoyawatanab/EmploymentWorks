@@ -4,7 +4,7 @@
 	ï‚ë´ÅEíçà”ì_ :
 */
 #pragma once
-#include "Libraries/WataLib/Singleton.h"
+#include "GameBase/WataLib/Singleton.h"
 #include "Game/Fade/IFade.h"
 
 class Camera;

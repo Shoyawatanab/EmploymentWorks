@@ -1,3 +1,8 @@
+/*
+	クラス名     : ResultTime
+	説明         : リザルトシーンの時間UI
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/Actor.h"
 
@@ -5,7 +10,7 @@ class Canvas;
 class NumberUI;
 class TimeSeparator;
 
-class ResuktTime : public Actor
+class ResultTime : public Actor
 {
 public:
 	//大きさ
@@ -20,9 +25,9 @@ public:
 
 public:
 	//コンストラク
-	ResuktTime(Canvas* canvas);
+	ResultTime(Canvas* canvas);
 	//デストラクタ
-	~ResuktTime() override;
+	~ResultTime() override;
 
 	//個別アップデート
 	void UpdateActor(const float& deltaTime) override;

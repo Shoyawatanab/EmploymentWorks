@@ -1,3 +1,8 @@
+/*
+	クラス名     : PlayerBoomerangAttack
+	説明         : プレイヤのブーメラン攻撃状態
+	補足・注意点 :
+*/
 #include "pch.h"
 #include "PlayerBoomerangAttack.h"
 #include "GameBase/Common/Commons.h"

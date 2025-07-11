@@ -1,3 +1,8 @@
+/*
+	クラス名     : ExitButton
+	説明         : タイトルシーンのExitボタンのUI
+	補足・注意点 :
+*/
 #pragma once
 #include "GameBase/UI/Button.h"
 
