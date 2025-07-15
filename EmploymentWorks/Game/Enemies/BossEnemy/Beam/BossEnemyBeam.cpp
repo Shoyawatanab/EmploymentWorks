@@ -41,16 +41,7 @@ BossEnemyBeam::~BossEnemyBeam()
 {
 }
 
-/// <summary>
-/// 個別のアップデート
-/// </summary>
-/// <param name="deltaTime"></param>
-void BossEnemyBeam::UpdateActor(const float& deltaTime)
-{
 
-
-
-}
 
 /// <summary>
 /// ターゲットに向けて回転
@@ -74,9 +65,6 @@ void BossEnemyBeam::TargetToRotation()
 	Vector3 playerPosition = m_target->GetTransform()->GetWorldPosition();
 	//敵からプレイヤの方向ベクトルの計算
 	Vector3 toPlayer = playerPosition - enemyPosition;
-	//yawの計算　（左右回転）
-	//xz平面で敵からプレイヤの方向を求める
-	float yaw = atan2(toPlayer.x, toPlayer.z);
 	//pitchの計算（上下回転）
 	//敵からプレイヤのウ違勅方向を求める
 	float pitch = atan2(toPlayer.y, sqrt(toPlayer.x * toPlayer.x + toPlayer.z * toPlayer.z));

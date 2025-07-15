@@ -66,7 +66,7 @@ BossBeamAttackActionController::~BossBeamAttackActionController()
 /// <param name="datas">í«â¡ÉfÅ[É^</param>
 void BossBeamAttackActionController::Notify(SceneMessageType type, void* datas)
 {
-
+	UNREFERENCED_PARAMETER(datas);
 	switch (type)
 	{
 		case SceneMessageType::BOSS_BEAM_IMPACT:

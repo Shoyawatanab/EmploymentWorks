@@ -21,13 +21,13 @@ const char* SoundManager::SOUND_BASE_PATH = "Resources/Sounds/";
 /// </summary>
 SoundManager::SoundManager()
 	:
-	m_channelBGM{}
+	m_channel{}
 	,m_soundPathList{}
 	,m_system{}
 {
-
 	// システムをインスタンス化する
-	FMOD_RESULT result = FMOD::System_Create(&m_system);
+	FMOD::System_Create(&m_system);
+
 	//システムの初期化
 	m_system->init(32, FMOD_INIT_NORMAL, nullptr);
 
@@ -95,18 +95,18 @@ void SoundManager::MakeSound(const std::string& soundName, SoundComponent::Sound
 void SoundManager::PlayBGM(FMOD::Sound** sound)
 {
 	// 現在のBGMが再生中なら止める
-	if (m_channelBGM)
+	if (m_channel)
 	{
 		bool isPlaying = false;
-		m_channelBGM->isPlaying(&isPlaying);
+		m_channel->isPlaying(&isPlaying);
 		//再生中なら止める
 		if (isPlaying)
 		{
-			m_channelBGM->stop();
+			m_channel->stop();
 		}
 	}
 
-	m_system->playSound((*sound), nullptr, false, &m_channelBGM);
+	m_system->playSound((*sound), nullptr, false, &m_channel);
 
 
 }
@@ -117,33 +117,24 @@ void SoundManager::PlayBGM(FMOD::Sound** sound)
 /// </summary>
 /// <param name="sound"></param>
 /// <param name="Channel"></param>
-void SoundManager::PlaySE(FMOD::Sound** sound, FMOD::Channel** channel)
+void SoundManager::PlaySE(FMOD::Sound** sound)
 {
 	bool isPlaying;
-	//再生状態の取得
-	(*channel)->getPaused(&isPlaying);
 
-	//再生中なら
-	if (isPlaying)
-	{
-		//初めに戻す
-		(*channel)->setPosition(0, FMOD_TIMEUNIT_MS);
-		//再生
-		m_system->playSound((*sound), nullptr, false, channel);
+	//再生
+	m_system->playSound((*sound), nullptr, false, &m_channel);
 
-	}
-
-
+	
 }
 
 /// <summary>
 /// BGMの停止
 /// </summary>
 /// <param name="sound"></param>
-void SoundManager::StopBGM(FMOD::Sound** sound)
+void SoundManager::StopBGM()
 {
 
-	m_channelBGM->stop();
+	m_channel->stop();
 
 }
 

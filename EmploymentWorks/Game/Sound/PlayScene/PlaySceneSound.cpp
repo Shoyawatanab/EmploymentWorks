@@ -6,6 +6,7 @@
 #include "pch.h"
 #include "PlaySceneSound.h"
 #include "Game/Component/Components.h"
+#include "Game/GlobalGameData.h"
 
 /// <summary>
 /// コンストラク
@@ -15,10 +16,25 @@ PlaySceneSound::PlaySceneSound(Scene* scene)
 	:
 	Actor(scene)
 {
+
+	std::string BGMName ="Stage1";
+
+	switch (GlobalGameData::GetInstance()->GetSelectStateNumber())
+	{
+		case 1:
+			BGMName = "Stage1";
+			break;
+		case 2:
+			BGMName = "Stage2";
+			break;
+		default:
+			break;
+	}
+
 	//BGMの作成
-	m_bgm = AddComponent<SoundComponent>(this, "Play", SoundComponent::SoundType::BGM);
+	m_bgm = AddComponent<SoundComponent>(this, BGMName, SoundComponent::SoundType::BGM);
 	//再生
-	//m_bgm->Play();
+	m_bgm->Play();
 
 
 

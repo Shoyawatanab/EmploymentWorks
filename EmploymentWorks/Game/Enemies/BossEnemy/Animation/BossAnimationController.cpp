@@ -98,6 +98,7 @@ BossAnimationController::~BossAnimationController()
 /// <param name="datas">í«â¡ÉfÅ[É^</param>
 void BossAnimationController::Notify(SceneMessageType type, void* datas)
 {
+	UNREFERENCED_PARAMETER(datas);
 
 	switch (type)
 	{

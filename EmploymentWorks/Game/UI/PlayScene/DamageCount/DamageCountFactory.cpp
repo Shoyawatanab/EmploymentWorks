@@ -7,10 +7,8 @@
 #include "DamageCountFactory.h"
 #include "GameBase/UI/Canvas/Canvas.h"
 #include "Game/UI/PlayScene/DamageCount/DamageCount.h"
-#include "GameBase/Scene/Scene.h"
 #include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/Component/Components.h"
-#include "Game/MathUtil.h"
 #include "GameBase/Scene/Scene.h"
 #include "GameBase/Camera/Camera.h"
 
@@ -70,15 +68,7 @@ void DamageCountFactory::Notify(SceneMessageType type, void* datas)
 					//追加データからダメージをキャスト
 					ui->SetDamage(data.Damage);
 
-					//座標をスクリーン座標に変換
-					auto ScreenPos = MathUtil::WorldToScreen(data.Position,
-						DirectX::SimpleMath::Matrix::Identity,
-						GetScene()->GetCamera()->GetViewMatrix(),
-						GetScene()->GetCamera()->GetProjectionMatrix()
-					);
-
-
-					ui->GetTransform()->SetPosition(DirectX::SimpleMath::Vector3(ScreenPos.x,ScreenPos.y,0));
+					ui->SetWorldPosition(data.Position);
 
 					break;
 				}

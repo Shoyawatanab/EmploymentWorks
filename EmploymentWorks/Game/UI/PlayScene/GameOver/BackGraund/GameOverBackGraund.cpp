@@ -38,7 +38,7 @@ GameOverBackGraund::GameOverBackGraund(Canvas* canvas)
 	auto device = CommonResources::GetInstance()->GetDeviceResources()->GetD3DDevice();
 	auto context = CommonResources::GetInstance()->GetDeviceResources()->GetD3DDeviceContext();
 
-	CreateShader(device, context);
+	CreateShader(device);
 
 	LoadTexture();
 
@@ -100,7 +100,6 @@ void GameOverBackGraund::CustomRender()
 {
 
 	//シェーダーの作成
-	auto device = CommonResources::GetInstance()->GetDeviceResources()->GetD3DDevice();
 	auto context = CommonResources::GetInstance()->GetDeviceResources()->GetD3DDeviceContext();
 	auto states = CommonResources::GetInstance()->GetCommonStates();
 
@@ -169,7 +168,7 @@ void GameOverBackGraund::CustomRender()
 
 }
 
-void GameOverBackGraund::CreateShader(ID3D11Device1* device, ID3D11DeviceContext* context)
+void GameOverBackGraund::CreateShader(ID3D11Device1* device)
 {
 
 	auto shaderFactory = ShaderFactory::GetInstance();

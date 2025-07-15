@@ -16,6 +16,9 @@ public:
 	//オブジェクトタグの取得
 	ObjectTag GetObjectTag() override { return ObjectTag::BOSS_ENEMY_PARTS; }
 
+	//ボス敵の取得
+	BossEnemy* GetBossEnemy() { return m_bossEnemy; }
+
 public:
 	//コンストラクタ
 	BossEnemyParts(Scene* scene, std::string partsName, std::string modelName
@@ -31,6 +34,9 @@ public:
 
 	//個別の当たった時の関数
 	virtual void OnCollisionEnterActor(ColliderComponent* collider) { UNREFERENCED_PARAMETER(collider); }
+
+	//部位破壊時の処理
+	virtual void PartsDestruction() {}
 
 private:
 

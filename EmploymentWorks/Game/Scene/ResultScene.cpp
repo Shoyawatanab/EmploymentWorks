@@ -47,7 +47,7 @@ void ResultScene::Initialize()
 	//ƒJƒƒ‰‚Ìì¬
 	m_camera = AddActor<ResultCamera>(this);
 
-	auto ui = AddActor<ResutlSceneScreenSpaceOverlayCanvas>(this);
+	AddActor<ResutlSceneScreenSpaceOverlayCanvas>(this);
 
 
 	//ƒ‚ƒfƒ‹‚Ìì¬

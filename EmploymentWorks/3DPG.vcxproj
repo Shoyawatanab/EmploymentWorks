@@ -273,6 +273,8 @@
     <ClInclude Include="Game\Messenger\Global\GlobalMessenger.h" />
     <ClInclude Include="Game\Messenger\Scene\SceneMessages.h" />
     <ClInclude Include="Game\Sound\PlayScene\PlaySceneSound.h" />
+    <ClInclude Include="Game\Sound\SelectScene\SelectSceneSound.h" />
+    <ClInclude Include="Game\Sound\TitleScene\TitleSceneSound.h" />
     <ClInclude Include="Game\UI\NumberUI.h" />
     <ClInclude Include="Game\UI\PlayScene\BoomerangCount\BoomerangCount.h" />
     <ClInclude Include="Game\UI\PlayScene\BossHp\BossHp.h" />
@@ -507,6 +509,8 @@
     <ClCompile Include="Game\Manager\PickUp\PickUpManager.cpp" />
     <ClCompile Include="Game\Messenger\Global\GlobalMessenger.cpp" />
     <ClCompile Include="Game\Sound\PlayScene\PlaySceneSound.cpp" />
+    <ClCompile Include="Game\Sound\SelectScene\SelectSceneSound.cpp" />
+    <ClCompile Include="Game\Sound\TitleScene\TitleSceneSound.cpp" />
     <ClCompile Include="Game\UI\NumberUI.cpp" />
     <ClCompile Include="Game\UI\PlayScene\BoomerangCount\BoomerangCount.cpp" />
     <ClCompile Include="Game\UI\PlayScene\BossHp\BossHp.cpp" />

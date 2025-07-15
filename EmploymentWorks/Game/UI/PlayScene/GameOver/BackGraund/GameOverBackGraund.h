@@ -56,7 +56,7 @@ private:
 	void CustomRender();
 
 	//シェーダー作成
-	void CreateShader(ID3D11Device1* device, ID3D11DeviceContext* context);
+	void CreateShader(ID3D11Device1* device );
 	
 	//画像の読み込み
 	void LoadTexture();

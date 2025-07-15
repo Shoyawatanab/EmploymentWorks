@@ -194,7 +194,7 @@ bool Conditions::IsHPMoreThanHalf()
 bool Conditions::IsAttack()
 {
 
-	float ratio =MathUtil::GetRandom(0,100);
+	float ratio = static_cast<float>(MathUtil::GetRandom(0,100));
 
 	if (ratio >= 30)
 	{

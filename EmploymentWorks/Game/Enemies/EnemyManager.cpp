@@ -129,10 +129,6 @@ void EnemyManager::LoadData()
 		//kinds‚Ì—v‘f‚Ì’l‚ð‘ã“ü
 		std::string kinds = item["kinds"];
 
-		if (kinds == "BossEnemy")
-		{
-			int a = 0;
-		}
 
 		//Position‚Ì—v‘f‚ð‘ã“ü
 		Vector3 position;

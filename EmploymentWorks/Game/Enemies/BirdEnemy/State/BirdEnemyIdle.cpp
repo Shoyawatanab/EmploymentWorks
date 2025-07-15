@@ -7,11 +7,12 @@
 #include "BirdEnemyIdle.h"
 #include <random>
 #include "Game/Params.h"
-
 #include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/Enemies/BirdEnemy/BirdEnemy.h"
 #include "Game/Enemies/BirdEnemy/State/BirdEnemyStateMachine.h"
 #include "Game/MathUtil.h"
+
+
 
 /// <summary>
 /// コンストラク
@@ -33,6 +34,8 @@ BirdEnemyIdle::BirdEnemyIdle(BirdEnemyStateMachine* stateMachine, BirdEnemy* bir
 BirdEnemyIdle::~BirdEnemyIdle()
 {
 }
+
+
 
 /// <summary>
 /// 更新処理

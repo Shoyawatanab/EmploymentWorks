@@ -11,6 +11,7 @@
 #include "Game/Messenger/Scene/SceneMessages.h"
 #include "GameBase/Scene/Scene.h"
 #include "GameBase/Manager/CollisionManager.h"
+#include "Game/MathUtil.h"
 
 /// <summary>
 /// コンストラクタ
@@ -26,6 +27,10 @@ PlaySceneCameraTPS::PlaySceneCameraTPS(PlaySceneCameraStateMachine* stateMachine
 	,m_zoomState{}
 	,m_zoomMovement{}
 	,m_zoomTime{}
+	,m_isShake{false}
+	,m_shakePosition{}
+	,m_shaleTime{}
+	,m_shakePower{0.05f}
 {
 
 	//メッセンジャーに登録
@@ -33,6 +38,7 @@ PlaySceneCameraTPS::PlaySceneCameraTPS(PlaySceneCameraStateMachine* stateMachine
 		{
 			SceneMessageType::PLAYER_GET_REDAY
 			,SceneMessageType::PLAYER_GET_REDAY_END
+			,SceneMessageType::TPS_CAMERA_SHAKE
 		}
 		, this
 	);
@@ -97,6 +103,11 @@ void PlaySceneCameraTPS::Update(const float& deltaTime)
 		eye -= pushBack;
 	}
 
+	//カメラの揺れ
+	Shake(deltaTime);
+
+	eye += m_shakePosition;
+
 	//カメラにセット
 	m_camera->SetEyePosition(eye);
 	m_camera->SetTargetPosition(target);
@@ -114,11 +125,13 @@ void PlaySceneCameraTPS::Update(const float& deltaTime)
 void PlaySceneCameraTPS::Enter()
 {
 	//初期値設定
-	SetCursorPos(MOUSE_POSITION.x,MOUSE_POSITION.y);
+	SetCursorPos(static_cast<int>(MOUSE_POSITION.x),static_cast<int>(MOUSE_POSITION.y));
 	m_rotationX = 0.0f;
 	m_rotationY = 0.0f;
 	m_zoomTime = 0.0f;
 	m_zoomState = ZoomState::NONE;
+
+	m_isShake = false;
 
 	ShowCursor(false);
 
@@ -140,6 +153,7 @@ void PlaySceneCameraTPS::Exit()
 /// <param name="datas">追加データ</param>
 void PlaySceneCameraTPS::Notify(SceneMessageType type, void* datas)
 {
+	UNREFERENCED_PARAMETER(datas);
 	switch (type)
 	{
 		case SceneMessageType::PLAYER_GET_REDAY:
@@ -150,6 +164,11 @@ void PlaySceneCameraTPS::Notify(SceneMessageType type, void* datas)
 			m_zoomState = ZoomState::ZOOM_OUT;
 			m_zoomMovement = DirectX::SimpleMath::Vector3::Zero;
 			m_zoomTime = 0.0f;
+
+			break;
+		case SceneMessageType::TPS_CAMERA_SHAKE:
+			m_shaleTime = SHAKETIME;
+			m_isShake = true;
 
 			break;
 
@@ -180,7 +199,7 @@ void PlaySceneCameraTPS::MouseOperation()
 	m_rotationY += diff.x * MOUSE_SENSITIVITY;
 
 	//初期値設定
-	SetCursorPos(MOUSE_POSITION.x, MOUSE_POSITION.y);
+	SetCursorPos(static_cast<int>( MOUSE_POSITION.x), static_cast<int>(MOUSE_POSITION.y));
 	//上の制限
 	if (m_rotationX >= ROTATE_LIMIT)
 	{
@@ -251,39 +270,42 @@ void PlaySceneCameraTPS::ZoomUpdate(const float& deltaTime)
 void PlaySceneCameraTPS::Shake(const float& deltaTime)
 {
 
-	//using namespace DirectX::SimpleMath;
-	//
-	//if (!m_isShake)
-	//{
-	//	return;
-	//}
+	using namespace DirectX::SimpleMath;
+	
+	if (!m_isShake)
+	{
+		return;
+	}
 
 
-	//m_shaleTime -= deltaTime;
+	m_shaleTime -= deltaTime;
 
 
-	//if (m_shaleTime <= 0.0f)
-	//{
-	//	m_isShake = false;
-	//	m_shakePosition = Vector3::Zero;
-	//	return;
-	//}
+	if (m_shaleTime <= 0.0f)
+	{
+		m_isShake = false;
+		m_shakePosition = Vector3::Zero;
+		return;
+	}
 
-	//float power = (m_shaleTime / SHAKETIME) * m_shakePower;
+	float power = (m_shaleTime / SHAKETIME) * m_shakePower;
 
-	////	完全なランダムをハードウェア的に生成するためのクラスの変数
-	//std::random_device seed;
-	////	上記の完全なランダムは動作が遅いため、seed値の決定のみに使用する
-	////	※「default_random_engine」はusingで「mt19937」となっている
-	//std::default_random_engine engine(seed());
-	////	生成して欲しいランダムの範囲をDistributionに任せる。今回は0～2PI
-	//std::uniform_real_distribution<> dist(-power, power);
+	//	完全なランダムをハードウェア的に生成するためのクラスの変数
+	std::random_device seed;
+	//	上記の完全なランダムは動作が遅いため、seed値の決定のみに使用する
+	//	※「default_random_engine」はusingで「mt19937」となっている
+	std::default_random_engine engine(seed());
+	//	生成して欲しいランダムの範囲をDistributionに任せる。今回は0～2PI
+	std::uniform_real_distribution<> dist(-power, power);
 
-	//float x = static_cast<float>(dist(engine));
-	//float y = static_cast<float>(dist(engine));
-	//float z = static_cast<float>(dist(engine));
+	MathUtil::GetRandom(-power, power);
 
-	//m_shakePosition = Vector3(x, y, z);
+
+	float x = MathUtil::GetRandom(-power, power);
+	float y = MathUtil::GetRandom(-power, power);
+	float z = MathUtil::GetRandom(-power, power);
+
+	m_shakePosition = Vector3(x, y, z);
 
 
 }

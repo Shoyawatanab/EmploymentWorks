@@ -562,6 +562,8 @@
     <ClInclude Include="Game\Manager\Managers.h" />
     <ClInclude Include="Game\Component\Components.h" />
     <ClInclude Include="Game\UI\PlayScene\PickUp\PickUpUI.h" />
+    <ClInclude Include="Game\Sound\TitleScene\TitleSceneSound.h" />
+    <ClInclude Include="Game\Sound\SelectScene\SelectSceneSound.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -854,6 +856,8 @@
     <ClCompile Include="Game\Manager\PickUp\PickUpManager.cpp" />
     <ClCompile Include="Game\Component\PickUp\PickableComponent.cpp" />
     <ClCompile Include="Game\UI\PlayScene\PickUp\PickUpUI.cpp" />
+    <ClCompile Include="Game\Sound\TitleScene\TitleSceneSound.cpp" />
+    <ClCompile Include="Game\Sound\SelectScene\SelectSceneSound.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />

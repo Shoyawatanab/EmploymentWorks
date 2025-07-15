@@ -70,9 +70,9 @@ BossJumpAttackJump::ActionState BossJumpAttackJump::Update(const float& deltaTim
 	//’…’n‚µ‚½‚ç
 	if (m_bossEnemy->GetIsGround())
 	{
-		auto rigidbody = m_bossEnemy->GetComponent<RigidbodyComponent>();
 		rigidbody->SetAddForce(Vector3::Zero);
 		rigidbody->SetVelocity(Vector3::Zero);
+		m_bossEnemy->PlayLandingSE();
 		return ActionState::END;
 	}
 

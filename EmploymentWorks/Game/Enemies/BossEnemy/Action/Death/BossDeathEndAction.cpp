@@ -37,6 +37,7 @@ BossDeathEndAction::~BossDeathEndAction()
 /// <returns>åpë±Ç©èIóπÇ©</returns>
 BossDeathEndAction::ActionState BossDeathEndAction::Update(const float& deltaTime)
 {
+	UNREFERENCED_PARAMETER(deltaTime);
 	return ActionState::RUNNING;
 
 }

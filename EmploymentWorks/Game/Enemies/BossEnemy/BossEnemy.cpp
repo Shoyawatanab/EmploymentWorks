@@ -49,6 +49,7 @@ BossEnemy::BossEnemy(Scene* scene, DirectX::SimpleMath::Vector3 scale
 	collider->SetNotHitObjectTag({
 		Actor::ObjectTag::BOSS_ENEMY_PARTS
 		,Actor::ObjectTag::BEAM
+
 		});
 
 
@@ -61,6 +62,11 @@ BossEnemy::BossEnemy(Scene* scene, DirectX::SimpleMath::Vector3 scale
 	model->GetTransform()->SetParent(GetTransform());
 	
 	SetModel(model);
+
+	//着地音
+	m_landingSE = AddComponent<SoundComponent>(this, "Landing", SoundComponent::SoundType::SE);
+
+
 
 //パーツをマネージャーにターゲットとして登録
 	//パーツの取得
@@ -125,14 +131,13 @@ void BossEnemy::UpdateActor(const float& deltaTime)
 	//{
 	//	//ビヘイビアツリーの更新
 	//	//m_behavior->Update(deltaTime);
-
-
 	//	//SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_BEAM_ATTACK_STATE);
 	//	//SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_JUMP_ATTACK_STATE);
 	//	//SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_WAKING_STATE);
-	//	//SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_SWING_DOWN_STATE);
+	//	SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_SWING_DOWN_STATE);
 
 	//}
+
 
 
 }
@@ -272,6 +277,16 @@ void BossEnemy::Rotation(const float& deltaTime)
 	//Y軸に対して回転をかける
 	Rotate *= DirectX::SimpleMath::Quaternion::CreateFromAxisAngle(moveAxis, moveAngle);
 	GetTransform()->SetRotate(Rotate);
+
+}
+
+/// <summary>
+/// 着地音の再生
+/// </summary>
+void BossEnemy::PlayLandingSE()
+{
+	//着地音
+	m_landingSE->Play();
 
 }
 

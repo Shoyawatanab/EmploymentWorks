@@ -55,7 +55,7 @@ ColliderComponent::~ColliderComponent()
 /// <param name="deltaTime">Œo‰ßŠÔ</param>
 void ColliderComponent::Update(const float& deltaTime)
 {
-
+	UNREFERENCED_PARAMETER(deltaTime);
 	//”h¶æXVˆ—
 	UpdateCollider();
 

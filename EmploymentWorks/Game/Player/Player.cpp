@@ -137,6 +137,7 @@ void Player::OnCollisionEnter(ColliderComponent* collider)
 
 			//’Ê’m
 			SceneMessenger::GetInstance()->Notify(SceneMessageType::PLAYER_DAMAGE);
+			SceneMessenger::GetInstance()->Notify(SceneMessageType::TPS_CAMERA_SHAKE);
 			AddDamage();
 		}
 			break;

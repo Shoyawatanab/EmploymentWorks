@@ -77,7 +77,7 @@ BoomerangCount::~BoomerangCount()
 /// <param name="datas">í«â¡ÉfÅ[É^</param>
 void BoomerangCount::Notify(SceneMessageType type, void* datas)
 {
-
+	UNREFERENCED_PARAMETER(datas);
 	switch (type)
 	{
 		case SceneMessageType::BOOMERANG_THROW:

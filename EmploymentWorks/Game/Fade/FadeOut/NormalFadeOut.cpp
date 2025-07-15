@@ -30,7 +30,7 @@ NormalFadeOut::NormalFadeOut()
 	auto device = CommonResources::GetInstance()->GetDeviceResources()->GetD3DDevice();
 	auto context = CommonResources::GetInstance()->GetDeviceResources()->GetD3DDeviceContext();
 
-	CreateShader(device,context);
+	CreateShader(device);
 
 	//	プリミティブバッチの作成
 	m_batch = std::make_unique<DirectX::PrimitiveBatch<DirectX::VertexPositionColorTexture>>(context);
@@ -65,7 +65,6 @@ void NormalFadeOut::Render()
 {
 
 	//シェーダーの作成
-	auto device = CommonResources::GetInstance()->GetDeviceResources()->GetD3DDevice();
 	auto context = CommonResources::GetInstance()->GetDeviceResources()->GetD3DDeviceContext();
 	auto states = CommonResources::GetInstance()->GetCommonStates();
 
@@ -141,7 +140,7 @@ void NormalFadeOut::Exit()
 
 
 
-void NormalFadeOut::CreateShader(ID3D11Device1* device, ID3D11DeviceContext* context)
+void NormalFadeOut::CreateShader(ID3D11Device1* device)
 {
 
 	auto shaderFactory = ShaderFactory::GetInstance();

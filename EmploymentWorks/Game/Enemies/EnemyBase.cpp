@@ -20,8 +20,6 @@ EnemyBase::EnemyBase(Scene* scene, int hp, EnemyManager* manager)
 	,m_manger{manager}
 {
 
-
-
 }
 
 /// <summary>

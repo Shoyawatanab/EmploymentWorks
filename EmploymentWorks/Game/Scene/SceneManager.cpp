@@ -172,6 +172,7 @@ void SceneManager::DeleteScene()
 /// <param name="datas">í«â¡ÉfÅ[É^</param>
 void SceneManager::Notify(GlobalMessageType type, void* datas)
 {
+	UNREFERENCED_PARAMETER(datas);
 	switch (type)
 	{
 		case GlobalMessageType::CHANGE_TITLE_SCENE:

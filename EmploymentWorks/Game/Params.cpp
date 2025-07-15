@@ -418,7 +418,7 @@ int Params::BOOMERANG_MAX_COUNT = 3;
   //鳥の敵の行動の最小間隔
   const float Params::BIRDENEMY_ACTIONS_MIN_TIME = 1.0f;
   //鳥の敵の行動の最大間隔
-  const float Params::BIRDENEMY_ACTIONS_MAX_TIME = 5.0f;
+  const float Params::BIRDENEMY_ACTIONS_MAX_TIME = 3.0f;
   //鳥の敵の行動半径
   const float Params::BIRDENEMY_MOVE_RADIUS = 2.0f;
   //鳥の敵の攻撃の確率
@@ -458,9 +458,9 @@ int Params::BOOMERANG_MAX_COUNT = 3;
 	const float Params::BIRDENEMY_BEAM_BALL_ACCUMULATIONTIME = 2.0f;
 
 	///鳥の敵のビーム弾の初速度
-	const float Params::BIRDENEMY_BEAM_BALL_INITIAL_SPEED = 4.0f;
+	const float Params::BIRDENEMY_BEAM_BALL_INITIAL_SPEED = 2.0f;
 	///鳥の敵のビーム弾の最終速度
-	const float Params::BIRDENEMY_BEAM_BALL_FAINAL_SPEED = 1.5f;
+	const float Params::BIRDENEMY_BEAM_BALL_FAINAL_SPEED = 0.7f;
 	//鳥の敵のエネルギー弾の減速率
 	const float Params::BIRDENEMY_BEAM_BALL_DECELERATION_TIME = 0.3f;
 

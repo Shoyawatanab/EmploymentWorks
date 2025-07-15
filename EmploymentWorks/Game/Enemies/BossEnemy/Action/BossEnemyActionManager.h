@@ -24,4 +24,8 @@ public:
 	//’Ê’m‚ğó‚¯æ‚éŠÖ”
 	void Notify(SceneMessageType type, void* datas) override;
 
+private:
+	//ƒ{ƒX
+	BossEnemy* m_bossEnemy;
+
 };

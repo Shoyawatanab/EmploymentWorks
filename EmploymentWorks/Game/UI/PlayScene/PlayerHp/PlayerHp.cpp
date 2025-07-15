@@ -72,6 +72,8 @@ PlayerHp::~PlayerHp()
 /// <param name="datas">í«â¡ÉfÅ[É^</param>
 void PlayerHp::Notify(SceneMessageType type, void* datas)
 {
+	UNREFERENCED_PARAMETER(datas);
+
 	switch (type)
 	{
 		case SceneMessageType::PLAYER_DAMAGE:

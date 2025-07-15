@@ -10,6 +10,10 @@
 #include "GameBase/UI/Image.h"
 #include "GameBase/Scene/Scene.h"
 #include "Game/UI/NumberUI.h"
+#include "Game/MathUtil.h"
+#include "GameBase/Camera/Camera.h"
+
+
 
 /// <summary>
 /// コンストラク
@@ -22,8 +26,10 @@ DamageCount::DamageCount(Canvas* canvas)
 	,m_numbers{}
 	,m_usedNumbers{}
 	,m_time{}
+	,m_worldPosition{}
 {
 	using namespace DirectX::SimpleMath;
+
 
 
 	////背景画像
@@ -63,6 +69,8 @@ DamageCount::~DamageCount()
 /// <param name="deltaTime">経過時間</param>
 void DamageCount::UpdateActor(const float& deltaTime)
 {
+	//座標の更新
+	UpdatePosition();
 
 	if (m_time >= DISPLAYTIME)
 	{
@@ -102,6 +110,25 @@ void DamageCount::OnDisable()
 }
 
 /// <summary>
+/// 座標の更新
+/// </summary>
+void DamageCount::UpdatePosition()
+{
+	using namespace DirectX::SimpleMath;
+
+	//座標をスクリーン座標に変換
+	auto ScreenPos = MathUtil::WorldToScreen(m_worldPosition,
+		Matrix::Identity,
+		GetScene()->GetCamera()->GetViewMatrix(),
+		GetScene()->GetCamera()->GetProjectionMatrix()
+	);
+
+
+	GetTransform()->SetPosition(DirectX::SimpleMath::Vector3(ScreenPos.x, ScreenPos.y, 0));
+
+}
+
+/// <summary>
 /// ダメージのセット
 /// </summary>
 /// <param name="damage"></param>
@@ -110,7 +137,7 @@ void DamageCount::SetDamage(int damage)
 	using namespace DirectX::SimpleMath;
 
 	//桁数を求める
-	int digits = std::log10(damage) + 1;
+	int digits = static_cast<int>(std::log10(damage) + 1);
 
 	//最大桁数を超えていたら表示しない
 	if (digits > MAXDIGITS)
@@ -140,5 +167,18 @@ void DamageCount::SetDamage(int damage)
 		damage /= 10;
 	}
 
+
+}
+
+/// <summary>
+/// 
+/// </summary>
+/// <param name="position"></param>
+void DamageCount::SetWorldPosition(DirectX::SimpleMath::Vector3 position)
+{
+
+	m_worldPosition = position;
+
+	UpdatePosition();
 
 }

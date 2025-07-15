@@ -7,6 +7,7 @@
 #include "Game/Enemies/BossEnemy/BossEnemyParts.h"
 
 class BossEnemy;
+class SoundComponent;
 
 class BossEnemyRightArm : public BossEnemyParts
 {
@@ -22,6 +23,11 @@ public:
 
 	//ŒÂ•Ê‚Ì“–‚½‚Á‚½‚ÌŠÖ”
 	void OnCollisionEnterActor(ColliderComponent* collider);
+
+private:
+
+	//ƒqƒbƒg‰¹
+	SoundComponent* m_hitSE;
 
 
 };

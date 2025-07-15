@@ -86,7 +86,7 @@ Explosiion::~Explosiion()
 /// <param name="deltaTime">経過時間</param>
 void Explosiion::UpdateActor(const float& deltaTime)
 {
-
+	UNREFERENCED_PARAMETER(deltaTime);
 	// フレームカウンタ
 	m_frameCounter++;
 

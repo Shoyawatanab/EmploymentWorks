@@ -24,11 +24,11 @@ FadeManager::FadeManager()
 	
 	//フェードインの作成
 	AddFadeIn(FadeInKinds::NORMAL_FADE_IN,std::make_unique<NormalFadeIn>());
-	//AddFadeIn(FadeInKinds::BOMERANG_FADE_IN,std::make_unique<BoomerangFadeIn>());
+	AddFadeIn(FadeInKinds::BOMERANG_FADE_IN,std::make_unique<BoomerangFadeIn>());
 
 	//フェードアウトの作成
 	AddFadeOut(FadeOutKinds::NORMAL_FADE_OUT, std::make_unique<NormalFadeOut>());
-	//AddFadeOut(FadeOutKinds::BOMERANG_FADE_OUT, std::make_unique<BoomerangFadeOut>());
+	AddFadeOut(FadeOutKinds::BOMERANG_FADE_OUT, std::make_unique<BoomerangFadeOut>());
 
 
 

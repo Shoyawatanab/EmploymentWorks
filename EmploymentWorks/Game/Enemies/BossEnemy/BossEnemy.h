@@ -12,11 +12,24 @@ class RigidbodyComponent;
 class AnimatorComponent;
 class BossEnemyModel;
 class BossEnemyActionManager;
-
+class SoundComponent;
 
 
 class BossEnemy : public EnemyBase 
 {
+public:
+
+	enum  class ActionType
+	{
+		IDEL           //通常
+		,BEAM_ATTACK   //ビーム攻撃
+		,JUMP_ATTACK   //ジャンプ攻撃
+		,ORIENTATION   //回転
+		,SWINGDOWN	   //振り下ろし攻撃
+		,WALK		   //歩き
+	};
+
+
 public:
 
 	//着地しているか　true　着地してる　false　してない
@@ -25,8 +38,12 @@ public:
 
 	//オブジェクトタグの取得
 	ObjectTag GetObjectTag() override { return ObjectTag::BOSS_ENEMY; }
-
+	//アニメーションの取得
 	AnimatorComponent* GetAnimation() { return m_animation; }
+	//実行アクションタイプの取得
+	ActionType GetCurrentActionType() { return m_currentActionType; }
+	//実行アクションタイプのセット
+	void SetCurrentActionType(ActionType type) { m_currentActionType = type; }
 
 public:
 
@@ -55,6 +72,9 @@ public:
 	//回転
 	void Rotation(const float& deltaTime);
 
+	//着地音の再生
+	void PlayLandingSE();
+
 private:
 
 	//着地したとき
@@ -76,6 +96,13 @@ private:
 	bool m_isGround;
 	//プレイヤ
 	Player* m_player;
+
+	//着地音
+	SoundComponent* m_landingSE;
+
+	//アクション状態
+	ActionType m_currentActionType;
+
 };
 
 

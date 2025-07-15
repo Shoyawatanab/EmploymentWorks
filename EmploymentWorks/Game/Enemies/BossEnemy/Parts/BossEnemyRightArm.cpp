@@ -9,6 +9,7 @@
 #include "Game/Component/Components.h"
 #include "Game/Params.h"
 #include "Game/Messenger/Scene/SceneMessages.h"
+#include "Game/Enemies/BossEnemy/BossEnemy.h"
 
 BossEnemyRightArm::BossEnemyRightArm(Scene* scene, BossEnemy* boss)
 	:
@@ -30,7 +31,8 @@ BossEnemyRightArm::BossEnemyRightArm(Scene* scene, BossEnemy* boss)
 	//回転
 	GetTransform()->SetRotate(Params::BOSSENEMY_RIGHTARM_ROTATION);
 
-	//以下追加部位の作成
+	//爆発音の作成
+	m_hitSE = AddComponent<SoundComponent>(this, "AttackHit", SoundComponent::SoundType::SE);
 
 
 }
@@ -53,14 +55,17 @@ void BossEnemyRightArm::OnCollisionEnterActor(ColliderComponent* collider)
 	switch (collider->GetActor()->GetObjectTag())
 	{
 		case Actor::ObjectTag::STAGE:
-		{
+			//SwingDown状態の時
+			if (GetBossEnemy()->GetCurrentActionType() == BossEnemy::ActionType::SWINGDOWN)
+			{
+				
+				DirectX::SimpleMath::Vector3 position = GetTransform()->GetWorldPosition();
 
-			DirectX::SimpleMath::Vector3 position = GetTransform()->GetWorldPosition();
-
-			position.y = 0.1f;
-
-			SceneMessenger::GetInstance()->Notify(SceneMessageType::CREATE_PARTICLE_EFFECT, &position);
-		}
+				position.y = 0.1f;
+				//パーティクルの通知
+				SceneMessenger::GetInstance()->Notify(SceneMessageType::CREATE_PARTICLE_EFFECT, &position);
+				m_hitSE->Play();
+			}
 		break;
 		default:
 			break;
