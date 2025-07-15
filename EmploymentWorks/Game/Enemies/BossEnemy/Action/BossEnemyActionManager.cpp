@@ -15,6 +15,8 @@
 /// コンストラクタ
 /// </summary>
 BossEnemyActionManager::BossEnemyActionManager(BossEnemy* ower,Player* target, BossEnemyBeam* beam)
+	:
+	m_bossEnemy{ower}
 {
 
 	//各アクションの作成
@@ -58,21 +60,33 @@ BossEnemyActionManager::~BossEnemyActionManager()
 /// <param name="datas">追加データ</param>
 void BossEnemyActionManager::Notify(SceneMessageType type, void* datas)
 {
+	UNREFERENCED_PARAMETER(datas);
+
 	switch (type)
 	{
 		case SceneMessageType::BOSS_IDLE_STATE:
+			//実行アクションタイプの変更
+			m_bossEnemy->SetCurrentActionType(BossEnemy::ActionType::IDEL);
 			ChangeAction("Idle");
 			break;
 		case SceneMessageType::BOSS_BEAM_ATTACK_STATE:
+			//実行アクションタイプの変更
+			m_bossEnemy->SetCurrentActionType(BossEnemy::ActionType::BEAM_ATTACK);
 			ChangeAction("Beam");
 			break;
 		case SceneMessageType::BOSS_JUMP_ATTACK_STATE:
+			//実行アクションタイプの変更
+			m_bossEnemy->SetCurrentActionType(BossEnemy::ActionType::JUMP_ATTACK);
 			ChangeAction("JumpAttack");
 			break;
 		case SceneMessageType::BOSS_WAKING_STATE:
+			//実行アクションタイプの変更
+			m_bossEnemy->SetCurrentActionType(BossEnemy::ActionType::WALK);
 			ChangeAction("Walk");
 			break;
 		case SceneMessageType::BOSS_SWING_DOWN_STATE:
+			//実行アクションタイプの変更
+			m_bossEnemy->SetCurrentActionType(BossEnemy::ActionType::SWINGDOWN);
 			ChangeAction("SwingDown");
 			break;
 

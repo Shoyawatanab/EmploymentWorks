@@ -36,7 +36,11 @@ public:
 	//ズーム方向
 	static constexpr DirectX::SimpleMath::Vector3 ZOOM_DIRECTION{0.2f, 0.0f, -1.0f};
 	//ズームにかかる時間
-	static constexpr float ZOOME_MAX_TIME = 0.2f;;
+	static constexpr float ZOOME_MAX_TIME = 0.2f;
+
+	//揺れの時間
+	static constexpr float SHAKETIME = 1.0f;
+
 
 public:
 	//コンストラクタ
@@ -80,5 +84,14 @@ private:
 	DirectX::SimpleMath::Vector3 m_zoomMovement;
 	//ズーム時間
 	float m_zoomTime;
+
+	//揺れているか
+	bool m_isShake;
+	//揺れ時間
+	float m_shaleTime;
+	//揺れの強さ
+	float m_shakePower;
+	//揺れの座標
+	DirectX::SimpleMath::Vector3 m_shakePosition;
 
 };

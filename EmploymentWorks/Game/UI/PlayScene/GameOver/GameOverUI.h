@@ -22,10 +22,6 @@ public:
 	//デストラクタ
 	~GameOverUI() override;
 
-	// 単体更新
-	void UpdateActor(const float& deltaTime) override;
-
-
 	//アクティブになった時に呼ばれる関数
 	void OnEnable() override;
 

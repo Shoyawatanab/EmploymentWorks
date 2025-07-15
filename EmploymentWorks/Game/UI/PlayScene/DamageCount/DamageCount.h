@@ -25,6 +25,13 @@ public:
 	static constexpr float DISPLAYTIME = 0.5f;
 
 public:
+
+	//ダメージのセット
+	void SetDamage(int damage);
+	//ワールド座標のセット
+	void SetWorldPosition(DirectX::SimpleMath::Vector3 position);
+
+public:
 	//コンストラクタ
 	DamageCount(Canvas* canvas);
 	//デストラクタ
@@ -37,8 +44,10 @@ public:
 	//非アクティブになった時に呼ばれる関数
 	void OnDisable() override;
 
-	//ダメージのセット
-	void SetDamage(int damage);
+private:
+
+	//座標の更新
+	void UpdatePosition();
 
 private:
 	//時間
@@ -49,4 +58,7 @@ private:
 	std::vector<NumberUI*> m_numbers;
 	//使用配列
 	std::vector<NumberUI*> m_usedNumbers;
+	//３D空間の座標
+	DirectX::SimpleMath::Vector3 m_worldPosition;
+
 };

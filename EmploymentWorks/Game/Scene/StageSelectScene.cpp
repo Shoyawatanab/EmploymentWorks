@@ -12,7 +12,7 @@
 
 #include "Game/UI/SelectScene/Canvas/SelectSceneScreenSpaceOverlayCanvas.h"
 #include "Game/Fade/FadeManager.h"
-
+#include "Game/Sound/SelectScene/SelectSceneSound.h"
 
 /// <summary>
 /// コンストラクタ
@@ -24,6 +24,8 @@ StageSelectScene::StageSelectScene(SceneManager* sceneManager)
 {
 	//FadeManager::GetInstance()->StartFadeOut();
 	FadeManager::GetInstance()->StartFadeOut(FadeManager::FadeOutKinds::BOMERANG_FADE_OUT);
+
+
 
 }
 
@@ -44,8 +46,9 @@ void StageSelectScene::Initialize()
 	//カメラの作成
 	m_camera =AddActor<SelectSceneCamera>(this);
 
-	auto ui = AddActor<SelectSceneScreenSpaceOverlayCanvas>(this);
+	AddActor<SelectSceneScreenSpaceOverlayCanvas>(this);
 
+	AddActor<SelectSceneSound>(this);
 
 }
 

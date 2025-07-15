@@ -19,4 +19,8 @@ public:
 	//デストラクタ
 	~BossEnemyLeftShoulder() override;
 
+	//部位破壊時の処理
+	void PartsDestruction() override;
+
+
 };

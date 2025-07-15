@@ -12,7 +12,7 @@
 /// <param name="scene">ÉVÅ[Éì</param>
 ScreenSpaceOverlayCanvas::ScreenSpaceOverlayCanvas(Scene* scene)
 	:
-	Canvas(scene)
+	Canvas(scene,RenderType::SpaceOverlay)
 {
 }
 

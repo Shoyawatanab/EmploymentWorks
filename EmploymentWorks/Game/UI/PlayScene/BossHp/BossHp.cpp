@@ -39,6 +39,7 @@ BossHp::BossHp(Canvas* canvas)
 		}, this
 	);
 
+
 }
 
 /// <summary>

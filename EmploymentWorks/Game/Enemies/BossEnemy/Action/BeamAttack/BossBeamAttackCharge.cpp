@@ -25,6 +25,7 @@ BossBeamAttackCharge::BossBeamAttackCharge(BossEnemy* bossenemy
 	,m_beam{beam}
 	,m_particleCreateTime{}
 	,m_time{}
+	,m_comtroller{beamAttack}
 {
 
 }

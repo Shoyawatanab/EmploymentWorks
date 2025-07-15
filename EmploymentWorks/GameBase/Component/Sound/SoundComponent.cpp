@@ -17,7 +17,7 @@ SoundComponent::SoundComponent(Actor* owner, const std::string& soundName, Sound
 	:
 	Component(owner)
 	,m_channelSE{}
-	,m_soundType{}
+	,m_soundType{type}
 	,m_sound{}
 	,m_manager{}
 {
@@ -50,7 +50,7 @@ void SoundComponent::Play()
 			break;
 		case SoundComponent::SoundType::SE:
 			//SE‚ÌÄ¶
-			m_manager->PlaySE(&m_sound, &m_channelSE);
+			m_manager->PlaySE(&m_sound);
 			break;
 		default:
 			break;
@@ -67,7 +67,7 @@ void SoundComponent::Stop()
 	switch (m_soundType)
 	{
 		case SoundComponent::SoundType::BGM:
-			m_manager->StopBGM(&m_sound);
+			m_manager->StopBGM();
 			break;
 		case SoundComponent::SoundType::SE:
 			break;

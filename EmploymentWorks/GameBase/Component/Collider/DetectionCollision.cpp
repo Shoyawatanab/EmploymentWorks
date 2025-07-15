@@ -117,10 +117,9 @@ DirectX::SimpleMath::Vector3 DetectionCollision::CheckLineSegmentCollision(Direc
 
 				if (distance <= maxLength)
 				{
+					//“–‚½‚Á‚Ä‚¢‚é
 
 					return ray.direction * (maxLength - distance);
-					//“–‚½‚Á‚Ä‚¢‚é
-					return ray.direction * distance;
 
 				}
 			}

@@ -10,17 +10,28 @@ class Canvas : public Actor
 {
 public:
 
+	enum  class RenderType
+	{
+	
+		SpaceOverlay  //常に画面に移り続ける
+		, WorldSpace  //３D空間のオブジェクトとして配置
+	};
+
+
+
+public:
+
 	//コンストラクタ
-	Canvas(Scene * scene);
+	Canvas(Scene * scene, RenderType type);
 	//デストラクタ
 	~Canvas();
+
+private:
+	//描画の種類
+	RenderType m_type;
 
 };
 
 
 
 
-/*
-Unityの画面上にUIの表示・３D空間上に表示などをストラテジーパターンで切り替えられうような設計の実装をする
-
-*/

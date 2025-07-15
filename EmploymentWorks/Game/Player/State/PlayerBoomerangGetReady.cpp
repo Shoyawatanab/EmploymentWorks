@@ -34,6 +34,7 @@ PlayerBoomerangGetReady::~PlayerBoomerangGetReady()
 /// <param name="deltaTime">Œo‰ßŽžŠÔ</param>
 void PlayerBoomerangGetReady::Update(const float& deltaTime)
 {
+	UNREFERENCED_PARAMETER(deltaTime);
 	using namespace DirectX;
 
 

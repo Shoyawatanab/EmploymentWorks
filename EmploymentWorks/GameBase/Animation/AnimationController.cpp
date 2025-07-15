@@ -455,14 +455,13 @@ bool AnimationController::CheckTrigger(const std::string& connectionName)
 /// <returns>true:‚Å‚«‚é   false:‚Å‚«‚È‚¢</returns>
 bool AnimationController::CheckFloatTransition(const std::string& connectionName, const float& value)
 {
+	UNREFERENCED_PARAMETER(value);
 	auto it = m_floatTransitionList.find(connectionName);
 	//ƒŠƒXƒg‚É‹ƒ‚¯‚ê‚Î
 	if (it == m_floatTransitionList.end())
 	{
 		return false;
 	}
-
-
 
 	//Anystate‚©‚Ç‚¤‚©
 	if (it->second.FromName == "AnyState")

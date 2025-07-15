@@ -8,6 +8,7 @@
 
 class Camera;
 class ModelComponent;
+class SoundComponent;
 
 class BossEnemyBeamEnergyBall : public Actor
 {
@@ -66,5 +67,8 @@ private:
 	//モデルコンポーネント
 	ModelComponent* m_outSidemodel;
 	ModelComponent* m_model;
+
+	//爆発音
+	SoundComponent* m_explosionSE;
 
 };

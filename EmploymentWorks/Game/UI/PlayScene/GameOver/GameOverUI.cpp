@@ -62,16 +62,6 @@ GameOverUI::~GameOverUI()
 {
 }
 
-/// <summary>
-/// 単体更新
-/// </summary>
-/// <param name="deltaTime">経過時間</param>
-void GameOverUI::UpdateActor(const float& deltaTime)
-{
-
-
-
-}
 
 
 /// <summary>
@@ -91,6 +81,8 @@ void GameOverUI::OnEnable()
 /// <param name="datas">追加データ</param>
 void GameOverUI::Notify(SceneMessageType type, void* datas)
 {
+	UNREFERENCED_PARAMETER(datas);
+
 	switch (type)
 	{
 		case SceneMessageType::GAME_OVER:

@@ -37,7 +37,6 @@ BoomerangThrow::BoomerangThrow(BoomerangStateMachine* stateMahine, Boomerang* bo
 	//CSV‚©‚çŠî€À•W‚Ìæ“¾
 	m_throwbasePosition = WataLib::CSV::LoadCSVBoomerang();
 
-
 }
 
 /// <summary>

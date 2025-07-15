@@ -32,9 +32,9 @@ IdleingAction::~IdleingAction()
 /// </summary>
 /// <param name="elapsedTime">åoâﬂéûä‘</param>
 /// <returns>åpë±Ç©èIóπÇ©</returns>
-IdleingAction:: ActionState IdleingAction::Update(const float& elapsedTime)
+IdleingAction:: ActionState IdleingAction::Update(const float& deltaTime)
 {
-
+	UNREFERENCED_PARAMETER(deltaTime);
 	return ActionState::END;
 
 }

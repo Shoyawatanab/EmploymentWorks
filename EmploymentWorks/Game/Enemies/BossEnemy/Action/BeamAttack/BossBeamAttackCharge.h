@@ -46,6 +46,6 @@ private:
 	float m_time;
 	//パーティクル生成時間
 	float m_particleCreateTime;
-
-
+	//コントローラー
+	BossBeamAttackActionController* m_comtroller;
 };

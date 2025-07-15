@@ -124,13 +124,13 @@ void StageFactory::LoadStageData()
 		//種類に応じたオブジェクトの作成
 		if (item["kinds"] == "Wall")
 		{
-			auto wall = GetScene()->AddActor<Wall>(GetScene(), stageParameter);
+			GetScene()->AddActor<Wall>(GetScene(), stageParameter);
 
 			
 		}
 		else if (item["kinds"] == "Floor")
 		{
-			auto floor = GetScene()->AddActor<Floor>(GetScene(), stageParameter);
+			GetScene()->AddActor<Floor>(GetScene(), stageParameter);
 
 		}
 	}

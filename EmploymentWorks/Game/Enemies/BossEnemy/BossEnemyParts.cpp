@@ -23,7 +23,7 @@ BossEnemyParts::BossEnemyParts(Scene* scene, std::string partsName,std::string m
 	, BossEnemy* boss)
 	:
 	ModelPartsBase(scene,partsName,modelName)
-	,m_hp{}
+	,m_hp{hp}
 	,m_bossEnemy{boss}
 {
 
@@ -35,6 +35,9 @@ BossEnemyParts::BossEnemyParts(Scene* scene, std::string partsName,std::string m
 	obb->SetNotHitObjectTag({
 		Actor::ObjectTag::BOSS_ENEMY
 		});
+
+	auto rigigdBody = AddComponent<RigidbodyComponent>(this);
+	rigigdBody->SetActive(false);
 
 }
 
@@ -70,12 +73,15 @@ void BossEnemyParts::OnCollisionEnter(ColliderComponent* collider)
 
 			//ボス敵にダメージの加算
 			m_bossEnemy->AddDamage(Params::BOOMERANG_DAMAGE);
+
+
 		}
 			break;
 		default:
 			break;
 	}
 
+	//パーツごとの判定
 	OnCollisionEnterActor(collider);
 
 }
@@ -86,9 +92,20 @@ void BossEnemyParts::OnCollisionEnter(ColliderComponent* collider)
 /// <param name="damage">ダメージ</param>
 void BossEnemyParts::HpDecrease(int damage)
 {
+	//すでに破壊されているなら処理しないため
+	if (m_hp == 0)
+	{
+		return;
+	}
 
 	m_hp -= damage;
 
 	m_hp = std::max(m_hp, 0);
+
+	if (m_hp == 0)
+	{
+		//パーツごとの破壊処理
+		PartsDestruction();
+	}
 
 }

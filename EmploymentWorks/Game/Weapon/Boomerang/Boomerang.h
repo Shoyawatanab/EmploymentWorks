@@ -8,6 +8,8 @@
 #include "Game/Weapon/Boomerang/State/BoomerangStateMachine.h"
 
 class Player;
+class SoundComponent;
+
 
 class Boomerang : public WeaponBase<BoomerangState>
 {
@@ -45,6 +47,8 @@ private:
 	//1ƒtƒŒ‘O‚ÌÀ•W
 	DirectX::SimpleMath::Vector3 m_lastPosition;
 
+	//‘ÅŒ‚‰¹
+	SoundComponent* m_strikeSE;
 
 };
 

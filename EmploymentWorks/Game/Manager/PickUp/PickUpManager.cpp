@@ -33,6 +33,7 @@ PickUpManager::~PickUpManager()
 /// <param name="deltaTime"></param>
 void PickUpManager::Update(const float& deltaTime)
 {
+	UNREFERENCED_PARAMETER(deltaTime);
 	//‚ ‚éƒŠƒXƒg‚¾‚¯‰ñ‚·
 	for (auto& [type, actors] : m_list)
 	{

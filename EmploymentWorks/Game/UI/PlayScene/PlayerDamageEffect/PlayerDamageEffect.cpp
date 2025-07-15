@@ -163,7 +163,7 @@ void PlayerDamageEffect::CustomRender()
 /// <param name="datas">追加データ</param>
 void PlayerDamageEffect::Notify(SceneMessageType type, void* datas)
 {
-
+	UNREFERENCED_PARAMETER(datas);
 	switch (type)
 	{
 		case SceneMessageType::PLAYER_DAMAGE:
@@ -182,8 +182,6 @@ void PlayerDamageEffect::CreateShader()
 {
 	//シェーダーの作成
 	auto device = CommonResources::GetInstance()->GetDeviceResources()->GetD3DDevice();
-	auto context = CommonResources::GetInstance()->GetDeviceResources()->GetD3DDeviceContext();
-
 
 	auto shaderFactory = ShaderFactory::GetInstance();
 

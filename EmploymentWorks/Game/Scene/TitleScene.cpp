@@ -14,6 +14,7 @@
 #include "Game/Params.h"
 #include "Game/Component/Components.h"
 #include "Game/Fade/FadeManager.h"
+#include "Game/Sound/TitleScene/TitleSceneSound.h"
 
 
 /// <summary>
@@ -59,21 +60,14 @@ void TitleScene::Initialize()
 	model->GetTransform()->Translate(PLAYER_POSITION);
 	model->GetTransform()->SetRotate(Params::PLAYER_ROTATION);
 
-	auto ui = AddActor<TitleSceneScreenSpaceOverlayCanvas>(this);
+	AddActor<TitleSceneScreenSpaceOverlayCanvas>(this);
 
 	//カメラのターゲットのセット
 	m_camera->SetTargetPosition(model->GetTransform()->GetPosition() );
 
 
+	AddActor<TitleSceneSound>(this);
 
-
-	//// シーン変更フラグを初期化する
-	//m_isChangeScene = false;
-
-	////フェードアウトの開始
-	//CommonResources::GetInstance()->GetFade()->StartNormalFadeOut();
-
-	//ShowCursor(true);
 
 
 

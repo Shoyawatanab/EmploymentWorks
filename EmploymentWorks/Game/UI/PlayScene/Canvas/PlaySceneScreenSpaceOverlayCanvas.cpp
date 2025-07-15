@@ -23,7 +23,7 @@ PlaySceneScreenSpaceOverlayCanvas::PlaySceneScreenSpaceOverlayCanvas(Scene* scen
 	//プレイシーンにきょうつうの　UI
 
 	//PlyerHpの作成
-	auto playerHp = GetScene()->AddActor<PlayerHp>(this);
+	GetScene()->AddActor<PlayerHp>(this);
 	//ターゲットマーカー
 	m_targetMarker = GetScene()->AddActor<TargetMarker>(this,targets);
 	//ブーメランのカウント
@@ -65,6 +65,7 @@ PlaySceneScreenSpaceOverlayCanvas::~PlaySceneScreenSpaceOverlayCanvas()
 /// <param name="datas">追加データ</param>
 void PlaySceneScreenSpaceOverlayCanvas::Notify(SceneMessageType type, void* datas)
 {
+	UNREFERENCED_PARAMETER(datas);
 
 	switch (type)
 	{

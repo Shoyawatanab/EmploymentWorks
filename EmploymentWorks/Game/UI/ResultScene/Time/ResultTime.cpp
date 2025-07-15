@@ -95,7 +95,7 @@ void ResultTime::AddTime(const float& totalSeconds)
 {
 
 	//•ª‚ğ‹‚ß‚é
-	int minutes = totalSeconds / 60;
+	int minutes = static_cast<int>(totalSeconds / 60);
 	//•b‚ğ‹‚ß‚é
 	int seconds = static_cast<int>(totalSeconds) % 60;
 

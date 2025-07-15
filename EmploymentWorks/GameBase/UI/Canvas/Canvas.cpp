@@ -6,9 +6,10 @@
 #include "pch.h"
 #include "Canvas.h"
 
-Canvas::Canvas(Scene* scene)
+Canvas::Canvas(Scene* scene, RenderType type)
 	:
 	Actor(scene)
+	,m_type{type}
 {
 }
 

@@ -101,7 +101,6 @@ void RoundShadowComponent::Render(const Camera& camera)
 	using namespace DirectX;
 	using namespace DirectX::SimpleMath;
 
-	auto device = CommonResources::GetInstance()->GetDeviceResources()->GetD3DDevice();
 	auto context = CommonResources::GetInstance()->GetDeviceResources()->GetD3DDeviceContext();
 	auto states = CommonResources::GetInstance()->GetCommonStates();
 

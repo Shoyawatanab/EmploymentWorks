@@ -9,6 +9,7 @@
 #include "Game/Component/Components.h"
 #include "Game/Params.h"
 #include "Game/Messenger/Scene/SceneMessages.h"
+#include "Game/Enemies/BossEnemy/BossEnemy.h"
 
 BossEnemyLeftArm::BossEnemyLeftArm(Scene* scene, BossEnemy* boss)
 	:
@@ -32,6 +33,10 @@ BossEnemyLeftArm::BossEnemyLeftArm(Scene* scene, BossEnemy* boss)
 	//以下追加部位の作成
 
 
+	//爆発音の作成
+	m_hitSE = AddComponent<SoundComponent>(this, "AttackHit", SoundComponent::SoundType::SE);
+
+
 }
 
 /// <summary>
@@ -51,14 +56,22 @@ void BossEnemyLeftArm::OnCollisionEnterActor(ColliderComponent* collider)
 	switch (collider->GetActor()->GetObjectTag())
 	{
 		case Actor::ObjectTag::STAGE:
-		{
 
-			DirectX::SimpleMath::Vector3 position = GetTransform()->GetWorldPosition();
+			//SwingDown状態なら
+			if (GetBossEnemy()->GetCurrentActionType() == BossEnemy::ActionType::SWINGDOWN)
+			{
 
-			position.y = 0.1f;
+				DirectX::SimpleMath::Vector3 position = GetTransform()->GetWorldPosition();
 
-			SceneMessenger::GetInstance()->Notify(SceneMessageType::CREATE_PARTICLE_EFFECT, &position);
-		}
+				position.y = 0.1f;
+				//パーティクル作成
+				SceneMessenger::GetInstance()->Notify(SceneMessageType::CREATE_PARTICLE_EFFECT, &position);
+				//サウンド再生
+				m_hitSE->Play();
+
+			}
+		
+		
 			break;
 		default:
 			break;

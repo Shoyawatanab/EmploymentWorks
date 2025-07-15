@@ -88,7 +88,7 @@ PlayerAnimationController::~PlayerAnimationController()
 /// <param name="datas">í«â¡ÉfÅ[É^</param>
 void PlayerAnimationController::Notify(SceneMessageType type, void* datas)
 {
-
+	UNREFERENCED_PARAMETER(datas);
 	switch (type)
 	{
 		case SceneMessageType::PLAYER_IDLE_STATE:

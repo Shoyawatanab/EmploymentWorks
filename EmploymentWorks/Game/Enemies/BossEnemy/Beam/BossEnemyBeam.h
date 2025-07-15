@@ -24,9 +24,6 @@ public:
 	BossEnemyBeam(Scene* scene);
 	//デストラクタ
 	~BossEnemyBeam();
-	//オブジェクト別の更新処理
-	void UpdateActor(const float& deltaTime) override;
-
 	//ターゲットに向けて回転
 	void TargetToRotation();
 

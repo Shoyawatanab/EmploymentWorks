@@ -22,6 +22,9 @@ enum class SceneMessageType : int
 	//ゲームの状態
 
 
+	//カメラの状態
+	,TPS_CAMERA_SHAKE                             //TPSカメラの揺れ
+
 
 	//プレイヤの活動
 	,PLAYER_GET_REDAY                              //プレイヤの構えの活動
@@ -66,7 +69,7 @@ enum class SceneMessageType : int
 //敵のダメージ時の構造体
 struct EnemyDamageDatas
 {
-	float Damage;
+	int Damage;
 	DirectX::SimpleMath::Vector3 Position;
 };
 

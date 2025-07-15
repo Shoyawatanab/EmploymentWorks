@@ -42,9 +42,12 @@ BossEnemyBeamEnergyBall::BossEnemyBeamEnergyBall(Scene* scene)
 	m_model->SetCustomRenderFunction(std::bind(&BossEnemyBeamEnergyBall::ModelRender, this, std::placeholders::_1));
 
 	//当たり判定の作成
-	auto aABBCollider = AddComponent<AABB>(this,  CollisionType::COLLISION
+	AddComponent<AABB>(this,  CollisionType::COLLISION
 		, Params::BOSSENEMY_BEAM_BALL_BOX_COLLIDER_SIZE
 		, Params::BOSSENEMY_BEAM_BALL_SPHERE_COLLIDER_SIZE);
+
+	//爆発音の作成
+	m_explosionSE = AddComponent<SoundComponent>(this, "Explosion", SoundComponent::SoundType::SE);
 
 
 	//シェーダー作成
@@ -74,7 +77,7 @@ void BossEnemyBeamEnergyBall::OnCollisionEnter(ColliderComponent* collider)
 		case ObjectTag::PLAYER:
 			
 			SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_BEAM_IMPACT);
-
+			m_explosionSE->Play();
 			break;
 		default:
 			break;
@@ -228,7 +231,6 @@ void BossEnemyBeamEnergyBall::CreateShader()
 
 	//シェーダーの作成
 	auto device = CommonResources::GetInstance()->GetDeviceResources()->GetD3DDevice();
-	auto context = CommonResources::GetInstance()->GetDeviceResources()->GetD3DDeviceContext();
 
 
 	auto shaderFactory = ShaderFactory::GetInstance();

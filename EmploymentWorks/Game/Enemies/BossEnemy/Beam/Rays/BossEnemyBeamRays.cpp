@@ -181,8 +181,6 @@ void BossEnemyBeamRays::CreateShader()
 
 	//シェーダーの作成
 	auto device = CommonResources::GetInstance()->GetDeviceResources()->GetD3DDevice();
-	auto context = CommonResources::GetInstance()->GetDeviceResources()->GetD3DDeviceContext();
-
 
 	auto shaderFactory = ShaderFactory::GetInstance();
 

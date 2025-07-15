@@ -61,6 +61,8 @@ TargetMarker::~TargetMarker()
 /// <param name="deltaTime">経過時間</param>
 void TargetMarker::UpdateActor(const float& deltaTime)
 {
+	UNREFERENCED_PARAMETER(deltaTime);
+
 	using namespace DirectX::SimpleMath;
 
 	if (!m_isGetReady) { return; }
@@ -70,12 +72,18 @@ void TargetMarker::UpdateActor(const float& deltaTime)
 	m_marker->GetTransform()->SetPosition(Vector3(result.x, result.y, 0.0f));
 
 
-
 }
 
 
+/// <summary>
+/// 通知を受け取る関数
+/// </summary>
+/// <param name="type">通知の種類</param>
+/// <param name="datas">追加データ</param>
 void TargetMarker::Notify(SceneMessageType type, void* datas)
 {
+	UNREFERENCED_PARAMETER(datas);
+
 	switch (type)
 	{
 		case SceneMessageType::NONE:
@@ -109,10 +117,25 @@ DirectX::SimpleMath::Vector2 TargetMarker::FilterWithinRange()
 	//画面の横のサイズを初期値とする
 	float minLength = Screen::WIDTH;
 
+	//カメラの方向ベクトル
+	Vector3 cameraForward = GetScene()->GetCamera()->GetForwardVector();
 
 	//
 	for (const auto& point : m_targets)
 	{
+		//カメラとオブジェクトの方向ベクトル
+		Vector3 toObjectVec = point->GetTransform()->GetWorldPosition() - GetScene()->GetCamera()->GetEyePosition();
+
+		//ドット積を求める
+		float dot = cameraForward.Dot(toObjectVec);
+
+		//カメラの後方なら
+		if (dot < 0)
+		{
+			continue;
+		}
+
+
 		//座標をスクリーン座標に変換
 		Vector2 ScreenPos = MathUtil::WorldToScreen(point->GetTransform()->GetWorldPosition(),
 			Matrix::Identity,

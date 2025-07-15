@@ -384,16 +384,47 @@ void Transform::CalculationRemoveParent()
 	// 位置を変更
 	m_position = Vector3::Transform(dire, mat);
 
-	m_position += m_parent->m_position;
+	m_position += m_parent->GetWorldPosition();
 	m_scale = Vector3(
 		m_scale.x * m_parent->m_scale.x,
 		m_scale.y * m_parent->m_scale.y,
 		m_scale.z * m_parent->m_scale.z
 	);
 
+
+
 	m_rotate *= m_parent->m_rotate;
 	m_isCompute = true;
 }
+
+
+//using namespace DirectX::SimpleMath;
+//
+//// 回転取得
+//Quaternion invers = m_parent->GetWorldRotate();
+//// 位置取得
+//Vector3 dire = m_position;
+//dire = Vector3(
+//	dire.x * m_parent->m_scale.x,
+//	dire.y * m_parent->m_scale.y,
+//	dire.z * m_parent->m_scale.z
+//);
+//// 行列の取得
+//Matrix mat = Matrix::CreateFromQuaternion(invers);
+//// 位置を変更
+//m_position = Vector3::Transform(dire, mat);
+//
+//m_position += m_parent->m_position;
+//m_scale = Vector3(
+//	m_scale.x * m_parent->m_scale.x,
+//	m_scale.y * m_parent->m_scale.y,
+//	m_scale.z * m_parent->m_scale.z
+//);
+//
+//
+//
+//m_rotate *= m_parent->m_rotate;
+//m_isCompute = true;
 
 /// <summary>
 /// 再帰的に子孫を返す

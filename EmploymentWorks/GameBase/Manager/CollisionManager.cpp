@@ -31,7 +31,7 @@ CollisionManager::~CollisionManager()
 
 void CollisionManager::Update(const float& deltaTime)
 {
-
+	UNREFERENCED_PARAMETER(deltaTime);
 	if (m_colliderList.empty()) { return; }
 
 
@@ -166,10 +166,15 @@ void CollisionManager::Collision_Collision(ColliderComponent* collider1, Collide
 
 void CollisionManager::Fixed_Fixed(ColliderComponent* collider1, ColliderComponent* collider2)
 {
+	UNREFERENCED_PARAMETER(collider1);
+	UNREFERENCED_PARAMETER(collider2);
 }
 
 void CollisionManager::Trigger_Trigger(ColliderComponent* collider1, ColliderComponent* collider2)
 {
+	UNREFERENCED_PARAMETER(collider1);
+	UNREFERENCED_PARAMETER(collider2);
+
 }
 
 /// <summary>

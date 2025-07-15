@@ -41,6 +41,9 @@ Boomerang::Boomerang(Scene* scene,Player* player)
 	auto pcikable = AddComponent<PickableComponent>(this,PickUpManager::PickUpType::PLAYER_PICKUP_WEAPON);
 	pcikable->SetOnPickUpFunction(std::bind(&Boomerang::PickUp,this));
 
+	//”š”­‰¹‚Ìì¬
+	m_strikeSE = AddComponent<SoundComponent>(this, "BoomerangHit", SoundComponent::SoundType::SE);
+
 
 	//‰Šúî•ñ‚Ì“K—p
 	GetTransform()->SetScale(Params::BOOMERANG_SCALE);
@@ -98,6 +101,9 @@ void Boomerang::OnCollisionEnter(ColliderComponent* collider)
 			{
 				m_stateMachine->ChangeState(BoomerangState::DORP);
 			}
+			break;
+		case Actor::ObjectTag::BOSS_ENEMY_PARTS:
+			m_strikeSE->Play();
 			break;
 		default:
 			break;
