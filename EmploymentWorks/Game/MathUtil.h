@@ -76,7 +76,7 @@ namespace MathUtil
         //	¶¬‚µ‚Ä—~‚µ‚¢ƒ‰ƒ“ƒ_ƒ€‚Ì”ÍˆÍ‚ğDistribution‚É”C‚¹‚éB¡‰ñ‚Í0`2PI
         std::uniform_real_distribution<> dist(minValue,maxValue);
 
-        return dist(engine);
+        return static_cast<T>( dist(engine));
 
     }
 

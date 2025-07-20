@@ -37,7 +37,7 @@ private:
 	Camera* m_camera;
 	//回収マネージャー
 	std::unique_ptr<PickUpManager> m_pickUpManager;
-
-
+	//プレイ時間
+	float m_playTime;
 
 };

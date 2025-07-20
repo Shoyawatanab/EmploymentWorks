@@ -43,7 +43,11 @@ SwingDownAttackSwingPhase::~SwingDownAttackSwingPhase()
 }
 
 
-
+/// <summary>
+/// 更新処理
+/// </summary>
+/// <param name="elapsedTime">経過時間</param>
+/// <returns>実行結果</returns>
 SwingDownAttackSwingPhase::ActionState SwingDownAttackSwingPhase::Update(const float& elapsedTime)
 {
 
@@ -54,8 +58,7 @@ SwingDownAttackSwingPhase::ActionState SwingDownAttackSwingPhase::Update(const f
 
 	m_time += elapsedTime;
 
-	return ActionState::RUNNING
-		;
+	return ActionState::RUNNING	;
 
 }
 

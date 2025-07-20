@@ -179,7 +179,7 @@ void AABB::UpdateCollider()
 void AABB::RenderCollider(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection
 	,DirectX::PrimitiveBatch<DirectX::VertexPositionColor>* batch, DirectX::BasicEffect* effect, ID3D11InputLayout* inputlayout)
 {
-
+	UNREFERENCED_PARAMETER(batch);
 	auto context = CommonResources::GetInstance()->GetDeviceResources()->GetD3DDeviceContext();
 	effect->SetView(view);
 	effect->SetProjection(projection);
@@ -326,7 +326,7 @@ void OBB::UpdateCollider()
 /// <param name="inputlayout">インプットレイアウト</param>
 void OBB::RenderCollider(const DirectX::SimpleMath::Matrix& view, const DirectX::SimpleMath::Matrix& projection, DirectX::PrimitiveBatch<DirectX::VertexPositionColor>* batch, DirectX::BasicEffect* effect, ID3D11InputLayout* inputlayout)
 {
-
+	UNREFERENCED_PARAMETER(batch);
 	auto context = CommonResources::GetInstance()->GetDeviceResources()->GetD3DDeviceContext();
 	effect->SetView(view);
 	effect->SetProjection(projection);

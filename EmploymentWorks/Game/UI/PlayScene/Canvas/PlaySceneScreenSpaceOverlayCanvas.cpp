@@ -32,8 +32,7 @@ PlaySceneScreenSpaceOverlayCanvas::PlaySceneScreenSpaceOverlayCanvas(Scene* scen
 	GetScene()->AddActor<DamageCountFactory>(this);
 	//プレイヤのダメージエフェクト
 	GetScene()->AddActor<PlayerDamageEffect>(this);
-	//ゲームオーバーUI
-	GetScene()->AddActor<GameOverUI>(this);
+
 	//回収UI
 	m_pickUpUI =  GetScene()->AddActor<PickUpUI>(this);
 
@@ -41,6 +40,9 @@ PlaySceneScreenSpaceOverlayCanvas::PlaySceneScreenSpaceOverlayCanvas(Scene* scen
 	//ステージごとのUI
 	StageUI();
 
+
+	//ゲームオーバーUI
+	GetScene()->AddActor<GameOverUI>(this);
 
 	SceneMessenger::GetInstance()->Rigister(
 		{

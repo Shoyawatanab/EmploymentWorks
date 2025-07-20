@@ -133,7 +133,7 @@ void SceneManager::CreateScene(SceneID sceneID)
 			m_currentScene = std::make_unique<PlayScene>();
 			break;
 		case SceneID::STAGESELECT:
-			m_currentScene = std::make_unique<StageSelectScene>(this);
+			m_currentScene = std::make_unique<StageSelectScene>();
 			break;
 		case SceneID::RESULT:
 			m_currentScene = std::make_unique<ResultScene>();

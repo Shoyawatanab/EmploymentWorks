@@ -58,9 +58,7 @@ void BossEnemyLeftShoulder::PartsDestruction()
 	//親子関係をなくす
 	GetTransform()->SetParent(nullptr);
 
-	//重力の有効
-	auto rigidbody = GetComponent<RigidbodyComponent>();
-	//rigidbody->SetActive(true);
+
 
 	
 	

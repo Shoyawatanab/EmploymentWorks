@@ -140,8 +140,6 @@ void ResultTime::Blink(const float& deltaTime)
 				//アクティブ状態に
 				m_separator->SetActive(true);
 				break;
-			default:
-				break;
 		}
 
 		m_time = 0.0f;

@@ -18,7 +18,7 @@ public:
 	//クリアタイムの取得
 	float GetClearTime() const { return m_clearTime; }
 	//クリアタイムの加算
-	void AddClearTime(const float& time) { m_clearTime += time; }
+	void SetClearTime(const float& time) { m_clearTime += time; }
 	//クリアタイムのリセット
 	void ResetClearTime() { m_clearTime = 0.0f; };
 public:
