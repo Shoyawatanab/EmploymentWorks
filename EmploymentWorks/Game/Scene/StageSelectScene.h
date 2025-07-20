@@ -5,8 +5,6 @@
 */
 #pragma once
 #include "GameBase/Scene/Scene.h"
-#include "Game/Scene/SceneManager.h"
-
 
 
 class StageSelectScene  :  public Scene
@@ -18,7 +16,7 @@ public:
 
 public:
     //コンストラクタ
-    StageSelectScene(SceneManager* sceneManager);
+    StageSelectScene();
     //デストラクタ
     ~StageSelectScene() override;
     //初期化

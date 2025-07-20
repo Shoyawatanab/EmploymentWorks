@@ -127,16 +127,16 @@ void BossEnemy::UpdateActor(const float& deltaTime)
 
 
 
-	//if (m_actionManager->Update(deltaTime))
-	//{
-	//	//ビヘイビアツリーの更新
-	//	//m_behavior->Update(deltaTime);
-	//	//SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_BEAM_ATTACK_STATE);
-	//	//SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_JUMP_ATTACK_STATE);
-	//	//SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_WAKING_STATE);
-	//	SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_SWING_DOWN_STATE);
+	if (m_actionManager->Update(deltaTime))
+	{
+		//ビヘイビアツリーの更新
+		//m_behavior->Update(deltaTime);
+		//SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_BEAM_ATTACK_STATE);
+		//SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_JUMP_ATTACK_STATE);
+		//SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_WAKING_STATE);
+		SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_SWING_DOWN_STATE);
 
-	//}
+	}
 
 
 

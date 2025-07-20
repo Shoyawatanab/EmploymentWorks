@@ -60,10 +60,10 @@ BossBeamAttackCharge::ActionState BossBeamAttackCharge::Update(const float& delt
 	m_beam->GetEnergyBall()->GetTransform()->SetScale(scale);
 
 	m_time += deltaTime;
-
+	//ƒ{ƒX“G‚Ì‰ñ“]
 	m_bossEnemy->Rotation(deltaTime);
 	
-
+	//I—¹‚Ì”»’è
 	if (m_time > Params::BOSSENEMY_BEAM_BALL_ACCUMULATIONTIME)
 	{
 		return ActionState::END;

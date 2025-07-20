@@ -37,12 +37,16 @@ BossJumpAttackCharge::~BossJumpAttackCharge()
 }
 
 
+
 BossJumpAttackCharge::ActionState BossJumpAttackCharge::Update(const float& elapsedTime)
 {
+
+
 	//時間はアニメーションと合わせる
 	if (m_time >= CHARGE_TIME)
 	{
 		return ActionState::END;
+	
 	}
 
 	

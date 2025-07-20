@@ -28,6 +28,7 @@ PlayScene::PlayScene()
 	:
 	m_camera{}
 	,m_pickUpManager{}
+	,m_playTime{}
 {
 	
 	m_pickUpManager = std::make_unique<PickUpManager>();
@@ -43,6 +44,8 @@ PlayScene::PlayScene()
 PlayScene::~PlayScene()
 {
 
+	//プレイ時間のセット
+	GlobalGameData::GetInstance()->SetClearTime(m_playTime);
 
 
 }
@@ -97,9 +100,8 @@ void PlayScene::SceneUpdate(const float& deltaTime)
 	
 	m_pickUpManager->Update(deltaTime);
 
-	GlobalGameData::GetInstance()->AddClearTime(deltaTime);
 
-
+	m_playTime += deltaTime;
 
 }
 

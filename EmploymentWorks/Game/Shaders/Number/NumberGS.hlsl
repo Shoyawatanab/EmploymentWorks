@@ -19,7 +19,7 @@ void main(
 )
 {
 
-    for (int i = 0; i < vnum; i++)
+    for (unsigned int i = 0; i < vnum; i++)
     {
 		//ジオメトリ出力
         PS_INPUT element;

@@ -18,7 +18,7 @@
 /// コンストラクタ
 /// </summary>
 /// <param name="sceneManager"></param>
-StageSelectScene::StageSelectScene(SceneManager* sceneManager)
+StageSelectScene::StageSelectScene()
 	:
 	m_camera{}
 {

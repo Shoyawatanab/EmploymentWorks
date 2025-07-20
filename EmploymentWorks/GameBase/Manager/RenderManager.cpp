@@ -182,6 +182,7 @@ void RenderManager::RemoveUserInterface(ImageComponent* comp)
 
 void RenderManager::AddCollider(ColliderComponent* comp)
 {
+	UNREFERENCED_PARAMETER(comp);
 //デバック実行時のみ処理
 #ifdef _DEBUG
 

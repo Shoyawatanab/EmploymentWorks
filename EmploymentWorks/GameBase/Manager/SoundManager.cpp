@@ -119,7 +119,6 @@ void SoundManager::PlayBGM(FMOD::Sound** sound)
 /// <param name="Channel"></param>
 void SoundManager::PlaySE(FMOD::Sound** sound)
 {
-	bool isPlaying;
 
 	//再生
 	m_system->playSound((*sound), nullptr, false, &m_channel);
@@ -156,7 +155,7 @@ void SoundManager::LoadSound()
 
 	FMOD::System* system;
 	// システムをインスタンス化する
-	FMOD_RESULT result = FMOD::System_Create(&system);
+	FMOD::System_Create(&system);
 	// システムを初期化する
 	system->init(32, FMOD_INIT_NORMAL, nullptr);
 	//BGMの読み込み
