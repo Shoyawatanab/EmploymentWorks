@@ -90,7 +90,7 @@ void BirdEnemy::UpdateActor(const float& deltaTime)
 		return;
 	}
 
-	m_stateMachine->Update(deltaTime);
+	//m_stateMachine->Update(deltaTime);
 
 	//常にターゲットに向くように
 	Rotate(deltaTime);

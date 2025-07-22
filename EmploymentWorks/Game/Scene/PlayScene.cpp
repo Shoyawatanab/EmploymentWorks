@@ -20,7 +20,6 @@
 #include "Game/GlobalGameData.h"
 #include "Game/Manager/Managers.h"
 
-
 /// <summary>
 /// コンストラク
 /// </summary>
@@ -53,7 +52,7 @@ PlayScene::~PlayScene()
 /// <summary>
 /// 初期化
 /// </summary>
-void PlayScene::Initialize()
+void PlayScene::SceneInitialize()
 {
 
 	using namespace DirectX::SimpleMath;
@@ -88,6 +87,8 @@ void PlayScene::Initialize()
 
 	//クリアタイムのリセット
 	GlobalGameData::GetInstance()->ResetClearTime();
+
+
 
 }
 

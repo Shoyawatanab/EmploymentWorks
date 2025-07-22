@@ -33,6 +33,8 @@ PlaySceneScreenSpaceOverlayCanvas::PlaySceneScreenSpaceOverlayCanvas(Scene* scen
 	//プレイヤのダメージエフェクト
 	GetScene()->AddActor<PlayerDamageEffect>(this);
 
+	GetScene()->AddActor<BoomerangThrowUI>(this);
+
 	//回収UI
 	m_pickUpUI =  GetScene()->AddActor<PickUpUI>(this);
 
@@ -44,6 +46,7 @@ PlaySceneScreenSpaceOverlayCanvas::PlaySceneScreenSpaceOverlayCanvas(Scene* scen
 	//ゲームオーバーUI
 	GetScene()->AddActor<GameOverUI>(this);
 
+	//通知を受け取る種類の設定
 	SceneMessenger::GetInstance()->Rigister(
 		{
 			SceneMessageType::PLAYER_PICKUP_POSSIBLE

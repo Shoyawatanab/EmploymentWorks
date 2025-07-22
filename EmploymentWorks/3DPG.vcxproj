@@ -190,8 +190,10 @@
     <ClInclude Include="GameBase\BehaviorTree\ActionNode.h" />
     <ClInclude Include="GameBase\BehaviorTree\BehaviorTrees.h" />
     <ClInclude Include="GameBase\Component\Effect\EffectComponent.h" />
+    <ClInclude Include="GameBase\Component\Input\InputComponent.h" />
     <ClInclude Include="GameBase\Component\RoundShadow\RoundShadowComponent.h" />
     <ClInclude Include="GameBase\Component\Sound\SoundComponent.h" />
+    <ClInclude Include="GameBase\Messenger\InputMessenger.h" />
     <ClInclude Include="Game\Camera\Result\ResultCamera.h" />
     <ClInclude Include="Game\Component\Components.h" />
     <ClInclude Include="Game\Component\PickUp\PickableComponent.h" />
@@ -277,6 +279,7 @@
     <ClInclude Include="Game\Sound\TitleScene\TitleSceneSound.h" />
     <ClInclude Include="Game\UI\NumberUI.h" />
     <ClInclude Include="Game\UI\PlayScene\BoomerangCount\BoomerangCount.h" />
+    <ClInclude Include="Game\UI\PlayScene\BoomerangThrow\BoomerangThrowUI.h" />
     <ClInclude Include="Game\UI\PlayScene\BossHp\BossHp.h" />
     <ClInclude Include="Game\UI\PlayScene\DamageCount\DamageCount.h" />
     <ClInclude Include="Game\UI\PlayScene\DamageCount\DamageCountFactory.h" />
@@ -306,6 +309,7 @@
     <ClInclude Include="Game\UI\TitleScene\TitleSceneUIs.h" />
     <ClInclude Include="Game\Weapon\Boomerang\State\BoomerangBounce.h" />
     <ClInclude Include="Game\Weapon\Boomerang\State\BoomerangDrop.h" />
+    <ClInclude Include="Game\Weapon\Boomerang\State\BoomerangThrow.h" />
     <ClInclude Include="Game\Weapon\WeaponBase.h" />
     <ClInclude Include="Game\Enemies\BossEnemy\BehavirTree\BossBehaviorTree.h" />
     <ClInclude Include="Game\Enemies\BossEnemy\BehavirTree\Conditions.h" />
@@ -418,7 +422,6 @@
     <ClInclude Include="Game\Weapon\Boomerang\State\Boomerangidle.h" />
     <ClInclude Include="Game\Weapon\Boomerang\State\BoomerangStateMachine.h" />
     <ClInclude Include="Game\Weapon\Boomerang\State\BoomerangStates.h" />
-    <ClInclude Include="Game\Weapon\Boomerang\State\BoomerangThrow.h" />
     <ClInclude Include="Game\Weapon\WeaponManager.h" />
     <ClInclude Include="GameBase\WataLib\Easing.h" />
     <ClInclude Include="Libraries\Microsoft\DebugDraw.h" />
@@ -440,8 +443,10 @@
     <ClCompile Include="GameBase\Action\ActionManager.cpp" />
     <ClCompile Include="GameBase\BehaviorTree\ActionNode.cpp" />
     <ClCompile Include="GameBase\Component\Effect\EffectComponent.cpp" />
+    <ClCompile Include="GameBase\Component\Input\InputComponent.cpp" />
     <ClCompile Include="GameBase\Component\RoundShadow\RoundShadowComponent.cpp" />
     <ClCompile Include="GameBase\Component\Sound\SoundComponent.cpp" />
+    <ClCompile Include="GameBase\Messenger\InputMessenger.cpp" />
     <ClCompile Include="Game\Camera\Result\ResultCamera.cpp" />
     <ClCompile Include="Game\Component\PickUp\PickableComponent.cpp" />
     <ClCompile Include="Game\Component\PickUp\PickerComponent.cpp" />
@@ -513,6 +518,7 @@
     <ClCompile Include="Game\Sound\TitleScene\TitleSceneSound.cpp" />
     <ClCompile Include="Game\UI\NumberUI.cpp" />
     <ClCompile Include="Game\UI\PlayScene\BoomerangCount\BoomerangCount.cpp" />
+    <ClCompile Include="Game\UI\PlayScene\BoomerangThrow\BoomerangThrowUI.cpp" />
     <ClCompile Include="Game\UI\PlayScene\BossHp\BossHp.cpp" />
     <ClCompile Include="Game\UI\PlayScene\DamageCount\DamageCount.cpp" />
     <ClCompile Include="Game\UI\PlayScene\DamageCount\DamageCountFactory.cpp" />
@@ -538,6 +544,7 @@
     <ClCompile Include="Game\UI\TitleScene\PlayButton\PlayButton.cpp" />
     <ClCompile Include="Game\Weapon\Boomerang\State\BoomerangBounce.cpp" />
     <ClCompile Include="Game\Weapon\Boomerang\State\BoomerangDrop.cpp" />
+    <ClCompile Include="Game\Weapon\Boomerang\State\BoomerangThrow.cpp" />
     <ClCompile Include="Game\Weapon\WeaponBase.cpp" />
     <ClCompile Include="Game\Enemies\BossEnemy\BehavirTree\BossBehaviorTree.cpp" />
     <ClCompile Include="Game\Enemies\BossEnemy\BehavirTree\Conditions.cpp" />
@@ -626,7 +633,6 @@
     <ClCompile Include="Game\Weapon\Boomerang\State\BoomerangGetReady.cpp" />
     <ClCompile Include="Game\Weapon\Boomerang\State\Boomerangidle.cpp" />
     <ClCompile Include="Game\Weapon\Boomerang\State\BoomerangStateMachine.cpp" />
-    <ClCompile Include="Game\Weapon\Boomerang\State\BoomerangThrow.cpp" />
     <ClCompile Include="Game\Weapon\WeaponManager.cpp" />
     <ClCompile Include="GameBase\WataLib\Easing.cpp" />
     <ClCompile Include="Libraries\Microsoft\DebugDraw.cpp" />

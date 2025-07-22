@@ -6,6 +6,8 @@
 #include "pch.h"
 #include "SoundComponent.h"
 #include "GameBase/Manager/SoundManager.h"
+#include "Libraries/FMOD/inc/fmod.hpp"
+#include "Libraries/FMOD/inc/fmod_errors.h"
 
 /// <summary>
 /// コンストラク
@@ -34,6 +36,7 @@ SoundComponent::SoundComponent(Actor* owner, const std::string& soundName, Sound
 /// </summary>
 SoundComponent::~SoundComponent()
 {
+	m_sound->release();
 }
 
 /// <summary>

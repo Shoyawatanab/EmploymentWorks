@@ -133,8 +133,17 @@ void SoundManager::PlaySE(FMOD::Sound** sound)
 void SoundManager::StopBGM()
 {
 
-	m_channel->stop();
-
+	// Œ»Ý‚ÌBGM‚ªÄ¶’†‚È‚çŽ~‚ß‚é
+	if (m_channel)
+	{
+		bool isPlaying = false;
+		m_channel->isPlaying(&isPlaying);
+		//Ä¶’†‚È‚çŽ~‚ß‚é
+		if (isPlaying)
+		{
+			m_channel->stop();
+		}
+	}
 }
 
 

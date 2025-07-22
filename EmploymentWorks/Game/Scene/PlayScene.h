@@ -25,7 +25,7 @@ public:
 	//デストラクタ
 	~PlayScene() override;
 
-	void Initialize() override;
+	void SceneInitialize() override;
 
 	void SceneUpdate(const float& deltaTime)override;
 

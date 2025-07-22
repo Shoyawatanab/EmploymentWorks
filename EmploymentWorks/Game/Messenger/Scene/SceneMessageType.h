@@ -18,6 +18,9 @@ enum class SceneMessageType : int
 	,CREATE_PARTICLE_EFFECT                        //パーティクルの作成
 	,PLAYER_PICKUP_POSSIBLE                        //プレイヤの回収可能
 	,PLAYER_PICKUP_IMPOSSIBLE                      //プレイヤの回収不可能
+	,MOUSE_WHEEL_UP                                //マウスホイールの上移動
+	,MOUSE_WHEEL_DOWN							   //マウスホイールの下移動
+
 
 	//ゲームの状態
 

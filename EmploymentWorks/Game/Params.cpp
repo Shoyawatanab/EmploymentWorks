@@ -115,7 +115,7 @@ int Params::BOOMERANG_MAX_COUNT = 3;
 //ブーメランのスフィアの当たり判定の大きさ
  const float Params::BOOMERANG_SPHERE_COLLIDER_SIZE = 0.4f;
 //　ブーメランの攻撃力
- const int Params::BOOMERANG_DAMAGE = 10;
+ const int Params::BOOMERANG_DAMAGE = 100;
 
  //ブーメランの影の大きさ
  const float Params::BOOMERANG_SHADOW_RADIUS = 0.5f ;
@@ -153,7 +153,7 @@ int Params::BOOMERANG_MAX_COUNT = 3;
 
  //ボス敵
 	 //ボス敵のHP
- const int Params::BOSSENEMY_MAX_HP = 500;
+ const int Params::BOSSENEMY_MAX_HP = 1000;
  //ボス敵の動くスピード
  const float Params::BOSSENEMY_MOVE_SPEED = 2.0f;
  //ボス敵の回転スピード
@@ -186,7 +186,7 @@ int Params::BOOMERANG_MAX_COUNT = 3;
  //ボス敵のRIGHTLEGのHP							 	 
  const  int Params::BOSSENEMY_RIGHTLEG_HP		= 100;
  //ボス敵のRIGHTSHOULDERのHP							 
- const  int Params::BOSSENEMY_RIGHTSHOULDER_HP	= 100;
+ const  int Params::BOSSENEMY_RIGHTSHOULDER_HP	= 1000;
  //ボス敵のRIGHTTHIGHのHP							 
  const  int Params::BOSSENEMY_RIGHTTHIGH_HP      = 100;
  //ボス敵のTORSOのHP							 		 

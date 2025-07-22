@@ -25,7 +25,9 @@ PlayerUsually::PlayerUsually(Player* player)
 	,m_moveDirection{}
 	,m_isGetReady{false}
 {
-
+	//共通リソース
+	m_commonResources = CommonResources::GetInstance();
+	//重力
 	m_rigidbody=  player->GetComponent<RigidbodyComponent>();
 	m_rigidbody->SetDeceleration(Params::GRAUND_FRICTION);
 
@@ -55,7 +57,6 @@ void PlayerUsually::Update(const float& deltatime)
 {
 	using namespace DirectX::SimpleMath;
 
-	m_moveDirection = Vector3::Zero;
 
 	//移動
 	Move(deltatime);
@@ -63,7 +64,9 @@ void PlayerUsually::Update(const float& deltatime)
 	//回転
 	Rotate(deltatime);
 
+	CheckMouseWheel();
 
+	m_moveDirection = Vector3::Zero;
 
 
 }
@@ -107,23 +110,6 @@ void PlayerUsually::Move(const float& deltatime)
 	float moveSpeed = Params::PLAYER_MOVE_SPEED * deltatime;
 
 
-	if (key.IsKeyDown(Keyboard::Keyboard::W))
-	{
-		m_moveDirection.z--;
-	}
-	if (key.IsKeyDown(Keyboard::Keyboard::S))
-	{
-		m_moveDirection.z++;
-	}
-	if (key.IsKeyDown(Keyboard::Keyboard::A))
-	{
-		m_moveDirection.x--;
-	}
-	if (key.IsKeyDown(Keyboard::Keyboard::D))
-	{
-		m_moveDirection.x++;
-	}
-
 	//カメラの横の回転軸から回転の計算
 	Quaternion rotationX =Quaternion::CreateFromYawPitchRoll(m_player->GetPlaySceneCamera()->GetRotationY(),0.0f,0.0f);
 	//カメラの回転に沿って回転
@@ -134,6 +120,10 @@ void PlayerUsually::Move(const float& deltatime)
 
 }
 
+/// <summary>
+/// 回転
+/// </summary>
+/// <param name="deltatime">経過時間</param>
 void PlayerUsually::Rotate(const float& deltatime)
 {
 	using namespace DirectX::SimpleMath;
@@ -177,5 +167,60 @@ void PlayerUsually::Rotate(const float& deltatime)
 
 }
 
+/// <summary>
+/// マウスホイールのチェック
+/// </summary>
+void PlayerUsually::CheckMouseWheel()
+{
+	using namespace DirectX;
+
+	const auto& state = m_commonResources->GetInputManager()->GetMouseState();
+
+	int scrollWheelValue = state.scrollWheelValue;
+
+	//上に回転
+	if (scrollWheelValue > 0)
+	{
+		SceneMessenger::GetInstance()->Notify(SceneMessageType::MOUSE_WHEEL_UP, nullptr);
+	}
+	//下に回転
+	else if (scrollWheelValue < 0)
+	{
+
+		SceneMessenger::GetInstance()->Notify(SceneMessageType::MOUSE_WHEEL_DOWN, nullptr);
+
+	}
+	//マウスホイールの移動値のリセット
+	Mouse::Get().ResetScrollWheelValue();
+
+}
+
+/// <summary>
+/// 入力時
+/// </summary>
+/// <param name="key"></param>
+void PlayerUsually::OnInput(const DirectX::Keyboard::Keys& key)
+{
+	using namespace DirectX;
+
+	switch (key)
+	{
+		case Keyboard::W:
+			m_moveDirection.z--;
+			break;
+		case Keyboard::S:
+			m_moveDirection.z++;
+			break;
+		case Keyboard::A:
+			m_moveDirection.x--;
+			break;
+		case Keyboard::D:
+			m_moveDirection.x++;
+			break;
+		default:
+			break;
+	}
+
+}
 
 

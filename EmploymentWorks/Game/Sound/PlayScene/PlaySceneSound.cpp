@@ -34,7 +34,7 @@ PlaySceneSound::PlaySceneSound(Scene* scene)
 	//BGM‚Ìì¬
 	m_bgm = AddComponent<SoundComponent>(this, BGMName, SoundComponent::SoundType::BGM);
 	//Ä¶
-	m_bgm->Play();
+	//m_bgm->Play();
 
 
 

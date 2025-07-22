@@ -8,6 +8,7 @@
 #include"GameBase/Actor.h"
 #include "GameBase/Managers.h"
 #include "GameBase/Camera/Camera.h"
+#include "GameBase/Messenger/InputMessenger.h"
 
 
 /// <summary>
@@ -20,6 +21,7 @@ Scene::Scene()
 	,m_updateNow{false}
 	,m_isChangeScene{}
 	,m_isActorDestroy{false}
+	,m_keyboardState{}
 {
 
 	m_renderMangaer = std::make_unique<RenderManager>();
@@ -54,10 +56,30 @@ Scene::~Scene()
 /// </summary>
 void Scene::Initialize()
 {
-	for (auto& actor : m_actors)
+	//派生クラスの初期化
+	SceneInitialize();
+
+	// 観察者リストをソートする
+	InputMessenger::GetInstance()->SortObserverList();
+	//  キー範囲リストを生成する
+	InputMessenger::GetInstance()->CreateKeyRangeList();
+
+}
+
+
+// キーボードが押下げられたどうかを判定する
+inline bool IsKeyPress(DirectX::Keyboard::State& state)
+{
+	// キーボードステートへのポインタを取得する
+	auto ptr = reinterpret_cast<uint32_t*>(&state);
+	for (int key = 0; key < 0xff; key++)
 	{
-		actor->Initialize();
+		const unsigned int buffer = 1u << (key & 0x1f);
+		// キーが押下げられたかどうかを調べる
+		if (ptr[(key >> 5)] && buffer)	 return true;
 	}
+	// キーは押下げられていない
+	return false;
 }
 
 /// <summary>
@@ -66,7 +88,17 @@ void Scene::Initialize()
 /// <param name="deltaTime"></param>
 void Scene::Update(float deltaTime)
 {
-	
+	// キーボードの状態を取得する
+	m_keyboardState = DirectX::Keyboard::Get().GetState();
+
+	// キーボードを押下げた場合にメッセンジャーにキーボードステートとプレイヤーノード番号配列を通知する
+	if (IsKeyPress(m_keyboardState))
+	{
+		InputMessenger::GetInstance()-> Notify(m_keyboardState);
+	}
+
+
+
 	//更新フラグをtrueに変更
 	m_updateNow = true;
 	// アクターの更新をする
@@ -125,3 +157,8 @@ void Scene::RemoveActor()
 	// 削除要請フラグをオフに
 	m_isActorDestroy = false;
 }
+
+
+
+
+

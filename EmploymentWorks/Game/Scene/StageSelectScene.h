@@ -20,7 +20,7 @@ public:
     //デストラクタ
     ~StageSelectScene() override;
     //初期化
-    void Initialize() override;
+    void SceneInitialize() override;
     
 private:
     Camera* m_camera;

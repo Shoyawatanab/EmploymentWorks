@@ -19,7 +19,7 @@ ModelPartsBase::ModelPartsBase(Scene* scene, const std::string& partsName, const
 {
 
 	//コンポーネントの追加
-	AddComponent<ModelComponent>(this, modelName);
+	m_modelComponent =  AddComponent<ModelComponent>(this, modelName);
 	
 }
 

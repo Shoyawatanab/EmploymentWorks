@@ -6,6 +6,8 @@
 #pragma once
 #include "GameBase/Actor.h"
 
+class ModelComponent;
+
 
 class ModelPartsBase : public Actor
 {
@@ -20,6 +22,8 @@ public:
 
 	//自身も含めた子孫モデルを全てを返す
 	std::vector<ModelPartsBase*> GetAllDescendants();
+	//モデルコンポーネントの取得
+	ModelComponent* GetModelComponent() { return m_modelComponent; }
 
 private:
 	
@@ -47,5 +51,8 @@ private:
 	std::vector<ModelPartsBase*>m_child;
 	//親モデル
 	ModelPartsBase* m_parent;
+	//モデルコンポーネント
+	ModelComponent* m_modelComponent;;
+
 
 };

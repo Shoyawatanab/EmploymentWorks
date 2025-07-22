@@ -31,7 +31,7 @@ public:
     //デストラクタ
     ~TitleScene() override;
     //初期化
-    void Initialize() override;    
+    void SceneInitialize() override;
 private:
     //カメラ
     Camera* m_camera;

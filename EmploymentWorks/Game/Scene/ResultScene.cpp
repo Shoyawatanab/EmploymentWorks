@@ -37,7 +37,7 @@ ResultScene::~ResultScene()
 /// <summary>
 /// ‰Šú‰»
 /// </summary>
-void ResultScene::Initialize()
+void ResultScene::SceneInitialize()
 {
 
 	using namespace DirectX::SimpleMath;

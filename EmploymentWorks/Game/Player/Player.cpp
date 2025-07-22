@@ -34,6 +34,7 @@ Player::Player(Scene* scene)
 	,m_isGround{}
 	,m_targetMarker{}
 	,m_hp{Params::PLAYER_HP}
+	,m_throwState{BoomerangThrowState::LEFT}
 {
 
 	m_rigidBody = AddComponent<RigidbodyComponent>(this);
@@ -42,8 +43,10 @@ Player::Player(Scene* scene)
 	, Params::PLAYER_BOX_COLLIDER_SIZE
 	, Params::PLAYER_SPHERE_COLLIDER_SIZE);
 
-
+	//丸影
 	AddComponent<RoundShadowComponent>(this, Params::PLAYER_SHADOW_RADIUS);
+
+
 
 	m_picker = AddComponent<PickerComponent>(this, PickUpManager::PickUpType::PLAYER_PICKUP_WEAPON);
 	m_picker->SetIsPickUp(true);
@@ -71,8 +74,22 @@ Player::Player(Scene* scene)
 	
 	//初期状態を
 	m_lastPosition = GetTransform()->GetPosition();
+	//入力コンポーネント
+	auto input = AddComponent<InputComponent>(this);
+	input->Rigister({ DirectX::Keyboard::Keyboard::A
+		,DirectX::Keyboard::Keyboard::W
+		,DirectX::Keyboard::Keyboard::D
+		,DirectX::Keyboard::Keyboard::S}
+	, std::bind(&PlayerUsually::OnInput, m_usually.get(), std::placeholders::_1));
 
 
+	//通知を受け取る種類の設定
+	SceneMessenger::GetInstance()->Rigister(
+		{
+			SceneMessageType::MOUSE_WHEEL_UP
+			,SceneMessageType::MOUSE_WHEEL_DOWN
+		}, this
+	);
 }
 
 /// <summary>
@@ -101,9 +118,8 @@ void Player::UpdateActor(const float& deltaTime)
 	Vector3 movement = GetTransform()->GetPosition() - m_lastPosition;
 	//移動量からスピードを求める
 	float speed = movement.Length() / deltaTime;
-
+	//移動時のアニメーション
 	m_animation->SetFloat("Move", speed);
-
 
 	//座標の保存
 	m_lastPosition = GetTransform()->GetPosition();
@@ -134,7 +150,6 @@ void Player::OnCollisionEnter(ColliderComponent* collider)
 		case Actor::ObjectTag::BOSS_ENEMY_PARTS:
 		{
 			//ダメージエフェクト
-
 			//通知
 			SceneMessenger::GetInstance()->Notify(SceneMessageType::PLAYER_DAMAGE);
 			SceneMessenger::GetInstance()->Notify(SceneMessageType::TPS_CAMERA_SHAKE);
@@ -194,6 +209,28 @@ void Player::WeaponRecoverable()
 void Player::WeaponUnrecoverable()
 {
 	SceneMessenger::GetInstance()->Notify(SceneMessageType::PLAYER_PICKUP_IMPOSSIBLE);
+
+}
+
+/// <summary>
+/// 通知時に呼び出される関数
+/// </summary>
+/// <param name="type">通知の種類</param>
+/// <param name="datas">追加データ</param>
+void Player::Notify(SceneMessageType type, void* datas)
+{
+	UNREFERENCED_PARAMETER(datas);
+	switch (type)
+	{	
+		case SceneMessageType::MOUSE_WHEEL_UP:
+			m_throwState = BoomerangThrowState::RIGHT;
+			break;
+		case SceneMessageType::MOUSE_WHEEL_DOWN:
+			m_throwState = BoomerangThrowState::LEFT;
+			break;
+		default:
+			break;
+	}
 
 }
 

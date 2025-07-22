@@ -27,11 +27,12 @@ BoomerangThrow::BoomerangThrow(BoomerangStateMachine* stateMahine, Boomerang* bo
 	:
 	m_stateMahine{ stateMahine }
 	, m_boomerang{ boomerang }
-	,m_player{player}
-	,m_throwbasePosition{}
-	,m_totalTime{}
-	,m_index{}
-	,m_state{}
+	, m_player{ player }
+	, m_throwbasePosition{}
+	, m_totalTime{}
+	, m_index{}
+	, m_moveState{}
+	,m_throwState{}
 {
 
 	//CSVから基準座標の取得
@@ -56,12 +57,12 @@ void BoomerangThrow::Update(const float& deltaTime)
 	//回転
 	Rotation(deltaTime);
 
-	switch (m_state)
+	switch (m_moveState)
 	{
-		case BoomerangThrow::State::SPINECURVE:		
+		case BoomerangThrow::MoveState::SPINECURVE:
 			SplineCurve(deltaTime);
 			break;
-		case BoomerangThrow::State::CHASE_TO_PLAYER:
+		case BoomerangThrow::MoveState::CHASE_TO_PLAYER:
 			ChaseToPlayer(deltaTime);
 			break;
 		default:
@@ -77,6 +78,9 @@ void BoomerangThrow::Enter()
 {
 	using namespace DirectX::SimpleMath;
 
+	//プレイヤから投げの状態の取得
+	m_throwState = m_player->GetBoomerangThrowState();
+
 	m_boomerang->GetTransform()->SetParent(nullptr);
 
 
@@ -86,10 +90,21 @@ void BoomerangThrow::Enter()
 	//初期化
 	m_index = 0;
 	m_horizontalRotation = Quaternion::Identity;
-	m_state = State::SPINECURVE;
+	m_moveState = MoveState::SPINECURVE;
+	switch (m_throwState)
+	{
+		case Player::BoomerangThrowState::LEFT:
+			//回転の情報を切り替える
+			ChangeRotationDatas(Params::BOOMERANG_THROW_START_ROTATION, Params::BOOMERANG_THROW_MIDDLE_ROTATION);
+			break;
+		case Player::BoomerangThrowState::RIGHT:
+			//回転の情報を切り替える
+			ChangeRotationDatas(Params::BOOMERANG_THROW_END_ROTATION, Params::BOOMERANG_THROW_MIDDLE_ROTATION);
 
-	//回転の情報を切り替える
-	ChangeRotationDatas(Params::BOOMERANG_THROW_START_ROTATION, Params::BOOMERANG_THROW_MIDDLE_ROTATION);
+			break;
+		default:
+			break;
+	}
 
 	//初期回転をプレイヤの回転に
 	m_initialRotation = m_player->GetTransform()->GetRotate();
@@ -165,6 +180,10 @@ void BoomerangThrow::CreateSplineCurvePositon()
 	for (int i = 0; i < basePosition.size(); i++)
 	{
 
+		//基準点が右回りだから左回りにするためにｘ軸を反転させる
+		basePosition[i].x *= (int)m_throwState;
+
+
 		//基準点から中心までの長さを求める
 		float lenght = basePosition[i].Length();
 		//割合を求める
@@ -187,7 +206,7 @@ void BoomerangThrow::CreateSplineCurvePositon()
 	}
 
 	//基準点の初期観点とプレイヤの回転　　　	基準点が180度ずれているため
-	Quaternion rotation = Params::BOOMERANG_THROW_POINT_ROTATE *  m_player->GetTransform()->GetRotate()  ;
+	Quaternion rotation = Params::BOOMERANG_THROW_POINT_ROTATE * m_player->GetTransform()->GetRotate();
 
 	for (int i = 0; i < basePosition.size(); i++)
 	{
@@ -242,13 +261,27 @@ void BoomerangThrow::SplineCurve(const float& deltaTime)
 		//半分まで行ったら
 		if ((m_index) % m_splineCurvePosition.size() == m_splineCurvePosition.size() / 2)
 		{
-			ChangeRotationDatas(Params::BOOMERANG_THROW_MIDDLE_ROTATION, Params::BOOMERANG_THROW_END_ROTATION);
+			switch (m_throwState)
+			{
+				case Player::BoomerangThrowState::LEFT:
+					//回転の情報を切り替える
+					ChangeRotationDatas(Params::BOOMERANG_THROW_MIDDLE_ROTATION, Params::BOOMERANG_THROW_END_ROTATION);
+					break;
+				case Player::BoomerangThrowState::RIGHT:
+					//回転の情報を切り替える
+					ChangeRotationDatas(Params::BOOMERANG_THROW_MIDDLE_ROTATION, Params::BOOMERANG_THROW_START_ROTATION);
+
+					break;
+				default:
+					break;
+			}
+
 		}
 
 		//最後の基準点に来たら
 		if ((m_index) % m_splineCurvePosition.size() == m_splineCurvePosition.size() - 1)
 		{
-			m_state = State::CHASE_TO_PLAYER;
+			m_moveState = MoveState::CHASE_TO_PLAYER;
 		}
 	}
 
@@ -268,7 +301,7 @@ void BoomerangThrow::ChaseToPlayer(const float& deltaTime)
 	//ブーメランの座標を取得
 	DirectX::SimpleMath::Vector3 BoomerangPos = m_boomerang->GetTransform()->GetPosition();
 	//プレイヤの座標を取得
-	DirectX::SimpleMath::Vector3 PlayerPos = m_player->GetTransform()-> GetPosition();
+	DirectX::SimpleMath::Vector3 PlayerPos = m_player->GetTransform()->GetPosition();
 
 
 	//進む方向
