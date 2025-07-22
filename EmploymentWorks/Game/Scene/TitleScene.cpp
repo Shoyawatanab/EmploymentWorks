@@ -42,7 +42,7 @@ TitleScene::~TitleScene()
 /// <summary>
 /// ‰Šú‰»
 /// </summary>
-void TitleScene::Initialize()
+void TitleScene::SceneInitialize()
 {
 
 

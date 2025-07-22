@@ -7,4 +7,4 @@
 #include "Game/UI/PlayScene/PlayerDamageEffect/PlayerDamageEffect.h"
 #include "Game/UI/PlayScene/GameOver/GameOverUI.h"
 #include "Game/UI/PlayScene/PickUp/PickUpUI.h"
-
+#include "Game/UI/PlayScene/BoomerangThrow/BoomerangThrowUI.h"

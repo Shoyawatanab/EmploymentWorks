@@ -6,6 +6,7 @@
 #pragma once
 #include"GameBase/Actor.h"
 #include "GameBase/Messenger/IObserver.h"
+#include "Game/Messenger/Scene/SceneMessages.h"
 
 class PlayerStateMachine;
 class PlaySceneCamera;
@@ -16,8 +17,17 @@ class PlayerUsually;
 class TargetMarker;
 class PickerComponent;
 
-class Player : public Actor
+class Player : public Actor , IObserver<SceneMessageType>
 {
+public:
+
+	//投げ方
+	enum class BoomerangThrowState : int
+	{
+		LEFT = -1           //左投げ　　この数字を使用してブーメランの回転の基準点を変更している
+		,RIGHT = 1			//右投げ
+	};
+
 public:
 
 	//オブジェクトタグの取得
@@ -32,11 +42,12 @@ public:
 	PlaySceneCamera* GetPlaySceneCamera() { return m_playSceneCamera; }
 	//プレイシーンカメラのセット
 	void SetPlaySceneCamera(PlaySceneCamera* camera) { m_playSceneCamera = camera; }
-
+	//ターゲットマーカーの取得
 	TargetMarker* GetTargetMarker() { return m_targetMarker; }
-
+	//ターゲットマーカーのセット
 	void SetTargetMarker(TargetMarker* targetMarker) { m_targetMarker = targetMarker; }
-
+	//ブーメランの投げの状態の取得
+	BoomerangThrowState GetBoomerangThrowState() { return m_throwState; }
 
 
 public:
@@ -60,6 +71,10 @@ public:
 	void WeaponRecoverable();
 	//武器が回収できなくなったとき
 	void WeaponUnrecoverable();
+
+	//通知時に呼び出される
+	void Notify(SceneMessageType type, void* datas)  override;
+
 
 private:
 	//着地したとき
@@ -90,5 +105,8 @@ private:
 	int m_hp;
 	//回収者コンポーネント
 	PickerComponent* m_picker;
+	//ブーメランの投げの状態
+	BoomerangThrowState m_throwState;
+
 
 };

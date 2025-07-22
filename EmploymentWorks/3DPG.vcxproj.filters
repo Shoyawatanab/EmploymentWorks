@@ -428,7 +428,6 @@
     <ClInclude Include="Game\Weapon\Boomerang\State\BoomerangStateMachine.h" />
     <ClInclude Include="Game\Weapon\Boomerang\State\Boomerangidle.h" />
     <ClInclude Include="Game\Weapon\Boomerang\State\BoomerangStates.h" />
-    <ClInclude Include="Game\Weapon\Boomerang\State\BoomerangThrow.h" />
     <ClInclude Include="Game\Weapon\Boomerang\State\BoomerangGetReady.h" />
     <ClInclude Include="Game\Messenger\Scene\SceneMessenger.h" />
     <ClInclude Include="Game\Player\State\PlayerBoomerangGetReady.h" />
@@ -564,6 +563,10 @@
     <ClInclude Include="Game\UI\PlayScene\PickUp\PickUpUI.h" />
     <ClInclude Include="Game\Sound\TitleScene\TitleSceneSound.h" />
     <ClInclude Include="Game\Sound\SelectScene\SelectSceneSound.h" />
+    <ClInclude Include="Game\UI\PlayScene\BoomerangThrow\BoomerangThrowUI.h" />
+    <ClInclude Include="Game\Weapon\Boomerang\State\BoomerangThrow.h" />
+    <ClInclude Include="GameBase\Messenger\InputMessenger.h" />
+    <ClInclude Include="GameBase\Component\Input\InputComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -742,7 +745,6 @@
     <ClCompile Include="Game\Weapon\Boomerang\Boomerang.cpp" />
     <ClCompile Include="Game\Weapon\Boomerang\State\BoomerangStateMachine.cpp" />
     <ClCompile Include="Game\Weapon\Boomerang\State\Boomerangidle.cpp" />
-    <ClCompile Include="Game\Weapon\Boomerang\State\BoomerangThrow.cpp" />
     <ClCompile Include="Game\Weapon\Boomerang\State\BoomerangGetReady.cpp" />
     <ClCompile Include="Game\Messenger\Scene\SceneMessenger.cpp" />
     <ClCompile Include="Game\Player\State\PlayerBoomerangGetReady.cpp" />
@@ -858,6 +860,10 @@
     <ClCompile Include="Game\UI\PlayScene\PickUp\PickUpUI.cpp" />
     <ClCompile Include="Game\Sound\TitleScene\TitleSceneSound.cpp" />
     <ClCompile Include="Game\Sound\SelectScene\SelectSceneSound.cpp" />
+    <ClCompile Include="Game\UI\PlayScene\BoomerangThrow\BoomerangThrowUI.cpp" />
+    <ClCompile Include="Game\Weapon\Boomerang\State\BoomerangThrow.cpp" />
+    <ClCompile Include="GameBase\Messenger\InputMessenger.cpp" />
+    <ClCompile Include="GameBase\Component\Input\InputComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />

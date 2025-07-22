@@ -6,7 +6,10 @@
 #pragma once
 #include "GameBase/Model/ModelPartsBase.h"
 
+class CommonResources;
+
 class BossEnemy;
+class Camera;
 
 class BossEnemyParts : public ModelPartsBase
 {
@@ -39,6 +42,13 @@ public:
 	virtual void PartsDestruction() {}
 
 private:
+
+	//描画
+	void Render(const Camera& camera);
+
+private:
+	//共通リソース
+	CommonResources* m_commonResources;
 
 	//元のクラス
 	BossEnemy* m_bossEnemy;

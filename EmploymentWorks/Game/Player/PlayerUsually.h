@@ -10,7 +10,7 @@
 
 class Player;
 class RigidbodyComponent;
-
+class CommonResources;
 
 class PlayerUsually : public IObserver<SceneMessageType>
 {
@@ -27,6 +27,8 @@ public:
 
 	//通知時に呼び出される
 	void Notify(SceneMessageType type, void* datas) override;
+	//入力時
+	void OnInput(const DirectX::Keyboard::Keys& key);
 
 
 private:
@@ -34,7 +36,12 @@ private:
 	void Move(const float& deltatime);
 	//回転
 	void Rotate(const float& deltatime);
+	//マウスホイールのチェック
+	void CheckMouseWheel();
+
 private:
+	//共通リソース
+	CommonResources* m_commonResources;
 	//プレイヤ
 	Player* m_player;
 	//リジットボディー

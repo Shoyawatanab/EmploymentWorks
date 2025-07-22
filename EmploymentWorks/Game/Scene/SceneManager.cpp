@@ -60,7 +60,6 @@ void SceneManager::Initialize()
 	ChangeScene(SceneID::PLAY);
 
 
-
 }
 
 

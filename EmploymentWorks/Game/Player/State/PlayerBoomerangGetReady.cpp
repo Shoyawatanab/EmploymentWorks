@@ -66,6 +66,7 @@ void PlayerBoomerangGetReady::Update(const float& deltaTime)
 		SceneMessenger::GetInstance()->Notify(SceneMessageType::BOOMERANG_THROW);
 
 
+
 	}
 }
 

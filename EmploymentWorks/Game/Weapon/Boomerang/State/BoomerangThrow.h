@@ -5,6 +5,7 @@
 */
 #pragma once
 #include "GameBase/Interface/IState.h"
+#include "Game/Player/Player.h"
 
 class BoomerangStateMachine;
 class Boomerang;
@@ -14,11 +15,12 @@ class BoomerangThrow : public IState
 {
 private:
 	//状態
-	enum  class State
+	enum  class MoveState
 	{
 		SPINECURVE      //投げる
 		, CHASE_TO_PLAYER   //返ってくる
 	};
+
 
 
 	static constexpr float TARGET_LENGTH{ 5.0f };
@@ -27,7 +29,7 @@ private:
 
 public:
 	//コンストラクタ
-	BoomerangThrow(BoomerangStateMachine* stateMahine, Boomerang* boomerang,Player* player);
+	BoomerangThrow(BoomerangStateMachine* stateMahine, Boomerang* boomerang, Player* player);
 	//デストラクタ
 	~BoomerangThrow() override;
 
@@ -68,8 +70,10 @@ private:
 	int m_index;
 	//経過時間
 	float m_totalTime;
-	//状態
-	State m_state;
+	//動きの状態
+	MoveState m_moveState;
+	//投げ方の状態
+	Player::BoomerangThrowState m_throwState;
 	//回転の情報
 	std::pair<DirectX::SimpleMath::Quaternion, DirectX::SimpleMath::Quaternion> m_rotationDatas;
 	//横回転
@@ -84,3 +88,4 @@ private:
 
 };
 
+#pragma once

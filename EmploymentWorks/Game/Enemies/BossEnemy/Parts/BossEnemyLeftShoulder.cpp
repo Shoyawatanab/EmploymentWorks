@@ -56,7 +56,7 @@ void BossEnemyLeftShoulder::PartsDestruction()
 {
 
 	//eŽqŠÖŒW‚ð‚È‚­‚·
-	GetTransform()->SetParent(nullptr);
+	//GetTransform()->SetParent(nullptr);
 
 
 

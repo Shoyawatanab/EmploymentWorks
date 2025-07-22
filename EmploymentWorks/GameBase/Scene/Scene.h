@@ -31,7 +31,9 @@ public:
 	Scene();
 	virtual ~Scene();
 	// 初期化
-	virtual void Initialize() = 0;
+	void Initialize();
+	// 派生クラス初期化
+	virtual void SceneInitialize() = 0;
 	// 更新処理
 	void Update(float deltaTime);
 	// 派生クラス更新処理
@@ -64,6 +66,10 @@ private:
 	bool m_updateNow;
 	// アクター削除フラグ
 	bool m_isActorDestroy;
+
+	// キーボードステート
+	DirectX::Keyboard::State m_keyboardState;
+
 
 	//描画のマネージャー
 	std::unique_ptr<RenderManager> m_renderMangaer;

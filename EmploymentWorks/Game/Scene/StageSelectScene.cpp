@@ -40,7 +40,7 @@ StageSelectScene::~StageSelectScene()
 /// <summary>
 /// ‰Šú‰»
 /// </summary>
-void StageSelectScene::Initialize()
+void StageSelectScene::SceneInitialize()
 {
 
 	//ƒJƒƒ‰‚Ìì¬
