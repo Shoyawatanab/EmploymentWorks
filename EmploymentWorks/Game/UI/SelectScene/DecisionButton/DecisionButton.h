@@ -1,6 +1,6 @@
 /*
-	クラス名     : StageOneButton
-	説明         : セレクトシーンのステージ１のボタン
+	クラス名     : DecisionButton
+	説明         : セレクトシーンの決定のボタン
 	補足・注意点 :
 */
 #pragma once
@@ -9,21 +9,21 @@
 class Canvas;
 class Button;
 
-class StageOneButton : public Button
+class DecisionButton : public Button
 {
 public:
 	//座標
-	static constexpr DirectX::SimpleMath::Vector3 POSITOIN{400, 360, 0};
+	static constexpr DirectX::SimpleMath::Vector3 POSITOIN{350.0f, 500.0f, 0};
 	//大きさ
-	static constexpr DirectX::SimpleMath::Vector3 SCALE{1.4f, 1.4f, 0};
+	static constexpr DirectX::SimpleMath::Vector3 SCALE{0.3f, 0.3f, 0};
 	//拡大率
 	static constexpr float MAGNIFICATION{ 1.4f };
 
 public:
 	//コンストラク
-	StageOneButton(Canvas* canvas);
+	DecisionButton(Canvas* canvas);
 	//デストラクタ
-	~StageOneButton() override;
+	~DecisionButton() override;
 
 private:
 	//クリック時

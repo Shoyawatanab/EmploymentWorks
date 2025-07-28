@@ -12,7 +12,7 @@
 /// </summary>
 GlobalGameData::GlobalGameData()
 	:
-	m_selectStageNumber{1}
+	m_selectStageNumber{2}
 	,m_clearTime{}
 {
 

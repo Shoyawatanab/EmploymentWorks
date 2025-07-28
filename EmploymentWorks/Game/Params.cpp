@@ -115,7 +115,7 @@ int Params::BOOMERANG_MAX_COUNT = 3;
 //ブーメランのスフィアの当たり判定の大きさ
  const float Params::BOOMERANG_SPHERE_COLLIDER_SIZE = 0.4f;
 //　ブーメランの攻撃力
- const int Params::BOOMERANG_DAMAGE = 100;
+ const int Params::BOOMERANG_DAMAGE = 10;
 
  //ブーメランの影の大きさ
  const float Params::BOOMERANG_SHADOW_RADIUS = 0.5f ;

@@ -9,6 +9,12 @@ enum class SceneMessageType : int
 {
 	NONE = -1
 
+	//セレクトシーン
+	,STAGE_UP                                     //セレクトステージのアップ
+	,STAGE_DOWN									  //セレクトステージのダウン
+
+
+
 	//ゲームの活動
 	,GAME_CLEAR                                    //ゲームクリア
 	,GAME_OVER									   //ゲームオーバー

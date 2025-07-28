@@ -3,12 +3,12 @@ cbuffer ConstBuffer	: register(b0)
     float4 windowSize;
 	float4 position;
     float4 size;
+    float4 rotate;
     float4 color;
     float4 clipRange;
     float4 viewRange;    //ï\é¶îÕàÕ
 	float4 FillAmount;  //x:â°Å@y:èc
 	
-
 };
 
 struct VS_INPUT

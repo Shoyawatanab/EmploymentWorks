@@ -23,9 +23,14 @@ SelectSceneScreenSpaceOverlayCanvas::SelectSceneScreenSpaceOverlayCanvas(Scene* 
 	//背景の作成
 	GetScene()->AddActor<SelectSceneBackGraund>(this);
 
-	//各ボタン
-	GetScene()->AddActor<StageOneButton>(this);
-	GetScene()->AddActor<StageTwoButton>(this);
+	//ステージ選択のUI
+	GetScene()->AddActor<StageSelectBase>(this);
+
+	//PLAYボタン
+	GetScene()->AddActor<DecisionButton>(this);
+
+	//右の情報
+	GetScene()->AddActor<InformationBase>(this);
 
 }
 

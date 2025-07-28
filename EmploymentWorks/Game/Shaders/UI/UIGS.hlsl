@@ -7,10 +7,10 @@ static const unsigned int vnum = 4;
 //wが0だと行列計算がおかしくなるので1に変更
 static const float4 offset_array[vnum] =
 {
-	float4( -1.0f,  1.0f, 0.0f, 1.0f),	// 左上
-	float4( 1.0f,  1.0f, 0.0f, 1.0f),	// 右上
-	float4( -1.0f,  -1.0f, 0.0f, 1.0f),	// 左下
-	float4( 1.0f,  -1.0f, 0.0f, 1.0f),	// 右下
+	float4( -0.5f,  0.5f, 0.0f, 1.0f),	// 左上
+	float4( 0.5f,  0.5f, 0.0f, 1.0f),	// 右上
+	float4( -0.5f,  -0.5f, 0.0f, 1.0f),	// 左下
+	float4( 0.5f,  -0.5f, 0.0f, 1.0f),	// 右下
 
 };
 
@@ -30,34 +30,46 @@ void main(
 	inout TriangleStream< PS_INPUT > output
 )
 {
+    
+    float cosA = cos(rotate.x);
+    float sinA = sin(rotate.x);
+
     for (uint i = 0; i < vnum; i++)
     {
-		//	ジオメトリ出力
         PS_INPUT element;
-		
-		//ウィンドウサイズ
+
         float2 window = windowSize.xy;
-		//ポジションを相対スケールに変換
+
+    // スクリーン座標化されたポジション
         float2 Position = input[0].pos.xy / window * 2.0f;
-		//原点から位置を計算.
         Position = float2(center.x + Position.x, center.y - Position.y);
-		
-		//サイズを計算
-        float2 relativeSize = size.xy / window;
-		
-		//最終位置を計算
-        element.pos.xy = Position + offset_array[i].xy * relativeSize * viewRange.xy;
-		
-		
+
+    // ローカル座標を定義 [-0.5, 0.5] → スケーリング（画像サイズ）
+        float2 local = offset_array[i].xy * size.xy;
+
+    // 回転
+        float2 rotated;
+        rotated.x = local.x * cosA - local.y * sinA;
+        rotated.y = local.x * sinA + local.y * cosA;
+
+    // ビュー拡大縮小
+        rotated *= viewRange.xy;
+
+    // 最終座標をスクリーン基準に変換
+        float2 final = rotated / window * 2.0f;
+        element.pos.xy = Position + final;
         element.pos.z = 0.0f;
         element.pos.w = 1.0f;
 
-		//	テクスチャのUV座標
-        element.tex = float2(clipRange.x + clipRange.z * offset_UV[i].x, clipRange.y + clipRange.w * offset_UV[i].y);
-        
+    // UVはそのままでOK
+        element.tex = float2(
+        clipRange.x + clipRange.z * offset_UV[i].x,
+        clipRange.y + clipRange.w * offset_UV[i].y
+    );
+
         output.Append(element);
     }
-	
+
     output.RestartStrip();
 	
 }

@@ -22,6 +22,8 @@ public:
 
 	//リストに登録
 	void Rigister(std::vector<GlobalMessageType> types, IObserver<GlobalMessageType>* observer);
+	//リストから削除
+	void Delete(IObserver<GlobalMessageType>* observer);
 	//通知
 	void Notify(GlobalMessageType type, void* datas = nullptr);
 	//クリア

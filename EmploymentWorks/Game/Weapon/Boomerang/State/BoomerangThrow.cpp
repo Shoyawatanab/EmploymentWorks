@@ -32,7 +32,7 @@ BoomerangThrow::BoomerangThrow(BoomerangStateMachine* stateMahine, Boomerang* bo
 	, m_totalTime{}
 	, m_index{}
 	, m_moveState{}
-	,m_throwState{}
+	,m_throwState{Player::BoomerangThrowState::RIGHT}
 {
 
 	//CSV‚©‚çŠî€À•W‚Ìæ“¾

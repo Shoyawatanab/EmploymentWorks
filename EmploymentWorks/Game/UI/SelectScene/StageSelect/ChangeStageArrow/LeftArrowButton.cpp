@@ -1,10 +1,10 @@
 /*
-	クラス名     : StageOneButton
-	説明         : セレクトシーンのステージ１のボタン
+	クラス名     : LeftArrowButton
+	説明         : セレクトシーンのステージUIの左矢印UI
 	補足・注意点 :
 */
 #include "pch.h"
-#include "StageOneButton.h"
+#include "LeftArrowButton.h"
 #include "GameBase/UI/Canvas/Canvas.h"
 #include "GameBase/UI/Button.h"
 #include "GameBase/Scene/Scene.h"
@@ -12,55 +12,58 @@
 #include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/Fade/FadeManager.h"
 #include "Game/Messenger/Global/GlobalMessages.h"
+#include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/GlobalGameData.h"
 
 /// <summary>
 /// コンストラク
 /// </summary>
 /// <param name="canvas">キャンバス</param>
-StageOneButton::StageOneButton(Canvas* canvas)
+LeftArrowButton::LeftArrowButton(Canvas* canvas)
 	:
-	Button(canvas, "Tutorial")
+	Button(canvas, "SelectSceneArow")
 {
 	using namespace DirectX::SimpleMath;
 
 	GetTransform()->SetScale(SCALE);
 	GetTransform()->SetPosition(POSITOIN);
+	GetTransform()->SetRotate(Quaternion::CreateFromYawPitchRoll(
+		ROTATE.y, ROTATE.x, ROTATE.z));
+
+	auto image = GetComponent<ImageComponent>();
+	image->SetAngle(DirectX::XMConvertToRadians(90.0f));
 
 	auto comp = GetComponent<ButtonComponent>();
 
 
-	comp->SetClickFunction(std::bind(&StageOneButton::OnClick, this));
-	comp->SetInRangeFunction(std::bind(&StageOneButton::InRange,this));
-	comp->SetOutOfRangeFunction(std::bind(&StageOneButton::OutOfRange,this));
+	comp->SetClickFunction(std::bind(&LeftArrowButton::OnClick, this));
+	comp->SetInRangeFunction(std::bind(&LeftArrowButton::InRange,this));
+	comp->SetOutOfRangeFunction(std::bind(&LeftArrowButton::OutOfRange,this));
+
 
 }
 
 /// <summary>
 /// デストラクタ
 /// </summary>
-StageOneButton::~StageOneButton()
+LeftArrowButton::~LeftArrowButton()
 {
 }
 
 /// <summary>
 /// クリック時
 /// </summary>
-void StageOneButton::OnClick()
+void LeftArrowButton::OnClick()
 {
 
-	GlobalMessenger::GetInstance()->Notify(GlobalMessageType::CHANGE_PLAY_SCENE);
-
-	FadeManager::GetInstance()->StartFadeIn();
-	//選択ステージ番号のセット
-	GlobalGameData::GetInstance()->SetSelectStateNumber(1);
+	SceneMessenger::GetInstance()->Notify(SceneMessageType::STAGE_DOWN);
 
 }
 
 /// <summary>
 /// 範囲内になった時
 /// </summary>
-void StageOneButton::InRange()
+void LeftArrowButton::InRange()
 {
 	GetTransform()->SetScale(SCALE * MAGNIFICATION);
 
@@ -69,7 +72,7 @@ void StageOneButton::InRange()
 /// <summary>
 /// 範囲外になった時
 /// </summary>
-void StageOneButton::OutOfRange()
+void LeftArrowButton::OutOfRange()
 {
 	GetTransform()->SetScale(SCALE);
 
