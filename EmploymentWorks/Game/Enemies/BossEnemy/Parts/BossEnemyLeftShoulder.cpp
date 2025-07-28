@@ -56,10 +56,13 @@ void BossEnemyLeftShoulder::PartsDestruction()
 {
 
 	//eqŠÖŒW‚ğ‚È‚­‚·
-	//GetTransform()->SetParent(nullptr);
+	GetTransform()->SetParent(nullptr);
 
 
-
+	//d—Í‚Ì’Ç‰Á
+	auto rigidBody = GetComponent<RigidbodyComponent>();
+	rigidBody->SetActive(true);
 	
+
 	
 }

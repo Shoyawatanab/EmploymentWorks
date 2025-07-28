@@ -39,6 +39,27 @@ void SceneMessenger::Rigister(std::vector<SceneMessageType> types, IObserver<Sce
 	}
 }
 
+/// <summary>
+/// リストから削除
+/// </summary>
+/// <param name="observer">削除するオブザーバー</param>
+void SceneMessenger::Delete(IObserver<SceneMessageType>* observer)
+{
+	//Typeだけ回す
+	for (auto& type : m_list)
+	{
+		//Typeごとにオブザーバーがあるか探す
+		auto it = std::find(type.second.begin(), type.second.end(), observer);
+
+		//存在すれば
+		if (it != type.second.end())
+		{
+			//削除
+			type.second.erase(it);
+		}
+	}
+}
+
 
 /// <summary>
 /// 通知する

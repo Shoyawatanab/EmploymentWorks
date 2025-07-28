@@ -24,9 +24,11 @@ const std::vector<D3D11_INPUT_ELEMENT_DESC> ImageComponent::INPUT_LAYOUT =
 	{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 };
 
-
-
-
+/// <summary>
+/// コンストラク
+/// </summary>
+/// <param name="owner">所有者</param>
+/// <param name="textureName">画像名</param>
 ImageComponent::ImageComponent(Actor* owner, std::string textureName)
 	:
 	Component(owner)
@@ -43,6 +45,7 @@ ImageComponent::ImageComponent(Actor* owner, std::string textureName)
 	,m_viewRange{DirectX::SimpleMath::Vector4::One}
 	,m_fillAmount{DirectX::SimpleMath::Vector4::One}
 	,m_renderKinds{RenderKinds::NORMAL}
+	,m_angle{}
 {
 
 	using namespace DirectX;
@@ -90,7 +93,9 @@ ImageComponent::~ImageComponent()
 {
 }
 
-
+/// <summary>
+/// 描画
+/// </summary>
 void ImageComponent::Render()
 {
 
@@ -109,7 +114,10 @@ void ImageComponent::Render()
 }
 
 
-
+/// <summary>
+/// 画像の読み込み
+/// </summary>
+/// <param name="textureName"></param>
 void ImageComponent::LoadTexture(std::string textureName)
 {
 
@@ -133,6 +141,9 @@ void ImageComponent::LoadTexture(std::string textureName)
 	m_textureHeight = desc.Height;
 }
 
+/// <summary>
+/// 通常描画
+/// </summary>
 void ImageComponent::NormalRender()
 {
 	using namespace DirectX;
@@ -141,9 +152,7 @@ void ImageComponent::NormalRender()
 	auto context = CommonResources::GetInstance()->GetDeviceResources()->GetD3DDeviceContext();
 
 	auto states = CommonResources::GetInstance()->GetCommonStates();
-
-
-
+	//頂点
 	VertexPositionTexture vertex{};
 
 	//シェーダーに渡す追加のバッファを作成する。(ConstBuffer）
@@ -151,6 +160,7 @@ void ImageComponent::NormalRender()
 	cbuff.windowSize = SimpleMath::Vector4(Screen::WIDTH, Screen::HEIGHT, 0, 0);
 	cbuff.Position = Vector4(GetActor()->GetTransform()->GetWorldPosition().x, GetActor()->GetTransform()->GetWorldPosition().y, 0, 0);
 	cbuff.Size = Vector4(GetWidth(), GetHeight(), 0, 0);
+	cbuff.Rotate = Vector4(m_angle, 0, 0, 0);
 	cbuff.Color = m_color;
 	cbuff.CutRange = m_cutRange;
 	cbuff.ViewRange = m_viewRange;
@@ -165,7 +175,7 @@ void ImageComponent::NormalRender()
 	context->GSSetConstantBuffers(0, 1, cb);
 	context->PSSetConstantBuffers(0, 1, cb);
 
-	//	画像用サンプラーの登録
+	//画像用サンプラーの登録
 	ID3D11SamplerState* sampler[1] = { states->LinearWrap() };
 	context->PSSetSamplers(0, 1, sampler);
 	//	半透明描画指定
@@ -187,10 +197,8 @@ void ImageComponent::NormalRender()
 	//	ピクセルシェーダにテクスチャを登録する。
 	context->PSSetShaderResources(0, 1, m_texture.GetAddressOf());
 
-
 	//	インプットレイアウトの登録
 	context->IASetInputLayout(m_inputLayout.Get());
-
 
 	//	板ポリゴンを描画
 	m_batch->Begin();
@@ -209,6 +217,7 @@ void ImageComponent::NormalRender()
 /// </summary>
 void ImageComponent::CustomRender()
 {
+	//関数の呼び出し
 	m_customRender();
 }
 

@@ -69,6 +69,12 @@ void InputMessenger::SortObserverList()
 
 void InputMessenger::CreateKeyRangeList()
 {
+	//リストに追加されたものがない場合
+	if (m_keybordList.empty())
+	{
+		return;
+	}
+
 	// 開始インデックスを設定する
 	size_t  startIndex = 0;
 	// 「キー範囲リスト」でデータが存在する場合は「キー範囲リスト」をクリアする

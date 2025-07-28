@@ -2,7 +2,7 @@
 	"Logo"               : "Logo.png",
 	"PLAY"               : "PLAY.png",
 	"EXIT"               : "EXIT.png",
-	"Tutorial"           : "Tutorial.png",
+	"Stage2"           : "Stage2.png",
 	"Stage1"             : "Stage1.png",
 	"BackGraund"         : "BackGraund.png",
 	"Tex"                : "Tex.png",
@@ -29,9 +29,12 @@
 	"ResultTitle"        :"ResultTitle.png",
 	"Ten"                : "Ten.png",
 	"mask"               : "mask.png",
-	"fade"               :  "load.png"
+	"fade"               :  "load.png",
+	"SelectPlay"         :"SelectPlay.png",
+	"StageBackGraund"      :"StageBackGraund.png",
+	"SelectSceneArow"   : "SelectSceneArow.png",
+	"SelectInfBase"     :"SelectInfBase.png"
 
-	
 
 
 }

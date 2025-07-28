@@ -34,7 +34,7 @@ Player::Player(Scene* scene)
 	,m_isGround{}
 	,m_targetMarker{}
 	,m_hp{Params::PLAYER_HP}
-	,m_throwState{BoomerangThrowState::LEFT}
+	,m_throwState{BoomerangThrowState::RIGHT}
 {
 
 	m_rigidBody = AddComponent<RigidbodyComponent>(this);

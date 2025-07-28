@@ -22,6 +22,9 @@ public:
 	~SceneMessenger() override;
 	//リストに登録
 	void Rigister(std::vector<SceneMessageType> types,IObserver<SceneMessageType>* observer);
+	//リストから削除
+	void Delete(IObserver<SceneMessageType>* observer);
+
 	//通知
 	void Notify(SceneMessageType type, void* = nullptr);
 	//クリア

@@ -22,6 +22,7 @@ public:
 		DirectX::SimpleMath::Vector4	windowSize;             //画面サイズ
 		DirectX::SimpleMath::Vector4    Position;				//座標
 		DirectX::SimpleMath::Vector4	Size;					//大きさ
+		DirectX::SimpleMath::Vector4    Rotate;                 //回転
 		DirectX::SimpleMath::Vector4    Color;					//色
 		DirectX::SimpleMath::Vector4    CutRange;				//切り取り範囲
 		DirectX::SimpleMath::Vector4    ViewRange;              //表示範囲
@@ -55,6 +56,10 @@ public:
 	float GetHeight() const;
 	//カスタム描画関数の登録
 	void SetCustomRenderFunction(std::function<void()> customRender);
+	//回転のセット
+	void SetAngle(const float& angle) { m_angle = angle; }
+	//回転の取得
+	float GetAngle() const { return m_angle; }
 
 public:
 	//コンストラクタ
@@ -108,5 +113,7 @@ private:
 
 	//個別描画
 	std::function<void()> m_customRender;
+	//回転
+	float m_angle;
 
 };

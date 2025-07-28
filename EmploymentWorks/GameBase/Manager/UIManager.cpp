@@ -111,7 +111,7 @@ bool UIManager::CheckInRange(const DirectX::SimpleMath::Vector2& mousePosition, 
 	float rectLeft = position.x - scale.x / 2;
 	float rectRight = position.x + scale.x / 2;
 	float rectTop = position.y - scale.y / 2;
-	float rectBottom = position.y + scale.x / 2;
+	float rectBottom = position.y + scale.y / 2;
 
 	// 円の中心に最も近い四角形の点を求める
 	float closestX = std::max(rectLeft, std::min(mousePosition.x, rectRight));

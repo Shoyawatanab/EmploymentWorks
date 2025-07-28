@@ -57,7 +57,7 @@ void SceneManager::Initialize()
 {
 
 	//‰ŠúƒV[ƒ“
-	ChangeScene(SceneID::PLAY);
+	ChangeScene(SceneID::STAGESELECT);
 
 
 }

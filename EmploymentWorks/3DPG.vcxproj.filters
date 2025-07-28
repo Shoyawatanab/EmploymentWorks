@@ -516,8 +516,8 @@
     <ClInclude Include="Game\UI\SelectScene\SelectSceneUIs.h" />
     <ClInclude Include="Game\Camera\SelectScene\SelectSceneCamera.h" />
     <ClInclude Include="Game\UI\SelectScene\BackGraund\SelectSceneBackGraund.h" />
-    <ClInclude Include="Game\UI\SelectScene\StageOneButton\StageOneButton.h" />
-    <ClInclude Include="Game\UI\SelectScene\StageTwoButton\StageTwoButton.h" />
+    <ClInclude Include="Game\UI\SelectScene\StageSelect\StageOneImage\StageOneImage.h" />
+    <ClInclude Include="Game\UI\SelectScene\StageSelect\StageTwoImage\StageTwoImage.h" />
     <ClInclude Include="Game\UI\TitleScene\PlayButton\PlayButton.h" />
     <ClInclude Include="Game\Enemies\BossEnemy\Beam\BossEnemyBeam.h" />
     <ClInclude Include="Game\Enemies\BossEnemy\Beam\Rays\BossEnemyBeamRays.h" />
@@ -567,6 +567,13 @@
     <ClInclude Include="Game\Weapon\Boomerang\State\BoomerangThrow.h" />
     <ClInclude Include="GameBase\Messenger\InputMessenger.h" />
     <ClInclude Include="GameBase\Component\Input\InputComponent.h" />
+    <ClInclude Include="Game\UI\SelectScene\DecisionButton\DecisionButton.h" />
+    <ClInclude Include="Game\UI\SelectScene\StageSelect\StageBackGraund\StageBackGraund.h" />
+    <ClInclude Include="Game\UI\SelectScene\StageSelect\ChangeStageArrow\LeftArrowButton.h" />
+    <ClInclude Include="Game\UI\SelectScene\StageSelect\ChangeStageArrow\RightArrowButton.h" />
+    <ClInclude Include="Game\UI\SelectScene\InfmationBase\InformationBase.h" />
+    <ClInclude Include="Game\UI\SelectScene\StageSelect\StageSelectBase.h" />
+    <ClInclude Include="Game\UI\SelectScene\InfmationBase\BackGraund\InformationBackGraund.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -818,8 +825,8 @@
     <ClCompile Include="Game\UI\SelectScene\Canvas\SelectSceneScreenSpaceOverlayCanvas.cpp" />
     <ClCompile Include="Game\Camera\SelectScene\SelectSceneCamera.cpp" />
     <ClCompile Include="Game\UI\SelectScene\BackGraund\SelectSceneBackGraund.cpp" />
-    <ClCompile Include="Game\UI\SelectScene\StageOneButton\StageOneButton.cpp" />
-    <ClCompile Include="Game\UI\SelectScene\StageTwoButton\StageTwoButton.cpp" />
+    <ClCompile Include="Game\UI\SelectScene\StageSelect\StageOneImage\StageOneImage.cpp" />
+    <ClCompile Include="Game\UI\SelectScene\StageSelect\StageTwoImage\StageTwoImage.cpp" />
     <ClCompile Include="Game\UI\TitleScene\PlayButton\PlayButton.cpp" />
     <ClCompile Include="Game\Enemies\BossEnemy\Beam\BossEnemyBeam.cpp" />
     <ClCompile Include="Game\Enemies\BossEnemy\Beam\Rays\BossEnemyBeamRays.cpp" />
@@ -842,7 +849,7 @@
     <ClCompile Include="Game\Enemies\BossEnemy\Action\Death\BossDeathEndAction.cpp" />
     <ClCompile Include="Game\Camera\Result\ResultCamera.cpp" />
     <ClCompile Include="Game\UI\ResultScene\Canvas\ResutlSceneScreenSpaceOverlayCanvas.cpp" />
-    <ClCompile Include="Game\UI\ResultScene\BackGraund\ResultceneBackGraund.cpp" />
+    <ClCompile Include="Game\UI\ResultScene\BackGraund\ResultSceneBackGraund.cpp" />
     <ClCompile Include="Game\UI\ResultScene\RetryButton\ResultRetryButton.cpp" />
     <ClCompile Include="Game\UI\ResultScene\TitleButton\ResultTitleButton.cpp" />
     <ClCompile Include="Game\UI\ResultScene\Time\ResultTime.cpp" />
@@ -864,6 +871,13 @@
     <ClCompile Include="Game\Weapon\Boomerang\State\BoomerangThrow.cpp" />
     <ClCompile Include="GameBase\Messenger\InputMessenger.cpp" />
     <ClCompile Include="GameBase\Component\Input\InputComponent.cpp" />
+    <ClCompile Include="Game\UI\SelectScene\DecisionButton\DecisionButton.cpp" />
+    <ClCompile Include="Game\UI\SelectScene\StageSelect\StageBackGraund\StageBackGraund.cpp" />
+    <ClCompile Include="Game\UI\SelectScene\StageSelect\ChangeStageArrow\LeftArrowButton.cpp" />
+    <ClCompile Include="Game\UI\SelectScene\StageSelect\ChangeStageArrow\RightArrowButton.cpp" />
+    <ClCompile Include="Game\UI\SelectScene\InfmationBase\InformationBase.cpp" />
+    <ClCompile Include="Game\UI\SelectScene\StageSelect\StageSelectBase.cpp" />
+    <ClCompile Include="Game\UI\SelectScene\InfmationBase\BackGraund\InformationBackGraund.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />

@@ -40,6 +40,29 @@ void GlobalMessenger::Rigister(std::vector<GlobalMessageType> types, IObserver<G
 }
 
 /// <summary>
+/// リストから削除
+/// </summary>
+/// <param name="observer">削除するオブザーバー</param>
+void GlobalMessenger::Delete(IObserver<GlobalMessageType>* observer)
+{
+
+	//Typeだけ回す
+	for (auto& type : m_list)
+	{
+		//Typeごとにオブザーバーがあるか探す
+		auto it = std::find(type.second.begin(), type.second.end(), observer);
+
+		//存在すれば
+		if (it != type.second.end())
+		{
+			//削除
+			type.second.erase(it);
+		}
+	}
+
+}
+
+/// <summary>
 /// 通知する
 /// </summary>
 /// <param name="type">通知の種類</param>
