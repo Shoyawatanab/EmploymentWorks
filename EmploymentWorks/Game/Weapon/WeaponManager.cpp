@@ -7,8 +7,8 @@
 #include "WeaponManager.h"
 #include "GameBase/Scene/Scene.h"
 #include "Game/Weapon/Boomerang/Boomerang.h"
-#include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/Component/Components.h"
+#include "Game/Messenger/Messengers.h"
 
 
 WeaponManager::WeaponManager(Scene* scene, Player* player)

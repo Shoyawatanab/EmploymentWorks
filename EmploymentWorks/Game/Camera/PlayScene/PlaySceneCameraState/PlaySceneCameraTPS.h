@@ -5,7 +5,7 @@
 */
 #pragma once
 #include "GameBase/Interface/IState.h"
-#include "Game/Messenger/Scene/SceneMessageType.h"
+#include "Game/Messenger/Messengers.h"
 
 class PlaySceneCamera;
 class PlaySceneCameraStateMachine;

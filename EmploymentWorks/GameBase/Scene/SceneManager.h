@@ -5,7 +5,6 @@
 
 */
 #pragma once
-#include "GameBase/Messenger/IObserver.h"
 
 // 前方宣言
 class Scene;
@@ -14,7 +13,6 @@ class FadeManager;
 class SceneManager 
 {
 public:
-
 	// シーンID ゲームごとにカスタムする
 	enum class SceneID : unsigned int
 	{

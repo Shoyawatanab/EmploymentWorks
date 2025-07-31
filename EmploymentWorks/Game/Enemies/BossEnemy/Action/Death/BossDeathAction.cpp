@@ -5,8 +5,7 @@
 */
 #include "pch.h"
 #include "BossDeathAction.h"
-#include "Game/Messenger/Messenger.h"
-#include "Game/Messenger/Scene/SceneMessageType.h"
+#include "Game/Messenger/Messengers.h"
 
 
 /// <summary>

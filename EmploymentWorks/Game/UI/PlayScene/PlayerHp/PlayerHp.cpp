@@ -9,7 +9,7 @@
 #include "GameBase/UI/Image.h"
 #include "GameBase/UI/Canvas/Canvas.h"
 #include "Game/Component/Components.h"
-#include "Game/Messenger/Scene/SceneMessages.h"
+#include "Game/Messenger/Messengers.h"
 
 /// <summary>
 /// コンストラクタ

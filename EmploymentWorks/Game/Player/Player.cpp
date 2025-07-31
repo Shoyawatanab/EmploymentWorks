@@ -16,9 +16,9 @@
 #include "Libraries/MyLib/InputManager.h"
 #include "Libraries/MyLib/MemoryLeakDetector.h"
 #include "Game/Weapon/Boomerang/Boomerang.h"
-#include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/Player/PlayerUsually.h"
 #include "Game/Fade/FadeManager.h"
+#include "Game/Messenger/Messengers.h"
 
 
 /// <summary>

@@ -8,7 +8,7 @@
 #include "Game/Player/Player.h"
 #include "Game/Player/Model/PlayerModel.h"
 #include "Game/Component/Components.h"
-#include "Game/Messenger/Scene/SceneMessages.h"
+#include "Game/Messenger/Messengers.h"
 
 
 /// <summary>

@@ -7,7 +7,7 @@
 #include "BossBeamAttackActionController.h"
 #include "GameBase/Common/Commons.h"
 #include "Game/Params.h"
-#include "Game/Messenger/Scene/SceneMessages.h"
+#include "Game/Messenger/Messengers.h"
 #include "Game/Enemies/BossEnemy/BossEnemy.h"
 #include "Game/Component/Components.h"
 

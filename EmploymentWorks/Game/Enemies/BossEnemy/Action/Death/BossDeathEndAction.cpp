@@ -5,7 +5,7 @@
 */
 #include "pch.h"
 #include "BossDeathEndAction.h"
-#include "Game/Messenger/Scene/SceneMessages.h"
+#include "Game/Messenger/Messengers.h"
 #include "Game/Enemies/BossEnemy/BossEnemy.h"
 #include "Game/Enemies/EnemyManager.h"
 

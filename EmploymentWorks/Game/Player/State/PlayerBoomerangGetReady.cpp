@@ -7,8 +7,7 @@
 #include "PlayerBoomerangAttack.h"
 #include "PlayerBoomerangGetReady.h"
 #include "GameBase/Common/Commons.h"
-#include "Game/Messenger/Scene/SceneMessages.h"
-#include "Game/Messenger/Messenger.h"
+#include "Game/Messenger/Messengers.h"
 
 /// <summary>
 /// コンストラクタ

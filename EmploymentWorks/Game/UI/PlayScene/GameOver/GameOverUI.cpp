@@ -12,7 +12,7 @@
 #include "Game/UI/PlayScene/GameOver/BackGraund/GameOverBackGraund.h"
 #include "Game/UI/PlayScene/GameOver/RetryButton/RetryButton.h"
 #include "Game/UI/PlayScene/GameOver/TitleButton/TitleButton.h"
-#include "Game/Messenger/Scene/SceneMessages.h"
+#include "Game/Messenger/Messengers.h"
 
 /// <summary>
 /// コンストラク

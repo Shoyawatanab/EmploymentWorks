@@ -11,7 +11,7 @@
 #include "Game/Enemies/BirdEnemy/State/BirdEnemyStateMachine.h"
 #include "Game/Player/Player.h"
 #include "Game/Enemies/BirdEnemy/Bullet/BirdEnemyBullet.h"
-#include "Game/Messenger/Scene/SceneMessages.h"
+#include "Game/Messenger/Messengers.h"
 #include "Game/Fade/FadeManager.h"
 #include "Game/Params.h"
 #include "Game/Enemies/EnemyManager.h"

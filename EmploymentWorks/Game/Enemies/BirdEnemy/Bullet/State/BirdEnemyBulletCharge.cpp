@@ -7,7 +7,7 @@
 #include "BirdEnemyBulletCharge.h"
 #include <random>
 #include "Game/Params.h"
-#include "Game/Messenger/Scene/SceneMessages.h"
+#include "Game/Messenger/Messengers.h"
 #include "Game/Enemies/BirdEnemy/Bullet/BirdEnemyBullet.h"
 #include "Game/Component/Components.h"
 

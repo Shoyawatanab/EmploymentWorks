@@ -6,9 +6,8 @@ template <typename T>
 class IObserver 
 {
 public:
-	
 	//’Ê’m‚ÉŒÄ‚Ño‚³‚ê‚é
-	virtual void Notify(T type,void* datas) = 0;
+	virtual void FunctionExecution(T type,void* datas) = 0;
 
 };
 

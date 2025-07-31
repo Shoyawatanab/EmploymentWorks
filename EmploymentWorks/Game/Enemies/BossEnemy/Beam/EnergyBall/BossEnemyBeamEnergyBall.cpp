@@ -11,7 +11,7 @@
 #include "GameBase/Common/Commons.h"
 #include "GameBase/Shader/ShaderFactory.h"
 #include "Game/Params.h"
-#include "Game/Messenger/Scene/SceneMessages.h"
+#include "Game/Messenger/Messengers.h"
 
 //インプットレイアウト
 const std::vector<D3D11_INPUT_ELEMENT_DESC> BossEnemyBeamEnergyBall::INPUT_LAYOUT =

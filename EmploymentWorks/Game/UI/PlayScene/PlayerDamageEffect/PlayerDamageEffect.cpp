@@ -11,7 +11,7 @@
 #include "Game/Component/Components.h"
 #include "GameBase/UI/Canvas/Canvas.h"
 #include "GameBase/UI/Image.h"
-#include "Game/Messenger/Scene/SceneMessages.h"
+#include "Game/Messenger/Messengers.h"
 
 ///	<summary>
 ///	インプットレイアウト

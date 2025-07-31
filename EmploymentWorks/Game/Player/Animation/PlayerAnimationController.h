@@ -5,7 +5,7 @@
 */
 #pragma once
 #include "GameBase/Animation/AnimationController.h"
-#include "Game/Messenger/Scene/SceneMessageType.h"
+#include "Game/Messenger/Messengers.h"
 
 class Player;
 

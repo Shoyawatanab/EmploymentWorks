@@ -5,9 +5,9 @@
 */
 #pragma once
 #include "GameBase/Actor.h"
-#include "Game/Messenger/Scene/SceneMessageType.h"
 #include "Game/Weapon/WeaponBase.h"
 #include "Game/Weapon/Boomerang/Boomerang.h"
+#include "Game/Messenger/Messengers.h"
 
 
 class Boomerang;

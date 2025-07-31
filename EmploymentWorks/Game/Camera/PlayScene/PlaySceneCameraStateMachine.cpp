@@ -6,9 +6,10 @@
 #include "pch.h"
 #include "PlaySceneCameraStateMachine.h"
 #include "PlaySceneCameraStates.h"
-#include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/Camera/PlayScene/PlaySceneCamera.h"
 #include "Game/Component/Components.h"
+#include "Game/Messenger/Messengers.h"
+
 
 /// <summary>
 /// コンストラクタ
