@@ -7,13 +7,12 @@
 #include "GameBase/Actor.h"
 #include "GameBase/Messenger/IObserver.h"
 #include "Game/Messenger/Scene/SceneMessageType.h"
-#include "Game/Messenger/Global/GlobalMeesageType.h"
 
 class Image;
 class Canvas;
 
 
-class StageSelectBase : public Actor ,public IObserver<SceneMessageType>,public IObserver<GlobalMessageType>
+class StageSelectBase : public Actor ,public IObserver<SceneMessageType>
 {
 public:
 
@@ -28,7 +27,9 @@ public:
 
 	//’Ê’m‚ÉŒÄ‚Ño‚³‚ê‚é
 	void Notify(SceneMessageType type, void* datas)  override;
-	void Notify(GlobalMessageType type, void* datas)  override;
+
+	void aa(SceneMessageType type, void* datas);
+
 
 private:
 

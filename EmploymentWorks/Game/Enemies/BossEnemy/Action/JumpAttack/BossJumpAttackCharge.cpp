@@ -9,6 +9,7 @@
 #include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/Component/Components.h"
 #include "Game/Enemies/BossEnemy/Action/JumpAttack/BossJumpAttackActionController.h"
+#include "Game/Messenger/Messenger.h"
 
 /// <summary>
 /// コンストラクタ
@@ -77,9 +78,9 @@ void BossJumpAttackCharge::Enter()
 	datas.Position.y = 0.1f;
 
 	//エフェクト作成の通知
-	SceneMessenger::GetInstance()->Notify(SceneMessageType::CREATE_CHARGE_EFFECT, &datas);
+	Messenger<SceneMessageType>::GetInstance()->Notify(SceneMessageType::CREATE_CHARGE_EFFECT, &datas);
 	//ジャンプアニメーションの通知
-	SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_JUMP_ANIMATION_START);
+	Messenger<SceneMessageType>::GetInstance()->Notify(SceneMessageType::BOSS_JUMP_ANIMATION_START);
 
 }
 

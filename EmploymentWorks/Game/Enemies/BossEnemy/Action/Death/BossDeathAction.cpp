@@ -5,7 +5,8 @@
 */
 #include "pch.h"
 #include "BossDeathAction.h"
-#include "Game/Messenger/Scene/SceneMessages.h"
+#include "Game/Messenger/Messenger.h"
+#include "Game/Messenger/Scene/SceneMessageType.h"
 
 
 /// <summary>
@@ -57,7 +58,7 @@ BossDeathAction:: ActionState BossDeathAction::Update(const float& deltaTime)
 /// </summary>
 void BossDeathAction::Enter()
 {
-	SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_DEFEATED);
+	Messenger<SceneMessageType>::GetInstance()->Notify(SceneMessageType::BOSS_DEFEATED);
 
 	m_time = 0;
 }

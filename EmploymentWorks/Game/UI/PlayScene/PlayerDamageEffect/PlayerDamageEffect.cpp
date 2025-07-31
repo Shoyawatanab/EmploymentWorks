@@ -50,11 +50,17 @@ PlayerDamageEffect::PlayerDamageEffect(Canvas* canvas)
 
 	m_image->SetActive(false);
 
-	SceneMessenger::GetInstance()->Rigister(
+
+	//通知を受け取るコンポーネントの追加
+	auto ob = AddComponent<ObserverComponent<SceneMessageType>>(this);
+	//どの通知かの登録と呼び出す関数の登録
+	ob->Rigister(
 		{
 			SceneMessageType::PLAYER_DAMAGE
-		}, this
+		}
+		, std::bind(&PlayerDamageEffect::Notify, this, std::placeholders::_1, std::placeholders::_2)
 	);
+
 
 }
 

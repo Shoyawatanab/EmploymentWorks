@@ -9,6 +9,7 @@
 #include "Game/Params.h"
 #include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/Enemies/BossEnemy/BossEnemy.h"
+#include "Game/Component/Components.h"
 
 
 /// <summary>
@@ -44,10 +45,14 @@ BossBeamAttackActionController::BossBeamAttackActionController(BossEnemy* bossen
 	);
 
 
-	SceneMessenger::GetInstance()->Rigister(
+	//’Ê’m‚ðŽó‚¯Žæ‚éƒRƒ“ƒ|[ƒlƒ“ƒg‚Ì’Ç‰Á
+	auto ob = bossenemy->AddComponent<ObserverComponent<SceneMessageType>>(bossenemy);
+	//‚Ç‚Ì’Ê’m‚©‚Ì“o˜^‚ÆŒÄ‚Ño‚·ŠÖ”‚Ì“o˜^
+	ob->Rigister(
 		{
 			SceneMessageType::BOSS_BEAM_IMPACT
-		}, this
+		}
+		, std::bind(&BossBeamAttackActionController::Notify, this, std::placeholders::_1, std::placeholders::_2)
 	);
 
 }

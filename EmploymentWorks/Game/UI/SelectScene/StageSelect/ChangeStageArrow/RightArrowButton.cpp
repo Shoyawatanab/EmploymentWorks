@@ -11,8 +11,10 @@
 #include "Game/Component/Components.h"
 #include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/Fade/FadeManager.h"
-#include "Game/Messenger/Global/GlobalMessages.h"
 #include "Game/GlobalGameData.h"
+
+
+#include "Game/Messenger/Messenger.h"
 
 /// <summary>
 /// コンストラク
@@ -40,6 +42,8 @@ RightArrowButton::RightArrowButton(Canvas* canvas)
 	comp->SetOutOfRangeFunction(std::bind(&RightArrowButton::OutOfRange,this));
 
 
+
+
 }
 
 /// <summary>
@@ -55,9 +59,7 @@ RightArrowButton::~RightArrowButton()
 void RightArrowButton::OnClick()
 {
 
-	SceneMessenger::GetInstance()->Notify(SceneMessageType::STAGE_UP);
-
-
+	Messenger<SceneMessageType>::GetInstance()->Notify(SceneMessageType::STAGE_UP);
 }
 
 /// <summary>

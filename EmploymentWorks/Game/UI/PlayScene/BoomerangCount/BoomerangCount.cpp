@@ -52,11 +52,16 @@ BoomerangCount::BoomerangCount(Canvas* canvas)
 	GetTransform()->SetScale(SCALE);
 	GetTransform()->SetPosition(POSITION);
 
-	SceneMessenger::GetInstance()->Rigister(
+
+	//通知を受け取るコンポーネントの追加
+	auto ob = AddComponent<ObserverComponent<SceneMessageType>>(this);
+	//どの通知かの登録と呼び出す関数の登録
+	ob->Rigister(
 		{
 			SceneMessageType::BOOMERANG_THROW
 			,SceneMessageType::BOOMERANG_CATCH
-		}, this
+		}
+		, std::bind(&BoomerangCount::Notify, this, std::placeholders::_1, std::placeholders::_2)
 	);
 
 

@@ -22,6 +22,7 @@ Scene::Scene()
 	,m_isChangeScene{}
 	,m_isActorDestroy{false}
 	,m_keyboardState{}
+	,m_nextSceneID{SceneManager::SceneID::NONE}
 {
 
 	m_renderMangaer = std::make_unique<RenderManager>();
@@ -157,6 +158,16 @@ void Scene::RemoveActor()
 	// 削除要請フラグをオフに
 	m_isActorDestroy = false;
 }
+
+/// <summary>
+/// シーン切り替え
+/// </summary>
+/// <param name="sceneID">シーンID</param>
+void Scene::ChangeScene(SceneManager::SceneID sceneID)
+{
+	m_nextSceneID = sceneID;
+}
+
 
 
 

@@ -11,7 +11,6 @@
 #include "Game/Component/Components.h"
 #include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/Fade/FadeManager.h"
-#include "Game/Messenger/Global/GlobalMessages.h"
 #include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/GlobalGameData.h"
 
@@ -56,7 +55,7 @@ LeftArrowButton::~LeftArrowButton()
 void LeftArrowButton::OnClick()
 {
 
-	SceneMessenger::GetInstance()->Notify(SceneMessageType::STAGE_DOWN);
+	Messenger<SceneMessageType>::GetInstance()->Notify(SceneMessageType::STAGE_DOWN);
 
 }
 

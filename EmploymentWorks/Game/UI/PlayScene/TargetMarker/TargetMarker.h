@@ -5,13 +5,12 @@
 */
 #pragma once
 #include "GameBase/Actor.h"
-#include "GameBase/Messenger/IObserver.h"
 #include "Game/Messenger/Scene/SceneMessageType.h"
 
 class Canvas;
 class Image;
 
-class TargetMarker : public Actor, public IObserver<SceneMessageType>
+class TargetMarker : public Actor
 {
 public:
 	//‘å‚«‚³
@@ -34,7 +33,7 @@ public:
 	void UpdateActor(const float& deltaTime) override;
 
 	//’Ê’m‚ÉŒÄ‚Ño‚³‚ê‚é
-	void Notify(SceneMessageType type, void* datas) override;
+	void Notify(SceneMessageType type, void* datas);
 
 
 private:

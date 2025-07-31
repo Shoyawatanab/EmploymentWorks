@@ -32,12 +32,16 @@ PlayerUsually::PlayerUsually(Player* player)
 	m_rigidbody->SetDeceleration(Params::GRAUND_FRICTION);
 
 
-	SceneMessenger::GetInstance()->Rigister(
+	//通知を受け取るコンポーネントの追加
+	auto ob = player->AddComponent<ObserverComponent<SceneMessageType>>(player);
+	//どの通知かの登録と呼び出す関数の登録
+	ob->Rigister(
 		{
 			SceneMessageType::PLAYER_GET_REDAY
 			,SceneMessageType::PLAYER_GET_REDAY_END
 		}
-		, this);
+		, std::bind(&PlayerUsually::Notify, this, std::placeholders::_1, std::placeholders::_2)
+	);
 }
 
 /// <summary>
@@ -181,13 +185,13 @@ void PlayerUsually::CheckMouseWheel()
 	//上に回転
 	if (scrollWheelValue > 0)
 	{
-		SceneMessenger::GetInstance()->Notify(SceneMessageType::MOUSE_WHEEL_UP, nullptr);
+		Messenger<SceneMessageType>::GetInstance()->Notify(SceneMessageType::MOUSE_WHEEL_UP, nullptr);
 	}
 	//下に回転
 	else if (scrollWheelValue < 0)
 	{
 
-		SceneMessenger::GetInstance()->Notify(SceneMessageType::MOUSE_WHEEL_DOWN, nullptr);
+		Messenger<SceneMessageType>::GetInstance()->Notify(SceneMessageType::MOUSE_WHEEL_DOWN, nullptr);
 
 	}
 	//マウスホイールの移動値のリセット

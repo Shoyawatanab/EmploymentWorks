@@ -3,12 +3,11 @@
 
 // IObserverインターフェースを定義する
 template <typename T>
-class IObserver 
+class IObserver2 
 {
 public:
-	
 	//通知時に呼び出される
-	virtual void Notify(T type,void* datas) = 0;
+	virtual void FunctionExecution(T type,void* datas) = 0;
 
 };
 

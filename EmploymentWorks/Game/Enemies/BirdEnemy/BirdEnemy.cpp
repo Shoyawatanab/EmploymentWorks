@@ -121,7 +121,7 @@ void BirdEnemy::OnCollisionEnter(ColliderComponent* collider)
 			datas.Position = GetTransform()->GetWorldPosition();
 			datas.Scale = GetTransform()->GetWorldScale();
 			//爆発エフェクトの通知
-			SceneMessenger::GetInstance()->Notify(SceneMessageType::EXPLOSITION_EFFECT, &datas);
+			Messenger<SceneMessageType>::GetInstance()->Notify(SceneMessageType::EXPLOSITION_EFFECT, &datas);
 			//オブジェクトを無効に
 			SetActive(false);
 			//マネージャーに死亡の通知
@@ -136,7 +136,7 @@ void BirdEnemy::OnCollisionEnter(ColliderComponent* collider)
 			datas.Damage = Params::BOOMERANG_DAMAGE;
 			datas.Position = GetTransform()->GetWorldPosition();
 			//敵ダメージのUIの通知
-			SceneMessenger::GetInstance()->Notify(SceneMessageType::ENEMY_DAMAGE, &datas);
+			Messenger<SceneMessageType>::GetInstance()->Notify(SceneMessageType::ENEMY_DAMAGE, &datas);
 		}
 
 			break;

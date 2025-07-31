@@ -5,7 +5,7 @@
 #include "pch.h"
 #include "Game.h"
 #include "GameBase/Screen.h"
-#include "Game/Scene/SceneManager.h"
+#include "GameBase/Scene/SceneManager.h"
 #include "GameBase/GameResources.h"
 
 extern void ExitGame() noexcept;

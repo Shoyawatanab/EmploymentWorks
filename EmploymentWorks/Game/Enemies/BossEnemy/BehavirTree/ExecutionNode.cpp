@@ -10,7 +10,7 @@
 #include "Game/Enemies/BossEnemy/BossEnemy.h"
 
 #include "Game/Messenger/Scene/SceneMessages.h"
-
+#include "Game/Messenger/Messenger.h"
 
 
 static const float ROTATESPEED = 1.0f;
@@ -48,7 +48,7 @@ ExecutionNode::~ExecutionNode()
 IBehaviorNode::State ExecutionNode::BossEnemyBeamAction()
 {
 
-	SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_BEAM_ATTACK_STATE);
+	Messenger<SceneMessageType>::GetInstance()->Notify(SceneMessageType::BOSS_BEAM_ATTACK_STATE);
 
 
 	return IBehaviorNode::State::SUCCESS;
@@ -64,7 +64,7 @@ IBehaviorNode::State ExecutionNode::BossEnemyBeamAction()
 IBehaviorNode::State ExecutionNode::BossEnemyJumpAttackAction()
 {
 
-	SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_JUMP_ATTACK_STATE);
+	Messenger<SceneMessageType>::GetInstance()->Notify(SceneMessageType::BOSS_JUMP_ATTACK_STATE);
 
 	return IBehaviorNode::State::SUCCESS;
 
@@ -76,7 +76,7 @@ IBehaviorNode::State ExecutionNode::BossEnemyJumpAttackAction()
 /// <returns></returns>
 IBehaviorNode::State ExecutionNode::BossEnemyWalking()
 {
-	SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_WAKING_STATE);
+	Messenger<SceneMessageType>::GetInstance()->Notify(SceneMessageType::BOSS_WAKING_STATE);
 
 	return IBehaviorNode::State::SUCCESS;
 
@@ -89,7 +89,7 @@ IBehaviorNode::State ExecutionNode::BossEnemyWalking()
 IBehaviorNode::State ExecutionNode::BossEnemySwingDown()
 {
 
-	SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_SWING_DOWN_STATE);
+	Messenger<SceneMessageType>::GetInstance()->Notify(SceneMessageType::BOSS_SWING_DOWN_STATE);
 
 
 	return IBehaviorNode::State::SUCCESS;

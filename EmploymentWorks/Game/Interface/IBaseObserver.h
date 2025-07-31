@@ -1,5 +1,4 @@
 #pragma once
-#include "Game/Observer/Telegram.h"
 
 
 // IObserverインターフェースを定義する

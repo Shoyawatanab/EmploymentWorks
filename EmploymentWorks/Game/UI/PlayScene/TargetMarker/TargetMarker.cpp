@@ -38,13 +38,18 @@ TargetMarker::TargetMarker(Canvas* canvas, std::vector<Actor*> targets)
 	m_marker->GetTransform()->SetPosition(Vector3::Zero);
 	m_marker->SetActive(false);
 
-	SceneMessenger::GetInstance()->Rigister(
+
+	//通知を受け取るコンポーネントの追加
+	auto ob = AddComponent<ObserverComponent<SceneMessageType>>(this);
+	//どの通知かの登録と呼び出す関数の登録
+	ob->Rigister(
 		{
 			SceneMessageType::PLAYER_GET_REDAY
 			,SceneMessageType::PLAYER_GET_REDAY_END
 		}
-		, this
+		, std::bind(&TargetMarker::Notify, this, std::placeholders::_1, std::placeholders::_2)
 	);
+
 
 }
 

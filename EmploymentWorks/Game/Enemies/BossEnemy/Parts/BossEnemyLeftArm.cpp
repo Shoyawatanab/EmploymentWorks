@@ -65,7 +65,7 @@ void BossEnemyLeftArm::OnCollisionEnterActor(ColliderComponent* collider)
 
 				position.y = 0.1f;
 				//パーティクル作成
-				SceneMessenger::GetInstance()->Notify(SceneMessageType::CREATE_PARTICLE_EFFECT, &position);
+				Messenger<SceneMessageType>::GetInstance()->Notify(SceneMessageType::CREATE_PARTICLE_EFFECT, &position);
 				//サウンド再生
 				m_hitSE->Play();
 

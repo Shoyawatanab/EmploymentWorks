@@ -5,7 +5,7 @@
 */
 #pragma once
 #include "GameBase/Scene/Scene.h"
-#include "Game/Scene/SceneManager.h"
+#include "GameBase/Scene/SceneManager.h"
 
 // ‘O•ûéŒ¾
 class CommonResources;

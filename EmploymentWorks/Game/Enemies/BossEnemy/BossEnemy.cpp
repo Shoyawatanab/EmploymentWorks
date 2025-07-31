@@ -209,7 +209,7 @@ void BossEnemy::AddDamage(int damage)
 
 
 	float ratio = GetHpRatio();
-	SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_DAMAGE, &ratio);
+	Messenger<SceneMessageType>::GetInstance()->Notify(SceneMessageType::BOSS_DAMAGE, &ratio);
 
 
 	if (GetHp() <= 0)

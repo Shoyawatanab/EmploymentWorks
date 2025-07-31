@@ -26,13 +26,18 @@ BoomerangThrowUI::BoomerangThrowUI(Canvas* canvas)
 	m_leftThrow->GetTransform()->SetPosition(LEFT_UI_POSITION);
 	m_leftThrow->GetTransform()->SetScale(LEFT_UI_SCALE);
 
-	//通知を受け取る種類の設定
-	SceneMessenger::GetInstance()->Rigister(
+
+	//通知を受け取るコンポーネントの追加
+	auto ob = AddComponent<ObserverComponent<SceneMessageType>>(this);
+	//どの通知かの登録と呼び出す関数の登録
+	ob->Rigister(
 		{
 			SceneMessageType::MOUSE_WHEEL_UP
 			,SceneMessageType::MOUSE_WHEEL_DOWN
-		}, this
+		}
+		, std::bind(&BoomerangThrowUI::Notify, this, std::placeholders::_1, std::placeholders::_2)
 	);
+
 
 }
 

@@ -20,7 +20,7 @@ SelectSceneSound::SelectSceneSound(Scene* scene)
 	//BGM‚Ìì¬
 	m_bgm = AddComponent<SoundComponent>(this, "StageSelect", SoundComponent::SoundType::BGM);
 	//Ä¶
-	m_bgm->Play();
+	//m_bgm->Play();
 
 
 

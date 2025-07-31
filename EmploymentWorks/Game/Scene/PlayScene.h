@@ -5,7 +5,7 @@
 */
 #pragma once
 #include "GameBase/Scene/Scene.h"
-#include "SceneManager.h"
+#include "GameBase/Scene/SceneManager.h"
 
 class PickUpManager;
 

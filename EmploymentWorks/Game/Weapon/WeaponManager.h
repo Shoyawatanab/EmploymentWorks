@@ -5,7 +5,6 @@
 */
 #pragma once
 #include "GameBase/Actor.h"
-#include "GameBase/Messenger/IObserver.h"
 #include "Game/Messenger/Scene/SceneMessageType.h"
 #include "Game/Weapon/WeaponBase.h"
 #include "Game/Weapon/Boomerang/Boomerang.h"
@@ -14,7 +13,7 @@
 class Boomerang;
 class Player;
 
-class WeaponManager : public Actor,  public IObserver<SceneMessageType>
+class WeaponManager : public Actor
 {
 public:
 	
@@ -29,7 +28,7 @@ public:
 	~WeaponManager() override;
 
 
-	void Notify(SceneMessageType type, void*) override;
+	void Notify(SceneMessageType type, void*);
 
 private:
 

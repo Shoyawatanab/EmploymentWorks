@@ -9,7 +9,7 @@
 #include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/Player/Player.h"
 #include "Game/Enemies/BossEnemy/BossEnemy.h"
-
+#include "Game/Component/Components.h"
 
 /// <summary>
 /// コンストラクタ
@@ -28,20 +28,22 @@ BossEnemyActionManager::BossEnemyActionManager(BossEnemy* ower,Player* target, B
 	AddAction("Orientation", std::make_unique<OrientationActionController>(ower, target));
 	AddAction("Orientation", std::make_unique<OrientationActionController>(ower, target));
 	AddAction("Death", std::make_unique<BossDeathActionController>(ower));
-
+	//初期アクションのセット
 	SetStartAction("Idle");
 	
 
-	//メッセージの登録
-	SceneMessenger::GetInstance()->Rigister(
+
+	//通知を受け取るコンポーネントの追加
+	auto ob = m_bossEnemy->AddComponent<ObserverComponent<SceneMessageType>>(m_bossEnemy);
+	//どの通知かの登録と呼び出す関数の登録
+	ob->Rigister(
 		{
 			SceneMessageType::BOSS_IDLE_STATE
 			,SceneMessageType::BOSS_BEAM_ATTACK_STATE
 			,SceneMessageType::BOSS_JUMP_ATTACK_STATE
 			,SceneMessageType::BOSS_SWING_DOWN_STATE
-			,SceneMessageType::BOSS_WAKING_STATE
-		}
-		, this
+			,SceneMessageType::BOSS_WAKING_STATE }
+		, std::bind(&BossEnemyActionManager::Notify, this, std::placeholders::_1, std::placeholders::_2)
 	);
 
 }
