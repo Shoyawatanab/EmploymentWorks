@@ -5,13 +5,12 @@
 */
 #pragma once
 #include "GameBase/Interface/IState.h"
-#include "GameBase/Messenger/IObserver.h"
 #include "Game/Messenger/Scene/SceneMessageType.h"
 
 class PlaySceneCamera;
 class PlaySceneCameraStateMachine;
 
-class PlaySceneCameraTPS : public IState , public IObserver<SceneMessageType>
+class PlaySceneCameraTPS : public IState
 {
 public:
 	//ズーム状態
@@ -21,26 +20,24 @@ public:
 		ZOOM_IN,		  //ズーム状態
 		ZOOM_OUT		  //ズームアウト状態
 	};
+
 public:
+
 	//マウス座標
 	static constexpr DirectX::SimpleMath::Vector2 MOUSE_POSITION{640.0f,320.0f};
-
 	//マウス感度
 	static constexpr float MOUSE_SENSITIVITY = 0.0005f;
 	//カメラの限界角度
 	static constexpr float ROTATE_LIMIT = 1.5f;
-
 	// ターゲットからのデフォルト距離
 	const float CAMERA_DISTANCE = 4.0f;
-
 	//ズーム方向
 	static constexpr DirectX::SimpleMath::Vector3 ZOOM_DIRECTION{0.2f, 0.0f, -1.0f};
 	//ズームにかかる時間
 	static constexpr float ZOOME_MAX_TIME = 0.2f;
-
 	//揺れの時間
 	static constexpr float SHAKETIME = 1.0f;
-
+	
 
 public:
 	//コンストラクタ
@@ -56,8 +53,7 @@ public:
 	void Exit() override;
 
 	//通知を受け取る関数
-	void Notify(SceneMessageType type, void* datas) override;
-
+	void Notify(SceneMessageType type, void* datas);
 
 private:
 

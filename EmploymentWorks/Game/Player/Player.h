@@ -5,7 +5,6 @@
 */
 #pragma once
 #include"GameBase/Actor.h"
-#include "GameBase/Messenger/IObserver.h"
 #include "Game/Messenger/Scene/SceneMessages.h"
 
 class PlayerStateMachine;
@@ -17,7 +16,7 @@ class PlayerUsually;
 class TargetMarker;
 class PickerComponent;
 
-class Player : public Actor , IObserver<SceneMessageType>
+class Player : public Actor
 {
 public:
 
@@ -73,7 +72,7 @@ public:
 	void WeaponUnrecoverable();
 
 	//’Ê’m‚ÉŒÄ‚Ño‚³‚ê‚é
-	void Notify(SceneMessageType type, void* datas)  override;
+	void Notify(SceneMessageType type, void* datas) ;
 
 
 private:

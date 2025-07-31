@@ -7,7 +7,8 @@
 #include "PlaySceneCameraStateMachine.h"
 #include "PlaySceneCameraStates.h"
 #include "Game/Messenger/Scene/SceneMessages.h"
-
+#include "Game/Camera/PlayScene/PlaySceneCamera.h"
+#include "Game/Component/Components.h"
 
 /// <summary>
 /// コンストラクタ
@@ -23,14 +24,17 @@ PlaySceneCameraStateMachine::PlaySceneCameraStateMachine(PlaySceneCamera* camera
 	//初期ステートの設定
 	SetStartState(PlaySceneCameraState::TPS);
 
-	//メッセンジャーに登録
-	SceneMessenger::GetInstance()->Rigister(
+
+	//通知を受け取るコンポーネントの追加
+	auto ob = camera->AddComponent<ObserverComponent<SceneMessageType>>(camera);
+	//どの通知かの登録と呼び出す関数の登録
+	ob->Rigister(
 		{
 			SceneMessageType::BOSS_DEFEATED
 			,SceneMessageType::GAME_OVER
-		}, this
+		}
+		, std::bind(&PlaySceneCameraStateMachine::Notify, this, std::placeholders::_1, std::placeholders::_2)
 	);
-
 }
 
 /// <summary>

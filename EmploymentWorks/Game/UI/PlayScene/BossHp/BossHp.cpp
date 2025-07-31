@@ -32,11 +32,14 @@ BossHp::BossHp(Canvas* canvas)
 	m_hpBar->GetTransform()->SetScale(Vector3(1, 0.85, 0));
 
 
-
-	SceneMessenger::GetInstance()->Rigister(
+	//通知を受け取るコンポーネントの追加
+	auto ob = AddComponent<ObserverComponent<SceneMessageType>>(this);
+	//どの通知かの登録と呼び出す関数の登録
+	ob->Rigister(
 		{
 			SceneMessageType::BOSS_DAMAGE
-		}, this
+		}
+		, std::bind(&BossHp::Notify, this, std::placeholders::_1, std::placeholders::_2)
 	);
 
 

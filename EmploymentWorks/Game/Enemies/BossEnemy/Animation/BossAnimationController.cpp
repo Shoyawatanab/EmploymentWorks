@@ -69,9 +69,11 @@ BossAnimationController::BossAnimationController(BossEnemy* bossEnemy)
 	//                    //遷移元　　　遷移先　　　　遷移名 基準値　　状態　大きいか　小さいか
 	CreateFloatTransition("BossIdle", "BossMove", "Move",speed, FloatState::Greater);
 
-	//メッセージの登録
-	SceneMessenger::GetInstance()->Rigister(
-		{ 
+	//通知を受け取るコンポーネントの追加
+	auto ob = bossEnemy->AddComponent<ObserverComponent<SceneMessageType>>(bossEnemy);
+	//どの通知かの登録と呼び出す関数の登録
+	ob->Rigister(
+		{
 			SceneMessageType::BOSS_IDLE_STATE
 			,SceneMessageType::BOSS_BEAM_ATTACK_STATE
 			,SceneMessageType::BOSS_JUMP_ANIMATION_START
@@ -79,7 +81,8 @@ BossAnimationController::BossAnimationController(BossEnemy* bossEnemy)
 			,SceneMessageType::BOSS_WAKING_STATE
 			,SceneMessageType::BOSS_DEFEATED
 			,SceneMessageType::BOSS_BEAM_IMPACT
-		}, this
+		}
+		, std::bind(&BossAnimationController::Notify, this, std::placeholders::_1, std::placeholders::_2)
 	);
 
 }

@@ -1,22 +1,22 @@
 /*
 	クラス名     : SceneManager
 	説明         : シーンマネージャー
-	補足・注意点 :
+	補足・注意点 :　シーンの作成時のクラスとSceneIDはゲームごとのクラスを使用すること
 */
 #include "pch.h"
 #include "SceneManager.h"
-#include "TitleScene.h"
-#include "PlayScene.h"
-#include "ResultScene.h"
-#include "StageSelectScene.h"
+#include "GameBase/Scene/Scene.h"
 #include "GameBase/Screen.h"
 #include "GameBase/Common/Commons.h"
-#include "Libraries/MyLib/MemoryLeakDetector.h"
-#include "Libraries/MyLib/InputManager.h"
-#include <cassert>
-#include "Game/Messenger/Global/GlobalMessages.h"
 #include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/Fade/FadeManager.h"
+
+
+//ゲームごとのシーン
+#include "Game/Scene/TitleScene.h"
+#include "Game/Scene/PlayScene.h"
+#include "Game/Scene/ResultScene.h"
+#include "Game/Scene/StageSelectScene.h"
 
 
 /// <summary>
@@ -25,20 +25,11 @@
 SceneManager::SceneManager()
 	:
 	m_currentScene{}
-	,m_nextSceneID{}
 	,m_fadeManager{}
 {
 
 	m_fadeManager = FadeManager::GetInstance();
 
-	GlobalMessenger::GetInstance()->Rigister(
-		{
-			GlobalMessageType::CHANGE_TITLE_SCENE
-			,GlobalMessageType::CHANGE_SELECT_SCENE
-			,GlobalMessageType::CHANGE_PLAY_SCENE
-			,GlobalMessageType::CHANGE_RESULT_SCENE
-		}, this
-	);
 
 }
 
@@ -57,8 +48,7 @@ void SceneManager::Initialize()
 {
 
 	//初期シーン
-	ChangeScene(SceneID::STAGESELECT);
-
+	ChangeScene(SceneID::TITLE);
 
 }
 
@@ -69,10 +59,14 @@ void SceneManager::Initialize()
 /// <param name="elapsedTime">経過時間</param>
 void SceneManager::Update(float elapsedTime)
 {
+	//シーンの更新
 	m_currentScene->Update(elapsedTime);
 
+	//シーンIDの取得
+	auto nextSceneID = m_currentScene->GetNextSceneID();
+
 	// シーンを変更しないとき
-	if (m_nextSceneID == SceneID::NONE) return;
+	if (nextSceneID == SceneID::NONE) return;
 
 	//フェード
 	if (m_fadeManager->GetFadeState() != FadeManager::FadeState::NONE)
@@ -81,9 +75,7 @@ void SceneManager::Update(float elapsedTime)
 	}
 
 	//シーン切り替え
-	ChangeScene(m_nextSceneID);
-	//初期化
-	m_nextSceneID = SceneID::NONE;
+	ChangeScene(nextSceneID);
 	
 }
 
@@ -92,6 +84,7 @@ void SceneManager::Update(float elapsedTime)
 /// </summary>
 void SceneManager::Render()
 {
+	//シーンの描画
 	m_currentScene->Render();
 }
 
@@ -101,6 +94,7 @@ void SceneManager::Render()
 /// </summary>
 void SceneManager::Finalize()
 {
+	//シーンの削除
 	DeleteScene();
 }
 
@@ -111,7 +105,9 @@ void SceneManager::Finalize()
 /// <param name="sceneID"></param>
 void SceneManager::ChangeScene(SceneID sceneID)
 {
+	//シーンの削除
 	DeleteScene();
+	//シーンの作成
 	CreateScene(sceneID);
 }
 
@@ -139,13 +135,13 @@ void SceneManager::CreateScene(SceneID sceneID)
 			break;
 		default:
 			assert(!"SceneManager::CreateScene::シーン名が存在しません！");
-			// no break
 	}
 
 	assert(m_currentScene && "SceneManager::CreateScene::次のシーンが生成されませんでした！");
 	m_currentScene->Initialize();
 
 }
+
 
 /// <summary>
 /// シーンの削除
@@ -155,41 +151,11 @@ void SceneManager::DeleteScene()
 	if (m_currentScene)
 	{
 		m_currentScene.reset();
-		//メッセンジャーもクリア
-		SceneMessenger::GetInstance()->Clear();
-
-	}
-
-}
-
-
-
-/// <summary>
-/// 通知を受け取る関数
-/// </summary>
-/// <param name="type">通知の種類</param>
-/// <param name="datas">追加データ</param>
-void SceneManager::Notify(GlobalMessageType type, void* datas)
-{
-	UNREFERENCED_PARAMETER(datas);
-	switch (type)
-	{
-		case GlobalMessageType::CHANGE_TITLE_SCENE:
-			SetNextSceneID(SceneID::TITLE);
-			break;
-		case GlobalMessageType::CHANGE_SELECT_SCENE:
-			SetNextSceneID(SceneID::STAGESELECT);
-			break;
-		case GlobalMessageType::CHANGE_PLAY_SCENE:
-			SetNextSceneID(SceneID::PLAY);
-			break;
-		case GlobalMessageType::CHANGE_RESULT_SCENE:
-			SetNextSceneID(SceneID::RESULT);
-			break;
-		default:
-			break;
 	}
 }
+
+
+
 
 
 

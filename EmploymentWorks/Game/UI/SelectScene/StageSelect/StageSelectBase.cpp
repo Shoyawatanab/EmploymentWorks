@@ -14,8 +14,10 @@
 #include "Game/UI/SelectScene/StageSelect/ChangeStageArrow/LeftArrowButton.h"
 #include "Game/UI/SelectScene/StageSelect/ChangeStageArrow/RightArrowButton.h"
 #include "Game/GlobalGameData.h"
-#include "Game/Messenger/Global/GlobalMessages.h"
 #include "Game/Messenger/Scene/SceneMessages.h"
+#include "Game/Component/Observer/ObserverComponent.h"
+
+
 
 /// <summary>
 /// コンストラク
@@ -45,19 +47,17 @@ StageSelectBase::StageSelectBase(Canvas* canvas)
 	GetScene()->AddActor<LeftArrowButton>(canvas);
 	GetScene()->AddActor<RightArrowButton>(canvas);
 
-	//通知を受け取る種類の設定
-	SceneMessenger::GetInstance()->Rigister(
+
+	auto ob = AddComponent<ObserverComponent<SceneMessageType>>(this);
+
+	ob->Rigister(
 		{
 			SceneMessageType::STAGE_UP
 			,SceneMessageType::STAGE_DOWN
-		}, this
+		}
+		,std::bind(&StageSelectBase::aa,this,std::placeholders::_1,std::placeholders::_2)
 	);
 
-	GlobalMessenger::GetInstance()->Rigister(
-		{
-			GlobalMessageType::CHANGE_PLAY_SCENE
-		}, this
-	);
 
 
 }
@@ -68,7 +68,6 @@ StageSelectBase::StageSelectBase(Canvas* canvas)
 StageSelectBase::~StageSelectBase()
 {
 
-	GlobalMessenger::GetInstance()->Delete(this);
 
 }
 
@@ -103,24 +102,27 @@ void StageSelectBase::Notify(SceneMessageType type, void* datas)
 }
 
 
-/// <summary>
-/// 通知を受け取る関数
-/// </summary>
-/// <param name="type">通知の種類</param>
-/// <param name="datas">追加データ</param>
-void StageSelectBase::Notify(GlobalMessageType type, void* datas)
-{
 
+void StageSelectBase::aa(SceneMessageType type, void* datas)
+{
 	switch (type)
 	{
-		case GlobalMessageType::CHANGE_PLAY_SCENE:
-			//選択ステージ番号のセット
-			GlobalGameData::GetInstance()->SetSelectStateNumber(m_selectStageNumber);
+		case SceneMessageType::STAGE_UP:
+			//
+			m_selectStageNumber++;
+			m_selectStageNumber = std::min(MAX_STAGE_COUNT, m_selectStageNumber);
+			//UIの切り替え
+			ChangeStageUI(m_selectStageNumber);
+			break;
+		case SceneMessageType::STAGE_DOWN:
+			m_selectStageNumber--;
+			m_selectStageNumber = std::max(1, m_selectStageNumber);
+			//UIの切り替え
+			ChangeStageUI(m_selectStageNumber);
 			break;
 		default:
 			break;
 	}
-
 }
 
 /// <summary>

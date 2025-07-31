@@ -8,6 +8,7 @@
 #include "Game/Player/Player.h"
 #include "Game/Player//State/PlayerStates.h"
 #include "Game/Messenger/Scene/SceneMessages.h"
+#include "Game/Component/Components.h"
 
 /// <summary>
 /// コンストラクタ
@@ -25,14 +26,17 @@ PlayerStateMachine::PlayerStateMachine(Player* player)
 
 	SetStartState(PlayerState::IDEL);
 
-	//メッセージの登録
-	SceneMessenger::GetInstance()->Rigister(
+
+	//通知を受け取るコンポーネントの追加
+	auto ob = player->AddComponent<ObserverComponent<SceneMessageType>>(player);
+	//どの通知かの登録と呼び出す関数の登録
+	ob->Rigister(
 		{
-		 SceneMessageType::PLAYER_IDLE_STATE
-		,SceneMessageType::PLAYER_BOOMERANG_ATTACK_STATE
-		,SceneMessageType::PLAYER_BOOMERANG_GET_READY_STATE
+			 SceneMessageType::PLAYER_IDLE_STATE
+			,SceneMessageType::PLAYER_BOOMERANG_ATTACK_STATE
+			,SceneMessageType::PLAYER_BOOMERANG_GET_READY_STATE
 		}
-		, this
+		, std::bind(&PlayerStateMachine::Notify, this, std::placeholders::_1, std::placeholders::_2)
 	);
 
 }

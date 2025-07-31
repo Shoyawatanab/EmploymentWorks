@@ -10,7 +10,7 @@
 // šinclude‚Ì’Ç‹Lš
 #include "GameBase/Common/Commons.h"
 #include "GameBase/Scene/Scene.h"
-#include "Game/Scene/SceneManager.h"
+#include "GameBase/Scene/SceneManager.h"
 #include "Libraries/MyLib/DebugString.h"
 #include "Libraries/MyLib/InputManager.h"
 #include "Game/Fade/FadeManager.h"

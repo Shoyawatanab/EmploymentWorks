@@ -59,17 +59,18 @@ PlayerAnimationController::PlayerAnimationController(Player* player)
 	//                    //遷移元　　　遷移先　　　　遷移名 基準値　　状態　大きいか　小さいか
 	CreateFloatTransition("PlayerIdle", "PlayerMove", "Move",speed, FloatState::Greater);
 
-	//メッセージの登録
-	SceneMessenger::GetInstance()->Rigister(
-		{ 
+	
+	//通知を受け取るコンポーネントの追加
+	auto ob = player->AddComponent<ObserverComponent<SceneMessageType>>(player);
+	//どの通知かの登録と呼び出す関数の登録
+	ob->Rigister(
+		{
 		SceneMessageType::PLAYER_IDLE_STATE
 		,SceneMessageType::PLAYER_BOOMERANG_GET_READY_STATE
-		,SceneMessageType::PLAYER_BOOMERANG_ATTACK_STATE
+		,SceneMessageType::PLAYER_BOOMERANG_ATTACK_STATE 
 		}
-		, this
+		, std::bind(&PlayerAnimationController::Notify, this, std::placeholders::_1, std::placeholders::_2)
 	);
-
-	
 
 
 }

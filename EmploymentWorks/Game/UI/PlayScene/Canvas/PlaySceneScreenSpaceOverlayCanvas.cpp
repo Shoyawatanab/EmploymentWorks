@@ -9,6 +9,7 @@
 #include "Game/UI/PlayScene/PlaySceneUIs.h"
 #include "Game/GlobalGameData.h"
 #include "Game/Messenger/Scene/SceneMessages.h"
+#include "Game/Component/Components.h"
 
 /// <summary>
 /// コンストラクタ
@@ -46,13 +47,17 @@ PlaySceneScreenSpaceOverlayCanvas::PlaySceneScreenSpaceOverlayCanvas(Scene* scen
 	//ゲームオーバーUI
 	GetScene()->AddActor<GameOverUI>(this);
 
-	//通知を受け取る種類の設定
-	SceneMessenger::GetInstance()->Rigister(
+	//通知を受け取るコンポーネントの追加
+	auto ob = AddComponent<ObserverComponent<SceneMessageType>>(this);
+	//どの通知かの登録と呼び出す関数の登録
+	ob->Rigister(
 		{
 			SceneMessageType::PLAYER_PICKUP_POSSIBLE
 			,SceneMessageType::PLAYER_PICKUP_IMPOSSIBLE
-		}, this
+		}
+		, std::bind(&PlaySceneScreenSpaceOverlayCanvas::Notify, this, std::placeholders::_1, std::placeholders::_2)
 	);
+
 
 }
 

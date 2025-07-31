@@ -7,7 +7,6 @@
 #include "ResultTitleButton.h"
 #include "GameBase/Scene/Scene.h"
 #include "Game/Component/Components.h"
-#include "Game/Messenger/Global/GlobalMessages.h"
 #include "Game/Fade/FadeManager.h"
 
 /// <summary>
@@ -46,7 +45,10 @@ ResultTitleButton::~ResultTitleButton()
 /// </summary>
 void ResultTitleButton::OnClick()
 {
-	GlobalMessenger::GetInstance()->Notify(GlobalMessageType::CHANGE_TITLE_SCENE);
+
+	//ƒV[ƒ“Ø‚è‘Ö‚¦
+	GetScene()->ChangeScene(SceneManager::SceneID::TITLE);
+
 	FadeManager::GetInstance()->StartFadeIn();
 
 }

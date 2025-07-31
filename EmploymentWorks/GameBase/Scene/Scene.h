@@ -4,6 +4,7 @@
 	補足・注意点 :
 */
 #pragma once
+#include "GameBase/Scene/SceneManager.h"
 
 class Actor;
 class CommonResources;
@@ -16,6 +17,9 @@ class UIManager;
 class Scene
 {
 public:
+	//切り替えシーンIDの取得
+	SceneManager::SceneID GetNextSceneID() { return m_nextSceneID; }
+
 	//マネージャーの取得
 	RenderManager* GetRenderMangaer() { return m_renderMangaer.get(); }
 	CollisionManager* GetCollisionManager() { return m_collisionManager.get(); }
@@ -47,13 +51,14 @@ public:
 	// アクター削除フラグをオンにする
 	void ActorDestroyOn() { m_isActorDestroy = true; }
 
-public:
 	// アクター追加
 	template<typename Act , typename...Args>
 	Act* AddActor(Args&&... args);
 	// アクター削除
 	void RemoveActor();
 
+	//シーン切り替え
+	void ChangeScene(SceneManager::SceneID sceneID);
 
 private:
 	// チェンジフラグ
@@ -66,10 +71,10 @@ private:
 	bool m_updateNow;
 	// アクター削除フラグ
 	bool m_isActorDestroy;
-
+	//次のシーンID
+	SceneManager::SceneID m_nextSceneID;
 	// キーボードステート
 	DirectX::Keyboard::State m_keyboardState;
-
 
 	//描画のマネージャー
 	std::unique_ptr<RenderManager> m_renderMangaer;

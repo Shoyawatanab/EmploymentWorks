@@ -9,7 +9,7 @@
 class PlayerStateMachine;
 class Player;
 
-class PlayerBoomerangAttack : public IState //, IObserver<GamePlayMessageType>
+class PlayerBoomerangAttack : public IState 
 {
 public:
 
@@ -43,8 +43,6 @@ public:
 	//状態を抜けた時
 	void Exit() override;
 
-	////通知時に呼び出される
-	//void Notify(const Telegram<GamePlayMessageType>& telegram) override;
 
 private:
 	//プレイヤ

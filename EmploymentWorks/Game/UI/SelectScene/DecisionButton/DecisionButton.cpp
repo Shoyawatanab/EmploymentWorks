@@ -11,7 +11,6 @@
 #include "Game/Component/Components.h"
 #include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/Fade/FadeManager.h"
-#include "Game/Messenger/Global/GlobalMessages.h"
 
 /// <summary>
 /// コンストラク
@@ -51,9 +50,12 @@ DecisionButton::~DecisionButton()
 void DecisionButton::OnClick()
 {
 
-	GlobalMessenger::GetInstance()->Notify(GlobalMessageType::CHANGE_PLAY_SCENE);
+	//GlobalMessenger::GetInstance()->Notify(GlobalMessageType::CHANGE_PLAY_SCENE);
+
+	GetScene()->ChangeScene(SceneManager::SceneID::PLAY);
 
 	FadeManager::GetInstance()->StartFadeIn();
+
 
 }
 

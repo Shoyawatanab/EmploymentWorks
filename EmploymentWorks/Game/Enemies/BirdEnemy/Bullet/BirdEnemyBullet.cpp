@@ -78,7 +78,7 @@ void BirdEnemyBullet::OnCollisionEnter(ColliderComponent* collider)
 			//追加データからデータのセット
 			datas.Position = GetTransform()->GetWorldPosition();
 			datas.Scale = GetTransform()->GetWorldScale();
-			SceneMessenger::GetInstance()->Notify(SceneMessageType::EXPLOSITION_EFFECT,&datas);
+			Messenger<SceneMessageType>::GetInstance()->Notify(SceneMessageType::EXPLOSITION_EFFECT,&datas);
 			
 			//SEの再生
 			m_explosionSE->Play();

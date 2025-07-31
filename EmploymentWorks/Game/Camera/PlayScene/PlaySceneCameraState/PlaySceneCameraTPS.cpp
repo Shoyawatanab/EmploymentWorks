@@ -8,10 +8,10 @@
 #include "Game/Camera/PlayScene/PlaySceneCamera.h"
 #include "Game/Player/Player.h"
 #include "Game/Component/Components.h"
-#include "Game/Messenger/Scene/SceneMessages.h"
 #include "GameBase/Scene/Scene.h"
 #include "GameBase/Manager/CollisionManager.h"
 #include "Game/MathUtil.h"
+#include "Game/Messenger/Messenger.h"
 
 /// <summary>
 /// コンストラクタ
@@ -33,14 +33,16 @@ PlaySceneCameraTPS::PlaySceneCameraTPS(PlaySceneCameraStateMachine* stateMachine
 	,m_shakePower{0.05f}
 {
 
-	//メッセンジャーに登録
-	SceneMessenger::GetInstance()->Rigister(
+	//通知を受け取るコンポーネントの追加
+	auto ob = m_camera->AddComponent<ObserverComponent<SceneMessageType>>(m_camera);
+	//どの通知かの登録と呼び出す関数の登録
+	ob->Rigister(
 		{
 			SceneMessageType::PLAYER_GET_REDAY
 			,SceneMessageType::PLAYER_GET_REDAY_END
 			,SceneMessageType::TPS_CAMERA_SHAKE
 		}
-		, this
+		, std::bind(&PlaySceneCameraTPS::Notify, this, std::placeholders::_1, std::placeholders::_2)
 	);
 
 
@@ -164,14 +166,11 @@ void PlaySceneCameraTPS::Notify(SceneMessageType type, void* datas)
 			m_zoomState = ZoomState::ZOOM_OUT;
 			m_zoomMovement = DirectX::SimpleMath::Vector3::Zero;
 			m_zoomTime = 0.0f;
-
 			break;
 		case SceneMessageType::TPS_CAMERA_SHAKE:
 			m_shaleTime = SHAKETIME;
 			m_isShake = true;
-
 			break;
-
 		default:
 			break;
 	}

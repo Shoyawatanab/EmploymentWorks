@@ -5,7 +5,6 @@
 */
 #pragma once
 #include "GameBase/StateMachine/StateMachine.h"
-#include "GameBase/Messenger/IObserver.h"
 #include "Game/Messenger/Scene/SceneMessageType.h"
 
 class PlaySceneCamera;
@@ -19,7 +18,7 @@ enum class PlaySceneCameraState
 	,STOP			 //’â~ƒJƒƒ‰
 };
 
-class PlaySceneCameraStateMachine : public StateMachine<IState, PlaySceneCameraState> , public IObserver<SceneMessageType>
+class PlaySceneCameraStateMachine : public StateMachine<IState, PlaySceneCameraState>
 {
 
 public:
@@ -29,7 +28,7 @@ public:
 	~PlaySceneCameraStateMachine() override;
 
 	//’Ê’m‚ÉŒÄ‚Ño‚³‚ê‚é
-	void Notify(SceneMessageType type, void* datas) override;
+	void Notify(SceneMessageType type, void* datas) ;
 
 
 };

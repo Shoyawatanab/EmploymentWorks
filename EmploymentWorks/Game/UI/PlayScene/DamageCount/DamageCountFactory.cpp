@@ -28,11 +28,16 @@ DamageCountFactory::DamageCountFactory(Canvas* canvas)
 		m_damageCount.push_back(damageCount);
 	}
 
-	SceneMessenger::GetInstance()->Rigister(
+	//通知を受け取るコンポーネントの追加
+	auto ob = AddComponent<ObserverComponent<SceneMessageType>>(this);
+	//どの通知かの登録と呼び出す関数の登録
+	ob->Rigister(
 		{
 			SceneMessageType::ENEMY_DAMAGE
-		}, this
+		}
+		, std::bind(&DamageCountFactory::Notify, this, std::placeholders::_1, std::placeholders::_2)
 	);
+
 
 }
 

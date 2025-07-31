@@ -11,7 +11,7 @@
 #include "Game/Player/Player.h"
 #include "Game/Player/State/PlayerStateMachine.h"
 #include "Game/Messenger/Scene/SceneMessages.h"
-
+#include "Game/Messenger/Messenger.h"
 
 /// <summary>
 /// コンストラクタ
@@ -57,7 +57,7 @@ void PlayerBoomerangAttack::Update(const float& deltaTime)
 void PlayerBoomerangAttack::Enter()
 {
 	//プレイヤの状態を通常に
-	SceneMessenger::GetInstance()->Notify(SceneMessageType::PLAYER_IDLE_STATE);
+	Messenger<SceneMessageType>::GetInstance()->Notify(SceneMessageType::PLAYER_IDLE_STATE);
 
 }
 

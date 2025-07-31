@@ -76,7 +76,7 @@ void BossEnemyBeamEnergyBall::OnCollisionEnter(ColliderComponent* collider)
 		case ObjectTag::STAGE:
 		case ObjectTag::PLAYER:
 			
-			SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_BEAM_IMPACT);
+			Messenger<SceneMessageType>::GetInstance()->Notify(SceneMessageType::BOSS_BEAM_IMPACT);
 			m_explosionSE->Play();
 			break;
 		default:

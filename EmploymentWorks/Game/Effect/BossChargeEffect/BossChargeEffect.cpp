@@ -215,6 +215,8 @@ void BossChargeEffect::Render(const Camera& camera)
 
 }
 
+
+
 /// <summary>
 /// アクティブ状態になった時
 /// </summary>

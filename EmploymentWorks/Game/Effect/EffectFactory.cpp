@@ -47,13 +47,18 @@ EffectFactory::EffectFactory(Scene* scene)
 
 	}
 
-
-	SceneMessenger::GetInstance()->Rigister({
-		SceneMessageType::EXPLOSITION_EFFECT
-		,SceneMessageType::CREATE_CHARGE_EFFECT
-		,SceneMessageType::CREATE_PARTICLE_EFFECT
-		}, this
+	//通知を受け取るコンポーネントの追加
+	auto ob = AddComponent<ObserverComponent<SceneMessageType>>(this);
+	//どの通知かの登録と呼び出す関数の登録
+	ob->Rigister(
+		{
+			SceneMessageType::EXPLOSITION_EFFECT
+			,SceneMessageType::CREATE_CHARGE_EFFECT
+			,SceneMessageType::CREATE_PARTICLE_EFFECT
+		}
+		, std::bind(&EffectFactory::Notify, this, std::placeholders::_1, std::placeholders::_2)
 	);
+
 
 }
 

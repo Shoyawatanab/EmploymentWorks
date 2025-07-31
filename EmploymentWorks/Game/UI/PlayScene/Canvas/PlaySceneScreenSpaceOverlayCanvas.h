@@ -5,13 +5,12 @@
 */
 #pragma once
 #include "GameBase/UI/Canvas/ScreenSpaceOverlayCanvas.h"
-#include "GameBase/Messenger/IObserver.h"
 #include "Game/Messenger/Scene/SceneMessageType.h"
 
 class TargetMarker;
 class PickUpUI;
 
-class PlaySceneScreenSpaceOverlayCanvas : public ScreenSpaceOverlayCanvas , public IObserver<SceneMessageType>
+class PlaySceneScreenSpaceOverlayCanvas : public ScreenSpaceOverlayCanvas 
 {
 public:
 	//ターゲットマーカーの取得
@@ -24,7 +23,7 @@ public:
 	~PlaySceneScreenSpaceOverlayCanvas() override;
 
 	//通知時に呼び出される
-	void Notify(SceneMessageType type, void* datas)  override;
+	void Notify(SceneMessageType type, void* datas) ;
 
 
 private:

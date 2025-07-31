@@ -8,7 +8,7 @@
 #include "GameBase/Scene/Scene.h"
 #include "Game/Weapon/Boomerang/Boomerang.h"
 #include "Game/Messenger/Scene/SceneMessages.h"
-
+#include "Game/Component/Components.h"
 
 
 WeaponManager::WeaponManager(Scene* scene, Player* player)
@@ -25,15 +25,18 @@ WeaponManager::WeaponManager(Scene* scene, Player* player)
 		m_boomerangs.push_back(boomerang);
 	}
 
-	//メッセンジャーに登録
-	SceneMessenger::GetInstance()->Rigister(
+	//通知を受け取るコンポーネントの追加
+	auto ob = AddComponent<ObserverComponent<SceneMessageType>>(this);
+	//どの通知かの登録と呼び出す関数の登録
+	ob->Rigister(
 		{
 			SceneMessageType::BOOMERANG_IDEL_STATE
 			,SceneMessageType::BOOMERANG_GET_READY_STATE
 			,SceneMessageType::BOOMERANG_THROW_STATE
 		}
-		, this
+		, std::bind(&WeaponManager::Notify, this, std::placeholders::_1, std::placeholders::_2)
 	);
+
 
 }
 

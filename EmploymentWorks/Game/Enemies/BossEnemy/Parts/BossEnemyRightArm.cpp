@@ -63,7 +63,7 @@ void BossEnemyRightArm::OnCollisionEnterActor(ColliderComponent* collider)
 
 				position.y = 0.1f;
 				//パーティクルの通知
-				SceneMessenger::GetInstance()->Notify(SceneMessageType::CREATE_PARTICLE_EFFECT, &position);
+				Messenger<SceneMessageType>::GetInstance()->Notify(SceneMessageType::CREATE_PARTICLE_EFFECT, &position);
 				m_hitSE->Play();
 			}
 		break;

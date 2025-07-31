@@ -11,7 +11,6 @@
 #include "Game/Component/Components.h"
 #include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/Fade/FadeManager.h"
-#include "Game/Messenger/Global/GlobalMessages.h"
 
 /// <summary>
 /// コンストラク
@@ -47,7 +46,9 @@ PlayButton::~PlayButton()
 void PlayButton::OnClick()
 {
 	
-	GlobalMessenger::GetInstance()->Notify(GlobalMessageType::CHANGE_SELECT_SCENE);
+	//シーン切り替え
+	GetScene()->ChangeScene(SceneManager::SceneID::STAGESELECT);
+
 
 	FadeManager::GetInstance()->StartFadeIn(FadeManager::FadeInKinds::BOMERANG_FADE_IN);
 

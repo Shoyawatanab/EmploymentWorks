@@ -1,40 +1,29 @@
 /*
 	クラス名     : SceneManager
 	説明         : シーンマネージャー
-	補足・注意点 :
+	補足・注意点 :　シーンの作成時のクラスとSceneIDはゲームごとのクラスを使用すること
+
 */
 #pragma once
-#include "GameBase/Scene/Scene.h"
 #include "GameBase/Messenger/IObserver.h"
-#include "Game/Messenger/Global/GlobalMeesageType.h"
 
 // 前方宣言
+class Scene;
 class FadeManager;
 
-class SceneManager : public IObserver<GlobalMessageType>
+class SceneManager 
 {
 public:
 
-	// シーンID
+	// シーンID ゲームごとにカスタムする
 	enum class SceneID : unsigned int
 	{
-		NONE,
+		NONE = 0,
 		TITLE,
 		PLAY,
 		STAGESELECT,
 		RESULT
 	};
-
-	enum StageID
-	{
-		STAGE1 = 0,
-		STAGE2
-
-	};
-public:
-
-	//次のシーンのIDのセット
-	void SetNextSceneID(SceneID sceneID) { m_nextSceneID =  sceneID; }
 
 public:
 	//コンストラク
@@ -50,11 +39,6 @@ public:
 	//
 	void Finalize();
 
-	//通知時に呼び出される
-	void Notify(GlobalMessageType type, void* datas) override;
-
-
-
 private:
 	//シーン切り替え
 	void ChangeScene(SceneID sceneID);
@@ -66,9 +50,6 @@ private:
 private:
 	//実行シーン
 	std::unique_ptr<Scene> m_currentScene;
-	//次のシーン
-	SceneID m_nextSceneID;
-
 	//フェードマネージャー
 	FadeManager* m_fadeManager;
 

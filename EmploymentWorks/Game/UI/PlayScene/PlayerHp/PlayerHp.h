@@ -5,13 +5,12 @@
 */
 #pragma once
 #include "GameBase/Actor.h"
-#include "GameBase/Messenger/IObserver.h"
 #include "Game/Messenger/Scene/SceneMessageType.h"
 
 class Canvas;
 class Image;
 
-class PlayerHp : public Actor , public IObserver<SceneMessageType>
+class PlayerHp : public Actor 
 {
 public:
 
@@ -31,7 +30,7 @@ public:
 	~PlayerHp() override;
 
 	//’Ê’m‚ÉŒÄ‚Ño‚³‚ê‚é
-	void Notify(SceneMessageType type, void* datas) override;
+	void Notify(SceneMessageType type, void* datas);
 
 
 private:

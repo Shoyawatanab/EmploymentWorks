@@ -13,7 +13,6 @@
 #include <fstream>
 #include <nlohmann/json.hpp>
 #include "Game/Messenger/Scene/SceneMessages.h"
-#include "Game/Messenger/Global/GlobalMessages.h"
 #include "Game/Fade/FadeManager.h"
 
 /// <summary>
@@ -61,10 +60,11 @@ void EnemyManager::DeathEnemy(Actor* actor)
 	//すべての敵を倒したら
 	if (m_enemys.empty())
 	{
-		//リザルトシーンに変更の通知
-		GlobalMessenger::GetInstance()->Notify(GlobalMessageType::CHANGE_RESULT_SCENE);
+		//シーン切り替え
+		GetScene()->ChangeScene(SceneManager::SceneID::RESULT);
 
 		FadeManager::GetInstance()->StartFadeIn();
+
 
 	}
 

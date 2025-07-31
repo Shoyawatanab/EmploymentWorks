@@ -1,12 +1,11 @@
 #pragma once
 #include "GameBase/Actor.h"
-#include "GameBase/Messenger/IObserver.h"
 #include "Game/Messenger/Scene/SceneMessages.h"
 
 class Canvas;
 class Image;
 
-class BoomerangThrowUI :public Actor ,public IObserver<SceneMessageType>
+class BoomerangThrowUI :public Actor
 {
 public:
 	//¶“Š‚°UI
@@ -31,7 +30,7 @@ public:
 	~BoomerangThrowUI();
 
 	//’Ê’m‚ÉŒÄ‚Ño‚³‚ê‚é
-	void Notify(SceneMessageType type, void* datas)  override;
+	void Notify(SceneMessageType type, void* datas);
 
 
 private:

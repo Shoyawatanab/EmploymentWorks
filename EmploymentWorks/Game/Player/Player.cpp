@@ -83,13 +83,18 @@ Player::Player(Scene* scene)
 	, std::bind(&PlayerUsually::OnInput, m_usually.get(), std::placeholders::_1));
 
 
-	//通知を受け取る種類の設定
-	SceneMessenger::GetInstance()->Rigister(
+	//通知を受け取るコンポーネントの追加
+	auto ob = AddComponent<ObserverComponent<SceneMessageType>>(this);
+	//どの通知かの登録と呼び出す関数の登録
+	ob->Rigister(
 		{
 			SceneMessageType::MOUSE_WHEEL_UP
 			,SceneMessageType::MOUSE_WHEEL_DOWN
-		}, this
+		}
+		, std::bind(&Player::Notify, this, std::placeholders::_1, std::placeholders::_2)
 	);
+
+
 }
 
 /// <summary>
@@ -151,8 +156,8 @@ void Player::OnCollisionEnter(ColliderComponent* collider)
 		{
 			//ダメージエフェクト
 			//通知
-			SceneMessenger::GetInstance()->Notify(SceneMessageType::PLAYER_DAMAGE);
-			SceneMessenger::GetInstance()->Notify(SceneMessageType::TPS_CAMERA_SHAKE);
+			Messenger<SceneMessageType>::GetInstance()->Notify(SceneMessageType::PLAYER_DAMAGE);
+			Messenger<SceneMessageType>::GetInstance()->Notify(SceneMessageType::TPS_CAMERA_SHAKE);
 			AddDamage();
 		}
 			break;
@@ -200,7 +205,7 @@ void Player::OnCollisionExit(ColliderComponent* collider)
 /// </summary>
 void Player::WeaponRecoverable()
 {
-	SceneMessenger::GetInstance()->Notify(SceneMessageType::PLAYER_PICKUP_POSSIBLE);
+	Messenger<SceneMessageType>::GetInstance()->Notify(SceneMessageType::PLAYER_PICKUP_POSSIBLE);
 }
 
 /// <summary>
@@ -208,7 +213,7 @@ void Player::WeaponRecoverable()
 /// </summary>
 void Player::WeaponUnrecoverable()
 {
-	SceneMessenger::GetInstance()->Notify(SceneMessageType::PLAYER_PICKUP_IMPOSSIBLE);
+	Messenger<SceneMessageType>::GetInstance()->Notify(SceneMessageType::PLAYER_PICKUP_IMPOSSIBLE);
 
 }
 
@@ -258,7 +263,7 @@ void Player::AddDamage()
 	if (m_hp == 0)
 	{
 		//ゲームオーバーの通知
-		SceneMessenger::GetInstance()->Notify(SceneMessageType::GAME_OVER);
+		Messenger<SceneMessageType>::GetInstance()->Notify(SceneMessageType::GAME_OVER);
 	}
 
 }

@@ -5,14 +5,13 @@
 */
 #pragma once
 #include "GameBase/Actor.h"
-#include "GameBase//Messenger/IObserver.h"
 #include "Game/Messenger/Scene/SceneMessageType.h"
 
 class Canvas;
 class Image;
 
 
-class BoomerangCount : public Actor , public IObserver<SceneMessageType>
+class BoomerangCount : public Actor 
 {
 
 	//UI‘S‘Ì‚Ì‘å‚«‚³
@@ -33,7 +32,7 @@ public:
 	~BoomerangCount() override;
 
 	//’Ê’m‚ÉŒÄ‚Ño‚³‚ê‚é
-	void Notify(SceneMessageType type, void* datas)  override;
+	void Notify(SceneMessageType type, void* datas);
 
 private:
 

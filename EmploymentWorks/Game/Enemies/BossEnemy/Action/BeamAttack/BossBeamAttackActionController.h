@@ -11,7 +11,6 @@
 #include "Game/Enemies/BossEnemy/Action/BeamAttack/BossBeamAttackPreliminaryAction.h"
 #include "Game/Enemies/BossEnemy/Action/BeamAttack/BossBeamAttackShot.h"
 
-#include "GameBase/Messenger/IObserver.h"
 #include "Game/Messenger/Scene/SceneMessageType.h"
 
 // 前方宣言
@@ -19,7 +18,7 @@ class CommonResources;
 class BossEnemyBeam;
 class BossEnemy;
 
-class BossBeamAttackActionController : public ActionController , public IObserver<SceneMessageType>
+class BossBeamAttackActionController : public ActionController 
 {
 public:
 	//コンストラクタ

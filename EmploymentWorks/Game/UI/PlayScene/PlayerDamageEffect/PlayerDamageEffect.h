@@ -5,13 +5,12 @@
 */
 #pragma once
 #include "GameBase/Actor.h"
-#include "GameBase/Messenger/IObserver.h"
 #include "Game/Messenger/Scene/SceneMessageType.h"
 
 class Image;
 class Canvas;
 
-class PlayerDamageEffect : public Actor , public IObserver<SceneMessageType>
+class PlayerDamageEffect : public Actor
 {
 public:
 
@@ -42,7 +41,7 @@ public:
 	void CustomRender();
 
 	//’Ê’m‚ÉŒÄ‚Ño‚³‚ê‚é
-	void Notify(SceneMessageType type, void* datas) override;
+	void Notify(SceneMessageType type, void* datas);
 
 
 private:

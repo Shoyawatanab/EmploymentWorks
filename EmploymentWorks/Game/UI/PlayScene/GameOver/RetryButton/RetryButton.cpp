@@ -7,7 +7,6 @@
 #include "RetryButton.h"
 #include "GameBase/Scene/Scene.h"
 #include "Game/Component/Components.h"
-#include "Game/Messenger/Global/GlobalMessages.h"
 #include "Game/Fade/FadeManager.h"
 
 /// <summary>
@@ -44,7 +43,10 @@ RetryButton::~RetryButton()
 void RetryButton::OnClick()
 {
 
-	GlobalMessenger::GetInstance()->Notify(GlobalMessageType::CHANGE_PLAY_SCENE);
+
+	//シーン切り替え
+	GetScene()->ChangeScene(SceneManager::SceneID::PLAY);
+	//フェード開始
 	FadeManager::GetInstance()->StartFadeIn();
 
 }

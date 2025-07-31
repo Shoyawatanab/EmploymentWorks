@@ -5,7 +5,6 @@
 */
 #pragma once
 #include "GameBase/StateMachine/StateMachine.h"
-#include "GameBase/Messenger/IObserver.h"
 
 
 class BirdEnemyBullet;

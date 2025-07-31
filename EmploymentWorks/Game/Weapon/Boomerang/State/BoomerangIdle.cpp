@@ -64,7 +64,7 @@ void BoomerangIdle::Enter()
 	shadow->SetActive(false);
 
 	//ブーメランのキャッチの活動
-	SceneMessenger::GetInstance()->Notify(SceneMessageType::BOOMERANG_CATCH);
+	Messenger<SceneMessageType>::GetInstance()->Notify(SceneMessageType::BOOMERANG_CATCH);
 
 
 }

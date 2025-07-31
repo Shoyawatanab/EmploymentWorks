@@ -11,7 +11,6 @@
 #include "Game/Component/Components.h"
 #include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/Fade/FadeManager.h"
-#include "Game/Messenger/Global/GlobalMessages.h"
 #include "Game/GlobalGameData.h"
 
 /// <summary>

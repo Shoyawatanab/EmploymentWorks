@@ -5,6 +5,6 @@
 
 #include "Game/Component/PickUp/PickerComponent.h"
 #include "Game/Component/PickUp/PickableComponent.h"
-
+#include "Game/Component/Observer/ObserverComponent.h"
 
 
