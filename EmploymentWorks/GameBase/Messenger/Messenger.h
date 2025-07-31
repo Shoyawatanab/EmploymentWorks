@@ -1,15 +1,15 @@
 /*
-	クラス名     : GlobalMessenger
-	説明         : シーンをまたがないMessenger
+	クラス名     : Messenger
+	説明         : メッセージを送るクラス
 	補足・注意点 :
 */
 #pragma once
 #include "GameBase/WataLib/Singleton.h"
 #include <unordered_map>
-#include "Game/Messenger/IObserver2.h"
+#include "GameBase/Messenger/IObserver.h"
 
 template<typename MessageType>
-class IObserver2;
+class IObserver;
 
 
 template<typename MessageType>
@@ -34,7 +34,7 @@ public:
 	};
 
 	//リストに登録
-	void Rigister(std::vector<MessageType> types, IObserver2<MessageType>* observer)
+	void Rigister(std::vector<MessageType> types, IObserver<MessageType>* observer)
 	{
 		//タイプだけ回す
 		for (auto& type : types)
@@ -46,7 +46,7 @@ public:
 	};
 	
 	//リストから削除
-	void Delete(IObserver2<MessageType>* observer)
+	void Delete(IObserver<MessageType>* observer)
 	{
 		//Typeだけ回す
 		for (auto& type : m_list)
@@ -94,7 +94,7 @@ public:
 private:
 
 	//リスト
-	std::unordered_map<MessageType, std::vector<IObserver2<MessageType>*>> m_list;
+	std::unordered_map<MessageType, std::vector<IObserver<MessageType>*>> m_list;
 
 };
 

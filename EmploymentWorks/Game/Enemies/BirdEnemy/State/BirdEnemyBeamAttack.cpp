@@ -5,7 +5,7 @@
 */
 #include "pch.h"
 #include "BirdEnemyBeamAttack.h"
-#include "Game/Messenger/Scene/SceneMessages.h"
+#include "Game/Messenger/Messengers.h"
 #include "Game/Enemies/BirdEnemy/BirdEnemy.h"
 #include "Game/Enemies/BirdEnemy/Bullet/BirdEnemyBullet.h"
 #include "Game/Enemies/BirdEnemy/Bullet/State/BirdEnemyBulletStateMachine.h"

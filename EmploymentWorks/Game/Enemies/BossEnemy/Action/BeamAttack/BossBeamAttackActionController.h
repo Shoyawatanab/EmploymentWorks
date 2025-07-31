@@ -11,7 +11,7 @@
 #include "Game/Enemies/BossEnemy/Action/BeamAttack/BossBeamAttackPreliminaryAction.h"
 #include "Game/Enemies/BossEnemy/Action/BeamAttack/BossBeamAttackShot.h"
 
-#include "Game/Messenger/Scene/SceneMessageType.h"
+#include "Game/Messenger/Messengers.h"
 
 // ‘O•ûéŒ¾
 class CommonResources;

@@ -13,7 +13,7 @@
 #include "Game/Params.h"
 #include "Game/Camera/PlayScene/PlaySceneCamera.h"
 #include "Game/Params.h"
-#include "Game/Messenger/Scene/SceneMessages.h"
+#include "Game/Messenger/Messengers.h"
 
 /// <summary>
 /// コンストラクタ

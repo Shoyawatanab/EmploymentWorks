@@ -12,7 +12,7 @@
 #include "GameBase/Screen.h"
 #include "GameBase/Camera/Camera.h"
 #include "GameBase/Actor.h"
-#include "Game/Messenger/Scene/SceneMessages.h"
+#include "Game/Messenger/Messengers.h"
 #include "Game/MathUtil.h"
 
 /// <summary>

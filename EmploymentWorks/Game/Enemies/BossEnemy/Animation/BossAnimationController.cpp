@@ -6,9 +6,10 @@
 #include "pch.h"
 #include "BossAnimationController.h"
 #include "Game/Component/Components.h"
-#include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/Enemies/BossEnemy/BossEnemy.h"
 #include "Game/Enemies/BossEnemy/Model/BossEnemyModel.h"
+#include "Game/Messenger/Messengers.h"
+
 
 /// <summary>
 /// コンストラクタ

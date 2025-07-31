@@ -6,7 +6,7 @@
 #include "pch.h"
 #include "BossEnemyActionManager.h"
 #include "Game/Enemies/BossEnemy/Action/BossEnemyActions.h"
-#include "Game/Messenger/Scene/SceneMessages.h"
+#include "Game/Messenger/Messengers.h"
 #include "Game/Player/Player.h"
 #include "Game/Enemies/BossEnemy/BossEnemy.h"
 #include "Game/Component/Components.h"

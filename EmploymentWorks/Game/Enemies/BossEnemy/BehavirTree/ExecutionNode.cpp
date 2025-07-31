@@ -8,9 +8,7 @@
 #include "GameBase/Common/Commons.h"
 #include "Game/Player/Player.h"
 #include "Game/Enemies/BossEnemy/BossEnemy.h"
-
-#include "Game/Messenger/Scene/SceneMessages.h"
-#include "Game/Messenger/Messenger.h"
+#include "Game/Messenger/Messengers.h"
 
 
 static const float ROTATESPEED = 1.0f;

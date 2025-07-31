@@ -8,7 +8,7 @@
 #include "GameBase/Scene/Scene.h"
 #include "Game/UI/PlayScene/PlaySceneUIs.h"
 #include "Game/GlobalGameData.h"
-#include "Game/Messenger/Scene/SceneMessages.h"
+#include "Game/Messenger/Messengers.h"
 #include "Game/Component/Components.h"
 
 /// <summary>
@@ -21,7 +21,7 @@ PlaySceneScreenSpaceOverlayCanvas::PlaySceneScreenSpaceOverlayCanvas(Scene* scen
 	,m_targetMarker{}
 {
 
-	//プレイシーンにきょうつうの　UI
+	//プレイシーンにきょうつうのUI
 
 	//PlyerHpの作成
 	GetScene()->AddActor<PlayerHp>(this);

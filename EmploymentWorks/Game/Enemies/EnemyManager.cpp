@@ -12,7 +12,7 @@
 #include <iostream>
 #include <fstream>
 #include <nlohmann/json.hpp>
-#include "Game/Messenger/Scene/SceneMessages.h"
+#include "Game/Messenger/Messengers.h"
 #include "Game/Fade/FadeManager.h"
 
 /// <summary>

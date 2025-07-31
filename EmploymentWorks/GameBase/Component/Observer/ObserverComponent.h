@@ -7,12 +7,13 @@
 #pragma once
 #include "GameBase/Component.h"
 #include "GameBase/Actor.h"
-#include "Game/Messenger/Messenger.h"
-#include "Game/Messenger/IObserver2.h"
+#include "GameBase/Messenger/Messenger.h"
+#include "GameBase/Messenger/IObserver.h"
+
 
 //通知の種類
 template<typename MessageType>
-class ObserverComponent : public Component , public IObserver2<MessageType>
+class ObserverComponent : public Component , public IObserver<MessageType>
 {
 public:
 	//コンストラク

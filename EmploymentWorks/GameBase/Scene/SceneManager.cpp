@@ -8,7 +8,7 @@
 #include "GameBase/Scene/Scene.h"
 #include "GameBase/Screen.h"
 #include "GameBase/Common/Commons.h"
-#include "Game/Messenger/Scene/SceneMessages.h"
+#include "Game/Messenger/Messengers.h"
 #include "Game/Fade/FadeManager.h"
 
 

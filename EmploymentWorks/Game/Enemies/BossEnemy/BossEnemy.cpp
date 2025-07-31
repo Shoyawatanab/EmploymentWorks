@@ -8,7 +8,6 @@
 #include "GameBase/Scene/Scene.h"
 #include "Game/Component/Components.h"
 #include "Game/Enemies/BossEnemy/BossEnemyParts.h"
-#include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/Enemies/BossEnemy/BehavirTree/BossBehaviorTree.h"
 #include "Game/Params.h"
 #include "Game/Enemies/BossEnemy/Model/BossEnemyModel.h"
@@ -19,6 +18,8 @@
 #include "Game/Fade/FadeManager.h"
 #include "Game/Enemies/BossEnemy/Beam/BossEnemyBeam.h"
 #include "Game/Enemies/EnemyManager.h"
+#include "Game/Messenger/Messengers.h"
+
 
 /// <summary>
 /// コンストラク

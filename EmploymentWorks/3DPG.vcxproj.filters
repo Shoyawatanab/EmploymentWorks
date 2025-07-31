@@ -270,9 +270,6 @@
     <ClInclude Include="GameBase\WataLib\CSV.h">
       <Filter>Libraries\WataLib</Filter>
     </ClInclude>
-    <ClInclude Include="GameBase\Messenger\IObserver.h">
-      <Filter>Game\Interface</Filter>
-    </ClInclude>
     <ClInclude Include="Game\Enemies\BossEnemy\Parts\BossEnemyBottom.h">
       <Filter>Game\Enemys\BossEnemy\Parts</Filter>
     </ClInclude>
@@ -333,7 +330,7 @@
     <ClInclude Include="Game\Enemies\BossEnemy\Parts\BossEnemyTorso.h">
       <Filter>Game\Enemys\BossEnemy\Parts</Filter>
     </ClInclude>
-    <ClInclude Include="Game\Messenger\Scene\SceneMessageType.h">
+    <ClInclude Include="Game\Messenger\SceneMessageType.h">
       <Filter>Game\Observer</Filter>
     </ClInclude>
     <ClInclude Include="Game\Stage\StageObject\Sky.h">
@@ -506,7 +503,6 @@
     <ClInclude Include="Game\Enemies\BirdEnemy\Bullet\State\BirdEnemyBulletCharge.h" />
     <ClInclude Include="Game\Enemies\BirdEnemy\Bullet\State\BirdEnemyBulletShot.h" />
     <ClInclude Include="Game\UI\PlayScene\PlayerDamageEffect\PlayerDamageEffect.h" />
-    <ClInclude Include="Game\Messenger\Scene\SceneMessages.h" />
     <ClInclude Include="Game\GlobalGameData.h" />
     <ClInclude Include="Game\UI\SelectScene\Canvas\SelectSceneScreenSpaceOverlayCanvas.h" />
     <ClInclude Include="Game\UI\SelectScene\SelectSceneUIs.h" />
@@ -570,9 +566,11 @@
     <ClInclude Include="Game\UI\SelectScene\InfmationBase\InformationBase.h" />
     <ClInclude Include="Game\UI\SelectScene\StageSelect\StageSelectBase.h" />
     <ClInclude Include="Game\UI\SelectScene\InfmationBase\BackGraund\InformationBackGraund.h" />
-    <ClInclude Include="Game\Component\Observer\ObserverComponent.h" />
-    <ClInclude Include="Game\Messenger\Messenger.h" />
-    <ClInclude Include="Game\Messenger\IObserver2.h" />
+    <ClInclude Include="GameBase\Component\Observer\ObserverComponent.h" />
+    <ClInclude Include="GameBase\Messenger\Messenger.h" />
+    <ClInclude Include="GameBase\Messenger\IObserver.h" />
+    <ClInclude Include="GameBase\Messenger\BaseMessengers.h" />
+    <ClInclude Include="Game\Messenger\Messengers.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -875,8 +873,8 @@
     <ClCompile Include="Game\UI\SelectScene\InfmationBase\InformationBase.cpp" />
     <ClCompile Include="Game\UI\SelectScene\StageSelect\StageSelectBase.cpp" />
     <ClCompile Include="Game\UI\SelectScene\InfmationBase\BackGraund\InformationBackGraund.cpp" />
-    <ClCompile Include="Game\Component\Observer\ObserverComponent.cpp" />
-    <ClCompile Include="Game\Messenger\Messenger.cpp" />
+    <ClCompile Include="GameBase\Component\Observer\ObserverComponent.cpp" />
+    <ClCompile Include="GameBase\Messenger\Messenger.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />

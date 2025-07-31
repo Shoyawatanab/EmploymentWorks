@@ -194,9 +194,10 @@
     <ClInclude Include="GameBase\Component\RoundShadow\RoundShadowComponent.h" />
     <ClInclude Include="GameBase\Component\Sound\SoundComponent.h" />
     <ClInclude Include="GameBase\Messenger\InputMessenger.h" />
+    <ClInclude Include="GameBase\Messenger\BaseMessengers.h" />
     <ClInclude Include="Game\Camera\Result\ResultCamera.h" />
     <ClInclude Include="Game\Component\Components.h" />
-    <ClInclude Include="Game\Component\Observer\ObserverComponent.h" />
+    <ClInclude Include="GameBase\Component\Observer\ObserverComponent.h" />
     <ClInclude Include="Game\Component\PickUp\PickableComponent.h" />
     <ClInclude Include="Game\Component\PickUp\PickerComponent.h" />
     <ClInclude Include="Game\Effect\BossChargeEffect\BossChargeEffect.h" />
@@ -271,9 +272,9 @@
     <ClInclude Include="Game\GlobalGameData.h" />
     <ClInclude Include="Game\Manager\Managers.h" />
     <ClInclude Include="Game\Manager\PickUp\PickUpManager.h" />
-    <ClInclude Include="Game\Messenger\IObserver2.h" />
-    <ClInclude Include="Game\Messenger\Messenger.h" />
-    <ClInclude Include="Game\Messenger\Scene\SceneMessages.h" />
+    <ClInclude Include="GameBase\Messenger\IObserver.h" />
+    <ClInclude Include="GameBase\Messenger\Messenger.h" />
+    <ClInclude Include="Game\Messenger\Messengers.h" />
     <ClInclude Include="Game\Sound\PlayScene\PlaySceneSound.h" />
     <ClInclude Include="Game\Sound\SelectScene\SelectSceneSound.h" />
     <ClInclude Include="Game\Sound\TitleScene\TitleSceneSound.h" />
@@ -387,12 +388,11 @@
     <ClInclude Include="Game\Interface\IEffect.h" />
     <ClInclude Include="Game\Interface\IKeyBoardObserver.h" />
     <ClInclude Include="Game\Interface\ILeafNode.h" />
-    <ClInclude Include="GameBase\Messenger\IObserver.h" />
     <ClInclude Include="GameBase\Interface\IState.h" />
     <ClInclude Include="Game\Interface\IStateMachine.h" />
     <ClInclude Include="Game\Interface\IUIState.h" />
     <ClInclude Include="Game\MathUtil.h" />
-    <ClInclude Include="Game\Messenger\Scene\SceneMessageType.h" />
+    <ClInclude Include="Game\Messenger\SceneMessageType.h" />
     <ClInclude Include="Game\Params.h" />
     <ClInclude Include="Game\Player\Animation\PlayerAnimationController.h" />
     <ClInclude Include="Game\Player\Model\PlayerModel.h" />
@@ -454,7 +454,7 @@
     <ClCompile Include="GameBase\Component\Sound\SoundComponent.cpp" />
     <ClCompile Include="GameBase\Messenger\InputMessenger.cpp" />
     <ClCompile Include="Game\Camera\Result\ResultCamera.cpp" />
-    <ClCompile Include="Game\Component\Observer\ObserverComponent.cpp" />
+    <ClCompile Include="GameBase\Component\Observer\ObserverComponent.cpp" />
     <ClCompile Include="Game\Component\PickUp\PickableComponent.cpp" />
     <ClCompile Include="Game\Component\PickUp\PickerComponent.cpp" />
     <ClCompile Include="Game\Effect\BossChargeEffect\BossChargeEffect.cpp" />
@@ -519,7 +519,7 @@
     <ClCompile Include="Game\Fade\FadeOut\NormalFadeOut.cpp" />
     <ClCompile Include="Game\GlobalGameData.cpp" />
     <ClCompile Include="Game\Manager\PickUp\PickUpManager.cpp" />
-    <ClCompile Include="Game\Messenger\Messenger.cpp" />
+    <ClCompile Include="GameBase\Messenger\Messenger.cpp" />
     <ClCompile Include="Game\Sound\PlayScene\PlaySceneSound.cpp" />
     <ClCompile Include="Game\Sound\SelectScene\SelectSceneSound.cpp" />
     <ClCompile Include="Game\Sound\TitleScene\TitleSceneSound.cpp" />

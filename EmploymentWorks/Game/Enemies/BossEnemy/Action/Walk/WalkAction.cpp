@@ -8,7 +8,7 @@
 #include "Game/Component/Components.h"
 #include "Game/Params.h"
 #include "GameBase/Common/Commons.h"
-#include "Game/Messenger/Scene/SceneMessages.h"
+#include "Game/Messenger/Messengers.h"
 #include "Game/Enemies/BossEnemy/BossEnemy.h"
 
 /// <summary>

@@ -7,8 +7,8 @@
 #include "PlayerStateMachine.h"
 #include "Game/Player/Player.h"
 #include "Game/Player//State/PlayerStates.h"
-#include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/Component/Components.h"
+#include "Game/Messenger/Messengers.h"
 
 /// <summary>
 /// コンストラクタ

@@ -8,7 +8,7 @@
 #include "GameBase/Scene/Scene.h"
 #include "Game/Component/Components.h"
 #include "Game/Params.h"
-#include "Game/Messenger/Scene/SceneMessages.h"
+#include "Game/Messenger/Messengers.h"
 #include "Game/Enemies/BossEnemy/BossEnemy.h"
 
 BossEnemyLeftArm::BossEnemyLeftArm(Scene* scene, BossEnemy* boss)

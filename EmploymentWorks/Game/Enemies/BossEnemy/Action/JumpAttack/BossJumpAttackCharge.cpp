@@ -6,10 +6,9 @@
 #include "pch.h"
 #include "BossJumpAttackCharge.h"
 #include "GameBase/Common/Commons.h"
-#include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/Component/Components.h"
 #include "Game/Enemies/BossEnemy/Action/JumpAttack/BossJumpAttackActionController.h"
-#include "Game/Messenger/Messenger.h"
+#include "Game/Messenger/Messengers.h"
 
 /// <summary>
 /// コンストラクタ

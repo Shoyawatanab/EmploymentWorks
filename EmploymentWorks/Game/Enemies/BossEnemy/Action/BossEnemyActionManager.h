@@ -6,7 +6,7 @@
 #pragma once
 #include "GameBase/Action/ActionManager.h"
 #include "GameBase/Actor.h"
-#include "Game/Messenger/Scene/SceneMessageType.h"
+#include "Game/Messenger/Messengers.h"
 
 class Player;
 class BossEnemy;

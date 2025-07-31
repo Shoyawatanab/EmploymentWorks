@@ -11,3 +11,4 @@
 #include "GameBase/Component/RoundShadow/RoundShadowComponent.h"
 #include "GameBase/Component/Sound/SoundComponent.h"
 #include "GameBase/Component/Input/InputComponent.h"
+#include "GameBase/Component/Observer/ObserverComponent.h"

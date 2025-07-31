@@ -3,7 +3,7 @@
 #include "Game/Component/Components.h"
 #include "Game/Enemies/BirdEnemy/BirdEnemy.h"
 #include "Game/Enemies/BirdEnemy/Bullet/State/BirdEnemyBulletStateMachine.h"
-#include "Game/Messenger/Scene/SceneMessages.h"
+#include "Game/Messenger/Messengers.h"
 
 /// <summary>
 /// コンストラク

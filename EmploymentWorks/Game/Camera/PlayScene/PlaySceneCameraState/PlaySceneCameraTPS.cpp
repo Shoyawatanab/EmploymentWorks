@@ -11,7 +11,7 @@
 #include "GameBase/Scene/Scene.h"
 #include "GameBase/Manager/CollisionManager.h"
 #include "Game/MathUtil.h"
-#include "Game/Messenger/Messenger.h"
+#include "Game/Messenger/Messengers.h"
 
 /// <summary>
 /// コンストラクタ

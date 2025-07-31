@@ -5,7 +5,7 @@
 */
 #pragma once
 #include "GameBase/Actor.h"
-#include "Game/Messenger/Scene/SceneMessageType.h"
+#include "Game/Messenger/Messengers.h"
 
 class Canvas;
 class DamageCount;

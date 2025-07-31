@@ -7,10 +7,11 @@
 #include "DamageCountFactory.h"
 #include "GameBase/UI/Canvas/Canvas.h"
 #include "Game/UI/PlayScene/DamageCount/DamageCount.h"
-#include "Game/Messenger/Scene/SceneMessages.h"
 #include "Game/Component/Components.h"
 #include "GameBase/Scene/Scene.h"
 #include "GameBase/Camera/Camera.h"
+#include "Game/Messenger/Messengers.h"
+
 
 /// <summary>
 /// コンストラク

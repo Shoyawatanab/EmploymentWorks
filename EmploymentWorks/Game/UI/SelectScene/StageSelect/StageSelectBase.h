@@ -6,13 +6,13 @@
 #pragma once
 #include "GameBase/Actor.h"
 #include "GameBase/Messenger/IObserver.h"
-#include "Game/Messenger/Scene/SceneMessageType.h"
+#include "Game/Messenger/Messengers.h"
 
 class Image;
 class Canvas;
 
 
-class StageSelectBase : public Actor ,public IObserver<SceneMessageType>
+class StageSelectBase : public Actor 
 {
 public:
 
@@ -26,9 +26,7 @@ public:
 	~StageSelectBase() override;
 
 	//’Ê’m‚ÉŒÄ‚Ño‚³‚ê‚é
-	void Notify(SceneMessageType type, void* datas)  override;
-
-	void aa(SceneMessageType type, void* datas);
+	void Notify(SceneMessageType type, void* datas);
 
 
 private:

@@ -10,7 +10,7 @@
 #include "GameBase/Scene/Scene.h"
 #include "Game/Component/Components.h"
 #include "Game/Params.h"
-#include "Game/Messenger/Scene/SceneMessages.h"
+#include "Game/Messenger/Messengers.h"
 #include "Game/Enemies/BirdEnemy/BirdEnemy.h"
 #include "Game/Enemies/BirdEnemy/State/BirdEnemyStateMachine.h"
 #include "Game/MathUtil.h"
