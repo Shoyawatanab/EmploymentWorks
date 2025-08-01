@@ -13,7 +13,7 @@ public:
 	//コンストラクタ
 	ActionManager();
 	//デストラクタ
-	virtual ~ActionManager();
+	virtual ~ActionManager() = 0;
 	//更新処理 true:実行終了   false:実行中
 	bool Update(const float& deltaTime);
 
@@ -23,6 +23,9 @@ public:
 	void ChangeAction(const std::string& actionName);
 	//行動の追加
 	void AddAction(const std::string& name, std::unique_ptr<ActionController> action);
+
+	//行動の中止
+	void ActionCancel();
 
 private:
 	//実行アクション

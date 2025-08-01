@@ -31,6 +31,9 @@ public:
 	//通知時に呼び出される
 	void Notify(SceneMessageType type, void* datas);
 
+	//行動の中止
+	void ActionCancel() override;
+
 
 private:
 	// 共通リソース
@@ -43,5 +46,8 @@ private:
 	std::unique_ptr<BossBeamAttackShot> m_shot;
 	//攻撃終了
 	std::unique_ptr<BossBeamAttackEnd> m_attackEnd;
+
+	//ビーム
+	BossEnemyBeam* m_beam;
 
 };

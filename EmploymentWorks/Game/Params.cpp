@@ -182,7 +182,7 @@ int Params::BOOMERANG_MAX_COUNT = 3;
  //ボス敵のRIGHTARMのHP							 	 
  const  int Params::BOSSENEMY_RIGHTARM_HP		= 100;
  //ボス敵のRIGHTARMJOINTのHP							 
- const  int Params::BOSSENEMY_RIGHTARMJOINT_HP	= 10;
+ const  int Params::BOSSENEMY_RIGHTARMJOINT_HP	= 100;
  //ボス敵のRIGHTLEGのHP							 	 
  const  int Params::BOSSENEMY_RIGHTLEG_HP		= 100;
  //ボス敵のRIGHTSHOULDERのHP							 

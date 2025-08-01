@@ -198,7 +198,7 @@ void EnemyManager::LoadData()
 		else if (kinds == "BirdEnemy")
 		{
 			//’¹“G‚Ìì¬
-			auto bird = GetScene()->AddActor<BirdEnemy>(GetScene(), scale, position, rotation,this, m_player);
+			auto bird = GetScene()->AddActor<BirdEnemy>(GetScene(), scale, position, rotation, this, m_player);
 			m_enemys.push_back(bird);
 
 		}

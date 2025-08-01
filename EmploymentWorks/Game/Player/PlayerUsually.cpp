@@ -118,6 +118,7 @@ void PlayerUsually::Move(const float& deltatime)
 	Quaternion rotationX =Quaternion::CreateFromYawPitchRoll(m_player->GetPlaySceneCamera()->GetRotationY(),0.0f,0.0f);
 	//ƒJƒƒ‰‚Ì‰ñ“]‚É‰ˆ‚Á‚Ä‰ñ“]
 	m_moveDirection = Vector3::Transform(m_moveDirection, rotationX);
+	m_moveDirection.Normalize();
 
 	//ˆÚ“®
 	m_rigidbody->AddForce(m_moveDirection * moveSpeed);

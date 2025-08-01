@@ -97,10 +97,10 @@ BossEnemy::BossEnemy(Scene* scene, DirectX::SimpleMath::Vector3 scale
 
 	//アニメーションコンポーネントの追加
 	m_animation = AddComponent<AnimatorComponent>(this, std::make_unique<BossAnimationController>(this));
-
+	//アクションマネージャーの作成
 	m_actionManager = std::make_unique<BossEnemyActionManager>(this,player,beam);
 
-
+	HpDecrease(1000);
 
 }
 
@@ -123,6 +123,7 @@ void BossEnemy::UpdateActor(const float& deltaTime)
 	//フェード実行中
 	if (FadeManager::GetInstance()->GetIsFade())
 	{
+
 		return;
 	}
 
@@ -130,16 +131,15 @@ void BossEnemy::UpdateActor(const float& deltaTime)
 
 	if (m_actionManager->Update(deltaTime))
 	{
+
 		//ビヘイビアツリーの更新
 		//m_behavior->Update(deltaTime);
-		//SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_BEAM_ATTACK_STATE);
-		//SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_JUMP_ATTACK_STATE);
-		//SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_WAKING_STATE);
-		//SceneMessenger::GetInstance()->Notify(SceneMessageType::BOSS_SWING_DOWN_STATE);
+		//Messenger<SceneMessageType>::GetInstance()->Notify(SceneMessageType::BOSS_BEAM_ATTACK_STATE);
+		//Messenger<SceneMessageType>::GetInstance()->Notify(SceneMessageType::BOSS_JUMP_ATTACK_STATE);
+		Messenger<SceneMessageType>::GetInstance()->Notify(SceneMessageType::BOSS_WAKING_STATE);
+		//Messenger<SceneMessageType>::GetInstance()->Notify(SceneMessageType::BOSS_SWING_DOWN_STATE);
 
 	}
-
-
 
 }
 
@@ -219,6 +219,9 @@ void BossEnemy::AddDamage(int damage)
 
 		auto* playCamera = static_cast<PlaySceneCamera*>(camera);
 		playCamera->SetTarget(this);
+
+		//アクションの停止
+		m_actionManager->ActionCancel();
 
 		m_actionManager->ChangeAction("Death");
 

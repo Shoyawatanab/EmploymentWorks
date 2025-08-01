@@ -13,7 +13,7 @@ public:
 	//コンストラク
 	ActionController();
 	//デストラクタ
-	virtual ~ActionController();
+	virtual ~ActionController() = 0;
 	//更新処理
 	IAction::ActionState Update(const float& elapsedTime);
 	//状態に入った時
@@ -24,6 +24,9 @@ public:
 	void ChangeState();
 	//行動の追加
 	void AddAction(std::vector<IAction*> actions);
+
+	//行動の中止
+	virtual void ActionCancel() {};
 
 private:
 	//各状態の保存変数
