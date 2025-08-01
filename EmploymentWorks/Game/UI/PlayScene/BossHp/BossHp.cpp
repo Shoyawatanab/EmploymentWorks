@@ -42,7 +42,6 @@ BossHp::BossHp(Canvas* canvas)
 		, std::bind(&BossHp::Notify, this, std::placeholders::_1, std::placeholders::_2)
 	);
 
-
 }
 
 /// <summary>

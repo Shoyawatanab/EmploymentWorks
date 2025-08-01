@@ -75,7 +75,6 @@ void BossEnemyParts::OnCollisionEnter(ColliderComponent* collider)
 			datas.Damage = Params::BOOMERANG_DAMAGE;
 			datas.Position = GetTransform()->GetWorldPosition();
 
-
 			Messenger<SceneMessageType>::GetInstance()->Notify(SceneMessageType::ENEMY_DAMAGE, &datas);
 
 			//ボス敵にダメージの加算
@@ -120,7 +119,7 @@ void BossEnemyParts::HpDecrease(int damage)
 		ExplosionEffectDatas datas;
 		//追加データからデータのセット
 		datas.Position = GetTransform()->GetWorldPosition();
-		datas.Scale = GetTransform()->GetWorldScale() * 0.1f;
+		datas.Scale = GetTransform()->GetWorldScale() * 0.15f;
 		Messenger<SceneMessageType>::GetInstance()->Notify(SceneMessageType::EXPLOSITION_EFFECT, &datas);
 
 

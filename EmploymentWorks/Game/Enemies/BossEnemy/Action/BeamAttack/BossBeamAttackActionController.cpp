@@ -10,6 +10,7 @@
 #include "Game/Messenger/Messengers.h"
 #include "Game/Enemies/BossEnemy/BossEnemy.h"
 #include "Game/Component/Components.h"
+#include "Game/Enemies/BossEnemy/Beam/BossEnemyBeam.h"
 
 
 /// <summary>
@@ -25,6 +26,7 @@ BossBeamAttackActionController::BossBeamAttackActionController(BossEnemy* bossen
 	,m_charge{}
 	,m_shot{}
 	,m_attackEnd{}
+	,m_beam{beam}
 {
 	//Šeó‘Ô‚Ì¶¬
 	m_preliminaryAction = std::make_unique<BossBeamAttackPreliminaryAction>(bossenemy,beam,this);
@@ -82,6 +84,15 @@ void BossBeamAttackActionController::Notify(SceneMessageType type, void* datas)
 			break;
 	}
 
+}
+
+/// <summary>
+/// s“®‚Ì’†~
+/// </summary>
+void BossBeamAttackActionController::ActionCancel()
+{
+
+	m_beam->SetActive(false);
 }
 
 

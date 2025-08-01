@@ -77,6 +77,8 @@ StageSelectBase::~StageSelectBase()
 /// <param name="datas">í«â¡ÉfÅ[É^</param>
 void StageSelectBase::Notify(SceneMessageType type, void* datas)
 {
+	UNREFERENCED_PARAMETER(datas);
+
 	switch (type)
 	{
 		case SceneMessageType::STAGE_UP:
@@ -95,6 +97,8 @@ void StageSelectBase::Notify(SceneMessageType type, void* datas)
 		default:
 			break;
 	}
+
+	GlobalGameData::GetInstance()->SetSelectStateNumber(m_selectStageNumber);
 }
 
 /// <summary>

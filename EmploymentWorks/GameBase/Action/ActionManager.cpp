@@ -20,8 +20,8 @@ ActionManager::ActionManager()
 /// </summary>
 ActionManager::~ActionManager()
 {
-	//m_action.first.clear();
-	//m_actionList.clear();
+	m_action.first.clear();
+	m_actionList.clear();
 }
 
 
@@ -85,5 +85,15 @@ void ActionManager::AddAction(const std::string& name, std::unique_ptr<ActionCon
 {
 
 	m_actionList[name] = std::move(action);
+
+}
+
+/// <summary>
+/// 行動の中止
+/// </summary>
+void ActionManager::ActionCancel()
+{
+	//実行コントローラーの行動の中止
+	m_action.second->ActionCancel();
 
 }

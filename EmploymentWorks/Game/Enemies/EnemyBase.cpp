@@ -19,7 +19,6 @@ EnemyBase::EnemyBase(Scene* scene, int hp, EnemyManager* manager)
 	,m_maxHp{hp}
 	,m_manger{manager}
 {
-
 }
 
 /// <summary>
