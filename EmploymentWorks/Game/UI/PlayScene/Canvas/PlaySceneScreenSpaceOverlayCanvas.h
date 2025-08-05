@@ -13,6 +13,7 @@ class PickUpUI;
 class PlaySceneScreenSpaceOverlayCanvas : public ScreenSpaceOverlayCanvas 
 {
 public:
+	
 	//ターゲットマーカーの取得
 	TargetMarker* GetTargetMarker() { return m_targetMarker; }
 

@@ -46,9 +46,9 @@ StageSelectBase::StageSelectBase(Canvas* canvas)
 	GetScene()->AddActor<LeftArrowButton>(canvas);
 	GetScene()->AddActor<RightArrowButton>(canvas);
 
-
+	//通知コンポーネント
 	auto ob = AddComponent<ObserverComponent<SceneMessageType>>(this);
-
+	//登録
 	ob->Rigister(
 		{
 			SceneMessageType::STAGE_UP
@@ -66,6 +66,7 @@ StageSelectBase::StageSelectBase(Canvas* canvas)
 /// </summary>
 StageSelectBase::~StageSelectBase()
 {
+
 
 
 }

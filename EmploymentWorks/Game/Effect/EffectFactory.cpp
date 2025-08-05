@@ -110,8 +110,9 @@ void EffectFactory::Notify(SceneMessageType type, void* datas)
 			{
 				if (!charge->GetActive())
 				{
-
+					//アクティブ状態に
 					charge->SetActive(true);
+					//追加データからデータのセット
 					charge->GetTransform()->SetPosition(data.Position);
 					charge->GetTransform()->SetScale(data.Scale);
 
@@ -136,11 +137,9 @@ void EffectFactory::Notify(SceneMessageType type, void* datas)
 
 					particle->SetActive(true);
 
-
 					break;
 				}
 			}
-
 		}
 			
 			break;

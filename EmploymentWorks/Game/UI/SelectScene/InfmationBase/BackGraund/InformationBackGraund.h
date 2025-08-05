@@ -13,9 +13,9 @@ class InformationBackGraund : public Image
 {
 public:
 	//ç¿ïW
-	static constexpr DirectX::SimpleMath::Vector3 POSITOIN{1000.0f, 360.0f, 0};
+	static constexpr DirectX::SimpleMath::Vector3 POSITOIN{0.0f, 0.0f, 0};
 	//ëÂÇ´Ç≥
-	static constexpr DirectX::SimpleMath::Vector3 SCALE{0.95f, 0.95f, 0};
+	static constexpr DirectX::SimpleMath::Vector3 SCALE{0.9f, 0.9f, 0};
 	//ägëÂó¶
 	static constexpr float MAGNIFICATION{ 1.4f };
 

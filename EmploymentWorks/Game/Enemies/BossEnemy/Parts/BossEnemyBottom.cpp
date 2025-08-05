@@ -22,8 +22,6 @@ BossEnemyBottom::BossEnemyBottom(Scene* scene, BossEnemy* boss)
 {
 
 
-	//obb->SetOffsetPosition(DirectX::SimpleMath::Vector3(0, 0.0f, 0));
-
 	//ˆÈ‰º’Ç‰Á•”ˆÊ‚Ìì¬
 
 	//Pelvis‚Ì¶¬

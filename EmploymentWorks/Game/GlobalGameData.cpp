@@ -23,4 +23,5 @@ GlobalGameData::GlobalGameData()
 /// </summary>
 GlobalGameData::~GlobalGameData()
 {
+
 }

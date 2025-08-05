@@ -23,14 +23,15 @@ BossHp::BossHp(Canvas* canvas)
 
 	//背景
 	m_backGraund = GetScene()->AddActor<Image>(canvas, "BossHPBase");
-	m_backGraund->GetTransform()->SetPosition(Vector3( 640, 50,0));
-	m_backGraund->GetTransform()->SetScale(Vector3( 1, 0.9,0));
+	m_backGraund->GetTransform()->SetScale(BACKGRAUND_SCALE);
+	m_backGraund->GetTransform()->SetParent(GetTransform());
 
 	//Hpバー
 	m_hpBar = GetScene()->AddActor<Image>(canvas, "EnemyHP");
-	m_hpBar->GetTransform()->SetPosition(Vector3(640, 50.5, 0));
-	m_hpBar->GetTransform()->SetScale(Vector3(1, 0.85, 0));
+	m_hpBar->GetTransform()->SetScale(HP_BAR_SCALE);
+	m_hpBar->GetTransform()->SetParent(GetTransform());
 
+	GetTransform()->SetPosition(POSITION);
 
 	//通知を受け取るコンポーネントの追加
 	auto ob = AddComponent<ObserverComponent<SceneMessageType>>(this);

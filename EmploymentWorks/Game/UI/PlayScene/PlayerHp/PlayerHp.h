@@ -21,7 +21,7 @@ public:
 	//オフセット
 	static constexpr DirectX::SimpleMath::Vector3 OFFSET_POSITION = { 120.0f,0.0f,0.0f };
 	//ハートの大きさ
-	static constexpr DirectX::SimpleMath::Vector3 HEART_SCALE = { 0.5f,0.5f,100.4f };
+	static constexpr DirectX::SimpleMath::Vector3 HEART_SCALE = { 1.6f,1.6f,0.0f };
 
 public:
 	//コンストラクタ

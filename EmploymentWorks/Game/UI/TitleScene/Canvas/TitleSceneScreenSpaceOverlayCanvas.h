@@ -10,6 +10,13 @@
 class TitleSceneScreenSpaceOverlayCanvas : public ScreenSpaceOverlayCanvas
 {
 public:
+
+	static constexpr DirectX::SimpleMath::Vector3 LOGO_POSITION{390, 120, 0};
+
+	static constexpr DirectX::SimpleMath::Vector3 LOGO_SCALE{0.25, 0.25, 0};
+
+
+public:
 	//コンストラクタ
 	TitleSceneScreenSpaceOverlayCanvas(Scene* scene);
 	//デストラクタ

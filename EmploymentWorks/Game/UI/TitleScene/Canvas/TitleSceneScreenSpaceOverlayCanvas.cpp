@@ -21,8 +21,8 @@ TitleSceneScreenSpaceOverlayCanvas::TitleSceneScreenSpaceOverlayCanvas(Scene* sc
 	using namespace DirectX::SimpleMath;
 
 	auto logo =GetScene()->AddActor<Image>(this,"Logo");
-	logo->GetTransform()->SetPosition(Vector3(390,120,0));
-	logo->GetTransform()->SetScale(Vector3(0.25,0.25,0));
+	logo->GetTransform()->SetPosition(LOGO_POSITION);
+	logo->GetTransform()->SetScale(LOGO_SCALE);
 
 	//
 	GetScene()->AddActor<ExitButton>(this);

@@ -12,7 +12,7 @@ class TimeSeparator : public Image
 {
 
 	//大きさ
-	static constexpr DirectX::SimpleMath::Vector3 SCALE = { 0.1f,0.1f,0.7f };
+	static constexpr DirectX::SimpleMath::Vector3 SCALE = { 1.0f,1.0f,1.0f };
 
 public:
 	//コンストラク

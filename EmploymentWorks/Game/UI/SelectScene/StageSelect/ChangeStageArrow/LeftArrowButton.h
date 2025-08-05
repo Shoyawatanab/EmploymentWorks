@@ -17,9 +17,9 @@ public:
 	//大きさ
 	static constexpr DirectX::SimpleMath::Vector3 SCALE{0.2f, 0.2f, 0};
 	//回転
-	static constexpr DirectX::SimpleMath::Vector3 ROTATE{0.0f, 0.0f, 90.0f};
+	static constexpr float ROTATE {90.0f};
 	//拡大率
-	static constexpr float MAGNIFICATION{ 1.2f };
+	static constexpr float MAGNIFICATION { 1.2f };
 
 public:
 	//コンストラク

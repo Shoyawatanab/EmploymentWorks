@@ -301,6 +301,8 @@
     <ClInclude Include="Game\UI\ResultScene\TitleButton\ResultTitleButton.h" />
     <ClInclude Include="Game\UI\SelectScene\BackGraund\SelectSceneBackGraund.h" />
     <ClInclude Include="Game\UI\SelectScene\InfmationBase\BackGraund\InformationBackGraund.h" />
+    <ClInclude Include="Game\UI\SelectScene\InfmationBase\Stage1\StageOneInformation.h" />
+    <ClInclude Include="Game\UI\SelectScene\InfmationBase\Stage2\StageTwoInformation.h" />
     <ClInclude Include="Game\UI\SelectScene\StageSelect\ChangeStageArrow\RightArrowButton.h" />
     <ClInclude Include="Game\UI\SelectScene\Canvas\SelectSceneScreenSpaceOverlayCanvas.h" />
     <ClInclude Include="Game\UI\SelectScene\StageSelect\ChangeStageArrow\LeftArrowButton.h" />
@@ -544,6 +546,8 @@
     <ClCompile Include="Game\UI\ResultScene\TitleButton\ResultTitleButton.cpp" />
     <ClCompile Include="Game\UI\SelectScene\BackGraund\SelectSceneBackGraund.cpp" />
     <ClCompile Include="Game\UI\SelectScene\InfmationBase\BackGraund\InformationBackGraund.cpp" />
+    <ClCompile Include="Game\UI\SelectScene\InfmationBase\Stage1\StageOneInformation.cpp" />
+    <ClCompile Include="Game\UI\SelectScene\InfmationBase\Stage2\StageTwoInformation.cpp" />
     <ClCompile Include="Game\UI\SelectScene\StageSelect\ChangeStageArrow\RightArrowButton.cpp" />
     <ClCompile Include="Game\UI\SelectScene\Canvas\SelectSceneScreenSpaceOverlayCanvas.cpp" />
     <ClCompile Include="Game\UI\SelectScene\StageSelect\ChangeStageArrow\LeftArrowButton.cpp" />

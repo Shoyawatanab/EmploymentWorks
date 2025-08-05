@@ -22,8 +22,6 @@ BossEnemyPelvis::BossEnemyPelvis(Scene* scene, BossEnemy* boss)
 {
 
 
-
-
 	//ˆÈ‰º’Ç‰Á•”ˆÊ‚Ìì¬
 //Torso‚Ì¶¬
 	auto torso = GetScene()->AddActor<BossEnemyTorso>(GetScene(), boss);

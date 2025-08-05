@@ -27,14 +27,12 @@ ResultTime::ResultTime(Canvas* canvas)
 	//Œ…”‚Ìì¬
 	//•ª‚Ì10‚ÌˆÊ
 	auto number = GetScene()->AddActor<NumberUI>(canvas);
-	number->GetTransform()->SetScale(Vector3(0.1f, 0.1f, 0));
 	number->GetTransform()->SetPosition(Vector3(-LETTER_SPACING * 2,0, 0));
 	number->GetTransform()->SetParent(GetTransform());
 	m_numbers.push_back(number);
 	
 	//•ª‚Ì1‚ÌˆÊ
 	number = GetScene()->AddActor<NumberUI>(canvas);
-	number->GetTransform()->SetScale(Vector3(0.1f, 0.1f, 0));
 	number->GetTransform()->SetPosition(Vector3(-LETTER_SPACING,0, 0));
 	number->SetNumber(1);
 	number->GetTransform()->SetParent(GetTransform());
@@ -42,7 +40,6 @@ ResultTime::ResultTime(Canvas* canvas)
 	
 	// •b‚Ì10‚ÌˆÊ
 	number = GetScene()->AddActor<NumberUI>(canvas);
-	number->GetTransform()->SetScale(Vector3(0.1f, 0.1f, 0));
 	number->GetTransform()->SetPosition(Vector3(LETTER_SPACING, 0, 0));
 	number->SetNumber(1);
 	number->GetTransform()->SetParent(GetTransform());
@@ -50,7 +47,6 @@ ResultTime::ResultTime(Canvas* canvas)
 
 	// •b‚Ì1‚ÌˆÊ
 	number = GetScene()->AddActor<NumberUI>(canvas);
-	number->GetTransform()->SetScale(Vector3(0.1f, 0.1f, 0));
 	number->GetTransform()->SetPosition(Vector3(LETTER_SPACING * 2, 0, 0));
 	number->SetNumber(1);
 	number->GetTransform()->SetParent(GetTransform());
@@ -60,7 +56,6 @@ ResultTime::ResultTime(Canvas* canvas)
 	//‹æØ‚è“_‚Ìì¬
 	m_separator = GetScene()->AddActor<TimeSeparator>(canvas);
 	m_separator->GetTransform()->SetParent(GetTransform());
-
 
 	GetTransform()->SetPosition(POSITION);
 

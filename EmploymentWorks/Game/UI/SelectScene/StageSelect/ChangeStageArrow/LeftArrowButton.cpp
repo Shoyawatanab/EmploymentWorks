@@ -25,11 +25,10 @@ LeftArrowButton::LeftArrowButton(Canvas* canvas)
 
 	GetTransform()->SetScale(SCALE);
 	GetTransform()->SetPosition(POSITOIN);
-	GetTransform()->SetRotate(Quaternion::CreateFromYawPitchRoll(
-		ROTATE.y, ROTATE.x, ROTATE.z));
+
 
 	auto image = GetComponent<ImageComponent>();
-	image->SetAngle(DirectX::XMConvertToRadians(90.0f));
+	image->SetAngle(DirectX::XMConvertToRadians(ROTATE));
 
 	auto comp = GetComponent<ButtonComponent>();
 

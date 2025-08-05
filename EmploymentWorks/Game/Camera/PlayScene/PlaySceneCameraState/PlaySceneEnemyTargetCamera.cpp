@@ -53,12 +53,14 @@ void PlaySceneEnemyTargetCamera::Enter()
 
 	//ターゲットの変更
 	m_camera->SetTargetPosition(m_camera->GetTarget()->GetTransform()->GetWorldPosition());
-
+	
 	Vector3 forward;
-
+	
 	forward = Vector3::Transform(EYE_DIRECTION, m_camera->GetTarget()->GetTransform()->GetWorldRotate());
-
+	
 	m_camera->SetEyePosition(m_camera->GetTarget()->GetTransform()->GetWorldPosition() + forward);
+
+
 
 }
 

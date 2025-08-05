@@ -41,7 +41,7 @@ DamageCount::DamageCount(Canvas* canvas)
 	for (int i = 0; i < MAXDIGITS; i++)
 	{
 		auto number = GetScene()->AddActor<NumberUI>(canvas);
-		number->GetTransform()->SetScale(Vector3(0.1f, 0.1f,0));
+		number->GetTransform()->SetScale(Vector3(2.3f, 2.3f,0));
 		number->GetTransform()->SetParent(GetTransform());
 		number->SetActive(false);
 		m_numbers.push_back(number);
@@ -52,6 +52,8 @@ DamageCount::DamageCount(Canvas* canvas)
 
 	//初期化で非アクティブに
 	SetActive(false);
+
+
 
 
 }

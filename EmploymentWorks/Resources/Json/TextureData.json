@@ -33,7 +33,9 @@
 	"SelectPlay"         :"SelectPlay.png",
 	"StageBackGraund"      :"StageBackGraund.png",
 	"SelectSceneArow"   : "SelectSceneArow.png",
-	"SelectInfBase"     :"SelectInfBase.png"
+	"SelectInfBase"     :"SelectInfBase.png",
+	"BossEnemy"         :"BossEnemy.png",
+	"BirdEnemy"         :"BirdEnemy.png"
 
 
 

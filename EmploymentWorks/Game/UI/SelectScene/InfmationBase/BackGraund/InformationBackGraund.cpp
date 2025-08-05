@@ -6,12 +6,8 @@
 #include "pch.h"
 #include "InformationBackGraund.h"
 #include "GameBase/UI/Canvas/Canvas.h"
-#include "GameBase/UI/Button.h"
 #include "GameBase/Scene/Scene.h"
 #include "Game/Component/Components.h"
-#include "Game/Messenger/Messengers.h"
-#include "Game/Fade/FadeManager.h"
-#include "Game/GlobalGameData.h"
 
 /// <summary>
 /// コンストラク

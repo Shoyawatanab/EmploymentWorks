@@ -19,8 +19,8 @@ BossEnemyLeftShoulder::BossEnemyLeftShoulder(Scene* scene, BossEnemy* boss)
 	:
 	BossEnemyParts(scene, PARTS_NAME
 		, "BossEnemyShoulder"
-		, Params::BOSSENEMY_LEFTSHOULDER_HP
-		//, 10
+		//, Params::BOSSENEMY_LEFTSHOULDER_HP
+		, 10
 		, Params::BOSSENEMY_LEFTSHOULDER_BOX_COLLIDER_SIZE
 		, Params::BOSSENEMY_LEFTSHOULDER_SPHERE_COLLIDER_SIZE
 		, boss)

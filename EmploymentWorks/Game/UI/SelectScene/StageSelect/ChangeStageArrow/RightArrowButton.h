@@ -17,7 +17,7 @@ public:
 	//‘å‚«‚³
 	static constexpr DirectX::SimpleMath::Vector3 SCALE{0.2f, 0.2f, 0};
 	//‰ñ“]
-	static constexpr DirectX::SimpleMath::Vector3 ROTATE{0.0f, 0.0f, 90.0f};
+	static constexpr float ROTATE{ 270.0f };
 	//Šg‘å—¦
 	static constexpr float MAGNIFICATION{ 1.2f };
 
