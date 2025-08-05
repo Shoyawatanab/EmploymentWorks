@@ -571,6 +571,8 @@
     <ClInclude Include="GameBase\Messenger\IObserver.h" />
     <ClInclude Include="GameBase\Messenger\BaseMessengers.h" />
     <ClInclude Include="Game\Messenger\Messengers.h" />
+    <ClInclude Include="Game\UI\SelectScene\InfmationBase\Stage1\StageOneInformation.h" />
+    <ClInclude Include="Game\UI\SelectScene\InfmationBase\Stage2\StageTwoInformation.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -875,6 +877,8 @@
     <ClCompile Include="Game\UI\SelectScene\InfmationBase\BackGraund\InformationBackGraund.cpp" />
     <ClCompile Include="GameBase\Component\Observer\ObserverComponent.cpp" />
     <ClCompile Include="GameBase\Messenger\Messenger.cpp" />
+    <ClCompile Include="Game\UI\SelectScene\InfmationBase\Stage1\StageOneInformation.cpp" />
+    <ClCompile Include="Game\UI\SelectScene\InfmationBase\Stage2\StageTwoInformation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />

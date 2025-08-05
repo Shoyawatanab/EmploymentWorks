@@ -119,7 +119,7 @@ void BossEnemyParts::HpDecrease(int damage)
 		ExplosionEffectDatas datas;
 		//追加データからデータのセット
 		datas.Position = GetTransform()->GetWorldPosition();
-		datas.Scale = GetTransform()->GetWorldScale() * 0.15f;
+		datas.Scale = GetTransform()->GetWorldScale();
 		Messenger<SceneMessageType>::GetInstance()->Notify(SceneMessageType::EXPLOSITION_EFFECT, &datas);
 
 

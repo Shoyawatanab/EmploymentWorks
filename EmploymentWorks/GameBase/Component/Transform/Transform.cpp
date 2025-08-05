@@ -83,7 +83,7 @@ DirectX::SimpleMath::Vector3 Transform::GetWorldScale()
 	// e‚ª‚¢‚éê‡Ae‚Ì‘å‚«‚³‚ð‘«‚·
 	if (m_parent != nullptr)
 	{
-		worldScale += m_parent->GetWorldScale();
+		worldScale *= m_parent->GetWorldScale();
 	}
 	return worldScale;
 }

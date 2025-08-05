@@ -39,7 +39,6 @@ DamageCountFactory::DamageCountFactory(Canvas* canvas)
 		, std::bind(&DamageCountFactory::Notify, this, std::placeholders::_1, std::placeholders::_2)
 	);
 
-
 }
 
 /// <summary>

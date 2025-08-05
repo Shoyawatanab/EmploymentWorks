@@ -45,7 +45,6 @@ PlayScene::~PlayScene()
 
 	//プレイ時間のセット
 	GlobalGameData::GetInstance()->SetClearTime(m_playTime);
-	GlobalGameData::GetInstance()->SetClearTime(198);
 
 
 }

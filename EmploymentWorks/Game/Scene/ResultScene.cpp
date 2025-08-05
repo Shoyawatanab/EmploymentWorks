@@ -16,6 +16,8 @@
 #include "Game/UI/ResultScene/Canvas/ResutlSceneScreenSpaceOverlayCanvas.h"
 
 
+#include "Game/GlobalGameData.h"
+
 /// <summary>
 /// コンストラクタ
 /// </summary>
@@ -60,6 +62,7 @@ void ResultScene::SceneInitialize()
 
 	FadeManager::GetInstance()->StartFadeOut();
 
+	GlobalGameData::GetInstance()->SetClearTime(198);
 
 }
 

@@ -11,6 +11,12 @@ class Canvas;
 class PickUpUI : public Image
 {
 public:
+
+	static constexpr DirectX::SimpleMath::Vector3 POSITION{640, 360, 0};
+	static constexpr DirectX::SimpleMath::Vector3 SCALE{0.2f, 0.2f, 0};
+
+
+public:
 	//コンストラク
 	PickUpUI(Canvas* canvas);
 	//デストラクタ

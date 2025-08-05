@@ -19,7 +19,7 @@ BossEnemyHead::BossEnemyHead(Scene* scene, BossEnemy* boss)
 		, Params::BOSSENEMY_HEAD_SPHERE_COLLIDER_SIZE
 		,boss)
 {
-	
+
 	//ˆÊ’uî•ñ
 	GetTransform()->Translate(Params::BOSSENEMY_HEAD_POSITION);
 	//‘å‚«‚³

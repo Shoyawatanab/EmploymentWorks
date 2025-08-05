@@ -22,7 +22,6 @@ BossEnemyLeftThigh::BossEnemyLeftThigh(Scene* scene, BossEnemy* boss)
 {
 
 
-
 	//ˆÈ‰º’Ç‰Á•”ˆÊ‚Ìì¬
 	//LeftLeg‚Ì¶¬
 	auto leftLeg = GetScene()->AddActor<BossEnemyLeftLeg>(GetScene(), boss);

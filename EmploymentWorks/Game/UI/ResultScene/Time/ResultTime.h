@@ -13,15 +13,16 @@ class TimeSeparator;
 class ResultTime : public Actor
 {
 public:
+
 	//大きさ
-	static constexpr DirectX::SimpleMath::Vector3 SCALE = { 0.65f,0.65f,0.4f };
+	static constexpr DirectX::SimpleMath::Vector3 SCALE = { 1.0f,1.0f,1.0f };
 	//座標
 	static constexpr DirectX::SimpleMath::Vector3 POSITION = { 750,310,0 };
 	//文字間隔
 	static constexpr float LETTER_SPACING = 100.0f;
-
 	//点滅間隔
 	static constexpr float BLINK_INTERVAL = 1.0f;
+
 
 public:
 	//コンストラク

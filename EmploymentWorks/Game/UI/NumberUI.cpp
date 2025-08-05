@@ -18,7 +18,7 @@ NumberUI::NumberUI(Canvas* canvas)
 	using namespace DirectX::SimpleMath;
 
 	m_number = GetScene()->AddActor<Image>(canvas, "Number");
-	m_number->GetTransform()->SetScale(Vector3(0.01f, 0.01f, 0));
+	m_number->GetTransform()->SetScale(Vector3(1.0f, 1.0f, 0));
 	//eŽqŠÖŒW
 	m_number->GetTransform()->SetParent(GetTransform());
 

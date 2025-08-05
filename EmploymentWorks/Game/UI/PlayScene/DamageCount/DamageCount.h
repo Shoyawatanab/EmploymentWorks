@@ -15,7 +15,7 @@ class DamageCount : public Actor
 public:
 
 	//”wŒi‚Ì‘å‚«‚³
-	static constexpr DirectX::SimpleMath::Vector3 BACKGROUND_SCALE = { 0.1f,0.1f,0.0f };
+	static constexpr DirectX::SimpleMath::Vector3 BACKGROUND_SCALE = { 2.3f,2.3f,1.0f };
 	//•\¦ŠÔŠu
 	static constexpr float SPACING = 20.0f;
 	//Å‘å•\¦Œ…

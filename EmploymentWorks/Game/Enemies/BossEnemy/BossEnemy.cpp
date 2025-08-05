@@ -100,7 +100,7 @@ BossEnemy::BossEnemy(Scene* scene, DirectX::SimpleMath::Vector3 scale
 	//アクションマネージャーの作成
 	m_actionManager = std::make_unique<BossEnemyActionManager>(this,player,beam);
 
-	HpDecrease(1000);
+
 
 }
 
@@ -128,16 +128,18 @@ void BossEnemy::UpdateActor(const float& deltaTime)
 	}
 
 
-
+	//アクションの更新
 	if (m_actionManager->Update(deltaTime))
 	{
 
+		
 		//ビヘイビアツリーの更新
-		//m_behavior->Update(deltaTime);
+		m_behavior->Update(deltaTime);
 		//Messenger<SceneMessageType>::GetInstance()->Notify(SceneMessageType::BOSS_BEAM_ATTACK_STATE);
 		//Messenger<SceneMessageType>::GetInstance()->Notify(SceneMessageType::BOSS_JUMP_ATTACK_STATE);
-		Messenger<SceneMessageType>::GetInstance()->Notify(SceneMessageType::BOSS_WAKING_STATE);
+		//Messenger<SceneMessageType>::GetInstance()->Notify(SceneMessageType::BOSS_WAKING_STATE);
 		//Messenger<SceneMessageType>::GetInstance()->Notify(SceneMessageType::BOSS_SWING_DOWN_STATE);
+
 
 	}
 

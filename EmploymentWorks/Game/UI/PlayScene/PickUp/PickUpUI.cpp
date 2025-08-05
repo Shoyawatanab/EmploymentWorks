@@ -17,8 +17,8 @@ PickUpUI::PickUpUI(Canvas* canvas)
 	Image(canvas,"F")
 {
 	
-	GetTransform()->SetPosition(DirectX::SimpleMath::Vector3(640, 360,0));
-	GetTransform()->SetScale(DirectX::SimpleMath::Vector3(0.2f, 0.2f, 0));
+	GetTransform()->SetPosition(POSITION);
+	GetTransform()->SetScale(SCALE);
 
 
 	SetActive(false);
