@@ -23,8 +23,6 @@ StageOneInformation::StageOneInformation(Canvas* canvas)
 {
 	using namespace DirectX::SimpleMath;
 
-
-
 	//ステージ１の情報
 	auto birdEnemy1 = GetScene()->AddActor<Image>(canvas, "BirdEnemy");
 	birdEnemy1->GetTransform()->SetPosition(BIRD_ONE_POSITION);
@@ -33,6 +31,7 @@ StageOneInformation::StageOneInformation(Canvas* canvas)
 	auto birdEnemy2 = GetScene()->AddActor<Image>(canvas, "BirdEnemy");
 	birdEnemy2->GetTransform()->SetPosition(BIRD_TWO_POSITION);
 	birdEnemy2->GetTransform()->SetParent(GetTransform());
+
 
 
 }

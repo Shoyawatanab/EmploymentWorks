@@ -11,6 +11,7 @@
 #include "GameBase/Component/Collider/ColliderComponent.h"
 
 class Camera;
+class Canvas;
 
 class RenderManager
 {
@@ -28,9 +29,9 @@ public:
 	//モデルの削除
 	void RemoveModel(ModelComponent* comp);
 	//UIの追加
-	void AddUserInterface(ImageComponent* comp);
+	void AddCanvas(Canvas* canvas);
 	//UIの削除
-	void RemoveUserInterface(ImageComponent* comp);
+	void RemoveCanvas(Canvas* canvas);
 
 	//コライダーの追加　デバッグ　
 	void AddCollider(ColliderComponent* comp);
@@ -45,7 +46,7 @@ private:
 	//モデルコンポーネント
 	std::vector<ModelComponent*> m_models;
 	//UIコンポーネント
-	std::vector<ImageComponent*> m_uis;
+	std::vector<Canvas*> m_canvass;
 	//エフェクトコンポーネント
 	std::vector<EffectComponent*> m_effects;
 	//丸影

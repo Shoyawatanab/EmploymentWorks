@@ -195,6 +195,7 @@
     <ClInclude Include="GameBase\Component\Sound\SoundComponent.h" />
     <ClInclude Include="GameBase\Messenger\InputMessenger.h" />
     <ClInclude Include="GameBase\Messenger\BaseMessengers.h" />
+    <ClInclude Include="GameBase\UI\Canvas\WorldSpaceCanvas.h" />
     <ClInclude Include="Game\Camera\Result\ResultCamera.h" />
     <ClInclude Include="Game\Component\Components.h" />
     <ClInclude Include="GameBase\Component\Observer\ObserverComponent.h" />
@@ -279,9 +280,11 @@
     <ClInclude Include="Game\Sound\SelectScene\SelectSceneSound.h" />
     <ClInclude Include="Game\Sound\TitleScene\TitleSceneSound.h" />
     <ClInclude Include="Game\UI\NumberUI.h" />
+    <ClInclude Include="Game\UI\PlayScene\BirdEnemyHP\BirdEnemyHP.h" />
     <ClInclude Include="Game\UI\PlayScene\BoomerangCount\BoomerangCount.h" />
     <ClInclude Include="Game\UI\PlayScene\BoomerangThrow\BoomerangThrowUI.h" />
     <ClInclude Include="Game\UI\PlayScene\BossHp\BossHp.h" />
+    <ClInclude Include="Game\UI\PlayScene\Canvas\PlaySceneWorldSpaceCanvas.h" />
     <ClInclude Include="Game\UI\PlayScene\DamageCount\DamageCount.h" />
     <ClInclude Include="Game\UI\PlayScene\DamageCount\DamageCountFactory.h" />
     <ClInclude Include="Game\UI\PlayScene\GameOver\BackGraund\GameOverBackGraund.h" />
@@ -455,6 +458,7 @@
     <ClCompile Include="GameBase\Component\RoundShadow\RoundShadowComponent.cpp" />
     <ClCompile Include="GameBase\Component\Sound\SoundComponent.cpp" />
     <ClCompile Include="GameBase\Messenger\InputMessenger.cpp" />
+    <ClCompile Include="GameBase\UI\Canvas\WorldSpaceCanvas.cpp" />
     <ClCompile Include="Game\Camera\Result\ResultCamera.cpp" />
     <ClCompile Include="GameBase\Component\Observer\ObserverComponent.cpp" />
     <ClCompile Include="Game\Component\PickUp\PickableComponent.cpp" />
@@ -526,9 +530,11 @@
     <ClCompile Include="Game\Sound\SelectScene\SelectSceneSound.cpp" />
     <ClCompile Include="Game\Sound\TitleScene\TitleSceneSound.cpp" />
     <ClCompile Include="Game\UI\NumberUI.cpp" />
+    <ClCompile Include="Game\UI\PlayScene\BirdEnemyHP\BirdEnemyHP.cpp" />
     <ClCompile Include="Game\UI\PlayScene\BoomerangCount\BoomerangCount.cpp" />
     <ClCompile Include="Game\UI\PlayScene\BoomerangThrow\BoomerangThrowUI.cpp" />
     <ClCompile Include="Game\UI\PlayScene\BossHp\BossHp.cpp" />
+    <ClCompile Include="Game\UI\PlayScene\Canvas\PlaySceneWorldSpaceCanvas.cpp" />
     <ClCompile Include="Game\UI\PlayScene\DamageCount\DamageCount.cpp" />
     <ClCompile Include="Game\UI\PlayScene\DamageCount\DamageCountFactory.cpp" />
     <ClCompile Include="Game\UI\PlayScene\GameOver\BackGraund\GameOverBackGraund.cpp" />
@@ -679,6 +685,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <None Include="GameBase\Shaders\UI\WorldSpaceUI.hlsli" />
     <None Include="Game\Shaders\BossBeam\BeamEnergyBall.hlsli" />
     <None Include="Game\Shaders\BossBeam\BeamRays.hlsli" />
     <None Include="Game\Shaders\DamageVignette\DamageVignette.hlsli" />
@@ -692,6 +699,30 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="GameBase\Shaders\UI\WorldSpaceUIGS.hlsl">
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="GameBase\Shaders\UI\WorldSpaceUIPS.hlsl">
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="GameBase\Shaders\UI\WorldSpaceUIVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Resources\Shaders\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
     <FxCompile Include="Game\Shaders\BossBeam\BeamEnergyBallPS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>

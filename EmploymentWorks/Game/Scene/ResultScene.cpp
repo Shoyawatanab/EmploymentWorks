@@ -36,6 +36,8 @@ ResultScene::~ResultScene()
 	// do nothing.
 }
 
+
+
 /// <summary>
 /// 初期化
 /// </summary>
@@ -45,7 +47,7 @@ void ResultScene::SceneInitialize()
 	using namespace DirectX::SimpleMath;
 	//ステージファクトリー作成
 	AddActor<StageFactory>(this);
-
+	
 	//カメラの作成
 	m_camera = AddActor<ResultCamera>(this);
 

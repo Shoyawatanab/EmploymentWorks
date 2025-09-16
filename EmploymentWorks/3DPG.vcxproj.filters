@@ -573,6 +573,9 @@
     <ClInclude Include="Game\Messenger\Messengers.h" />
     <ClInclude Include="Game\UI\SelectScene\InfmationBase\Stage1\StageOneInformation.h" />
     <ClInclude Include="Game\UI\SelectScene\InfmationBase\Stage2\StageTwoInformation.h" />
+    <ClInclude Include="GameBase\UI\Canvas\WorldSpaceCanvas.h" />
+    <ClInclude Include="Game\UI\PlayScene\Canvas\PlaySceneWorldSpaceCanvas.h" />
+    <ClInclude Include="Game\UI\PlayScene\BirdEnemyHP\BirdEnemyHP.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
@@ -879,6 +882,9 @@
     <ClCompile Include="GameBase\Messenger\Messenger.cpp" />
     <ClCompile Include="Game\UI\SelectScene\InfmationBase\Stage1\StageOneInformation.cpp" />
     <ClCompile Include="Game\UI\SelectScene\InfmationBase\Stage2\StageTwoInformation.cpp" />
+    <ClCompile Include="GameBase\UI\Canvas\WorldSpaceCanvas.cpp" />
+    <ClCompile Include="Game\UI\PlayScene\Canvas\PlaySceneWorldSpaceCanvas.cpp" />
+    <ClCompile Include="Game\UI\PlayScene\BirdEnemyHP\BirdEnemyHP.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="resource.rc" />
@@ -920,6 +926,7 @@
     <None Include="Game\Shaders\GameOver\GameOver.hlsli" />
     <None Include="Game\Shaders\Fade\DieCutting\DieCutting.hlsli" />
     <None Include="Game\Shaders\Fade\DieCutting\Mask.hlsli" />
+    <None Include="GameBase\Shaders\UI\WorldSpaceUI.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Game\Shaders\Fade\FadeGS.hlsl">
@@ -991,5 +998,8 @@
     <FxCompile Include="Game\Shaders\Fade\DieCutting\MaskGS.hlsl" />
     <FxCompile Include="Game\Shaders\Fade\DieCutting\MaskPS.hlsl" />
     <FxCompile Include="Game\Shaders\Fade\DieCutting\MaskVS.hlsl" />
+    <FxCompile Include="GameBase\Shaders\UI\WorldSpaceUIGS.hlsl" />
+    <FxCompile Include="GameBase\Shaders\UI\WorldSpaceUIPS.hlsl" />
+    <FxCompile Include="GameBase\Shaders\UI\WorldSpaceUIVS.hlsl" />
   </ItemGroup>
 </Project>

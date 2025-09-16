@@ -1,41 +1,40 @@
 /*
-	クラス名     : ScreenSpaceOverlayCanvas
-	説明         : 常に画面に映っているUI用Canvas
+	クラス名     : WorldSpaceCanvas
+	説明         :3D空間用のUI用Canvas
 	補足・注意点 :
 */
 #include "pch.h"
-#include "ScreenSpaceOverlayCanvas.h"
+#include "WorldSpaceCanvas.h"
 #include "GameBase/Common/Commons.h"
 #include "GameBase/Screen.h"
 #include "GameBase/Actor.h"
 #include "GameBase/Component/UI/ImageComponent.h"
 #include "GameBase/Component/BaseComponents.h"
 #include "GameBase/Shader/ShaderFactory.h"
-
-
+#include "GameBase/Camera/Camera.h"
 
 /// <summary>
 /// インプットレイアウト
 /// </summary>
-const std::vector<D3D11_INPUT_ELEMENT_DESC> ScreenSpaceOverlayCanvas::INPUT_LAYOUT =
+const std::vector<D3D11_INPUT_ELEMENT_DESC> WorldSpaceCanvas::INPUT_LAYOUT =
 {
 	 { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 	{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 };
 
-
 /// <summary>
 /// コンストラク
 /// </summary>
 /// <param name="scene">シーン</param>
-ScreenSpaceOverlayCanvas::ScreenSpaceOverlayCanvas(Scene* scene)
+WorldSpaceCanvas::WorldSpaceCanvas(Scene* scene)
 	:
-	Canvas(scene,RenderType::SpaceOverlay)
+	Canvas(scene, RenderType::WorldSpace)
 	, m_vertexShader{}
 	, m_pixelShader{}
 	, m_geometryShader{}
 	, m_CBuffer{}
 	, m_inputLayout{}
+	,m_isBillboard{true}
 {
 
 	using namespace DirectX;
@@ -51,12 +50,12 @@ ScreenSpaceOverlayCanvas::ScreenSpaceOverlayCanvas(Scene* scene)
 
 
 
-	m_inputLayout = shaderFactory->CreateInputLayout(device, INPUT_LAYOUT, "UIVS.cso");
+	m_inputLayout = shaderFactory->CreateInputLayout(device, INPUT_LAYOUT, "WorldSpaceUIVS.cso");
 
 	//各シェーダーの作成
-	m_vertexShader = shaderFactory->CreateVS(device, "UIVS.cso");
-	m_pixelShader = shaderFactory->CreatePS(device, "UIPS.cso");
-	m_geometryShader = shaderFactory->CreateGS(device, "UIGS.cso");
+	m_vertexShader = shaderFactory->CreateVS(device,   "WorldSpaceUIVS.cso");
+	m_pixelShader = shaderFactory->CreatePS(device,    "WorldSpaceUIPS.cso");
+	m_geometryShader = shaderFactory->CreateGS(device, "WorldSpaceUIGS.cso");
 
 
 	//	シェーダーにデータを渡すためのコンスタントバッファ生成
@@ -73,16 +72,16 @@ ScreenSpaceOverlayCanvas::ScreenSpaceOverlayCanvas(Scene* scene)
 /// <summary>
 /// デストラクタ
 /// </summary>
-ScreenSpaceOverlayCanvas::~ScreenSpaceOverlayCanvas()
+WorldSpaceCanvas::~WorldSpaceCanvas()
 {
+
 }
 
 /// <summary>
 /// 描画
 /// </summary>
-void ScreenSpaceOverlayCanvas::Render(const Camera& camera)
+void WorldSpaceCanvas::Render(const Camera& camera)
 {
-	UNREFERENCED_PARAMETER(camera);
 
 	for (auto& com : GetImageComponent())
 	{
@@ -94,7 +93,7 @@ void ScreenSpaceOverlayCanvas::Render(const Camera& camera)
 		{
 			case ImageComponent::RenderKinds::NORMAL:
 				//通常描画
-				NormalRender(com);
+				NormalRender(camera,com);
 				break;
 			case ImageComponent::RenderKinds::CUSTOM:
 				//登録された関数の呼び出し
@@ -107,13 +106,11 @@ void ScreenSpaceOverlayCanvas::Render(const Camera& camera)
 
 }
 
-
-
 /// <summary>
 /// 通常描画
 /// </summary>
 /// <param name="comp">コンポーネント</param>
-void ScreenSpaceOverlayCanvas::NormalRender(ImageComponent* comp)
+void WorldSpaceCanvas::NormalRender(const Camera& camera,ImageComponent* comp)
 {
 
 	using namespace DirectX;
@@ -123,18 +120,41 @@ void ScreenSpaceOverlayCanvas::NormalRender(ImageComponent* comp)
 
 	auto states = CommonResources::GetInstance()->GetCommonStates();
 	//頂点
-	VertexPositionTexture vertex{};
+	VertexPositionTexture vertex[1] = {
+			VertexPositionTexture(comp->GetActor()->GetTransform()->GetWorldPosition(),Vector2(comp->GetTextureWidth(),comp->GetTextureHeight()))
+	};
+
+	Matrix view;
+
+	if (m_isBillboard)
+	{
+		//ビルボードあり
+		view = camera.GetViewMatrix().Invert();
+	}
+	else
+	{
+		//ビルボードなし
+		view = Matrix::Identity;
+	}
+	
 
 	//シェーダーに渡す追加のバッファを作成する。(ConstBuffer）
-	ScreenSpaceOverlayCanvas::ConstBuffer cbuff;
-	cbuff.windowSize = SimpleMath::Vector4(Screen::WIDTH, Screen::HEIGHT, 0, 0);
-	cbuff.Position = Vector4(comp->GetActor()->GetTransform()->GetWorldPosition().x, comp->GetActor()->GetTransform()->GetWorldPosition().y, 0, 0);
-	cbuff.Size = Vector4(comp->GetWidth(), comp->GetHeight(), 0, 0);
+	WorldSpaceCanvas::ConstBuffer cbuff;
+	cbuff.matView = camera.GetViewMatrix().Transpose();
+	cbuff.matProj = camera.GetProjectionMatrix().Transpose();
+	cbuff.matWorld = view.Transpose() ;
+
+
+
+	cbuff.Position = Vector4(0,1, 0, 0);
+	cbuff.Size = Vector4(comp->GetWidth(), comp->GetHeight(), 1, 1);
 	cbuff.Rotate = Vector4(comp->GetAngle(), 0, 0, 0);
 	cbuff.Color = comp->GetColor();
 	cbuff.CutRange = comp->GetCutRange();
 	cbuff.ViewRange = comp->GetViewRange();
 	cbuff.FillAmount = comp->GetFillAmount();
+
+
 
 	//	受け渡し用バッファの内容更新(ConstBufferからID3D11Bufferへの変換）
 	context->UpdateSubresource(m_CBuffer.Get(), 0, NULL, &cbuff, 0, 0);
@@ -172,7 +192,8 @@ void ScreenSpaceOverlayCanvas::NormalRender(ImageComponent* comp)
 
 	//	板ポリゴンを描画
 	m_batch->Begin();
-	m_batch->Draw(D3D11_PRIMITIVE_TOPOLOGY_POINTLIST, &vertex, 1);
+	//m_batch->Draw(D3D11_PRIMITIVE_TOPOLOGY_POINTLIST, &vertex, 1);
+	m_batch->Draw(D3D11_PRIMITIVE_TOPOLOGY_POINTLIST, &vertex[0], ARRAYSIZE(vertex));
 	m_batch->End();
 
 	//	シェーダの登録を解除しておく

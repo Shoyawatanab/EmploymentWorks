@@ -54,11 +54,14 @@ void PlayButton::OnClick()
 
 }
 
+
+
 /// <summary>
 /// ”ÍˆÍ“à‚É‚È‚Á‚½Žž
 /// </summary>
 void PlayButton::InRange()
 {
+
 	GetTransform()->SetScale(SCALE * MAGNIFICATION);
 
 }
