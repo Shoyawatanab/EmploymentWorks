@@ -110,7 +110,9 @@ void GameOverBackGraund::CustomRender()
 		DirectX::VertexPositionColorTexture(DirectX::SimpleMath::Vector3(0.0f,  0.0f, 0.0f), DirectX::SimpleMath::Vector4::One, DirectX::SimpleMath::Vector2(0.0f, 0.0f)),
 	};
 
-	//	シェーダーに渡す追加のバッファを作成する。(ConstBuffer）
+
+
+	//シェーダーに渡す追加のバッファを作成する。(ConstBuffer）
 	ConstBuffer cbuff;
 	cbuff.matView = DirectX::SimpleMath::Matrix::Identity;
 	cbuff.matProj = DirectX::SimpleMath::Matrix::Identity;

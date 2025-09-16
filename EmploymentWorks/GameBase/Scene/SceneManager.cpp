@@ -48,7 +48,7 @@ void SceneManager::Initialize()
 {
 
 	//‰ŠúƒV[ƒ“
-	ChangeScene(SceneID::TITLE);
+	ChangeScene(SceneID::PLAY);
 
 }
 

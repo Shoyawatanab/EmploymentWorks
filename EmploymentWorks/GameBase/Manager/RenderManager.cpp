@@ -7,9 +7,8 @@
 #include "RenderManager.h"
 #include "GameBase/Camera/Camera.h"
 #include "GameBase/Common/Commons.h"
-
-
 #include "GameBase/Camera/Camera.h"
+#include "GameBase/UI/Canvas/Canvas.h"
 
 /// <summary>
 /// コンストラクタ
@@ -53,7 +52,7 @@ RenderManager::~RenderManager()
 {
 	m_models.clear();
 	m_colliders.clear();
-	m_uis.clear();
+	m_canvass.clear();
 	m_effects.clear();
 	m_roundShadow.clear();
 }
@@ -84,11 +83,10 @@ void RenderManager::Render(const Camera& camera)
 		effect->Render(camera);
 	}
 
-	for (auto& ui : m_uis)
+	for (auto& canvas : m_canvass)
 	{
-		if (!ui->GetActive()) { continue; }
 
-		ui->Render();
+		canvas->Render(camera);
 	}
 	
 
@@ -146,39 +144,44 @@ void RenderManager::RemoveModel(ModelComponent* comp)
 }
 
 /// <summary>
-/// UIコンポーネントの追加
+/// キャンバスの追加
 /// </summary>
-/// <param name="comp">UIコンポーネント</param>
-void RenderManager::AddUserInterface(ImageComponent* comp)
+/// <param name="canvas"></param>
+void RenderManager::AddCanvas(Canvas* canvas)
 {
-	//UIがあるか
-	auto ui = std::find(m_uis.begin(), m_uis.end(), comp);
+	//キャンバスがあるか探す
+	auto sertchCanvas = std::find(m_canvass.begin(), m_canvass.end(), canvas);
 
 	//なければ
-	if (ui == m_uis.end())
+	if (sertchCanvas == m_canvass.end())
 	{
 		//追加
-		m_uis.push_back(std::move(comp));
+		m_canvass.push_back(canvas);
 
 	}
+
+
 }
 
 /// <summary>
-/// UIコンポーネントの削除
+/// キャンバスの削除
 /// </summary>
-/// <param name="comp">UIコンポーネント</param>
-void RenderManager::RemoveUserInterface(ImageComponent* comp)
+/// <param name="canvas"></param>
+void RenderManager::RemoveCanvas(Canvas* canvas)
 {
-	//UIがあるか
-	auto ui = std::find(m_uis.begin(), m_uis.end(), comp);
+	//キャンバスがあるか探す
+	auto sertchCanvas = std::find(m_canvass.begin(), m_canvass.end(), canvas);
+
 	//あれば
-	if (ui != m_uis.end())
+	if (sertchCanvas != m_canvass.end())
 	{
-		//削除
-		m_uis.erase(ui);
+		//追加
+		m_canvass.erase(sertchCanvas);
 
 	}
+
 }
+
 
 void RenderManager::AddCollider(ColliderComponent* comp)
 {

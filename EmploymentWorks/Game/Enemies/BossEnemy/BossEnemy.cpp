@@ -127,7 +127,6 @@ void BossEnemy::UpdateActor(const float& deltaTime)
 		return;
 	}
 
-
 	//アクションの更新
 	if (m_actionManager->Update(deltaTime))
 	{

@@ -19,7 +19,7 @@ Image::Image(Canvas* canvas, const std::string& textureName)
 {
 
 	//ƒCƒ[ƒW‚Ì’Ç‰Á
-	m_imageComponent = AddComponent<ImageComponent>(this, textureName);
+	m_imageComponent = AddComponent<ImageComponent>(canvas,this, textureName);
 
 
 }

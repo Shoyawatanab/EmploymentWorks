@@ -12,6 +12,7 @@
 #include "Game/Camera/PlayScene/PlaySceneCamera.h"
 #include "Game/Camera/PlayScene/PlaySceneCamera.h"
 #include "Game/UI/PlayScene/Canvas/PlaySceneScreenSpaceOverlayCanvas.h"
+#include "Game/UI/PlayScene/Canvas/PlaySceneWorldSpaceCanvas.h"
 #include "Game/Weapon/WeaponManager.h"
 #include "Game/Enemies/EnemyManager.h"
 #include "Game/Fade/FadeManager.h"
@@ -71,14 +72,15 @@ void PlayScene::SceneInitialize()
 	auto enemyManger = AddActor<EnemyManager>(this, player);
 
 	
-	auto ui = AddActor<PlaySceneScreenSpaceOverlayCanvas>(this,enemyManger->GetTargets());
+	auto overlayCanvas = AddActor<PlaySceneScreenSpaceOverlayCanvas>(this,enemyManger->GetTargets());
 
+	auto worldSpaceCanvas = AddActor<PlaySceneWorldSpaceCanvas>(this);
 
 	//ƒvƒŒƒCƒ„‚Ì“o˜^
 	auto camera = static_cast<PlaySceneCamera*>(m_camera)->SetTarget(player);
 
 	player->SetPlaySceneCamera(camera);
-	player->SetTargetMarker(ui->GetTargetMarker());
+	player->SetTargetMarker(overlayCanvas->GetTargetMarker());
 
 	AddActor<EffectFactory>(this);
 

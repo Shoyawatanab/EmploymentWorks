@@ -1,6 +1,6 @@
 /*
-	クラス名     : ScreenSpaceOverlayCanvas
-	説明         : 常に画面に映っているUI用Canvas
+	クラス名     : WorldSpaceCanvas
+	説明         : 3D空間用のUI用Canvas
 	補足・注意点 :
 */
 #pragma once
@@ -8,7 +8,7 @@
 
 class Camera;
 
-class ScreenSpaceOverlayCanvas : public Canvas
+class WorldSpaceCanvas : public Canvas
 {
 public:
 
@@ -19,8 +19,9 @@ public:
 	//データ受け渡し用コンスタントバッファ(送信側)
 	struct ConstBuffer
 	{
-		DirectX::SimpleMath::Vector4	windowSize;             //画面サイズ
-		DirectX::SimpleMath::Vector4    Position;				//座標
+		DirectX::SimpleMath::Matrix		matWorld;
+		DirectX::SimpleMath::Matrix		matView;
+		DirectX::SimpleMath::Matrix		matProj;		DirectX::SimpleMath::Vector4    Position;				//座標
 		DirectX::SimpleMath::Vector4	Size;					//大きさ
 		DirectX::SimpleMath::Vector4    Rotate;                 //回転
 		DirectX::SimpleMath::Vector4    Color;					//色
@@ -38,12 +39,14 @@ public:
 	// ジオメトリシェーダの取得
 	Microsoft::WRL::ComPtr<ID3D11GeometryShader> GetGeometryShader() { return m_geometryShader; }
 
+	//ビルボード処理のセット
+	void SetIsBillboard(bool isBillboard) { m_isBillboard = isBillboard; }
 
 public:
 	//コンストラクタ
-	ScreenSpaceOverlayCanvas(Scene* scene);
+	WorldSpaceCanvas(Scene* scene);
 	//デストラクタ
-	~ScreenSpaceOverlayCanvas();
+	~WorldSpaceCanvas();
 
 	//描画
 	void Render(const Camera& camera) override;
@@ -51,13 +54,12 @@ public:
 private:
 
 	//通常描画
-	void NormalRender(ImageComponent* comp);
+	void NormalRender(const Camera& camera,ImageComponent* comp);
 
 private:
 
 	// プリミティブバッチ
 	std::unique_ptr<DirectX::PrimitiveBatch<DirectX::VertexPositionTexture>> m_batch;
-
 	// 頂点シェーダ
 	Microsoft::WRL::ComPtr<ID3D11VertexShader> m_vertexShader;
 	// ピクセルシェーダ
@@ -69,6 +71,10 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11Buffer>	m_CBuffer;
 	// 入力レイアウト
 	Microsoft::WRL::ComPtr<ID3D11InputLayout> m_inputLayout;
+
+
+	bool m_isBillboard;
+
 
 };
 
