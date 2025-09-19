@@ -39,6 +39,21 @@ PlaySceneWorldSpaceCanvas::~PlaySceneWorldSpaceCanvas()
 
 }
 
+/// <summary>
+/// 鳥敵のHPの追加
+/// </summary>
+/// <param name="enemys"></param>
+void PlaySceneWorldSpaceCanvas::AddBirdEnemyHP(std::vector<Actor*> enemys)
+{
+
+	for (auto& enemy : enemys)
+	{
+		GetScene()->AddActor<BirdEnemyHP>(this,enemy);
+
+	}
+
+}
+
 
 
 /// <summary>
@@ -47,13 +62,12 @@ PlaySceneWorldSpaceCanvas::~PlaySceneWorldSpaceCanvas()
 void PlaySceneWorldSpaceCanvas::StageUI()
 {
 	//ステージ番号の取得
-	int StageNumber = GlobalGameData::GetInstance()->GetSelectStateNumber();
+	int StageNumber = GlobalGameData::GetInstance()->GetSelectStageNumber();
 
 	switch (StageNumber)
 	{
 		case 1:
 
-			GetScene()->AddActor<BirdEnemyHP>(this);
 
 			break;
 		case 2:
@@ -62,6 +76,7 @@ void PlaySceneWorldSpaceCanvas::StageUI()
 			break;
 	}
 
+	
 
 }
 

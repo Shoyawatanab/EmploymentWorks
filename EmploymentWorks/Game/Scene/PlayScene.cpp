@@ -69,12 +69,13 @@ void PlayScene::SceneInitialize()
 	//武器ファクトリーの生成
 	AddActor<WeaponManager>(this, player);
 
+	//敵の生成
 	auto enemyManger = AddActor<EnemyManager>(this, player);
-
-	
+		
+	//キャンバスの生成
 	auto overlayCanvas = AddActor<PlaySceneScreenSpaceOverlayCanvas>(this,enemyManger->GetTargets());
-
 	auto worldSpaceCanvas = AddActor<PlaySceneWorldSpaceCanvas>(this);
+
 
 	//プレイヤの登録
 	auto camera = static_cast<PlaySceneCamera*>(m_camera)->SetTarget(player);
@@ -85,6 +86,23 @@ void PlayScene::SceneInitialize()
 	AddActor<EffectFactory>(this);
 
 	AddActor<PlaySceneSound>(this);
+
+	//ステージ番号の取得
+	int StageNumber = GlobalGameData::GetInstance()->GetSelectStageNumber();
+
+	//ステージごとの処理
+	switch (StageNumber)
+	{
+		case 1:
+			//鳥敵のHP作成
+			worldSpaceCanvas->AddBirdEnemyHP(enemyManger->GetEnemys(Actor::ObjectTag::BIRD_ENEMY));
+			break;
+		case 2:
+			break;
+		default:
+			break;
+	}
+
 
 
 	//クリアタイムのリセット
@@ -107,6 +125,8 @@ void PlayScene::SceneUpdate(const float& deltaTime)
 	m_playTime += deltaTime;
 
 }
+
+
 
 
 

@@ -10,6 +10,8 @@
 #include "GameBase/Scene/Scene.h"
 #include "Game/Component/Components.h"
 #include "Game/Messenger/Messengers.h"
+#include "Game/MathUtil.h"
+
 
 /// <summary>
 /// コンストラク
@@ -18,6 +20,14 @@
 BossHp::BossHp(Canvas* canvas)
 	:
 	Actor(canvas->GetScene())
+	,m_backGraund{}
+	,m_hpBar{}
+	,m_redHpBar{}
+	,m_currentRatio{1.0f}
+	,m_startRatio{}
+	,m_endtRatio{}
+	,m_animationTime{}
+	,m_isAnimation{}
 {
 	using namespace DirectX::SimpleMath;
 
@@ -25,6 +35,14 @@ BossHp::BossHp(Canvas* canvas)
 	m_backGraund = GetScene()->AddActor<Image>(canvas, "BossHPBase");
 	m_backGraund->GetTransform()->SetScale(BACKGRAUND_SCALE);
 	m_backGraund->GetTransform()->SetParent(GetTransform());
+
+
+	//赤のHpバー
+	m_redHpBar = GetScene()->AddActor<Image>(canvas, "EnemyHP");
+	m_redHpBar->GetTransform()->SetScale(HP_BAR_SCALE);
+	m_redHpBar->GetTransform()->SetParent(GetTransform());
+	//赤色に指定
+	m_redHpBar->SetColor(Vector4(255, 0, 0, 1));
 
 	//Hpバー
 	m_hpBar = GetScene()->AddActor<Image>(canvas, "EnemyHP");
@@ -52,6 +70,34 @@ BossHp::~BossHp()
 {
 }
 
+void BossHp::UpdateActor(const float& deltaTime)
+{
+
+	//アニメーション
+	if (m_isAnimation)
+	{
+		//時間の割合を求める
+		float timeRation = (ANIMATION_MAX_TIME - m_animationTime) / ANIMATION_MAX_TIME;
+		//表示割合を求める
+		float ratio = MathUtil::Lerp(m_startRatio, m_endtRatio, timeRation);
+		//赤色のバーの変更
+		m_redHpBar->SetHorizontalFillAmount(ratio);
+
+		//アニメーション終了時
+		if (m_animationTime <= 0)
+		{
+			m_isAnimation = false;
+			m_animationTime = ANIMATION_MAX_TIME;
+		}
+
+		//経過時間の加算
+		m_animationTime -= deltaTime;
+
+
+	}
+
+}
+
 /// <summary>
 /// 通知を受け取る関数
 /// </summary>
@@ -69,8 +115,20 @@ void BossHp::Notify(SceneMessageType type, void* datas)
 
 			if (typeid(*ratio) == typeid(float))
 			{
+			
+
+				m_startRatio = m_currentRatio;
+
+				m_endtRatio = *ratio;
+
+				//アニメーションを有効に
+				m_isAnimation = true;
+
+				m_animationTime = ANIMATION_MAX_TIME;
+
 				//Hpバーの塗りつぶし割合の変更
 				m_hpBar->SetHorizontalFillAmount(*ratio);
+
 			}
 		}
 			break;

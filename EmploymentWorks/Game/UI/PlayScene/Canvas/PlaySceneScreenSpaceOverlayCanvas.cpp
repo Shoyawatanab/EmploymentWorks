@@ -98,7 +98,7 @@ void PlaySceneScreenSpaceOverlayCanvas::Notify(SceneMessageType type, void* data
 void PlaySceneScreenSpaceOverlayCanvas::StageUI()
 {
 	//ステージ番号の取得
-	int StageNumber = GlobalGameData::GetInstance()->GetSelectStateNumber();
+	int StageNumber = GlobalGameData::GetInstance()->GetSelectStageNumber();
 
 	switch (StageNumber)
 	{

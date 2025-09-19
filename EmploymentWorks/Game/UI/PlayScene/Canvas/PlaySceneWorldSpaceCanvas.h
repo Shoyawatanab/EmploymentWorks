@@ -10,8 +10,6 @@
 
 class PlaySceneWorldSpaceCanvas : public WorldSpaceCanvas
 {
-public:
-
 
 public:
 	//コンストラクタ
@@ -19,6 +17,8 @@ public:
 	//デストラクタ
 	~PlaySceneWorldSpaceCanvas() override;
 
+	//鳥的HPの作成
+	void AddBirdEnemyHP(std::vector<Actor*> enemys);
 
 private:
 

@@ -15,6 +15,7 @@
 #include "Game/Fade/FadeManager.h"
 #include "Game/Params.h"
 #include "Game/Enemies/EnemyManager.h"
+#include "Game/UI/PlayScene/BirdEnemyHP/BirdEnemyHP.h"
 
 /// <summary>
 /// コンストラク
@@ -28,6 +29,7 @@ BirdEnemy::BirdEnemy(Scene* scene, DirectX::SimpleMath::Vector3 scale
 	EnemyBase(scene,Params::BIRDENEMY_HP,manager)
 	,m_target{player}
 	,m_bullets{}
+	,m_hpBar{}
 {
 
 	using namespace DirectX::SimpleMath;
@@ -40,7 +42,7 @@ BirdEnemy::BirdEnemy(Scene* scene, DirectX::SimpleMath::Vector3 scale
 	//影の追加
 	auto shadow = AddComponent<RoundShadowComponent>(this, Params::BIRDENEMY_SHADOW_RADIUS);
 
-	shadow->SetActive(false);
+	shadow->SetActive(true);
 
 	//モデルの作成
 	auto model = GetScene()->AddActor<BirdEnemyModel>(GetScene());
@@ -90,7 +92,6 @@ void BirdEnemy::UpdateActor(const float& deltaTime)
 		return;
 	}
 
-	return;
 
 	m_stateMachine->Update(deltaTime);
 
@@ -112,6 +113,9 @@ void BirdEnemy::OnCollisionEnter(ColliderComponent* collider)
 		{
 			//HPの減少
 			HpDecrease(Params::BOOMERANG_DAMAGE);
+
+			float ratio = GetHpRatio();
+			m_hpBar->SetRatio(ratio);
 
 		}
 
