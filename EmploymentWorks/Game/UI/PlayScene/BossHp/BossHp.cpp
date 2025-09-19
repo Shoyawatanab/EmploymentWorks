@@ -70,6 +70,10 @@ BossHp::~BossHp()
 {
 }
 
+/// <summary>
+/// ŒÂ•ÊXV
+/// </summary>
+/// <param name="deltaTime">Œo‰ßŠÔ</param>
 void BossHp::UpdateActor(const float& deltaTime)
 {
 
@@ -115,7 +119,6 @@ void BossHp::Notify(SceneMessageType type, void* datas)
 
 			if (typeid(*ratio) == typeid(float))
 			{
-			
 
 				m_startRatio = m_currentRatio;
 
