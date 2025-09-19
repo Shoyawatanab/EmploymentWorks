@@ -27,12 +27,14 @@ TargetMarker::TargetMarker(Canvas* canvas, std::vector<Actor*> targets)
 	,m_targets{targets}
 	,m_isGetReady{false}
 	,m_isLockOn{false}
+	,m_isAnimation{false}
+	,m_animationTime{ANIMATION_MAX_TIME}
+	,m_target{}
 {
 
 	using namespace DirectX::SimpleMath;
 
 	m_marker = GetScene()->AddActor<Image>(canvas,"TargetMarker");
-	///m_marker->SetActive(false);
 	m_marker->GetTransform()->SetScale(SCALE);
 
 	m_marker->GetTransform()->SetPosition(Vector3::Zero);
@@ -76,8 +78,33 @@ void TargetMarker::UpdateActor(const float& deltaTime)
 
 	m_marker->GetTransform()->SetPosition(Vector3(result.x, result.y, 0.0f));
 
+	//アニメーション
+	if (m_isAnimation)
+	{
+
+		//時間の割合を求める
+		float timeRatio = (ANIMATION_MAX_TIME - m_animationTime) / ANIMATION_MAX_TIME;
+
+		timeRatio = std::max(timeRatio, 0.0f);
+
+		//表示割合を求める
+		Vector3 scale = Vector3::Lerp(INITIAL_SCALE, SCALE, timeRatio);
+
+		m_marker->GetTransform()->SetScale(scale);
+
+		if (m_animationTime <= 0)
+		{
+			m_isAnimation = false;
+		}
+
+		m_animationTime -= deltaTime;
+
+		m_animationTime = std::max(m_animationTime, 0.0f);
+
+	}
 
 }
+
 
 
 /// <summary>
@@ -116,8 +143,11 @@ DirectX::SimpleMath::Vector2 TargetMarker::FilterWithinRange()
 	//変数宣言
 	DirectX::SimpleMath::Vector2 result;
 
+	Actor* target = nullptr;
+
 	m_marker->SetActive(false);
 	m_isLockOn = false;
+
 
 	//画面の横のサイズを初期値とする
 	float minLength = Screen::WIDTH;
@@ -148,6 +178,7 @@ DirectX::SimpleMath::Vector2 TargetMarker::FilterWithinRange()
 			GetScene()->GetCamera()->GetProjectionMatrix()
 		);
 
+		//
 		float distance = Vector2::Distance(ScreenPos, Vector2(Screen::CENTER_X,Screen::CENTER_Y));
 
 		//raneg内の座標かどうかの判定
@@ -161,16 +192,61 @@ DirectX::SimpleMath::Vector2 TargetMarker::FilterWithinRange()
 				result = ScreenPos;
 				//最小値を更新
 				minLength = distance;
-				//ターゲットを更新
-				m_targetPosition = point->GetTransform()->GetWorldPosition();
+
+				//ターゲットの更新
+				target = point;
 
 				m_marker->SetActive(true);
 				m_isLockOn = true;
+								
+				
 			}
 
 		}
 	}
 
+	//ターゲットが変わったかの判定
+	CheckChangeTarget(target);
+
+
 	return result;
+}
+
+
+/// <summary>
+/// アニメーション開始
+/// </summary>
+void TargetMarker::StartAnimation()
+{
+	m_isAnimation = true;
+
+	m_animationTime = ANIMATION_MAX_TIME;
+
+}
+
+/// <summary>
+/// ターゲットが変わったかの判定
+/// </summary>
+/// <param name="target"></param>
+void TargetMarker::CheckChangeTarget(Actor* target)
+{
+	//Nullなら
+	if (target == nullptr)
+	{
+		m_target = nullptr;
+		return;
+	}
+
+	//同じなら
+	if (m_target == target)
+	{
+		return;
+	}
+
+	//ターゲットの更新
+	m_target = target;
+
+	StartAnimation();
+
 }
 

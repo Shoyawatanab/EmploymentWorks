@@ -205,11 +205,10 @@ void BossEnemy::OnCollisionExit(ColliderComponent* collider)
 /// <param name="damage">ダメージ</param>
 void BossEnemy::AddDamage(int damage)
 {
-
+	//HP減少
 	HpDecrease(damage);
 	
-
-
+	//HP割合の取得
 	float ratio = GetHpRatio();
 	Messenger<SceneMessageType>::GetInstance()->Notify(SceneMessageType::BOSS_DAMAGE, &ratio);
 
@@ -251,7 +250,6 @@ void BossEnemy::Rotation(const float& deltaTime)
 	direction.Normalize();
 	//今の敵の前方向
 	Vector3 forward = GetTransform()->GetForwardVector();
-	//forward.Normalize();
 	//回転軸の作成
 	Vector3 moveAxis = forward.Cross(direction);
 
@@ -283,6 +281,8 @@ void BossEnemy::Rotation(const float& deltaTime)
 	Rotate *= DirectX::SimpleMath::Quaternion::CreateFromAxisAngle(moveAxis, moveAngle);
 	GetTransform()->SetRotate(Rotate);
 
+
+
 }
 
 /// <summary>
@@ -300,8 +300,10 @@ void BossEnemy::PlayLandingSE()
 /// </summary>
 void BossEnemy::Landing()
 {
+	
 	m_rigidBody->ResetGravity();
 	m_isGround = true;
+
 }
 
 
