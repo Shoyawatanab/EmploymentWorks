@@ -53,7 +53,7 @@ void StageFactory::LoadStageData()
 	using json = nlohmann::json;
 
 
-	int stageNumber = GlobalGameData::GetInstance()->GetSelectStateNumber();
+	int stageNumber = GlobalGameData::GetInstance()->GetSelectStageNumber();
 
 	std::ifstream file(L"Resources/Json/Stage/Stage" + std::to_wstring(stageNumber) + L"/StageObject.json");
 

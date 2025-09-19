@@ -13,7 +13,10 @@ class EnemyManager : public Actor
 public:
 
 	//‘S‚Ä‚Ì“G‚ğ•Ô‚·
-	std::vector<Actor*> GetEnemys() { return m_enemys; }
+	std::vector<Actor*> GetAllEnemys() { return m_enemys; }
+	//“Á’è‚Ì“G‚Ìæ“¾
+	std::vector<Actor*> GetEnemys(Actor::ObjectTag tag);
+
 	//ƒ^[ƒQƒbƒg‚Ì“G‚Ìæ“¾
 	std::vector<Actor*> GetTargets() { return m_targets; }
 
@@ -34,6 +37,8 @@ private:
 
 
 private:
+
+
 	//“G”z—ñ
 	std::vector<Actor*> m_enemys;
 	//ƒvƒŒƒCƒ„

@@ -19,7 +19,7 @@ PlaySceneSound::PlaySceneSound(Scene* scene)
 
 	std::string BGMName ="Stage1";
 
-	switch (GlobalGameData::GetInstance()->GetSelectStateNumber())
+	switch (GlobalGameData::GetInstance()->GetSelectStageNumber())
 	{
 		case 1:
 			BGMName = "Stage1";

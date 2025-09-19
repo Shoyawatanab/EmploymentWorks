@@ -9,6 +9,7 @@
 class Player;
 class BirdEnemyStateMachine;
 class BirdEnemyBullet;
+class BirdEnemyHP;
 
 
 class BirdEnemy : public EnemyBase
@@ -32,6 +33,12 @@ public:
 
 	//ステートマシーンの取得
 	BirdEnemyStateMachine* GetStateMachine() { return m_stateMachine.get(); }
+
+
+	//HPバーのセット
+	void SetHpBar(BirdEnemyHP* hpBar) { m_hpBar = hpBar; }
+
+
 
 public:
 	//コンストラク
@@ -60,6 +67,9 @@ private:
 
 	//弾配列
 	std::vector<BirdEnemyBullet*> m_bullets;
+
+	//HPバー
+	BirdEnemyHP* m_hpBar;
 
 };
 

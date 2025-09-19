@@ -8,7 +8,8 @@
 #include "GameBase/Camera/Camera.h"
 #include "GameBase/Common/Commons.h"
 #include "GameBase/Camera/Camera.h"
-#include "GameBase/UI/Canvas/Canvas.h"
+
+
 
 /// <summary>
 /// コンストラクタ
@@ -22,6 +23,7 @@ RenderManager::RenderManager()
 	,m_effects{}
 	,m_layout{}
 	,m_roundShadow{}
+	,m_canvass{}
 {
 	
 	using namespace DirectX;
@@ -55,6 +57,7 @@ RenderManager::~RenderManager()
 	m_canvass.clear();
 	m_effects.clear();
 	m_roundShadow.clear();
+
 }
 
 
@@ -86,7 +89,7 @@ void RenderManager::Render(const Camera& camera)
 	for (auto& canvas : m_canvass)
 	{
 
-		canvas->Render(camera);
+		canvas.second->Render(camera);
 	}
 	
 
@@ -146,17 +149,21 @@ void RenderManager::RemoveModel(ModelComponent* comp)
 /// <summary>
 /// キャンバスの追加
 /// </summary>
-/// <param name="canvas"></param>
+/// <param name="canvas">追加キャンバス</param>
 void RenderManager::AddCanvas(Canvas* canvas)
 {
+	//キャンバスの種類の取得
+	auto canvasType = canvas->GetRenderType();
+
+
 	//キャンバスがあるか探す
-	auto sertchCanvas = std::find(m_canvass.begin(), m_canvass.end(), canvas);
+	auto sertchCanvas = m_canvass.find(canvasType);
 
 	//なければ
 	if (sertchCanvas == m_canvass.end())
 	{
 		//追加
-		m_canvass.push_back(canvas);
+		m_canvass[canvas->GetRenderType()] = canvas;
 
 	}
 
@@ -166,16 +173,21 @@ void RenderManager::AddCanvas(Canvas* canvas)
 /// <summary>
 /// キャンバスの削除
 /// </summary>
-/// <param name="canvas"></param>
+/// <param name="canvas">削除キャンバス</param>
 void RenderManager::RemoveCanvas(Canvas* canvas)
 {
+	//キャンバスの種類の取得
+	auto canvasType = canvas->GetRenderType();
+
+
 	//キャンバスがあるか探す
-	auto sertchCanvas = std::find(m_canvass.begin(), m_canvass.end(), canvas);
+	auto sertchCanvas = m_canvass.find(canvasType);
+
 
 	//あれば
 	if (sertchCanvas != m_canvass.end())
 	{
-		//追加
+		//削除
 		m_canvass.erase(sertchCanvas);
 
 	}
@@ -240,3 +252,23 @@ void RenderManager::AddRoundShadow(RoundShadowComponent* comp)
 }
 
 
+/// <summary>
+/// キャンバスの取得
+/// </summary>
+/// <param name="type">取得したいキャンバスの種類</param>
+/// <returns>s取得結果</returns>
+Canvas* RenderManager::GetCanvas(Canvas::RenderType type)
+{
+
+	//キャンバスがあるか探す
+	auto sertchCanvas = m_canvass.find(type);
+
+	//なければ
+	if (sertchCanvas == m_canvass.end())
+	{
+		
+		return nullptr;
+	}
+
+	return m_canvass[type];
+}

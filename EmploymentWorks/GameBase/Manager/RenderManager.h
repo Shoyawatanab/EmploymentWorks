@@ -4,17 +4,24 @@
 	補足・注意点 : Sceneで宣言
 */
 #pragma once
+#include <unordered_map>
 #include "GameBase/Component/Model/ModelComponent.h"
 #include "GameBase/Component/UI/ImageComponent.h"
 #include "GameBase/Component/Effect/EffectComponent.h"
 #include "GameBase/Component/RoundShadow/RoundShadowComponent.h"
 #include "GameBase/Component/Collider/ColliderComponent.h"
+#include "GameBase/UI/Canvas/Canvas.h"
+
 
 class Camera;
-class Canvas;
 
 class RenderManager
 {
+public:
+
+	//キャンバスの取得　
+	Canvas* GetCanvas(Canvas::RenderType type);
+
 public:
 
 	//コンストラクタ
@@ -46,7 +53,7 @@ private:
 	//モデルコンポーネント
 	std::vector<ModelComponent*> m_models;
 	//UIコンポーネント
-	std::vector<Canvas*> m_canvass;
+	std::unordered_map<Canvas::RenderType ,Canvas*> m_canvass;
 	//エフェクトコンポーネント
 	std::vector<EffectComponent*> m_effects;
 	//丸影

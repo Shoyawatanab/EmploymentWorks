@@ -14,7 +14,7 @@ public:
 	//選択ステージ番号のセット
 	void SetSelectStateNumber(int number) { m_selectStageNumber = number; }
 	//ステージ番号の取得
-	int GetSelectStateNumber() const { return m_selectStageNumber; }
+	int GetSelectStageNumber() const { return m_selectStageNumber; }
 	//クリアタイムの取得
 	float GetClearTime() const { return m_clearTime; }
 	//クリアタイムの加算

@@ -15,6 +15,9 @@
 #include "Game/Messenger/Messengers.h"
 #include "Game/Fade/FadeManager.h"
 
+#include "GameBase/Manager/RenderManager.h"
+
+
 /// <summary>
 /// コンストラク
 /// </summary>
@@ -108,7 +111,7 @@ void EnemyManager::LoadData()
 
 
 	//ステージ番号の取得
-	int stageNumber = GlobalGameData::GetInstance()->GetSelectStateNumber();
+	int stageNumber = GlobalGameData::GetInstance()->GetSelectStageNumber();
 
 
 	std::ifstream file(L"Resources/Json/Stage/Stage" + std::to_wstring(stageNumber) + L"/Enemy.json");
@@ -201,6 +204,10 @@ void EnemyManager::LoadData()
 			auto bird = GetScene()->AddActor<BirdEnemy>(GetScene(), scale, position, rotation, this, m_player);
 			m_enemys.push_back(bird);
 
+			//HPUIの作成
+			auto canvas = GetScene()->GetRenderMangaer()->GetCanvas(Canvas::RenderType::WorldSpace);
+
+
 		}
 
 	}
@@ -208,3 +215,32 @@ void EnemyManager::LoadData()
 
 
 }
+
+
+/// <summary>
+/// 敵の取得
+/// </summary>
+/// <param name="tag">取得したい敵のタグ</param>
+/// <returns>敵配列</returns>
+std::vector<Actor*> EnemyManager::GetEnemys(Actor::ObjectTag tag)
+{
+
+	//保存配列
+	std::vector<Actor*> enemys;
+
+	for (auto& enemy : m_enemys)
+	{
+		//Tagの比較
+		if (enemy->GetObjectTag() == tag)
+		{
+			enemys.push_back(enemy);
+		}
+	}
+
+	return enemys;
+}
+
+
+
+
+

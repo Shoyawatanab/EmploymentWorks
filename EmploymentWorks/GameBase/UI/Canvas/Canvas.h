@@ -14,7 +14,7 @@ class Canvas : public Actor
 public:
 
 	//•`‰æƒ^ƒCƒv
-	enum  class RenderType
+	enum  class RenderType 
 	{
 	
 		SpaceOverlay  //í‚É‰æ–Ê‚ÉˆÚ‚è‘±‚¯‚é
